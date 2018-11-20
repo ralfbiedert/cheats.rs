@@ -20,6 +20,7 @@
     <!-- CSS -->
     {% block css %}
     <link rel="stylesheet" href="{{ get_url(path="book.css") | safe }}">
+    <link rel="stylesheet" href="{{ get_url(path="prism.css") | safe }}">
     {% endblock css %}
 
     {% block extra_head %}
@@ -56,6 +57,9 @@
             {% endblock next_link %}
         </div>
     </div>
+
+    <script type="text/javascript" src="{{ get_url(path="prism.js") | safe }}"></script>
+    <script type="text/javascript" src="{{ get_url(path="custom.js") | safe }}"></script>
 
     {% block js_body %}
     {% endblock js_body %}
