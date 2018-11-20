@@ -8,11 +8,11 @@ sort_by = "weight"
 This section contains an example-based overview of most _sigils_ and _symbols_ usually found in Rust. It does not try to be sound from a language theory perspective, but rather easily digestible for a practitioner.
 
 Where appropriate, this document will link to the corresponding sections in the
-The Book {{ book(page="") }},
-Rust by Example {{ ex(page="") }},
-Std Docs {{ std(page="std")}},
-Nomicon {{ nom(page="")}},
-Reference {{ ref(page="")}}.
+**The Book** {{ book(page="") }},
+**Rust by Example** {{ ex(page="") }},
+**Std Docs** {{ std(page="std")}},
+**Nomicon** {{ nom(page="")}},
+**Reference** {{ ref(page="")}}.
 
 
 > **TODO** The document is only 10% annotated or so (first two sections).
@@ -32,7 +32,7 @@ These constructs are usually processed and expanded before the actual compilatio
 | `$x:ty`  | Macro capture in macros by example. |
 | `$x` |  Macro substitution in **macros by example** {{book(page="appendix-04-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
 | `$(x),*` | Macro repetition in macros by example. |
-| `#[attr]`  | Outer **attribute** [Ⓔ](https://doc.rust-lang.org/stable/rust-by-example/attribute.html) [Ⓡ](https://doc.rust-lang.org/stable/reference/attributes.html). |
+| `#[attr]`  | Outer **attribute** {{ex(page="attribute.html")}} {{ref(page="attributes.html")}} |
 | `#![attr]` | Inner attribute. |
 
 </div>
@@ -43,15 +43,21 @@ These constructs are usually processed and expanded before the actual compilatio
 References and pointers are Rust's way to grant something access to a memory location that does not own that location.
 
 
+{{ book(page="") }}
+{{ ex(page="") }}
+{{ std(page="std") }}
+{{ nom(page="")}}
+{{ ref(page="")}}
+
 <div class="cheats">
 
 | Example | Explanation |
 |---------|-------------|
-| `&x` | Immutable **borrow** [Ⓐ](https://doc.rust-lang.org/std/borrow/trait.Borrow.html) [Ⓑ](https://doc.rust-lang.org/stable/book/2018-edition/ch04-02-references-and-borrowing.html) [Ⓔ](https://doc.rust-lang.org/stable/rust-by-example/scope/borrow.html).|
-| `&T` | Immutable safe pointer type, aka **reference** [Ⓐ](https://doc.rust-lang.org/std/primitive.reference.html) [Ⓑ](https://doc.rust-lang.org/stable/book/2018-edition/ch04-02-references-and-borrowing.html) [Ⓝ](https://doc.rust-lang.org/nightly/nomicon/references.html) [Ⓡ](https://doc.rust-lang.org/stable/reference/types.html#pointer-types). |
-| `&mut x` | Borrow that allows **mutability** [Ⓔ](https://doc.rust-lang.org/stable/rust-by-example/scope/borrow/mut.html). |
+| `&x` | Immutable **borrow**  {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} |
+| `&T` | Immutable safe pointer type, aka **reference**  {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} |
+| `&mut x` | Borrow that allows **mutability** {{ ex(page="scope/borrow/mut.html") }} |
 | `&mut T` | Reference that allows mutability. |
-| `*const x` | Immutable **raw pointer** [Ⓐ](https://doc.rust-lang.org/std/primitive.pointer.html) [Ⓑ](https://doc.rust-lang.org/stable/book/2018-edition/ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer) [Ⓡ](https://doc.rust-lang.org/stable/reference/types.html#raw-pointers-const-and-mut). |
+| `*const x` | Immutable **raw pointer** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }} |
 | `*const T` | Immutable raw pointer type. |
 | `*mut x` | Mutable raw pointer. |
 | `*mut T` | Mutable raw pointer type. |
