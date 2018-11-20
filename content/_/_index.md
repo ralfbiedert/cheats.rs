@@ -1,8 +1,6 @@
 +++
-title = "What is Gutenberg"
-weight = 2
+weight = 1
 sort_by = "weight"
-insert_anchor_links = "right"
 +++
 
-adsa
+# Sigil
