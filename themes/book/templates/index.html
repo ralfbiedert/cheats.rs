@@ -8,6 +8,10 @@
     <!-- Enable responsiveness on mobile devices-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
     <title>{% block title %}{{ config.title }}{% endblock title %}</title>
 
     {% block js %}
@@ -54,11 +58,6 @@
     </div>
 
     {% block js_body %}
-    {% if config.build_search_index %}
-    <script type="text/javascript" src="{{ get_url(path="elasticlunr.min.js") | safe }}"></script>
-    <script type="text/javascript" src="{{ get_url(path="search_index.en.js") | safe }}"></script>
-    {% endif %}
-    <script type="text/javascript" src="{{ get_url(path="book.js") | safe }}"></script>
     {% endblock js_body %}
 </body>
 
