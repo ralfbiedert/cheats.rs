@@ -7,18 +7,12 @@ sort_by = "weight"
 
 This section contains an example-based overview of most _sigils_ and _symbols_ usually found in Rust. It does not try to be sound from a language theory perspective, but rather easily digestible for a practitioner.
 
-
 Where appropriate, this document will link to the corresponding sections in the
-The Book [<span class="entry">Ⓑ</span>](https://doc.rust-lang.org/stable/book/2018-edition),
-Rust by Example [<span class="entry">Ⓔ</span>](https://doc.rust-lang.org/stable/rust-by-example),
-API Docs [<span class="mid">Ⓐ</span>](https://doc.rust-lang.org/std/index.html),
-Nomicon [<span class="expert">Ⓝ</span>](https://doc.rust-lang.org/nightly/nomicon)
-Reference [<span class="expert">Ⓡ</span>](https://doc.rust-lang.org/stable/reference/).
-
-TODO: CREATE MACROS LIKE
-$api:std::ops::trait::Shr
-$nom:lifetimes
-...
+The Book {{ book(page="") }},
+Rust by Example {{ ex(page="") }},
+Std Docs {{ std(page="std")}},
+Nomicon {{ nom(page="")}},
+Reference {{ ref(page="")}}.
 
 
 > **TODO** The document is only 10% annotated or so (first two sections).
@@ -34,9 +28,9 @@ These constructs are usually processed and expanded before the actual compilatio
 
 | Example |  Explanation |
 |---------|---------|
-| `m!` |  Invocation preamble for **macros** [Ⓐ](https://doc.rust-lang.org/std/index.html#macros) [Ⓑ](https://doc.rust-lang.org/stable/book/2018-edition/appendix-04-macros.html) [Ⓡ](https://doc.rust-lang.org/stable/reference/macros.html). |
+| `m!` |  Invocation preamble for **macros** {{book(page="appendix-04-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} |
 | `$x:ty`  | Macro capture in macros by example. |
-| `$x` |  Macro substitution in **macros by example** [Ⓑ](https://doc.rust-lang.org/stable/book/2018-edition/appendix-04-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming) [Ⓔ](https://doc.rust-lang.org/stable/rust-by-example/macros.html#macro_rules) [Ⓡ](https://doc.rust-lang.org/stable/reference/macros-by-example.html). |
+| `$x` |  Macro substitution in **macros by example** {{book(page="appendix-04-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
 | `$(x),*` | Macro repetition in macros by example. |
 | `#[attr]`  | Outer **attribute** [Ⓔ](https://doc.rust-lang.org/stable/rust-by-example/attribute.html) [Ⓡ](https://doc.rust-lang.org/stable/reference/attributes.html). |
 | `#![attr]` | Inner attribute. |
