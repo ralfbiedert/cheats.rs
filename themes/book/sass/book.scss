@@ -1,41 +1,39 @@
 @charset "utf-8";
-
 @import "normalize";
-
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  font-size: 62.5%;
+    font-size: 62.5%;
 }
 
-body, html {
-  height: 100%;
+body,
+html {
+    height: 100%;
 }
 
 body {
-  text-rendering: optimizeLegibility;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.2px;
+    text-rendering: optimizeLegibility;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.2px;
 }
 
-
 @mixin min-screen($min-width: $body-width) {
-   @media screen and (min-width: $min-width) {
-     @content;
-   }
+    @media screen and (min-width: $min-width) {
+        @content;
+    }
 }
 
 @mixin max-screen($max-width: $body-width) {
-   @media screen and (max-width: $max-width) {
-     @content;
-   }
+    @media screen and (max-width: $max-width) {
+        @content;
+    }
 }
 
 $sidebar-width: 0px;
-
 @import "navigation";
 @import "content";
 @import "header";
+@import "cheats";
