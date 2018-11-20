@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <!-- Enable responsiveness on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+
+    {% block js %}
+    {% endblock js %}
+
+    <!-- CSS -->
+    {% block css %}
+    <link rel="stylesheet" href="{{ get_url(path="book.css") | safe }}">
+    {% endblock css %}
+
+    {% block extra_head %}
+    {% endblock extra_head %}
+</head>
+
+<body>
+
+
+    <div class="page">
+        <div class="page__content">
+            {% if config.build_search_index %}
+            <div class="search-container">
+                <input id="search" type="search" placeholder="Search..">
+                <div class="search-results">
+                    <div class="search-results__header"></div>
+                    <ul class="search-results__items"></ul>
+                </div>
+            </div>
+            {% endif %}
+            <div class="book-content">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </div>
+
+        <div class="prev-link">
+            {% block prev_link %}
+            {% endblock prev_link %}
+        </div>
+
+        <div class="next-link">
+            {% block next_link %}
+            {% endblock next_link %}
+        </div>
+    </div>
+
+    {% block js_body %}
+    {% if config.build_search_index %}
+    <script type="text/javascript" src="{{ get_url(path="elasticlunr.min.js") | safe }}"></script>
+    <script type="text/javascript" src="{{ get_url(path="search_index.en.js") | safe }}"></script>
+    {% endif %}
+    <script type="text/javascript" src="{{ get_url(path="book.js") | safe }}"></script>
+    {% endblock js_body %}
+</body>
+
+</html>
