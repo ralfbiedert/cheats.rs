@@ -152,7 +152,7 @@ Rust has several ways to create string or char literals, depending on your needs
 
 <div class="cheats">
 
-| Symbol | Explanation |
+| Example | Explanation |
 |--------|-------------|
 | `"..."` | **String literal** {{ ref(page="tokens.html#string-literals")}}, will escape `\n`, ... |
 | `r"..."`, | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}}, won't escape `\n`, ... |
@@ -171,7 +171,7 @@ No comment.
 
 <div class="cheats">
 
-| Symbol | Explanation |
+| Example | Explanation |
 |--------|-------------|
 | `//` | Line comment. |
 | `//!` | Inner line **doc comment**. {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} |
@@ -183,51 +183,6 @@ No comment.
 </div>
 
 
-### Common Operators
-
-Operators most languages have.
-
-<div class="cheats">
-
-| Example   | Operator Trait | Explanation |
-|---------  |-------------|-------|
-| `x + y`  | [Add](https://doc.rust-lang.org/std/ops/trait.Add.html) | Addition. |
-| `x += y`  | [AddAssign](https://doc.rust-lang.org/std/ops/trait.AddAssign.html) | Addition and assignment. |
-| `x / y`  | [Div](https://doc.rust-lang.org/std/ops/trait.Div.html) | Division. |
-| `x /= y`  | [DivAssign](https://doc.rust-lang.org/std/ops/trait.DivAssign.html) | Division and assignment. |
-| `x * y`  | [Mul](https://doc.rust-lang.org/std/ops/trait.Mul.html) | Multiplication. |
-| `x *= y`  | [MulAssign](https://doc.rust-lang.org/std/ops/trait.MulAssign.html) | Multiplication and assignment. |
-| `-x`      | [Neg](https://doc.rust-lang.org/std/ops/trait.Net.html) | Unary negation operator. |
-| `x % y`  | [Rem](https://doc.rust-lang.org/std/ops/trait.Rem.html) | Remainder. |
-| `x %= y`  | [RemAssign](https://doc.rust-lang.org/std/ops/trait.RemAssign.html) | Remainder and assignment. |
-| `x - y`  | [Sub](https://doc.rust-lang.org/std/ops/trait.Sub.html) | Subtraction. |
-| `x -= y`  | [SubAssign](https://doc.rust-lang.org/std/ops/trait.SubAssign.html) | Subtraction and assignment. |
-| `x < y`  |  | Less than comparison |
-| `x <= y` | | Less than or equal to comparison |
-|  `x == y`| | Equality comparison |
-| `x > y`  | | Greater than comparison |
-|  `x >= y`|  | Greater than or equal to comparison |
-| `x & y`  | [BitAnd](https://doc.rust-lang.org/std/ops/trait.BitAnd.html) | Bitwise AND. |
-| `x &= y`  | [BitAndAssign](https://doc.rust-lang.org/std/ops/trait.BitAndAssign.html) | Bitwise AND and assignment. |
-| `x ^ y`  | [BitXor](https://doc.rust-lang.org/std/ops/trait.BitXor.html) | Bitwise exclusive OR. |
-|  `x ^= y` | [BitXorAssign](https://doc.rust-lang.org/std/ops/trait.BitXorAssign.html) | Bitwise exclusive OR and assignment. |
-| <code>x \| y</code>  | [BitOr](https://doc.rust-lang.org/std/ops/trait.BitOr.html)| Bitwise OR. |
-| <code>x \|= y</code>  | [BitOrAssign](https://doc.rust-lang.org/std/ops/trait.BitOrAssign.html)| Bitwise OR and assignment. |
-| `!x`      | [Not](https://doc.rust-lang.org/std/ops/trait.Not.html) | Bitwise or logical complement. |
-| `x << y` | [Shl](https://doc.rust-lang.org/std/ops/trait.Shl.html)  | Left-shift |
-|  `x <<= y`| [ShlAssign](https://doc.rust-lang.org/std/ops/trait.ShlAssign.html) | Left-shift and assignment |
-|  `x >> y`| [Shr](https://doc.rust-lang.org/std/ops/trait.Shr.html) | Right-shift |
-| `x >>= y` | [ShrAssign](https://doc.rust-lang.org/std/ops/trait.ShrAssign.html) | Right-shift and assignment |
-| <code>x \|\| y</code>| | Logical OR |
-| `x = y`   |  | Assignment/equivalence. |
-| `x < y`  |  | Less than comparison |
-| `x <= y` | | Less than or equal to comparison |
-|  `x == y`| | Equality comparison |
-| `x > y`  | | Greater than comparison |
-|  `x >= y`|  | Greater than or equal to comparison |
-
-</div>
-
 
 ### Miscellaneous
 
@@ -237,22 +192,36 @@ These sigils did not fit any other category but are good to know nonetheless.
 
 | Example | Explanation |
 |---------|-------------|
-| `!` | Always empty bottom type for diverging functions |
-| `_` | Unnamed variable. |
-| `_x` | Variable explicitly marked as being unused. |
+| `!` | Always empty **never type**. {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html?highlight=never#never-type") }} |
+| `_` | Unnamed variable, e.g., <code>\|x, _\| { ... }</code>.|
+| `_x` | Variable explicitly marked as unused. |
 | `1_0` | Numeric separator for visual clarity. |
-| `r#foo` | A raw identifier for edition compatibility. |
+| `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html?highlight=raw,iten#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html?highlight=raw,iden#raw-identifiers") }} for edition compatibility. |
 
 </div>
+
+
+
+### Common Operators
+
+Rust supports all common operators you would expect to find in a language (`+`, `*`, `%`, `=`, `==`...).
+Since they behave no differently in Rust we do not list them here.
+For some of them Rust also support **operator overloading**. {{ std(page="std/ops/index.html")}}
+
 
 
 # Keywords
 
 <div class="cheats">
 
+
+{{ book(page="") }}
+{{ book(page="") }}
+
+
 | Keyword | Explanation |
 |--------|-------------|
-| `as` | Primitive casting; disambiguate traits; rename imports. |
+| `as` | Primitive **casting** {{ book(page="types/cast.html#casting") }}; disambiguate traits; rename imports. |
 | `break` | Exit a loop immediately |
 | `const` | Define constant items or constant raw pointers |
 | `continue` | Continue to the next loop iteration |
