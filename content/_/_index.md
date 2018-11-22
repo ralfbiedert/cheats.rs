@@ -117,16 +117,17 @@ Ubiquitous constructs for code structure and execution flow.
 
 <div class="cheats">
 
-| Example | Explanation |
+| Sigil | Explanation |
 |---------|-------------|
 | `a::b` | Namespace **path**. {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} |
-| <code>\|x\| </code> | Preamble for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
-| `f() -> T` | Function return type |
-| `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
 | `'a: loop` | Loop label. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
+| <code>\|x\| </code> | Preamble for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
+| `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
 | `x?` | Early return **error propagation**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 
 </div>
+
+
 
 ### Pattern Matching
 
@@ -221,7 +222,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 
 | Keyword | Explanation |
 |--------|-------------|
-| `as` | Primitive **casting** {{ book(page="types/cast.html#casting") }}; disambiguate traits; rename imports. |
+| `as` | **Casting** {{ book(page="types/cast.html#casting") }}; disambiguation; imports. |
 | `break` | Exit a loop immediately |
 | `const` | Define constant items or constant raw pointers |
 | `continue` | Continue to the next loop iteration |
@@ -259,8 +260,34 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 | `while` | Loop conditionally. |
 </div>
 
-# Memory Layout
 
-> TODO: Replace this with both container types and stack / heap explanations around Sized / Unsized / dyn Trait / ...
+# Various
 
-![image](images/containers.png)
+> TODO: Add stack / heap explanations around Sized / Unsized / dyn Trait / ...
+
+
+
+### Containers
+
+[![image](/link_containers.png)](https://docs.google.com/presentation/d/1q-c7UAyrUlM-eZyTo1pd8SZ0qwA_wYxmPZVOQkoDmH4/edit#slide=id.p)
+
+### Containers
+
+[![image](/link_periodic.png)]()
+
+### Railroad
+
+[![image](/link_railroad.png)]()
+
+### Railroad
+
+[![image](/link_strings.png)]()
+
+
+
+### Tools
+
+| Keyword | Explanation |
+|--------|-------------|
+| [![image](/tool_railroad.png)](https://xxx) | **Macro Railroad** {{ book(page="types/cast.html#casting") }}; disambiguation; imports. |
+| [![image](/tool_railroad.png)](https://xxx) | **Casting** {{ book(page="types/cast.html#casting") }}; disambiguation; imports. |
