@@ -265,6 +265,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 
 > TODO: Add stack / heap explanations around Sized / Unsized / dyn Trait / ...
 
+{{ tool(src="/link_periodic.png") }} {{ tool(src="/link_containers.png") }} {{ tool(src="/link_railroad.png") }} {{ tool(src="/link_strings.png") }}
 
 
 ### Containers
