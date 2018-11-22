@@ -29,7 +29,6 @@
 
 <body>
 
-
     <div class="page">
         <div class="page__content">
             {% if config.build_search_index %}
@@ -57,6 +56,9 @@
             {% endblock next_link %}
         </div>
     </div>
+
+    <a href="https://github.com/ralfbiedert/cheats.rs/"><img style="position: absolute; top: 0; right: 0; border: 0;"
+            src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 
     <script type="text/javascript" src="{{ get_url(path="prism.js") | safe }}"></script>
     <script type="text/javascript" src="{{ get_url(path="custom.js") | safe }}"></script>

@@ -20,6 +20,17 @@ body {
     letter-spacing: 0.2px;
 }
 
+div.title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 40px;
+}
+
+div.subtitle {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
 @mixin min-screen($min-width: $body-width) {
     @media screen and (min-width: $min-width) {
         @content;

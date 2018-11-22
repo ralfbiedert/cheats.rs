@@ -1,13 +1,18 @@
 .cheats>table tr td:first-child {
-    width: 150px;
+    width: 250px;
 }
 
-// .entry {
-    //     color: rgb(0, 110, 0);
-    // }
-    // .mid {
-    //     color: rgb(143, 93, 1);
-    // }
-    // .expert {
-    //     color: rgb(184, 0, 0);
-    // }
+.entry {
+    color: rgb(0, 110, 0);
+    font-size: 70%;
+}
+
+.mid {
+    color: rgb(143, 93, 1);
+    font-size: 70%;
+}
+
+.expert {
+    color: rgb(184, 0, 0);
+    font-size: 70%;
+}

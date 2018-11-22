@@ -3,26 +3,26 @@ weight = 1
 sort_by = "weight"
 +++
 
+<div class="title">Rust Cheat Sheet</div>
+<div class="subtitle">22.11.2018</div>
+
+
+
+>  Where appropriate, this document will link to the corresponding sections in the
+>  **The Book** {{ book(page="") }},
+>  **Rust by Example** {{ ex(page="") }},
+>  **Std Docs** {{ std(page="std")}},
+>  **Nomicon** {{ nom(page="")}},
+>  **Reference** {{ ref(page="")}}.
+
 # Sigils
 
-This section contains an example-based overview of most _sigils_ and _symbols_ usually found in Rust. It does not try to be sound from a language theory perspective, but rather easily digestible for a practitioner.
+List of most _sigils_ and _symbols_ usually found in Rust.
 
-Where appropriate, this document will link to the corresponding sections in the
-**The Book** {{ book(page="") }},
-**Rust by Example** {{ ex(page="") }},
-**Std Docs** {{ std(page="std")}},
-**Nomicon** {{ nom(page="")}},
-**Reference** {{ ref(page="")}}.
-
-
-> **TODO** The document is only 10% annotated or so (first two sections).
-> I want to get some feedback first before I put too much effort into this.
-
-<!-- [Ⓐ]() [Ⓑ]() [Ⓔ]() [Ⓝ]() [Ⓡ]() -->
 
 ### Preprocessing
 
-These constructs are usually processed and expanded before the actual compilation happens.
+Constructs expanded before the actual compilation happens.
 
 <div class="cheats">
 
@@ -40,14 +40,8 @@ These constructs are usually processed and expanded before the actual compilatio
 
 ### References & Pointers
 
-References and pointers are Rust's way to grant something access to a memory location that does not own that location.
+Granting access to un-owned memory.
 
-
-{{ book(page="") }}
-{{ ex(page="") }}
-{{ std(page="std") }}
-{{ nom(page="")}}
-{{ ref(page="")}}
 
 <div class="cheats">
 
@@ -61,81 +55,81 @@ References and pointers are Rust's way to grant something access to a memory loc
 | `*const T` | Immutable raw pointer type. |
 | `*mut x` | Mutable raw pointer. |
 | `*mut T` | Mutable raw pointer type. |
-| `*x` | **Dereference** [Ⓐ](https://doc.rust-lang.org/std/ops/trait.Deref.html) [Ⓑ](https://doc.rust-lang.org/stable/book/2018-edition/ch15-02-deref.html) [Ⓝ](https://doc.rust-lang.org/nightly/nomicon/vec-deref.html). |
-| `'a`  | Often seen as `&'a T`, a **lifetime parameter** [Ⓑ](https://doc.rust-lang.org/stable/book/2018-edition/ch10-00-generics.html) [Ⓔ](https://doc.rust-lang.org/stable/rust-by-example/scope/lifetime.html) [Ⓝ](https://doc.rust-lang.org/nightly/nomicon/lifetimes.html) [Ⓡ](https://doc.rust-lang.org/stable/reference/items/generics.html#type-and-lifetime-parameters).|
+| `*x` | **Dereference**  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
+| `'a`  | Often seen as `&'a T`, a **lifetime parameter** {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="scope/lifetimes.html") }} {{ ref(page="generics.html#type-and-lifetime-parameters")}} |
 
 </div>
 
 ### Entity Creation & Usage
 
-Entity creation and usage sigils lists most idiomatic ways how to create and use non-primitive types and their values.
+Creation and usage of various built-in types.
 
 
 <div class="cheats">
 
 | Example | Explanation |
 |---------|-------------|
-| `S { x: y }` | Field initializer for **structs** [Ⓐ](https://doc.rust-lang.org/std/keyword.struct.html) [Ⓑ](https://doc.rust-lang.org/stable/book/2018-edition/ch05-00-structs.html) [Ⓔ](https://doc.rust-lang.org/stable/rust-by-example/custom_types/structs.html) [Ⓡ](https://doc.rust-lang.org/stable/reference/expressions/struct-expr.html). |
+| `S { x: y }` | Field initializer for **structs** {{ book(page="ch05-00-structs.html") }} {{ ex(page="custom_types/structs.html") }} {{ std(page="std/keyword.struct.html") }} {{ ref(page="expressions/struct-expr.html") }} |
 | `S { x }` | Use local variable `x` for field `x` when creating struct. |
 | `S { ..x }` | Fill remaining fields from `x`, esp. useful with [Default](https://doc.rust-lang.org/std/default/trait.Default.html). |
-| `()` | Empty tuple, both literal and type, aka **unit** [Ⓐ](https://doc.rust-lang.org/std/primitive.unit.html). |
+| `()` | Empty tuple, both literal and type, aka **unit** {{ std(page="std/primitive.unit.html") }} |
 | `(x)` | Parenthesized expression |
-| `(x,)` | Single-element **tuple** expression [Ⓐ](https://doc.rust-lang.org/std/primitive.tuple.html) [Ⓔ](https://doc.rust-lang.org/stable/rust-by-example/primitives/tuples.html) [Ⓡ](https://doc.rust-lang.org/stable/reference/expressions/tuple-expr.html).|
+| `(x,)` | Single-element **tuple** expression {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
 | `(T,)` | Single-element tuple type |
-| `[T; n]` | `n`-sized **array** [Ⓐ](https://doc.rust-lang.org/std/primitive.array.html) [Ⓔ](https://doc.rust-lang.org/stable/rust-by-example/primitives/array.html) [Ⓡ](https://doc.rust-lang.org/stable/reference/expressions/array-expr.html). |
+| `[T; n]` | `n`-sized **array** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} {{ ref(page="expressions/array-expr.html") }} |
 | `[x, y]` | Array with given elements. |
 | `x[0]` | Collection indexing. Overloadable [Index](https://doc.rust-lang.org/std/ops/trait.Index.html), [IndexMut](https://doc.rust-lang.org/std/ops/trait.IndexMut.html) |
-| `x[..]` | Collection slice-like indexing via [Range](https://doc.rust-lang.org/std/ops/struct.Range.html), compare **slices** [Ⓐ](https://doc.rust-lang.org/std/primitive.slice.html) [Ⓔ](https://doc.rust-lang.org/stable/rust-by-example/primitives/array.html) [Ⓡ](https://doc.rust-lang.org/stable/reference/types.html#array-and-slice-types). |
+| `x[..]` | Collection slice-like indexing via [Range](https://doc.rust-lang.org/std/ops/struct.Range.html), _c_. **slices**  {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} |
 | `x[a..]` | Collection slice-like indexing via [RangeFrom](https://doc.rust-lang.org/std/ops/struct.RangeFrom.html). |
 | `x[..b]` | Collection slice-like indexing [RangeTo](https://doc.rust-lang.org/std/ops/struct.RangeTo.html). |
 | `x[a..b]` | Collection slice-like indexing via [RangeFull](https://doc.rust-lang.org/std/ops/struct.RangeFull.html). |
-| `a..b` | Right-exclusive **range** [Ⓡ](https://doc.rust-lang.org/stable/reference/expressions/range-expr.html) creation, also seen as `..`, `a..`, `..b`.  |
+| `a..b` | Right-exclusive **range** {{ ref(page="expressions/range-expr.html") }} creation, also seen as `..`, `a..`, `..b`.  |
 | `a..=b` | Inclusive range creation, also seen as `..=b`. |
-| `x.i` | Member **access** [Ⓡ](https://doc.rust-lang.org/stable/reference/expressions/field-expr.html) |
+| `x.i` | Member **access** {{ ref(page="expressions/field-expr.html") }} |
 | `x.0` | Tuple access |
 
 </div>
 
 ### Generics & Constraints
 
-Generics allow you to create code that operates on more than one type. Closely related are constraints, that allow caller and callee to agree on the limits within which such code may operate.
+Code that works with more than one type.
 
-[Ⓐ]() [Ⓑ]() [Ⓔ]() [Ⓝ]() [Ⓡ]()
 
 <div class="cheats">
 
 | Example | Explanation |
 |---------|-------------|
-| `S<T>`  | A generic type with a type parameter.  |
-| `S<T=R>` | A generic type with specific assignments (e.g., `Iterator<Item=T>`) |
-| `<_>` | 'Automatically infer this' parameter. |
-| `T: R`  | Type trait constraint |
-| `T: 'a` | Type lifetime constraint |
-| `T: R + S`  | Compound type constraint, also seen as `T: R + 'a` |
-| `for<> R` | Higher-ranked lifetime bounds |
-| `!Send`          | Disabling an automatically derived trait. |
-| `?Sized`         | Opting out of a pre-defined trait bound in type
+| `S<T>`  | A **generic** {{ book(page="ch10-01-syntax.html") }} {{ ex(page="generics.html") }} type with a type parameter.  |
+| `S<T=R>` | A **default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} |
+| `<_>` | Inferred **anonymous lifetime** {{ book(page="ch19-02-advanced-lifetimes.html#the-anonymous-lifetime") }} or **type** {{ todo() }}. |
+| `T: R`  | Type **trait bound** {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} |
+| `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }} |
+| `T: R + S`  | **Compound type bound** {{ book(page="ch10-02-traits.html#multiple-trait-bounds-with-") }} {{ ex(page="generics/multi_bounds.html") }}, also seen as `T: R + 'a` |
+| `for<> R` | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
+| `!Send`          | Disabling an automatically derived trait. {{ todo() }} |
+| `?Sized`         | Opting out of a pre-defined trait bound in type {{ todo() }} |
 
 </div>
 
 ### Program Structure & Flow
 
-These sigils are essential when dividing code into smaller units, or elegantly expressing non-linear flows such as error handling.
+Ubiquitous constructs for code structure and execution flow.
 
 <div class="cheats">
 
 | Example | Explanation |
 |---------|-------------|
-| `a::b` | Namespace path |
-| <code>\|x\| </code> | Closure preamble. |
+| `a::b` | Namespace **path**. {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} |
+| <code>\|x\| </code> | Preamble for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
 | `f() -> T` | Function return type |
-| `x;` | Statement and item terminator |
-| `'a: loop` | Loop label |
-| `x?` | Early return on error. |
+| `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
+| `'a: loop` | Loop label. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
+| `x?` | Early return **error propagation**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 
 </div>
 
 ### Pattern Matching
+
 
 These sigils are only found within `match` blocks.
 
@@ -144,8 +138,8 @@ These sigils are only found within `match` blocks.
 
 | Example | Explanation |
 |---------|-------------|
-|  `p => x` | Part of match arm syntax |
-| `x @ p` | Pattern binding in match arms. |
+|  `p => x` | Part of match arm syntax in **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
+| `x @ p` | **Pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} in match arms.  |
 | <code>p \| q</code> | Pattern alternatives |
 
 </div>
@@ -155,64 +149,82 @@ These sigils are only found within `match` blocks.
 
 Rust has several ways to create string or char literals, depending on your needs.
 
+
 <div class="cheats">
 
 | Symbol | Explanation |
 |--------|-------------|
-| `"..."` | String literal |
-| `r"..."`, `r#"..."#`, `r##"..."##`, etc. | Raw string literal, escape characters not processed |
-| `b"..."` | Byte string literal; constructs a `[u8]` instead of a string |
-| `br"..."`, `br#"..."#`, `br##"..."##`, etc. | Raw byte string literal, combination of raw and byte string literal |
-| `'...'` | Character literal |
-| `b'...'` | ASCII byte literal |
+| `"..."` | **String literal** {{ ref(page="tokens.html#string-literals")}}, will escape `\n`, ... |
+| `r"..."`, | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}}, won't escape `\n`, ... |
+| `r#"..."#`, etc. | Raw string literal, but can also contain `"`. |
+| `b"..."` | **Byte string literal** {{ ref(page="tokens.html#byte-and-byte-string-literals")}}; constructs a `[u8]` instead of a string. |
+| `br"..."`, `br#"..."#`, etc. | Raw byte string literal, combination of the above. |
+| `'🦀'` | **Character literal** {{ ref(page="tokens.html#character-and-string-literals")}}, can contain unicode. |
+| `b'x'` | ASCII **byte literal**. {{ ref(page="tokens.html#byte-literals")}}|
 
 </div>
 
 ### Comments
 
-Similar to macros, comments are being removed before compilation. In addition, doc comments can be extracted and are the basis of API documentation and tooling support.
+No comment.
+
 
 <div class="cheats">
 
 | Symbol | Explanation |
 |--------|-------------|
-| `//` | Line comment |
-| `//!` | Inner line doc comment |
-| `///` | Outer line doc comment |
-| `/*...*/` | Block comment |
-| `/*!...*/` | Inner block doc comment |
-| `/**...*/` | Outer block doc comment |
+| `//` | Line comment. |
+| `//!` | Inner line **doc comment**. {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} |
+| `///` | Outer line doc comment. |
+| `/*...*/` | Block comment. |
+| `/*!...*/` | Inner block doc comment. |
+| `/**...*/` | Outer block doc comment. |
 
 </div>
 
 
 ### Common Operators
 
-If you are familiar with other programming languages, you will probably recognize these. Most common operators
-can be customized by implementing a [std::ops]() trait.
+Operators most languages have.
 
 <div class="cheats">
 
 | Example   | Operator Trait | Explanation |
 |---------  |-------------|-------|
-| `!x`      | [Not](https://doc.rust-lang.org/std/ops/trait.Not.html) | Bitwise or logical complement |
-| `x = y`   |  | Assignment/equivalence |
-| `x / y`  | [Div](https://doc.rust-lang.org/std/ops/trait.Div.html) | Arithmetic division |
-| `x /= y`  | [DivAssign](https://doc.rust-lang.org/std/ops/trait.DivAssign.html) | Arithmetic division and assignment |
-| `x << y` | [Shl](https://doc.rust-lang.org/std/ops/trait.Shl.html)  | Left-shift |
-|  `x <<= y`| [ShlAssign](https://doc.rust-lang.org/std/ops/trait.ShlAssign.html) | Left-shift and assignment |
+| `x + y`  | [Add](https://doc.rust-lang.org/std/ops/trait.Add.html) | Addition. |
+| `x += y`  | [AddAssign](https://doc.rust-lang.org/std/ops/trait.AddAssign.html) | Addition and assignment. |
+| `x / y`  | [Div](https://doc.rust-lang.org/std/ops/trait.Div.html) | Division. |
+| `x /= y`  | [DivAssign](https://doc.rust-lang.org/std/ops/trait.DivAssign.html) | Division and assignment. |
+| `x * y`  | [Mul](https://doc.rust-lang.org/std/ops/trait.Mul.html) | Multiplication. |
+| `x *= y`  | [MulAssign](https://doc.rust-lang.org/std/ops/trait.MulAssign.html) | Multiplication and assignment. |
+| `-x`      | [Neg](https://doc.rust-lang.org/std/ops/trait.Net.html) | Unary negation operator. |
+| `x % y`  | [Rem](https://doc.rust-lang.org/std/ops/trait.Rem.html) | Remainder. |
+| `x %= y`  | [RemAssign](https://doc.rust-lang.org/std/ops/trait.RemAssign.html) | Remainder and assignment. |
+| `x - y`  | [Sub](https://doc.rust-lang.org/std/ops/trait.Sub.html) | Subtraction. |
+| `x -= y`  | [SubAssign](https://doc.rust-lang.org/std/ops/trait.SubAssign.html) | Subtraction and assignment. |
 | `x < y`  |  | Less than comparison |
 | `x <= y` | | Less than or equal to comparison |
 |  `x == y`| | Equality comparison |
 | `x > y`  | | Greater than comparison |
 |  `x >= y`|  | Greater than or equal to comparison |
+| `x & y`  | [BitAnd](https://doc.rust-lang.org/std/ops/trait.BitAnd.html) | Bitwise AND. |
+| `x &= y`  | [BitAndAssign](https://doc.rust-lang.org/std/ops/trait.BitAndAssign.html) | Bitwise AND and assignment. |
+| `x ^ y`  | [BitXor](https://doc.rust-lang.org/std/ops/trait.BitXor.html) | Bitwise exclusive OR. |
+|  `x ^= y` | [BitXorAssign](https://doc.rust-lang.org/std/ops/trait.BitXorAssign.html) | Bitwise exclusive OR and assignment. |
+| <code>x \| y</code>  | [BitOr](https://doc.rust-lang.org/std/ops/trait.BitOr.html)| Bitwise OR. |
+| <code>x \|= y</code>  | [BitOrAssign](https://doc.rust-lang.org/std/ops/trait.BitOrAssign.html)| Bitwise OR and assignment. |
+| `!x`      | [Not](https://doc.rust-lang.org/std/ops/trait.Not.html) | Bitwise or logical complement. |
+| `x << y` | [Shl](https://doc.rust-lang.org/std/ops/trait.Shl.html)  | Left-shift |
+|  `x <<= y`| [ShlAssign](https://doc.rust-lang.org/std/ops/trait.ShlAssign.html) | Left-shift and assignment |
 |  `x >> y`| [Shr](https://doc.rust-lang.org/std/ops/trait.Shr.html) | Right-shift |
 | `x >>= y` | [ShrAssign](https://doc.rust-lang.org/std/ops/trait.ShrAssign.html) | Right-shift and assignment |
-| `x ^ y`  | [BitXor](https://doc.rust-lang.org/std/ops/trait.BitXor.html) | Bitwise exclusive OR |
-|  `x ^= y` | [BitXorAssign](https://doc.rust-lang.org/std/ops/trait.BitXorAssign.html) | Bitwise exclusive OR and assignment |
-| <code>x \| y</code>  | [BitOr](https://doc.rust-lang.org/std/ops/trait.BitOr.html)| Bitwise OR |
-| <code>x \|= y</code>  | [BitOrAssign](https://doc.rust-lang.org/std/ops/trait.BitOrAssign.html)| Bitwise OR and assignment |
 | <code>x \|\| y</code>| | Logical OR |
+| `x = y`   |  | Assignment/equivalence. |
+| `x < y`  |  | Less than comparison |
+| `x <= y` | | Less than or equal to comparison |
+|  `x == y`| | Equality comparison |
+| `x > y`  | | Greater than comparison |
+|  `x >= y`|  | Greater than or equal to comparison |
 
 </div>
 
@@ -229,6 +241,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | `_` | Unnamed variable. |
 | `_x` | Variable explicitly marked as being unused. |
 | `1_0` | Numeric separator for visual clarity. |
+| `r#foo` | A raw identifier for edition compatibility. |
 
 </div>
 
