@@ -1,4 +1,4 @@
-![Screenshot](/gfx/screenshot.png)
+# ![Logo](/static/logo.png) Rust Language Cheat Sheet
 
  [**READ ONLINE**](https://cheats.rs)
 
