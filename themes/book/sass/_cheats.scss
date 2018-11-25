@@ -1,5 +1,13 @@
-.cheats>table tr td:first-child {
+.cheats>table tr td:nth-child(1) {
     width: 250px;
+}
+
+.keywords>table tr td:nth-child(1) {
+    width: 150px;
+}
+
+.keywords>table tr td:nth-child(2) {
+    width: 200px;
 }
 
 .entry {
