@@ -3,7 +3,7 @@
  [**READ ONLINE**](https://cheats.rs)
 
 
-# Overview
+# Background
 
 This is the "Rust Language Cheat Sheet". It is for users who
 * are **Early Rust professionals** (experienced programmers, intermediate Rust users), and
@@ -28,4 +28,4 @@ Contributions are very welcome. You can PR bug fixes (broken links, typos, ...) 
 
 # License
 
-CC-BY.
+CC0 to the extent applicable. Uses tables from [The Book](https://doc.rust-lang.org/stable/book/).
