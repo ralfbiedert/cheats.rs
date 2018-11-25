@@ -22,6 +22,16 @@ Design guides:
 * have **memorable URL** :)
 
 
+# Building
+
+Build with [Zola](https://www.getzola.org/), the static site generator written in Rust. To develop locally make sure Zola is installed and then run from this directory:
+
+```
+zola serve
+```
+
+
+
 # Contributing
 
 Contributions are very welcome. You can PR bug fixes (broken links, typos, ...) directly. I am happy to evolve the current concept based on feedback and demands. Feel free to open an issue and discuss.
