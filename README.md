@@ -1,4 +1,6 @@
- +++ [**READ ONLINE**](https://cheats.rs) +++
+![Screenshot](/gfx/screenshot.png)
+
+ [**READ ONLINE**](https://cheats.rs)
 
 
 # Overview
