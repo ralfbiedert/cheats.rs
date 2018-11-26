@@ -5,7 +5,9 @@ sort_by = "weight"
 
 <img id="logo" src="/logo.png"></img>
 <div class="title">Rust Language Cheat Sheet</div>
-<div class="subtitle">25.11.2018</div>
+<div class="subtitle">{{ date() }}</div>
+
+
 
 
 >  Where appropriate, this document will link to the corresponding sections in the
