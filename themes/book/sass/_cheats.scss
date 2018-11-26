@@ -1,13 +1,29 @@
-.cheats>table tr td:nth-child(1) {
-    width: 250px;
+// Esp. for mobiles.
+$smallscreen-width: 650px;
+// Small screens
+@media screen and (max-width: $smallscreen-width) {
+    .cheats>table tr td:nth-child(1) {
+        width: 150px;
+    }
+    .keywords>table tr td:nth-child(1) {
+        width: 150px;
+    }
+    .keywords>table tr td:nth-child(2) {
+        width: 150px;
+    }
 }
 
-.keywords>table tr td:nth-child(1) {
-    width: 150px;
-}
-
-.keywords>table tr td:nth-child(2) {
-    width: 200px;
+// Larger screens
+@media screen and (min-width: $smallscreen-width) {
+    .cheats>table tr td:nth-child(1) {
+        width: 250px;
+    }
+    .keywords>table tr td:nth-child(1) {
+        width: 150px;
+    }
+    .keywords>table tr td:nth-child(2) {
+        width: 200px;
+    }
 }
 
 .entry {
