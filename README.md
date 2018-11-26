@@ -17,7 +17,7 @@ Use cases, in order of priority:
 
 Design guides:
 * have **high information density**; every word counts.
-* be **printer friendly**
+* be **printer and mobile friendly**
 * don't repeat what's better explained elsewhere, but do state the very essence.
 * have **memorable URL** :)
 
