@@ -103,7 +103,8 @@ Code that works with more than one type.
 |---------|-------------|
 | `S<T>`  | A **generic** {{ book(page="ch10-01-syntax.html") }} {{ ex(page="generics.html") }} type with a type parameter.  |
 | `S<T=R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }}, or **associated type**. {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ex(page="generics/assoc_items/types.html") }} {{ ref(page="items/associated-items.html#associated-types") }} |
-| `<_>` | Inferred **anonymous lifetime** {{ book(page="ch19-02-advanced-lifetimes.html#the-anonymous-lifetime") }} or **type** {{ todo() }}. |
+| `<'_>` | Inferred **anonymous lifetime**. {{ book(page="ch19-02-advanced-lifetimes.html#the-anonymous-lifetime") }} |
+| `<_>` | Inferred **anonymous type**. {{ todo() }} |
 | `T: R`  | Type **trait bound** {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} |
 | `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }} |
 | `T: R + S`  | **Compound type bound** {{ book(page="ch10-02-traits.html#multiple-trait-bounds-with-") }} {{ ex(page="generics/multi_bounds.html") }}, also seen as `T: R + 'a` |
