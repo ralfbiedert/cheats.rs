@@ -108,9 +108,9 @@ Code that works with more than one type.
 | `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }} |
 | `T: R + S`  | **Compound type bound** {{ book(page="ch10-02-traits.html#multiple-trait-bounds-with-") }} {{ ex(page="generics/multi_bounds.html") }}, also seen as `T: R + 'a` |
 | `for<'a>` | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
-| `T::<S>` | 'Turbofish' call site type disambiguation. {{todo()}} |
-| `!Send`          | Disabling an automatically derived trait. {{ todo() }} |
-| `?Sized`         | Opting out of a pre-defined trait bound in type {{ todo() }} |
+| `T::<S>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation.  |
+| `!Send`          | Disable an automatically derived trait. {{ todo() }} |
+| `?Sized`         | Opt out of a pre-defined trait bound. {{ todo() }} |
 
 </div>
 
@@ -280,7 +280,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 
 # Invisible Sugar
 
-If something works that "shouldn't work now that you think about it", it might be due one of these.
+If something works that "shouldn't work now that you think about it", it might be due to one of these.
 
 
 | Name | Description |
