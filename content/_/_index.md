@@ -255,7 +255,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 | `move` | <code>move \|\| x + x </code> | Make a closure take ownership of all its captures. |
 | `mut` | `mut x`  | Denote mutability. |
 | `pub` | `pub x`  | **Visibility modifier** {{ book(page="ch07-02-controlling-visibility-with-pub.html#controlling-visibility-with-pub") }} {{ ex(page="mod/visibility.html#visibility") }} {{ ref(page="visibility-and-privacy.html#visibility-and-privacy") }}, also `pub(...)`. |
-| `ref` | `??` | Bind by reference. |
+| `ref` | `ref x` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} |
 | `return` | `return 0;`  | Return from function. |
 | `Self` | `fn new() -> Self`  | Type alias for the type implementing a trait. |
 | `self` | `self.x`  | Method subject. |
