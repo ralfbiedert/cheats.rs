@@ -105,7 +105,7 @@ Code that works with more than one type.
 | `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }} |
 | `T: R + S`  | **Compound type bound** {{ book(page="ch10-02-traits.html#multiple-trait-bounds-with-") }} {{ ex(page="generics/multi_bounds.html") }}, also seen as `T: R + 'a` |
 | `T::<S>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation.  |
-| `'b: 'a` | Lifetime `'b` must live at least as long as `'a` bound. |
+| `'b: 'a` | Lifetime `'b` must live at least as long as `'a`. |
 | `for<'a>` | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
 | `!Send`          | Disable an automatically derived trait. {{ todo() }} |
 | `?Sized`         | Opt out of a pre-defined trait bound. {{ todo() }} |
