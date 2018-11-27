@@ -53,9 +53,7 @@ Granting access to un-owned memory.
 | `&T` | Immutable safe pointer type, aka **reference**.  {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} |
 | `&mut x` | Borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `&mut T` | Reference that allows mutability. |
-| `*const x` | Immutable **raw pointer**. {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }} |
-| `*const T` | Immutable raw pointer type. |
-| `*mut x` | Mutable raw pointer. |
+| `*const T` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}. |
 | `*mut T` | Mutable raw pointer type. |
 | `*x` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
 | `'a`  | Often seen as `&'a T`, a **lifetime parameter**. {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} |
@@ -233,7 +231,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 | ~ |  `pub(crate)` | Visibility modifier, _c_. `pub`. |
 | `dyn` |  `&dyn T` | Marker for **dynamic dispatch** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }}, _c_. `impl`. |
 | `else` | `if x {} else {}` | Fallback for `if`. |
-| `enum` | `enum E {}` | Define an **[algebraic data type](https://en.wikipedia.org/wiki/Algebraic_data_type)** / **tagged union**. {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} |
+| `enum` | `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type). |
 | `extern` |  `extern crate`  | Link an external crate. |
 | ~ | `extern "C" fn`  | External dependency for **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 | `false` | `false`  | Boolean false literal |
@@ -292,6 +290,15 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html?highlight=lifetime,el#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f(x: &'a T)`.|
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
+
+
+# Lingo
+
+| Name | Description |
+|--------| -----------|
+| **Algebraic Data Type** {{ nom(page="coercions.html") }} |  |
+| **Tagged Union** {{ nom(page="coercions.html") }} |  |
+| **Sum Type** {{ nom(page="coercions.html") }} |  |
 
 
 <!-- | **Lifetime Inference** {{ book(page="") }} {{ book(page="") }} | Automatically correct `'a` for `&'a T`.| -->
