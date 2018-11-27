@@ -306,6 +306,8 @@ If something works that "shouldn't work now that you think about it", it might b
 <!-- | **Lifetime Inference** {{ book(page="") }} {{ book(page="") }} | Automatically correct `'a` for `&'a T`.| -->
 
 
+<!-- Don't render this section for printing, won't be helpful -->
+<div class="noprint">
 
 # More Cheats
 
@@ -313,6 +315,9 @@ If something works that "shouldn't work now that you think about it", it might b
 {{ tool(src="/link_containers.png", title="Containers", url="https://docs.google.com/presentation/d/1q-c7UAyrUlM-eZyTo1pd8SZ0qwA_wYxmPZVOQkoDmH4/edit") }}
 {{ tool(src="/link_railroad.png", title="Macro Railroad", url="https://github.com/lukaslueg/macro_railroad") }}
 {{ tool(src="/link_lifetimes.png", title="Lifetimes", url="https://rufflewind.com/img/rust-move-copy-borrow.png") }}
+
+</div>
+
 
 <!-- Do we want to show them? I find these very confusing. -->
 <!-- {{ tool(src="/link_godbolt.png", title="Compiler Explorer", url="https://godbolt.org/") }} -->

@@ -26,6 +26,13 @@ $smallscreen-width: 650px;
     }
 }
 
+// Larger screens
+@media print {
+    .noprint {
+        display: none;
+    }
+}
+
 .entry {
     color: rgb(0, 110, 0);
     font-size: 65%;
