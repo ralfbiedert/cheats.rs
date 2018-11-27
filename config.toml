@@ -3,5 +3,4 @@ base_url = "https://cheats.rs"
 title = "Rust Language Cheat Sheet"
 compile_sass = true
 build_search_index = false
-# check_external_links = true
 highlight_code = false # We use prismjs for that
