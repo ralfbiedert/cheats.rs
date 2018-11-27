@@ -292,6 +292,8 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
 
 
+<!--
+
 # Lingo
 
 | Name | Description |
@@ -299,7 +301,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Algebraic Data Type** {{ nom(page="coercions.html") }} |  |
 | **Tagged Union** {{ nom(page="coercions.html") }} |  |
 | **Sum Type** {{ nom(page="coercions.html") }} |  |
-
+ -->
 
 <!-- | **Lifetime Inference** {{ book(page="") }} {{ book(page="") }} | Automatically correct `'a` for `&'a T`.| -->
 
