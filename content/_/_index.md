@@ -22,7 +22,7 @@ sort_by = "weight"
 List of most _sigils_ and _symbols_ usually found in Rust.
 
 
-### Code generation
+### Code Generation
 
 Constructs expanded before the actual compilation happens.
 
