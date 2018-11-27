@@ -22,7 +22,7 @@ sort_by = "weight"
 List of most _sigils_ and _symbols_ usually found in Rust.
 
 
-### Preprocessing
+### Code generation
 
 Constructs expanded before the actual compilation happens.
 
@@ -102,7 +102,7 @@ Code that works with more than one type.
 | Example | Explanation |
 |---------|-------------|
 | `S<T>`  | A **generic** {{ book(page="ch10-01-syntax.html") }} {{ ex(page="generics.html") }} type with a type parameter.  |
-| `S<T=R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }}, or **associated type**. {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ex(page="generics/assoc_items/types.html") }} {{ ref(page="items/associated-items.html#associated-types") }} |
+| `S<T = R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }}, or **associated type**. {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ex(page="generics/assoc_items/types.html") }} {{ ref(page="items/associated-items.html#associated-types") }} |
 | `<'_>` | Inferred **anonymous lifetime**. {{ book(page="ch19-02-advanced-lifetimes.html#the-anonymous-lifetime") }} |
 | `<_>` | Inferred **anonymous type**. {{ todo() }} |
 | `T: R`  | Type **trait bound** {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} |
@@ -125,7 +125,7 @@ Ubiquitous constructs for code structure and execution flow.
 |---------|-------------|
 | `a::b` | Namespace **path**. {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} |
 | `'a: loop` | Loop label. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
-| <code>\|x\| </code> | Preamble for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
+| <code>\|x\| </code> | Binder for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
 | `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
 | `x?` | Early return **error propagation**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 
@@ -145,7 +145,7 @@ These sigils are only found within `match` blocks.
 |---------|-------------|
 |  `p => x` | Part of match arm syntax in **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
 | `x @ p` | **Pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} in match arms.  |
-| <code>p \| q</code> | Pattern alternatives |
+| <code>p \| q</code> | Pattern alternatives (or-patterns). |
 
 </div>
 
@@ -198,8 +198,8 @@ These sigils did not fit any other category but are good to know nonetheless.
 | Example | Explanation |
 |---------|-------------|
 | `!` | Always empty **never type**. {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html?highlight=never#never-type") }} |
-| `_` | Unnamed variable, e.g., <code>\|x, _\| { ... }</code>.|
-| `_x` | Variable explicitly marked as unused. |
+| `_` | Unnamed binding, e.g., <code>\|x, _\| { ... }</code>.|
+| `_x` | Binding explicitly marked as unused. |
 | `1_0` | Numeric separator for visual clarity. |
 | `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html?highlight=raw,iten#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html?highlight=raw,iden#raw-identifiers") }} for edition compatibility. |
 
@@ -233,7 +233,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 | ~ |  `pub(crate)` | Visibility modifier, _c_. `pub`. |
 | `dyn` |  `&dyn T` | Marker for **dynamic dispatch** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }}, _c_. `impl`. |
 | `else` | `if x {} else {}` | Fallback for `if`. |
-| `enum` | `enum E {}` | Define an **enumeration**. {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} |
+| `enum` | `enum E {}` | Define an **[algebraic data type](https://en.wikipedia.org/wiki/Algebraic_data_type)** / **tagged union**. {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} |
 | `extern` |  `extern crate`  | Link an external crate. |
 | ~ | `extern "C" fn`  | External dependency for **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 | `false` | `false`  | Boolean false literal |
