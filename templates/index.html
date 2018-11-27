@@ -31,29 +31,10 @@
 
     <div class="page">
         <div class="page__content">
-            {% if config.build_search_index %}
-            <div class="search-container">
-                <input id="search" type="search" placeholder="Search..">
-                <div class="search-results">
-                    <div class="search-results__header"></div>
-                    <ul class="search-results__items"></ul>
-                </div>
-            </div>
-            {% endif %}
             <div class="book-content">
-                {% block content %}
-                {% endblock content %}
+                <h1>{{ section.title }}</h1>
+                {{ section.content | safe }}
             </div>
-        </div>
-
-        <div class="prev-link">
-            {% block prev_link %}
-            {% endblock prev_link %}
-        </div>
-
-        <div class="next-link">
-            {% block next_link %}
-            {% endblock next_link %}
         </div>
     </div>
 

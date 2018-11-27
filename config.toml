@@ -1,6 +1,5 @@
 # The URL the site will be built for
 base_url = "https://cheats.rs"
-theme = "book"
 title = "Rust Language Cheat Sheet"
 compile_sass = true
 build_search_index = false
