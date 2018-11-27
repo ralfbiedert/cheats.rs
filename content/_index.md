@@ -105,6 +105,7 @@ Code that works with more than one type.
 | `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }} |
 | `T: R + S`  | **Compound type bound** {{ book(page="ch10-02-traits.html#multiple-trait-bounds-with-") }} {{ ex(page="generics/multi_bounds.html") }}, also seen as `T: R + 'a` |
 | `T::<S>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation.  |
+| `'b: 'a` | Lifetime `'b` must live at least as long as `'a` bound. |
 | `for<'a>` | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
 | `!Send`          | Disable an automatically derived trait. {{ todo() }} |
 | `?Sized`         | Opt out of a pre-defined trait bound. {{ todo() }} |
@@ -196,10 +197,12 @@ These sigils did not fit any other category but are good to know nonetheless.
 | `!` | Always empty **never type**. {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html?highlight=never#never-type") }} |
 | `_` | Unnamed variable binding, e.g., <code>\|x, _\| { ... }</code>.|
 | `_x` | Variable binding explicitly marked as unused. |
-| `1_0` | Numeric separator for visual clarity. |
+| `1_234_567` | Numeric separator for visual clarity. |
+| `1u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, ...). |
 | `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html?highlight=raw,iten#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html?highlight=raw,iden#raw-identifiers") }} for edition compatibility. |
 
 </div>
+
 
 
 
@@ -265,9 +268,10 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 | ~ | `pub(super)`  | Visibility modifier, _c_. `pub`. |
 | `trait` | `trait T {}`  | Define a trait. |
 | `true` | `true`  | Boolean true literal. |
-| `type` | `type X = u32;`  | **Type alias**. {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} |
+| `type` | `type T = S;`  | **Type alias**. {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} |
 | ~ | `type X;`  | **Associated type**.{{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }}  |
 | `unsafe` |  `unsafe {...}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
+| `union` |  `union U {...}` | Unsafe **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `use` | `use a::b`  | Bring symbols into scope. |
 | `where` | `where T: S`  | Denote clauses that constrain a type. |
 | `while` | `while x {...}`  | Loop while expression is true. |
