@@ -74,8 +74,8 @@ Creation and usage of various built-in types.
 | `(x)` | Parenthesized expression |
 | `(x,)` | Single-element **tuple** expression {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
 | `(T,)` | Single-element tuple type |
-| `[T; n]` | **Array** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} {{ ref(page="expressions/array-expr.html") }} with `n` copies of `T`'s [Default](https://doc.rust-lang.org/std/default/trait.Default.html). |
-| `[x; n]` | Array with `n` copies of `x`. |
+| `[T; n]` | **Array** type {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} with `n` elements of type `T`. |
+| `[x; n]` | Array with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
 | `[x, y]` | Array with given elements. |
 | `x[0]` | Collection indexing. Overloadable [Index](https://doc.rust-lang.org/std/ops/trait.Index.html), [IndexMut](https://doc.rust-lang.org/std/ops/trait.IndexMut.html) |
 | `x[..]` | Collection slice-like indexing via [RangeFull](https://doc.rust-lang.org/std/ops/struct.RangeFull.html), _c_. **slices**  {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} |
