@@ -223,7 +223,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 
 | Keyword | Example | Explanation |
 |--------|----| -----------|
-| `as` | `x as u32`  | Primitive **casting** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, safe yet dangerous.{{ nom(page="casts.html") }} |
+| `as` | `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and more. {{ nom(page="casts.html") }} |
 | ~ | `T as S`  | Trait **disambiguation**. {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} |
 | `break` | `break x;`  | Exit a loop, yield `x` as value of loop. |
 | `const` | `const X`  | Define a **constant**. {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} |
