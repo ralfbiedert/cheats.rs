@@ -93,7 +93,7 @@ Creation and usage of various built-in types.
 
 ### Pattern Matching
 
-These constructs are found in pattern matches.
+These constructs are found in `match` expressions.
 
 <div class="cheats">
 
