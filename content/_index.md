@@ -330,16 +330,20 @@ If something works that "shouldn't work now that you think about it", it might b
 
 # More Cheats
 
-{{ tool(src="/link_master.png", title="Rust Learning", url="https://github.com/ctjhoa/rust-learning") }}
+These are other great visual guides and tables.
+
 {{ tool(src="/link_containers.png", title="Containers", url="https://docs.google.com/presentation/d/1q-c7UAyrUlM-eZyTo1pd8SZ0qwA_wYxmPZVOQkoDmH4/edit") }}
 {{ tool(src="/link_railroad.png", title="Macro Railroad", url="https://github.com/lukaslueg/macro_railroad") }}
 {{ tool(src="/link_lifetimes.png", title="Lifetimes", url="https://rufflewind.com/img/rust-move-copy-borrow.png") }}
 
+| Cheat Sheet | Description |
+|--------| -----------|
+| [Rust Learning⭐](https://github.com/ctjhoa/rust-learning) | Probably the best collection of links about learning Rust.  |
+| [String Conversions](https://docs.google.com/spreadsheets/d/19vSPL6z2d50JlyzwxariaYD6EU2QQUQqIDOGbiGQC7Y/pubhtml?gid=0&single=true) | How to get type of string from another. |
+| [API Guidelines Checklist](https://rust-lang-nursery.github.io/api-guidelines/checklist.html) | How to design your own APIs. |
+| [Periodic Table of Types](http://cosmic.mearie.org/2014/01/periodic-table-of-rust-types) | How various types and references correlate. |
+| [Futures](https://rufflewind.com/img/rust-futures-cheatsheet.html) | How to construct and work with futures. |
+
 </div>
 
-
-<!-- Do we want to show them? I find these very confusing. -->
 <!-- {{ tool(src="/link_godbolt.png", title="Compiler Explorer", url="https://godbolt.org/") }} -->
-<!-- {{ tool(src="/link_strings.png", title="String Conversions", url="https://docs.google.com/spreadsheets/d/19vSPL6z2d50JlyzwxariaYD6EU2QQUQqIDOGbiGQC7Y/pubhtml?gid=0&single=true") }}
-{{ tool(src="/link_api.png", title="API Guidelines", url="https://rust-lang-nursery.github.io/api-guidelines/") }}
-{{ tool(src="/link_periodic.png", title="Periodic Table of Types", url="http://cosmic.mearie.org/2014/01/periodic-table-of-rust-types/") }} -->
