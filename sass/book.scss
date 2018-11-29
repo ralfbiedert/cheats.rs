@@ -4,8 +4,17 @@
     box-sizing: border-box;
 }
 
-html {
-    font-size: 62.5%;
+@media screen {
+    html {
+        font-size: 9px;
+    }
+}
+
+// Smaller font looks better on paper
+@media print {
+    html {
+        font-size: 7px;
+    }
 }
 
 body,
@@ -16,7 +25,6 @@ html {
 body {
     text-rendering: optimizeLegibility;
     font-family: "Open Sans", sans-serif;
-    font-size: 14px;
     letter-spacing: 0.2px;
 }
 
