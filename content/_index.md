@@ -211,7 +211,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | Example | Explanation |
 |---------|-------------|
 | `!` | Always empty **never type**. {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html?highlight=never#never-type") }} |
-| `_` | Unnamed variable binding, e.g., <code>\|x, _\| { ... }</code>.|
+| `_` | Unnamed variable binding, e.g., <code>\|x, _\| {}</code>.|
 | `_x` | Variable binding explicitly marked as unused. |
 | `1_234_567` | Numeric separator for visual clarity. |
 | `1u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, ...). |
@@ -267,7 +267,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 | ~ | `pub(in a::b)`  | Visible at most in `a::b`, _c_. `pub`. |
 | `let` | `let x`;  | Bind a variable. |
 | `loop` | `loop {}`  | Loop unconditionally. |
-| `match` | `match m { ... }` | Initiate **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
+| `match` | `match m {}` | Initiate **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
 | `mod` | `mod m {}`  | Define a **module**. {{ book(page="ch07-00-modules.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} |
 | `move` | <code>move \|\| x + x </code> | Make a closure take ownership of all its captures. |
 | `mut` | `mut x`  | Denote mutability. |
@@ -287,11 +287,11 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 | `true` | `true`  | Boolean true literal. |
 | `type` | `type T = S;`  | Create a **type alias**. {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} |
 | ~ | `type X;`  | Create an **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} for a trait. |
-| `unsafe` |  `unsafe {...}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
-| `union` |  `union U {...}` | Unsafe **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
+| `unsafe` |  `unsafe {}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
+| `union` |  `union U {}` | Unsafe **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `use` | `use a::b`  | Bring symbol into scope. |
 | `where` | `where T: S`  | Introduce type constraints for generics. |
-| `while` | `while x {...}`  | Loop while expression is true. |
+| `while` | `while x {}`  | Loop while expression is true. |
 
 </div>
 
