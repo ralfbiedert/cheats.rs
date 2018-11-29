@@ -259,7 +259,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 | ~ | `for<'a>`  | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
 | `if` | `if x {}`  | Conditional branch if expression is true. |
 | ~ | `if let Some(x)`  | Branch if pattern can be assigned. {{ ref(page="expressions/if-expr.html#if-let-expressions") }} |
-| ~ | `P(X) if x > 10`  | Pattern match **guards**. {{ std(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
+| ~ | `P(X) if x > 10`  | Pattern match **guards**. {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
 | `impl` | `impl T {}`  | Implement functionality. |
 | ~ | `fn f(x: impl T)`  | Trait bound,"**impl traits**" {{ book(page="ch10-02-traits.html#trait-bounds") }}, same {{todo()}} as `x: T`. |
 | ~ | `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-traits") }}, returns `S` that `impl T`. |
