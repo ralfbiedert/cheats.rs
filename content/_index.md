@@ -32,6 +32,7 @@ Constructs expanded before the actual compilation happens.
 | `$x:ty`  | Macro capture in macros by example. |
 | `$x` |  Macro substitution in **macros by example**. {{book(page="appendix-04-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
 | `$(x),*` | Macro repetition in macros by example. |
+| `$crate` | Special hygiene variable, crate where macros is defined. {{ todo() }} |
 | `#[attr]`  | Outer **attribute**. {{ex(page="attribute.html")}} {{ref(page="attributes.html")}} |
 | `#![attr]` | Inner attribute. |
 
