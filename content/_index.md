@@ -90,6 +90,36 @@ Creation and usage of various built-in types.
 
 </div>
 
+
+### Pattern Matching
+
+These constructs are found in pattern matches.
+
+<div class="cheats">
+
+| Example | Explanation |
+|---------|-------------|
+|  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
+|  `E::B ( .. ) => {}` | Match enum tuple variant `B`, wildcard any index. |
+|  `E::C { .. } => {}` | Match enum struct variant `C`, wildcard any field. |
+|  `S { x: 0, y: 1 } => {}` | Match struct with specific params. |
+|  `S { x, y } => {}` | Match struct with any values for fields `x` and `y`. |
+|  `S { .. } => {}` | Match struct with any values. |
+|  `D => {}` | Match enum variant `E::D` if `D` in `use`. |
+|  `D => {}` | Match anything, bind `D`; false friend of `E::D` if `D` not in `use`. |
+|  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
+|  `[a, 0] => {}` | Match array with any value for `a` and `0` for second. |
+|  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
+| `x @ 1 .. 5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
+| <code>0 \| 1 => {}</code> | Pattern alternatives (or-patterns). |
+
+</div>
+
+<!-- This is more relevant for let D = ... cases, https://www.reddit.com/r/rust/comments/a1846o/rust_quiz_26_medium_to_hard_rust_questions_with/eaop291/ -->
+<!-- |  `D => {}` | Match struct if `D` unit `struct D;`| -->
+
+
+
 ### Generics & Constraints
 
 Code that works with more than one type.
@@ -131,27 +161,6 @@ Ubiquitous constructs for code structure and execution flow.
 </div>
 
 
-
-### Pattern Matching
-
-
-These constructs are found in pattern matches.
-
-<div class="cheats">
-
-| Example | Explanation |
-|---------|-------------|
-|  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
-|  `E::B { _, y } => {}` | Match variant `B`, don't care about specific parameter. |
-|  `E::B { .. } => {}` | Match variant `B`, don't care about any parameter. |
-|  `C => {}` | Either `E::C` if `C` in `use`, possible "false friend" variable. |
-|  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
-|  `[a, 0] => {}` | Match array with any value for `a` and `0` for second. |
-|  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
-| `x @ 1 .. 5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
-| <code>0 \| 1 => {}</code> | Pattern alternatives (or-patterns). |
-
-</div>
 
 
 ### Strings & Chars
