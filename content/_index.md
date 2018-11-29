@@ -135,16 +135,21 @@ Ubiquitous constructs for code structure and execution flow.
 ### Pattern Matching
 
 
-These sigils are only found within `match` blocks.
+These constructs are found in pattern matches.
 
 <div class="cheats">
 
-
 | Example | Explanation |
 |---------|-------------|
-|  `p => x` | Part of match arm syntax in **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
-| `x @ p` | **Pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} in match arms.  |
-| <code>p \| q</code> | Pattern alternatives (or-patterns). |
+|  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
+|  `E::B { _, y } => {}` | Match variant `B`, don't care about specific parameter. |
+|  `E::B { .. } => {}` | Match variant `B`, don't care about any parameter. |
+|  `C => {}` | Either `E::C` if `C` in `use`, possible "false friend" variable. |
+|  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
+|  `[a, 0] => {}` | Match array with any value for `a` and `0` for second. |
+|  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
+| `x @ 1 .. 5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
+| <code>0 \| 1 => {}</code> | Pattern alternatives (or-patterns). |
 
 </div>
 
@@ -245,6 +250,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 | ~ | `for<'a>`  | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
 | `if` | `if x {}`  | Conditional branch if expression is true. |
 | ~ | `if let Some(x)`  | Branch if pattern can be assigned. {{ ref(page="expressions/if-expr.html#if-let-expressions") }} |
+| ~ | `P(X) if x > 10`  | Pattern match **guards**. {{ std(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
 | `impl` | `impl T {}`  | Implement functionality. |
 | ~ | `fn f(x: impl T)`  | Trait bound,"**impl traits**" {{ book(page="ch10-02-traits.html#trait-bounds") }}, same {{todo()}} as `x: T`. |
 | ~ | `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-traits") }}, returns `S` that `impl T`. |
