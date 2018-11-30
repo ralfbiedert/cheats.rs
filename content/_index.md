@@ -15,11 +15,6 @@ sort_by = "weight"
 >  **Nomicon** {{ nom(page="")}},
 >  **Reference** {{ ref(page="")}}.
 
-# Sigils
-
-List of most _sigils_ and _symbols_ usually found in Rust.
-
-
 ### Code Generation
 
 Constructs expanded before the actual compilation happens.
@@ -29,7 +24,22 @@ Constructs expanded before the actual compilation happens.
 | Example |  Explanation |
 |---------|---------|
 | `m!` |  **Macro** {{book(page="appendix-04-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation preamble, usually in `m!()`, `m!{}`, `m![]`. |
-| `$x:ty`  | Macro capture in macros by example. |
+| `$x:ty`  | Macro capture, also `$x:ex`, `$x:XXX`. |
+| `$x` |  Macro substitution in **macros by example**. {{book(page="appendix-04-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
+| `$(x),*` | Macro repetition in macros by example. |
+| `$crate` | Special hygiene variable, crate where macros is defined. {{ todo() }} |
+| `#[attr]`  | Outer **attribute**. {{ex(page="attribute.html")}} {{ref(page="attributes.html")}} |
+| `#![attr]` | Inner attribute. |
+
+</div>
+
+
+<div class="cheats small">
+
+| Example |  Explanation |
+|---------|---------|
+| `m!` |  **Macro** {{book(page="appendix-04-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation preamble, usually in `m!()`, `m!{}`, `m![]`. |
+| `$x:ty`  | Macro capture, also `$x:ex`, `$x:XXX`. |
 | `$x` |  Macro substitution in **macros by example**. {{book(page="appendix-04-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
 | `$(x),*` | Macro repetition in macros by example. |
 | `$crate` | Special hygiene variable, crate where macros is defined. {{ todo() }} |
