@@ -4,6 +4,7 @@ sort_by = "weight"
 template = "index.html"
 +++
 
+
 <img id="logo" src="/logo.png"></img>
 <div class="title">Rust Language Cheat Sheet</div>
 <div class="subtitle">{{ date() }}</div>
@@ -15,97 +16,12 @@ template = "index.html"
 >  **Nomicon** {{ nom(page="")}},
 >  **Reference** {{ ref(page="")}}.
 
-
 {{ outdated() }}
 
 
-### Data Structure
+# Sigils
 
-Structural composition of entities.
-
-<div class="cheats">
-
-| Sigil | Explanation |
-|---------|-------------|
-| `static X`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime. |
-| `const X: T = x;`  | Define a **constant**. {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} |
-| `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type). |
-| `struct S;` | Define a structure. |
-| `type T = S;`  | Create a **type alias**. {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} |
-| `type X;`  | Create an **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} for a trait. |
-| `union U {}` | Unsafe **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
-| `let x`;  | Bind a variable. |
-| `mut x`  | Denote mutability. |
-| `trait T {}`  | Define a trait. |
-
-</div>
-
-### Compositional Structure
-
-Structural composition of entities.
-
-<div class="cheats">
-
-| Sigil | Explanation |
-|---------|-------------|
-| `extern crate x`  | Declare dependency on external **crate**. {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }}|
-| `extern "C" fn`  | External dependency for **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
-| `mod m {}`  | Define a **module**. {{ book(page="ch07-00-modules.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} |
-| `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-controlling-visibility-with-pub.html#controlling-visibility-with-pub") }} {{ ex(page="mod/visibility.html#visibility") }} {{ ref(page="visibility-and-privacy.html#visibility-and-privacy") }}. |
-| `pub(crate) T` | Visibility at most in current crate, _c_. `pub`. |
-| `pub(self)`  | Visible in current module, _c_. `pub`. |
-| `pub(super)`  | Visible at most in parent, _c_. `pub`. |
-| `pub(in a::b) T`  | Visible at most in `a::b`, _c_. `pub`. |
-| `super::x`  | Path to parent module of the current module. |
-| `self`  | Refer to method subject. |
-| `self::x`  | Refer to current module. |
-| `Self`  | Type alias for current type, e.g. `fn new() -> Self`. |
-| `use a::b`  | Bring symbol into scope. |
-| `a::b` | Namespace **path**. {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} |
-
-</div>
-
-
-### Execution Structure
-
-Structural composition of entities.
-
-<div class="cheats">
-
-| Sigil | Explanation |
-|---------|-------------|
-| `fn f() -> T {}`  | Define a function. |
-| `fn() -> T`  | **Function pointers**. {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} |
-| `impl T for S {}`  | Implement traits. |
-| `impl T {}`  | Implement functionality. |
-| <code>\|x\|</code> | Parameter binder for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
-| `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
-
-</div>
-
-
-
-### Control Flow
-
-Ubiquitous constructs for code structure and execution flow.
-
-<div class="cheats">
-
-| Sigil | Explanation |
-|---------|-------------|
-| `break x;`  | Exit a loop, yield `x` as value of loop. |
-| `break 'a;`  | Exit a loop, yield `x` as value of loop. |
-| `continue;`  | Continue to the next loop iteration |
-| `for x in iter {}` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
-| `return x`  | Return from function. |
-| `if x {} else {}`  | Conditional branch if expression is true. |
-| `loop {}`  | Loop unconditionally. |
-| `'a: loop` | Loop label. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
-| `x?` | Early return **error propagation**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
-| `while x {}`  | Loop while expression is true. |
-
-</div>
-
+List of most _sigils_ and _symbols_ usually found in Rust.
 
 
 ### Code Generation
@@ -116,8 +32,8 @@ Constructs expanded before the actual compilation happens.
 
 | Example |  Explanation |
 |---------|---------|
-| `m!` |  **Macro** {{book(page="appendix-04-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation preamble, usually in `m!()`, `m!{}`, `m![]`. |
-| `$x:ty`  | Macro capture, also `$x:ex`, `$x:XXX`. |
+| `m!` |  Invocation preamble for **macros**. {{book(page="appendix-04-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} |
+| `$x:ty`  | Macro capture in macros by example. |
 | `$x` |  Macro substitution in **macros by example**. {{book(page="appendix-04-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
 | `$(x),*` | Macro repetition in macros by example. |
 | `$crate` | Special hygiene variable, crate where macros is defined. {{ todo() }} |
@@ -232,6 +148,21 @@ Code that works with more than one type.
 
 </div>
 
+### Program Structure & Flow
+
+Ubiquitous constructs for code structure and execution flow.
+
+<div class="cheats">
+
+| Sigil | Explanation |
+|---------|-------------|
+| `a::b` | Namespace **path**. {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} |
+| `'a: loop` | Loop label. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
+| <code>\|x\|</code> | Parameter binder for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
+| `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
+| `x?` | Early return **error propagation**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
+
+</div>
 
 
 
@@ -313,26 +244,63 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 |--------|----| -----------|
 | `as` | `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and more. {{ nom(page="casts.html") }} |
 | ~ | `S as T`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`. |
+| `break` | `break x;`  | Exit a loop, yield `x` as value of loop. |
+| `const` | `const X`  | Define a **constant**. {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} |
 | ~ |  `*const T` | Constant raw pointers, _c_. raw pointer. |
+| `continue` | `continue;`  | Continue to the next loop iteration |
+| `crate` | `extern crate`  | Declare dependency on external **crate**. {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }}|
+| ~ |  `pub(crate)` | Visibility at most in current crate, _c_. `pub`. |
 | `dyn` |  `&dyn T` | Marker for **dynamic dispatch** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }}, _c_. `impl`. |
+| `else` | `if x {} else {}` | Fallback for `if`. |
+| `enum` | `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type). |
+| `extern` |  `extern crate`  | Link an external crate. |
+| ~ | `extern "C" fn`  | External dependency for **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 | `false` | `false`  | Boolean false literal. |
+| `fn` | `fn f() -> T {}`  | Define a function. |
+| ~ | `x: fn()`  | **Function pointers**. {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} |
+| `for` |  `for x in iter` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
+| ~ | `impl T for S`  | Implement traits |
 | ~ | `for<'a>`  | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
+| `if` | `if x {}`  | Conditional branch if expression is true. |
 | ~ | `if let Some(x)`  | Branch if pattern can be assigned. {{ ref(page="expressions/if-expr.html#if-let-expressions") }} |
 | ~ | `P(X) if x > 10`  | Pattern match **guards**. {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
+| `impl` | `impl T {}`  | Implement functionality. |
 | ~ | `fn f(x: impl T)`  | Trait bound,"**impl traits**" {{ book(page="ch10-02-traits.html#trait-bounds") }}, same {{todo()}} as `x: T`. |
 | ~ | `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-traits") }}, returns `S` that `impl T`. |
+| `in` | `for x in iter`   | Part of `for` loop syntax. |
+| ~ | `pub(in a::b)`  | Visible at most in `a::b`, _c_. `pub`. |
+| `let` | `let x`;  | Bind a variable. |
+| `loop` | `loop {}`  | Loop unconditionally. |
 | `match` | `match m {}` | Initiate **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
+| `mod` | `mod m {}`  | Define a **module**. {{ book(page="ch07-00-modules.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} |
 | `move` | <code>move \|\| x + x </code> | Make a closure take ownership of all its captures. |
+| `mut` | `mut x`  | Denote mutability. |
+| `pub` | `pub x`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-controlling-visibility-with-pub.html#controlling-visibility-with-pub") }} {{ ex(page="mod/visibility.html#visibility") }} {{ ref(page="visibility-and-privacy.html#visibility-and-privacy") }}. |
 | `ref` | `ref x` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} |
+| `return` | `return 0;`  | Return from function. |
+| `Self` | `fn new() -> Self`  | Type alias for the type implementing a trait. |
+| `self` | `self.x`  | Refer to method subject. |
+| ~ | `self::x`  | Refer to current module. |
+| ~ | `pub(self)`  | Visible in current module, _c_. `pub`. |
+| `static` | `static X`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime. |
 | ~ | `'static`  | Lifetime lasting the entire program execution. |
+| `struct` | `struct S;` | Define a structure. |
+| `super` | `use super::x`  | Parent module of the current module. |
+| ~ | `pub(super)`  | Visible at most in parent, _c_. `pub`. |
+| `trait` | `trait T {}`  | Define a trait. |
 | `true` | `true`  | Boolean true literal. |
+| `type` | `type T = S;`  | Create a **type alias**. {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} |
+| ~ | `type X;`  | Create an **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} for a trait. |
 | `unsafe` |  `unsafe {}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
+| `union` |  `union U {}` | Unsafe **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
+| `use` | `use a::b`  | Bring symbol into scope. |
 | `where` | `where T: S`  | Introduce type constraints for generics. |
+| `while` | `while x {}`  | Loop while expression is true. |
 
 </div>
 
 
-## Invisible Sugar
+# Invisible Sugar
 
 If something works that "shouldn't work now that you think about it", it might be due to one of these.
 
@@ -345,9 +313,6 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html?highlight=lifetime,el#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f(x: &'a T)`.|
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
-
-
-## Expressions vs. Statements
 
 
 <!--
@@ -367,7 +332,7 @@ If something works that "shouldn't work now that you think about it", it might b
 <!-- Don't render this section for printing, won't be helpful -->
 <div class="noprint">
 
-## More Cheats
+# More Cheats
 
 These are other great visual guides and tables.
 
