@@ -16,7 +16,7 @@ $smallscreen-width: 650px;
 // Larger screens
 @media screen and (min-width: $smallscreen-width) {
     .cheats>table tr td:nth-child(1) {
-        width: 180px;
+        width: 220px;
     }
     .keywords>table tr td:nth-child(1) {
         width: 150px;
@@ -24,10 +24,6 @@ $smallscreen-width: 650px;
     .keywords>table tr td:nth-child(2) {
         width: 200px;
     }
-}
-
-.small {
-    font-size: 80%;
 }
 
 // Larger screens

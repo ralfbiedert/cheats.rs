@@ -1,8 +1,7 @@
 .page {
     position: absolute;
     width: calc(100% - #{$sidebar-width});
-    height: 100%;
-    // overflow-y: auto;
+    height: 100%; // overflow-y: auto;
     color: #000;
     background: #fff;
     padding-bottom: 20px;
@@ -73,7 +72,6 @@
             thead {
                 background: hsl(0, 0%, 80%);
                 th {
-                    padding: 2px 13px;
                     font-weight: bold;
                     border: 1px solid #ccc;
                 }
