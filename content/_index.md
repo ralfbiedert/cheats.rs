@@ -15,9 +15,10 @@ sort_by = "weight"
 >  **Nomicon** {{ nom(page="")}},
 >  **Reference** {{ ref(page="")}}.
 
+
 ### Data Structure
 
-Structural composition of entities.
+XXX
 
 <div class="cheats">
 
@@ -26,19 +27,40 @@ Structural composition of entities.
 | `static X`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime. |
 | `const X: T = x;`  | Define a **constant**. {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} |
 | `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type). |
-| `struct S;` | Define a structure. |
-| `type T = S;`  | Create a **type alias**. {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} |
-| `type X;`  | Create an **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} for a trait. |
+| `struct S {}` | Define a structure. |
 | `union U {}` | Unsafe **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `let x`;  | Bind a variable. |
 | `mut x`  | Denote mutability. |
-| `trait T {}`  | Define a trait. |
 
 </div>
 
+
+
+
+
+### Behavioral Structure
+
+XXX
+
+<div class="cheats">
+
+| Sigil | Explanation |
+|---------|-------------|
+| `trait T {}`  | Define a trait. |
+| `fn f() -> T {}`  | Define a function. |
+| `fn() -> T`  | **Function pointers**. {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} |
+| `impl T for S {}`  | Implement traits. |
+| `impl T {}`  | Implement functionality. |
+|  `unsafe {}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
+| <code>\|x\|</code> | Parameter binder for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
+| <code>move \|\| x + x </code> | Make a closure take ownership of all its captures. |
+| `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
+</div>
+
+
 ### Compositional Structure
 
-Structural composition of entities.
+XXX
 
 <div class="cheats">
 
@@ -53,29 +75,9 @@ Structural composition of entities.
 | `pub(super)`  | Visible at most in parent, _c_. `pub`. |
 | `pub(in a::b) T`  | Visible at most in `a::b`, _c_. `pub`. |
 | `super::x`  | Path to parent module of the current module. |
-| `self`  | Refer to method subject. |
 | `self::x`  | Refer to current module. |
-| `Self`  | Type alias for current type, e.g. `fn new() -> Self`. |
 | `use a::b`  | Bring symbol into scope. |
 | `a::b` | Namespace **path**. {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} |
-
-</div>
-
-
-### Execution Structure
-
-Structural composition of entities.
-
-<div class="cheats">
-
-| Sigil | Explanation |
-|---------|-------------|
-| `fn f() -> T {}`  | Define a function. |
-| `fn() -> T`  | **Function pointers**. {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} |
-| `impl T for S {}`  | Implement traits. |
-| `impl T {}`  | Implement functionality. |
-| <code>\|x\|</code> | Parameter binder for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
-| `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
 
 </div>
 
@@ -83,7 +85,7 @@ Structural composition of entities.
 
 ### Control Flow
 
-Ubiquitous constructs for code structure and execution flow.
+XXX
 
 <div class="cheats">
 
@@ -99,6 +101,24 @@ Ubiquitous constructs for code structure and execution flow.
 | `'a: loop` | Loop label. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
 | `x?` | Early return **error propagation**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 | `while x {}`  | Loop while expression is true. |
+
+</div>
+
+
+
+### Type Aliases and Casts
+
+XXX
+
+<div class="cheats">
+
+| Sigil | Explanation |
+|---------|-------------|
+| `type T = S;`  | Create a **type alias**. {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} |
+| `Self`  | Type alias for current type, e.g. `fn new() -> Self`. |
+| `self`  | Refer to method subject. |
+| `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and more. {{ nom(page="casts.html") }} |
+| `S as T`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`. |
 
 </div>
 
@@ -140,6 +160,8 @@ Granting access to un-owned memory.
 | `*mut T` | Mutable raw pointer type. |
 | `*x` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
 | `'a`  | Often seen as `&'a T`, a **lifetime parameter**. {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} |
+| `'static`  | Lifetime lasting the entire program execution. |
+| `ref x` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} |
 
 </div>
 
@@ -183,6 +205,7 @@ These constructs are found in `match` expressions.
 
 | Example | Explanation |
 |---------|-------------|
+| `match m {}` | Initiate **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
 |  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
 |  `E::B ( .. ) => {}` | Match enum tuple variant `B`, wildcard any index. |
 |  `E::C { .. } => {}` | Match enum struct variant `C`, wildcard any field. |
@@ -196,6 +219,9 @@ These constructs are found in `match` expressions.
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
 | `x @ 1 .. 5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
 | <code>0 \| 1 => {}</code> | Pattern alternatives (or-patterns). |
+| `P(X) if x > 10`  | Pattern match **guards**. {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
+
+| `if let Some(x)`  | Branch if pattern can be assigned. {{ ref(page="expressions/if-expr.html#if-let-expressions") }} |
 
 </div>
 
@@ -225,6 +251,11 @@ Code that works with more than one type.
 | `for<'a>` | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
 | `!Send`          | Disable an automatically derived trait. {{ todo() }} |
 | `?Sized`         | Opt out of a pre-defined trait bound. {{ todo() }} |
+| `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-traits") }}, returns `S` that `impl T`. |
+| `&dyn T` | Marker for **dynamic dispatch** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }}, _c_. `impl`. |
+| `type X;`  | Create an **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} for a trait. |
+| `where T: S`  | Introduce type constraints for generics. |
+| `fn f(x: impl T)`  | Trait bound,"**impl traits**" {{ book(page="ch10-02-traits.html#trait-bounds") }}, same {{todo()}} as `x: T`. |
 
 </div>
 
@@ -299,34 +330,6 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 
 
 
-# Keywords
-
-<div class="keywords">
-<!-- |  | `? as ?`  | Imports. | -->
-
-
-| Keyword | Example | Explanation |
-|--------|----| -----------|
-| `as` | `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and more. {{ nom(page="casts.html") }} |
-| ~ | `S as T`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`. |
-| ~ |  `*const T` | Constant raw pointers, _c_. raw pointer. |
-| `dyn` |  `&dyn T` | Marker for **dynamic dispatch** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }}, _c_. `impl`. |
-| `false` | `false`  | Boolean false literal. |
-| ~ | `for<'a>`  | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
-| ~ | `if let Some(x)`  | Branch if pattern can be assigned. {{ ref(page="expressions/if-expr.html#if-let-expressions") }} |
-| ~ | `P(X) if x > 10`  | Pattern match **guards**. {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
-| ~ | `fn f(x: impl T)`  | Trait bound,"**impl traits**" {{ book(page="ch10-02-traits.html#trait-bounds") }}, same {{todo()}} as `x: T`. |
-| ~ | `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-traits") }}, returns `S` that `impl T`. |
-| `match` | `match m {}` | Initiate **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
-| `move` | <code>move \|\| x + x </code> | Make a closure take ownership of all its captures. |
-| `ref` | `ref x` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} |
-| ~ | `'static`  | Lifetime lasting the entire program execution. |
-| `true` | `true`  | Boolean true literal. |
-| `unsafe` |  `unsafe {}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
-| `where` | `where T: S`  | Introduce type constraints for generics. |
-
-</div>
-
 
 ## Invisible Sugar
 
@@ -345,6 +348,31 @@ If something works that "shouldn't work now that you think about it", it might b
 
 ## Expressions vs. Statements
 
+
+## Data Layout
+
+Primitive types:
+
+| Kind | 1 byte |  2 byte |  4 byte |  8 byte |  16 byte |
+|---|---|---|---|---|---|---|---|
+|**Signed**| `u8` |  `u16` |  `u32` |  `u64` |  `u128` |
+|**Unsigned**| `i8` |  `i16` |  `i32` |  `i64` |  `i128` |
+|**Float**|      |        |  `f32` |  `f64` |         |
+|**Boolean**| `true`, `false` |        |  |   |         |
+
+<div>&nbsp;</div>
+
+Advanced types:
+
+| Type | Bytes |  Description |
+|--- |---|---|
+|`()` | 0 | Unit types (also `struct S;`, `!`, ...) take up no memory. |
+|`T`| `mem::xxx(T)` | If `x: T` moved might produce additional runtime drop flag. |
+|`&T`| word<sup>*</sup> | References are plain pointers. |
+|`&'a T`| word<sup>*</sup> | Same as `&T`, lifetimes disappear in assembly (contrasting move). |
+|`&[T]`| 2 x word<sup>*</sup> | A slice is represented as `(ptr, len)`. |
+
+&nbsp; &nbsp; <sup>*</sup> whatever word size is on machine, usually 4 or 8 bytes.
 
 <!--
 
