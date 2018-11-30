@@ -24,7 +24,7 @@ Design guides:
 
 # Building
 
-Build with [Zola](https://www.getzola.org/), the static site generator written in Rust. To develop locally make sure Zola is installed and then run from this directory:
+Built with [Zola](https://www.getzola.org/), the static site generator written in Rust. To develop locally install Zola, then run:
 
 ```
 zola serve
