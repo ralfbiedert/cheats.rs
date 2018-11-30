@@ -1,12 +1,12 @@
 +++
 weight = 1
 sort_by = "weight"
+template = "index.html"
 +++
 
 <img id="logo" src="/logo.png"></img>
 <div class="title">Rust Language Cheat Sheet</div>
 <div class="subtitle">{{ date() }}</div>
-
 
 >  Where appropriate, this document will link to the corresponding sections in the
 >  **The Book** {{ book(page="") }},
@@ -14,6 +14,10 @@ sort_by = "weight"
 >  **Std Docs** {{ std(page="std")}},
 >  **Nomicon** {{ nom(page="")}},
 >  **Reference** {{ ref(page="")}}.
+
+
+{{ outdated() }}
+
 
 ### Data Structure
 
