@@ -16,7 +16,7 @@ sort_by = "weight"
 >  **Reference** {{ ref(page="")}}.
 
 
-### Data Structure
+### Defining Data
 
 XXX
 
@@ -24,21 +24,20 @@ XXX
 
 | Sigil | Explanation |
 |---------|-------------|
-| `static X`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime. |
-| `const X: T = x;`  | Define a **constant**. {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} |
-| `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type). |
 | `struct S {}` | Define a structure. |
-| `union U {}` | Unsafe **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
-| `let x`;  | Bind a variable. |
-| `mut x`  | Denote mutability. |
+| `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
+| `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
+| `static X: T = x`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, consumes memory.  |
+| `const X: T = x;`  | Define a **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} used during compilation, takes no memory. |
+| `let x: T = y`;  | Bind a variable, i.e., Reserve `T`-bytes on stack called `x`, copy or move `y`. |
+| `let x = y`;  | Same, but with type inference (infer `T` based on `y`). |
+| `let x`;  | Same, but only usable after `y` assigned later. |
+| `let mut x;`  | Similar to `let x`, but allow bytes of `x` to be changed. |
 
 </div>
 
 
-
-
-
-### Behavioral Structure
+### Defining Behavior
 
 XXX
 
@@ -51,14 +50,15 @@ XXX
 | `fn() -> T`  | **Function pointers**. {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} |
 | `impl T for S {}`  | Implement traits. |
 | `impl T {}`  | Implement functionality. |
-|  `unsafe {}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
+| `unsafe {}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 | <code>\|x\|</code> | Parameter binder for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
 | <code>move \|\| x + x </code> | Make a closure take ownership of all its captures. |
 | `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
 </div>
 
 
-### Compositional Structure
+
+### Structure & Access
 
 XXX
 
@@ -80,7 +80,6 @@ XXX
 | `a::b` | Namespace **path**. {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} |
 
 </div>
-
 
 
 ### Control Flow
