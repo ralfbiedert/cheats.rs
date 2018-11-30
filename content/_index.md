@@ -16,44 +16,101 @@ sort_by = "weight"
 >  **Reference** {{ ref(page="")}}.
 
 
-### Defining Data
+### Data Structures and Usage
 
-XXX
+Define data types and memory locations, and use them.
 
 <div class="cheats">
 
-| Sigil | Explanation |
+| Example | Explanation |
 |---------|-------------|
-| `struct S {}` | Define a structure. |
+| `struct S {}` | Define a **struct**, {{ book(page="ch05-00-structs.html") }} {{ ex(page="custom_types/structs.html") }} {{ std(page="std/keyword.struct.html") }} {{ ref(page="expressions/struct-expr.html") }} with named fields. |
+| {{ tab() }} `struct S` `()` | Define "tupled" struct with numbered fields `.0`, `.1`, ... |
+| {{ tab() }} `struct S;` | Define zero sized unit struct. |
 | `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `static X: T = x`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, consumes memory.  |
 | `const X: T = x;`  | Define a **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} used during compilation, takes no memory. |
-| `let x: T = y`;  | Bind a variable, i.e., Reserve `T`-bytes on stack called `x`, copy or move `y`. |
-| `let x = y`;  | Same, but with type inference (infer `T` based on `y`). |
-| `let x`;  | Same, but only usable after `y` assigned later. |
-| `let mut x;`  | Similar to `let x`, but allow bytes of `x` to be changed. |
+| `let x;`  | **Variable binding** {{ todo() }} that can't be changed or `&mut`'ed. |
+| `let mut x;`  | Same, but allow for change or mutable borrow. |
+
+</div>
+
+{{ tablesep() }}
+
+<div class="cheats">
+
+| Example | Explanation |
+|---------|-------------|
+| `S { x: y }` | Create `struct S {}` or `use`'ed `enum E::S {}` with field `x` set to `y`. |
+| `S { x }` | Same, but use local variable `x` for field `x`. |
+| `S { ..x }` | Same, but fill remaining fields from `x`, esp. useful with [Default](https://doc.rust-lang.org/std/default/trait.Default.html). |
+| `S` `(x)` | Create `struct S` `(T)` or `use`'ed `enum E::S` `()` with field `.0` set to `x`. |
+| `S` | If `S` is unit `struct S;` or `use`'ed `enum E::S` create value of `S`. |
+| `E::A { x: y }` | Create enum variant `A`. Other methods above also work. |
+| `()` | Empty tuple, both literal and type, aka **unit** {{ std(page="std/primitive.unit.html") }} |
+| `(x)` | Parenthesized expression |
+| `(x,)` | Single-element **tuple** expression {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
+| `(T,)` | Single-element tuple type |
+| `[T; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} with `n` elements of type `T`. |
+| `[x; n]` | Array with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
+| `[x, y]` | Array with given elements. |
+| `x[0]` | Collection indexing. Overloadable [Index](https://doc.rust-lang.org/std/ops/trait.Index.html), [IndexMut](https://doc.rust-lang.org/std/ops/trait.IndexMut.html) |
+| `x[..]` | Collection slice-like indexing via [RangeFull](https://doc.rust-lang.org/std/ops/struct.RangeFull.html), _c_. **slices**  {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} |
+| `x[a..]` | Collection slice-like indexing via [RangeFrom](https://doc.rust-lang.org/std/ops/struct.RangeFrom.html). |
+| `x[..b]` | Collection slice-like indexing [RangeTo](https://doc.rust-lang.org/std/ops/struct.RangeTo.html). |
+| `x[a..b]` | Collection slice-like indexing via [Range](https://doc.rust-lang.org/std/ops/struct.Range.html). |
+| `a..b` | Right-exclusive **range** {{ ref(page="expressions/range-expr.html") }} creation, also seen as `..`, `a..`, `..b`.  |
+| `a..=b` | Inclusive range creation, also seen as `..=b`. |
+| `x.i` | Member **access** {{ ref(page="expressions/field-expr.html") }} |
+| `x.0` | Tuple access |
 
 </div>
 
 
-### Defining Behavior
+### Behavioral Structures
 
-XXX
+Define units of code and their abstractions.
 
 <div class="cheats">
 
 | Sigil | Explanation |
 |---------|-------------|
 | `trait T {}`  | Define a trait. |
-| `fn f() -> T {}`  | Define a function. |
+| `impl S {}`  | Implement functionality for a type `S`. |
+| `impl T for S {}`  | Implement trait `T` for type `S`. |
+| `fn f() {}`  | Define a function. |
+| {{ tab() }} `fn f() -> T {}`  | Define a function returning a type T. |
+| {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
+| <code>\|\| {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that captures its environment. |
+| {{ tab() }} <code>\|x\| {}</code> | Closure with a bound parameter `x`. |
+| {{ tab() }} <code>\|x\| x + x</code> | Closure without block expression.  |
+| {{ tab() }} <code>move \|\| x + x </code> | Closure taking ownership of all its captures. |
+| {{ tab() }} <code> return \|\| true </code> | Sometimes closures can hide in unexpected places (this _is_ a closure). |
 | `fn() -> T`  | **Function pointers**. {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} |
-| `impl T for S {}`  | Implement traits. |
-| `impl T {}`  | Implement functionality. |
 | `unsafe {}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
-| <code>\|x\|</code> | Parameter binder for **closures**. {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} |
-| <code>move \|\| x + x </code> | Make a closure take ownership of all its captures. |
-| `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
+</div>
+
+
+### Control Flow
+
+Control execution within a function.
+
+<div class="cheats">
+
+| Sigil | Explanation |
+|---------|-------------|
+| `break x;`  | Exit a loop, yield `x` as value of loop. |
+| `break 'a;`  | Exit a loop, yield `x` as value of loop. |
+| `continue;`  | Continue to the next loop iteration |
+| `for x in iter {}` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
+| `return x`  | Return from function. |
+| `if x {} else {}`  | Conditional branch if expression is true. |
+| `loop {}`  | Loop unconditionally. |
+| `'a: loop` | Loop label. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
+| `x?` | Early return **error propagation**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
+| `while x {}`  | Loop while expression is true. |
+
 </div>
 
 
@@ -70,36 +127,14 @@ XXX
 | `extern "C" fn`  | External dependency for **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 | `mod m {}`  | Define a **module**. {{ book(page="ch07-00-modules.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} |
 | `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-controlling-visibility-with-pub.html#controlling-visibility-with-pub") }} {{ ex(page="mod/visibility.html#visibility") }} {{ ref(page="visibility-and-privacy.html#visibility-and-privacy") }}. |
-| `pub(crate) T` | Visibility at most in current crate, _c_. `pub`. |
-| `pub(self)`  | Visible in current module, _c_. `pub`. |
-| `pub(super)`  | Visible at most in parent, _c_. `pub`. |
-| `pub(in a::b) T`  | Visible at most in `a::b`, _c_. `pub`. |
+| {{ tab() }} `pub(crate) T` | Visibility at most in current crate, _c_. `pub`. |
+| {{ tab() }} `pub(self)`  | Visible in current module, _c_. `pub`. |
+| {{ tab() }} `pub(super)`  | Visible at most in parent, _c_. `pub`. |
+| {{ tab() }} `pub(in a::b) T`  | Visible at most in `a::b`, _c_. `pub`. |
 | `super::x`  | Path to parent module of the current module. |
 | `self::x`  | Refer to current module. |
 | `use a::b`  | Bring symbol into scope. |
 | `a::b` | Namespace **path**. {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} |
-
-</div>
-
-
-### Control Flow
-
-XXX
-
-<div class="cheats">
-
-| Sigil | Explanation |
-|---------|-------------|
-| `break x;`  | Exit a loop, yield `x` as value of loop. |
-| `break 'a;`  | Exit a loop, yield `x` as value of loop. |
-| `continue;`  | Continue to the next loop iteration |
-| `for x in iter {}` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
-| `return x`  | Return from function. |
-| `if x {} else {}`  | Conditional branch if expression is true. |
-| `loop {}`  | Loop unconditionally. |
-| `'a: loop` | Loop label. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
-| `x?` | Early return **error propagation**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
-| `while x {}`  | Loop while expression is true. |
 
 </div>
 
@@ -157,43 +192,13 @@ Granting access to un-owned memory.
 | `&mut T` | Reference that allows mutability. |
 | `*const T` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}. |
 | `*mut T` | Mutable raw pointer type. |
+| `ref x` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} |
 | `*x` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
 | `'a`  | Often seen as `&'a T`, a **lifetime parameter**. {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} |
 | `'static`  | Lifetime lasting the entire program execution. |
-| `ref x` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} |
 
 </div>
 
-### Entity Creation & Usage
-
-Creation and usage of various built-in types.
-
-
-<div class="cheats">
-
-| Example | Explanation |
-|---------|-------------|
-| `S { x: y }` | Field initializer for **structs** {{ book(page="ch05-00-structs.html") }} {{ ex(page="custom_types/structs.html") }} {{ std(page="std/keyword.struct.html") }} {{ ref(page="expressions/struct-expr.html") }} |
-| `S { x }` | Use local variable `x` for field `x` when creating struct. |
-| `S { ..x }` | Fill remaining fields from `x`, esp. useful with [Default](https://doc.rust-lang.org/std/default/trait.Default.html). |
-| `()` | Empty tuple, both literal and type, aka **unit** {{ std(page="std/primitive.unit.html") }} |
-| `(x)` | Parenthesized expression |
-| `(x,)` | Single-element **tuple** expression {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
-| `(T,)` | Single-element tuple type |
-| `[T; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} with `n` elements of type `T`. |
-| `[x; n]` | Array with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
-| `[x, y]` | Array with given elements. |
-| `x[0]` | Collection indexing. Overloadable [Index](https://doc.rust-lang.org/std/ops/trait.Index.html), [IndexMut](https://doc.rust-lang.org/std/ops/trait.IndexMut.html) |
-| `x[..]` | Collection slice-like indexing via [RangeFull](https://doc.rust-lang.org/std/ops/struct.RangeFull.html), _c_. **slices**  {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} |
-| `x[a..]` | Collection slice-like indexing via [RangeFrom](https://doc.rust-lang.org/std/ops/struct.RangeFrom.html). |
-| `x[..b]` | Collection slice-like indexing [RangeTo](https://doc.rust-lang.org/std/ops/struct.RangeTo.html). |
-| `x[a..b]` | Collection slice-like indexing via [Range](https://doc.rust-lang.org/std/ops/struct.Range.html). |
-| `a..b` | Right-exclusive **range** {{ ref(page="expressions/range-expr.html") }} creation, also seen as `..`, `a..`, `..b`.  |
-| `a..=b` | Inclusive range creation, also seen as `..=b`. |
-| `x.i` | Member **access** {{ ref(page="expressions/field-expr.html") }} |
-| `x.0` | Tuple access |
-
-</div>
 
 
 ### Pattern Matching
@@ -315,6 +320,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | `1_234_567` | Numeric separator for visual clarity. |
 | `1u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, ...). |
 | `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html?highlight=raw,iten#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html?highlight=raw,iden#raw-identifiers") }} for edition compatibility. |
+| `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
 
 </div>
 
@@ -359,7 +365,7 @@ Primitive types:
 |**Float**|      |        |  `f32` |  `f64` |         |
 |**Boolean**| `true`, `false` |        |  |   |         |
 
-<div>&nbsp;</div>
+{{ tablesep() }}
 
 Advanced types:
 
