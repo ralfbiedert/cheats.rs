@@ -28,7 +28,7 @@ Constructs expanded before the actual compilation happens.
 
 | Example |  Explanation |
 |---------|---------|
-| `m!` |  Invocation preamble for **macros**. {{book(page="appendix-04-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} |
+| `m!` |  **Macro** {{book(page="appendix-04-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation preamble, usually in `m!()`, `m!{}`, `m![]`. |
 | `$x:ty`  | Macro capture in macros by example. |
 | `$x` |  Macro substitution in **macros by example**. {{book(page="appendix-04-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
 | `$(x),*` | Macro repetition in macros by example. |
