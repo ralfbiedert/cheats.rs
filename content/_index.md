@@ -106,11 +106,11 @@ Define units of code and their abstractions.
 
 | Sigil | Explanation |
 |---------|-------------|
-| `trait T {}`  | Define a trait. |
-| `impl S {}`  | Implement functionality for a type `S`. |
+| `trait T {}`  | Define a **trait**. {{ book(page="ch10-02-traits.html") }} {{ ex(page="trait.html") }} {{ ref(page="items/traits.html") }} |
+| `impl S {}`  | **Implementation** {{ ref(page="items/implementations.html") }} of functionality for a type `S`. |
 | `impl T for S {}`  | Implement trait `T` for type `S`. |
 | `impl !T for S {}` | Disable an automatically derived **auto trait** {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }}. |
-| `fn f() {}`  | Definition of a function; or associated function if inside `impl`. |
+| `fn f() {}`  | Definition of a **function** {{ book(page="ch03-03-how-functions-work.html") }}  {{ ex(page="fn.html") }} {{ ref(page="items/functions.html") }}; or associated function if inside `impl`. |
 | {{ tab() }} `fn f() -> T {}`  | Same, returning a type T. |
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
 | `fn() -> T`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with traits `Fn`, `FnOnce`, `FnMut`. |
