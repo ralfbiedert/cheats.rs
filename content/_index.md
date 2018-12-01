@@ -478,7 +478,7 @@ These are other great visual guides and tables.
 
 ## Meta
 
-> Want a **PDF download**? This document is print friendly and looks great in **Firefox's and Chrome's PDF export** (Press `CTRL-P` then "Export PDF").
+> Want this Rust cheat sheet as a **PDF download**? <a href="javascript:window.print()"><b>Click here</b></a> (or select File > Print) and then "Save as PDF". It looks great in both Firefox's and Chrome's PDF exports.
 
 
 </div>
