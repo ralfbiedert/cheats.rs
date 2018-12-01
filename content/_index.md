@@ -396,7 +396,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html?highlight=lifetime,el#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f(x: &'a T)`.|
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
 
-
+<!--
 ## Expressions vs. Statements
 
 ## Lifetimes
@@ -433,7 +433,7 @@ Advanced types:
 |`&'a T`| word<sup>*</sup> | Same as `&T`, lifetimes disappear in assembly (contrasting move). |
 |`&[T]`| 2 x word<sup>*</sup> | A slice is represented as `(ptr, len)`. |
 
-&nbsp; &nbsp; <sup>*</sup> whatever word size is on machine, usually 4 or 8 bytes.
+&nbsp; &nbsp; <sup>*</sup> whatever word size is on machine, usually 4 or 8 bytes. -->
 
 <!--
 
