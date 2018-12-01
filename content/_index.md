@@ -36,7 +36,7 @@ Define data types and memory locations, and use them.
 | `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `static X: T = x;`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
-| `const X: T = x;`  | Define a **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} inlined during compilation. |
+| `const X: T = x;`  | Define inlineable **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Inlined values are mutable!!! |
 | `let x;`  | **Variable binding** {{ todo() }} that can't be changed or `&mut`'ed. |
 | `let mut x;`  | Same, but allow for change or mutable borrow. |
 
@@ -107,6 +107,7 @@ Define units of code and their abstractions.
 | Sigil | Explanation |
 |---------|-------------|
 | `trait T {}`  | Define a **trait**. {{ book(page="ch10-02-traits.html") }} {{ ex(page="trait.html") }} {{ ref(page="items/traits.html") }} |
+| `trait T : R {}` | `T` is subtrait of **supertrait** {{ ref(page="items/traits.html#supertraits") }} `R`. Any `S` must `impl R` before it can `impl T`. |
 | `impl S {}`  | **Implementation** {{ ref(page="items/implementations.html") }} of functionality for a type `S`. |
 | `impl T for S {}`  | Implement trait `T` for type `S`. |
 | `impl !T for S {}` | Disable an automatically derived **auto trait** {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }}. |
