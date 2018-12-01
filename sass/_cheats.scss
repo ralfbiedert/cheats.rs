@@ -11,6 +11,9 @@ $smallscreen-width: 650px;
     .keywords>table tr td:nth-child(2) {
         width: 150px;
     }
+    .hidemobile {
+        display: none;
+    }
 }
 
 // Larger screens
@@ -24,6 +27,7 @@ $smallscreen-width: 650px;
     .keywords>table tr td:nth-child(2) {
         width: 200px;
     }
+    .hidemobile {}
 }
 
 // Larger screens
