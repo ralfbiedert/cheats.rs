@@ -4,7 +4,6 @@ sort_by = "weight"
 template = "index.html"
 +++
 
-
 <img id="logo" src="/logo.png"></img>
 <div class="title">Rust Language Cheat Sheet</div>
 <div class="subtitle">{{ date() }}</div>
@@ -15,6 +14,12 @@ template = "index.html"
 >  **Std Docs** {{ std(page="std")}},
 >  **Nomicon** {{ nom(page="")}},
 >  **Reference** {{ ref(page="")}}.
+
+<div style="color: gray; font-weight: bold;">
+    Based on the feedback so far a new iteration is on the way.
+    You can find it under <a href="/beta"><b>cheats.rs/beta</b></a>.
+    Please <a href="https://github.com/ralfbiedert/cheats.rs/issues/18">leave feedback here.</a>
+</div>
 
 
 # Sigils
