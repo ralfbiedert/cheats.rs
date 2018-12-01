@@ -478,8 +478,8 @@ These are other great visual guides and tables.
 
 ## Meta
 
-> Want a **PDF**? This document is print friendly and looks great in **Firefox's and Chrome's PDF export** (Press `CTRL-P` then "Export PDF")!
-> Should also be mobile friendly.
+> Want a **PDF download**? This document is print friendly and looks great in **Firefox's and Chrome's PDF export** (Press `CTRL-P` then "Export PDF").
+
 
 </div>
 
