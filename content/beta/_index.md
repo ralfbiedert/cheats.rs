@@ -10,17 +10,16 @@ template = "index.html"
 
 
 
-> This document links to corresponding sections in the
+> Contains clickable links to
 > **The Book** {{ book(page="") }},
 > **Rust by Example** {{ ex(page="") }},
 > **Std Docs** {{ std(page="std") }},
 > **Nomicon** {{ nom(page="") }},
 > **Reference** {{ ref(page="") }}.
-> These footnotes are clickable!
->
-> Furthermore, it will mark things that are
+> Furthermore, entries are marked as
 > largely **deprecated** {{ deprecated() }},
-> or have a **minimum edition** {{ edition(ed="'18") }}.
+> have a **minimum edition** {{ edition(ed="'18") }}.
+> or are **bad** {{ edition(ed="⚡") }}.
 
 
 ### Data Structures
@@ -120,12 +119,14 @@ Define units of code and their abstractions.
 | {{ tab() }} <code>\|x\| x + x</code> | Closure without block expression.  |
 | {{ tab() }} <code>move \|x\| x + y </code> | Closure taking ownership of all captures. |
 | {{ tab() }} <code> return \|\| true </code> | Closures may sometimes look like logical ORs (here: return a closure). |
-| `x.f()` | Call member function |
+| `x.f()` | Call member function, requires `f` takes `self`, `&self`, ... as first argument. |
 | {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
 | {{ tab() }} `X::f(&x)` | Same as `x.f()`. |
 | {{ tab() }} `X::f(&mut x)` | Same as `x.f()`. |
-| {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T` (i.e., `x.f()` finds methods of `T` if in scope). |
 | {{ tab() }} `S::f(&x)` | Same as `x.f()` if `X` derefs to `S` (i.e., `x.f()` finds methods of `S`). |
+| {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T` (i.e., `x.f()` finds methods of `T` if in scope). |
+| `X::f()` | Call associated function, e.g., `X::new()`. |
+| {{ tab() }} `<X as T>::f()` | Call `T::f()` implemented for `X`. |
 | `unsafe {}` | _Here be dragons_, marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 </div>
 
@@ -250,7 +251,7 @@ These constructs are found in `match` expressions.
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
 | `x @ 1 .. 5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
 | <code>0 \| 1 => {}</code> | Pattern alternatives (or-patterns). |
-| `P(X) if x > 10`  | Pattern match **guards**. {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
+| `S { x } if x > 10`  | Pattern match **guards**. {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
 
 </div>
 
@@ -277,7 +278,7 @@ These constructs are found in `match` expressions.
 
 ### Generics & Constraints
 
-Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, ... to create more flexible
+Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, ...
 
 <div class="cheats">
 
@@ -470,3 +471,8 @@ These are other great visual guides and tables.
 </div>
 
 <!-- {{ tool(src="/link_godbolt.png", title="Compiler Explorer", url="https://godbolt.org/") }} -->
+
+## Meta
+
+> Want a **PDF**? This document is print friendly and looks great in **Firefox's and Chrome's PDF export** (Press `CTRL-P` then "Export PDF")!
+> Should also be mobile friendly.
