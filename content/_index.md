@@ -35,8 +35,8 @@ Define data types and memory locations, and use them.
 | {{ tab() }} `struct S;` | Define zero sized unit struct. |
 | `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
-| `static X: T = x`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, consumes memory.  |
-| `const X: T = x;`  | Define a **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} used during compilation, takes no memory. |
+| `static X: T = x;`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
+| `const X: T = x;`  | Define a **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} inlined during compilation. |
 | `let x;`  | **Variable binding** {{ todo() }} that can't be changed or `&mut`'ed. |
 | `let mut x;`  | Same, but allow for change or mutable borrow. |
 
@@ -170,15 +170,15 @@ Segment projects into smaller units and minimize dependencies.
 | {{ tab() }} `crate::x` | Search `x` relative to crate root. {{ edition(ed="'18") }} |
 | {{ tab() }} `self::x`  | Search `x` relative to current module. |
 | {{ tab() }} `super::x`  | Search `x` relative to parent module. |
-| `use a::b`  | **Use** {{ ex(page="mod/use.html#the-use-declaration") }} {{ ref(page="items/use-declarations.html") }}  `b` directly in this scope without requiring `a` anymore. |
-| `use a::*`  | Bring everything from `a` into scope and reexport. |
-| `pub use a::b`  | Bring `a::b` into scope and reexport from here. |
+| `use a::b;`  | **Use** {{ ex(page="mod/use.html#the-use-declaration") }} {{ ref(page="items/use-declarations.html") }}  `b` directly in this scope without requiring `a` anymore. |
+| `use a::*;`  | Bring everything from `a` into scope and reexport. |
+| `pub use a::b;`  | Bring `a::b` into scope and reexport from here. |
 | `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-controlling-visibility-with-pub.html#controlling-visibility-with-pub") }} {{ ex(page="mod/visibility.html#visibility") }} {{ ref(page="visibility-and-privacy.html#visibility-and-privacy") }} for `T`. |
 | {{ tab() }} `pub(crate) T` | Visible at most in current crate. |
 | {{ tab() }} `pub(self) T`  | Visible at most in current module. |
 | {{ tab() }} `pub(super) T`  | Visible at most in parent. |
 | {{ tab() }} `pub(in a::b) T`  | Visible at most in `a::b`. |
-| `extern crate x` | Declare dependency on external **crate** {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }} {{ deprecated() }} ; just `use x::f` in {{ edition(ed="'18") }}.  |
+| `extern crate x`; | Declare dependency on external **crate** {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }} {{ deprecated() }} ; just `use x::f` in {{ edition(ed="'18") }}.  |
 | `extern "C" fn`  | External dependency for **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 
 </div>
