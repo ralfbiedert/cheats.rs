@@ -50,14 +50,14 @@ Define data types and memory locations, and use them.
 |---------|-------------|
 | `S { x: y }` | Create `struct S {}` or `use`'ed `enum E::S {}` with field `x` set to `y`. |
 | `S { x }` | Same, but use local variable `x` for field `x`. |
-| `S { ..x }` | Same, but fill remaining fields from `x`, esp. useful with [Default](https://doc.rust-lang.org/std/default/trait.Default.html). |
+| `S { ..s }` | Fill remaining fields from `s`, esp. useful with [Default](https://doc.rust-lang.org/std/default/trait.Default.html). |
 | `S` `(x)` | Create `struct S` `(T)` or `use`'ed `enum E::S` `()` with field `.0` set to `x`. |
 | `S` | If `S` is unit `struct S;` or `use`'ed `enum E::S` create value of `S`. |
 | `E::A { x: y }` | Create enum variant `A`. Other methods above also work. |
 | `()` | Empty tuple, both literal and type, aka **unit** {{ std(page="std/primitive.unit.html") }} |
-| `(x)` | Parenthesized expression |
-| `(x,)` | Single-element **tuple** expression {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
-| `(T,)` | Single-element tuple type |
+| `(x)` | Parenthesized expression. |
+| `(x,)` | Single-element **tuple** expression. {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
+| `(T,)` | Single-element tuple type. |
 | `[T; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} with `n` elements of type `T`. |
 | `[x; n]` | Array with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
 | `[x, y]` | Array with given elements. |
@@ -68,7 +68,7 @@ Define data types and memory locations, and use them.
 | `x[a..b]` | Collection slice-like indexing via [Range](https://doc.rust-lang.org/std/ops/struct.Range.html). |
 | `a..b` | Right-exclusive **range** {{ ref(page="expressions/range-expr.html") }} creation, also seen as `..`, `a..`, `..b`.  |
 | `a..=b` | Inclusive range creation, also seen as `..=b`. |
-| `x.i` | Member **access** {{ ref(page="expressions/field-expr.html") }} |
+| `x.i` | Member **access**. {{ ref(page="expressions/field-expr.html") }} |
 | `x.0` | Tuple access |
 
 </div>
@@ -109,15 +109,15 @@ Define units of code and their abstractions.
 | `trait T {}`  | Define a trait. |
 | `impl S {}`  | Implement functionality for a type `S`. |
 | `impl T for S {}`  | Implement trait `T` for type `S`. |
-| `impl !T for S {}` | Disable an automatically derived marker trait. {{ todo() }} |
+| `impl !T for S {}` | Disable an automatically derived **auto trait** {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }}. |
 | `fn f() {}`  | Definition of a function; or associated function if inside `impl`. |
 | {{ tab() }} `fn f() -> T {}`  | Same, returning a type T. |
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
 | `fn() -> T`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with traits `Fn`, `FnOnce`, `FnMut`. |
-| <code>\|\| {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows all captures. |
+| <code>\|\| {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
 | {{ tab() }} <code>\|x\| {}</code> | Closure with a bound parameter `x`. |
 | {{ tab() }} <code>\|x\| x + x</code> | Closure without block expression.  |
-| {{ tab() }} <code>move \|x\| x + y </code> | Closure taking ownership of all captures. |
+| {{ tab() }} <code>move \|x\| x + y </code> | Closure taking ownership of its captures. |
 | {{ tab() }} <code> return \|\| true </code> | Closures may sometimes look like logical ORs (here: return a closure). |
 | `x.f()` | Call member function, requires `f` takes `self`, `&self`, ... as first argument. |
 | {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
@@ -140,10 +140,10 @@ Control execution within a function.
 | Sigil | Explanation |
 |---------|-------------|
 | `while x {}`  | **Loop** {{ ref(page="expressions/loop-expr.html#predicate-loops") }}, run while expression `x` is true. |
-| `loop {}`  | **Loop infinitely** {{ ref(page="expressions/loop-expr.html#infinite-loops") }} until `break`. |
+| `loop {}`  | **Loop infinitely** {{ ref(page="expressions/loop-expr.html#infinite-loops") }} until `break`. Can yield value with `break x`. |
 | `for x in iter {}` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
 | `if x {} else {}`  | **Conditional branch** {{ ref(page="expressions/if-expr.html") }} if expression is true. |
-| `'label: loop` | **Loop label**. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
+| `'label: loop {}` | **Loop label** {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}}, useful for flow control in nested loops. |
 | `break`  | **Break expression** {{ ref(page="expressions/loop-expr.html#break-expressions") }} to exit a loop. |
 | {{ tab() }} `break x`  | Same, but make `x` value of the loop expression (only in actual `loop`). |
 | {{ tab() }} `break 'label`  | Exit not only this loop, but the enclosing one marked with `'label`. |
@@ -168,17 +168,17 @@ Segment projects into smaller units and minimize dependencies.
 | `a::b` | Namespace **path** {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, ...). |
 | {{ tab() }} `::x` | Search `x` relative to crate root. {{ deprecated() }} |
 | {{ tab() }} `crate::x` | Search `x` relative to crate root. {{ edition(ed="'18") }} |
-| {{ tab() }} `self::x`  | Search `x` relative to the current module. |
-| {{ tab() }} `super::x`  | Search `x` relative to the parent module. |
+| {{ tab() }} `self::x`  | Search `x` relative to current module. |
+| {{ tab() }} `super::x`  | Search `x` relative to parent module. |
 | `use a::b`  | **Use** {{ ex(page="mod/use.html#the-use-declaration") }} {{ ref(page="items/use-declarations.html") }}  `b` directly in this scope without requiring `a` anymore. |
 | `use a::*`  | Bring everything from `a` into scope and reexport. |
 | `pub use a::b`  | Bring `a::b` into scope and reexport from here. |
 | `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-controlling-visibility-with-pub.html#controlling-visibility-with-pub") }} {{ ex(page="mod/visibility.html#visibility") }} {{ ref(page="visibility-and-privacy.html#visibility-and-privacy") }} for `T`. |
-| {{ tab() }} `pub(crate) T` | Visibile at most in current crate. |
+| {{ tab() }} `pub(crate) T` | Visible at most in current crate. |
 | {{ tab() }} `pub(self) T`  | Visible at most in current module. |
 | {{ tab() }} `pub(super) T`  | Visible at most in parent. |
 | {{ tab() }} `pub(in a::b) T`  | Visible at most in `a::b`. |
-| `extern crate x` | Declare dependency on external **crate**. {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }} {{ deprecated() }} ; just `use x::f` in {{ edition(ed="'18") }}.  |
+| `extern crate x` | Declare dependency on external **crate** {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }} {{ deprecated() }} ; just `use x::f` in {{ edition(ed="'18") }}.  |
 | `extern "C" fn`  | External dependency for **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 
 </div>
@@ -200,7 +200,7 @@ Short-hand names of types, and methods to convert one type to another.
 |  {{ tab() }}  `&mut self`  | Same, but mutably borrowed, same as `f(self: &mut Self)` |
 |  {{ tab() }}  `self: Box<Self>`  | [Arbitrary self type](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart pointers (`my_box.f_of_self()`). |
 | `S as T`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`. |
-| `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and more. {{ nom(page="casts.html") }} |
+| `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and be a bit surprising. {{ nom(page="casts.html") }} |
 
 </div>
 
@@ -231,7 +231,7 @@ Constructs expanded before the actual compilation happens.
 
 ### Pattern Matching
 
-These constructs are found in `match` expressions.
+These constructs are found in `match` or `let` expressions.
 
 <div class="cheats">
 
@@ -245,7 +245,7 @@ These constructs are found in `match` expressions.
 |  `S { x, y } => {}` | Match struct with any values for fields `x` and `y`. |
 |  `S { .. } => {}` | Match struct with any values. |
 |  `D => {}` | Match enum variant `E::D` if `D` in `use`. |
-|  `D => {}` | Match anything, bind `D`; false friend of `E::D` if `D` not in `use`. |
+|  `D => {}` | Match anything, bind `D`; ⚡ possibly false friend of `E::D` if `D` not in `use`. |
 |  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
 |  `[a, 0] => {}` | Match array with any value for `a` and `0` for second. |
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
@@ -288,17 +288,17 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | `S<T: R>`  | Type short hand **trait bound** {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} specification  (`R` _must_ be trait). |
 | {{ tab() }} `T: R + S`  | **Compound type bound** {{ book(page="ch10-02-traits.html#multiple-trait-bounds-with-") }} {{ ex(page="generics/multi_bounds.html") }}, also seen as `T: R + 'a` |
 | {{ tab() }} `T: ?Sized`         | Opt out of a pre-defined trait bound Sized. {{ todo() }} |
-| {{ tab() }} `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }} |
+| {{ tab() }} `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }}, all references in T must outlive `'a`.  |
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlives_) `'a` bound. |
 | `S<T> where T: R`  | Same as `S<T: R>` but easier for longer bounds. |
 | `S<T = R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} for associated type.|
 | `S<'_>` | Inferred **anonymous lifetime**. {{ book(page="ch19-02-advanced-lifetimes.html#the-anonymous-lifetime") }} |
 | `S<_>` | Inferred **anonymous type**. {{ todo() }} |
-| `S::<T>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation.  |
+| `S::<T>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation, e.g. `f::<u32>()`. |
 | `trait T { type X; }`  | Defines an **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} `X` for trait `T`. |
 | {{ tab() }} `type X = R;`  | Set associated type within `impl T for S { type X = R; }`. |
-| `impl<T> S<T> {}`  | Implementation of functionality generic over `T` for `S<T>`.  |
-| `impl S<T> {}`  | Implementation of functionality for exactly `S<T>` (e.g., `S<u32>`).  |
+| `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`.  |
+| `impl S<T> {}`  | Implement functionality for exactly `S<T>` (e.g., `S<u32>`).  |
 | `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-traits") }}, returns an unknown-to-caller `S` that `impl T`. |
 | `fn f(x: &impl T)`  | Trait bound,"**impl traits**" {{ book(page="ch10-02-traits.html#trait-bounds") }}, somewhat similar to `fn f<S:T>(x: &S)`. |
 | `fn f(x: &dyn T)`  | Marker for **dynamic dispatch** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }}, `f` will not be monomorphized. |
@@ -434,6 +434,12 @@ Advanced types:
 |`&[T]`| 2 x word<sup>*</sup> | A slice is represented as `(ptr, len)`. |
 
 &nbsp; &nbsp; <sup>*</sup> whatever word size is on machine, usually 4 or 8 bytes. -->
+
+<!--
+| {{ tab() }} `impl S<u32> {}`  | You can "implement" the same struct multiple times as long as the ... |
+| {{ tab() }} `impl S<f32> {}`  | ... types differ. This even allows `S` to have totally different methods ... |
+| {{ tab() }} `impl<T> S<T: A> {}`  | ... for each `S<T>`, which is great if some don't make sense everywhere. | -->
+
 
 <!--
 
