@@ -194,7 +194,7 @@ Short-hand names of types, and methods to convert one type to another.
 | Sigil | Explanation |
 |---------|-------------|
 | `type T = S;`  | Create a **type alias** {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} {{ ref(page="items/type-aliases.html?highlight=alias#type-aliases") }}, i.e., another name for `S`. |
-| `Self`  | Type alias for **implementing type** {{ ref(page="reference/types.html#self-types") }}, e.g. `fn new() -> Self`. |
+| `Self`  | Type alias for **implementing type** {{ ref(page="types.html#self-types") }}, e.g. `fn new() -> Self`. |
 | `self`  | Method subject in `fn f(self) {}`, same as `fn f(self: Self) {}`. |
 |  {{ tab() }}  `&self`  | Same, but refers to self as borrowed, same as `f(self: &Self)`|
 |  {{ tab() }}  `&mut self`  | Same, but mutably borrowed, same as `f(self: &mut Self)` |
@@ -290,7 +290,7 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | {{ tab() }} `T: ?Sized`         | Opt out of a pre-defined trait bound Sized. {{ todo() }} |
 | {{ tab() }} `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }} |
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlives_) `'a` bound. |
-| `S<T> where T: S`  | Same as `S<T: R>` but easier for longer bounds. |
+| `S<T> where T: R`  | Same as `S<T: R>` but easier for longer bounds. |
 | `S<T = R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} for associated type.|
 | `S<'_>` | Inferred **anonymous lifetime**. {{ book(page="ch19-02-advanced-lifetimes.html#the-anonymous-lifetime") }} |
 | `S<_>` | Inferred **anonymous type**. {{ todo() }} |
@@ -468,11 +468,11 @@ These are other great visual guides and tables.
 | [Periodic Table of Types](http://cosmic.mearie.org/2014/01/periodic-table-of-rust-types) | How various types and references correlate. |
 | [Futures](https://rufflewind.com/img/rust-futures-cheatsheet.html) | How to construct and work with futures. |
 
-</div>
-
-<!-- {{ tool(src="/link_godbolt.png", title="Compiler Explorer", url="https://godbolt.org/") }} -->
-
 ## Meta
 
 > Want a **PDF**? This document is print friendly and looks great in **Firefox's and Chrome's PDF export** (Press `CTRL-P` then "Export PDF")!
 > Should also be mobile friendly.
+
+</div>
+
+<!-- {{ tool(src="/link_godbolt.png", title="Compiler Explorer", url="https://godbolt.org/") }} -->
