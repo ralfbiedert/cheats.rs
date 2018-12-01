@@ -8,15 +8,21 @@ sort_by = "weight"
 <div class="subtitle">{{ date() }}</div>
 
 
->  Where appropriate, this document will link to the corresponding sections in the
->  **The Book** {{ book(page="") }},
->  **Rust by Example** {{ ex(page="") }},
->  **Std Docs** {{ std(page="std")}},
->  **Nomicon** {{ nom(page="")}},
->  **Reference** {{ ref(page="")}}.
+
+> This document links to corresponding sections in the
+> **The Book** {{ book(page="") }},
+> **Rust by Example** {{ ex(page="") }},
+> **Std Docs** {{ std(page="std") }},
+> **Nomicon** {{ nom(page="") }},
+> **Reference** {{ ref(page="") }}.
+> These footnotes are clickable!
+>
+> Furthermore, it will mark things that are
+> largely **deprecated** {{ deprecated() }},
+> or have a **minimum edition** {{ edition(ed="'18") }}.
 
 
-### Data Structures and Usage
+### Data Structures
 
 Define data types and memory locations, and use them.
 
@@ -67,8 +73,32 @@ Define data types and memory locations, and use them.
 
 </div>
 
+### References & Pointers
 
-### Behavioral Structures
+Granting access to un-owned memory.
+
+
+<div class="cheats">
+
+| Example | Explanation |
+|---------|-------------|
+| `&x` | Immutable **borrow**.  {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} |
+| `&T` | Immutable safe pointer type, aka **reference**.  {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} |
+| `&mut x` | Borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
+| `&mut T` | Reference that allows mutability. |
+| `*const T` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}. |
+| `*mut T` | Mutable raw pointer type. |
+| `ref x` {{ deprecated() }} | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} |
+| `*x` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
+| `'a`  | Often seen as `&'a T`, a **lifetime parameter**. {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} |
+| `'static`  | Lifetime lasting the entire program execution. |
+
+</div>
+
+
+
+
+### Functions & Behavior
 
 Define units of code and their abstractions.
 
@@ -79,16 +109,17 @@ Define units of code and their abstractions.
 | `trait T {}`  | Define a trait. |
 | `impl S {}`  | Implement functionality for a type `S`. |
 | `impl T for S {}`  | Implement trait `T` for type `S`. |
-| `fn f() {}`  | Define a function. |
-| {{ tab() }} `fn f() -> T {}`  | Define a function returning a type T. |
+| `impl !T for S {}` | Disable an automatically derived marker trait. {{ todo() }} |
+| `fn f() {}`  | Definition of a function; or associated function if inside `impl`. |
+| {{ tab() }} `fn f() -> T {}`  | Same, returning a type T. |
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
-| <code>\|\| {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that captures its environment. |
+| `fn() -> T`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with traits `Fn`, `FnOnce`, `FnMut`. |
+| <code>\|\| {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows all captures. |
 | {{ tab() }} <code>\|x\| {}</code> | Closure with a bound parameter `x`. |
 | {{ tab() }} <code>\|x\| x + x</code> | Closure without block expression.  |
-| {{ tab() }} <code>move \|\| x + x </code> | Closure taking ownership of all its captures. |
-| {{ tab() }} <code> return \|\| true </code> | Sometimes closures can hide in unexpected places (this _is_ a closure). |
-| `fn() -> T`  | **Function pointers**. {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} |
-| `unsafe {}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
+| {{ tab() }} <code>move \|x\| x + y </code> | Closure taking ownership of all captures. |
+| {{ tab() }} <code> return \|\| true </code> | Closures may sometimes look like logical ORs (here: return a closure). |
+| `unsafe {}` | _Here be dragons_, marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 </div>
 
 
@@ -100,41 +131,47 @@ Control execution within a function.
 
 | Sigil | Explanation |
 |---------|-------------|
-| `break x;`  | Exit a loop, yield `x` as value of loop. |
-| `break 'a;`  | Exit a loop, yield `x` as value of loop. |
-| `continue;`  | Continue to the next loop iteration |
+| `while x {}`  | **Loop** {{ ref(page="expressions/loop-expr.html#predicate-loops") }}, run while expression `x` is true. |
+| `loop {}`  | **Loop infinitely** {{ ref(page="expressions/loop-expr.html#infinite-loops") }} until `break`. |
 | `for x in iter {}` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
-| `return x`  | Return from function. |
-| `if x {} else {}`  | Conditional branch if expression is true. |
-| `loop {}`  | Loop unconditionally. |
-| `'a: loop` | Loop label. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
-| `x?` | Early return **error propagation**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
-| `while x {}`  | Loop while expression is true. |
+| `if x {} else {}`  | **Conditional branch** {{ ref(page="expressions/if-expr.html") }} if expression is true. |
+| `'label: loop` | **Loop label**. {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} |
+| `break`  | **Break expression** {{ ref(page="expressions/loop-expr.html#break-expressions") }} to exit a loop. |
+| {{ tab() }} `break x`  | Same, but make `x` value of the loop expression (only in actual `loop`). |
+| {{ tab() }} `break 'label`  | Exit not only this loop, but the enclosing one marked with `'label`. |
+| `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
+| `continue 'label`  | Same, but instead of enclosing loop marked with `'label`. |
+| `return x`  | Early return from function. More idiomatic way is to end with expression. |
+| `x?` | If `x` is `Result::Err` or `Option::None`, **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 
 </div>
 
 
 
-### Structure & Access
+### Organizing Code
 
-XXX
+Segment projects into smaller units and minimize dependencies.
 
 <div class="cheats">
 
 | Sigil | Explanation |
 |---------|-------------|
-| `extern crate x`  | Declare dependency on external **crate**. {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }}|
-| `extern "C" fn`  | External dependency for **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 | `mod m {}`  | Define a **module**. {{ book(page="ch07-00-modules.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} |
-| `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-controlling-visibility-with-pub.html#controlling-visibility-with-pub") }} {{ ex(page="mod/visibility.html#visibility") }} {{ ref(page="visibility-and-privacy.html#visibility-and-privacy") }}. |
-| {{ tab() }} `pub(crate) T` | Visibility at most in current crate, _c_. `pub`. |
-| {{ tab() }} `pub(self)`  | Visible in current module, _c_. `pub`. |
-| {{ tab() }} `pub(super)`  | Visible at most in parent, _c_. `pub`. |
-| {{ tab() }} `pub(in a::b) T`  | Visible at most in `a::b`, _c_. `pub`. |
-| `super::x`  | Path to parent module of the current module. |
-| `self::x`  | Refer to current module. |
-| `use a::b`  | Bring symbol into scope. |
-| `a::b` | Namespace **path**. {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} |
+| `a::b` | Namespace **path** {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, ...). |
+| {{ tab() }} `::x` | Search `x` relative to crate root. {{ deprecated() }} |
+| {{ tab() }} `crate::x` | Search `x` relative to crate root. {{ edition(ed="'18") }} |
+| {{ tab() }} `self::x`  | Search `x` relative to the current module. |
+| {{ tab() }} `super::x`  | Search `x` relative to the parent module. |
+| `use a::b`  | Bring symbol `b` directly into scope without requiring `a` anymore. |
+| `use a::*`  | Bring everything from `a` into scope and reexport. |
+| `pub use a::b`  | Bring `a::b` into scope and reexport from here. |
+| `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-controlling-visibility-with-pub.html#controlling-visibility-with-pub") }} {{ ex(page="mod/visibility.html#visibility") }} {{ ref(page="visibility-and-privacy.html#visibility-and-privacy") }} for `T`. |
+| {{ tab() }} `pub(crate) T` | Visibility at most in current crate. |
+| {{ tab() }} `pub(self) T`  | Visible at most in current module. |
+| {{ tab() }} `pub(super) T`  | Visible at most in parent. |
+| {{ tab() }} `pub(in a::b) T`  | Visible at most in `a::b`. |
+| `extern crate x` | Declare dependency on external **crate**. {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }} {{ deprecated() }} ; since {{ edition(ed="'18") }} just `use x::f`.  |
+| `extern "C" fn`  | External dependency for **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 
 </div>
 
@@ -177,28 +214,6 @@ Constructs expanded before the actual compilation happens.
 </div>
 
 
-### References & Pointers
-
-Granting access to un-owned memory.
-
-
-<div class="cheats">
-
-| Example | Explanation |
-|---------|-------------|
-| `&x` | Immutable **borrow**.  {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} |
-| `&T` | Immutable safe pointer type, aka **reference**.  {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} |
-| `&mut x` | Borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
-| `&mut T` | Reference that allows mutability. |
-| `*const T` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}. |
-| `*mut T` | Mutable raw pointer type. |
-| `ref x` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} |
-| `*x` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
-| `'a`  | Often seen as `&'a T`, a **lifetime parameter**. {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} |
-| `'static`  | Lifetime lasting the entire program execution. |
-
-</div>
-
 
 
 ### Pattern Matching
@@ -236,8 +251,7 @@ These constructs are found in `match` expressions.
 
 ### Generics & Constraints
 
-Code that works with more than one type.
-
+Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, ... to create more flexible
 
 <div class="cheats">
 
@@ -250,14 +264,13 @@ Code that works with more than one type.
 | `T: R`  | Type **trait bound** {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} |
 | `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }} |
 | `T: R + S`  | **Compound type bound** {{ book(page="ch10-02-traits.html#multiple-trait-bounds-with-") }} {{ ex(page="generics/multi_bounds.html") }}, also seen as `T: R + 'a` |
+| `T: ?Sized`         | Opt out of a pre-defined trait bound Sized. {{ todo() }} |
 | `T::<S>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation.  |
 | `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlives_) `'a`. |
 | `for<'a>` | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
-| `!Send`          | Disable an automatically derived trait. {{ todo() }} |
-| `?Sized`         | Opt out of a pre-defined trait bound. {{ todo() }} |
 | `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-traits") }}, returns `S` that `impl T`. |
 | `&dyn T` | Marker for **dynamic dispatch** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }}, _c_. `impl`. |
-| `type X;`  | Create an **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} for a trait. |
+| `trait T { type X; }`  | Create an **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} `X` for trait `T`. |
 | `where T: S`  | Introduce type constraints for generics. |
 | `fn f(x: impl T)`  | Trait bound,"**impl traits**" {{ book(page="ch10-02-traits.html#trait-bounds") }}, same {{todo()}} as `x: T`. |
 
