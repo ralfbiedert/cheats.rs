@@ -417,22 +417,22 @@ If you are used to programming Java or C, consider these.
 |  | `x = loop { break 5 };`  |
 |  | `fn f() -> u32 { 0 }`  |
 | **Think in Iterators** | `(1..10).map(f).collect()` |
-|  | <code>names.iter().filter(\|x\| x.starts_with("Rick")).for_each(f)</code> |
-| **Handle Absence with `?`** | `x = might_fail()?;` |
-|  | `get()?.transform()?.run()?` |
+|  | <code>names.iter().filter(\|x\| x.starts_with("A")).for_each(f)</code> |
+| **Handle Absence with `?`** | `x = try_something()?;` |
+|  | `get_option()?.transform()?.run()?` |
 | **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
 |  | `struct Charge(f32)` over `f32` |
 | **Provide Builders** | `Build::new("Car").model("Z").rate(Curr::USD).run();` |
 | **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
-|   | Rust is not OO / Java, only `impl` what makes sense per `T`. |
+|   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
 | **Unsafe** | Avoid `unsafe {}` code. |
 | **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
-| **Tooling** | Use clippy to catch errors and improve code quality. |
-|  | Use rustfmt to help others read your code. |
+| **Tooling** | Use [clippy](https://github.com/rust-lang/rust-clippy) to catch errors and improve code quality. |
+|  | Use [rustfmt](https://github.com/rust-lang/rustfmt) to help others read your code. |
 |  | Add doc comments to document APIs. |
 |  | Add doc & unit tests to ensure your code works. |
-|  | Follow the API Guidelines to make your API feel Rustic. |
+|  | Follow the [API Guidelines](https://rust-lang-nursery.github.io/api-guidelines/) to make your API feel Rustic. |
 
 </div>
 
@@ -445,34 +445,34 @@ If you are used to programming Java or C, consider these.
 
 Lifetimes can be overwhelming at times. Here is a simplified guide on how to read and interpret constructs containing lifetimes.
 
-> **Note**, this section is experimental and takes a rather unconventional approach.
-> For the time being, use with a grain of salt. Feedback very welcome!
+> **Note**:
+> This section is work in progress.
+> For the time being, use with a grain of salt.
+> Feedback very welcome!
 
 | Construct | How to read |
 |--------| -----------|
-| `&'a T`  | This **`&T` is a reference that can hold a "safe pointer"** (borrow) `&t`. |
-|   | At any point this `&T` is written, a valid pointer must be stored. |
-|   | At any point this `&T` is read, a valid pointer must have been stored first. |
-|   | The pointer is valid if it points to a `t: T`, and that `t` lives at least `'a`. |
-|   | This implies this `&T` also has to disappear before `'a` ends. |
-|   | Like a template, `'a` will be decided by the calling code. |
-|   | Caller will decide `'a` based on actual `t`, or another abstract `'b`. |
+| `&'a T`  | This **`&T` is a reference that can hold a borrow"** `&t`. |
+|   | Any borrow stored here must point at a `t`, with this `t` living at least `'a`. |
+|   | Conversely, you must stop using this `&T` before `'a` ends. |
 | `&T`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
 |   | Within methods bodies, lifetimes are determined automatically. |
 |   | Within signatures, lifetimes may be 'elided' (annotated automatically). |
 |  &t | This will take **an actual pointer to an actual `t`**, called 'borrow'. |
 |   | A `&t` is to an `&T` as a `5` is to an `u32`. |
-|   | The moment `&t` is produced, `t` is put into a 'borrowed' state. |
+|   | The moment `&t` is produced, `t` is put into a **borrowed state**. |
 |   | As long as **any** pointer to `t` could be around, `t` cannot be altered. |
 |   | This analysis is based on all possible pointer propagation paths. |
 |   | For example, in `let a = &t; let b = a;`, also `b` needs to go. |
 |   | Borrowing of `t` stops once last `&t` is last used, not when `&t` dropped. |
-|   | The `&t` is considered of type `&'b T`, with `'b` of that `t`. |
-|   | It can be assigned to any `&'a T` when `'b` outlives `'a`. |
-| `S<'a> {}` | This struct contains a pointer somewhere inside. |
-|   | `'a` is the lifetime of the pointer target this might be pointing to. |
-| `f(x: &'a T) -> &'a S`  | This function takes and returns references as above.  |
-|   | It **also propagates borrow state** according to lifetime parameters. |
+| `S<'a> {}` | For any `'a`, let this struct be able to hold a reference `&'a T`. |
+|  | `'a` will be determined automatically by the user of this struct. |
+| `f<'a>(x: &'a T)`  | For any `'a`, let this `fn` accept a reference `&'a T`. |
+| {{ tab() }} {{ tab() }} {{ tab() }} {{ tab() }} `-> &'a S` | ... and that returns a reference `&'a S`. |
+|   | `'a` will be determined automatically by the caller.
+|   | `'a` will be picked so that it **satisfies input and output** at call site. |
+|   | `'a` is mix of where `x` comes from and `f(x)` goes. |
+|   | **In addition, propagate borrow state** according to lifetime names! |
 |   | Here: while `s` from `let s = f(&x)` is around, `x` counts as 'borrowed'. |
 
 {{ tablesep() }}
