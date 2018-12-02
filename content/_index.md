@@ -388,7 +388,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 
 
 
-## Invisible Sugar
+### Invisible Sugar
 
 If something works that "shouldn't work now that you think about it", it might be due to one of these.
 
@@ -464,7 +464,7 @@ Advanced types:
 <!-- Don't render this section for printing, won't be helpful -->
 <div class="noprint">
 
-## More Cheats
+### More Cheats
 
 These are other great visual guides and tables.
 

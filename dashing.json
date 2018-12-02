@@ -1,0 +1,16 @@
+{
+    "name": "Rust Cheat Sheet",
+    "package": "rust_cheat_sheet",
+    "index": "index.html",
+    "selectors": {
+        "h3": "Section",
+        "___": "Packages",
+        "title": "Package"
+    },
+    "ignore": [
+        "ABOUT"
+    ],
+    "icon32x32": "favicon32.png",
+    "allowJS": true,
+    "ExternalURL": "https://cheats.rs"
+}
