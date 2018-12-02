@@ -96,8 +96,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `'a`  | A **lifetime parameter**. {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} |
 | {{ tab() }}  `&'a T`  | A reference to any `t: T`, where such `t` must live at least `'a`. |
 | {{ tab() }}  `&'a mut T`  | A mutable reference to any `t: T`, where such `t` must live at least `'a`. |
-| {{ tab() }}  `S<'a>`  | A struct holding a reference to something which must live at least `'a`. |
-| {{ tab() }}  `fn f<'a>(t: &'a T)`  | Function accepting a reference to an `t` which must live at least `'a`. |
+| {{ tab() }}  `S<'a>`  | Struct generic over `'a` for pointer to something which must live that long. |
+| {{ tab() }}  `fn f<'a>(t: &'a T)`  | Function generic over any `'a` with `&T` pointing to `t` of that lifetime. |
 | `'static`  | Special lifetime lasting the entire program execution. |
 
 </div>
@@ -452,7 +452,7 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 
 | Construct | How to read |
 |--------| -----------|
-| `&'a T`  | This **`&T` is a reference that can hold a borrow"** `&t`. |
+| `&'a T`  | This **`&T` is a reference that can hold a borrow** `&t`. |
 |   | Any borrow stored here must point at a `t`, with this `t` living at least `'a`. |
 |   | Conversely, you must stop using this `&T` before `'a` ends. |
 | `&T`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
