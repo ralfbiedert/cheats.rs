@@ -1,6 +1,6 @@
 {
-    "name": "Rust Cheat Sheet",
-    "package": "rust_cheat_sheet",
+    "name": "Rust Language Cheat Sheet",
+    "package": "rustcheats",
     "index": "index.html",
     "selectors": {
         "h3": "Section",

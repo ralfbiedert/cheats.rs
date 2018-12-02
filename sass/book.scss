@@ -67,6 +67,12 @@ h3 {
     margin-top: 30px;
 }
 
+footer {
+    text-align: center;
+    color: gray;
+    font-size: 9px;
+}
+
 $sidebar-width: 0px;
 @import "navigation";
 @import "content";
