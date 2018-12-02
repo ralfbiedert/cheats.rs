@@ -93,12 +93,14 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `*mut T` | Mutable raw pointer type. |
 | `ref t` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
 | `*x` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
-| `'static`  | Lifetime lasting the entire program execution. |
-| `'a`  | Often seen as `&'a T`, a **lifetime parameter**. {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} |
+| `'a`  | A **lifetime parameter**. {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} |
+| {{ tab() }}  `&'a T`  | A reference to any `t: T`, where such `t` must live at least `'a`. |
+| {{ tab() }}  `&'a mut T`  | A mutable reference to any `t: T`, where such `t` must live at least `'a`. |
+| {{ tab() }}  `S<'a>`  | A struct holding a reference to something which must live at least `'a`. |
+| {{ tab() }}  `fn f<'a>(t: &'a T)`  | Function accepting a reference to an `t` which must live at least `'a`. |
+| `'static`  | Special lifetime lasting the entire program execution. |
 
 </div>
-
-
 
 
 ### Functions & Behavior
@@ -388,7 +390,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 
 
 
-### Invisible Sugar
+## Invisible Sugar
 
 If something works that "shouldn't work now that you think about it", it might be due to one of these.
 
@@ -402,19 +404,85 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html?highlight=lifetime,el#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f(x: &'a T)`.|
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
 
-<!--
-## Expressions vs. Statements
 
-## Lifetimes
+<div class="cheats">
 
-| Name | Description |
+## Idiomatic Rust
+
+If you are used to programming Java or C, consider these.
+
+| Idiom | Code |
+|--------| ---- |
+| **Think in Expressions** | `x = if x { a } else { b };` |
+|  | `x = loop { break 5 };`  |
+|  | `fn f() -> u32 { 0 }`  |
+| **Think in Iterators** | `(1..10).map(f).collect()` |
+|  | <code>names.iter().filter(\|x\| x.starts_with("Rick")).for_each(f)</code> |
+| **Handle Absence with `?`** | `x = might_fail()?;` |
+|  | `get()?.transform()?.run()?` |
+| **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
+|  | `enum E { Visible, Hidden }` over `visible: bool` |
+|  | `struct Charge(f32)` over `f32` |
+| **Provide Builders** | `Build::new("Car").model("Z").rate(Curr::USD).run();` |
+| **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
+|   | Rust is not OO / Java, only `impl` what makes sense per `T`. |
+| **Unsafe** | Avoid `unsafe {}` code. |
+| **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
+| **Tooling** | Use clippy to catch errors and improve code quality. |
+|  | Use rustfmt to help others read your code. |
+|  | Add doc comments to document APIs. |
+|  | Add doc & unit tests to ensure your code works. |
+|  | Follow the API Guidelines to make your API feel Rustic. |
+
+</div>
+
+<!-- | **Split Data & Behavior** | ... | -->
+
+<div class="cheats">
+
+
+## A Guide to Reading Lifetimes
+
+Lifetimes can be overwhelming at times. Here is a simplified guide on how to read and interpret constructs containing lifetimes.
+
+> **Note**, this section is experimental and takes a rather unconventional approach.
+> For the time being, use with a grain of salt. Feedback very welcome!
+
+| Construct | How to read |
 |--------| -----------|
-| `&'a T`  | At any point this `&T` must hold a pointer towards a `t`, with a lifetime of any such `t` that might be in here of at least `'a`. Conversely, the 'usable existence' of `&T` has to be equal or smaller than `'a`. The actual lifetime `'a` is determined based on which `&t` are assigned to it. |
-| `&T`  | Sometimes `'a` might be elided and can't be specified, but it still exists. |
-| `&t`  | Inversely to `&'a T` Rust also checks whether a `&t` |
-| `S<'a> {}`  | This struct contains a pointer somewhere inside. Analog to `&'a T`. |
-| `f(x: &'a T) -> &'a S`  | This has two effects. One, the returned pointer must life as long as `'a`.  |
+| `&'a T`  | This **`&T` is a reference that can hold a "safe pointer"** (borrow) `&t`. |
+|   | At any point this `&T` is written, a valid pointer must be stored. |
+|   | At any point this `&T` is read, a valid pointer must have been stored first. |
+|   | The pointer is valid if it points to a `t: T`, and that `t` lives at least `'a`. |
+|   | This implies this `&T` also has to disappear before `'a` ends. |
+|   | Like a template, `'a` will be decided by the calling code. |
+|   | Caller will decide `'a` based on actual `t`, or another abstract `'b`. |
+| `&T`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
+|   | Within methods bodies, lifetimes are determined automatically. |
+|   | Within signatures, lifetimes may be 'elided' (annotated automatically). |
+|  &t | This will take **an actual pointer to an actual `t`**, called 'borrow'. |
+|   | A `&t` is to an `&T` as a `5` is to an `u32`. |
+|   | The moment `&t` is produced, `t` is put into a 'borrowed' state. |
+|   | As long as **any** pointer to `t` could be around, `t` cannot be altered. |
+|   | This analysis is based on all possible pointer propagation paths. |
+|   | For example, in `let a = &t; let b = a;`, also `b` needs to go. |
+|   | Borrowing of `t` stops once last `&t` is last used, not when `&t` dropped. |
+|   | The `&t` is considered of type `&'b T`, with `'b` of that `t`. |
+|   | It can be assigned to any `&'a T` when `'b` outlives `'a`. |
+| `S<'a> {}` | This struct contains a pointer somewhere inside. |
+|   | `'a` is the lifetime of the pointer target this might be pointing to. |
+| `f(x: &'a T) -> &'a S`  | This function takes and returns references as above.  |
+|   | It **also propagates borrow state** according to lifetime parameters. |
+|   | Here: while `s` from `let s = f(&x)` is around, `x` counts as 'borrowed'. |
 
+{{ tablesep() }}
+
+Mutable borrows `&mut t` and references `&mut T` work similarly, but they prevent other borrows from existing.
+
+</div>
+
+
+<!--
 
 ## Data Layout
 
@@ -439,32 +507,14 @@ Advanced types:
 |`&'a T`| word<sup>*</sup> | Same as `&T`, lifetimes disappear in assembly (contrasting move). |
 |`&[T]`| 2 x word<sup>*</sup> | A slice is represented as `(ptr, len)`. |
 
-&nbsp; &nbsp; <sup>*</sup> whatever word size is on machine, usually 4 or 8 bytes. -->
-
-<!--
-| {{ tab() }} `impl S<u32> {}`  | You can "implement" the same struct multiple times as long as the ... |
-| {{ tab() }} `impl S<f32> {}`  | ... types differ. This even allows `S` to have totally different methods ... |
-| {{ tab() }} `impl<T> S<T: A> {}`  | ... for each `S<T>`, which is great if some don't make sense everywhere. | -->
-
-
-<!--
-
-# Lingo
-
-| Name | Description |
-|--------| -----------|
-| **Algebraic Data Type** {{ nom(page="coercions.html") }} |  |
-| **Tagged Union** {{ nom(page="coercions.html") }} |  |
-| **Sum Type** {{ nom(page="coercions.html") }} |  |
+&nbsp; &nbsp; <sup>*</sup> whatever word size is on machine, usually 4 or 8 bytes.
  -->
-
-<!-- | **Lifetime Inference** {{ book(page="") }} {{ book(page="") }} | Automatically correct `'a` for `&'a T`.| -->
 
 
 <!-- Don't render this section for printing, won't be helpful -->
 <div class="noprint">
 
-### More Cheats
+## More Cheats
 
 These are other great visual guides and tables.
 

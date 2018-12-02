@@ -37,6 +37,14 @@ zola serve
 Contributions are very welcome. You can PR bug fixes (broken links, typos, ...) directly. I am happy to evolve the current concept based on feedback and demands. Feel free to open an issue and discuss.
 
 
+# Credits
+
+Takes inspiration from:
+
+* [The Book](https://doc.rust-lang.org/stable/book/) (some tables)
+* [Idiomatic Rust Libraries](https://killercup.github.io/rustfest-idiomatic-libs/#/) (Idiomatic Rust)
+
+
 # License
 
-CC0 to the extent applicable. Uses tables from [The Book](https://doc.rust-lang.org/stable/book/).
+CC0 to the extent applicable.
