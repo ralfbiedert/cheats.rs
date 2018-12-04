@@ -93,11 +93,11 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `*mut T` | Mutable raw pointer type. |
 | `ref t` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
 | `*x` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
-| `'a`  | A **lifetime parameter**. {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} |
-| {{ tab() }}  `&'a T`  | A reference to any `t: T`, where such `t` must live at least `'a`. |
-| {{ tab() }}  `&'a mut T`  | A mutable reference to any `t: T`, where such `t` must live at least `'a`. |
-| {{ tab() }}  `S<'a>`  | Struct generic over `'a` for pointer to something which must live that long. |
-| {{ tab() }}  `fn f<'a>(t: &'a T)`  | Function generic over any `'a` with `&T` pointing to `t` of that lifetime. |
+| `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}}, duration of a flow in static analysis. |
+| {{ tab() }}  `&'a T`  | Place for pointer to location of `T`. Only accepts loc. living `'a` or longer. |
+| {{ tab() }}  `&'a mut T`  | Same, but mutable. |
+| {{ tab() }}  `S<'a>`  | Same, for some embedded pointer in `S`. Creator of `S` decides `'a`. |
+| {{ tab() }}  `fn f<'a>(t: &'a T)`  | Same, for function. Caller decides `'a`. |
 | `'static`  | Special lifetime lasting the entire program execution. |
 
 </div>
@@ -452,24 +452,29 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 
 | Construct | How to read |
 |--------| -----------|
-| `&'a T`  | This **`&T` is a reference that can hold a borrow** `&t`. |
-|   | Any borrow stored here must point at a `t`, with this `t` living at least `'a`. |
-|   | Conversely, you must stop using this `&T` before `'a` ends. |
+| `&'a T`  | This `&T` is a **place that can hold a pointer** (i.e., reference). |
+|   | Any pointer stored in here must point to a location of a `T`. |
+|   | Any location pointed to must live at least for duration `'a`. |
+|   | For whole duration of `'a`, location pointed to must hold valid `t`.  |
+|   | This `&T` must be stopped being using before `'a` ends. |
+|   | Duration of `'a` is purely compile time. Random `if` in code not reflected. |
 | `&T`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
 |   | Within methods bodies, lifetimes are determined automatically. |
 |   | Within signatures, lifetimes may be 'elided' (annotated automatically). |
-|  &t | This will take **an actual pointer to an actual `t`**, called 'borrow'. |
+|  `&t` | This will produce **an actual pointer to an actual `t`**, called 'borrow'. |
 |   | A `&t` is to an `&T` as a `5` is to an `u32`. |
 |   | The moment `&t` is produced, `t` is put into a **borrowed state**. |
 |   | As long as **any** pointer to `t` could be around, `t` cannot be altered. |
 |   | This analysis is based on all possible pointer propagation paths. |
 |   | For example, in `let a = &t; let b = a;`, also `b` needs to go. |
 |   | Borrowing of `t` stops once last `&t` is last used, not when `&t` dropped. |
-| `S<'a> {}` | For any `'a`, let this struct be able to hold a reference `&'a T`. |
+| `S<'a> {}` | Signals that `S` will contain a pointer (i.e., reference). |
 |  | `'a` will be determined automatically by the user of this struct. |
-| `f<'a>(x: &'a T)`  | For any `'a`, let this `fn` accept a reference `&'a T`. |
-| {{ tab() }} {{ tab() }} {{ tab() }} {{ tab() }} `-> &'a S` | ... and that returns a reference `&'a S`. |
-|   | `'a` will be determined automatically by the caller.
+|  | `'a` will be chosen as small as possible. |
+| `f<'a>(x: &'a T)`  | Signals this struct will accept a pointer (i.e., reference). |
+| {{ tab() }} {{ tab() }} {{ tab() }} {{ tab() }} `-> &'a S` | ... and that returns one. |
+|   | `'a` will be determined automatically by the caller. |
+|   | `'a` will be chosen as small as possible. |
 |   | `'a` will be picked so that it **satisfies input and output** at call site. |
 |   | `'a` is mix of where `x` comes from and `f(x)` goes. |
 |   | **In addition, propagate borrow state** according to lifetime names! |
