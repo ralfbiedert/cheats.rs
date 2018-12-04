@@ -40,8 +40,10 @@ Define data types and memory locations, and use them.
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `static X: T = x;`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
 | `const X: T = x;`  | Define inlineable **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Inlined values are mutable!!! |
-| `let x;`  | **Variable binding** {{ todo() }} that can't be changed or `&mut`'ed. |
-| `let mut x;`  | Same, but allow for change or mutable borrow. |
+| `let x;`  | Allocate bytes on stack called `x`. Can be assigned once, not mutated. |
+| `let mut x;`  | Like `let`, but allow for change or mutable borrow. |
+| {{ tab() }} `x = y` | Copy bytes at `y` to bytes at `x` if `Copy`. Compiler might optimize. |
+| {{ tab() }} `x = y` | Same, but also invalidate `y` if not `Copy`. Compiler might optimize. |
 
 </div>
 
@@ -456,7 +458,7 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 |   | Any pointer stored in here must point to a location of a `T`. |
 |   | Any location pointed to must live at least for duration `'a`. |
 |   | For whole duration of `'a`, location pointed to must hold valid `t`.  |
-|   | This `&T` must be stopped being using before `'a` ends. |
+|   | This `&T` must be stopped being used before `'a` ends. |
 |   | Duration of `'a` is purely compile time. Random `if` in code not reflected. |
 | `&T`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
 |   | Within methods bodies, lifetimes are determined automatically. |
