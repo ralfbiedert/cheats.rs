@@ -56,6 +56,7 @@ Define data types and memory locations, and use them.
 | `S { x: y }` | Create `struct S {}` or `use`'ed `enum E::S {}` with field `x` set to `y`. |
 | `S { x }` | Same, but use local variable `x` for field `x`. |
 | `S { ..s }` | Fill remaining fields from `s`, esp. useful with [Default](https://doc.rust-lang.org/std/default/trait.Default.html). |
+| `S { 0: x }` | Like `S` `(x)` below, but set field `.0` with struct syntax.  |
 | `S` `(x)` | Create `struct S` `(T)` or `use`'ed `enum E::S` `()` with field `.0` set to `x`. |
 | `S` | If `S` is unit `struct S;` or `use`'ed `enum E::S` create value of `S`. |
 | `E::C { x: y }` | Create enum variant `C`. Other methods above also work. |
@@ -121,12 +122,14 @@ Define units of code and their abstractions.
 | `fn f() {}`  | Definition of a **function** {{ book(page="ch03-03-how-functions-work.html") }}  {{ ex(page="fn.html") }} {{ ref(page="items/functions.html") }}; or associated function if inside `impl`. |
 | {{ tab() }} `fn f() -> T {}`  | Same, returning a type T. |
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
+| `const fn f() {}`  | Constant `fn` for compile time compilations, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
 | `fn() -> T`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with traits `Fn`, `FnOnce`, `FnMut`. |
 | <code>\|\| {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
 | {{ tab() }} <code>\|x\| {}</code> | Closure with a bound parameter `x`. |
 | {{ tab() }} <code>\|x\| x + x</code> | Closure without block expression.  |
 | {{ tab() }} <code>move \|x\| x + y </code> | Closure taking ownership of its captures. |
 | {{ tab() }} <code> return \|\| true </code> | Closures may sometimes look like logical ORs (here: return a closure). |
+| `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, ...). |
 | `x.f()` | Call member function, requires `f` takes `self`, `&self`, ... as first argument. |
 | {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
 | {{ tab() }} `X::f(&x)` | Same as `x.f()`. |
