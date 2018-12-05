@@ -40,10 +40,10 @@ Define data types and memory locations, and use them.
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `static X: T = x;`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
 | `const X: T = x;`  | Define inlineable **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Inlined values are mutable!!! |
-| `let x;`  | Allocate bytes on stack called `x`. Can be assigned once, not mutated. |
-| `let mut x;`  | Like `let`, but allow for change or mutable borrow. |
-| {{ tab() }} `x = y` | Copy bytes at `y` to bytes at `x` if `Copy`. Compiler might optimize. |
-| {{ tab() }} `x = y` | Same, but also invalidate `y` if not `Copy`. Compiler might optimize. |
+| `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable. |
+| `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. |
+| {{ tab() }} `x = y` | Copy bytes at `y` to bytes at `x` if `T: Copy`. Compiler might optimize. |
+| {{ tab() }} `x = y` | Same, but also invalidate `y` if `T` not `Copy`. Compiler might optimize. |
 
 </div>
 
@@ -98,7 +98,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `*x` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}}, duration of a flow in static analysis. |
 | {{ tab() }}  `&'a T`  | Place for pointer to location of `T`. Only accepts loc. living `'a` or longer. |
-| {{ tab() }}  `&'a mut T`  | Same, but mutable. |
+| {{ tab() }}  `&'a mut T`  | Same, but allow content of location of `T` to be changed. |
 | {{ tab() }}  `S<'a>`  | Same, for some embedded pointer in `S`. Creator of `S` decides `'a`. |
 | {{ tab() }}  `fn f<'a>(t: &'a T)`  | Same, for function. Caller decides `'a`. |
 | `'static`  | Special lifetime lasting the entire program execution. |
@@ -308,7 +308,8 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | `S<'_>` | Inferred **anonymous lifetime**. {{ book(page="ch19-02-advanced-lifetimes.html#the-anonymous-lifetime") }} |
 | `S<_>` | Inferred **anonymous type**. {{ todo() }} |
 | `S::<T>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation, e.g. `f::<u32>()`. |
-| `trait T { type X; }`  | Defines an **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} `X` for trait `T`. |
+| `trait T<X> {}`  | A trait generic over `X`. Can have multiple `impl T for S` (one per `X`). |
+| `trait T { type X; }`  | Defines **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} `X`. Only one `impl T for S` possible. |
 | {{ tab() }} `type X = R;`  | Set associated type within `impl T for S { type X = R; }`. |
 | `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`.  |
 | `impl S<T> {}`  | Implement functionality for exactly `S<T>` (e.g., `S<u32>`).  |
