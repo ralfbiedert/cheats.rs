@@ -411,6 +411,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
 
 
+
 <div class="cheats">
 
 ## Idiomatic Rust
@@ -525,6 +526,9 @@ Advanced types:
 <!-- Don't render this section for printing, won't be helpful -->
 <div class="noprint">
 
+
+
+
 ## More Cheats
 
 These are other great visual guides and tables.
@@ -540,6 +544,19 @@ These are other great visual guides and tables.
 | [API Guidelines Checklist](https://rust-lang-nursery.github.io/api-guidelines/checklist.html) | How to design your own APIs. |
 | [Periodic Table of Types](http://cosmic.mearie.org/2014/01/periodic-table-of-rust-types) | How various types and references correlate. |
 | [Futures](https://rufflewind.com/img/rust-futures-cheatsheet.html) | How to construct and work with futures. |
+
+{{ tablesep() }}
+
+
+The following tools you can install with  **`cargo install cargo-[tool]`** (e.g., `cargo install cargo-asm`). They also need Rust nightly, take a few moments to compile, and might be a bit fragile ⚠️
+
+| Tool | Description |
+|--------| -----------|
+| `cargo asm` | Disassemble Rust code, the ultimate ground truth ([src](https://github.com/gnzlbg/cargo-asm)).  |
+| `cargo inspect` | Show mostly desugared Rust ([src](https://github.com/mre/cargo-inspect)). |
+
+
+
 
 ## Meta
 
