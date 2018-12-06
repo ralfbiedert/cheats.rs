@@ -459,8 +459,16 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 
 | Construct | How to read |
 |--------| -----------|
-| `&'a T`  | This `&T` is a **place that can hold a pointer** (i.e., reference). |
-|   | Any pointer stored in here must point to a location of a `T`. |
+| `let t: T = T(0)`  | To understand lifetimes it important to mentally separate a few concepts.  |
+|   | In Java / Python a variable `t` often is synonymous with the value inside.  |
+|   | In fact, `t` only refers to the **location that can hold a value** `T`. |
+|   | In Rust, it is important to separate this location from the contained value. |
+|   | That location is `T`-sized and is named `t`. |
+|   | If declared with `let`, it lives on the stack. |
+|   | Talking about `T` (or `&T`) can, of course, mean so much more (behavior, ...). |
+|   | Below, any type `T` (or type `&T`) shall only mean _memory for a `T` (&T)_. |
+| `&'a T`  | A `&T` is a **location that can hold a pointer** (i.e., reference). |
+|   | Any pointer stored in here must point to another location of a `T`. |
 |   | Any location pointed to must live at least for duration `'a`. |
 |   | For whole duration of `'a`, location pointed to must hold valid `t`.  |
 |   | This `&T` must be stopped being used before `'a` ends. |
@@ -468,13 +476,16 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 | `&T`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
 |   | Within methods bodies, lifetimes are determined automatically. |
 |   | Within signatures, lifetimes may be 'elided' (annotated automatically). |
-|  `&t` | This will produce **an actual pointer to an actual `t`**, called 'borrow'. |
+|  `&t` | This will produce **an actual pointer to a location of `t`**, called 'borrow'. |
 |   | A `&t` is to an `&T` as a `5` is to an `u32`. |
-|   | The moment `&t` is produced, `t` is put into a **borrowed state**. |
-|   | As long as **any** pointer to `t` could be around, `t` cannot be altered. |
+|   | The moment `&t` is produced, location `t` is put into a **borrowed state**. |
+|   | As long as **any** pointer to `t` could be around, `t` cannot be altered directly. |
 |   | This analysis is based on all possible pointer propagation paths. |
 |   | For example, in `let a = &t; let b = a;`, also `b` needs to go. |
 |   | Borrowing of `t` stops once last `&t` is last used, not when `&t` dropped. |
+| `&mut t` | Same, but will produce a mutable borrow. |
+|   | A `&mut` will allow the *owner of the borrow* to change `t`'s content. |
+|   | This reiterates that not the value in `t`, but `t`'s location is borrowed. |
 | `S<'a> {}` | Signals that `S` will contain a pointer (i.e., reference). |
 |  | `'a` will be determined automatically by the user of this struct. |
 |  | `'a` will be chosen as small as possible. |
@@ -488,8 +499,6 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 |   | Here: while `s` from `let s = f(&x)` is around, `x` counts as 'borrowed'. |
 
 {{ tablesep() }}
-
-Mutable borrows `&mut t` and references `&mut T` work similarly, but they prevent other borrows from existing.
 
 </div>
 
@@ -547,6 +556,9 @@ These are other great visual guides and tables.
 
 {{ tablesep() }}
 
+<!--
+
+TODO: These are a bit too fragile right now.
 
 The following tools you can install with  **`cargo install cargo-[tool]`** (e.g., `cargo install cargo-asm`). They also need Rust nightly, take a few moments to compile, and might be a bit fragile ⚠️
 
@@ -554,7 +566,7 @@ The following tools you can install with  **`cargo install cargo-[tool]`** (e.g.
 |--------| -----------|
 | `cargo asm` | Disassemble Rust code, the ultimate ground truth ([src](https://github.com/gnzlbg/cargo-asm)).  |
 | `cargo inspect` | Show mostly desugared Rust ([src](https://github.com/mre/cargo-inspect)). |
-
+ -->
 
 
 
