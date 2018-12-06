@@ -459,7 +459,7 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 
 | Construct | How to read |
 |--------| -----------|
-| `let t: T = T(0)`  | To understand lifetimes it important to mentally separate a few concepts.  |
+| `let t: T = T(0)`  | To understand lifetimes we need to distinguish a few concepts.  |
 |   | In Java / Python a variable `t` often is synonymous with the value inside.  |
 |   | In fact, `t` only refers to the **location that can hold a value** `T`. |
 |   | In Rust, it is important to separate this location from the contained value. |
