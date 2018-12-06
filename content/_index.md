@@ -537,7 +537,6 @@ Advanced types:
 
 
 
-
 ## More Cheats
 
 These are other great visual guides and tables.
@@ -556,28 +555,10 @@ These are other great visual guides and tables.
 
 {{ tablesep() }}
 
-<!--
-
-TODO: These are a bit too fragile right now.
-
-The following tools you can install with  **`cargo install cargo-[tool]`** (e.g., `cargo install cargo-asm`). They also need Rust nightly, take a few moments to compile, and might be a bit fragile ⚠️
-
-| Tool | Description |
-|--------| -----------|
-| `cargo asm` | Disassemble Rust code, the ultimate ground truth ([src](https://github.com/gnzlbg/cargo-asm)).  |
-| `cargo inspect` | Show mostly desugared Rust ([src](https://github.com/mre/cargo-inspect)). |
- -->
-
-
-
 ## Meta
 
 > Want this Rust cheat sheet as a PDF download? <a href="javascript:window.print()"><b>Generate PDF</b></a> (or select File > Print) and then "Save as PDF". It looks great in both Firefox's and Chrome's PDF exports. Alternatively use the <a href="rust_cheat_sheet.pdf"><b>cached PDF</b></a>.
 
 </div>
 
-
 <footer>Ralf Biedert, {{ year() }} – <a href="https://cheats.rs">cheats.rs</a></footer>
-
-
-<!-- {{ tool(src="/link_godbolt.png", title="Compiler Explorer", url="https://godbolt.org/") }} -->
