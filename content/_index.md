@@ -450,7 +450,7 @@ If you are used to programming Java or C, consider these.
 
 ## A Guide to Reading Lifetimes
 
-Lifetimes can be overwhelming at times. Here is a simplified guide on how to read and interpret constructs containing lifetimes.
+Lifetimes can be overwhelming at times. Here is a simplified guide on how to read and interpret constructs containing lifetimes if you are familiar with C.
 
 > **Note**:
 > This section is work in progress.
@@ -459,32 +459,30 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 
 | Construct | How to read |
 |--------| -----------|
-| `let t: T = T(0)`  | To understand lifetimes we need to distinguish a few concepts.  |
-|   | In Java / Python a variable `t` often is synonymous with the value inside.  |
-|   | In fact, `t` only refers to the **location that can hold a value** `T`. |
-|   | In Rust, it is important to separate this location from the contained value. |
-|   | That location is `T`-sized and is named `t`. |
-|   | If declared with `let`, it lives on the stack. |
-|   | Talking about `T` (or `&T`) can, of course, mean so much more (behavior, ...). |
-|   | Below, any type `T` (or type `&T`) shall only mean _memory for a `T` (&T)_. |
-| `&'a T`  | A `&T` is a **location that can hold a pointer** (i.e., reference). |
-|   | Any pointer stored in here must point to another location of a `T`. |
-|   | Any location pointed to must live at least for duration `'a`. |
-|   | For whole duration of `'a`, location pointed to must hold valid `t`.  |
-|   | This `&T` must be stopped being used before `'a` ends. |
-|   | Duration of `'a` is purely compile time. Random `if` in code not reflected. |
+| `let t: T = T(0)`  | A location that is `T`-sized, named `t`, and contains the value `T(0)`.|
+|   | If declared with `let`, that location lives on the stack. |
+|   | Generally, `t` can mean _location of `t`_, and _value within `t`_. |
+|   | As a location, `t = T(1)` means, assign value `T(1)` to location `t`. |
+|   | As a value, `f(t)` means call `f` with value inside of `t`. |
+|   | To explicitly talk about its location (address) we do `&t`. |
+|   | To explicitly talk about a location that can hold such a location we do `&T`. |
+| `&'a T`  | A `&T` is a **location that can hold an address** (i.e., reference). |
+|   | Any address stored in here must be that of a valid `T`. |
+|   | Any address stored must _live_ at least for (_outlive_) duration `'a`. |
+|   | That means during `'a` memory targeted by `&T` can't be invalidated.  |
+|   | Also, this `&T` must be stopped being used before `'a` ends. |
+|   | Duration of `'a` is purely compile time view, based on static analysis. |
 | `&T`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
 |   | Within methods bodies, lifetimes are determined automatically. |
 |   | Within signatures, lifetimes may be 'elided' (annotated automatically). |
-|  `&t` | This will produce **an actual pointer to a location of `t`**, called 'borrow'. |
-|   | A `&t` is to an `&T` as a `5` is to an `u32`. |
+|  `&t` | This will produce the **actual address of location `t`**, called 'borrow'. |
 |   | The moment `&t` is produced, location `t` is put into a **borrowed state**. |
-|   | As long as **any** pointer to `t` could be around, `t` cannot be altered directly. |
-|   | This analysis is based on all possible pointer propagation paths. |
+|   | As long as **any** `&t` could be around, `t` cannot be altered directly. |
+|   | This analysis is based on all possible address propagation paths. |
 |   | For example, in `let a = &t; let b = a;`, also `b` needs to go. |
 |   | Borrowing of `t` stops once last `&t` is last used, not when `&t` dropped. |
 | `&mut t` | Same, but will produce a mutable borrow. |
-|   | A `&mut` will allow the *owner of the borrow* to change `t`'s content. |
+|   | A `&mut` will allow the *owner of the borrow* (address) to change `t`'s content. |
 |   | This reiterates that not the value in `t`, but `t`'s location is borrowed. |
 | `S<'a> {}` | Signals that `S` will contain a pointer (i.e., reference). |
 |  | `'a` will be determined automatically by the user of this struct. |
