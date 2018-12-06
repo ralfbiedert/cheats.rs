@@ -176,8 +176,8 @@ Segment projects into smaller units and minimize dependencies.
 
 | Sigil | Explanation |
 |---------|-------------|
-| `mod m {}`  | Define a **module**. {{ book(page="ch07-00-modules.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} |
-| `a::b` | Namespace **path** {{ book(page="ch07-03-importing-names-with-use.html") }} {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, ...). |
+| `mod m {}`  | Define a **module**. {{ book(page="ch07-02-modules-and-use-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} |
+| `a::b` | Namespace **path** {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, ...). |
 | {{ tab() }} `::x` | Search `x` relative to crate root. {{ deprecated() }} |
 | {{ tab() }} `crate::x` | Search `x` relative to crate root. {{ edition(ed="'18") }} |
 | {{ tab() }} `self::x`  | Search `x` relative to current module. |
@@ -186,7 +186,7 @@ Segment projects into smaller units and minimize dependencies.
 | `use a::{b, c};` | Same, but bring `b` and `c` into scope. |
 | `use a::*;`  | Bring everything from `a` into scope and reexport. |
 | `pub use a::b;`  | Bring `a::b` into scope and reexport from here. |
-| `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-controlling-visibility-with-pub.html#controlling-visibility-with-pub") }} {{ ex(page="mod/visibility.html#visibility") }} {{ ref(page="visibility-and-privacy.html#visibility-and-privacy") }} for `T`. |
+| `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-modules-and-use-to-control-scope-and-privacy.html") }} for `T`. |
 | {{ tab() }} `pub(crate) T` | Visible at most in current crate. |
 | {{ tab() }} `pub(self) T`  | Visible at most in current module. |
 | {{ tab() }} `pub(super) T`  | Visible at most in parent. |
@@ -227,9 +227,9 @@ Constructs expanded before the actual compilation happens.
 
 | Example |  Explanation |
 |---------|---------|
-| `m!()` |  **Macro** {{book(page="appendix-04-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation, also `m!{}`, `m![]` (depending on macro). |
+| `m!()` |  **Macro** {{book(page="ch19-06-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation, also `m!{}`, `m![]` (depending on macro). |
 | `$x:ty`  | Macro capture, also `$x:expr`, `$x:ty`, `$x:path`, ... {{ref(page="macros-by-example.html")}} |
-| `$x` |  Macro substitution in **macros by example**. {{book(page="appendix-04-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
+| `$x` |  Macro substitution in **macros by example**. {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
 | `$(x),*` | Macro repetition "zero or more times" in macros by example. |
 | {{ tab() }} `$(x),+` | Same, but "one or more times". |
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
