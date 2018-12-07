@@ -462,9 +462,6 @@ Some commands and tools that are good to know.
 |  | `expanded` Show with expanded macros, ... |
 | `rustup docs` | Open offline Rust documentation, good on a plane! |
 
-| Tool | Description |
-|--------| ---- |
-
 
 {{ tablesep() }}
 
