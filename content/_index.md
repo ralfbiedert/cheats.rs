@@ -448,37 +448,6 @@ If you are used to programming Java or C, consider these.
 </div>
 
 
-## Tooling
-
-Some commands and tools that are good to know.
-
-
-| Command | Description |
-|--------| ---- |
-| `cargo init` | Create a new project for the latest edition. |
-| `cargo build` | Build the project in debug mode (`--release` for all optimization). |
-| `cargo check` | Check if project would compile (much faster). |
-| `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
-|  | `expanded` Show with expanded macros, ... |
-| `rustup docs` | Open offline Rust documentation, good on a plane! |
-
-
-{{ tablesep() }}
-
-
-These are 3rd party tools and need to be installed with `cargo install cargo-[tool]` first.
-They often require unstable and are subject to break.
-
-<div class="cheats">
-
-
-| Command | Description |
-|--------| ---- |
-| `cargo asm` | Show generated assembly instructions for code. |
-
-</div>
-
-
 
 <div class="cheats">
 
@@ -534,6 +503,38 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 {{ tablesep() }}
 
 </div>
+
+
+## Tooling
+
+Some commands and tools that are good to know.
+
+
+| Command | Description |
+|--------| ---- |
+| `cargo init` | Create a new project for the latest edition. |
+| `cargo build` | Build the project in debug mode (`--release` for all optimization). |
+| `cargo check` | Check if project would compile (much faster). |
+| `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
+|  | `expanded` Show with expanded macros, ... |
+| `rustup docs` | Open offline Rust documentation, good on a plane! |
+
+
+{{ tablesep() }}
+
+
+These are 3rd party tools and need to be installed with `cargo install cargo-[tool]` first.
+They often require unstable and are subject to break.
+
+<div class="cheats">
+
+
+| Command | Description |
+|--------| ---- |
+| `cargo asm` | Show generated assembly instructions for code. |
+
+</div>
+
 
 
 <!--
