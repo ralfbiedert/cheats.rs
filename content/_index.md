@@ -488,16 +488,17 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 | `&mut t` | Same, but will produce a mutable borrow. |
 |   | A `&mut` will allow the *owner of the borrow* (address) to change `t`'s content. |
 |   | This reiterates that not the value in `t`, but `t`'s location is borrowed. |
-| `S<'a> {}` | Signals that `S` will contain a pointer (i.e., reference). |
+| `S<'a> {}` | Signals that `S` will hold an address (i.e., reference). |
 |  | `'a` will be determined automatically by the user of this struct. |
 |  | `'a` will be chosen as small as possible. |
-| `f<'a>(x: &'a T)`  | Signals this struct will accept a pointer (i.e., reference). |
-| {{ tab() }} {{ tab() }} {{ tab() }} {{ tab() }} `-> &'a S` | ... and that returns one. |
+| `f<'a>(x: &'a T)`  | Signals this function will accept an address (i.e., reference). |
+| {{ tab() }} {{ tab() }} {{ tab() }} {{ tab() }} `-> &'a S` | ... and that it returns one. |
 |   | `'a` will be determined automatically by the caller. |
 |   | `'a` will be chosen as small as possible. |
 |   | `'a` will be picked so that it **satisfies input and output** at call site. |
 |   | `'a` is mix of where `x` comes from and `f(x)` goes. |
 |   | **In addition, propagate borrow state** according to lifetime names! |
+|   | So while result address with `'a` is used, input address with `'a` is locked.  |
 |   | Here: while `s` from `let s = f(&x)` is around, `x` counts as 'borrowed'. |
 
 {{ tablesep() }}
