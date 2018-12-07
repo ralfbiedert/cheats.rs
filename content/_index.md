@@ -88,8 +88,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 
 | Example | Explanation |
 |---------|-------------|
-| `&t` | Immutable **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (i.e., an actual "pointer to t", like `0x1234`). |
-| `&T` | Immutable **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (i.e., safe pointer _type_ holding _any_ `&t`). |
+| `&t` | Immutable **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (on low level, address of _this_ `t`, like `0x1234`). |
+| `&T` | Immutable **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (space and type holding _any_ `&t`). |
 | `&mut t` | Borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `&mut T` | Reference that allows mutability. |
 | `*const T` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}. |
