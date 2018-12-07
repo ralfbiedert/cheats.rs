@@ -433,17 +433,55 @@ If you are used to programming Java or C, consider these.
 | **Provide Builders** | `Build::new("Car").model("Z").rate(Curr::USD).run();` |
 | **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
 |   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
-| **Unsafe** | Avoid `unsafe {}` code. |
+| **Unsafe** | Avoid `unsafe {}` code unless doing FFI. |
 | **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
-| **Tooling** | Use [clippy](https://github.com/rust-lang/rust-clippy) to catch errors and improve code quality. |
-|  | Use [rustfmt](https://github.com/rust-lang/rustfmt) to help others read your code. |
-|  | Add doc comments to document APIs. |
-|  | Add doc & unit tests to ensure your code works. |
-|  | Follow the [API Guidelines](https://rust-lang-nursery.github.io/api-guidelines/) to make your API feel Rustic. |
+| **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
+|  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
+|  | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
+|  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
+|  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
+|  | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) to make your API feel Rustic. |
+
+<!-- |  | Add benchmarks (`#[bench]`) to ensure your code is fast. | -->
+
 
 </div>
 
-<!-- | **Split Data & Behavior** | ... | -->
+
+## Tooling
+
+Some commands and tools that are good to know.
+
+
+| Tool | Description |
+|--------| ---- |
+| `cargo init` | Create a new project for the latest edition. |
+| `cargo build` | Build the project in debug mode (`--release` for all optimization). |
+| `cargo check` | Check if project would compile (much faster). |
+| `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
+|  | `expanded` Show with expanded macros, ... |
+| `rustup docs` | Open offline Rust documentation, good on a plane! |
+
+| Tool | Description |
+|--------| ---- |
+
+
+{{ tablesep() }}
+
+
+These are 3rd party tools and need to be installed with `cargo install cargo-[tool]` first.
+They often require unstable and are subject to break.
+
+<div class="cheats">
+
+
+| Tool | Description |
+|--------| ---- |
+| `cargo asm` | Show generated assembly instructions for code. |
+
+</div>
+
+
 
 <div class="cheats">
 
