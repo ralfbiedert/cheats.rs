@@ -97,9 +97,9 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `ref t` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
 | `*x` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}}, duration of a flow in static analysis. |
-| {{ tab() }}  `&'a T`  | Place for pointer to location of `T`. Only accepts loc. living `'a` or longer. |
-| {{ tab() }}  `&'a mut T`  | Same, but allow content of location of `T` to be changed. |
-| {{ tab() }}  `S<'a>`  | Same, for some embedded pointer in `S`. Creator of `S` decides `'a`. |
+| {{ tab() }}  `&'a T`  | Place for an address of a `T`. Only accepts addr. living `'a` or longer. |
+| {{ tab() }}  `&'a mut T`  | Same, but allow content of address to be changed. |
+| {{ tab() }}  `S<'a>`  | Signals `S` will contain address with lifetime `'a`. Creator of `S` decides `'a`. |
 | {{ tab() }}  `fn f<'a>(t: &'a T)`  | Same, for function. Caller decides `'a`. |
 | `'static`  | Special lifetime lasting the entire program execution. |
 
@@ -138,7 +138,7 @@ Define units of code and their abstractions.
 | {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T` (i.e., `x.f()` finds methods of `T` if in scope). |
 | `X::f()` | Call associated function, e.g., `X::new()`. |
 | {{ tab() }} `<X as T>::f()` | Call `T::f()` implemented for `X`. |
-| `unsafe {}` | Marker for **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} that will probably segfa#%$@. |
+| `unsafe {}` | Marker for **unsafe code** {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} that will probably segfa#%$@. |
 
 </div>
 
@@ -453,7 +453,7 @@ If you are used to programming Java or C, consider these.
 Some commands and tools that are good to know.
 
 
-| Tool | Description |
+| Command | Description |
 |--------| ---- |
 | `cargo init` | Create a new project for the latest edition. |
 | `cargo build` | Build the project in debug mode (`--release` for all optimization). |
@@ -472,7 +472,7 @@ They often require unstable and are subject to break.
 <div class="cheats">
 
 
-| Tool | Description |
+| Command | Description |
 |--------| ---- |
 | `cargo asm` | Show generated assembly instructions for code. |
 
