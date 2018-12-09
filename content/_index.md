@@ -93,8 +93,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `&[T]` | Special slice reference that contains address _and_ length (like `&str`). |
 | {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains addr. of _data_ and _vtable_. |
 | {{ tab() }} `&mut T` | Like `&T` but allows mutability (also `&mut [T]`, `&mut dyn T`, ...) |
-| `*const T` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}. |
-| `*mut T` | Mutable raw pointer type. |
+| `*const T` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}, like `&T` but w/o compile safety. |
+| `*mut T` | Mutable raw pointer type, like `&mut T` but w/o compile safety. |
 | `&t` | Immutable **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (on low level, address of _this_ `t`, like `0x1234`). |
 | `&mut t` | Borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `ref t` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
