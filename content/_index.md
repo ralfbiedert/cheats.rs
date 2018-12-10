@@ -415,11 +415,12 @@ If something works that "shouldn't work now that you think about it", it might b
 
 
 
-<div class="cheats">
 
 ## Idiomatic Rust
 
 If you are used to programming Java or C, consider these.
+
+<div class="cheats">
 
 | Idiom | Code |
 |--------| ---- |
@@ -427,13 +428,13 @@ If you are used to programming Java or C, consider these.
 |  | `x = loop { break 5 };`  |
 |  | `fn f() -> u32 { 0 }`  |
 | **Think in Iterators** | `(1..10).map(f).collect()` |
-|  | <code>names.iter().filter(\|x\| x.starts_with("A")).for_each(f)</code> |
+|  | <code>names.iter().filter(\|x\| x.starts_with("A"))</code> |
 | **Handle Absence with `?`** | `x = try_something()?;` |
-|  | `get_option()?.transform()?.run()?` |
+|  | `get_option()?.run()?` |
 | **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
 |  | `struct Charge(f32)` over `f32` |
-| **Provide Builders** | `Build::new("Car").model("Z").rate(Curr::USD).run();` |
+| **Provide Builders** | `Car::new("X").hp(5).run();` |
 | **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
 |   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
 | **Unsafe** | Avoid `unsafe {}` code unless doing FFI. |
