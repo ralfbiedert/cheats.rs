@@ -18,7 +18,7 @@ template = "index.html"
 > **Reference** {{ ref(page="") }}.
 > Furthermore, entries are marked as
 > largely **deprecated** {{ deprecated() }},
-> have a **minimum edition** {{ edition(ed="'18") }}.
+> have a **minimum edition** {{ edition(ed="'18") }},
 > or are **bad** {{ edition(ed="⚡") }}.
 
 
@@ -123,10 +123,10 @@ Define units of code and their abstractions.
 | `impl T for S {}`  | Implement trait `T` for type `S`. |
 | `impl !T for S {}` | Disable an automatically derived **auto trait** {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }}. |
 | `fn f() {}`  | Definition of a **function** {{ book(page="ch03-03-how-functions-work.html") }}  {{ ex(page="fn.html") }} {{ ref(page="items/functions.html") }}; or associated function if inside `impl`. |
-| {{ tab() }} `fn f() -> T {}`  | Same, returning a type T. |
+| {{ tab() }} `fn f() -> T {}`  | Same, returning a value of type T. |
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
 | `const fn f() {}`  | Constant `fn` for compile time compilations, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
-| `fn() -> T`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with traits `Fn`, `FnOnce`, `FnMut`. |
+| `fn() -> T`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with trait [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html). |
 | <code>\|\| {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
 | {{ tab() }} <code>\|x\| {}</code> | Closure with a bound parameter `x`. |
 | {{ tab() }} <code>\|x\| x + x</code> | Closure without block expression.  |
@@ -165,7 +165,7 @@ Control execution within a function.
 | `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
 | `continue 'label`  | Same, but instead of enclosing loop marked with `'label`. |
 | `return x`  | Early return from function. More idiomatic way is to end with expression. |
-| `x?` | If `x` is `Result::Err` or `Option::None`, **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
+| `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 
 </div>
 
