@@ -38,8 +38,8 @@ Define data types and memory locations, and use them.
 | {{ tab() }}  `enum E { A, C {} }` | Define variants of enum; can be unit- `A`, tuple- `B` `()` and struct-like `C{}`. |
 | {{ tab() }}  `enum E { A = 1 }` | If variants are only unit-like, allow discriminant values, e.g., for FFI. |
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
-| `static X: T = x;`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
-| `const X: T = x;`  | Define inlineable **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Inlined values are mutable!!! |
+| `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
+| `const X: T = T();`  | Define inlineable **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Inlined values are mutable!!! |
 | `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable. |
 | `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. |
 | {{ tab() }} `x = y` | Copy bytes at `y` to bytes at `x` if `T: Copy`. Compiler might optimize. |
@@ -63,9 +63,9 @@ Define data types and memory locations, and use them.
 | `()` | Empty tuple, both literal and type, aka **unit** {{ std(page="std/primitive.unit.html") }} |
 | `(x)` | Parenthesized expression. |
 | `(x,)` | Single-element **tuple** expression. {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
-| `(T,)` | Single-element tuple type. |
-| `[T]` | Array of unspecified length, i.e., **slice**. {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. |
-| `[T; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} with `n` elements of type `T`. |
+| `(S,)` | Single-element tuple type. |
+| `[S]` | Array of unspecified length, i.e., **slice**. {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. |
+| `[S; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} with `n` elements of type `S`. |
 | `[x; n]` | Array with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
 | `[x, y]` | Array with given elements. |
 | `x[0]` | Collection indexing. Overloadable [Index](https://doc.rust-lang.org/std/ops/trait.Index.html), [IndexMut](https://doc.rust-lang.org/std/ops/trait.IndexMut.html) |
@@ -89,19 +89,19 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 
 | Example | Explanation |
 |---------|-------------|
-| `&T` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (space for holding _any_ `&t`). |
-| {{ tab() }} `&[T]` | Special slice reference that contains address _and_ length (like `&str`). |
-| {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains addr. of _data_ and _vtable_. |
-| {{ tab() }} `&mut T` | Exclusive reference to allow mutability (also `&mut [T]`, `&mut dyn T`, ...) |
-| `*const T` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}, like `&T` but w/o compile safety. |
-| `*mut T` | Mutable raw pointer type, like `&mut T` but w/o compile safety. |
-| `&t` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (on low level, address of _this_ `t`, like `0x1234`). |
-| `&mut t` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
-| `ref t` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
-| `*x` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
+| `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (space for holding _any_ `&s`). |
+| {{ tab() }} `&[S]` | Special slice reference that contains address _and_ length (like `&str`). |
+| {{ tab() }} `&dyn S` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains addr. of _data_ and _vtable_. |
+| {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, ...) |
+| `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}, like `&T` but w/o compile safety. |
+| `*mut S` | Mutable raw pointer type, like `&mut S` but w/o compile safety. |
+| `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (on low level, address of _this_ `t`, like `0x1234`). |
+| `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
+| `ref s` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
+| `*s` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}}, duration of a flow in static analysis. |
-| {{ tab() }}  `&'a T`  | Place for an address of a `T`. Only accepts addr. living `'a` or longer. |
-| {{ tab() }}  `&'a mut T`  | Same, but allow content of address to be changed. |
+| {{ tab() }}  `&'a S`  | Place for an address of a `S`. Only accepts addr. living `'a` or longer. |
+| {{ tab() }}  `&'a mut S`  | Same, but allow content of address to be changed. |
 | {{ tab() }}  `S<'a>`  | Signals `S` will contain address with lifetime `'a`. Creator of `S` decides `'a`. |
 | {{ tab() }}  `fn f<'a>(t: &'a T)`  | Same, for function. Caller decides `'a`. |
 | `'static`  | Special lifetime lasting the entire program execution. |
@@ -467,31 +467,31 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 
 | Construct | How to read |
 |--------| -----------|
-| `let t: T = T(0)`  | A location that is `T`-sized, named `t`, and contains the value `T(0)`.|
+| `let s: S = S(0)`  | A location that is `S`-sized, named `s`, and contains the value `S(0)`.|
 |   | If declared with `let`, that location lives on the stack. |
-|   | Generally, `t` can mean _location of `t`_, and _value within `t`_. |
-|   | As a location, `t = T(1)` means, assign value `T(1)` to location `t`. |
-|   | As a value, `f(t)` means call `f` with value inside of `t`. |
-|   | To explicitly talk about its location (address) we do `&t`. |
-|   | To explicitly talk about a location that can hold such a location we do `&T`. |
-| `&'a T`  | A `&T` is a **location that can hold an address** (i.e., reference). |
-|   | Any address stored in here must be that of a valid `T`. |
+|   | Generally, `s` can mean _location of `s`_, and _value within `s`_. |
+|   | As a location, `s = S(1)` means, assign value `S(1)` to location `s`. |
+|   | As a value, `f(s)` means call `f` with value inside of `s`. |
+|   | To explicitly talk about its location (address) we do `&s`. |
+|   | To explicitly talk about a location that can hold such a location we do `&S`. |
+| `&'a S`  | A `&S` is a **location that can hold an address** (i.e., reference). |
+|   | Any address stored in here must be that of a valid `S`. |
 |   | Any address stored must _live_ at least for (_outlive_) duration `'a`. |
-|   | That means during `'a` memory targeted by `&T` can't be invalidated.  |
-|   | Also, this `&T` must be stopped being used before `'a` ends. |
+|   | That means during `'a` memory targeted by `&S` can't be invalidated.  |
+|   | Also, this `&S` must be stopped being used before `'a` ends. |
 |   | Duration of `'a` is purely compile time view, based on static analysis. |
-| `&T`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
+| `&S`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
 |   | Within methods bodies, lifetimes are determined automatically. |
 |   | Within signatures, lifetimes may be 'elided' (annotated automatically). |
-|  `&t` | This will produce the **actual address of location `t`**, called 'borrow'. |
-|   | The moment `&t` is produced, location `t` is put into a **borrowed state**. |
-|   | As long as **any** `&t` could be around, `t` cannot be altered directly. |
+|  `&s` | This will produce the **actual address of location `s`**, called 'borrow'. |
+|   | The moment `&s` is produced, location `s` is put into a **borrowed state**. |
+|   | As long as **any** `&s` could be around, `s` cannot be altered directly. |
 |   | This analysis is based on all possible address propagation paths. |
-|   | For example, in `let a = &t; let b = a;`, also `b` needs to go. |
-|   | Borrowing of `t` stops once last `&t` is last used, not when `&t` dropped. |
-| `&mut t` | Same, but will produce a mutable borrow. |
-|   | A `&mut` will allow the *owner of the borrow* (address) to change `t`'s content. |
-|   | This reiterates that not the value in `t`, but `t`'s location is borrowed. |
+|   | For example, in `let a = &s; let b = a;`, also `b` needs to go. |
+|   | Borrowing of `s` stops once last `&s` is last used, not when `&s` dropped. |
+| `&mut s` | Same, but will produce a mutable borrow. |
+|   | A `&mut` will allow the *owner of the borrow* (address) to change `s`'s content. |
+|   | This reiterates that not the value in `s`, but `s`'s location is borrowed. |
 | `S<'a> {}` | Signals that `S` will hold an address (i.e., reference). |
 |  | `'a` will be determined automatically by the user of this struct. |
 |  | `'a` will be chosen as small as possible. |
