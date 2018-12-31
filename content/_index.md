@@ -141,7 +141,7 @@ Define units of code and their abstractions.
 | {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T` (i.e., `x.f()` finds methods of `T` if in scope). |
 | `X::f()` | Call associated function, e.g., `X::new()`. |
 | {{ tab() }} `<X as T>::f()` | Call `T::f()` implemented for `X`. |
-| `unsafe {}` | Marker for **unsafe code** {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} that will probably segfa#%$@. |
+| `unsafe {}` | Allows programmer to summon segfaults; **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 
 </div>
 
@@ -437,7 +437,7 @@ If you are used to programming Java or C, consider these.
 | **Provide Builders** | `Car::new("X").hp(5).run();` |
 | **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
 |   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
-| **Unsafe** | Avoid `unsafe {}` code unless doing FFI. |
+| **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
 | **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
 | **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
 |  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
@@ -485,13 +485,14 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 |   | Within signatures, lifetimes may be 'elided' (annotated automatically). |
 |  `&s` | This will produce the **actual address of location `s`**, called 'borrow'. |
 |   | The moment `&s` is produced, location `s` is put into a **borrowed state**. |
-|   | As long as **any** `&s` could be around, `s` cannot be altered directly. |
+|   | Checking if in borrowed state is based on compile-time analysis. |
 |   | This analysis is based on all possible address propagation paths. |
+|   | As long as **any** `&s` could be around, `s` cannot be altered directly. |
 |   | For example, in `let a = &s; let b = a;`, also `b` needs to go. |
 |   | Borrowing of `s` stops once last `&s` is last used, not when `&s` dropped. |
 | `&mut s` | Same, but will produce a mutable borrow. |
-|   | A `&mut` will allow the *owner of the borrow* (address) to change `s`'s content. |
-|   | This reiterates that not the value in `s`, but `s`'s location is borrowed. |
+|   | A `&mut` will allow the *owner of the borrow* (address) to change `s` content. |
+|   | This reiterates that not the value in `s`, but `s` location is borrowed. |
 | `S<'a> {}` | Signals that `S` will hold an address (i.e., reference). |
 |  | `'a` will be determined automatically by the user of this struct. |
 |  | `'a` will be chosen as small as possible. |
