@@ -428,15 +428,31 @@ From a call site perspective that means:
 | `g<F: FnMut()>(mut f: F)`  | ... `f()` multiple times. | `Fn`, `FnMut` |
 | `g<F: Fn()>(f: F)`  | ... `f()` multiple times.  | `Fn` |
 
+<div class="footnotes">
+    Notice how <b>asking</b> for a <code>Fn</code> closure as a function is
+    most restrictive for the caller; but <b>having</b> a <code>Fn</code>
+    closure as a caller is most compatible with any function.
+</div>
+
+
+
 {{ tablesep() }}
 
 From the perspective of someone defining a closure:
 
-| Closure | Implements | Comment |
+| Closure | Implements<sup>*</sup> | Comment |
 |--------| -----------| --- |
 | <code> \|\| { moved_s; } </code> | `FnOnce` | Must give up ownership. |
 | <code> \|\| { &mut s; } </code> | `FnOnce`, `FnMut` | Allows `g()` to change local state. |
 | <code> \|\| { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; can reuse same vars. |
+
+<div class="footnotes">
+    <sup>*</sup> The actual rules which traits are implemented by which
+    closure are <a href="https://doc.rust-lang.org/stable/reference/expressions/closure-expr.html">a bit more complex</a>. Rust prefers capturing by reference
+    (resulting in the most "compatible" <code>Fn</code> closures from a caller perspective), but can be
+    forced to capture its environment by copy or move via the
+    <code>move || {}</code> syntax.
+</div>
 
 {{ tablesep() }}
 
