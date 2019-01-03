@@ -414,6 +414,43 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
 
 
+## Closures
+
+There is a relation `Fn` : `FnMut` : `FnOnce`. That means, a closure that
+implements `Fn`, also implements `FnMut` and `FnOnce`. Likewise, a closure
+that implements `FnMut`, also implements `FnOnce`.
+
+From a call site perspective that means:
+
+| Signature | Function `g` can call ... |  Function `g` accepts ... |
+|--------| -----------| -----------|
+| `g<F: FnOnce()>(f: F)`  | ... `f()` once. |  `Fn`, `FnMut`, `FnOnce`  |
+| `g<F: FnMut()>(mut f: F)`  | ... `f()` multiple times. | `Fn`, `FnMut` |
+| `g<F: Fn()>(f: F)`  | ... `f()` multiple times.  | `Fn` |
+
+{{ tablesep() }}
+
+From the perspective of someone defining a closure:
+
+| Closure | Implements | Comment |
+|--------| -----------| --- |
+| <code> \|\| { moved_s; } </code> | `FnOnce` | Must give up ownership. |
+| <code> \|\| { &mut s; } </code> | `FnOnce`, `FnMut` | Allows `g()` to change local state. |
+| <code> \|\| { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; can reuse same vars. |
+
+{{ tablesep() }}
+
+That gives the following advantages and disadvantages:
+
+| Using | Advantage | Disadvantage |
+|--------| -----------| -----------|
+| `F: FnOnce`  | <span class="good">Easy to satisfy as caller.</span> | <span class="bad">Single use only for `g()`.</span> |
+| `F: FnMut`  | <span class="good">Allows `g()` to change caller state.</span> | <span class="bad">Caller may not reuse captures during `g()`.</span> |
+| `F: Fn`  | <span class="good">Many can exist at same time.</span> | <span class="bad">Hardest to produce for caller.</span> |
+
+
+
+
 
 
 ## Idiomatic Rust

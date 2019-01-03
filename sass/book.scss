@@ -44,6 +44,14 @@ img#logo {
     top: 40px;
 }
 
+span.good {
+    color: green;
+}
+
+span.bad {
+    color: darkred;
+}
+
 @mixin min-screen($min-width: $body-width) {
     @media screen and (min-width: $min-width) {
         @content;
