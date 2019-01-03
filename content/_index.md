@@ -447,8 +447,7 @@ From the perspective of someone defining a closure:
 | <code> \|\| { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; can reuse same vars. |
 
 <div class="footnotes">
-    <sup>*</sup> The actual rules which traits are implemented by which
-    closure are <a href="https://doc.rust-lang.org/stable/reference/expressions/closure-expr.html">a bit more complex</a>. Rust prefers capturing by reference
+    <sup>*</sup> Rust <a href="https://doc.rust-lang.org/stable/reference/expressions/closure-expr.html">prefers capturing</a> by reference
     (resulting in the most "compatible" <code>Fn</code> closures from a caller perspective), but can be
     forced to capture its environment by copy or move via the
     <code>move || {}</code> syntax.
@@ -463,6 +462,7 @@ That gives the following advantages and disadvantages:
 | `F: FnOnce`  | <span class="good">Easy to satisfy as caller.</span> | <span class="bad">Single use only, `g()` may call `f()` just once.</span> |
 | `F: FnMut`  | <span class="good">Allows `g()` to change caller state.</span> | <span class="bad">Caller may not reuse captures during `g()`.</span> |
 | `F: Fn`  | <span class="good">Many can exist at same time.</span> | <span class="bad">Hardest to produce for caller.</span> |
+
 
 
 
