@@ -416,7 +416,7 @@ If something works that "shouldn't work now that you think about it", it might b
 
 ## Closures
 
-There is a relation `Fn` : `FnMut` : `FnOnce`. That means, a closure that
+There is a subtrait relationship `Fn` : `FnMut` : `FnOnce`. That means, a closure that
 implements `Fn`, also implements `FnMut` and `FnOnce`. Likewise, a closure
 that implements `FnMut`, also implements `FnOnce`.
 
@@ -442,7 +442,7 @@ From the perspective of someone defining a closure:
 
 | Closure | Implements<sup>*</sup> | Comment |
 |--------| -----------| --- |
-| <code> \|\| { moved_s; } </code> | `FnOnce` | Must give up ownership. |
+| <code> \|\| { moved_s; } </code> | `FnOnce` | Caller must give up ownership of `moved_s`. |
 | <code> \|\| { &mut s; } </code> | `FnOnce`, `FnMut` | Allows `g()` to change local state. |
 | <code> \|\| { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; can reuse same vars. |
 
@@ -458,9 +458,9 @@ From the perspective of someone defining a closure:
 
 That gives the following advantages and disadvantages:
 
-| Using | Advantage | Disadvantage |
+| Requiring | Advantage | Disadvantage |
 |--------| -----------| -----------|
-| `F: FnOnce`  | <span class="good">Easy to satisfy as caller.</span> | <span class="bad">Single use only for `g()`.</span> |
+| `F: FnOnce`  | <span class="good">Easy to satisfy as caller.</span> | <span class="bad">Single use only, `g()` may call `f()` just once.</span> |
 | `F: FnMut`  | <span class="good">Allows `g()` to change caller state.</span> | <span class="bad">Caller may not reuse captures during `g()`.</span> |
 | `F: Fn`  | <span class="good">Many can exist at same time.</span> | <span class="bad">Hardest to produce for caller.</span> |
 
