@@ -234,6 +234,7 @@ Constructs expanded before the actual compilation happens.
 | `$x:ty`  | Macro capture, also `$x:expr`, `$x:ty`, `$x:path`, ... {{ref(page="macros-by-example.html")}} |
 | `$x` |  Macro substitution in **macros by example**. {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
 | `$(x),*` | Macro repetition "zero or more times" in macros by example. |
+| {{ tab() }} `$(x),?` | Same, but "zero or one time". |
 | {{ tab() }} `$(x),+` | Same, but "one or more times". |
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
 | `$crate` | Special hygiene variable, crate where macros is defined. {{ todo() }} |
