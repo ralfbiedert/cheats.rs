@@ -573,13 +573,18 @@ Some commands and tools that are good to know.
 | Command | Description |
 |--------| ---- |
 | `cargo init` | Create a new project for the latest edition. |
-| `cargo build`, `cargo b` | Build the project in debug mode (`--release` for all optimization). |
-| `cargo check`, `cargo c` | Check if project would compile (much faster). |
-| `cargo test`, `cargo t` | Run tests for the project. |
-| `cargo run`, `cargo r` | Run your project, if a binary is produced (main.rs). |
+| <code>cargo <span class="cargo-prefix">b</span>uild</code> | Build the project in debug mode (`--release` for all optimization). |
+| <code>cargo <span class="cargo-prefix">c</span>heck</code> | Check if project would compile (much faster). |
+| <code>cargo <span class="cargo-prefix">t</span>est</code> | Run tests for the project. |
+| <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
 | `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
 |  | `expanded` Show with expanded macros, ... |
 | `rustup docs` | Open offline Rust documentation, good on a plane! |
+
+
+<div class="footnotes">
+* A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type <code>cargo build</code> or just <code>cargo b</code>.
+</div>
 
 
 {{ tablesep() }}

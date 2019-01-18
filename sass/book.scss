@@ -57,6 +57,11 @@ span.bad {
     color: darkred;
 }
 
+span.cargo-prefix {
+    // text-decoration: underline;
+    border: 1px solid rgb(200, 200, 200);
+}
+
 @mixin min-screen($min-width: $body-width) {
     @media screen and (min-width: $min-width) {
         @content;
