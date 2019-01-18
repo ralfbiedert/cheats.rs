@@ -573,8 +573,10 @@ Some commands and tools that are good to know.
 | Command | Description |
 |--------| ---- |
 | `cargo init` | Create a new project for the latest edition. |
-| `cargo build` | Build the project in debug mode (`--release` for all optimization). |
-| `cargo check` | Check if project would compile (much faster). |
+| `cargo build`, `cargo b` | Build the project in debug mode (`--release` for all optimization). |
+| `cargo check`, `cargo c` | Check if project would compile (much faster). |
+| `cargo test`, `cargo t` | Run tests for the project. |
+| `cargo run`, `cargo r` | Run your project, if a binary is produced (main.rs). |
 | `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
 |  | `expanded` Show with expanded macros, ... |
 | `rustup docs` | Open offline Rust documentation, good on a plane! |
