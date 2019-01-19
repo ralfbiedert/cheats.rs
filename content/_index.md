@@ -368,7 +368,14 @@ No comment.
 
 </div>
 
+Some guidance about documentating your crate is provided in [this
+RFC][RFC0505].  The Standard library follows [an extended
+version][RFC1574].
 
+[RFC0505]:
+https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md
+[RFC1574]:
+https://github.com/rust-lang/rfcs/blob/master/text/1574-more-api-documentation-conventions.md#appendix-a-full-conventions-text
 
 ### Miscellaneous
 
