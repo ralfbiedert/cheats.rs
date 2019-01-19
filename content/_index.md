@@ -187,7 +187,7 @@ Segment projects into smaller units and minimize dependencies.
 | {{ tab() }} `super::x`  | Search `x` relative to parent module. |
 | `use a::b;`  | **Use** {{ ex(page="mod/use.html#the-use-declaration") }} {{ ref(page="items/use-declarations.html") }}  `b` directly in this scope without requiring `a` anymore. |
 | `use a::{b, c};` | Same, but bring `b` and `c` into scope. |
-| `use a::*;`  | Bring everything from `a` into scope and reexport. |
+| `use a::*;`  | Bring everything from `a` into scope. |
 | `pub use a::b;`  | Bring `a::b` into scope and reexport from here. |
 | `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-modules-and-use-to-control-scope-and-privacy.html") }} for `T`. |
 | {{ tab() }} `pub(crate) T` | Visible at most in current crate. |
