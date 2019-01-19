@@ -583,7 +583,7 @@ Some commands and tools that are good to know.
 
 
 <div class="footnotes">
-* A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type <code>cargo build</code> or just <code>cargo b</code>.
+A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type <code>cargo build</code> or just <code>cargo b</code>.
 </div>
 
 
