@@ -368,15 +368,6 @@ No comment.
 
 </div>
 
-Some guidance about documentating your crate is provided in [this
-RFC][RFC0505].  The Standard library follows [an extended
-version][RFC1574].
-
-[RFC0505]:
-https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md
-[RFC1574]:
-https://github.com/rust-lang/rfcs/blob/master/text/1574-more-api-documentation-conventions.md#appendix-a-full-conventions-text
-
 ### Miscellaneous
 
 These sigils did not fit any other category but are good to know nonetheless.
@@ -502,13 +493,15 @@ If you are used to programming Java or C, consider these.
 | **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
 | **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
 |  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
-|  | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
-|  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
 |  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
-|  | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) to make your API feel Rustic. |
+| **Doc comments** | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
+|  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
+|  | Use common headings: **Examples**, **Panics**, **Errors** and **Safety**. See [RFC 1574][RFC1574] for details. |
+| **API** | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) to make your API feel Rustic. |
 
 <!-- |  | Add benchmarks (`#[bench]`) to ensure your code is fast. | -->
 
+[RFC1574]: https://github.com/rust-lang/rfcs/blob/master/text/1574-more-api-documentation-conventions.md
 
 </div>
 
