@@ -506,7 +506,7 @@ If you are used to programming Java or C, consider these.
 
 > 🔥 We **highly** recommend you also follow the
 > [**API Guideline Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)
-> if you are creating a library 🔥
+> if you are writing a shared project 🔥
 
 
 
