@@ -368,8 +368,6 @@ No comment.
 
 </div>
 
-
-
 ### Miscellaneous
 
 These sigils did not fit any other category but are good to know nonetheless.
@@ -493,15 +491,18 @@ If you are used to programming Java or C, consider these.
 |   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
 | **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
 | **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
-| **API Design** | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)) to make your API feel Rustic. |
-|  | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
 | **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
 |  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
-|  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
 |  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
+|  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
+| **Documentation** | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
+|  | Don't forget to include a **summary sentence** and **Examples**. |
+|  | If applicable **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
+| **API Design** | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)) to make your API feel Rustic. |
 
 <!-- |  | Add benchmarks (`#[bench]`) to ensure your code is fast. | -->
 
+[RFC1574]: https://github.com/rust-lang/rfcs/blob/master/text/1574-more-api-documentation-conventions.md
 
 </div>
 
