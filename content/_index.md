@@ -497,7 +497,7 @@ If you are used to programming Java or C, consider these.
 |  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
 | **Documentation** | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
 |  | Don't forget to include a **summary sentence** and the **Examples** heading. |
-|  | If applicable **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
+|  | If applicable: **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
 
 <!-- | **API Design** | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)) to make your API feel Rustic. | -->
 <!-- |  | Add benchmarks (`#[bench]`) to ensure your code is fast. | -->
