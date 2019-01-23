@@ -496,11 +496,19 @@ If you are used to programming Java or C, consider these.
 |  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
 |  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
 | **Documentation** | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
-|  | Don't forget to include a **summary sentence** and **Examples**. |
+|  | Don't forget to include a **summary sentence** and the **Examples** heading. |
 |  | If applicable **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
-| **API Design** | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)) to make your API feel Rustic. |
 
+<!-- | **API Design** | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)) to make your API feel Rustic. | -->
 <!-- |  | Add benchmarks (`#[bench]`) to ensure your code is fast. | -->
+
+{{ tablesep() }}
+
+> 🔥 We **highly** recommend you also follow the
+> [**API Guideline Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)
+> if you are creating a library 🔥
+
+
 
 [RFC1574]: https://github.com/rust-lang/rfcs/blob/master/text/1574-more-api-documentation-conventions.md
 
@@ -515,10 +523,10 @@ If you are used to programming Java or C, consider these.
 
 Lifetimes can be overwhelming at times. Here is a simplified guide on how to read and interpret constructs containing lifetimes if you are familiar with C.
 
-> **Note**:
+<!-- > **Note**:
 > This section is work in progress.
 > For the time being, use with a grain of salt.
-> Feedback very welcome!
+> Feedback very welcome! -->
 
 | Construct | How to read |
 |--------| -----------|
