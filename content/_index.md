@@ -187,6 +187,7 @@ Segment projects into smaller units and minimize dependencies.
 | {{ tab() }} `super::x`  | Search `x` relative to parent module. |
 | `use a::b;`  | **Use** {{ ex(page="mod/use.html#the-use-declaration") }} {{ ref(page="items/use-declarations.html") }}  `b` directly in this scope without requiring `a` anymore. |
 | `use a::{b, c};` | Same, but bring `b` and `c` into scope. |
+| `use a::b as x;`  | Bring `b` into scope but name `x`, like `use std::error::Error as E`. |
 | `use a::*;`  | Bring everything from `a` into scope. |
 | `pub use a::b;`  | Bring `a::b` into scope and reexport from here. |
 | `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-modules-and-use-to-control-scope-and-privacy.html") }} for `T`. |
@@ -216,6 +217,7 @@ Short-hand names of types, and methods to convert one type to another.
 |  {{ tab() }}  `&mut self`  | Same, but mutably borrowed, same as `f(self: &mut Self)` |
 |  {{ tab() }}  `self: Box<Self>`  | [Arbitrary self type](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart pointers (`my_box.f_of_self()`). |
 | `S as T`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`. |
+| `S as R`  | When using symbol, import `S` as `R`, cmp. `use` above. |
 | `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and be a bit surprising. {{ nom(page="casts.html") }} |
 
 </div>
