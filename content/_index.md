@@ -507,8 +507,8 @@ If you are used to programming Java or C, consider these.
 {{ tablesep() }}
 
 > 🔥 We **highly** recommend you also follow the
-> [**API Guideline Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)
-> if you are writing a shared project 🔥
+> [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html))
+> for any shared project! 🔥
 
 
 
