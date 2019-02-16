@@ -664,7 +664,7 @@ These are other great visual guides and tables.
 | [API Guidelines Checklist](https://rust-lang-nursery.github.io/api-guidelines/checklist.html) | How to design your own APIs. |
 | [Periodic Table of Types](http://cosmic.mearie.org/2014/01/periodic-table-of-rust-types) | How various types and references correlate. |
 | [Futures](https://rufflewind.com/img/rust-futures-cheatsheet.html) | How to construct and work with futures. |
-| [Iterator](https://danielkeep.github.io/itercheat_baked.html) | A really quick summary about all iterator methods. |
+| [Rust Iterator Cheat Sheet](https://danielkeep.github.io/itercheat_baked.html) | Summary of iterator-related methods from `std::iter` and `itertools`. |
 
 {{ tablesep() }}
 
