@@ -262,7 +262,7 @@ These constructs are found in `match` or `let` expressions.
 |  `E::B ( .. ) => {}` | Match enum tuple variant `B`, wildcard any index. |
 |  `E::C { .. } => {}` | Match enum struct variant `C`, wildcard any field. |
 |  `S { x: 0, y: 1 } => {}` | Match struct with specific params. |
-|  `S { x, y } => {}` | Match struct with any values for fields `x` and `y`. |
+|  `S { x, y } => {}` | Match struct with any values, bind fields as variables `x` and `y`. |
 |  `S { .. } => {}` | Match struct with any values. |
 |  `D => {}` | Match enum variant `E::D` if `D` in `use`. |
 |  `D => {}` | Match anything, bind `D`; ⚡ possibly false friend of `E::D` if `D` not in `use`. |
@@ -272,7 +272,7 @@ These constructs are found in `match` or `let` expressions.
 | `x @ 1 .. 5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
 | <code>0 \| 1 => {}</code> | Pattern alternatives (or-patterns).|
 | {{ tab() }}  <code>E::A \| E::Z </code> | Same, but on enum variants. |
-| {{ tab() }}  <code>E::C {x} \| E::D {x}</code> | Same, but allow bind `x` if all variants have it. |
+| {{ tab() }}  <code>E::C {x} \| E::D {x}</code> | Same, but bind `x` if all variants have it. |
 | `S { x } if x > 10`  | Pattern match **guards**. {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
 
 </div>
