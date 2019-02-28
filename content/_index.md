@@ -188,6 +188,7 @@ Segment projects into smaller units and minimize dependencies.
 | `use a::b;`  | **Use** {{ ex(page="mod/use.html#the-use-declaration") }} {{ ref(page="items/use-declarations.html") }}  `b` directly in this scope without requiring `a` anymore. |
 | `use a::{b, c};` | Same, but bring `b` and `c` into scope. |
 | `use a::b as x;`  | Bring `b` into scope but name `x`, like `use std::error::Error as E`. |
+| `use a::b as _;`  | Bring `b` anonymously into scope, useful for traits with conflicting names. |
 | `use a::*;`  | Bring everything from `a` into scope. |
 | `pub use a::b;`  | Bring `a::b` into scope and reexport from here. |
 | `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-modules-and-use-to-control-scope-and-privacy.html") }} for `T`. |
@@ -269,7 +270,9 @@ These constructs are found in `match` or `let` expressions.
 |  `[a, 0] => {}` | Match array with any value for `a` and `0` for second. |
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
 | `x @ 1 .. 5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
-| <code>0 \| 1 => {}</code> | Pattern alternatives (or-patterns). |
+| <code>0 \| 1 => {}</code> | Pattern alternatives (or-patterns).|
+| {{ tab() }}  <code>E::A \| E::Z </code> | Same, but on enum variants. |
+| {{ tab() }}  <code>E::C {x} \| E::D {x}</code> | Same, but allow bind `x` if all variants have it. |
 | `S { x } if x > 10`  | Pattern match **guards**. {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
 
 </div>
