@@ -262,7 +262,7 @@ These constructs are found in `match` or `let` expressions.
 |  `E::B ( .. ) => {}` | Match enum tuple variant `B`, wildcard any index. |
 |  `E::C { .. } => {}` | Match enum struct variant `C`, wildcard any field. |
 |  `S { x: 0, y: 1 } => {}` | Match struct with specific params. |
-|  `S { x, y } => {}` | Match struct with any values, bind fields as variables `x` and `y`. |
+|  `S { x, y } => {}` | Match struct with any values, bind respective fields as variables `x` and `y`. |
 |  `S { .. } => {}` | Match struct with any values. |
 |  `D => {}` | Match enum variant `E::D` if `D` in `use`. |
 |  `D => {}` | Match anything, bind `D`; ⚡ possibly false friend of `E::D` if `D` not in `use`. |
