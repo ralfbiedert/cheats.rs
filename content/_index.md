@@ -90,17 +90,18 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | Example | Explanation |
 |---------|-------------|
 | `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (space for holding _any_ `&s`). |
-| {{ tab() }} `&[S]` | Special slice reference that contains address _and_ length (like `&str`). |
-| {{ tab() }} `&dyn S` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains addr. of _data_ and _vtable_. |
+| {{ tab() }} `&[S]` | Special slice reference that contains (`address`, `length`). |
+| {{ tab() }} `&str` | Special string reference that contains (`address`, `length`). |
+| {{ tab() }} `&dyn S` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains (`address`, `vtable`). |
 | {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, ...) |
 | `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}, like `&S` but w/o compile safety. |
 | `*mut S` | Mutable raw pointer type, like `&mut S` but w/o compile safety. |
-| `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (on low level, address of _this_ `s`, like `0x1234`). |
+| `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., address, len, vtable, ... of _this_ `s`, like `0x1234`). |
 | `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `ref s` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
 | `*s` | **Dereference**.  {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}}, duration of a flow in static analysis. |
-| {{ tab() }}  `&'a S`  | Place for an address of a `S`. Only accepts addr. living `'a` or longer. |
+| {{ tab() }}  `&'a S`  | Only accepts a `s` with an address that lives `'a` or longer. |
 | {{ tab() }}  `&'a mut S`  | Same, but allow content of address to be changed. |
 | {{ tab() }}  `S<'a>`  | Signals `S` will contain address with lifetime `'a`. Creator of `S` decides `'a`. |
 | {{ tab() }}  `fn f<'a>(t: &'a T)`  | Same, for function. Caller decides `'a`. |
@@ -542,7 +543,7 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 |   | As a value, `f(s)` means call `f` with value inside of `s`. |
 |   | To explicitly talk about its location (address) we do `&s`. |
 |   | To explicitly talk about a location that can hold such a location we do `&S`. |
-| `&'a S`  | A `&S` is a **location that can hold an address** (i.e., reference). |
+| `&'a S`  | A `&S` is a **location that can hold** (at least) **an address**, called reference. |
 |   | Any address stored in here must be that of a valid `S`. |
 |   | Any address stored must _live_ at least for (_outlive_) duration `'a`. |
 |   | That means during `'a` memory targeted by `&S` can't be invalidated.  |
