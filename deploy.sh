@@ -22,7 +22,7 @@ fi
 
 zola -c $TOML_DEPLOY build
 
-# Update deplyment date in sitemap.xml
+# Update deployment date in sitemap.xml
 sed -i -e "s/_NOW_/$NOW/g" $DIST/sitemap.xml
 
 
