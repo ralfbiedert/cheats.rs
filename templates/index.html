@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
     <link rel="icon" type="image/png" href="favicon32.png">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
-        rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
 
     <title>{% block title %}{{ config.title }}{% endblock title %}</title>
@@ -33,12 +32,17 @@
 
 
     <!-- Github ribbon -->
-    <a class="noprint" href="https://github.com/ralfbiedert/cheats.rs/"><img style="position: absolute; top: 0; right: 0; border: 0;"
-            src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+    <a class="noprint" href="https://github.com/ralfbiedert/cheats.rs/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 
     <!-- Syntax highlighting -->
     <script type="text/javascript" src="{{ get_url(path="prism.js") | safe }}"></script>
-    <script type="text/javascript" src="{{ get_url(path="custom.js") | safe }}"></script>
+    <script type="text/javascript">
+        let codes = document.querySelectorAll("code");
+
+        codes.forEach(code => {
+            code.className = "language-rust";
+        });
+    </script>
 </body>
 
 </html>
