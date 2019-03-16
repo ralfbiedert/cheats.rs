@@ -37,6 +37,15 @@ $smallscreen-width: 650px;
     }
 }
 
+.toc {
+    display: flex;
+    margin-top: 40px;
+}
+
+.column {
+  flex: 50%;
+}
+
 .entry {
     color: rgb(0, 110, 0);
     font-size: 65%;
