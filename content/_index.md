@@ -62,9 +62,11 @@ Misc
 </div>
 </div>
 
+
 ### <a name="data_structures"></a> Data Structures
 
 Define data types and memory locations, and use them.
+
 
 <div class="cheats">
 
@@ -79,7 +81,7 @@ Define data types and memory locations, and use them.
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
 | `const X: T = T();`  | Define inlineable **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Inlined values are mutable!!! |
-| `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable. |
+| `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable.<sup>*</sup> |
 | `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. |
 | {{ tab() }} `x = y` | Copy bytes at `y` to bytes at `x` if `T: Copy`. Compiler might optimize. |
 | {{ tab() }} `x = y` | Same, but also invalidate `y` if `T` not `Copy`. Compiler might optimize. |
@@ -119,6 +121,15 @@ Define data types and memory locations, and use them.
 
 </div>
 
+<div class="footnotes">
+    <sup>*</sup> Note that technically <i>mutable</i> and <i>immutable</i>
+    are a bit of a misnomer. Even if you have an immutable binding or shared
+    reference, it might contain a
+    <a href="https://doc.rust-lang.org/std/cell/index.html">Cell</a>,
+    which supports so called <i>interior mutability</i>.
+</div>
+
+
 ### <a name="references_pointers"></a> References & Pointers
 
 Granting access to un-owned memory. Also see section on Generics & Constraints.
@@ -133,8 +144,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `&str` | Special string reference that contains (`address`, `length`). |
 | {{ tab() }} `&dyn S` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains (`address`, `vtable`). |
 | {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, ...) |
-| `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }}, like `&S` but w/o compile safety. |
-| `*mut S` | Mutable raw pointer type, like `&mut S` but w/o compile safety. |
+| `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }} w/o compile safety. |
+| `*mut S` | Mutable raw pointer type w/o compile safety. |
 | `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., address, len, vtable, ... of _this_ `s`, like `0x1234`). |
 | `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `ref s` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
@@ -163,10 +174,10 @@ Define units of code and their abstractions.
 | `impl T for S {}`  | Implement trait `T` for type `S`. |
 | `impl !T for S {}` | Disable an automatically derived **auto trait** {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }}. |
 | `fn f() {}`  | Definition of a **function** {{ book(page="ch03-03-how-functions-work.html") }}  {{ ex(page="fn.html") }} {{ ref(page="items/functions.html") }}; or associated function if inside `impl`. |
-| {{ tab() }} `fn f() -> T {}`  | Same, returning a value of type T. |
+| {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
 | `const fn f() {}`  | Constant `fn` for compile time compilations, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
-| `fn() -> T`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with trait [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html). |
+| `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with trait [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html). |
 | <code>\|\| {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
 | {{ tab() }} <code>\|x\| {}</code> | Closure with a bound parameter `x`. |
 | {{ tab() }} <code>\|x\| x + x</code> | Closure without block expression.  |
@@ -180,7 +191,7 @@ Define units of code and their abstractions.
 | {{ tab() }} `S::f(&x)` | Same as `x.f()` if `X` derefs to `S` (i.e., `x.f()` finds methods of `S`). |
 | {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T` (i.e., `x.f()` finds methods of `T` if in scope). |
 | `X::f()` | Call associated function, e.g., `X::new()`. |
-| {{ tab() }} `<X as T>::f()` | Call `T::f()` implemented for `X`. |
+| {{ tab() }} `<X as T>::f()` | Call trait method `T::f()` implemented for `X`. |
 | `unsafe {}` | Allows programmer to summon segfaults; **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 
 </div>
