@@ -271,8 +271,8 @@ Short-hand names of types, and methods to convert one type to another.
 |  {{ tab() }}  `&self`  | Same, but refers to self as borrowed, same as `f(self: &Self)`|
 |  {{ tab() }}  `&mut self`  | Same, but mutably borrowed, same as `f(self: &mut Self)` |
 |  {{ tab() }}  `self: Box<Self>`  | [Arbitrary self type](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart pointers (`my_box.f_of_self()`). |
-| `S as T`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`. |
-| `S as R`  | When using symbol, import `S` as `R`, cmp. `use` above. |
+| `S as T`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`, e.g., `<X as T>::f()`. |
+| `S as R`  | In `use` of symbol, import `S` as `R`, e.g., `use a::b as x`. |
 | `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and be a bit surprising. {{ nom(page="casts.html") }} |
 
 </div>
@@ -311,7 +311,7 @@ These constructs are found in `match` or `let` expressions.
 
 | Example | Explanation |
 |---------|-------------|
-| `match m {}` | Initiate **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
+| `match m {}` | Initiate **pattern matching** {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }}, then use match arms below: |
 |  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
 |  `E::B ( .. ) => {}` | Match enum tuple variant `B`, wildcard any index. |
 |  `E::C { .. } => {}` | Match enum struct variant `C`, wildcard any field. |
@@ -341,8 +341,8 @@ These constructs are found in `match` or `let` expressions.
 |  {{ tab() }} `let S { x } = s` | Only `x` will be bound to value `s.x`. |
 |  {{ tab() }} `let (_, b, _) = abc` | Only `b` will be bound to value `abc.1`. |
 |  {{ tab() }} `let (a, ..) = abc` | Ignoring 'the rest' also works. |
-|  {{ tab() }} `let Some(x) = get()` | ⚡ Will **not** work if pattern can be 'refuted', use `if let` instead. |
-| `if let Some(x) = get()`  | Branch if pattern can actually be assigned {{ ref(page="expressions/if-expr.html#if-let-expressions") }} (e.g., `enum` variant). |
+|  {{ tab() }} `let Some(x) = get()` | ⚡ Will **not** work if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
+| `if let Some(x) = get()`  | Branch if pattern can actually be assigned (e.g., `enum` variant). |
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`.|
 
 </div>
@@ -366,7 +366,7 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | {{ tab() }} `T: ?Sized`         | Opt out of a pre-defined trait bound Sized. {{ todo() }} |
 | {{ tab() }} `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }}, all references in T must outlive `'a`.  |
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlives_) `'a` bound. |
-| `S<T> where T: R`  | Same as `S<T: R>` but easier for longer bounds. |
+| `S<T> where T: R`  | Same as `S<T: R>` but more pleasant to read for longer bounds. |
 | `S<T = R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} for associated type.|
 | `S<'_>` | Inferred **anonymous lifetime**. {{ book(page="ch19-02-advanced-lifetimes.html#the-anonymous-lifetime") }} |
 | `S<_>` | Inferred **anonymous type**. {{ todo() }} |
