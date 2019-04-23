@@ -501,8 +501,8 @@ From the perspective of someone defining a closure:
 | Closure | Implements<sup>*</sup> | Comment |
 |--------| -----------| --- |
 | <code> \|\| { moved_s; } </code> | `FnOnce` | Caller must give up ownership of `moved_s`. |
-| <code> \|\| { &mut s; } </code> | `FnOnce`, `FnMut` | Allows `g()` to change local state. |
-| <code> \|\| { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; can reuse same vars. |
+| <code> \|\| { &mut s; } </code> | `FnOnce`, `FnMut` | Allows `g()` to change caller's local state `s`. |
+| <code> \|\| { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; but can share and reuse `s`. |
 
 <div class="footnotes">
     <sup>*</sup> Rust <a href="https://doc.rust-lang.org/stable/reference/expressions/closure-expr.html">prefers capturing</a> by reference
