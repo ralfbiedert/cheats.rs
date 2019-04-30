@@ -379,6 +379,7 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-traits") }}, returns an unknown-to-caller `S` that `impl T`. |
 | `fn f(x: &impl T)`  | Trait bound,"**impl traits**" {{ book(page="ch10-02-traits.html#trait-bounds") }}, somewhat similar to `fn f<S:T>(x: &S)`. |
 | `fn f(x: &dyn T)`  | Marker for **dynamic dispatch** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }}, `f` will not be monomorphized. |
+| `fn f() where Self: R`  | In a `trait T {}`, mark `f` as accessible only on types that also `impl R`.  |
 | `for<'a>` | **Higher-rank trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
 
 </div>
