@@ -16,10 +16,11 @@ template = "index.html"
 > **Std Docs** {{ std(page="std") }},
 > **Nomicon** {{ nom(page="") }},
 > **Reference** {{ ref(page="") }}.
-> Furthermore, entries are marked as
+> Other symbols used:
 > largely **deprecated** {{ deprecated() }},
-> have a **minimum edition** {{ edition(ed="'18") }},
-> or are **bad** {{ edition(ed="⚡") }}.
+> has a **minimum edition** {{ edition(ed="'18") }},
+> is **experimental** {{ experimental() }},
+> or **bad** {{ edition(ed="⚡") }}.
 
 
 <div class="noprint">
@@ -116,7 +117,7 @@ Define data types and memory locations, and use them.
 | `x[a..b]` | Collection slice-like indexing via [Range](https://doc.rust-lang.org/std/ops/struct.Range.html). |
 | `a..b` | Right-exclusive **range** {{ ref(page="expressions/range-expr.html") }} creation, also seen as `..`, `a..`, `..b`.  |
 | `a..=b` | Inclusive range creation, also seen as `..=b`. |
-| `x.i` | Member **access**. {{ ref(page="expressions/field-expr.html") }} |
+| `x.i` | Member **access**. {{ ref(page="expressions/field-expr.html") }}|
 | `x.0` | Tuple access |
 
 </div>
@@ -180,6 +181,9 @@ Define units of code and their abstractions.
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
 | `const fn f() {}`  | Constant `fn` for compile time compilations, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
+| `async fn f() {}`  | **Async** {{ experimental() }} function transformation, makes `f` return an `impl Future`. {{ std(page="std/future/trait.Future.html") }} |
+| {{ tab() }} `async fn f() -> S`  | The call `f()` returns an `impl Future<Output=S>`, does not execute `f`! |
+| {{ tab() }} `async {}`  | Async block {{ todo() }} that transforms last expression `x` into `Future<Output=X>`. |
 | `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with trait [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html). |
 | <code>\|\| {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
 | {{ tab() }} <code>\|x\| {}</code> | Closure with a bound parameter `x`. |
@@ -218,6 +222,7 @@ Control execution within a function.
 | {{ tab() }} `break 'label`  | Exit not only this loop, but the enclosing one marked with `'label`. |
 | `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
 | `continue 'label`  | Same, but instead of enclosing loop marked with `'label`. |
+| `x.await` | Only works inside `async`. Yield flow until Future or Stream `x` ready. {{ experimental() }} |
 | `return x`  | Early return from function. More idiomatic way is to end with expression. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 
@@ -437,7 +442,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 
 | Example | Explanation |
 |---------|-------------|
-| `!` | Always empty **never type**. {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html?highlight=never#never-type") }} |
+| `!` | Always empty **never type**. {{ experimental() }} {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html?highlight=never#never-type") }} |
 | `_` | Unnamed variable binding, e.g., <code>\|x, _\| {}</code>.|
 | `_x` | Variable binding explicitly marked as unused. |
 | `1_234_567` | Numeric separator for visual clarity. |
