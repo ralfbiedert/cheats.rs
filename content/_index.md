@@ -222,11 +222,9 @@ Control execution within a function.
 | {{ tab() }} `break 'label`  | Exit not only this loop, but the enclosing one marked with `'label`. |
 | `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
 | `continue 'label`  | Same, but instead of enclosing loop marked with `'label`. |
+| `x.await` | Only works inside `async`. Yield flow until [Future](https://doc.rust-lang.org/std/future/trait.Future.html) or Stream {{ todo() }} `x` ready. {{ experimental() }} {{ edition(ed="'18") }} |
 | `return x`  | Early return from function. More idiomatic way is to end with expression. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
-
-<!-- Soon ... very soon ... -->
-<!-- | `x.await` | Only works inside `async`. Yield flow until Future or Stream `x` ready. {{ experimental() }} {{ edition(ed="'18") }} | -->
 
 </div>
 
