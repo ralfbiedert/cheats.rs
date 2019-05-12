@@ -185,11 +185,11 @@ Define units of code and their abstractions.
 | {{ tab() }} `async fn f() -> S`  | The call `f()` returns an `impl Future<Output=S>`, does not execute `f`! |
 | {{ tab() }} `async {}`  | Async block {{ todo() }} that transforms last expression `x` into `Future<Output=X>`. |
 | `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with trait [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html). |
-| <code>\|\| {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
-| {{ tab() }} <code>\|x\| {}</code> | Closure with a bound parameter `x`. |
-| {{ tab() }} <code>\|x\| x + x</code> | Closure without block expression.  |
-| {{ tab() }} <code>move \|x\| x + y </code> | Closure taking ownership of its captures. |
-| {{ tab() }} <code> return \|\| true </code> | Closures may sometimes look like logical ORs (here: return a closure). |
+| <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
+| {{ tab() }} <code>&vert;x&vert; {}</code> | Closure with a bound parameter `x`. |
+| {{ tab() }} <code>&vert;x&vert; x + x</code> | Closure without block expression.  |
+| {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures. |
+| {{ tab() }} <code> return &vert;&vert; true </code> | Closures may sometimes look like logical ORs (here: return a closure). |
 | `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, ...). |
 | `x.f()` | Call member function, requires `f` takes `self`, `&self`, ... as first argument. |
 | {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
@@ -329,9 +329,9 @@ These constructs are found in `match` or `let` expressions.
 |  `[a, 0] => {}` | Match array with any value for `a` and `0` for second. |
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
 | `x @ 1 .. 5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
-| <code>0 \| 1 => {}</code> | Pattern alternatives (or-patterns).|
-| {{ tab() }}  <code>E::A \| E::Z </code> | Same, but on enum variants. |
-| {{ tab() }}  <code>E::C {x} \| E::D {x}</code> | Same, but bind `x` if all variants have it. |
+| <code>0 &vert; 1 => {}</code> | Pattern alternatives (or-patterns).|
+| {{ tab() }}  <code>E::A &vert; E::Z </code> | Same, but on enum variants. |
+| {{ tab() }}  <code>E::C {x} &vert; E::D {x}</code> | Same, but bind `x` if all variants have it. |
 | `S { x } if x > 10`  | Pattern match **guards**. {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} |
 
 </div>
@@ -443,7 +443,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | Example | Explanation |
 |---------|-------------|
 | `!` | Always empty **never type**. {{ experimental() }} {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html?highlight=never#never-type") }} |
-| `_` | Unnamed variable binding, e.g., <code>\|x, _\| {}</code>.|
+| `_` | Unnamed variable binding, e.g., <code>&vert;x, _&vert; {}</code>.|
 | `_x` | Variable binding explicitly marked as unused. |
 | `1_234_567` | Numeric separator for visual clarity. |
 | `1u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, ...). |
@@ -507,9 +507,9 @@ From the perspective of someone defining a closure:
 
 | Closure | Implements<sup>*</sup> | Comment |
 |--------| -----------| --- |
-| <code> \|\| { moved_s; } </code> | `FnOnce` | Caller must give up ownership of `moved_s`. |
-| <code> \|\| { &mut s; } </code> | `FnOnce`, `FnMut` | Allows `g()` to change caller's local state `s`. |
-| <code> \|\| { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; but can share and reuse `s`. |
+| <code> &vert;&vert; { moved_s; } </code> | `FnOnce` | Caller must give up ownership of `moved_s`. |
+| <code> &vert;&vert; { &mut s; } </code> | `FnOnce`, `FnMut` | Allows `g()` to change caller's local state `s`. |
+| <code> &vert;&vert; { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; but can share and reuse `s`. |
 
 <div class="footnotes">
     <sup>*</sup> Rust <a href="https://doc.rust-lang.org/stable/reference/expressions/closure-expr.html">prefers capturing</a> by reference
@@ -546,7 +546,7 @@ If you are used to programming Java or C, consider these.
 |  | `x = loop { break 5 };`  |
 |  | `fn f() -> u32 { 0 }`  |
 | **Think in Iterators** | `(1..10).map(f).collect()` |
-|  | <code>names.iter().filter(\|x\| x.starts_with("A"))</code> |
+|  | <code>names.iter().filter(&vert;x&vert; x.starts_with("A"))</code> |
 | **Handle Absence with `?`** | `x = try_something()?;` |
 |  | `get_option()?.run()?` |
 | **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
