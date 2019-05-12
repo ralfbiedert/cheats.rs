@@ -77,7 +77,7 @@ Define data types and memory locations, and use them.
 | {{ tab() }} `struct S` `()` | Define "tupled" struct with numbered fields `.0`, `.1`, ... |
 | {{ tab() }} `struct S;` | Define zero sized unit struct. |
 | `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
-| {{ tab() }}  `enum E { A, C {} }` | Define variants of enum; can be unit- `A`, tuple- `B` `()` and struct-like `C{}`. |
+| {{ tab() }}  `enum E { A, B(), C {} }` | Define variants of enum; can be unit- `A`, tuple- `B` `()` and struct-like `C{}`. |
 | {{ tab() }}  `enum E { A = 1 }` | If variants are only unit-like, allow discriminant values, e.g., for FFI. |
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
@@ -720,6 +720,9 @@ These are other great visual guides and tables.
 {{ tool(src="/link_containers.png", title="Containers", url="https://docs.google.com/presentation/d/1q-c7UAyrUlM-eZyTo1pd8SZ0qwA_wYxmPZVOQkoDmH4/edit") }}
 {{ tool(src="/link_railroad.png", title="Macro Railroad", url="https://lukaslueg.github.io/macro_railroad_wasm_demo/") }}
 {{ tool(src="/link_lifetimes.png", title="Lifetimes", url="https://rufflewind.com/2017-02-15/rust-move-copy-borrow") }}
+
+{{ tablesep() }}
+
 
 | Cheat Sheet | Description |
 |--------| -----------|

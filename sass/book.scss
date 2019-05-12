@@ -1,32 +1,15 @@
 @charset "utf-8";
+
 @import "normalize";
-* {
-    box-sizing: border-box;
+@import "html";
+@import "page";
+
+
+img#logo {
+    position: relative;
+    top: 40px;
 }
 
-@media screen {
-    html {
-        font-size: 9px;
-    }
-}
-
-// Smaller font looks better on paper
-@media print {
-    html {
-        font-size: 7px;
-    }
-}
-
-body,
-html {
-    height: 100%;
-}
-
-body {
-    text-rendering: optimizeLegibility;
-    font-family: "Open Sans", sans-serif;
-    letter-spacing: 0.2px;
-}
 
 div.title {
     text-align: center;
@@ -44,10 +27,15 @@ div.footnotes {
     font-size: 80%;
 }
 
-img#logo {
-    position: relative;
-    top: 40px;
+div.toc {
+    display: flex;
+    margin-top: 40px;
 }
+
+div.column {
+    flex: 50%;
+}
+
 
 span.good {
     color: green;
@@ -61,37 +49,21 @@ span.cargo-prefix {
     border: 1px solid rgb(200, 200, 200);
 }
 
-@mixin min-screen($min-width: $body-width) {
-    @media screen and (min-width: $min-width) {
-        @content;
-    }
+sup.entry {
+    color: rgb(0, 110, 0);
+    font-size: 65%;
 }
 
-@mixin max-screen($max-width: $body-width) {
-    @media screen and (max-width: $max-width) {
-        @content;
-    }
+sup.mid {
+    color: rgb(143, 93, 1);
+    font-size: 65%;
 }
 
-h1,
-h2 {
-    margin-bottom: 10px;
-    margin-top: 30px;
+sup.expert {
+    color: rgb(184, 0, 0);
+    font-size: 65%;
 }
 
-h3 {
-    margin-bottom: 5px;
-    margin-top: 30px;
+sup.generalsup {
+    font-size: 65%;
 }
-
-footer {
-    text-align: center;
-    color: gray;
-    font-size: 9px;
-}
-
-$sidebar-width: 0px;
-@import "navigation";
-@import "content";
-@import "header";
-@import "cheats";

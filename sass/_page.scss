@@ -1,6 +1,22 @@
+$smallscreen-width: 650px;
+
+
+@mixin min-screen($min-width: $body-width) {
+    @media screen and (min-width: $min-width) {
+        @content;
+    }
+}
+
+@mixin max-screen($max-width: $body-width) {
+    @media screen and (max-width: $max-width) {
+        @content;
+    }
+}
+
+
 .page {
     position: absolute;
-    width: calc(100% - #{$sidebar-width});
+    width: 100%;
     height: 100%; // overflow-y: auto;
     color: #000;
     background: #fff;
@@ -65,7 +81,7 @@
             border-collapse: collapse;
             border-color: #cccccc;
             td {
-                padding: 3px 20px;
+                padding: 3px 5px 3px 20px;
                 border: 1px hsl(0, 0%, 95%) solid;
             }
             thead {
@@ -124,7 +140,7 @@
         }
     }
     .previous {
-        left: $sidebar-width;
+        left: 0px;
         float: left;
         transition: left 0.5s;
     }
@@ -148,19 +164,6 @@
     }
 }
 
-@include min-screen(600px) {
-    .page {
-        left: $sidebar-width;
-    }
-}
-
-.page-without-menu {
-    width: 100%;
-    left: 0;
-    .previous {
-        left: 15px;
-    }
-}
 
 @include max-screen(600px) {
     .page {
@@ -169,41 +172,38 @@
     }
 }
 
-.search-container {
-    display: none;
-    &--is-visible {
-        display: block;
+
+// Small screens
+@media screen and (max-width: $smallscreen-width) {
+    .cheats>table tr td:nth-child(1) {
+        width: 150px;
     }
-    #search {
-        width: 100%;
-        padding: 1rem;
-        border: 1px solid #aaa;
-        border-radius: 3px;
-        background-color: #fafafa;
-        color: #000;
+    .keywords>table tr td:nth-child(1) {
+        width: 150px;
     }
-    .search-results {
-        &__header {
-            font-weight: bold;
-            padding: 1rem 0rem;
-        }
-        &__items {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        &__item {
-            margin-bottom: 1rem;
-        }
-        &__teaser {
-            font-size: 90%;
-        }
+    .keywords>table tr td:nth-child(2) {
+        width: 150px;
     }
 }
 
-.search-mode {
-    .prev-link,
-    .next-link {
+
+// Larger screens
+@media screen and (min-width: $smallscreen-width) {
+    .cheats>table tr td:nth-child(1) {
+        width: 230px;
+    }
+    .keywords>table tr td:nth-child(1) {
+        width: 150px;
+    }
+    .keywords>table tr td:nth-child(2) {
+        width: 200px;
+    }
+}
+
+
+// Larger screens
+@media print {
+    .noprint {
         display: none;
     }
 }
