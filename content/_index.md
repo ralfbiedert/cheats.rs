@@ -182,7 +182,7 @@ Define units of code and their abstractions.
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
 | `const fn f() {}`  | Constant `fn` for compile time compilations, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
 | `async fn f() {}`  | **Async** {{ experimental() }} {{ edition(ed="'18") }} function transformation, makes `f` return an `impl Future`. {{ std(page="std/future/trait.Future.html") }} |
-| {{ tab() }} `async fn f() -> S`  | The call `f()` returns an `impl Future<Output=S>`, does not execute `f`! |
+| {{ tab() }} `async fn f() -> S {}`  | The call `f()` returns an `impl Future<Output=S>`, does not execute `f`! |
 | {{ tab() }} `async {}`  | Async block {{ todo() }} that transforms last expression `x` into `Future<Output=X>`. |
 | `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with trait [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html). |
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
