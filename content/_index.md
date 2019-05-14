@@ -118,8 +118,8 @@ Define data types and memory locations, and use them.
 | `x[a..b]` | Collection slice-like indexing via [Range](https://doc.rust-lang.org/std/ops/struct.Range.html). |
 | `a..b` | Right-exclusive **range** {{ ref(page="expressions/range-expr.html") }} creation, also seen as `..`, `a..`, `..b`.  |
 | `a..=b` | Inclusive range creation, also seen as `..=b`. |
-| `x.i` | Member **access**. {{ ref(page="expressions/field-expr.html") }}|
-| `x.0` | Tuple access |
+| `s.x` | Named **field access**, {{ ref(page="expressions/field-expr.html") }} might try to [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) if `x` not part of type `S`. |
+| `s.0` | Numbered field access, used for tuple types `S` &#8203;`(T)`. |
 
 </div>
 
