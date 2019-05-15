@@ -623,7 +623,7 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 | `&mut s` | Same, but will produce a mutable borrow. |
 |   | A `&mut` will allow the *owner of the borrow* (address) to change `s` content. |
 |   | This reiterates that not the value in `s`, but `s` location is borrowed. |
-| `S<'a> {}` | Signals that `S` will hold an address (i.e., reference). |
+| `S<'a> {}` | Signals that `S` will hold at least one address (i.e., reference). |
 |  | `'a` will be determined automatically by the user of this struct. |
 |  | `'a` will be chosen as small as possible. |
 | `f<'a>(x: &'a T)`  | Signals this function will accept an address (i.e., reference). |
@@ -635,6 +635,10 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 |   | **In addition, propagate borrow state** according to lifetime names! |
 |   | So while result address with `'a` is used, input address with `'a` is locked.  |
 |   | Here: while `s` from `let s = f(&x)` is around, `x` counts as 'borrowed'. |
+| `<'a, 'b: 'a>` | The lifetimes declared in `S<>` and `f<>` can also have bounds. |
+|  | The `<'a, 'b>` part means the type will handle at least 2 addresses. |
+|  | The `'b: 'a` part is a **lifetime bound**, and means `'b` must **outlive** `'a`. |
+|  | Any address in an `&'b X` must exist at least as long as any in an `&'a Y`. |
 
 {{ tablesep() }}
 
