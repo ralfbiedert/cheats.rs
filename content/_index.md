@@ -41,6 +41,7 @@ Language Constructs
 * [Generics & Constraints](#generics_constraints)
 * [Strings & Chars](#strings_chars)
 * [Comments](#comments)
+* [Formatting Strings](#formatting_strings)
 * [Miscellaneous](#miscellaneous)
 
 </div>
@@ -432,6 +433,42 @@ No comment.
 | `/*...*/` | Block comment. |
 | `/*!...*/` | Inner block doc comment. |
 | `/**...*/` | Outer block doc comment. |
+
+</div>
+
+### <a name="formatting_strings"></a> Formatting Strings
+
+There are several macros that you can use to output formatted data: `print!`, `eprint!`, and `write!` (each also has a
+version with `ln` to print a newline). The `format!` macro can create a formatted String.
+
+<div class="cheats">
+
+Each format argument follows a basic grammar:
+
+```
+{[argument][':'[[fill]align][sign]['#']['0'][width]['.' precision][type]]}
+```
+
+Where `argument` can be omitted (next argument, counting only `{}`), a number N (the Nth zero-based argument), or an
+identifier (for named macro arguments). The full grammar for the format string and flags is [specified in the
+`std::fmt`](https://doc.rust-lang.org/std/fmt/index.html#syntax) documentation, but here are some commonly used flags:
+
+| Element | Values | Meaning |
+|---------|--------|---------|
+| `align` | `<`, `^`, `>` | Left, center, right. These only make sense if you specify a width |
+| `sign`/`#`/`0` | | Sign can be `+` to force printing of sign. `#` forces alternate formatting. This is commonly used to pretty-print [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html) formatting with `{:#?}`. `0` zero-pads numeric values |
+| `width` | Positive integer | Minimum character width for the field. If it's shorter, pad using the `fill` value, defaulting to space. See the docs for [using another argument to control width](https://doc.rust-lang.org/std/fmt/index.html#width) |
+| `precision` | Non-negative integer | Controls digits after the decimal for floating point values, or a truncate width for non-numeric types. See the docs for [using another argument to control precision](https://doc.rust-lang.org/std/fmt/index.html#precision)
+| `type` | `?`, `x`, `e`, `b`, `o` | [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html), hex, exponent, binary, or octal (there are more). The types you can choose are [tied to traits that you can implement](https://doc.rust-lang.org/std/fmt/index.html#traits)
+
+Examples:
+
+| Example | Explanation |
+|---------|-------------|
+| `{2:#?}` | Pretty-print the 3rd argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html) |
+| `{myVal:^2$}` | Center the `myVal` named argument with a width specified by the 3rd argument |
+| `{:<10.3}` | Left align with width 10 and a precision of 3.|
+| `{myVal:#x}` | Format the `myVal` named argument using hexadecimal, with a leading `0x` (from the `#` "alternative format" flag) |
 
 </div>
 
