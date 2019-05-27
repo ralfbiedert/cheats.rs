@@ -645,7 +645,7 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 </div>
 
 
-### <a name="formatting_strings"></a> Formatting Strings
+## <a name="formatting_strings"></a> Formatting Strings
 
 Formatting applies to `print!`, `eprint!`, `write!` (and their -`ln` siblings like `println!`).
 The `format!` macro can create a formatted `String`.
