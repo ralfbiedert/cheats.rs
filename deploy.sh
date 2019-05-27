@@ -27,4 +27,4 @@ sed -i -e "s/_NOW_/$NOW/g" $DIST/sitemap.xml
 
 
 aws s3 cp $DIST s3://cheats.rs/ --recursive
-aws cloudfront create-invalidation --distribution-id E3P5E5G4A4QPL8 --paths "/*"
+#aws cloudfront create-invalidation --distribution-id E3P5E5G4A4QPL8 --paths "/*"

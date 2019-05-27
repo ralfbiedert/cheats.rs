@@ -241,7 +241,7 @@ Segment projects into smaller units and minimize dependencies.
 
 | Sigil | Explanation |
 |---------|-------------|
-| `mod m {}`  | Define a **module**. {{ book(page="ch07-02-modules-and-use-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} |
+| `mod m {}`  | Define a **module**. {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} |
 | `a::b` | Namespace **path** {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, ...). |
 | {{ tab() }} `::b` | Search `b` relative to crate root. {{ deprecated() }} |
 | {{ tab() }} `crate::b` | Search `b` relative to crate root. {{ edition(ed="'18") }} |
@@ -253,7 +253,7 @@ Segment projects into smaller units and minimize dependencies.
 | `use a::b as _;`  | Bring `b` anonymously into scope, useful for traits with conflicting names. |
 | `use a::*;`  | Bring everything from `a` into scope. |
 | `pub use a::b;`  | Bring `a::b` into scope and reexport from here. |
-| `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-modules-and-use-to-control-scope-and-privacy.html") }} for `T`. |
+| `pub T`  | "Public if parent path public" **visibility** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} for `T`. |
 | {{ tab() }} `pub(crate) T` | Visible at most in current crate. |
 | {{ tab() }} `pub(self) T`  | Visible at most in current module. |
 | {{ tab() }} `pub(super) T`  | Visible at most in parent. |
