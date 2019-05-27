@@ -666,7 +666,7 @@ The full grammar is [specified in the
 | Element |  Meaning |
 |---------| ---------|
 | `argument` |  Omitted (next `{}`), number (`0`, `1`, ...) or identifier for named arguments. |
-| `align` | Left (`<`), center (`^`), or right (`>`) , if width is specified. |
+| `align` | Left (`<`), center (`^`), or right (`>`) , if width is specified, fills with `fill`. |
 | `#` | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0). Pretty-print with `{:#?}`, for example. |
 | `0` | Zero-pads numeric values. |
 | `width` | Minimum width (&geq; 0), padding with `fill` (default to space). |
