@@ -579,9 +579,6 @@ If you are used to programming Java or C, consider these.
 > for any shared project! 🔥
 
 
-
-[RFC1574]: https://github.com/rust-lang/rfcs/blob/master/text/1574-more-api-documentation-conventions.md
-
 </div>
 
 
@@ -667,12 +664,12 @@ identifier (for named macro arguments). The full grammar for the format string a
 
 | Element | Values | Meaning |
 |---------|--------|---------|
-| `align` | `<`, `^`, `>` | Left, center, or right , if width is specified |
-| `#` | | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0). Pretty-print with `{:#?}`, for example |
-| `0` | | Zero-pads numeric values |
-| `width` | > 0 | Minimum width, padding with `fill` (default to space) |
-| `precision` | &geq; 0 | Decimal digits for numerics, or max width for non-numerics |
-| `type` | `?`, `x`, `b`, `o` | [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html), hex, binary, or octal ([there are more, using Traits](https://doc.rust-lang.org/std/fmt/index.html#traits)) |
+| `align` | `<`, `^`, `>` | Left, center, or right , if width is specified. |
+| `#` | | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0). Pretty-print with `{:#?}`, for example. |
+| `0` | | Zero-pads numeric values. |
+| `width` | > 0 | Minimum width, padding with `fill` (default to space). |
+| `precision` | &geq; 0 | Decimal digits for numerics, or max width for non-numerics. |
+| `type` | `?`, `x`, `b`, `o` | [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html), hex, binary, or octal ([there are more, using Traits](https://doc.rust-lang.org/std/fmt/index.html#traits)). |
 
 Note that [width](https://doc.rust-lang.org/std/fmt/index.html#width) and [precision](https://doc.rust-lang.org/std/fmt/index.html#precision) can use other arguments as their values, allowing for dynamic sizing of fields.
 
@@ -680,11 +677,11 @@ Examples:
 
 | Example | Explanation |
 |---------|-------------|
-| `{#?}` | Pretty-print the next argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html) |
-| `{2:#?}` | Pretty-print the 3rd argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html) |
-| `{myVal:^2$}` | Center the `myVal` named argument, width specified by the 3rd argument |
+| `{#?}` | Pretty-print the next argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
+| `{2:#?}` | Pretty-print the 3rd argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
+| `{myVal:^2$}` | Center the `myVal` named argument, width specified by the 3rd argument. |
 | `{:<10.3}` | Left align with width 10 and a precision of 3.|
-| `{myVal:#x}` | Format `myVal` argument as hex, with a leading `0x` (alternate format for `x`) |
+| `{myVal:#x}` | Format `myVal` argument as hex, with a leading `0x` (alternate format for `x`). |
 
 </div>
 
