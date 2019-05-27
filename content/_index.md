@@ -647,10 +647,11 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 
 ### <a name="formatting_strings"></a> Formatting Strings
 
-There are several macros that you can use to output formatted data: `print!`, `eprint!`, and `write!` (each also has a
-version with `ln`, e.g. `println!`, to print a newline). The `format!` macro can create a formatted String.
+Formatting applies to `print!`, `eprint!`, `write!` (and their -`ln` siblings like `println!`).
+The `format!` macro can create a formatted `String`.
 
 <div class="cheats">
+
 
 Each format argument follows a basic grammar:
 
@@ -658,20 +659,28 @@ Each format argument follows a basic grammar:
 {[argument][':'[[fill]align][sign]['#']['0'][width]['.' precision][type]]}
 ```
 
-Where `argument` can be omitted (next argument, counting only `{}`), a number N (the Nth zero-based argument), or an
-identifier (for named macro arguments). The full grammar for the format string and flags is [specified in the
+The full grammar is [specified in the
 `std::fmt`](https://doc.rust-lang.org/std/fmt/index.html#syntax) documentation, but here are some commonly used flags:
 
-| Element | Values | Meaning |
-|---------|--------|---------|
-| `align` | `<`, `^`, `>` | Left, center, or right , if width is specified. |
-| `#` | | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0). Pretty-print with `{:#?}`, for example. |
-| `0` | | Zero-pads numeric values. |
-| `width` | > 0 | Minimum width, padding with `fill` (default to space). |
-| `precision` | &geq; 0 | Decimal digits for numerics, or max width for non-numerics. |
-| `type` | `?`, `x`, `b`, `o` | [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html), hex, binary, or octal ([there are more, using Traits](https://doc.rust-lang.org/std/fmt/index.html#traits)). |
 
-Note that [width](https://doc.rust-lang.org/std/fmt/index.html#width) and [precision](https://doc.rust-lang.org/std/fmt/index.html#precision) can use other arguments as their values, allowing for dynamic sizing of fields.
+| Element |  Meaning |
+|---------| ---------|
+| `argument` |  Omitted (next `{}`), number (`0`, `1`, ...) or identifier for named arguments. |
+| `align` | Left (`<`), center (`^`), or right (`>`) , if width is specified. |
+| `#` | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0). Pretty-print with `{:#?}`, for example. |
+| `0` | Zero-pads numeric values. |
+| `width` | Minimum width (&geq; 0), padding with `fill` (default to space). |
+| `precision` | Decimal digits (&geq; 0) for numerics, or max width for non-numerics. |
+| `type` | [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html) (`?`), hex (`x`), binary (`b`), or octal (`o`) ([there are more, using Traits](https://doc.rust-lang.org/std/fmt/index.html#traits)). |
+
+
+
+<div class="footnotes">
+    Note that <a href="https://doc.rust-lang.org/std/fmt/index.html#width">width</a> and <a href="https://doc.rust-lang.org/std/fmt/index.html#precision">precision</a> can use other arguments as their values, allowing for dynamic sizing of fields.
+</div>
+
+{{ tablesep() }}
+
 
 Examples:
 
