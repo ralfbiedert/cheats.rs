@@ -57,7 +57,7 @@ Guides
 * [Tooling](#tooling)
 
 Misc
-* [More Cheats](#more_cheats)
+* [Links & Services](#links_and_services)
 * [Printing & PDF](#printing_pdf)
 
 </div>
@@ -771,7 +771,7 @@ Advanced types:
 
 
 
-## <a name="more_cheats"></a> More Cheats
+## <a name="links_and_services"></a> Links & Services
 
 These are other great visual guides and tables.
 
@@ -794,6 +794,36 @@ These are other great visual guides and tables.
 
 
 {{ tablesep() }}
+
+
+All Rust books developed by the community.
+
+| Book ️️📚  | Description |
+|--------| -----------|
+| [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) | Standard introduction to Rust, **start here if you are new**. |
+| [The Reference](https://doc.rust-lang.org/stable/reference/) {{ experimental() }}  | Reference of the Rust language.  |
+| [The Rustc Guide ](https://rust-lang.github.io/rustc-guide/index.html) | Explains how the compiler works internally. |
+| [The Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
+| [The Unsafe Code Reference](https://rust-lang.github.io/unsafe-code-guidelines/) | Concise information about writing `unsafe` code. |
+| [The Cargo Book](https://doc.rust-lang.org/cargo/) | How to use `cargo` and write `Cargo.toml`. |
+| [The Async Book](https://rust-lang.github.io/async-book/)  {{ experimental() }} | Explains `async` code, `Futures`, ... |
+| [The Embedded Book](https://docs.rust-embedded.org/book/intro/index.html) | Working with embedded and `#![no_std]` devices. |
+| [The Webassembly Book](https://rustwasm.github.io/book/) {{ experimental() }} | Working with the web producing `.wasm` files. |
+
+
+{{ tablesep() }}
+
+
+Online services which provide information or tooling.
+
+| Service ️️⚙️ | Description |
+|--------| -----------|
+| [Rust Component History](https://rust-lang.github.io/rustup-components-history/) | Check **nightly** status of various Rust tools for a platform. |
+| [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
+| [ALL the Clippy Lints](https://rust-lang.github.io/rust-clippy/master/) | All the [**clippy**](https://github.com/rust-lang/rust-clippy) lints you might be interested in. |
+
+{{ tablesep() }}
+
 
 
 
