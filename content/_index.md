@@ -782,7 +782,7 @@ These are other great visual guides and tables.
 {{ tablesep() }}
 
 
-| Cheat Sheet | Description |
+| Cheat Sheets | Description |
 |--------| -----------|
 | [Rust Learning⭐](https://github.com/ctjhoa/rust-learning) | Probably the best collection of links about learning Rust.  |
 | [String Conversions](https://docs.google.com/spreadsheets/d/19vSPL6z2d50JlyzwxariaYD6EU2QQUQqIDOGbiGQC7Y/pubhtml?gid=0&single=true) | How to get type of string from another. |
@@ -797,7 +797,7 @@ These are other great visual guides and tables.
 
 All major Rust books developed by the community.
 
-| Book ️️📚  | Description |
+| Books ️️📚  | Description |
 |--------| -----------|
 | [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) | Standard introduction to Rust, **start here if you are new**. |
 | {{ tab() }} [The API Guidelines](https://rust-lang-nursery.github.io/api-guidelines/) | How to write idiomatic and re-usable Rust. |
@@ -817,18 +817,31 @@ All major Rust books developed by the community.
 
 {{ tablesep() }}
 
+Comprehensive lookup tables for common components.
 
-Online services which provide information or tooling.
-
-| Service ️️⚙️ | Description |
+| Tables ️️📋️ | Description |
 |--------| -----------|
-| [Rust Component History](https://rust-lang.github.io/rustup-components-history/) | Check **nightly** status of various Rust tools for a platform. |
-| [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 | [Compiler Error Index](https://doc.rust-lang.org/error-index.html) | Ever wondered what `E0404` means? |
 | [ALL the Clippy Lints](https://rust-lang.github.io/rust-clippy/master/) | All the [**clippy**](https://github.com/rust-lang/rust-clippy) lints you might be interested in. |
+| [Configuring Rustfmt](https://rust-lang.github.io/rustfmt/) | All [**rustfmt**](https://github.com/rust-lang/rustfmt) options you can use in `rustfmt.toml`. |
+| [Rust Forge](https://forge.rust-lang.org/) | Lists release train and links for people working on the compiler. |
+| {{ tab() }} [Rust Platform Support](https://forge.rust-lang.org/platform-support.html) | All supported platforms and their Tier. |
+| {{ tab() }} [Rust Component History](https://rust-lang.github.io/rustup-components-history/) | Check **nightly** status of various Rust tools for a platform. |
+
 
 {{ tablesep() }}
 
+
+Online services which provide information or tooling.
+
+| Services ️️⚙️ | Description |
+|--------| -----------|
+| [crates.io](https://crates.io/) | All 3rd party libraries for Rust. |
+| [docs.rs](https://docs.rs/) | Documentation for 3rd party libraries, automatically generated source. |
+| [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
+
+
+{{ tablesep() }}
 
 
 
