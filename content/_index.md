@@ -808,10 +808,10 @@ All major Rust books developed by the community.
 | {{ tab() }} [The Unstable Book](https://doc.rust-lang.org/unstable-book/index.html) | Information about unstable items, e.g, `#![feature(...)]`.  |
 | {{ tab() }} [The Rustc Guide ](https://rust-lang.github.io/rustc-guide/index.html) | Explains how the compiler works internally. |
 | [The Cargo Book](https://doc.rust-lang.org/cargo/) | How to use `cargo` and write `Cargo.toml`. |
-| [The CLI Book](https://rust-lang-nursery.github.io/cli-wg/) | Information for creating CLI tools. |
+| [The CLI Book](https://rust-lang-nursery.github.io/cli-wg/) | Information about creating CLI tools. |
 | [The Embedded Book](https://docs.rust-embedded.org/book/intro/index.html) | Working with embedded and `#![no_std]` devices. |
 | {{ tab() }} [The Embedonomicon](https://docs.rust-embedded.org/embedonomicon/) | First `#![no_std]` from scratch on a Cortex-M. |
-| [The Webassembly Book](https://rustwasm.github.io/docs/book/) | Working with the web producing `.wasm` files. |
+| [The Webassembly Book](https://rustwasm.github.io/docs/book/) | Working with the web and producing `.wasm` files. |
 | {{ tab() }} [The `wasm-bindgen` Guide](https://rustwasm.github.io/docs/wasm-bindgen/) | How to bind Rust and JavaScript APIs in particular. |
 
 
