@@ -805,8 +805,10 @@ All Rust books developed by the community.
 | [The Rustc Guide ](https://rust-lang.github.io/rustc-guide/index.html) | Explains how the compiler works internally. |
 | [The Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
 | [The Unsafe Code Reference](https://rust-lang.github.io/unsafe-code-guidelines/) | Concise information about writing `unsafe` code. |
+| [The Unstable Book](https://doc.rust-lang.org/unstable-book/index.html) | Information about unstable items, e.g, `#![feature(...)]`.  |
 | [The Cargo Book](https://doc.rust-lang.org/cargo/) | How to use `cargo` and write `Cargo.toml`. |
 | [The Async Book](https://rust-lang.github.io/async-book/)  {{ experimental() }} | Explains `async` code, `Futures`, ... |
+| [The CLI Book](https://rust-lang-nursery.github.io/cli-wg/) | Information for creating CLI tools. |
 | [The Embedded Book](https://docs.rust-embedded.org/book/intro/index.html) | Working with embedded and `#![no_std]` devices. |
 | [The Webassembly Book](https://rustwasm.github.io/book/) {{ experimental() }} | Working with the web producing `.wasm` files. |
 
@@ -820,6 +822,7 @@ Online services which provide information or tooling.
 |--------| -----------|
 | [Rust Component History](https://rust-lang.github.io/rustup-components-history/) | Check **nightly** status of various Rust tools for a platform. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
+| [Compiler Error Index](https://doc.rust-lang.org/error-index.html/) | Ever wondered what `E0404` means? |
 | [ALL the Clippy Lints](https://rust-lang.github.io/rust-clippy/master/) | All the [**clippy**](https://github.com/rust-lang/rust-clippy) lints you might be interested in. |
 
 {{ tablesep() }}
