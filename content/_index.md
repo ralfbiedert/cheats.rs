@@ -437,6 +437,7 @@ No comment.
 | `/*...*/` | Block comment. |
 | `/*!...*/` | Inner block doc comment. |
 | `/**...*/` | Outer block doc comment. |
+| `#` | In doc tests, hide line from documentation (` ```   # use x::hidden; ``` `). |
 
 </div>
 
