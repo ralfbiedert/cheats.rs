@@ -807,7 +807,7 @@ All major Rust books developed by the community.
 | {{ tab() }} [The Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
 | {{ tab() }} [The Unsafe Code Reference](https://rust-lang.github.io/unsafe-code-guidelines/) | Concise information about writing `unsafe` code. |
 | {{ tab() }} [The Unstable Book](https://doc.rust-lang.org/unstable-book/index.html) | Information about unstable items, e.g, `#![feature(...)]`.  |
-| {{ tab() }} [The SIMD Performance Guide](https://rust-lang-nursery.github.io/packed_simd/perf-guide/) {{ experimental() }} | Work on `u8x32` or `f32x8` to speed up your computations.  |
+| {{ tab() }} [The SIMD Performance Guide](https://rust-lang-nursery.github.io/packed_simd/perf-guide/) {{ experimental() }} | Work with `u8x32` or `f32x8` to speed up your computations.  |
 | {{ tab() }} [The RFC Book ](https://rust-lang.github.io/rfcs/) | Look up accepted RFCs and how they change the language. |
 | {{ tab() }} [The Rustc Guide ](https://rust-lang.github.io/rustc-guide/index.html) | Explains how the compiler works internally. |
 | [The Cargo Book](https://doc.rust-lang.org/cargo/) | How to use `cargo` and write `Cargo.toml`. |
