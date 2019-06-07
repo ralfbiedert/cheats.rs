@@ -786,7 +786,6 @@ These are other great visual guides and tables.
 |--------| -----------|
 | [Rust Learning⭐](https://github.com/ctjhoa/rust-learning) | Probably the best collection of links about learning Rust.  |
 | [String Conversions](https://docs.google.com/spreadsheets/d/19vSPL6z2d50JlyzwxariaYD6EU2QQUQqIDOGbiGQC7Y/pubhtml?gid=0&single=true) | How to get type of string from another. |
-| [API Guidelines Checklist](https://rust-lang-nursery.github.io/api-guidelines/checklist.html) | How to design your own APIs. |
 | [Periodic Table of Types](http://cosmic.mearie.org/2014/01/periodic-table-of-rust-types) | How various types and references correlate. |
 | [Futures](https://rufflewind.com/img/rust-futures-cheatsheet.html) | How to construct and work with futures. |
 | [Rust Iterator Cheat Sheet](https://danielkeep.github.io/itercheat_baked.html) | Summary of iterator-related methods from `std::iter` and `itertools`. |
@@ -801,6 +800,7 @@ All major Rust books developed by the community.
 | Book ️️📚  | Description |
 |--------| -----------|
 | [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) | Standard introduction to Rust, **start here if you are new**. |
+| {{ tab() }} [The API Guidelines](https://rust-lang-nursery.github.io/api-guidelines/) | How to write idiomatic and re-usable Rust. |
 | {{ tab() }} [The Async Book](https://rust-lang.github.io/async-book/)  {{ experimental() }} | Explains `async` code, `Futures`, ... |
 | {{ tab() }} [The Reference](https://doc.rust-lang.org/stable/reference/) {{ experimental() }}  | Reference of the Rust language.  |
 | {{ tab() }} [The Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
