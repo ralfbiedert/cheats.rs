@@ -432,11 +432,12 @@ No comment.
 | Example | Explanation |
 |--------|-------------|
 | `//` | Line comment. |
-| `//!` | Inner line **doc comment**. {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} |
+| `//!` | Inner line **doc comment** {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} for auto generated documentation. |
 | `///` | Outer line doc comment. |
 | `/*...*/` | Block comment. |
 | `/*!...*/` | Inner block doc comment. |
 | `/**...*/` | Outer block doc comment. |
+| ` ```rust ... ``` ` | In doc comments, include a [doc test](https://doc.rust-lang.org/rustdoc/documentation-tests.html) (doc code running on `cargo test`). |
 | `#` | In doc tests, hide line from documentation (` ```   # use x::hidden; ``` `). |
 
 </div>
@@ -808,6 +809,7 @@ All major Rust books developed by the community.
 | {{ tab() }} [The Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
 | {{ tab() }} [The Unsafe Code Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/)  {{ experimental() }} | Concise information about writing `unsafe` code. |
 | {{ tab() }} [The Unstable Book](https://doc.rust-lang.org/unstable-book/index.html) | Information about unstable items, e.g, `#![feature(...)]`.  |
+| {{ tab() }} [The Rustdoc Book](https://doc.rust-lang.org/stable/rustdoc/) | Tips how to customize `cargo doc` and `rustdoc`. |
 | {{ tab() }} [The SIMD Performance Guide](https://rust-lang-nursery.github.io/packed_simd/perf-guide/) {{ experimental() }} | Work with `u8x32` or `f32x8` to speed up your computations.  |
 | {{ tab() }} [The RFC Book ](https://rust-lang.github.io/rfcs/) | Look up accepted RFCs and how they change the language. |
 | {{ tab() }} [The Rustc Guide](https://rust-lang.github.io/rustc-guide/index.html) | Explains how the compiler works internally. |
