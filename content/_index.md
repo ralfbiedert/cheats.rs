@@ -799,7 +799,7 @@ These are other great visual guides and tables.
 
 All major Rust books developed by the community.
 
-| Books ️️📚  | Description |
+| Books&nbsp;️📚  | Description |
 |--------| -----------|
 | [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) | Standard introduction to Rust, **start here if you are new**. |
 | {{ tab() }} [The API Guidelines](https://rust-lang-nursery.github.io/api-guidelines/) | How to write idiomatic and re-usable Rust. |
@@ -826,7 +826,7 @@ All major Rust books developed by the community.
 
 Comprehensive lookup tables for common components.
 
-| Tables ️️📋️ | Description |
+| Tables&nbsp;📋| Description |
 |--------| -----------|
 | [Compiler Error Index](https://doc.rust-lang.org/error-index.html) | Ever wondered what `E0404` means? |
 | [ALL the Clippy Lints](https://rust-lang.github.io/rust-clippy/master/) | All the [**clippy**](https://github.com/rust-lang/rust-clippy) lints you might be interested in. |
@@ -842,7 +842,7 @@ Comprehensive lookup tables for common components.
 
 Online services which provide information or tooling.
 
-| Services ️️⚙️ | Description |
+| Services&nbsp;⚙️ | Description |
 |--------| -----------|
 | [crates.io](https://crates.io/) | All 3rd party libraries for Rust. |
 | [docs.rs](https://docs.rs/) | Documentation for 3rd party libraries, automatically generated source. |
