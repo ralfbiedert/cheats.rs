@@ -66,6 +66,27 @@ Misc
 </div>
 
 
+
+## <a name="type_aliases_and_casts"></a> Hello, Rust!
+
+If you have never seen Rust before (or to try the things below).
+
+<div id="hellostatic">
+
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+
+</div>
+<div id="helloplay"></div>
+<div id="helloctrl"><a href="javascript:show_playground(true);">▶️ Edit & Run</a></div>
+
+
+
 ### <a name="data_structures"></a> Data Structures
 
 Define data types and memory locations, and use them.

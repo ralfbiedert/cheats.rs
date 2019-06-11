@@ -9,7 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
     <link rel="icon" type="image/png" href="favicon32.png">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
 
     <title>{% block title %}{{ config.title }}{% endblock title %}</title>
@@ -32,7 +34,9 @@
 
 
     <!-- Github ribbon -->
-    <a class="noprint" href="https://github.com/ralfbiedert/cheats.rs/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+    <a class="noprint" href="https://github.com/ralfbiedert/cheats.rs/"><img
+            style="position: absolute; top: 0; right: 0; border: 0;"
+            src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 
     <!-- Syntax highlighting -->
     <script type="text/javascript" src="{{ get_url(path="prism.js") | safe }}"></script>
@@ -42,6 +46,23 @@
         codes.forEach(code => {
             code.className = "language-rust";
         });
+
+        /// Enables or disables the playground.
+        function show_playground(state) {
+            let area_static = document.getElementById("hellostatic");
+            let area_play = document.getElementById("helloplay");
+            let area_ctrl = document.getElementById("helloctrl");
+
+            if (state) {
+                area_static.style = 'display: none;';
+                area_play.innerHTML = '<iframe src="https://play.rust-lang.org/" style="width:100%; height:500px;"></iframe>';
+                area_ctrl.innerHTML = '<a href="javascript:show_playground(false);">⏹️ Stop Editor</a>';
+            } else {
+                area_static.style = 'display: block;';
+                area_play.innerHTML = '';
+                area_ctrl.innerHTML = '<a href="javascript:show_playground(true);">▶️ Edit & Run</a>';
+            }
+        }
     </script>
 </body>
 
