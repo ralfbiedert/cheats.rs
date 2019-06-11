@@ -69,7 +69,7 @@ Misc
 
 ## <a name="type_aliases_and_casts"></a> Hello, Rust!
 
-If you have never seen Rust before (or to try the things below).
+If you have never seen Rust before, or if you want to try the things below:
 
 <div id="hellostatic">
 
