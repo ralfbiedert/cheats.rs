@@ -2,6 +2,7 @@
 weight = 1
 sort_by = "weight"
 template = "index.html"
+insert_anchor_links = "right"
 +++
 
 <img id="logo" src="/logo.png"></img>
@@ -67,7 +68,7 @@ Misc
 
 
 
-## <a name="type_aliases_and_casts"></a> Hello, Rust!
+## Hello, Rust!
 
 If you have never seen Rust before, or if you want to try the things below:
 
@@ -87,7 +88,7 @@ fn main() {
 
 
 
-### <a name="data_structures"></a> Data Structures
+### Data Structures
 
 Define data types and memory locations, and use them.
 
@@ -155,7 +156,7 @@ Define data types and memory locations, and use them.
 </div>
 
 
-### <a name="references_pointers"></a> References & Pointers
+### References & Pointers
 
 Granting access to un-owned memory. Also see section on Generics & Constraints.
 
@@ -188,7 +189,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 </div>
 
 
-###  <a name="functions_behavior"></a> Functions & Behavior
+###  Functions & Behavior
 
 Define units of code and their abstractions.
 
@@ -228,7 +229,7 @@ Define units of code and their abstractions.
 </div>
 
 
-### <a name="control_flow"></a> Control Flow
+### Control Flow
 
 Control execution within a function.
 
@@ -254,7 +255,7 @@ Control execution within a function.
 
 
 
-### <a name="organizing_code"></a> Organizing Code
+### Organizing Code
 
 Segment projects into smaller units and minimize dependencies.
 
@@ -286,7 +287,7 @@ Segment projects into smaller units and minimize dependencies.
 
 
 
-### <a name="type_aliases_and_casts"></a> Type Aliases and Casts
+### Type Aliases and Casts
 
 Short-hand names of types, and methods to convert one type to another.
 
@@ -308,7 +309,7 @@ Short-hand names of types, and methods to convert one type to another.
 
 
 
-### <a name="code_generation"></a> Code Generation
+### Code Generation
 
 Constructs expanded before the actual compilation happens.
 
@@ -332,7 +333,7 @@ Constructs expanded before the actual compilation happens.
 
 
 
-### <a name="pattern_matching"></a> Pattern Matching
+### Pattern Matching
 
 These constructs are found in `match` or `let` expressions.
 
@@ -381,7 +382,7 @@ These constructs are found in `match` or `let` expressions.
 
 
 
-### <a name="generics_constraints"></a> Generics & Constraints
+### Generics & Constraints
 
 Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, ...
 
@@ -424,7 +425,7 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 
 
 
-### <a name="strings_chars"></a> Strings & Chars
+### Strings & Chars
 
 Rust has several ways to create string or char literals, depending on your needs.
 
@@ -444,7 +445,7 @@ Rust has several ways to create string or char literals, depending on your needs
 </div>
 
 
-### <a name="comments"></a> Comments
+### Comments
 
 No comment.
 
@@ -464,7 +465,7 @@ No comment.
 </div>
 
 
-### <a name="miscellaneous"></a> Miscellaneous
+### Miscellaneous
 
 These sigils did not fit any other category but are good to know nonetheless.
 
@@ -494,7 +495,7 @@ For some of them Rust also support **operator overloading**. {{ std(page="std/op
 
 
 
-## <a name="invisible_sugar"></a> Invisible Sugar
+## Invisible Sugar
 
 If something works that "shouldn't work now that you think about it", it might be due to one of these.
 
@@ -509,7 +510,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
 
 
-## <a name="closures"></a> Closures
+## Closures
 
 There is a subtrait relationship `Fn` : `FnMut` : `FnOnce`. That means, a closure that
 implements `Fn`, also implements `FnMut` and `FnOnce`. Likewise, a closure
@@ -564,7 +565,7 @@ That gives the following advantages and disadvantages:
 
 
 
-## <a name="idiomatic_rust"></a> Idiomatic Rust
+## Idiomatic Rust
 
 If you are used to programming Java or C, consider these.
 
@@ -612,7 +613,7 @@ If you are used to programming Java or C, consider these.
 <div class="cheats">
 
 
-## <a name="a_guide_to_reading_lifetimes"></a> A Guide to Reading Lifetimes
+## A Guide to Reading Lifetimes
 
 Lifetimes can be overwhelming at times. Here is a simplified guide on how to read and interpret constructs containing lifetimes if you are familiar with C.
 
@@ -671,7 +672,7 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 </div>
 
 
-## <a name="formatting_strings"></a> Formatting Strings
+## Formatting Strings
 
 Formatting applies to `print!`, `eprint!`, `write!` (and their -`ln` siblings like `println!`).
 The `format!` macro can create a formatted `String`.
@@ -721,7 +722,7 @@ Examples:
 </div>
 
 
-## <a name="tooling"></a> Tooling
+## Tooling
 
 Some commands and tools that are good to know.
 
@@ -794,7 +795,7 @@ Advanced types:
 
 
 
-## <a name="links_and_services"></a> Links & Services
+## Links & Services
 
 These are other great visual guides and tables.
 
@@ -874,7 +875,7 @@ Online services which provide information or tooling.
 
 
 
-## <a name="printing_pdf"></a> Printing & PDF
+## Printing & PDF
 
 > Want this Rust cheat sheet as a PDF download? <a href="javascript:window.print()"><b>Generate PDF</b></a> (or select File > Print – might take 10s so) and then "Save as PDF". It looks great in both Firefox's and Chrome's PDF exports. Alternatively use the <a href="rust_cheat_sheet.pdf"><b>cached PDF</b></a>.
 
