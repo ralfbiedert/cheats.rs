@@ -5,22 +5,23 @@
 
 DIST=public
 TOML_BASE=config.toml
-TOML_DEPLOY=config.deploy.toml
 
 NOW=`date +"%Y-%m-%dT%H:%M:%S+02:00"`
 
-cp $TOML_BASE $TOML_DEPLOY
+# https://stackoverflow.com/questions/5195607/checking-bash-exit-status-of-several-commands-efficiently
+function exit_if_fail {
+    "$@"
+    local status=$?
+    if [ $status -ne 0 ]; then
+        echo "error with '$1'" >&2
+        exit 1
+    fi
+    return $status
+}
 
-echo "" >> $TOML_DEPLOY
-echo "check_external_links = true" >> $TOML_DEPLOY
 
-if ! grep "^check_external_links = true$" $TOML_DEPLOY > /dev/null
-then
-   echo "Failed to activate 'check_external_links'."
-   exit -1
-fi
-
-zola -c $TOML_DEPLOY build
+exit_if_fail zola -c $TOML_BASE check
+exit_if_fail zola -c $TOML_BASE build
 
 # Update deployment date in sitemap.xml
 sed -i -e "s/_NOW_/$NOW/g" $DIST/sitemap.xml

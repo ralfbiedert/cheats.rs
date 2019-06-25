@@ -2,7 +2,7 @@
 weight = 1
 sort_by = "weight"
 template = "index.html"
-insert_anchor_links = "right"
+#insert_anchor_links = "right"
 +++
 
 <img id="logo" src="/logo.png"></img>
@@ -31,18 +31,18 @@ insert_anchor_links = "right"
 <div class="column">
 
 Language Constructs
-* [Data Structures](#data_structures)
-* [References & Pointers](#references_pointers)
-* [Functions & Behavior](#functions_behavior)
-* [Control Flow](#control_flow)
-* [Organizing Code](#organizing_code)
-* [Type Aliases and Casts](#type_aliases_and_casts)
-* [Code Generation](#code_generation)
-* [Pattern Matching](#pattern_matching)
-* [Generics & Constraints](#generics_constraints)
-* [Strings & Chars](#strings_chars)
+* [Data Structures](#data-structures)
+* [References & Pointers](#references-pointers)
+* [Functions & Behavior](#functions-behavior)
+* [Control Flow](#control-flow)
+* [Organizing Code](#organizing-code)
+* [Type Aliases and Casts](#type-aliases-and-casts)
+* [Code Generation](#code-generation)
+* [Pattern Matching](#pattern-matching)
+* [Generics & Constraints](#generics-constraints)
+* [Strings & Chars](#strings-chars)
 * [Comments](#comments)
-* [Formatting Strings](#formatting_strings)
+* [Formatting Strings](#formatting-strings)
 * [Miscellaneous](#miscellaneous)
 
 </div>
@@ -50,16 +50,16 @@ Language Constructs
 <div class="column">
 
 Guides
-* [Invisible Sugar](#invisible_sugar)
+* [Invisible Sugar](#invisible-sugar)
 * [Closures](#closures)
-* [Idiomatic Rust](#idiomatic_rust)
-* [A Guide to Reading Lifetimes](#a_guide_to_reading_lifetimes)
-* [Formatting Strings](#formatting_strings)
+* [Idiomatic Rust](#idiomatic-rust)
+* [A Guide to Reading Lifetimes](#a-guide-to-reading-lifetimes)
+* [Formatting Strings](#formatting-strings)
 * [Tooling](#tooling)
 
 Misc
-* [Links & Services](#links_and_services)
-* [Printing & PDF](#printing_pdf)
+* [Links & Services](#links-services)
+* [Printing & PDF](#printing-pdf)
 
 </div>
 
