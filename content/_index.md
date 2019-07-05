@@ -318,7 +318,7 @@ Constructs expanded before the actual compilation happens.
 | Example |  Explanation |
 |---------|---------|
 | `m!()` |  **Macro** {{book(page="ch19-06-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation, also `m!{}`, `m![]` (depending on macro). |
-| `$x:ty`  | Macro capture, also `$x:expr`, `$x:ty`, `$x:path`, ... {{ref(page="macros-by-example.html")}} |
+| `$x:ty`  | Macro capture, also `$x:expr`, `$x:ty`, `$x:path`, ... see next table. |
 | `$x` |  Macro substitution in **macros by example**. {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
 | `$(x),*` | Macro repetition "zero or more times" in macros by example. |
 | {{ tab() }} `$(x),?` | Same, but "zero or one time". |
@@ -330,6 +330,25 @@ Constructs expanded before the actual compilation happens.
 
 </div>
 
+{{ tablesep() }}
+
+In a `macro_rules!` implementation, the following macro captures can be used:
+
+<div class="cheats">
+
+| Macro Capture |  Explanation |
+|---------|---------|
+| `$x:item`  | An item, like a function, struct, module, etc. |
+| `$x:block` | A block of statements and/or an expression, surrounded by braces. |
+| `$x:stmt`  | A statement. |
+| `$x:pat`   | A pattern. |
+| `$x:expr`  | An expression. |
+| `$x:ty`    | A type. |
+| `$x:ident` | An identifier. |
+| `$x:path`  | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`, …). |
+| `$x:meta`  | A meta item; the things that go inside `#[...]` and `#![...]` attributes. |
+| `$x:tt`    | A single token tree. |
+</div>
 
 
 
@@ -829,6 +848,7 @@ All major Rust books developed by the community.
 | {{ tab() }} [The Reference](https://doc.rust-lang.org/stable/reference/) {{ experimental() }}  | Reference of the Rust language.  |
 | {{ tab() }} [The Edition Guide](https://doc.rust-lang.org/nightly/edition-guide/) | Working with Rust 2015, Rust 2018, and beyond.  |
 | {{ tab() }} [The Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
+| {{ tab() }} [The Little Book of Rust Macros](https://danielkeep.github.io/tlborm/book/index.html) {{ experimental() }}| Community's collective knowledge of Rust macros. |
 | {{ tab() }} [The Unsafe Code Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/)  {{ experimental() }} | Concise information about writing `unsafe` code. |
 | {{ tab() }} [The Unstable Book](https://doc.rust-lang.org/unstable-book/index.html) | Information about unstable items, e.g, `#![feature(...)]`.  |
 | {{ tab() }} [The Rustdoc Book](https://doc.rust-lang.org/stable/rustdoc/) | Tips how to customize `cargo doc` and `rustdoc`. |
