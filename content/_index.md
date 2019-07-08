@@ -42,7 +42,6 @@ Language Constructs
 * [Generics & Constraints](#generics-constraints)
 * [Strings & Chars](#strings-chars)
 * [Comments](#comments)
-* [Formatting Strings](#formatting-strings)
 * [Miscellaneous](#miscellaneous)
 
 </div>
