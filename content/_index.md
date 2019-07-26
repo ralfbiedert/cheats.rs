@@ -90,8 +90,7 @@ fn main() {
 
 ### Data Structures
 
-Define data types and memory locations, and use them.
-
+Data types and memory locations defined via keywords.
 
 <div class="cheats">
 
@@ -114,7 +113,19 @@ Define data types and memory locations, and use them.
 
 </div>
 
+<div class="footnotes">
+    <sup>*</sup> Note that technically <i>mutable</i> and <i>immutable</i>
+    are a bit of a misnomer. Even if you have an immutable binding or shared
+    reference, it might contain a
+    <a href="https://doc.rust-lang.org/std/cell/index.html">Cell</a>,
+    which supports so called <i>interior mutability</i>.
+</div>
+
+
+
 {{ tablesep() }}
+
+Creating and accessing data structures; and some more _sigilic_ types.
 
 <div class="cheats">
 
@@ -131,10 +142,10 @@ Define data types and memory locations, and use them.
 | `(x)` | Parenthesized expression. |
 | `(x,)` | Single-element **tuple** expression. {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
 | `(S,)` | Single-element tuple type. |
-| `[S]` | Array of unspecified length, i.e., **slice**. {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. |
-| `[S; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} with `n` elements of type `S`. |
-| `[x; n]` | Array with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
-| `[x, y]` | Array with given elements. |
+| `[S]` | Array type of unspecified length, i.e., **slice**. {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. |
+| `[S; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} of fixed length `n` holding elements of type `S`. |
+| `[x; n]` | Array instance with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
+| `[x, y]` | Array instance with given elements `x` and `y`. |
 | `x[0]` | Collection indexing. Overloadable [Index](https://doc.rust-lang.org/std/ops/trait.Index.html), [IndexMut](https://doc.rust-lang.org/std/ops/trait.IndexMut.html) |
 | `x[..]` | Collection slice-like indexing via [RangeFull](https://doc.rust-lang.org/std/ops/struct.RangeFull.html), _c_. slices.  |
 | `x[a..]` | Collection slice-like indexing via [RangeFrom](https://doc.rust-lang.org/std/ops/struct.RangeFrom.html). |
@@ -145,14 +156,6 @@ Define data types and memory locations, and use them.
 | `s.x` | Named **field access**, {{ ref(page="expressions/field-expr.html") }} might try to [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) if `x` not part of type `S`. |
 | `s.0` | Numbered field access, used for tuple types `S` &#8203;`(T)`. |
 
-</div>
-
-<div class="footnotes">
-    <sup>*</sup> Note that technically <i>mutable</i> and <i>immutable</i>
-    are a bit of a misnomer. Even if you have an immutable binding or shared
-    reference, it might contain a
-    <a href="https://doc.rust-lang.org/std/cell/index.html">Cell</a>,
-    which supports so called <i>interior mutability</i>.
 </div>
 
 
@@ -354,13 +357,32 @@ In a `macro_rules!` implementation, the following macro captures can be used:
 
 ### Pattern Matching
 
-These constructs are found in `match` or `let` expressions.
+Constructs found in `match` or `let` expressions, or function parameters.
+
 
 <div class="cheats">
 
 | Example | Explanation |
 |---------|-------------|
-| `match m {}` | Initiate **pattern matching** {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }}, then use match arms below: |
+| `match m {}` | Initiate **pattern matching** {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }}, then use match arms, _c_. next table. |
+| `let Some(x) = Some(5)`  | Notably, `let` also pattern matches similar to the table below. |
+|  {{ tab() }} `let S { x } = s` | Only `x` will be bound to value `s.x`. |
+|  {{ tab() }} `let (_, b, _) = abc` | Only `b` will be bound to value `abc.1`. |
+|  {{ tab() }} `let (a, ..) = abc` | Ignoring 'the rest' also works. |
+|  {{ tab() }} `let Some(x) = get()` | ⚡ Will **not** work if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
+| `if let Some(x) = get()`  | Branch if pattern can actually be assigned (e.g., `enum` variant). |
+| `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`.|
+
+</div>
+
+{{ tablesep() }}
+
+Pattern matching arms in `match` expressions. The left side of these arms can also be found in `let` expressions.
+
+<div class="cheats">
+
+| Example | Explanation |
+|---------|-------------|
 |  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
 |  `E::B ( .. ) => {}` | Match enum tuple variant `B`, wildcard any index. |
 |  `E::C { .. } => {}` | Match enum struct variant `C`, wildcard any field. |
@@ -380,21 +402,7 @@ These constructs are found in `match` or `let` expressions.
 
 </div>
 
-{{ tablesep() }}
 
-<div class="cheats">
-
-| Example | Explanation |
-|---------|-------------|
-| `let Some(x) = Some(5)`  | Notably, `let` also pattern matches similar to the table above. |
-|  {{ tab() }} `let S { x } = s` | Only `x` will be bound to value `s.x`. |
-|  {{ tab() }} `let (_, b, _) = abc` | Only `b` will be bound to value `abc.1`. |
-|  {{ tab() }} `let (a, ..) = abc` | Ignoring 'the rest' also works. |
-|  {{ tab() }} `let Some(x) = get()` | ⚡ Will **not** work if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
-| `if let Some(x) = get()`  | Branch if pattern can actually be assigned (e.g., `enum` variant). |
-| `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`.|
-
-</div>
 
 <!-- This is more relevant for let D = ... cases, https://www.reddit.com/r/rust/comments/a1846o/rust_quiz_26_medium_to_hard_rust_questions_with/eaop291/ -->
 <!-- |  `D => {}` | Match struct if `D` unit `struct D;`| -->
@@ -472,9 +480,9 @@ No comment.
 
 | Example | Explanation |
 |--------|-------------|
-| `//` | Line comment. |
+| `//` | Line comment, use these to document code flow or _internals_. |
 | `//!` | Inner line **doc comment** {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} for auto generated documentation. |
-| `///` | Outer line doc comment. |
+| `///` | Outer line doc comment, use these on types. |
 | `/*...*/` | Block comment. |
 | `/*!...*/` | Inner block doc comment. |
 | `/**...*/` | Outer block doc comment. |
