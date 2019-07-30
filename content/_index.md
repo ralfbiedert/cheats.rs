@@ -742,9 +742,9 @@ Examples:
 |---------|-------------|
 | `{#?}` | Pretty-print the next argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
 | `{2:#?}` | Pretty-print the 3rd argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
-| `{myVal:^2$}` | Center the `myVal` named argument, width specified by the 3rd argument. |
+| `{val:^2$}` | Center the `val` named argument, width specified by the 3rd argument. |
 | `{:<10.3}` | Left align with width 10 and a precision of 3.|
-| `{myVal:#x}` | Format `myVal` argument as hex, with a leading `0x` (alternate format for `x`). |
+| `{val:#x}` | Format `val` argument as hex, with a leading `0x` (alternate format for `x`). |
 
 </div>
 
