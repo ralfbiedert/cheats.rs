@@ -4,3 +4,4 @@
 *.css linguist-detectable=false
 *.js linguist-detectable=false
 *.sh linguist-detectable=false
+*.pdf filter=lfs diff=lfs merge=lfs -text
