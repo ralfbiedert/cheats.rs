@@ -68,6 +68,8 @@ Misc
 
 
 
+<div class="noprint">
+
 ## Hello, Rust!
 
 If you have never seen Rust before, or if you want to try the things below:
@@ -86,6 +88,7 @@ fn main() {
 <div id="helloplay"></div>
 <div id="helloctrl"><a href="javascript:show_playground(true);">▶️ Edit & Run</a></div>
 
+</div>
 
 
 ### Data Structures
