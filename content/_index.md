@@ -900,6 +900,7 @@ Online services which provide information or tooling.
 |--------| -----------|
 | [crates.io](https://crates.io/) | All 3rd party libraries for Rust. |
 | [docs.rs](https://docs.rs/) | Documentation for 3rd party libraries, automatically generated source. |
+| [libs.rs](https://libs.rs/) | Unofficial overview of quality Rust libraries and applications. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 
 
