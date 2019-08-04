@@ -345,15 +345,15 @@ In a `macro_rules!` implementation, the following macro captures can be used:
 | Macro Capture |  Explanation |
 |---------|---------|
 | `$x:item`  | An item, like a function, struct, module, etc. |
-| `$x:block` | A block of statements and/or an expression, surrounded by braces. |
-| `$x:stmt`  | A statement. |
-| `$x:pat`   | A pattern. |
-| `$x:expr`  | An expression. |
-| `$x:ty`    | A type. |
-| `$x:ident` | An identifier. |
+| `$x:block` | A block `{}` of statements or expressions, e.g., `{ let x = 5; }` |
+| `$x:stmt`  | A statement, e.g., `let x = 1 + 1;`, `String::new();` or `vec![];` |
+| `$x:expr`  | An expression, e.g., `x`, `1 + 1`, `String::new()` or `vec![]` |
+| `$x:pat`   | A pattern, e.g., `Some(t)`, `(17, 'a')` or `_`. |
+| `$x:ty`    | A type, e.g., `String`, `usize` or `Vec<u8>`. |
+| `$x:ident` | An identifier, for example in `let x = 0;` the identifier is `x`. |
 | `$x:path`  | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`, …). |
 | `$x:meta`  | A meta item; the things that go inside `#[...]` and `#![...]` attributes. |
-| `$x:tt`    | A single token tree. |
+| `$x:tt`    | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more detail. |
 </div>
 
 
