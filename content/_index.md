@@ -353,7 +353,7 @@ In a `macro_rules!` implementation, the following macro captures can be used:
 | `$x:ident` | An identifier, for example in `let x = 0;` the identifier is `x`. |
 | `$x:path`  | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`, …). |
 | `$x:meta`  | A meta item; the things that go inside `#[...]` and `#![...]` attributes. |
-| `$x:tt`    | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more detail. |
+| `$x:tt`    | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more details. |
 </div>
 
 
