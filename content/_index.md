@@ -765,9 +765,10 @@ Some commands and tools that are good to know.
 | <code>cargo <span class="cargo-prefix">c</span>heck</code> | Check if project would compile (much faster). |
 | <code>cargo <span class="cargo-prefix">t</span>est</code> | Run tests for the project. |
 | <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
+| <code>cargo doc --open</code> | Locally generate documentation for your code and dependencies |
 | `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
 |  | `expanded` Show with expanded macros, ... |
-| `rustup docs` | Open offline Rust documentation, good on a plane! |
+| `rustup docs` | Open offline Rust documentation (incl. the books), good on a plane! |
 
 
 <div class="footnotes">
