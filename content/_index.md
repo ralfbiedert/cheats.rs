@@ -108,8 +108,8 @@ Data types and memory locations defined via keywords.
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
 | `const X: T = T();`  | Define inlineable **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Inlined values are mutable!!! |
-| `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable.<sup>*</sup> |
-| `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. |
+| `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable.  |
+| `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. {{ note( note="*") }}.|
 | {{ tab() }} `x = y` | Moves `y` to `x`, invalidating `y` if `T` is not `Copy`, and copying `y` otherwise. |
 
 </div>
@@ -143,7 +143,7 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `(x)` | Parenthesized expression. |
 | `(x,)` | Single-element **tuple** expression. {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
 | `(S,)` | Single-element tuple type. |
-| `[S]` | Array type of unspecified length, i.e., **slice**. {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. |
+| `[S]` | Array type of unspecified length, i.e., **slice**. {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. {{ note( note="*") }} |
 | `[S; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} of fixed length `n` holding elements of type `S`. |
 | `[x; n]` | Array instance with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
 | `[x, y]` | Array instance with given elements `x` and `y`. |
@@ -157,6 +157,10 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `s.x` | Named **field access**, {{ ref(page="expressions/field-expr.html") }} might try to [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) if `x` not part of type `S`. |
 | `s.0` | Numbered field access, used for tuple types `S` &#8203;`(T)`. |
 
+</div>
+
+<div class="footnotes">
+    <sup>*</sup> For now, see <a href="https://github.com/rust-lang/rust/issues/48055">tracking issue</a> and corresponding <a href="https://github.com/rust-lang/rfcs/pull/1909">RFC 1909</a>.
 </div>
 
 
@@ -191,6 +195,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `'static`  | Special lifetime lasting the entire program execution. |
 
 </div>
+
+
 
 
 ###  Functions & Behavior
