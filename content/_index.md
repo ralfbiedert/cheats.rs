@@ -789,7 +789,7 @@ They often require unstable and are subject to break.
 |--------| ---- |
 | `cargo asm` | Show generated assembly instructions for code. {{ link(url = "https://github.com/gnzlbg/cargo-asm") }}  |
 | `cargo outdated` | List upgradable dependencies. {{ link(url = "https://github.com/kbknapp/cargo-outdated") }}  |
-| `cargo tree` | Print dependencies as a tree.{{ link(url = "https://github.com/sfackler/cargo-tree") }}  |
+| `cargo tree` | Print dependencies as a tree. {{ link(url = "https://github.com/sfackler/cargo-tree") }}  |
 | `cargo-edit` | Meta package (`cargo install cargo-edit`) {{ link(url = "https://github.com/killercup/cargo-edit") }}. Provides: |
 | {{ tab() }} `cargo add <crate>` | Add latest version of `<crate>` to your `Cargo.toml`.  |
 | {{ tab() }} `cargo rm <crate>` | Remove `<crate>` from your `Cargo.toml`.  |
