@@ -110,8 +110,7 @@ Data types and memory locations defined via keywords.
 | `const X: T = T();`  | Define inlineable **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Inlined values are mutable!!! |
 | `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable.<sup>*</sup> |
 | `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. |
-| {{ tab() }} `x = y` | Copy bytes at `y` to bytes at `x` if `T: Copy`. Compiler might optimize. |
-| {{ tab() }} `x = y` | Same, but also invalidate `y` if `T` not `Copy`. Compiler might optimize. |
+| {{ tab() }} `x = y` | Moves `y` to `x`, invalidating `y` if `T` is not `Copy`, and copying `y` otherwise. |
 
 </div>
 
