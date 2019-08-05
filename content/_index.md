@@ -520,7 +520,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 
 Rust supports all common operators you would expect to find in a language (`+`, `*`, `%`, `=`, `==`...).
 Since they behave no differently in Rust we do not list them here.
-For some of them Rust also support **operator overloading**. {{ std(page="std/ops/index.html")}}
+For some of them Rust also supports **operator overloading**. {{ std(page="std/ops/index.html")}}
 
 
 
