@@ -21,7 +21,7 @@ template = "index.html"
 > largely **deprecated** {{ deprecated() }},
 > has a **minimum edition** {{ edition(ed="'18") }},
 > is **experimental** {{ experimental() }},
-> or **bad** {{ edition(ed="⚡") }}.
+> or **bad** {{ note( note="⚡") }}.
 
 
 <div class="noprint">
@@ -787,20 +787,16 @@ They often require unstable and are subject to break.
 
 | Command | Description |
 |--------| ---- |
-| `cargo asm` | Show generated assembly instructions for code. |
-| `cargo outdated` | List upgradable dependencies. |
-| `cargo tree` | Print dependencies as a tree. |
-| From [cargo-edit]: | Tools for editing `Cargo.toml`. |
-| {{ tab() }} `cargo add <crate>` | Add latest version of `<crate>` to your `Cargo.toml`. |
-| {{ tab() }} `cargo rm <crate>` | Remove `<crate>` from your `Cargo.toml`. |
-| {{ tab() }} `cargo upgrade <crate>` | Upgrade the version of `<crate>` to the latest. |
-
-<!-- Can be added once it supports Windows -->
-<!-- | `cargo flamegraph` | Flamegraph performance metrics (`cargo install flamegraph`). | -->
+| `cargo asm` | Show generated assembly instructions for code. {{ link(url = "https://github.com/gnzlbg/cargo-asm") }}  |
+| `cargo outdated` | List upgradable dependencies. {{ link(url = "https://github.com/kbknapp/cargo-outdated") }}  |
+| `cargo tree` | Print dependencies as a tree.{{ link(url = "https://github.com/sfackler/cargo-tree") }}  |
+| `cargo-edit` | Meta package (`cargo install cargo-edit`) {{ link(url = "https://github.com/killercup/cargo-edit") }}. Provides: |
+| {{ tab() }} `cargo add <crate>` | Add latest version of `<crate>` to your `Cargo.toml`.  |
+| {{ tab() }} `cargo rm <crate>` | Remove `<crate>` from your `Cargo.toml`.  |
+| {{ tab() }} `cargo upgrade <crate>` | Upgrade the version of `<crate>` to the latest.  |
+| `cargo flamegraph` | Visualize CPU time (`cargo install flamegraph`). {{ link(url = "https://github.com/ferrous-systems/flamegraph") }} {{ note( note="OSX, Linux only") }} |
 
 </div>
-
-[cargo-edit]: https://github.com/killercup/cargo-edit
 
 
 <!--
