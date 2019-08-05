@@ -26,10 +26,6 @@
     <div class="page">
         <div class="page__content">
 
-            <div class="controls">
-                <a href="javascript:toggle_night_mode()">Night Mode &#x1f4a1;</a>
-            </div>
-
             <div class="book-content">
                 <h1>{{ section.title }}</h1>
                 {{ section.content | safe }}
@@ -47,7 +43,6 @@
     <script type="text/javascript" src="{{ get_url(path="prism.js") | safe }}"></script>
     <script type="text/javascript">
         let codes = document.querySelectorAll("code");
-        let night_mode = localStorage.getItem('night-mode');
 
         /// Enables or disables the playground.
         function show_playground(state) {
@@ -83,11 +78,16 @@
             code.className = "language-rust";
         });
 
-        // Load night mode setting on first page load
-        if (night_mode === "night") {
-            toggle_night_mode();
-        }
+        // Try to load night mode setting on first page load.
+        try {
+            let night_mode = localStorage.getItem('night-mode');
 
+            if (night_mode === "night") {
+                toggle_night_mode();
+            }
+        } catch (e) {
+            console.log(e);
+        }
     </script>
 </body>
 

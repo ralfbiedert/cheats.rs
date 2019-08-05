@@ -23,6 +23,11 @@ template = "index.html"
 > is **experimental** {{ experimental() }},
 > or **bad** {{ note( note="⚡") }}.
 
+<div class="controls">
+    <a href="javascript:toggle_night_mode()">Night Mode &#x1f4a1;</a>
+</div>
+
+
 
 <div class="noprint">
 
