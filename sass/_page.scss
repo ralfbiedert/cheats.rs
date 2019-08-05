@@ -165,6 +165,21 @@ $smallscreen-width: 650px;
 }
 
 
+.controls {
+    padding-top: 10px;
+    font-size: 60%;
+    text-align: right;
+}
+
+
+// Attached to `body` to enable night mode, inspiration from
+// https://lnikki.la/articles/night-mode-css-filter/
+.night-mode {
+    background-color: black;
+    filter: invert(1) hue-rotate(180deg);
+}
+
+
 @include max-screen(600px) {
     .page {
         width: 100%;
