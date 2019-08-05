@@ -779,6 +779,21 @@ A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means 
 {{ tablesep() }}
 
 
+These are optional `rustup` components.
+Install them with `rustup component add [tool]`.
+
+<div class="cheats">
+
+
+| Tool | Description |
+|--------| ---- |
+| `cargo clippy` | Additional ([lints](https://rust-lang.github.io/rust-clippy/master/)) catching common API misuses and unidiomatic code. {{ link(url = "https://github.com/rust-lang/rust-clippy") }} |
+| `cargo fmt` | Automatic code formatter (`rustup component add rustfmt`). {{ link(url = "https://github.com/rust-lang/rustfmt") }} |
+
+
+{{ tablesep() }}
+
+
 These are 3rd party tools and usually need to be installed with `cargo install cargo-[tool]` first.
 They often require unstable and are subject to break.
 
@@ -797,23 +812,6 @@ They often require unstable and are subject to break.
 | `cargo flamegraph` | Visualize CPU time (`cargo install flamegraph`). {{ link(url = "https://github.com/ferrous-systems/flamegraph") }} {{ note( note="OSX, Linux only") }} |
 
 </div>
-
-{{ tablesep() }}
-
-
-These are optional `rustup` components.
-Install them with `rustup component add [tool]`.
-
-<div class="cheats">
-
-
-| Tool | Description |
-|--------| ---- |
-| `clippy` | Additional lints ([list](https://rust-lang.github.io/rust-clippy/master/)) catching common API misuses and giving hints for more idiomatic code. {{ link(url = "https://github.com/rust-lang/rust-clippy") }} |
-| | Usage: `cargo clippy` |
-| `rustfmt` | Automatic code formatter. {{ link(url = "https://github.com/rust-lang/rustfmt") }} |
-| | Usage: `rustfmt <file>` or `cargo fmt [--all]` |
-
 
 </div>
 
