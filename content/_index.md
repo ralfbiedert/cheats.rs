@@ -779,7 +779,7 @@ A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means 
 {{ tablesep() }}
 
 
-These are 3rd party tools and need to be installed with `cargo install cargo-[tool]` first.
+These are 3rd party tools and usually need to be installed with `cargo install cargo-[tool]` first.
 They often require unstable and are subject to break.
 
 <div class="cheats">
@@ -788,13 +788,15 @@ They often require unstable and are subject to break.
 | Command | Description |
 |--------| ---- |
 | `cargo asm` | Show generated assembly instructions for code. |
-| `cargo flamegraph` | Flamegraph performance metrics (`cargo install flamegraph`) |
-| `cargo outdated` | List upgradable dependencies |
-| `cargo tree` | Print dependencies as a tree |
-| [cargo-edit] | Tools for editing `Cargo.toml` |
-| {{ tab() }} `cargo add <crate>` | Add latest version of `<crate>` to your `Cargo.toml` |
-| {{ tab() }} `cargo rm <crate>` | Remove `<crate>` from your `Cargo.toml` |
-| {{ tab() }} `cargo upgrade <crate>` | Upgrade the version of `<crate>` to the latest |
+| `cargo outdated` | List upgradable dependencies. |
+| `cargo tree` | Print dependencies as a tree. |
+| From [cargo-edit]: | Tools for editing `Cargo.toml`. |
+| {{ tab() }} `cargo add <crate>` | Add latest version of `<crate>` to your `Cargo.toml`. |
+| {{ tab() }} `cargo rm <crate>` | Remove `<crate>` from your `Cargo.toml`. |
+| {{ tab() }} `cargo upgrade <crate>` | Upgrade the version of `<crate>` to the latest. |
+
+<!-- Can be added once it supports Windows -->
+<!-- | `cargo flamegraph` | Flamegraph performance metrics (`cargo install flamegraph`). | -->
 
 </div>
 
