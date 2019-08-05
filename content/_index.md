@@ -107,11 +107,10 @@ Data types and memory locations defined via keywords.
 | {{ tab() }}  `enum E { A = 1 }` | If variants are only unit-like, allow discriminant values, e.g., for FFI. |
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
-| `const X: T = T();`  | Define inlineable **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. |
-| `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable.<sup>*</sup> |
-| `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. |
-| {{ tab() }} `x = y` | Copy bytes at `y` to bytes at `x` if `T: Copy`. Compiler might optimize. |
-| {{ tab() }} `x = y` | Same, but also invalidate `y` if `T` not `Copy`. Compiler might optimize. |
+| `const X: T = T();`  | Defines **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Copied into a temporary when used. |
+| `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable.  |
+| `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. {{ note( note="*") }}.|
+| {{ tab() }} `x = y` | Moves `y` to `x`, invalidating `y` if `T` is not `Copy`, and copying `y` otherwise. |
 
 </div>
 
@@ -144,7 +143,7 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `(x)` | Parenthesized expression. |
 | `(x,)` | Single-element **tuple** expression. {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
 | `(S,)` | Single-element tuple type. |
-| `[S]` | Array type of unspecified length, i.e., **slice**. {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. |
+| `[S]` | Array type of unspecified length, i.e., **slice**. {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. {{ note( note="*") }} |
 | `[S; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} of fixed length `n` holding elements of type `S`. |
 | `[x; n]` | Array instance with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
 | `[x, y]` | Array instance with given elements `x` and `y`. |
@@ -158,6 +157,10 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `s.x` | Named **field access**, {{ ref(page="expressions/field-expr.html") }} might try to [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) if `x` not part of type `S`. |
 | `s.0` | Numbered field access, used for tuple types `S` &#8203;`(T)`. |
 
+</div>
+
+<div class="footnotes">
+    <sup>*</sup> For now, see <a href="https://github.com/rust-lang/rust/issues/48055">tracking issue</a> and corresponding <a href="https://github.com/rust-lang/rfcs/pull/1909">RFC 1909</a>.
 </div>
 
 
@@ -192,6 +195,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `'static`  | Special lifetime lasting the entire program execution. |
 
 </div>
+
+
 
 
 ###  Functions & Behavior
@@ -344,16 +349,17 @@ In a `macro_rules!` implementation, the following macro captures can be used:
 
 | Macro Capture |  Explanation |
 |---------|---------|
-| `$x:item`  | An item, like a function, struct, module, etc. |
-| `$x:block` | A block `{}` of statements or expressions, e.g., `{ let x = 5; }` |
-| `$x:stmt`  | A statement, e.g., `let x = 1 + 1;`, `String::new();` or `vec![];` |
-| `$x:expr`  | An expression, e.g., `x`, `1 + 1`, `String::new()` or `vec![]` |
-| `$x:pat`   | A pattern, e.g., `Some(t)`, `(17, 'a')` or `_`. |
-| `$x:ty`    | A type, e.g., `String`, `usize` or `Vec<u8>`. |
-| `$x:ident` | An identifier, for example in `let x = 0;` the identifier is `x`. |
-| `$x:path`  | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`, …). |
-| `$x:meta`  | A meta item; the things that go inside `#[...]` and `#![...]` attributes. |
-| `$x:tt`    | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more details. |
+| `$x:item`    | An item, like a function, struct, module, etc. |
+| `$x:block`   | A block `{}` of statements or expressions, e.g., `{ let x = 5; }` |
+| `$x:stmt`    | A statement, e.g., `let x = 1 + 1;`, `String::new();` or `vec![];` |
+| `$x:expr`    | An expression, e.g., `x`, `1 + 1`, `String::new()` or `vec![]` |
+| `$x:pat`     | A pattern, e.g., `Some(t)`, `(17, 'a')` or `_`. |
+| `$x:ty`      | A type, e.g., `String`, `usize` or `Vec<u8>`. |
+| `$x:ident`   | An identifier, for example in `let x = 0;` the identifier is `x`. |
+| `$x:path`    | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`, …). |
+| `$x:literal` | A literal (e.g. `3`, `"foo"`, `b"bar"`, etc.). |
+| `$x:meta`    | A meta item; the things that go inside `#[...]` and `#![...]` attributes. |
+| `$x:tt`      | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more details. |
 </div>
 
 
@@ -397,7 +403,7 @@ Pattern matching arms in `match` expressions. The left side of these arms can al
 |  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
 |  `[a, 0] => {}` | Match array with any value for `a` and `0` for second. |
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
-| `x @ 1 .. 5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
+| `x @ 1..=5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#a-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
 | <code>0 &vert; 1 => {}</code> | Pattern alternatives (or-patterns).|
 | {{ tab() }}  <code>E::A &vert; E::Z </code> | Same, but on enum variants. |
 | {{ tab() }}  <code>E::C {x} &vert; E::D {x}</code> | Same, but bind `x` if all variants have it. |
@@ -520,7 +526,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 
 Rust supports all common operators you would expect to find in a language (`+`, `*`, `%`, `=`, `==`...).
 Since they behave no differently in Rust we do not list them here.
-For some of them Rust also support **operator overloading**. {{ std(page="std/ops/index.html")}}
+For some of them Rust also supports **operator overloading**. {{ std(page="std/ops/index.html")}}
 
 
 
@@ -779,6 +785,21 @@ A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means 
 {{ tablesep() }}
 
 
+These are optional `rustup` components.
+Install them with `rustup component add [tool]`.
+
+<div class="cheats">
+
+
+| Tool | Description |
+|--------| ---- |
+| `cargo clippy` | Additional ([lints](https://rust-lang.github.io/rust-clippy/master/)) catching common API misuses and unidiomatic code. {{ link(url = "https://github.com/rust-lang/rust-clippy") }} |
+| `cargo fmt` | Automatic code formatter (`rustup component add rustfmt`). {{ link(url = "https://github.com/rust-lang/rustfmt") }} |
+
+
+{{ tablesep() }}
+
+
 These are 3rd party tools and usually need to be installed with `cargo install cargo-[tool]` first.
 They often require unstable and are subject to break.
 
@@ -797,6 +818,9 @@ They often require unstable and are subject to break.
 | `cargo flamegraph` | Visualize CPU time (`cargo install flamegraph`). {{ link(url = "https://github.com/ferrous-systems/flamegraph") }} {{ note( note="OSX, Linux only") }} |
 
 </div>
+
+</div>
+
 
 
 <!--
