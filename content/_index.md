@@ -773,7 +773,7 @@ Some commands and tools that are good to know.
 | <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
 | <code>cargo doc --open</code> | Locally generate documentation for your code and dependencies. |
 | `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
-|  | `expanded` Show with expanded macros, ... |
+| {{ tab() }} `expanded` |  Show with expanded macros, ... |
 | <code>cargo +{nightly, stable} ...</code>  | Runs command with given toolchain, e.g., for 'nightly only' tools. |
 | `rustup docs` | Open offline Rust documentation (incl. the books), good on a plane! |
 
