@@ -43,7 +43,7 @@ Takes inspiration from:
 
 * [The Book](https://doc.rust-lang.org/stable/book/) (some tables)
 * [Idiomatic Rust Libraries](https://killercup.github.io/rustfest-idiomatic-libs/#/) (Idiomatic Rust)
-
+* [Ferris](https://rustacean.net/) (Rust mascot by Karen Rustad Tölva)
 
 # License
 
