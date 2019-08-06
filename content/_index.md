@@ -115,7 +115,7 @@ Data types and memory locations defined via keywords.
 | `const X: T = T();`  | Defines **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Copied into a temporary when used. |
 | `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable.  |
 | `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. {{ note( note="*") }} |
-| {{ tab() }} `x = y` | Moves `y` to `x`, invalidating `y` if `T` is not `Copy`, and copying `y` otherwise. |
+| {{ tab() }} `x = y;` | Moves `y` to `x`, invalidating `y` if `T` is not `Copy`, and copying `y` otherwise. |
 
 </div>
 
@@ -189,9 +189,9 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `ref s` | **Bind by reference**. {{ book(page="ch18-03-pattern-syntax.html#legacy-patterns-ref-and-ref-mut") }} {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
 | `*r` | **Dereference** {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} a reference `r` to access what it points to. |
-| {{ tab() }} `*r = s` | If `r` is a mutable reference, move or copy `s` to target memory. |
-| {{ tab() }} `s = *r` | Make `s` a copy of whatever `r` references, if that is `Copy`. |
-| {{ tab() }} `s = *my_box` | [Special case](https://www.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8/) for `Box` that can also move out Box'ed content if it isn't `Copy`. |
+| {{ tab() }} `*r = s;` | If `r` is a mutable reference, move or copy `s` to target memory. |
+| {{ tab() }} `s = *r;` | Make `s` a copy of whatever `r` references, if that is `Copy`. |
+| {{ tab() }} `s = *my_box;` | [Special case](https://www.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8/) for `Box` that can also move out Box'ed content if it isn't `Copy`. |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}}, duration of a flow in static analysis. |
 | {{ tab() }}  `&'a S`  | Only accepts a `s` with an address that lives `'a` or longer. |
 | {{ tab() }}  `&'a mut S`  | Same, but allow content of address to be changed. |
@@ -296,7 +296,7 @@ Segment projects into smaller units and minimize dependencies.
 | {{ tab() }} `pub(self) T`  | Visible at most in current module. |
 | {{ tab() }} `pub(super) T`  | Visible at most in parent. |
 | {{ tab() }} `pub(in a::b) T`  | Visible at most in `a::b`. |
-| `extern crate a`; | Declare dependency on external **crate** {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }} {{ deprecated() }} ; just `use a::b` in {{ edition(ed="'18") }}.  |
+| `extern crate a;` | Declare dependency on external **crate** {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }} {{ deprecated() }} ; just `use a::b` in {{ edition(ed="'18") }}.  |
 | `extern "C" fn`  | External dependency for **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 
 </div>
@@ -379,12 +379,12 @@ Constructs found in `match` or `let` expressions, or function parameters.
 | Example | Explanation |
 |---------|-------------|
 | `match m {}` | Initiate **pattern matching** {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }}, then use match arms, _c_. next table. |
-| `let Some(x) = Some(5)`  | Notably, `let` also pattern matches similar to the table below. |
-|  {{ tab() }} `let S { x } = s` | Only `x` will be bound to value `s.x`. |
-|  {{ tab() }} `let (_, b, _) = abc` | Only `b` will be bound to value `abc.1`. |
-|  {{ tab() }} `let (a, ..) = abc` | Ignoring 'the rest' also works. |
-|  {{ tab() }} `let Some(x) = get()` | Will **not** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
-| `if let Some(x) = get()`  | Branch if pattern can actually be assigned (e.g., `enum` variant). |
+| `let Some(x) = Some(5);`  | Notably, `let` also pattern matches similar to the table below. |
+|  {{ tab() }} `let S { x } = s;` | Only `x` will be bound to value `s.x`. |
+|  {{ tab() }} `let (_, b, _) = abc;` | Only `b` will be bound to value `abc.1`. |
+|  {{ tab() }} `let (a, ..) = abc;` | Ignoring 'the rest' also works. |
+|  {{ tab() }} `let Some(x) = get();` | Will **not** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
+| `if let Some(x) = get() {}`  | Branch if pattern can actually be assigned (e.g., `enum` variant). |
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`.|
 
 </div>
