@@ -20,7 +20,7 @@ template = "index.html"
 > Other symbols used:
 > largely **deprecated** {{ deprecated() }},
 > has a **minimum edition** {{ edition(ed="'18") }},
-> is **experimental** {{ experimental() }},
+> is **work in progress** {{ experimental() }},
 > or **bad** {{ note( note="⚡") }}.
 
 <div class="controls">
