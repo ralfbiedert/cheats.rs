@@ -11,7 +11,10 @@ pre[class*="language-"] {
 	color: black;
 	background: none;
 	text-shadow: 0 1px white;
-	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-family: 'Fira Code', monospace;
+	font-variant-ligatures: common-ligatures;
+	font-size:85%;
+	/* font-variant-ligatures: none; */
 	text-align: left;
 	white-space: pre;
 	word-spacing: normal;
@@ -107,7 +110,7 @@ pre[class*="language-"] {
 .language-css .token.string,
 .style .token.string {
 	color: #9a6e3a;
-	background: hsla(0, 0%, 100%, .5);
+	/* background: hsla(0, 0%, 100%, .5); */
 }
 
 .token.atrule,
@@ -138,4 +141,3 @@ pre[class*="language-"] {
 .token.entity {
 	cursor: help;
 }
-
