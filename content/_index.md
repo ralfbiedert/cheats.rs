@@ -21,7 +21,7 @@ template = "index.html"
 > largely **deprecated** {{ deprecated() }},
 > has a **minimum edition** {{ edition(ed="'18") }},
 > is **work in progress** {{ experimental() }},
-> or **bad** {{ note( note="⚡") }}.
+> or **bad** {{ bad() }}.
 
 <div class="controls">
     <a href="javascript:toggle_night_mode()">Night Mode &#x1f4a1;</a>
@@ -383,7 +383,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 |  {{ tab() }} `let S { x } = s` | Only `x` will be bound to value `s.x`. |
 |  {{ tab() }} `let (_, b, _) = abc` | Only `b` will be bound to value `abc.1`. |
 |  {{ tab() }} `let (a, ..) = abc` | Ignoring 'the rest' also works. |
-|  {{ tab() }} `let Some(x) = get()` | ⚡ Will **not** work if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
+|  {{ tab() }} `let Some(x) = get()` | Will **not** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
 | `if let Some(x) = get()`  | Branch if pattern can actually be assigned (e.g., `enum` variant). |
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`.|
 
@@ -404,7 +404,7 @@ Pattern matching arms in `match` expressions. The left side of these arms can al
 |  `S { x, y } => {}` | Match struct with any values, bind respective fields as variables `x` and `y`. |
 |  `S { .. } => {}` | Match struct with any values. |
 |  `D => {}` | Match enum variant `E::D` if `D` in `use`. |
-|  `D => {}` | Match anything, bind `D`; ⚡ possibly false friend of `E::D` if `D` not in `use`. |
+|  `D => {}` | Match anything, bind `D`; possibly false friend {{ bad() }} of `E::D` if `D` not in `use`. |
 |  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
 |  `[a, 0] => {}` | Match array with any value for `a` and `0` for second. |
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
@@ -434,7 +434,7 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | `S<T>`  | A **generic** {{ book(page="ch10-01-syntax.html") }} {{ ex(page="generics.html") }} type with a type parameter (`T` is placeholder name here). |
 | `S<T: R>`  | Type short hand **trait bound** {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} specification  (`R` _must_ be actual trait). |
 | {{ tab() }} `T: R, P: S`  | **Independent trait bounds** (here one for `T` and one for `P`). |
-| {{ tab() }} `T: R, S`  | ⚡ Compile error. You probably want compound bound `R + S` below. |
+| {{ tab() }} `T: R, S`  | Compile error {{ bad() }}, you probably want compound bound `R + S` below. |
 | {{ tab() }} `T: R + S`  | **Compound trait bound** {{ book(page="ch10-02-traits.html#multiple-trait-bounds-with-") }} {{ ex(page="generics/multi_bounds.html") }}, `T` must fulfill `R` and `S`. |
 | {{ tab() }} `T: R + 'a`  | Same, but w. lifetime. `T` must fulfill `R`, if `T` has lifetimes, must outlive `'a`. |
 | {{ tab() }} `T: ?Sized`         | Opt out of a pre-defined trait bound, here `Sized`. {{ todo() }} |
