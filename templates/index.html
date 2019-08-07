@@ -45,6 +45,7 @@
     <script type="text/javascript">
         let codes = document.querySelectorAll("code");
 
+
         /// Enables or disables the playground.
         function show_playground(state) {
             let area_static = document.getElementById("hellostatic");
@@ -62,7 +63,7 @@
             }
         }
 
-        // Toggles night mode
+        // Called by toggle button, enable or disable night mode and persist setting in localStorage.
         function toggle_night_mode() {
             let body = document.getElementsByTagName("body")[0];
             if (body.classList.contains("night-mode")) {
@@ -74,17 +75,42 @@
             }
         }
 
-        // Use proper syntax
+        // Called by toggle button, enable or disable ligatures persist setting in localStorage.
+        function toggle_ligatures() {
+            let body = document.getElementsByTagName("body")[0];
+            let set = undefined;
+
+            if (codes[0].style.fontVariantLigatures == "common-ligatures") {
+                set = "none";
+                localStorage.setItem('ligatures', 'no-ligatures');
+            } else {
+                set = "common-ligatures";
+                localStorage.setItem('ligatures', 'ligatures');
+            }
+
+            codes.forEach(code => {
+                code.style.fontVariantLigatures = set;
+            })
+        }
+
+        // Use proper syntax since we don't want to write ````rust ...``` all the time.
         codes.forEach(code => {
             code.className = "language-rust";
         });
 
-        // Try to load night mode setting on first page load.
+
+        // Executed on page load, this runs all toggles the user might have clicked
+        // the last time based on localStorage.
         try {
             let night_mode = localStorage.getItem('night-mode');
+            let ligatures = localStorage.getItem('ligatures');
 
             if (night_mode === "night") {
                 toggle_night_mode();
+            }
+
+            if (ligatures === "ligatures") {
+                toggle_ligatures();
             }
         } catch (e) {
             console.log(e);

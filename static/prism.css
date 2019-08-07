@@ -12,8 +12,7 @@ pre[class*="language-"] {
 	background: none;
 	text-shadow: 0 1px white;
 	font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-	font-variant-ligatures: common-ligatures;
-	/* font-variant-ligatures: none; */
+	font-variant-ligatures: none;
 	text-align: left;
 	white-space: pre;
 	word-spacing: normal;

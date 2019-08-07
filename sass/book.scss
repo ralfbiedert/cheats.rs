@@ -14,6 +14,14 @@ div#helloctrl {
     text-align: right;
 }
 
+div.controls {
+    font-size: 60%;
+    text-align: right;
+
+    a {
+        margin-left: 15px;
+    }
+}
 
 div.title {
     text-align: center;
