@@ -756,7 +756,7 @@ Examples:
 
 | Example | Explanation |
 |---------|-------------|
-| `{#?}` | Pretty-print the next argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
+| `{:#?}` | Pretty-print the next argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
 | `{2:#?}` | Pretty-print the 3rd argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
 | `{val:^2$}` | Center the `val` named argument, width specified by the 3rd argument. |
 | `{:<10.3}` | Left align with width 10 and a precision of 3.|
