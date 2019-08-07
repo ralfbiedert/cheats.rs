@@ -1,4 +1,5 @@
 $smallscreen-width: 650px;
+$largescreen-width: 1050px;
 
 
 @mixin min-screen($min-width: $body-width) {
@@ -21,7 +22,6 @@ $smallscreen-width: 650px;
     color: #000;
     background: #fff;
     padding-bottom: 20px;
-    transition: 0.5s;
     .zola-anchor {
         color: #4183c4;
         padding-left: 10px;
@@ -189,7 +189,7 @@ $smallscreen-width: 650px;
 }
 
 
-// Small screens
+// Small screens like phones.
 @media screen and (max-width: $smallscreen-width) {
     html {
         font-size: 7px;
@@ -207,10 +207,37 @@ $smallscreen-width: 650px;
 }
 
 
-// Larger screens
-@media screen and (min-width: $smallscreen-width) {
+// Technically this is the 'default', but due to the scaling below this effectively is
+// now a transition zone where we can squeeze a bit more out.
+@media screen and (min-width: $smallscreen-width) and (max-width: $largescreen-width) {
     html {
         font-size: 9px;
+    }
+
+    .cheats>table tr td:nth-child(1) {
+        width: 235px;
+    }
+    .keywords>table tr td:nth-child(1) {
+        width: 150px;
+    }
+    .keywords>table tr td:nth-child(2) {
+        width: 200px;
+    }
+}
+
+
+// On larger screens we scale the content a bit, since changing font size would make lot of entries
+// line break, which is ugly. Reason we zoom in general is because of user complaints about font size,
+// readability, compare #39.
+@media screen and (min-width: $largescreen-width) {
+    html {
+        font-size: 9px;
+    }
+
+    .page {
+        // background-color: red;
+        transition: 0s;
+        transform: scale(1.05);
     }
 
     .cheats>table tr td:nth-child(1) {
