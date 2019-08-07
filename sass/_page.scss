@@ -181,9 +181,20 @@ $smallscreen-width: 650px;
     }
 }
 
+// Smaller font looks better on paper
+@media print {
+    html {
+        font-size: 7px;
+    }
+}
+
 
 // Small screens
 @media screen and (max-width: $smallscreen-width) {
+    html {
+        font-size: 7px;
+    }
+
     .cheats>table tr td:nth-child(1) {
         width: 150px;
     }
@@ -198,6 +209,10 @@ $smallscreen-width: 650px;
 
 // Larger screens
 @media screen and (min-width: $smallscreen-width) {
+    html {
+        font-size: 9px;
+    }
+
     .cheats>table tr td:nth-child(1) {
         width: 235px;
     }
