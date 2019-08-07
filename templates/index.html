@@ -44,6 +44,7 @@
     <script type="text/javascript" src="{{ get_url(path="prism.js") | safe }}"></script>
     <script type="text/javascript">
         let codes = document.querySelectorAll("code");
+        let iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent); // https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
 
 
         /// Enables or disables the playground.
@@ -111,6 +112,13 @@
 
             if (ligatures === "ligatures") {
                 toggle_ligatures();
+            }
+
+            // iOS does not honor the ligature settings and always renders the font without them.
+            // Hide the button not to confuse users.
+            if (iOS) {
+                let button = document.getElementById("toggle_ligatures");
+                button.style.visibility = "hidden";
             }
         } catch (e) {
             console.log(e);
