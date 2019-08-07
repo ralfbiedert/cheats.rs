@@ -379,11 +379,11 @@ Constructs found in `match` or `let` expressions, or function parameters.
 | Example | Explanation |
 |---------|-------------|
 | `match m {}` | Initiate **pattern matching** {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }}, then use match arms, _c_. next table. |
-| `let Some(x) = Some(5);`  | Notably, `let` also pattern matches similar to the table below. |
+| `let S(x) = get();`  | Notably, `let` also pattern matches similar to the table below. |
 |  {{ tab() }} `let S { x } = s;` | Only `x` will be bound to value `s.x`. |
 |  {{ tab() }} `let (_, b, _) = abc;` | Only `b` will be bound to value `abc.1`. |
 |  {{ tab() }} `let (a, ..) = abc;` | Ignoring 'the rest' also works. |
-|  {{ tab() }} `let Some(x) = get();` | Will **not** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
+|  {{ tab() }} `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
 | `if let Some(x) = get() {}`  | Branch if pattern can actually be assigned (e.g., `enum` variant). |
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`.|
 
