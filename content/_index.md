@@ -41,7 +41,7 @@ Language Constructs
 * [Control Flow](#control-flow)
 * [Organizing Code](#organizing-code)
 * [Type Aliases and Casts](#type-aliases-and-casts)
-* [Code Generation](#code-generation)
+* [Macros & Attributes](#macros-attributes)
 * [Pattern Matching](#pattern-matching)
 * [Generics & Constraints](#generics-constraints)
 * [Strings & Chars](#strings-chars)
@@ -324,9 +324,9 @@ Short-hand names of types, and methods to convert one type to another.
 
 
 
-### Code Generation
+### Macros & Attributes
 
-Constructs expanded before the actual compilation happens.
+Code generation constructs expanded before the actual compilation happens.
 
 <div class="cheats">
 
