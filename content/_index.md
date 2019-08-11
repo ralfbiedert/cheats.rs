@@ -209,7 +209,7 @@ Define units of code and their abstractions.
 
 <div class="cheats">
 
-| Sigil | Explanation |
+| Example | Explanation |
 |---------|-------------|
 | `trait T {}`  | Define a **trait**. {{ book(page="ch10-02-traits.html") }} {{ ex(page="trait.html") }} {{ ref(page="items/traits.html") }} |
 | `trait T : R {}` | `T` is subtrait of **supertrait** {{ ref(page="items/traits.html#supertraits") }} `R`. Any `S` must `impl R` before it can `impl T`. |
@@ -220,24 +220,13 @@ Define units of code and their abstractions.
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
 | `const fn f() {}`  | Constant `fn` usable at compile time, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
-| `async fn f() {}`  | **Async** {{ experimental() }} {{ edition(ed="'18") }} function transformation, makes `f` return an `impl Future`. {{ std(page="std/future/trait.Future.html") }} |
-| {{ tab() }} `async fn f() -> S {}`  | The call `f()` returns an `impl Future<Output=S>`, does not execute `f`! |
-| {{ tab() }} `async {}`  | Block `async { x }` transforms last expression `x` into `Future<Output=X>`. |
+| `async fn f() {}`  | **Async** {{ experimental() }} {{ edition(ed="'18") }} function transformation, see section below. |
 | `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with trait [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html). |
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
 | {{ tab() }} <code>&vert;x&vert; {}</code> | Closure with a bound parameter `x`. |
 | {{ tab() }} <code>&vert;x&vert; x + x</code> | Closure without block expression.  |
 | {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures. |
 | {{ tab() }} <code> return &vert;&vert; true </code> | Closures may sometimes look like logical ORs (here: return a closure). |
-| `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, ...). |
-| `x.f()` | Call member function, requires `f` takes `self`, `&self`, ... as first argument. |
-| {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
-| {{ tab() }} `X::f(&x)` | Same as `x.f()`. |
-| {{ tab() }} `X::f(&mut x)` | Same as `x.f()`. |
-| {{ tab() }} `S::f(&x)` | Same as `x.f()` if `X` [derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) to `S` (i.e., `x.f()` finds methods of `S`). |
-| {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T` (i.e., `x.f()` finds methods of `T` if in scope). |
-| `X::f()` | Call associated function, e.g., `X::new()`. |
-| {{ tab() }} `<X as T>::f()` | Call trait method `T::f()` implemented for `X`. |
 | `unsafe {}` | If you need to crash your code in production; **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 
 </div>
@@ -245,11 +234,11 @@ Define units of code and their abstractions.
 
 ### Control Flow
 
-Control execution within a function.
+Control execution within any function.
 
 <div class="cheats">
 
-| Sigil | Explanation |
+| Example | Explanation |
 |---------|-------------|
 | `while x {}`  | **Loop** {{ ref(page="expressions/loop-expr.html#predicate-loops") }}, run while expression `x` is true. |
 | `loop {}`  | **Loop infinitely** {{ ref(page="expressions/loop-expr.html#infinite-loops") }} until `break`. Can yield value with `break x`. |
@@ -261,12 +250,39 @@ Control execution within a function.
 | {{ tab() }} `break 'label`  | Exit not only this loop, but the enclosing one marked with `'label`. |
 | `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
 | `continue 'label`  | Same, but instead of enclosing loop marked with `'label`. |
-| `x.await` | Only works inside `async`. Yield flow until [Future](https://doc.rust-lang.org/std/future/trait.Future.html) or Stream {{ todo() }} `x` ready. {{ experimental() }} {{ edition(ed="'18") }} |
-| `return x`  | Early return from function. More idiomatic way is to end with expression. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
+| `return x`  | Early return from function. More idiomatic way is to end with expression. |
+| `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, ...). |
+| `x.f()` | Call member function, requires `f` takes `self`, `&self`, ... as first argument. |
+| {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
+| {{ tab() }} `X::f(&x)` | Same as `x.f()`. |
+| {{ tab() }} `X::f(&mut x)` | Same as `x.f()`. |
+| {{ tab() }} `S::f(&x)` | Same as `x.f()` if `X` [derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) to `S` (i.e., `x.f()` finds methods of `S`). |
+| {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T` (i.e., `x.f()` finds methods of `T` if in scope). |
+| `X::f()` | Call associated function, e.g., `X::new()`. |
+| {{ tab() }} `<X as T>::f()` | Call trait method `T::f()` implemented for `X`. |
+</div>
+
+{{ tablesep() }}
+
+
+Control asynchronous flow:
+
+<div class="cheats">
+
+| Example | Explanation |
+|---------|-------------|
+| `async fn f() {}`  | **Async** {{ experimental() }} {{ edition(ed="'18") }} function transformation, makes `f` return an `impl Future`. {{ std(page="std/future/trait.Future.html") }} |
+| {{ tab() }} `async fn f() -> S {}`  | The call `f()` returns an `impl Future<Output=S>`, does not execute `f`! |
+| {{ tab() }} `async {}`  | Block `async { x }` transforms last expression `x` into `Future<Output=X>`. |
+| `let x = async_f();` | Produces a state machine behind an `impl Future` to execute `async_f`. |
+| `x.await` | Only works inside `async`. Yield flow until [Future](https://doc.rust-lang.org/std/future/trait.Future.html) or Stream {{ todo() }} `x` ready. {{ experimental() }} {{ edition(ed="'18") }} |
+| {{ tab() }}  `s.no(); x.await; s.go();` | Maybe bad {{ bad() }}, `await` will [not return](http://www.randomhacks.net/2019/03/09/in-nightly-rust-await-may-never-return/) if `Future` dropped while waiting. |
+| {{ tab() }}  `set_TL(a); x.await; TL();` | Definitely bad {{ bad() }}, `await` may return from other thread, [thread local](https://doc.rust-lang.org/std/macro.thread_local.html) invalid. |
 
 </div>
 
+<!-- | {{ tab() }}  <code>guard(&vert;&vert; s.go()); x.await;</code> | If inconsistent state across `await`, add drop guard to fix state. | -->
 
 
 ### Organizing Code
@@ -275,7 +291,7 @@ Segment projects into smaller units and minimize dependencies.
 
 <div class="cheats">
 
-| Sigil | Explanation |
+| Example | Explanation |
 |---------|-------------|
 | `mod m {}`  | Define a **module** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }}, get definition from inside `{}`. |
 | `mod m;`  | Define a module, get definition from `m.rs` or `m/mod.rs`. |
@@ -308,7 +324,7 @@ Short-hand names of types, and methods to convert one type to another.
 
 <div class="cheats">
 
-| Sigil | Explanation |
+| Example | Explanation |
 |---------|-------------|
 | `type T = S;`  | Create a **type alias** {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} {{ ref(page="items/type-aliases.html?highlight=alias#type-aliases") }}, i.e., another name for `S`. |
 | `Self`  | Type alias for **implementing type** {{ ref(page="types.html#self-types") }}, e.g. `fn new() -> Self`. |
