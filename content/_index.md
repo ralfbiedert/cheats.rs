@@ -561,9 +561,9 @@ If something works that "shouldn't work now that you think about it", it might b
 
 ## Async-Await 101
 
-_In the jungle, the mighty jungle, the lion sleeps tonight._
+_Webserver: In the jungle, the mighty jungle, the lion sleeps tonight._
 
-_Chorus: Async-await ... async-await ... async-await_ ...
+_Runtime: Async-await ... async-await ... async-await_ ...
 
 <div class="cheats">
 
