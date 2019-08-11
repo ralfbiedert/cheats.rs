@@ -581,23 +581,23 @@ _Chorus: Async-await ... async-await ... async-await_ ...
 {{ tablesep() }}
 
 From outside perspective `impl Future<Output=X>` is similar to state machine that is either running
-some `synchronous()` code, or paused at an `.await`. When invoking `.await` current thread
+some `synchronous_code()` code, or paused at an `.await`. When invoking `.await` current thread
 returns to `runtime`! Runtime **might** resume execution later with current **or another** thread:
 
 <!-- Otherwise the rows wrap on small devices and look ugly -->
 <div style="overflow:auto;">
-<div style="min-width: 100%; width: 550px;">
+<div style="min-width: 100%; width: 650px;">
 
 ```
-      synchronous1();          synchronous2();          synchronous3();
-START ---------------> x.await ---------------> y.await ---------------> DONE
-// ^                     ^     ^                    Future<Output=X> ready -^
-// Before `sm`           |     |
-// being executed,       |     This might resume on another thread (next best
-// runtime's executor    |     avaialable), or NOT AT ALL if Future was dropped.
-// starts here.          |
-//                       Instructs executor to attempt `x`. If available: continue,
-//                       if not: voluntarily pause this `sm` and continue another.
+      synchronous_code1();          synchronous_code2();          synchronous_code3();
+START --------------------> x.await --------------------> y.await --------------------> DONE
+// ^                          ^     ^                              Future<Output=X> ready -^
+// Before `sm` is             |     |
+// being executed,            |     This might resume on another thread (next best avaialable),
+// runtime's executor         |     or NOT AT ALL if Future was dropped.
+// starts here.               |
+//                            Instructs executor to attempt `x`. If available: continue execution,
+//                            if not: voluntarily pause this `sm` and make executor continue another.
 ```
 
 </div>
