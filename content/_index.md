@@ -54,6 +54,7 @@ Language Constructs
 
 Guides
 * [Invisible Sugar](#invisible-sugar)
+* [Async-Await 101](#async-await-101)
 * [Closures](#closures)
 * [Idiomatic Rust](#idiomatic-rust)
 * [A Guide to Reading Lifetimes](#a-guide-to-reading-lifetimes)
@@ -220,7 +221,9 @@ Define units of code and their abstractions.
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
 | `const fn f() {}`  | Constant `fn` usable at compile time, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
-| `async fn f() {}`  | **Async** {{ experimental() }} {{ edition(ed="'18") }} function transformation, see section below. |
+| `async fn f() {}`  | **Async** {{ experimental() }} {{ edition(ed="'18") }} function transformation, makes `f` return an `impl Future`. {{ std(page="std/future/trait.Future.html") }} |
+| {{ tab() }} `async fn f() -> S {}`  | Same, but make `f` return an `impl Future<Output=S>`. |
+| {{ tab() }} `async { x }`  | Used within a function, make `{ x }` an `impl Future<Output=X>`. |
 | `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with trait [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html). |
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
 | {{ tab() }} <code>&vert;x&vert; {}</code> | Closure with a bound parameter `x`. |
@@ -251,6 +254,7 @@ Control execution within any function.
 | `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
 | `continue 'label`  | Same, but instead of enclosing loop marked with `'label`. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
+| `x.await` | Only works inside `async`. Yield flow until [Future](https://doc.rust-lang.org/std/future/trait.Future.html) or Stream {{ todo() }} `x` ready. {{ experimental() }} {{ edition(ed="'18") }} |
 | `return x`  | Early return from function. More idiomatic way is to end with expression. |
 | `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, ...). |
 | `x.f()` | Call member function, requires `f` takes `self`, `&self`, ... as first argument. |
@@ -263,26 +267,9 @@ Control execution within any function.
 | {{ tab() }} `<X as T>::f()` | Call trait method `T::f()` implemented for `X`. |
 </div>
 
-{{ tablesep() }}
-
-
-Control asynchronous flow:
-
-<div class="cheats">
-
-| Example | Explanation |
-|---------|-------------|
-| `async fn f() {}`  | **Async** {{ experimental() }} {{ edition(ed="'18") }} function transformation, makes `f` return an `impl Future`. {{ std(page="std/future/trait.Future.html") }} |
-| {{ tab() }} `async fn f() -> S {}`  | The call `f()` returns an `impl Future<Output=S>`, does not execute `f`! |
-| {{ tab() }} `async {}`  | Block `async { x }` transforms last expression `x` into `Future<Output=X>`. |
-| `let x = async_f();` | Produces a state machine behind an `impl Future` to execute `async_f`. |
-| `x.await` | Only works inside `async`. Yield flow until [Future](https://doc.rust-lang.org/std/future/trait.Future.html) or Stream {{ todo() }} `x` ready. {{ experimental() }} {{ edition(ed="'18") }} |
-| {{ tab() }}  `s.no(); x.await; s.go();` | Maybe bad {{ bad() }}, `await` will [not return](http://www.randomhacks.net/2019/03/09/in-nightly-rust-await-may-never-return/) if `Future` dropped while waiting. |
-| {{ tab() }}  `set_TL(a); x.await; TL();` | Definitely bad {{ bad() }}, `await` may return from other thread, [thread local](https://doc.rust-lang.org/std/macro.thread_local.html) invalid. |
-
-</div>
 
 <!-- | {{ tab() }}  <code>guard(&vert;&vert; s.go()); x.await;</code> | If inconsistent state across `await`, add drop guard to fix state. | -->
+<!-- | {{ tab() }} `async fn f() -> S {}`  | The call `f()` returns an `impl Future<Output=S>`, does not execute `f`! | -->
 
 
 ### Organizing Code
@@ -567,6 +554,72 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
 
 
+
+
+<div class="cheats">
+
+
+## Async-Await 101
+
+_In the jungle, the mighty jungle, the lion sleeps tonight._
+
+_Chorus: Async-await ... async-await ... async-await_ ...
+
+<div class="cheats">
+
+| Construct | Explanation |
+|---------|-------------|
+| `async ...`  | Any `async` always returns an `impl Future<Output=_>`. {{ std(page="std/future/trait.Future.html") }} |
+| {{ tab() }} `async fn f() {}`  | Function `f` returns an `impl Future<Output=()>`. |
+| {{ tab() }} `async fn f() -> S {}`  | Function `f` returns an `impl Future<Output=S>`. |
+| {{ tab() }} `async { x }`  | Transforms `{ x }` into `impl Future<Output=X>`. |
+| `let sm = f();   ` | Calling `f()` that is `async` will **not** execute `f`, but return 'state machine' `sm`. |
+| {{ tab() }} `sm = async { g() }`  | Likewise, does **not** execute the `{ g() }` block; produces state machine. |
+| {{ tab() }} `runtime.block_on(sm);`  | Schedules `sm` (which `impl Future`) to actually run. Will execute `g()`. |
+| `sm.await` | Inside an `async {}`, check if `sm` is done. If not, yield flow until it is. |
+
+{{ tablesep() }}
+
+From outside perspective `impl Future<Output=X>` is similar to state machine that is either running
+some `synchronous_code()`, or paused at an `.await`. When invoking `.await` current thread
+returns to `runtime`! Runtime **might** resume execution later with current **or another** thread:
+
+```
+      synchronous_code1();          synchronous_code2();          synchronous_code3();
+START --------------------> x.await --------------------> y.await --------------------> DONE
+// ^                          ^     ^                              Future<Output=X> ready -^
+// Before `sm` is             |     |
+// being executed,            |     This might resume on another thread (next best avaialable),
+// runtime's executor         |     or NOT AT ALL if Future was dropped.
+// starts here.               |
+//                            Instructs executor to attempt `x`. If available: continue execution,
+//                            if not: voluntarily pause this `sm` and make executor continue another.
+```
+
+{{ tablesep() }}
+
+This leads to the following considerations when writing code inside an `async` construct:
+
+| Constructs {{ note(note="*") }} | Explanation |
+|---------|-------------|
+| `sleep_or_block();` | Definitely bad {{ bad() }}, never halt current thread, clogs executor. |
+| `set_TL(a); x.await; TL();` | Definitely bad {{ bad() }}, `await` may return from other thread, [thread local](https://doc.rust-lang.org/std/macro.thread_local.html) invalid. |
+| `s.no(); x.await; s.go();` | Maybe bad {{ bad() }}, `await` will [not return](http://www.randomhacks.net/2019/03/09/in-nightly-rust-await-may-never-return/) if `Future` dropped while waiting. |
+| `Rc::new(); x.await; rc();` | Non-`Send` types prevent `impl Future` from being `Send`; less compatible. |
+<div class="footnotes">
+    {{ note(note="*") }} Here we assume <code>s</code> is any non-local that could temporarily be put into an invalid state;
+    <code>TL</code> is any thread local storage, and that the <code>async {}</code> containing the code is written
+    without assuming executor specifics.
+</div>
+
+
+
+</div>
+
+</div>
+
+
+
 ## Closures
 
 There is a subtrait relationship `Fn` : `FnMut` : `FnOnce`. That means, a closure that
@@ -664,7 +717,6 @@ If you are used to programming Java or C, consider these.
 
 
 </div>
-
 
 
 <div class="cheats">
