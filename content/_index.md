@@ -570,50 +570,58 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 | `async`  | Anything declared `async` always returns an `impl Future<Output=_>`. {{ std(page="std/future/trait.Future.html") }} |
 | {{ tab() }} `async fn f() {}`  | Function `f` returns an `impl Future<Output=()>`. |
 | {{ tab() }} `async fn f() -> S {}`  | Function `f` returns an `impl Future<Output=S>`. |
-| {{ tab() }} `async { x }`  | Transforms `{ x }` into `impl Future<Output=X>`. |
-| `let sm = f();   ` | Calling `f()` that is `async` will **not** execute `f`, but return 'state machine' `sm`. |
+| {{ tab() }} `async { x }`  | Transforms `{ x }` into an `impl Future<Output=X>`. |
+| `let sm = f();   ` | Calling `f()` that is `async` will **not** execute `f`, but return state machine `sm`. {{ note(note="1") }} |
 | {{ tab() }} `sm = async { g() };`  | Likewise, does **not** execute the `{ g() }` block; produces state machine. |
-| {{ tab() }} `runtime.block_on(sm);` {{ note(note="*") }}  | Schedules `sm` (which `impl Future`) to actually run. Will execute `g()`. |
-| `sm.await` | Inside an `async {}`, check if `sm` is done. If not, yield flow until it is. |
+| `runtime.block_on(sm);` {{ note(note="2") }}  | Outside an `async {}`, schedules `sm` to actually run. Would execute `g()`. |
+| `sm.await` | Inside an `async {}`, run `sm` until complete. Yield to runtime if `sm` not ready. |
 
 <div class="footnotes">
-    {{ note(note="*") }} Right now Rust doesn't come with its own runtime. Use external crate instead, such as <a href="https://crates.io/crates/tokio">tokio 0.2+</a>.
+    {{ note(note="1") }} That state machine <code>impl Future</code>. For the remainder we use 'state machine' and <code>Future</code> synonymously.
+    <br/>
+    {{ note(note="2") }} Right now Rust doesn't come with its own runtime. Use external crate instead, such as <a href="https://crates.io/crates/tokio">tokio 0.2+</a>.
     Also, Futures in Rust are an MPV. There is <b>much</b> more utility stuff in the <a href="https://github.com/rust-lang-nursery/futures-rs">futures crate</a>.
 </div>
 
 {{ tablesep() }}
 
-Futures as seen from someone who holds an `impl Future` after calling `f()`:
+Futures as seen by someone who holds an `impl Future` after calling `f()`:
 
 <!-- - An `impl Future` is often a compiler-generated, opaque `S` that implements `Future`. -->
-- From outside perspective this `impl Future<Output=X>` is similar to a state machine.
-- Advancing the state machine is done by the runtime invoking the Future's `poll()` {{ std(page="std/future/trait.Future.html#tymethod.poll") }} method.
-- After one or more `poll()` calls it will signal `Ready` and the `Output` will be available.
+<!-- - Outside an `async {}`, advancing `sm` is done by the runtime, invoking the Future's `poll()` {{ std(page="std/future/trait.Future.html#tymethod.poll") }} method.
+- Inside an `async {}`, advancing `other_sm` is done by current `sm`. -->
 
-Futures as seen from someone who authors `async f() {}`:
-- The code will only be run by a runtime implicitly via `poll()`, and not be called directly.
-- The future is either running `synchronous_code()` around an `.await`, or paused at it.
-- When invoking `x.await` the current thread returns to `runtime` if `x` not ready.
+- From outside perspective this `impl Future<Output=X>` is similar to a state machine.
+- After one or more `Future::poll()` calls it will signal `Ready` and the `Output` will be available.
+- If not in `async` context already, `poll()` and state progression driven via runtime.
+- If `f()` called from existing `async` context, state progression driven via `.await`.
+
+Futures as seen by someone who authors `async f() {}`:
+- The code will only be run in context of runtime via `poll()`, never _directly_.
+- Runtime will execute code from worker thread. Might or might not be thread that invoked runtime.
+- When executing, worker thread runs until end, or until it encounters _another_ state machine `x`.
+- If control passed to `x` via `x.await`, worker thread continues with that one instead.
+- At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker thread returns all the way up to runtime so it can drive another Future.
 - Runtime **might** resume execution later. It usually does, unless Future dropped.
-- It might resume with the previous **or another** thread (depends on runtime).
+- It might resume with the previous worker **or another** worker thread (depends on runtime).
 <!-- - The thread executing inside `async {}` is usually unrelated to the one invoking `f()`. -->
 
-Compare this diagram:
+Simplified diagram:
 
 <!-- Otherwise the rows wrap on small devices and look ugly -->
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
 ```
-      synchronous_code1();          synchronous_code2();          synchronous_code3();
+       consecutive_code();           consecutive_code();           consecutive_code();
 START --------------------> x.await --------------------> y.await --------------------> READY
 // ^                          ^     ^                               Future<Output=X> ready -^
-// Before `sm` is             |     |
-// being executed.            |     This might resume on another thread (next best avaialable),
-// Always invoked by          |     or NOT AT ALL if Future was dropped.
-// some runtime.              |
-//                            Attempt to resolve `x`. If ready: continue execution, if not:
-//                            voluntarily pause this `sm` and make runtime continue another.
+// Invoked via runtime        |     |
+// or an external .await      |     This might resume on another thread (next best avaialable),
+//                            |     or NOT AT ALL if Future was dropped.
+//                            |
+//                            Execute `x`. If ready: just continue execution; if not, return
+//                            this thread to runtime.
 ```
 
 </div>
