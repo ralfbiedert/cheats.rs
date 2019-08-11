@@ -569,18 +569,22 @@ _Chorus: Async-await ... async-await ... async-await_ ...
 
 | Construct | Explanation |
 |---------|-------------|
-| `async ...`  | Any `async` always returns an `impl Future<Output=_>`. {{ std(page="std/future/trait.Future.html") }} |
+| `async`  | Anything declared `async` always returns an `impl Future<Output=_>`. {{ std(page="std/future/trait.Future.html") }} |
 | {{ tab() }} `async fn f() {}`  | Function `f` returns an `impl Future<Output=()>`. |
 | {{ tab() }} `async fn f() -> S {}`  | Function `f` returns an `impl Future<Output=S>`. |
 | {{ tab() }} `async { x }`  | Transforms `{ x }` into `impl Future<Output=X>`. |
 | `let sm = f();   ` | Calling `f()` that is `async` will **not** execute `f`, but return 'state machine' `sm`. |
-| {{ tab() }} `sm = async { g() }`  | Likewise, does **not** execute the `{ g() }` block; produces state machine. |
-| {{ tab() }} `runtime.block_on(sm);`  | Schedules `sm` (which `impl Future`) to actually run. Will execute `g()`. |
+| {{ tab() }} `sm = async { g() };`  | Likewise, does **not** execute the `{ g() }` block; produces state machine. |
+| {{ tab() }} `runtime.block_on(sm);` {{ note(note="*") }}  | Schedules `sm` (which `impl Future`) to actually run. Will execute `g()`. |
 | `sm.await` | Inside an `async {}`, check if `sm` is done. If not, yield flow until it is. |
+
+<div class="footnotes">
+    {{ note(note="*") }} As of now Rust doesn't come with its own runtime. Use external crate instead, such as <a href="https://crates.io/crates/tokio">tokio 0.2+</a>.
+</div>
 
 {{ tablesep() }}
 
-From outside perspective `impl Future<Output=X>` is similar to state machine that is either running
+From outside perspective `impl Future<Output=X>` is similar to a state machine that is either running
 some `synchronous_code()` code, or paused at an `.await`. When invoking `.await` current thread
 returns to `runtime`! Runtime **might** resume execution later with current **or another** thread:
 
@@ -607,16 +611,19 @@ START --------------------> x.await --------------------> y.await --------------
 
 This leads to the following considerations when writing code inside an `async` construct:
 
-| Constructs {{ note(note="*") }} | Explanation |
+| Constructs {{ note(note="1") }} | Explanation |
 |---------|-------------|
 | `sleep_or_block();` | Definitely bad {{ bad() }}, never halt current thread, clogs executor. |
 | `set_TL(a); x.await; TL();` | Definitely bad {{ bad() }}, `await` may return from other thread, [thread local](https://doc.rust-lang.org/std/macro.thread_local.html) invalid. |
-| `s.no(); x.await; s.go();` | Maybe bad {{ bad() }}, `await` will [not return](http://www.randomhacks.net/2019/03/09/in-nightly-rust-await-may-never-return/) if `Future` dropped while waiting. |
+| `s.no(); x.await; s.go();` | Maybe bad {{ bad() }}, `await` will [not return](http://www.randomhacks.net/2019/03/09/in-nightly-rust-await-may-never-return/) if `Future` dropped while waiting. {{ note(note="2") }} |
 | `Rc::new(); x.await; rc();` | Non-`Send` types prevent `impl Future` from being `Send`; less compatible. |
 <div class="footnotes">
-    {{ note(note="*") }} Here we assume <code>s</code> is any non-local that could temporarily be put into an invalid state;
+    {{ note(note="1") }} Here we assume <code>s</code> is any non-local that could temporarily be put into an invalid state;
     <code>TL</code> is any thread local storage, and that the <code>async {}</code> containing the code is written
     without assuming executor specifics.
+    <br/>
+    {{ note(note="2") }} Since <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html">Drop</a> is run in any case when <code>Future</code> is dropped, consider using drop guard that cleans up / fixes application state if it has to be left in bad condition across <code>.await</code> points.
+
 </div>
 
 
