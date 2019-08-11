@@ -565,6 +565,8 @@ _Webserver: In the jungle, the mighty jungle, the lion sleeps tonight._
 
 _Runtime: Async-await ... async-await ... async-await_ ...
 
+<!-- If you are familiar with async / await in C# or TypeScript, here are some things to keep in mind: -->
+
 <div class="cheats">
 
 | Construct | Explanation |
@@ -579,14 +581,28 @@ _Runtime: Async-await ... async-await ... async-await_ ...
 | `sm.await` | Inside an `async {}`, check if `sm` is done. If not, yield flow until it is. |
 
 <div class="footnotes">
-    {{ note(note="*") }} As of now Rust doesn't come with its own runtime. Use external crate instead, such as <a href="https://crates.io/crates/tokio">tokio 0.2+</a>.
+    {{ note(note="*") }} Right now Rust doesn't come with its own runtime. Use external crate instead, such as <a href="https://crates.io/crates/tokio">tokio 0.2+</a>.
+    Also, Futures in Rust are an MPV. There is <b>much</b> more utility stuff in the <a href="https://github.com/rust-lang-nursery/futures-rs">futures crate</a>.
 </div>
 
 {{ tablesep() }}
 
-From outside perspective `impl Future<Output=X>` is similar to a state machine that is either running
-some `synchronous_code()` code, or paused at an `.await`. When invoking `.await` current thread
-returns to `runtime`! Runtime **might** resume execution later with current **or another** thread:
+Futures as seen from someone who holds an `impl Future` after calling `f()`:
+
+- An `impl Future` is often a compiler-generated, opaque `S` that implements `Future`.
+- From outside perspective this `impl Future<Output=X>` is similar to a state machine.
+- Advancing the state machine is done by the runtime invoking the Future's `poll()` {{ std(page="std/future/trait.Future.html#tymethod.poll") }} method.
+- After one or more `poll()` calls it will signal `Ready` and the `Output` will be available.
+
+Futures as seen from someone who authors `async f() {}`:
+- The code will only be run by a runtime implicitly via `poll()`, and not be called directly.
+- The thread executing inside `async {}` is usually unrelated to the one invoking `f()`.
+- The future is either running `synchronous_code()` around an `.await`, or paused at it.
+- When invoking `x.await` the current thread returns to `runtime` if `x` not ready.
+- Runtime **might** resume execution later. It usually does, unless Future dropped.
+- It might resume with the previous **or another** thread (depends on runtime).
+
+Compare this diagram:
 
 <!-- Otherwise the rows wrap on small devices and look ugly -->
 <div style="overflow:auto;">
@@ -594,14 +610,14 @@ returns to `runtime`! Runtime **might** resume execution later with current **or
 
 ```
       synchronous_code1();          synchronous_code2();          synchronous_code3();
-START --------------------> x.await --------------------> y.await --------------------> DONE
-// ^                          ^     ^                              Future<Output=X> ready -^
+START --------------------> x.await --------------------> y.await --------------------> READY
+// ^                          ^     ^                               Future<Output=X> ready -^
 // Before `sm` is             |     |
-// being executed,            |     This might resume on another thread (next best avaialable),
-// runtime's executor         |     or NOT AT ALL if Future was dropped.
-// starts here.               |
-//                            Instructs executor to attempt `x`. If available: continue execution,
-//                            if not: voluntarily pause this `sm` and make executor continue another.
+// being executed.            |     This might resume on another thread (next best avaialable),
+// Always invoked by          |     or NOT AT ALL if Future was dropped.
+// some runtime.              |
+//                            Attempt to resolve `x`. If done: continue execution, if not:
+//                            voluntarily pause this `sm` and make runtime continue another.
 ```
 
 </div>
@@ -739,11 +755,6 @@ If you are used to programming Java or C, consider these.
 ## A Guide to Reading Lifetimes
 
 Lifetimes can be overwhelming at times. Here is a simplified guide on how to read and interpret constructs containing lifetimes if you are familiar with C.
-
-<!-- > **Note**:
-> This section is work in progress.
-> For the time being, use with a grain of salt.
-> Feedback very welcome! -->
 
 | Construct | How to read |
 |--------| -----------|
