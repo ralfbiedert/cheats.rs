@@ -592,7 +592,7 @@ Futures as seen by someone who holds an `impl Future` after calling `f()`:
 - Inside an `async {}`, advancing `other_sm` is done by current `sm`. -->
 
 - From outside perspective this `impl Future<Output=X>` is similar to a state machine.
-- After one or more `Future::poll()` calls it will signal `Ready` and the `Output` will be available.
+- After one or more `Future::poll()` calls it will be in state `Ready` and the `Output` will be available.
 - If not in `async` context already, `poll()` and state progression driven via runtime.
 - If `f()` called from existing `async` context, state progression driven via `.await`.
 
