@@ -561,11 +561,7 @@ If something works that "shouldn't work now that you think about it", it might b
 
 ## Async-Await 101
 
-_Webserver: In the jungle, the mighty jungle, the lion sleeps tonight._
-
-_Runtime: Async-await ... async-await ... async-await_ ...
-
-<!-- If you are familiar with async / await in C# or TypeScript, here are some things to keep in mind: -->
+If you are familiar with async / await in C# or TypeScript, here are some things to keep in mind:
 
 <div class="cheats">
 
@@ -589,18 +585,18 @@ _Runtime: Async-await ... async-await ... async-await_ ...
 
 Futures as seen from someone who holds an `impl Future` after calling `f()`:
 
-- An `impl Future` is often a compiler-generated, opaque `S` that implements `Future`.
+<!-- - An `impl Future` is often a compiler-generated, opaque `S` that implements `Future`. -->
 - From outside perspective this `impl Future<Output=X>` is similar to a state machine.
 - Advancing the state machine is done by the runtime invoking the Future's `poll()` {{ std(page="std/future/trait.Future.html#tymethod.poll") }} method.
 - After one or more `poll()` calls it will signal `Ready` and the `Output` will be available.
 
 Futures as seen from someone who authors `async f() {}`:
 - The code will only be run by a runtime implicitly via `poll()`, and not be called directly.
-- The thread executing inside `async {}` is usually unrelated to the one invoking `f()`.
 - The future is either running `synchronous_code()` around an `.await`, or paused at it.
 - When invoking `x.await` the current thread returns to `runtime` if `x` not ready.
 - Runtime **might** resume execution later. It usually does, unless Future dropped.
 - It might resume with the previous **or another** thread (depends on runtime).
+<!-- - The thread executing inside `async {}` is usually unrelated to the one invoking `f()`. -->
 
 Compare this diagram:
 
@@ -616,7 +612,7 @@ START --------------------> x.await --------------------> y.await --------------
 // being executed.            |     This might resume on another thread (next best avaialable),
 // Always invoked by          |     or NOT AT ALL if Future was dropped.
 // some runtime.              |
-//                            Attempt to resolve `x`. If done: continue execution, if not:
+//                            Attempt to resolve `x`. If ready: continue execution, if not:
 //                            voluntarily pause this `sm` and make runtime continue another.
 ```
 
