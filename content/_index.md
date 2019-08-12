@@ -577,7 +577,9 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 | `sm.await` | Inside an `async {}`, run `sm` until complete. Yield to runtime if `sm` not ready. |
 
 <div class="footnotes">
-    {{ note(note="1") }} That state machine <code>impl Future</code>. For the remainder we use 'state machine' and <code>Future</code> synonymously.
+    {{ note(note="1") }} Technically <code>async</code> transforms the following code into an anonymous, compiler-generated state machine type, and <code>f()</code> instantiates that machine.
+    That state machine always <code>impl Future</code>, maybe <code>Send</code> & co, depending on types you used inside <code>async</code>. State machine driven by worker thread invoking
+    <code>Future::poll()</code> via runtime directly, or parent <code>.await</code> indirectly.
     <br/>
     {{ note(note="2") }} Right now Rust doesn't come with its own runtime. Use external crate instead, such as <a href="https://crates.io/crates/tokio">tokio 0.2+</a>.
     Also, Futures in Rust are an MPV. There is <b>much</b> more utility stuff in the <a href="https://github.com/rust-lang-nursery/futures-rs">futures crate</a>.
@@ -585,11 +587,8 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 
 {{ tablesep() }}
 
-Futures as seen by someone who holds an `impl Future<Output=X>` after calling `f()`:
 
-<!-- - Outside an `async {}`, advancing `sm` is done by the runtime, invoking the Future's `poll()` {{ std(page="std/future/trait.Future.html#tymethod.poll") }} method.
-- Inside an `async {}`, advancing `other_sm` is done by current `sm`. -->
-
+<!-- Futures as seen by someone who holds an `impl Future<Output=X>` after calling `f()`:
 
 - This `impl Future` is an anonymous, compiler-generated instance of a state machine.
 - After one or more `Future::poll()` calls it will be in state `Ready` and the `Output` will be available.
@@ -603,13 +602,14 @@ Futures as seen by someone who authors `async f() {}`:
 - Runtime will execute from worker thread. Might or might not be thread that invoked runtime.
 - When executing, worker thread runs until end, or until it encounters _another_ state machine `x`.
 - If control passed to `x` via `x.await`, worker thread continues with that one instead.
-- At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker thread returns all the way up to runtime so it can drive another Future.
+- At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker thread returns all the way up to runtime so it can drive another Future. -->
 
-In other words, at each `.await`, worker thread might return and runtime:
-- **Might** resume execution later. It usually does, unless `sm` / `Future` dropped.
-- **Might** resume with the previous worker **or another** worker thread (depends on runtime).
+At each `x.await`, state machine passes control to subordinate state machine `x`. At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker
+thread returns all the way up to runtime so it can drive another Future. Some time later the runtime:
+- **might** resume execution. It usually does, unless `sm` / `Future` dropped.
+- **might** resume with the previous worker **or another** worker thread (depends on runtime).
 
-Simplified diagram:
+Simplified diagram for code written inside an `async` block :
 
 <!-- Otherwise the rows wrap on small devices and look ugly -->
 <div style="overflow:auto;">
