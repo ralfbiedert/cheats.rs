@@ -578,7 +578,7 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 
 <div class="footnotes">
     {{ note(note="1") }} Technically <code>async</code> transforms the following code into an anonymous, compiler-generated state machine type, and <code>f()</code> instantiates that machine.
-    That state machine always <code>impl Future</code>, maybe <code>Send</code> & co, depending on types you used inside <code>async</code>. State machine driven by worker thread invoking
+    The state machine always <code>impl Future</code>, possibly <code>Send</code> & co, depending on types you used inside <code>async</code>. State machine driven by worker thread invoking
     <code>Future::poll()</code> via runtime directly, or parent <code>.await</code> indirectly.
     <br/>
     {{ note(note="2") }} Right now Rust doesn't come with its own runtime. Use external crate instead, such as <a href="https://crates.io/crates/tokio">tokio 0.2+</a>.
