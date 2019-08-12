@@ -597,8 +597,10 @@ Futures as seen by someone who holds an `impl Future<Output=X>` after calling `f
 - State progression initiated via `.await` if called from existing `async` context.
 
 Futures as seen by someone who authors `async f() {}`:
-- The code will only be run as a state machine in context of runtime via `poll()`, never directly.
-- Runtime will execute code from worker thread. Might or might not be thread that invoked runtime.
+- The written code will be transformed into state machine code that will later be instantiated.
+- Derived traits of state machine depending on types you use inside. Always `Future`, maybe `Send`, ...
+- Actual execution of this state machine happens in context of runtime via `poll()`, never directly.
+- Runtime will execute from worker thread. Might or might not be thread that invoked runtime.
 - When executing, worker thread runs until end, or until it encounters _another_ state machine `x`.
 - If control passed to `x` via `x.await`, worker thread continues with that one instead.
 - At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker thread returns all the way up to runtime so it can drive another Future.
