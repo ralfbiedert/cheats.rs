@@ -237,7 +237,7 @@ Define units of code and their abstractions.
 
 ### Control Flow
 
-Control execution within any function.
+Control execution within a function.
 
 <div class="cheats">
 
