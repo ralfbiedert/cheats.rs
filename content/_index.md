@@ -571,7 +571,7 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 | {{ tab() }} `async fn f() {}`  | Function `f` returns an `impl Future<Output=()>`. |
 | {{ tab() }} `async fn f() -> S {}`  | Function `f` returns an `impl Future<Output=S>`. |
 | {{ tab() }} `async { x }`  | Transforms `{ x }` into an `impl Future<Output=X>`. |
-| `let sm = f();   ` | Calling `f()` that is `async` will **not** execute `f`, but return state machine `sm`. {{ note(note="1") }} |
+| `let sm = f();   ` | Calling `f()` that is `async` will **not** execute `f`, but produce state machine `sm`. {{ note(note="1") }} |
 | {{ tab() }} `sm = async { g() };`  | Likewise, does **not** execute the `{ g() }` block; produces state machine. |
 | `runtime.block_on(sm);` {{ note(note="2") }}  | Outside an `async {}`, schedules `sm` to actually run. Would execute `g()`. |
 | `sm.await` | Inside an `async {}`, run `sm` until complete. Yield to runtime if `sm` not ready. |
@@ -585,26 +585,27 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 
 {{ tablesep() }}
 
-Futures as seen by someone who holds an `impl Future` after calling `f()`:
+Futures as seen by someone who holds an `impl Future<Output=X>` after calling `f()`:
 
-<!-- - An `impl Future` is often a compiler-generated, opaque `S` that implements `Future`. -->
 <!-- - Outside an `async {}`, advancing `sm` is done by the runtime, invoking the Future's `poll()` {{ std(page="std/future/trait.Future.html#tymethod.poll") }} method.
 - Inside an `async {}`, advancing `other_sm` is done by current `sm`. -->
 
-- From outside perspective this `impl Future<Output=X>` is similar to a state machine.
+
+- This `impl Future` is an anonymous, compiler-generated instance of a state machine.
 - After one or more `Future::poll()` calls it will be in state `Ready` and the `Output` will be available.
-- If not in `async` context already, `poll()` and state progression driven via runtime.
-- If `f()` called from existing `async` context, state progression driven via `.await`.
+- State progression initiated via `Runtime::block_on()` (and friends) if not in `async` context already.
+- State progression initiated via `.await` if called from existing `async` context.
 
 Futures as seen by someone who authors `async f() {}`:
-- The code will only be run in context of runtime via `poll()`, never _directly_.
+- The code will only be run as a state machine in context of runtime via `poll()`, never directly.
 - Runtime will execute code from worker thread. Might or might not be thread that invoked runtime.
 - When executing, worker thread runs until end, or until it encounters _another_ state machine `x`.
 - If control passed to `x` via `x.await`, worker thread continues with that one instead.
 - At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker thread returns all the way up to runtime so it can drive another Future.
-- Runtime **might** resume execution later. It usually does, unless Future dropped.
-- It might resume with the previous worker **or another** worker thread (depends on runtime).
-<!-- - The thread executing inside `async {}` is usually unrelated to the one invoking `f()`. -->
+
+In other words, at each `.await`, worker thread might return and runtime:
+- **Might** resume execution later. It usually does, unless `sm` / `Future` dropped.
+- **Might** resume with the previous worker **or another** worker thread (depends on runtime).
 
 Simplified diagram:
 
