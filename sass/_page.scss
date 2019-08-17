@@ -234,10 +234,11 @@ $largescreen-width: 1050px;
         font-size: 9px;
     }
 
-    .page {
+    .book-content {
         // background-color: red;
         transition: 0s;
         transform: scale(1.05);
+        transform-origin: top left;
     }
 
     .cheats>table tr td:nth-child(1) {
