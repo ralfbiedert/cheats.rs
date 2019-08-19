@@ -31,6 +31,13 @@ footer {
     font-size: 9px;
 }
 
+footer::after {
+    content: " ";
+    display: block;
+    width: 1px;
+    height: 20px;
+}
+
 sup {
     padding: -5px;
 }
