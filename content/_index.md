@@ -477,12 +477,12 @@ Rust has several ways to create string or char literals, depending on your needs
 
 | Example | Explanation |
 |--------|-------------|
-| `"..."` | **String literal** {{ ref(page="tokens.html#string-literals")}}, will escape `\n`, ... |
-| `r"..."`, | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}}, won't escape `\n`, ... |
-| `r#"..."#`, etc. | Raw string literal, but can also contain `"`. |
-| `b"..."` | **Byte string literal** {{ ref(page="tokens.html#byte-and-byte-string-literals")}}; constructs ASCII `[u8]`, not a string. |
-| `br"..."`, `br#"..."#`, etc. | Raw byte string literal, combination of the above. |
-| `'🦀'` | **Character literal** {{ ref(page="tokens.html#character-and-string-literals")}}, can contain unicode. |
+| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}} UTF-8, will escape `\n` to _line break_ `0xA`, ... |
+| `r"..."`, | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}} UTF-8, won't escape `\n`, ... |
+| `r#"..."#`, etc. | Raw string literal, UTF-8, but can also contain `"`. |
+| `b"..."` | **Byte string literal**; {{ ref(page="tokens.html#byte-and-byte-string-literals")}} constructs ASCII `[u8]`, not a string. |
+| `br"..."`, `br#"..."#`, etc. | Raw byte string literal, ASCII `[u8]`, combination of the above. |
+| `'🦀'` | **Character literal**, {{ ref(page="tokens.html#character-and-string-literals")}} fixed 4 byte unicode '**char**'. {{ std(page="std/primitive.char.html") }} |
 | `b'x'` | ASCII **byte literal**. {{ ref(page="tokens.html#byte-literals")}} |
 
 </div>
