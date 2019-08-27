@@ -50,14 +50,16 @@ Language Constructs
 
 </div>
 
+
 <div class="column">
 
 Guides
-* [Invisible Sugar](#invisible-sugar)
+
+* [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
 * [Closures](#closures)
-* [Idiomatic Rust](#idiomatic-rust)
 * [A Guide to Reading Lifetimes](#a-guide-to-reading-lifetimes)
+* [Invisible Sugar](#invisible-sugar)
 * [Formatting Strings](#formatting-strings)
 * [Tooling](#tooling)
 
@@ -537,33 +539,117 @@ Since they behave no differently in Rust we do not list them here.
 For some of them Rust also supports **operator overloading**. {{ std(page="std/ops/index.html")}}
 
 
+---
+
+# Guides
 
 
-## Invisible Sugar
+<!-- ## Project Anatomy
 
-If something works that "shouldn't work now that you think about it", it might be due to one of these.
+XXXX
+
+<div class="header-blue">
+
+| Idiom | Code |
+|--------| ---- |
+| `benches/` | Contains _highlevel_ benchmarks for your crate, run via `cargo bench`. |
+| `examples/` | Examples how to use your crate, run via `cargo run --example xxx`.  |
+| `src/` | Actual source code for your project |
+| {{ tab() }} `build.rs` | Pre-build script, can be specified in `Cargo.toml`. |
+| {{ tab() }} `main.rs` | Entry point for applications, this is what `cargo run` uses. |
+| {{ tab() }} `lib.rs` | Entry point for libraries. This is where `my_crate::x` lookup starts. |
+| `tests/` | Integration tests go here. |
+| `.rustfmt.toml` | In case you want to customize how `cargo fmt` works. |
+| `Cargo.toml` | Main project configuration, dependencies, ... |
+| `Cargo.lock` | For reproducible builds, recommended to `git add` for apps, not for libs. |
+</div>
+
+{{ tablesep() }}
 
 
-| Name | Description |
-|--------| -----------|
-| **Coercions** {{ nom(page="coercions.html") }} | 'Weaken' types to match signature, e.g., `&mut T` to `&T`.  |
-| **Deref** {{ nom(page="vec-deref.html#deref") }} | [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, ... compatible with some target `S`. |
-| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic types.
-| **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
-| **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html?highlight=lifetime,el#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
-| **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
+Minimal benchmark example automatically invoked by `cargo bench`:
+
+```
+// benches/sample.rs
+
+#![feature(test)]
+
+extern crate test;
+
+#[bench]
+fn my_algo(b: &mut Bencher) {
+    b.iter(|| {
+        blackbox(my_crate::f())
+    });
+}
+```
+
+Minimal integration test automatically invoked by `cargo test`:
+
+```
+// tests/sample.rs
+
+#[test]
+fn my_sample() {
+    assert_eq!(my_crate::f(), 123);
+}
+``` -->
+
+
+
+## Idiomatic Rust
+
+If you are used to programming Java or C, consider these.
+
+<div class="header-blue">
+
+| Idiom | Code |
+|--------| ---- |
+| **Think in Expressions** | `x = if x { a } else { b };` |
+|  | `x = loop { break 5 };`  |
+|  | `fn f() -> u32 { 0 }`  |
+| **Think in Iterators** | `(1..10).map(f).collect()` |
+|  | <code>names.iter().filter(&vert;x&vert; x.starts_with("A"))</code> |
+| **Handle Absence with `?`** | `x = try_something()?;` |
+|  | `get_option()?.run()?` |
+| **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
+|  | `enum E { Visible, Hidden }` over `visible: bool` |
+|  | `struct Charge(f32)` over `f32` |
+| **Provide Builders** | `Car::new("Model T").hp(20).run();` |
+| **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
+|   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
+| **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
+| **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
+| **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
+|  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
+|  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
+|  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
+| **Documentation** | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
+|  | Don't forget to include a **summary sentence** and the **Examples** heading. |
+|  | If applicable: **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
+
+</div>
+
+
+<!-- | **API Design** | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)) to make your API feel Rustic. | -->
+<!-- |  | Add benchmarks (`#[bench]`) to ensure your code is fast. | -->
+
+{{ tablesep() }}
+
+> 🔥 We **highly** recommend you also follow the
+> [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html))
+> for any shared project! 🔥
 
 
 
 
-<div class="cheats">
 
 
 ## Async-Await 101
 
 If you are familiar with async / await in C# or TypeScript, here are some things to keep in mind:
 
-<div class="cheats">
+<div class="header-orange">
 
 | Construct | Explanation |
 |---------|-------------|
@@ -575,6 +661,9 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 | {{ tab() }} `sm = async { g() };`  | Likewise, does **not** execute the `{ g() }` block; produces state machine. |
 | `runtime.block_on(sm);` {{ note(note="2") }}  | Outside an `async {}`, schedules `sm` to actually run. Would execute `g()`. |
 | `sm.await` | Inside an `async {}`, run `sm` until complete. Yield to runtime if `sm` not ready. |
+
+</div>
+
 
 <div class="footnotes">
     {{ note(note="1") }} Technically <code>async</code> transforms the following code into an anonymous, compiler-generated state machine type, and <code>f()</code> instantiates that machine.
@@ -634,12 +723,18 @@ START --------------------> x.await --------------------> y.await --------------
 
 This leads to the following considerations when writing code inside an `async` construct:
 
+<div class="header-orange">
+
+
 | Constructs {{ note(note="1") }} | Explanation |
 |---------|-------------|
 | `sleep_or_block();` | Definitely bad {{ bad() }}, never halt current thread, clogs executor. |
 | `set_TL(a); x.await; TL();` | Definitely bad {{ bad() }}, `await` may return from other thread, [thread local](https://doc.rust-lang.org/std/macro.thread_local.html) invalid. |
 | `s.no(); x.await; s.go();` | Maybe bad {{ bad() }}, `await` will [not return](http://www.randomhacks.net/2019/03/09/in-nightly-rust-await-may-never-return/) if `Future` dropped while waiting. {{ note(note="2") }} |
 | `Rc::new(); x.await; rc();` | Non-`Send` types prevent `impl Future` from being `Send`; less compatible. |
+
+</div>
+
 <div class="footnotes">
     {{ note(note="1") }} Here we assume <code>s</code> is any non-local that could temporarily be put into an invalid state;
     <code>TL</code> is any thread local storage, and that the <code>async {}</code> containing the code is written
@@ -651,10 +746,6 @@ This leads to the following considerations when writing code inside an `async` c
 
 
 
-</div>
-
-</div>
-
 
 
 ## Closures
@@ -665,11 +756,15 @@ that implements `FnMut`, also implements `FnOnce`.
 
 From a call site perspective that means:
 
+<div class="header-green">
+
 | Signature | Function `g` can call ... |  Function `g` accepts ... |
 |--------| -----------| -----------|
 | `g<F: FnOnce()>(f: F)`  | ... `f()` once. |  `Fn`, `FnMut`, `FnOnce`  |
 | `g<F: FnMut()>(mut f: F)`  | ... `f()` multiple times. | `Fn`, `FnMut` |
 | `g<F: Fn()>(f: F)`  | ... `f()` multiple times.  | `Fn` |
+
+</div>
 
 <div class="footnotes">
     Notice how <b>asking</b> for a <code>Fn</code> closure as a function is
@@ -683,11 +778,15 @@ From a call site perspective that means:
 
 From the perspective of someone defining a closure:
 
+<div class="header-green">
+
 | Closure | Implements<sup>*</sup> | Comment |
 |--------| -----------| --- |
 | <code> &vert;&vert; { moved_s; } </code> | `FnOnce` | Caller must give up ownership of `moved_s`. |
 | <code> &vert;&vert; { &mut s; } </code> | `FnOnce`, `FnMut` | Allows `g()` to change caller's local state `s`. |
 | <code> &vert;&vert; { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; but can share and reuse `s`. |
+
+</div>
 
 <div class="footnotes">
     <sup>*</sup> Rust <a href="https://doc.rust-lang.org/stable/reference/expressions/closure-expr.html">prefers capturing</a> by reference
@@ -700,68 +799,28 @@ From the perspective of someone defining a closure:
 
 That gives the following advantages and disadvantages:
 
+<div class="header-green">
+
 | Requiring | Advantage | Disadvantage |
 |--------| -----------| -----------|
 | `F: FnOnce`  | <span class="good">Easy to satisfy as caller.</span> | <span class="bad">Single use only, `g()` may call `f()` just once.</span> |
 | `F: FnMut`  | <span class="good">Allows `g()` to change caller state.</span> | <span class="bad">Caller may not reuse captures during `g()`.</span> |
 | `F: Fn`  | <span class="good">Many can exist at same time.</span> | <span class="bad">Hardest to produce for caller.</span> |
 
-
-
-
-
-
-
-## Idiomatic Rust
-
-If you are used to programming Java or C, consider these.
-
-<div class="cheats">
-
-| Idiom | Code |
-|--------| ---- |
-| **Think in Expressions** | `x = if x { a } else { b };` |
-|  | `x = loop { break 5 };`  |
-|  | `fn f() -> u32 { 0 }`  |
-| **Think in Iterators** | `(1..10).map(f).collect()` |
-|  | <code>names.iter().filter(&vert;x&vert; x.starts_with("A"))</code> |
-| **Handle Absence with `?`** | `x = try_something()?;` |
-|  | `get_option()?.run()?` |
-| **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
-|  | `enum E { Visible, Hidden }` over `visible: bool` |
-|  | `struct Charge(f32)` over `f32` |
-| **Provide Builders** | `Car::new("Model T").hp(20).run();` |
-| **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
-|   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
-| **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
-| **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
-| **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
-|  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
-|  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
-|  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
-| **Documentation** | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
-|  | Don't forget to include a **summary sentence** and the **Examples** heading. |
-|  | If applicable: **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
-
-<!-- | **API Design** | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)) to make your API feel Rustic. | -->
-<!-- |  | Add benchmarks (`#[bench]`) to ensure your code is fast. | -->
-
-{{ tablesep() }}
-
-> 🔥 We **highly** recommend you also follow the
-> [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html))
-> for any shared project! 🔥
-
-
 </div>
 
 
-<div class="cheats">
+
+<!-- ## Important Traits
+
+xxx -->
 
 
 ## A Guide to Reading Lifetimes
 
 Lifetimes can be overwhelming at times. Here is a simplified guide on how to read and interpret constructs containing lifetimes if you are familiar with C.
+
+<div class="header-magenta">
 
 | Construct | How to read |
 |--------| -----------|
@@ -814,6 +873,30 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 </div>
 
 
+
+
+## Invisible Sugar
+
+If something works that "shouldn't work now that you think about it", it might be due to one of these.
+
+
+<div class="header-lemongrass">
+
+
+| Name | Description |
+|--------| -----------|
+| **Coercions** {{ nom(page="coercions.html") }} | 'Weaken' types to match signature, e.g., `&mut T` to `&T`.  |
+| **Deref** {{ nom(page="vec-deref.html#deref") }} | [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, ... compatible with some target `S`. |
+| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic types.
+| **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
+| **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html?highlight=lifetime,el#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
+| **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
+
+</div>
+
+
+
+
 ## Formatting Strings
 
 Formatting applies to `print!`, `eprint!`, `write!` (and their -`ln` siblings like `println!`).
@@ -832,6 +915,8 @@ The full grammar is [specified in the
 `std::fmt`](https://doc.rust-lang.org/std/fmt/index.html#syntax) documentation, but here are some commonly used flags:
 
 
+<div class="header-undefined-color-3">
+
 | Element |  Meaning |
 |---------| ---------|
 | `argument` |  Omitted (next `{}`), number (`0`, `1`, ...) or identifier for named arguments. |
@@ -842,6 +927,7 @@ The full grammar is [specified in the
 | `precision` | Decimal digits (&geq; 0) for numerics, or max width for non-numerics. |
 | `type` | [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html) (`?`), hex (`x`), binary (`b`), or octal (`o`) ([there are more, using Traits](https://doc.rust-lang.org/std/fmt/index.html#traits)). |
 
+</div>
 
 
 <div class="footnotes">
@@ -851,7 +937,7 @@ The full grammar is [specified in the
 {{ tablesep() }}
 
 
-Examples:
+<div class="header-undefined-color-3">
 
 | Example | Explanation |
 |---------|-------------|
@@ -869,6 +955,8 @@ Examples:
 Some commands and tools that are good to know.
 
 
+<div class="header-lobstercrabs">
+
 | Command | Description |
 |--------| ---- |
 | `cargo init` | Create a new project for the latest edition. |
@@ -882,6 +970,7 @@ Some commands and tools that are good to know.
 | <code>cargo +{nightly, stable} ...</code>  | Runs command with given toolchain, e.g., for 'nightly only' tools. |
 | `rustup docs` | Open offline Rust documentation (incl. the books), good on a plane! |
 
+</div>
 
 <div class="footnotes">
 A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type <code>cargo build</code> or just <code>cargo b</code>.
@@ -894,14 +983,15 @@ A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means 
 These are optional `rustup` components.
 Install them with `rustup component add [tool]`.
 
-<div class="cheats">
 
+<div class="header-lobstercrabs">
 
 | Tool | Description |
 |--------| ---- |
 | `cargo clippy` | Additional ([lints](https://rust-lang.github.io/rust-clippy/master/)) catching common API misuses and unidiomatic code. {{ link(url = "https://github.com/rust-lang/rust-clippy") }} |
 | `cargo fmt` | Automatic code formatter (`rustup component add rustfmt`). {{ link(url = "https://github.com/rust-lang/rustfmt") }} |
 
+</div>
 
 {{ tablesep() }}
 
@@ -909,8 +999,8 @@ Install them with `rustup component add [tool]`.
 These are 3rd party tools and usually need to be installed with `cargo install cargo-[tool]` first.
 They often require unstable and are subject to break.
 
-<div class="cheats">
 
+<div class="header-lobstercrabs">
 
 | Command | Description |
 |--------| ---- |
@@ -922,8 +1012,6 @@ They often require unstable and are subject to break.
 | {{ tab() }} `cargo rm <crate>` | Remove `<crate>` from your `Cargo.toml`.  |
 | {{ tab() }} `cargo upgrade <crate>` | Upgrade the version of `<crate>` to the latest.  |
 | `cargo flamegraph` | Visualize CPU time (`cargo install flamegraph`). {{ link(url = "https://github.com/ferrous-systems/flamegraph") }} {{ note( note="OSX, Linux only") }} |
-
-</div>
 
 </div>
 
@@ -961,6 +1049,9 @@ Advanced types:
 <!-- Don't render this section for printing, won't be helpful -->
 <div class="noprint">
 
+---
+
+# Misc
 
 
 ## Links & Services
@@ -974,6 +1065,8 @@ These are other great visual guides and tables.
 {{ tablesep() }}
 
 
+<div class="header-lavender">
+
 | Cheat Sheets | Description |
 |--------| -----------|
 | [Rust Learning⭐](https://github.com/ctjhoa/rust-learning) | Probably the best collection of links about learning Rust.  |
@@ -984,11 +1077,17 @@ These are other great visual guides and tables.
 | [Rust Iterator Cheat Sheet](https://danielkeep.github.io/itercheat_baked.html) | Summary of iterator-related methods from `std::iter` and `itertools`. |
 | [Type-Based Rust Cheat Sheet](https://upsuper.github.io/rust-cheatsheet/) | Lists common types and how they convert. |
 
+</div>
+
 
 {{ tablesep() }}
 
 
 All major Rust books developed by the community.
+
+
+<div class="header-lavender">
+
 
 | Books&nbsp;️📚  | Description |
 |--------| -----------|
@@ -1012,11 +1111,14 @@ All major Rust books developed by the community.
 | [The WebAssembly Book](https://rustwasm.github.io/docs/book/) | Working with the web and producing `.wasm` files. |
 | {{ tab() }} [The `wasm-bindgen` Guide](https://rustwasm.github.io/docs/wasm-bindgen/) | How to bind Rust and JavaScript APIs in particular. |
 
+</div>
 
 
 {{ tablesep() }}
 
 Comprehensive lookup tables for common components.
+
+<div class="header-lavender">
 
 | Tables&nbsp;📋| Description |
 |--------| -----------|
@@ -1028,11 +1130,14 @@ Comprehensive lookup tables for common components.
 | {{ tab() }} [Rust Platform Support](https://forge.rust-lang.org/platform-support.html) | All supported platforms and their Tier. |
 | {{ tab() }} [Rust Component History](https://rust-lang.github.io/rustup-components-history/) | Check **nightly** status of various Rust tools for a platform. |
 
+</div>
 
 {{ tablesep() }}
 
 
 Online services which provide information or tooling.
+
+<div class="header-lavender">
 
 | Services&nbsp;⚙️ | Description |
 |--------| -----------|
@@ -1041,6 +1146,7 @@ Online services which provide information or tooling.
 | [libs.rs](https://libs.rs/) | Unofficial overview of quality Rust libraries and applications. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 
+</div>
 
 {{ tablesep() }}
 
