@@ -55,6 +55,7 @@ Language Constructs
 
 Guides
 
+* [Project Anatomy](#project-anatomy)
 * [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
 * [Closures](#closures)
@@ -544,47 +545,90 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 # Guides
 
 
-<!-- ## Project Anatomy
+## Project Anatomy
 
-XXXX
+Basic project layout and common files and folders.
 
-<div class="header-blue">
+<div class="header-red">
 
 | Idiom | Code |
 |--------| ---- |
-| `benches/` | Contains _highlevel_ benchmarks for your crate, run via `cargo bench`. |
-| `examples/` | Examples how to use your crate, run via `cargo run --example xxx`.  |
-| `src/` | Actual source code for your project |
-| {{ tab() }} `build.rs` | Pre-build script, can be specified in `Cargo.toml`. |
+| `benches/` | Benchmarks for your crate, run via `cargo bench`, only useful in nightly. |
+| `examples/` | Examples how to use your crate, run via `cargo run --example my_example`.  |
+| `src/` | Actual source code for your project. |
+| {{ tab() }} `build.rs` | Pre-build script, e.g., when compiling C / FFI, needs to be specified in `Cargo.toml`. |
 | {{ tab() }} `main.rs` | Entry point for applications, this is what `cargo run` uses. |
-| {{ tab() }} `lib.rs` | Entry point for libraries. This is where `my_crate::x` lookup starts. |
-| `tests/` | Integration tests go here. |
+| {{ tab() }} `lib.rs` | Entry point for libraries. This is where lookup for `my_crate::f` starts. |
+| `tests/` | Integration tests go here, invoked via `cargo test`. Unit tests often stay in `src/` file. |
 | `.rustfmt.toml` | In case you want to customize how `cargo fmt` works. |
-| `Cargo.toml` | Main project configuration, dependencies, ... |
-| `Cargo.lock` | For reproducible builds, recommended to `git add` for apps, not for libs. |
+| `Cargo.toml` | Main project configuration. Defines dependencies, artifacts ... |
+| `Cargo.lock` | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
 </div>
 
 {{ tablesep() }}
 
 
-Minimal benchmark example automatically invoked by `cargo bench`:
+An almost minimal library entry point with some unit tests would look like this:
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```
+// src/lib.rs
+
+pub fn f() -> u32 { ... }  // This function has a public path from the root, so it's
+                           // accessible from the outside.
+
+fn g() -> u32 { ... }      // This function does not have a public path from the root,
+                           // it is visible only inside this crate.
+
+#[cfg(test)]               // With `#[cfg(test)]` this only gets compiled when testing.
+mod test {
+
+    #[test]
+    pub fn test() {
+        assert_eq!(super::g(), 123); // Unit tests of internal functions are usually done
+    }                                // in a `mod test {}` next to their declaration.
+
+}
+```
+
+</div>
+</div>
+
+{{ tablesep() }}
+
+Minimal benchmark example automatically invoked by `cargo bench`. Code within has access to crate `my_crate` like any external project would have; resolution starts at `lib.rs`.
+
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
 
 ```
 // benches/sample.rs
 
-#![feature(test)]
+#![feature(test)]   // #[bench] is still experimental
 
-extern crate test;
+extern crate test;  // Even in '18 this is needed ... for reasons.
+                    // Normally you never need this in '18 code.
+
+use test::{black_box, Bencher};
 
 #[bench]
 fn my_algo(b: &mut Bencher) {
-    b.iter(|| {
-        blackbox(my_crate::f())
-    });
+    b.iter(|| black_box(my_crate::f())); // `black_box` prevents `f` from being optimized away.
 }
 ```
+</div>
+</div>
 
-Minimal integration test automatically invoked by `cargo test`:
+{{ tablesep() }}
+
+Minimal integration test automatically invoked by `cargo test`. Like above, code within has access to crate `my_crate` starting at `lib.rs`.
+
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
 
 ```
 // tests/sample.rs
@@ -593,7 +637,11 @@ Minimal integration test automatically invoked by `cargo test`:
 fn my_sample() {
     assert_eq!(my_crate::f(), 123);
 }
-``` -->
+```
+
+</div>
+</div>
+
 
 
 
