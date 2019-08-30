@@ -581,7 +581,7 @@ pub fn f() {}      // Is a public item in root, so it's accessible from the outs
 
 mod m {
     pub fn g() {}  // No public path (`m` not public) from root, so `g`
-}                  // is not accessible from outside crate.
+}                  // is not accessible from the outside of the crate.
 ```
 
 </div>
@@ -599,7 +599,7 @@ Integration tests and benchmarks, in their basic, form look like this:
 
 #[test]
 fn my_sample() {
-    assert_eq!(my_crate::f(), 123); // Integration test (and benchmarks) 'depend' to the crate like
+    assert_eq!(my_crate::f(), 123); // Integration tests (and benchmarks) 'depend' to the crate like
 }                                   // a 3rd party would. Hence, they only see public items.
 ```
 
