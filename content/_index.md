@@ -413,7 +413,7 @@ Pattern matching arms in `match` expressions. The left side of these arms can al
 |  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
 |  `[a, 0] => {}` | Match array with any value for `a` and `0` for second. |
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
-| `x @ 1..=5 => {}` | Bind matched to `x`; **pattern binding** {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}.  |
+| `x @ 1..=5 => {}` | Bind matched to `x`; **pattern binding**. {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }}  |
 | <code>0 &vert; 1 => {}</code> | Pattern alternatives (or-patterns).|
 | {{ tab() }}  <code>E::A &vert; E::Z </code> | Same, but on enum variants. |
 | {{ tab() }}  <code>E::C {x} &vert; E::D {x}</code> | Same, but bind `x` if all variants have it. |
