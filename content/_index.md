@@ -547,7 +547,7 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 
 ## Project Anatomy
 
-Basic project layout and common files and folders.
+Basic project layout and common files and folders, as used by [Cargo](https://doc.rust-lang.org/cargo/index.html), Rust's package manager.
 
 <div class="header-red">
 
@@ -556,11 +556,12 @@ Basic project layout and common files and folders.
 | `benches/` | Benchmarks for your crate, run via `cargo bench`, only useful in nightly. |
 | `examples/` | Examples how to use your crate, run via `cargo run --example my_example`.  |
 | `src/` | Actual source code for your project. |
-| {{ tab() }} `build.rs` | Pre-build script, e.g., when compiling C / FFI, needs to be specified in `Cargo.toml`. |
-| {{ tab() }} `main.rs` | Entry point for applications, this is what `cargo run` uses. |
-| {{ tab() }} `lib.rs` | Entry point for libraries. This is where lookup for `my_crate::f` starts. |
+| {{ tab() }} `build.rs` |  [Pre-build script](https://doc.rust-lang.org/cargo/reference/build-scripts.html), e.g., when compiling C / FFI, needs to be specified in `Cargo.toml`. |
+| {{ tab() }} `main.rs` | Default entry point for applications, this is what `cargo run` uses. |
+| {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f` starts. |
 | `tests/` | Integration tests go here, invoked via `cargo test`. Unit tests often stay in `src/` file. |
-| `.rustfmt.toml` | In case you want to customize how `cargo fmt` works. |
+| `.rustfmt.toml` | In case you want to [customize](https://rust-lang.github.io/rustfmt/) how `cargo fmt` works. |
+| `.clippy.toml` | Special configuration for certain [clippy lints](https://rust-lang.github.io/rust-clippy/master/index.html). |
 | `Cargo.toml` | Main project configuration. Defines dependencies, artifacts ... |
 | `Cargo.lock` | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
 </div>
@@ -568,49 +569,53 @@ Basic project layout and common files and folders.
 {{ tablesep() }}
 
 
-An almost minimal library entry point with some unit tests would look like this:
+An minimal library entry point with functions and modules looks like this:
 
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
 ```
-// src/lib.rs
+// src/lib.rs (default library entry point)
 
-pub fn f() -> u32 { ... }  // This function has a public path from the root, so it's
-                           // accessible from the outside.
+pub fn f() {}      // Is a public item in root, so it's accessible from the outside.
 
-fn g() -> u32 { ... }      // This function does not have a public path from the root,
-                           // it is visible only inside this crate.
-
-#[cfg(test)]               // With `#[cfg(test)]` this only gets compiled when testing.
-mod test {
-
-    #[test]
-    pub fn test() {
-        assert_eq!(super::g(), 123); // Unit tests of internal functions are usually done
-    }                                // in a `mod test {}` next to their declaration.
-
-}
+mod m {
+    pub fn g() {}  // No public path (`m` not public) from root, so `g`
+}                  // is not accessible from outside crate.
 ```
 
 </div>
 </div>
 
-{{ tablesep() }}
-
-Minimal benchmark example automatically invoked by `cargo bench`. Code within has access to crate `my_crate` like any external project would have; resolution starts at `lib.rs`.
-
+For binaries (not depicted), function `fn main() {}` is the entry point.
+Unit tests (not depicted), usually reside in a `#[cfg(test)] mod test { }` next to their code.
+Integration tests and benchmarks, in their basic, form look like this:
 
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
 ```
-// benches/sample.rs
+// tests/sample.rs (sample integration test)
+
+#[test]
+fn my_sample() {
+    assert_eq!(my_crate::f(), 123); // Integration test (and benchmarks) 'depend' to the crate like
+}                                   // a 3rd party would. Hence, they only see public items.
+```
+
+</div>
+</div>
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```
+// benches/sample.rs (sample benchmark)
 
 #![feature(test)]   // #[bench] is still experimental
 
 extern crate test;  // Even in '18 this is needed ... for reasons.
-                    // Normally you never need this in '18 code.
+                    // Normally you don't need this in '18 code.
 
 use test::{black_box, Bencher};
 
@@ -621,27 +626,6 @@ fn my_algo(b: &mut Bencher) {
 ```
 </div>
 </div>
-
-{{ tablesep() }}
-
-Minimal integration test automatically invoked by `cargo test`. Like above, code within has access to crate `my_crate` starting at `lib.rs`.
-
-
-<div style="overflow:auto;">
-<div style="min-width: 100%; width: 650px;">
-
-```
-// tests/sample.rs
-
-#[test]
-fn my_sample() {
-    assert_eq!(my_crate::f(), 123);
-}
-```
-
-</div>
-</div>
-
 
 
 
@@ -1172,7 +1156,7 @@ Comprehensive lookup tables for common components.
 |--------| -----------|
 | [Compiler Error Index](https://doc.rust-lang.org/error-index.html) | Ever wondered what `E0404` means? |
 | [ALL the Clippy Lints](https://rust-lang.github.io/rust-clippy/master/) | All the [**clippy**](https://github.com/rust-lang/rust-clippy) lints you might be interested in. |
-| [Configuring Rustfmt](https://rust-lang.github.io/rustfmt/) | All [**rustfmt**](https://github.com/rust-lang/rustfmt) options you can use in `rustfmt.toml`. |
+| [Configuring Rustfmt](https://rust-lang.github.io/rustfmt/) | All [**rustfmt**](https://github.com/rust-lang/rustfmt) options you can use in `.rustfmt.toml`. |
 | [Rust Changelog](https://github.com/rust-lang/rust/blob/master/RELEASES.md) | See all the things that changed in a particular version. |
 | [Rust Forge](https://forge.rust-lang.org/) | Lists release train and links for people working on the compiler. |
 | {{ tab() }} [Rust Platform Support](https://forge.rust-lang.org/platform-support.html) | All supported platforms and their Tier. |
