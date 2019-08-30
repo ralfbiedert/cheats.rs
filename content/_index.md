@@ -553,7 +553,7 @@ Basic project layout and common files and folders, as used by [Cargo](https://do
 
 | Idiom | Code |
 |--------| ---- |
-| `benches/` | Benchmarks for your crate, run via `cargo bench`, only useful in nightly. |
+| `benches/` | Benchmarks for your crate, run via `cargo bench`, only useful in nightly. {{ experimental() }} |
 | `examples/` | Examples how to use your crate, run via `cargo run --example my_example`.  |
 | `src/` | Actual source code for your project. |
 | {{ tab() }} `build.rs` |  [Pre-build script](https://doc.rust-lang.org/cargo/reference/build-scripts.html), e.g., when compiling C / FFI, needs to be specified in `Cargo.toml`. |
