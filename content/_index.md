@@ -883,6 +883,13 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 | `&mut s` | Same, but will produce a mutable borrow. |
 |   | A `&mut` will allow the *owner of the borrow* (address) to change `s` content. |
 |   | This reiterates that not the value in `s`, but location of `s` is borrowed. |
+
+{{ tablesep() }}
+
+When reading function or type signatures in particular:
+
+| Construct | How to read |
+|--------| -----------|
 | `S<'a> {}` | Signals that `S` will hold at least one address (i.e., reference). |
 |  | `'a` will be determined automatically by the user of this struct. |
 |  | `'a` will be chosen as small as possible. |
