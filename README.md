@@ -37,14 +37,20 @@ zola serve
 Contributions are very welcome. You can PR bug fixes (broken links, typos, ...) directly. I am happy to evolve the current concept based on feedback and demands. Feel free to open an issue and discuss.
 
 
+
 # Credits
 
-Takes inspiration from:
+Big shout-out to [all the contributors](https://github.com/ralfbiedert/cheats.rs/graphs/contributors) and people filing [issues](https://github.com/ralfbiedert/cheats.rs/issues) and [pull requests](https://github.com/ralfbiedert/cheats.rs/pulls) for being awesome!
+
+
+Takes additional inspiration from:
 
 * [The Book](https://doc.rust-lang.org/stable/book/) (some tables)
 * [Idiomatic Rust Libraries](https://killercup.github.io/rustfest-idiomatic-libs/#/) (Idiomatic Rust)
 * [Ferris](https://rustacean.net/) (Rust mascot by Karen Rustad Tölva)
 
-# License
 
-CC0 to the extent applicable.
+
+# Legal & License
+
+Many parts CC0, with some restrictions accounting for EU moral rights, 3rd party rights and privacy rights. Please see [LEGAL](LEGAL.md) for details.
