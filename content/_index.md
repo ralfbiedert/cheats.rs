@@ -547,7 +547,7 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 
 ## Project Anatomy
 
-Basic project layout and common files and folders, as used by [Cargo](https://doc.rust-lang.org/cargo/index.html), Rust's package manager.
+Basic project layout, and common files and folders, as used by Rust [tooling](#tooling).
 
 <div class="header-red">
 
