@@ -110,19 +110,23 @@
         });
 
 
+        // iOS does not honor the ligature settings and always renders the font without them.
+        // Hide the button not to confuse users.
+        if (iOS) {
+            let button = document.getElementById("toggle_ligatures");
+            button.style.visibility = "hidden";
+        }
+
         // Executed on page load, this runs all toggles the user might have clicked
         // the last time based on localStorage.
         try {
-            // iOS does not honor the ligature settings and always renders the font without them.
-            // Hide the button not to confuse users.
-            if (iOS) {
-                let button = document.getElementById("toggle_ligatures");
-                button.style.visibility = "hidden";
-            }
-
             let night_mode = !!localStorage && localStorage.getItem('night-mode');
             let ligatures = !!localStorage && localStorage.getItem('ligatures');
             let survey = !!localStorage && localStorage.getItem('survey2019');
+
+            if (!survey || survey === "" || survey === "block") {
+                set_survey("block");
+            }
 
             if (night_mode === "night") {
                 toggle_night_mode();
@@ -130,10 +134,6 @@
 
             if (ligatures === "ligatures") {
                 toggle_ligatures();
-            }
-
-            if (!survey || survey === "" || survey === "block") {
-                set_survey("block");
             }
         } catch (e) {
             console.log(e);
