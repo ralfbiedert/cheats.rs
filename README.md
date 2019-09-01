@@ -53,4 +53,4 @@ Takes additional inspiration from:
 
 # Legal & License
 
-Many parts CC0, with some restrictions accounting for EU moral rights, 3rd party rights and privacy rights. Please see [LEGAL](LEGAL.md) for details.
+Most content parts CC0, please see [here](content/legal.md) for details.

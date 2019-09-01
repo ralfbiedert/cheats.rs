@@ -44,7 +44,7 @@
     <script type="text/javascript" src="{{ get_url(path="prism.js") | safe }}"></script>
     <script type="text/javascript">
         let codes = document.querySelectorAll("code");
-        let iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent); // https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
+        let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform); // https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
 
 
         /// Enables or disables the playground.
@@ -69,10 +69,10 @@
             let body = document.getElementsByTagName("body")[0];
             if (body.classList.contains("night-mode")) {
                 body.classList.remove("night-mode");
-                localStorage.setItem('night-mode', 'day');
+                !!localStorage && localStorage.setItem('night-mode', 'day');
             } else {
                 body.classList.add("night-mode");
-                localStorage.setItem('night-mode', 'night');
+                !!localStorage && localStorage.setItem('night-mode', 'night');
             }
         }
 
@@ -83,15 +83,25 @@
 
             if (codes[0].style.fontVariantLigatures == "common-ligatures") {
                 set = "none";
-                localStorage.setItem('ligatures', 'no-ligatures');
+                !!localStorage && localStorage.setItem('ligatures', 'no-ligatures');
             } else {
                 set = "common-ligatures";
-                localStorage.setItem('ligatures', 'ligatures');
+                !!localStorage && localStorage.setItem('ligatures', 'ligatures');
             }
 
             codes.forEach(code => {
                 code.style.fontVariantLigatures = set;
             })
+        }
+
+        // Sets the survey state
+        function set_survey(state) {
+            let elements = document.getElementsByClassName("survey");
+            for (e of elements) {
+                e.style.display = state;
+            }
+
+            !!localStorage && localStorage.setItem('survey2019', state);
         }
 
         // Use proper syntax since we don't want to write ````rust ...``` all the time.
@@ -103,8 +113,16 @@
         // Executed on page load, this runs all toggles the user might have clicked
         // the last time based on localStorage.
         try {
-            let night_mode = localStorage.getItem('night-mode');
-            let ligatures = localStorage.getItem('ligatures');
+            // iOS does not honor the ligature settings and always renders the font without them.
+            // Hide the button not to confuse users.
+            if (iOS) {
+                let button = document.getElementById("toggle_ligatures");
+                button.style.visibility = "hidden";
+            }
+
+            let night_mode = !!localStorage && localStorage.getItem('night-mode');
+            let ligatures = !!localStorage && localStorage.getItem('ligatures');
+            let survey = !!localStorage && localStorage.getItem('survey2019');
 
             if (night_mode === "night") {
                 toggle_night_mode();
@@ -114,11 +132,8 @@
                 toggle_ligatures();
             }
 
-            // iOS does not honor the ligature settings and always renders the font without them.
-            // Hide the button not to confuse users.
-            if (iOS) {
-                let button = document.getElementById("toggle_ligatures");
-                button.style.visibility = "hidden";
+            if (!survey || survey === "" || survey === "block") {
+                set_survey("block");
             }
         } catch (e) {
             console.log(e);

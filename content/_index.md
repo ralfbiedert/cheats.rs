@@ -75,6 +75,10 @@ Misc
 
 
 
+{{ survey() }}
+
+
+
 <div class="noprint">
 
 ## Hello, Rust!
@@ -1190,6 +1194,9 @@ Online services which provide information or tooling.
 {{ tablesep() }}
 
 
+{{ survey() }}
+
+
 
 ## Printing & PDF
 
@@ -1197,4 +1204,4 @@ Online services which provide information or tooling.
 
 </div>
 
-<footer>Ralf Biedert, {{ year() }} – <a href="https://cheats.rs">cheats.rs</a></footer>
+<footer>Ralf Biedert, {{ year() }} – <a href="https://cheats.rs">cheats.rs</a> <br/><br/> <a href="legal">Legal & Privacy</a></footer>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <!-- Enable responsiveness on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <link rel="icon" type="image/png" href="favicon32.png">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+        rel="stylesheet" type="text/css">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ get_url(path="book.css") | safe }}">
+    <link rel="stylesheet" href="{{ get_url(path="prism.css") | safe }}">
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="page__content">
+
+            <div class="book-content">
+                <h1>{{ page.title }}</h1>
+                {{ page.content | safe }}
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

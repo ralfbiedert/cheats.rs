@@ -49,6 +49,21 @@ div.column {
 }
 
 
+div.survey {
+    margin-top: 40px;
+    text-align: center;
+    display: none;
+
+    span.ignore {
+        font-size: 70%;
+        position: relative;
+        right: -20px;
+        top: -10px;
+    }
+}
+
+
+
 .header-red {
     th {
         background-color: rgb(235, 156, 162);
