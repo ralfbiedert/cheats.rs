@@ -1,7 +1,0 @@
-{
-    plugins: {
-        "posthtml-img-autosize" : {
-            processEmptySize: true
-        }
-    }
-}
