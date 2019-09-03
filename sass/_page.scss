@@ -80,10 +80,6 @@ $largescreen-width: 1050px;
             margin: 0 auto;
             border-collapse: collapse;
             border-color: #cccccc;
-            td {
-                padding: 3px 5px 3px 20px;
-                border: 1px hsl(0, 0%, 95%) solid;
-            }
             thead {
                 background: hsl(0, 0%, 80%);
                 th {
@@ -104,6 +100,10 @@ $largescreen-width: 1050px;
                     background: hsl(0, 0%, 97%);
                 }
             }
+            td {
+                padding: 3px 5px 3px 20px;
+            }
+
         }
         font-size: 1.6rem;
         word-wrap: break-word;
