@@ -1,0 +1,13 @@
+{
+  "name": "cheats.rs",
+  "scripts": {
+    "posthtml": "cd public && posthtml index.html -u posthtml-img-autosize -u posthtml-inline-assets -u htmlnano -c ../.posthtmlrc"
+  },
+  "private": true,
+  "dependencies": {
+    "htmlnano": "^0.2.4",
+    "posthtml-cli": "^0.5.1",
+    "posthtml-img-autosize": "^0.1.4",
+    "posthtml-inline-assets": "^3.0.0"
+  }
+}

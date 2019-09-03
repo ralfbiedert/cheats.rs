@@ -22,10 +22,11 @@ function exit_if_fail {
 
 exit_if_fail zola -c $TOML_BASE check
 exit_if_fail zola -c $TOML_BASE build
+exit_if_fail npm run posthtml
 
 # Update deployment date in sitemap.xml
 sed -i -e "s/_NOW_/$NOW/g" $DIST/sitemap.xml
 
-
+# Publish
 aws s3 cp $DIST s3://cheats.rs/ --recursive
 aws cloudfront create-invalidation --distribution-id E3P5E5G4A4QPL8 --paths "/*"
