@@ -1,0 +1,57 @@
+
+div.data {
+}
+
+datum {
+    display: inline;
+    margin-right: 30px;
+    border-collapse: collapse;
+
+    heap {
+        background-color: burlywood;
+        display: table-row;
+        padding: 5px;
+        margin: 10px;
+        font-size: 120%;
+        height: 50px;
+        vertical-align: middle;
+    }
+
+    visual {
+        background-color: salmon;
+        display: table-row;
+        padding: 5px;
+        margin: 10px;
+        font-size: 120%;
+        height: 50px;
+    }
+
+    zoom {
+        background-color: cornsilk;
+        display: table-row;
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+        position: relative;
+        width: 520px;
+        top: -10px;
+        z-index: -100;
+    }
+
+    name {
+        text-align: left;
+        display: table-row;
+    }
+
+    code {
+        display: table-column;
+        background-color: inherit !important;
+        text-align: center !important;
+        vertical-align: middle;
+        text-shadow: 0em 0em !important;
+    }
+
+    byte {
+        display: inline;
+    }
+}
