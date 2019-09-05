@@ -543,6 +543,193 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 
 ---
 
+# Data
+
+<div class="data">
+
+<datum>
+    <name><code>u8</code>,<code>i8</code></name>
+    <visual>
+        <code></code>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <zoom>
+        <bit>S</bit>
+        <bit>_</bit>
+        <bit>_</bit>
+        <bit>_</bit>
+        <bit>_</bit>
+        <bit>_</bit>
+        <bit>_</bit>
+        <bit>_</bit>
+    </zoom>
+    <heap>
+        <code>T</code>
+        <code>T</code>
+        <code>T</code>
+    </heap>
+
+</datum>
+
+
+<datum>
+    <name><code>Arc&lt;T&gt;</code></name>
+    <visual>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+</datum>
+
+<datum>
+    <heap>
+        <code>T</code>
+        <code>T</code>
+        <code>T</code>
+    </heap>
+    <visual>
+        <code></code>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+
+
+<datum>
+    <visual>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+<datum>
+    <heap>
+        <code>T</code>
+        <code>T</code>
+        <code>T</code>
+    </heap>
+    <visual>
+        <code></code>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+
+
+<datum>
+    <visual>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+<datum>
+    <heap>
+        <code>T</code>
+        <code>T</code>
+        <code>T</code>
+    </heap>
+    <visual>
+        <code></code>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+
+
+<datum>
+    <visual>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+<datum>
+    <heap>
+        <code>T</code>
+        <code>T</code>
+        <code>T</code>
+    </heap>
+    <visual>
+        <code></code>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+
+
+<datum>
+    <visual>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+<datum>
+    <heap>
+        <code>T</code>
+        <code>T</code>
+        <code>T</code>
+    </heap>
+    <visual>
+        <code></code>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+
+
+<datum>
+    <visual>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+<datum>
+    <heap>
+        <code>T</code>
+        <code>T</code>
+        <code>T</code>
+    </heap>
+    <visual>
+        <code></code>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+
+
+<datum>
+    <visual>
+        <code>T</code>
+        <code>T</code>
+    </visual>
+    <name>Blah</name>
+</datum>
+
+</div>
+
+{{ tablesep() }}
+
+
+<div class="header-blue">
+
+| Type | Local Memory | <div style="background-color:orange">Heap</div> |
+|--------|---- | ---------|
+| XXX | `ptr` | `T` |
+
+</div>
+
+
+---
+
 # Guides
 
 
