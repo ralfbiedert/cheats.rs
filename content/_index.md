@@ -630,7 +630,7 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
     <visual>
         <code>S</code>
     </visual>
-    <description style="position:absolute"><code>-127 ..= 127</code></description>
+    <description style="position:absolute"><code>-128 ..= 127</code></description>
     <description style="visibility:hidden;"><code>0 ..= 255</code></description>
 </datum>
 
@@ -700,8 +700,20 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 <br/>
 
 <datum>
-    <name><code>usize</code></name>
+    <name><code>char</code></name>
     <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+    </visual>
+    <description>Any UTF-8 <i>char</i>.</description>
+
+</datum>
+
+<datum>
+    <name><code>usize</code></name>
+    <visual class="sized">
         <code>_</code>
         <code>_</code>
         <code>_</code>
@@ -719,7 +731,7 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 
 <datum>
     <name><code>isize</code></name>
-    <visual>
+    <visual class="sized">
         <code>_</code>
         <code>_</code>
         <code>_</code>
@@ -771,15 +783,120 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
 </datum>
 
 
-### XXX
+### Basic Custom Types
+
+Basic types that can be defined by the user and their memory representation. The compiler might add additional padding under certain conditions.
 
 <datum>
     <name>Any type <code>T</code></name>
     <visual>
-       ← <code>T</code> →
+       <framed>← <code>T</code> → </framed>
     </visual>
-    <!-- <description>Memory layout depending on content, packing.</description> -->
 </datum>
+
+
+<datum>
+    <name><code>(A, B, C)</code></name>
+    <visual>
+       <framed><code>A</code></framed>
+       <framed style="width: 100px;"><code>B</code></framed>
+       <framed style="width: 50px;"><code>C</code></framed>
+    </visual>
+    <zoom>
+        Holds an A, B, C at once.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>[T; n]</code></name>
+    <visual>
+       <framed style="width: 30px;"><code>T</code></framed>
+       <framed style="width: 30px;"><code>T</code></framed>
+       <framed style="width: 30px;"><code>T</code></framed>
+       <span style="font-size:10px;">... n times</span>
+    </visual>
+    <zoom>
+        Only holds type T. Fixed size.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>[T]</code></name>
+    <visual>
+       <span style="font-size:10px;">...</span>
+       <framed style="width: 30px;"><code>T</code></framed>
+       <framed style="width: 30px;"><code>T</code></framed>
+       <framed style="width: 30px;"><code>T</code></framed>
+       <span style="font-size:10px;">... unspecified times</span>
+    </visual>
+    <zoom>
+        Is 'unsized', size not know at compile.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>enum E { A, B, C }</code></name>
+    <visual style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed>
+            <code>A</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed style="width: 100px;">
+            <code>B</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed style="width: 50px;">
+            <code>C</code>
+        </framed>
+    </visual>
+    <zoom>
+        Safely holds A or B or C.
+    </zoom>
+</datum>
+
+
+
+<datum>
+    <name><code>union { ... }</code></name>
+    <visual style="text-align: left;">
+        <framed>
+            <code>A</code>
+        </framed>
+    </visual>
+    <andor>and</andor>
+    <visual style="text-align: left;">
+        <framed style="width: 100px;">
+            <code>B</code>
+        </framed>
+    </visual>
+    <andor>and</andor>
+    <visual style="text-align: left;">
+        <framed style="width: 50px;">
+            <code>C</code>
+        </framed>
+    </visual>
+    <zoom>
+        Mushes A, B, C.
+    </zoom>
+</datum>
+
+
+
+
+
+
+### References & Pointers
+
 
 <datum>
     <name><code>&'a T</code></name>
@@ -788,8 +905,13 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
            <code>ptr</code><sub>4/8</sub>
         </ptr>
     </visual>
+    <memory-entry>
+        <memory class="any">
+            <code>T</code>
+        </memory>
+    </memory-entry>
     <zoom>
-        Exceptions below.
+        Target guaranteed.
     </zoom>
 </datum>
 
@@ -801,10 +923,113 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
            <code>ptr</code><sub>4/8</sub>
         </ptr>
     </visual>
+    <memory-entry>
+        <memory class="any">
+            <code>T</code>
+        </memory>
+    </memory-entry>
     <zoom>
-        Exceptions below.
+        Target guaranteed.
     </zoom>
 </datum>
+
+
+<datum>
+    <name><code>*const T</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <zoom>
+        No guarantees.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>*mut T</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <zoom>
+        No guarantees.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>&[T]</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <sized>
+            <code>len</code><sub>4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry class="double">
+        <memory class="any extrapadding" >
+            <visual>
+            <framed style="width: 30px;"><code>T</code></framed>
+            <framed style="width: 30px;"><code>T</code></framed>
+            <framed style="width: 30px;"><code>T</code></framed>
+            </visual>
+        </memory>
+    </memory-entry>
+</datum>
+
+
+
+<datum>
+    <name><code>&str</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <sized>
+            <code>len</code><sub>4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry class="double">
+        <memory class="any extrapadding">
+            <visual>
+            <code>___hello___</code>
+            </visual>
+        </memory>
+    </memory-entry>
+</datum>
+
+
+
+
+### Standard Library Types
+
+<datum>
+    <name><code>Option&lt;T&gt;</code></name>
+    <visual style="text-align: left;">
+        <pad><code>Tag</code></pad>
+    </visual>
+    <andor>or</andor>
+    <visual style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed style="width: 100px;">
+            <code>T</code>
+        </framed>
+    </visual>
+</datum>
+
+<datum>
+    <name><code>Option&lt;T&gt;</code></name>
+    <visual>
+        <framed style="width: 100px;">
+            <code>T</code>
+        </framed>
+    </visual>
+</datum>
+
 
 
 <datum>
@@ -813,230 +1038,22 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
-        <ptr>
-           <code>ptr</code><sub>4/8</sub>
-        </ptr>
     </visual>
-    <heap-entry>
-        <heap>
+    <memory-entry>
+        <memory class="heap">
             <code>T</code>
-        </heap>
-    </heap-entry>
-    <heap-entry>
-        <heap>
-            <code>T</code>
-        </heap>
-    </heap-entry>
-</datum>
-
-
-### XXX
-
-<datum>
-    <name><code>u8</code>,<code>i8</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-    </visual>
-    <zoom>
-        <bit>S</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-    </zoom>
-    <description>sadahj askjdha skjdhas </description>
+        </memory>
+    </memory-entry>
+    <description>If <code>T: Sized</code>, see exceptions.</description>
 </datum>
 
 
 <datum>
-    <name><code>u8</code>,<code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code></name>
+    <name><code>String</code></name>
     <visual>
-        <code>_</code>
+       ← <code>TODO</code> →
     </visual>
 </datum>
-
-<datum>
-    <name><code>u8</code>,<code>i8</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-    </visual>
-    <zoom>
-        <bit>S</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-        <bit>x</bit>
-    </zoom>
-    <description>sadahj askjdha skjdhas </description>
-</datum>
-
-
-
-<datum>
-    <name><code>Arc&lt;T&gt;</code></name>
-    <visual>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-</datum>
-
-<datum>
-    <heap>
-        <code>T</code>
-        <code>T</code>
-        <code>T</code>
-    </heap>
-    <visual>
-        <code></code>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-
-
-<datum>
-    <visual>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-<datum>
-    <heap>
-        <code>T</code>
-        <code>T</code>
-        <code>T</code>
-    </heap>
-    <visual>
-        <code></code>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-
-
-<datum>
-    <visual>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-<datum>
-    <heap>
-        <code>T</code>
-        <code>T</code>
-        <code>T</code>
-    </heap>
-    <visual>
-        <code></code>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-
-
-<datum>
-    <visual>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-<datum>
-    <heap>
-        <code>T</code>
-        <code>T</code>
-        <code>T</code>
-    </heap>
-    <visual>
-        <code></code>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-
-
-<datum>
-    <visual>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-<datum>
-    <heap>
-        <code>T</code>
-        <code>T</code>
-        <code>T</code>
-    </heap>
-    <visual>
-        <code></code>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-
-
-<datum>
-    <visual>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-<datum>
-    <heap>
-        <code>T</code>
-        <code>T</code>
-        <code>T</code>
-    </heap>
-    <visual>
-        <code></code>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-
-
-<datum>
-    <visual>
-        <code>T</code>
-        <code>T</code>
-    </visual>
-    <name>Blah</name>
-</datum>
-
-</div>
-
-{{ tablesep() }}
-
-
-<div class="header-blue">
-
-| Type | Local Memory | <div style="background-color:orange">Heap</div> |
-|--------|---- | ---------|
-| XXX | `ptr` | `T` |
-
-</div>
 
 
 ---
