@@ -545,32 +545,340 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 
 # Data
 
+Memory representations of common data types.
+
+
+### Integer Types
+
+Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Values depicted for little-endian architectures (e.g., x86-64).
+
 <div class="data">
+
+<datum>
+    <name><code>u8</code></name>
+    <visual>
+        <code>_</code>
+    </visual>
+    <description><code>0 ..= 255</code></description>
+</datum>
+
+<datum>
+    <name><code>u16</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+    </visual>
+    <description><code>0 ..= 65_535</code></description>
+</datum>
+
+<datum>
+    <name><code>u32</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+    </visual>
+    <description style="position:absolute"><code>0 ..= 4_294_967_295</code></description>
+</datum>
+
+<datum>
+    <name><code>u64</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+    </visual>
+    <description style="position:absolute"><code>0 ..= 18_446_744_073_709_551_615</code></description>
+</datum>
+
+<datum>
+    <name><code>u128</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+    </visual>
+    <description><code>0 ..= 170_141_183_460_469_231_731_687_303_715_884_105_728</code></description>
+</datum>
+
+<br/>
+
+<datum>
+    <name><code>i8</code></name>
+    <visual>
+        <code>S</code>
+    </visual>
+    <description style="position:absolute"><code>-127 ..= 127</code></description>
+    <description style="visibility:hidden;"><code>0 ..= 255</code></description>
+</datum>
+
+<datum>
+    <name><code>i16</code></name>
+    <visual>
+        <code>_</code>
+        <code>S</code>
+    </visual>
+    <description style="position:absolute; text-align: right;"><code>-32_768 ..=</code><br><code>32_767</code></description>
+    <description style="visibility:hidden;"><code>0 ..= 65_535</code></description>
+</datum>
+
+<datum>
+    <name><code>i32</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>S</code>
+    </visual>
+    <description style="position:absolute; text-align: right;"><code>-2_147_483_648 ..=</code><br><code>2_147_483_647</code></description>
+</datum>
+
+<datum>
+    <name><code>i64</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>S</code>
+    </visual>
+    <description style="position:absolute; text-align: right;"><code>-9_223_372_036_854_775_808 ..=</code><br><code>9_223_372_036_854_775_807</code></description>
+</datum>
+
+
+<datum>
+    <name><code>i128</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>S</code>
+    </visual>
+    <zoom>
+        With <code>S</code> being [<code>+- . . . . . . .</code>]
+    </zoom>
+    <description style="position:absolute; text-align: right;"><code>-170_141_183_460_469_231_731_687_303_715_884_105_728 ..=</code><br><code>170_141_183_460_469_231_731_687_303_715_884_105_727</code></description>
+</datum>
+
+<br/>
+
+<datum>
+    <name><code>usize</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code style="color: white">_</code>
+        <code style="color: white">_</code>
+        <code style="color: white">_</code>
+        <code style="color: white">_</code>
+    </visual>
+    <zoom>
+        Same as <code>ptr</code> on platform.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>isize</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code style="color: white">_</code>
+        <code style="color: white">_</code>
+        <code style="color: white">_</code>
+        <code style="color: white">S</code>
+    </visual>
+    <zoom>
+        Same as <code>ptr</code> on platform.
+    </zoom>
+</datum>
+
+
+
+### Float Types
+
+Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes, depending on context), and S data containing the sign bit. Values again depicted for little-endian architectures (e.g., x86-64).
+
+
+
+<datum>
+    <name><code>f32</code></name>
+    <visual>
+        <code>E</code>
+        <code>E</code>
+        <code>m</code>
+        <code>S</code>
+    </visual>
+</datum>
+
+
+<datum>
+    <name><code>f64</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>T</code>
+        <code>O</code>
+        <code>D</code>
+        <code>O</code>
+        <code>_</code>
+        <code>_</code>
+    </visual>
+    <zoom>
+        With <code>S</code> being [<code>+- . . . . . . .</code>]
+    </zoom>
+</datum>
+
+
+### XXX
+
+<datum>
+    <name>Any type <code>T</code></name>
+    <visual>
+       ← <code>T</code> →
+    </visual>
+    <!-- <description>Memory layout depending on content, packing.</description> -->
+</datum>
+
+<datum>
+    <name><code>&'a T</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <zoom>
+        Exceptions below.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>&'a mut T</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <zoom>
+        Exceptions below.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>Box&lt;T&gt;</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <heap-entry>
+        <heap>
+            <code>T</code>
+        </heap>
+    </heap-entry>
+    <heap-entry>
+        <heap>
+            <code>T</code>
+        </heap>
+    </heap-entry>
+</datum>
+
+
+### XXX
 
 <datum>
     <name><code>u8</code>,<code>i8</code></name>
     <visual>
-        <code></code>
-        <code>T</code>
-        <code>T</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
     </visual>
     <zoom>
         <bit>S</bit>
-        <bit>_</bit>
-        <bit>_</bit>
-        <bit>_</bit>
-        <bit>_</bit>
-        <bit>_</bit>
-        <bit>_</bit>
-        <bit>_</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+        <bit>x</bit>
     </zoom>
-    <heap>
-        <code>T</code>
-        <code>T</code>
-        <code>T</code>
-    </heap>
-
+    <description>sadahj askjdha skjdhas </description>
 </datum>
+
+
+<datum>
+    <name><code>u8</code>,<code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code></name>
+    <visual>
+        <code>_</code>
+    </visual>
+</datum>
+
+<datum>
+    <name><code>u8</code>,<code>i8</code></name>
+    <visual>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+        <code>_</code>
+    </visual>
+    <zoom>
+        <bit>S</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+        <bit>x</bit>
+    </zoom>
+    <description>sadahj askjdha skjdhas </description>
+</datum>
+
 
 
 <datum>

@@ -3,44 +3,89 @@ div.data {
 }
 
 datum {
-    display: inline;
+    display: inline-block;
     margin-right: 30px;
     border-collapse: collapse;
-
-    heap {
-        background-color: burlywood;
-        display: table-row;
-        padding: 5px;
-        margin: 10px;
-        font-size: 120%;
-        height: 50px;
-        vertical-align: middle;
-    }
+    vertical-align: top;
+    margin-bottom: 25px;
 
     visual {
+        text-align: center;
         background-color: salmon;
-        display: table-row;
+        display: block;
         padding: 5px;
-        margin: 10px;
         font-size: 120%;
-        height: 50px;
     }
 
     zoom {
         background-color: cornsilk;
-        display: table-row;
+        display: block;
         border-style: solid;
         border-width: 1px;
         border-color: black;
         position: relative;
-        width: 520px;
-        top: -10px;
+        text-align: center;
+        width: 106%;
+        left: -3%;
+        top: -2px;
         z-index: -100;
+        font-size: 12px;
+    }
+
+    heap-entry {
+        display: inline-block;
+        width: 100px;
+    }
+
+
+    heap {
+        background-color: navajowhite;
+        display: inline-block;
+        padding: 5px;
+        font-size: 120%;
+        text-align: center;
+        position: relative;
+        border-style: dashed;
+        border-width: 3px;
+        border-color: lightskyblue;
+        width: 80%;
+        left: 10%;
+        top: 5px;
+        z-index: 100;
+    }
+
+    heap::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -10px;
+        left: 49%;
+        border-style: solid;
+        height: 7px;
+        border-width: 1px;
+        border-color: gray;
+        z-index: -50;
+    }
+
+    heap::after {
+        content: "(heap)";
+        display: block;
+        position: absolute;
+        bottom: 0px;
+        right: 2px;
+        font-size: 9px;
+    }
+
+
+    description {
+        display: block;
+        word-wrap: break-word;
+        font-size: 9px;
     }
 
     name {
         text-align: left;
-        display: table-row;
+        display: block;
     }
 
     code {
@@ -49,6 +94,16 @@ datum {
         text-align: center !important;
         vertical-align: middle;
         text-shadow: 0em 0em !important;
+    }
+
+    ptr {
+        display: inline-block;
+        width: 100px;
+        background-color: lightskyblue;
+    }
+
+    sub {
+        font-size: 50%;
     }
 
     byte {
