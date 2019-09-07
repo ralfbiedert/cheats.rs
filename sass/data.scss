@@ -17,6 +17,11 @@ datum {
         font-size: 120%;
     }
 
+    visual.sized {
+        background-color: cyan;
+    }
+
+
     zoom {
         background-color: cornsilk;
         display: block;
@@ -32,14 +37,22 @@ datum {
         font-size: 12px;
     }
 
-    heap-entry {
+    memory-entry {
         display: inline-block;
         width: 100px;
     }
 
+    memory-entry.double {
+        width: 200px;
+        position:relative;
+        left:-40px;
+    }
 
-    heap {
-        background-color: navajowhite;
+    memory.extrapadding {
+        padding-bottom: 15px;
+    }
+
+    memory {
         display: inline-block;
         padding: 5px;
         font-size: 120%;
@@ -52,9 +65,18 @@ datum {
         left: 10%;
         top: 5px;
         z-index: 100;
+        margin-bottom: 10px;
     }
 
-    heap::before {
+    memory.heap {
+        background-color: navajowhite;
+    }
+
+    memory.any {
+        background-color: lightgray;
+    }
+
+    memory::before {
         content: "";
         display: block;
         position: absolute;
@@ -67,7 +89,16 @@ datum {
         z-index: -50;
     }
 
-    heap::after {
+    memory.any::after {
+        content: "(any)";
+        display: block;
+        position: absolute;
+        bottom: 0px;
+        right: 2px;
+        font-size: 9px;
+    }
+
+    memory.heap::after {
         content: "(heap)";
         display: block;
         position: absolute;
@@ -88,6 +119,24 @@ datum {
         display: block;
     }
 
+    pad {
+        background-color: lightgreen;
+    }
+
+    andor {
+        display: block;
+        text-align: center;
+        font-size: 10px;
+    }
+
+    framed {
+        display: inline-block;
+        border-style: solid;
+        border-width: 1px;
+        border-color: white;
+    }
+
+
     code {
         display: table-column;
         background-color: inherit !important;
@@ -101,6 +150,13 @@ datum {
         width: 100px;
         background-color: lightskyblue;
     }
+
+   sized {
+        background-color: cyan;
+        display: inline-block;
+        width: 100px;
+    }
+
 
     sub {
         font-size: 50%;
