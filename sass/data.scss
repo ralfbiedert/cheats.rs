@@ -39,6 +39,7 @@ datum {
 
     memory-entry {
         display: inline-block;
+        vertical-align: top;
         width: 100px;
     }
 
@@ -73,8 +74,13 @@ datum {
     }
 
     memory.any {
-        background-color: lightgray;
+        background-color: rgb(253, 236, 220);
     }
+
+    memory.static {
+        background-color: burlywood;
+    }
+
 
     memory::before {
         content: "";
@@ -90,7 +96,7 @@ datum {
     }
 
     memory.any::after {
-        content: "(any)";
+        content: "(any mem)";
         display: block;
         position: absolute;
         bottom: 0px;
@@ -106,6 +112,16 @@ datum {
         right: 2px;
         font-size: 9px;
     }
+
+    memory.static::after {
+        content: "(static)";
+        display: block;
+        position: absolute;
+        bottom: 0px;
+        right: 2px;
+        font-size: 9px;
+    }
+
 
 
     description {

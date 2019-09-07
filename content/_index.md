@@ -48,13 +48,25 @@ Language Constructs
 * [Comments](#comments)
 * [Miscellaneous](#miscellaneous)
 
+Misc
+* [Links & Services](#links-services)
+* [Printing & PDF](#printing-pdf)
+
+
 </div>
 
 
 <div class="column">
 
-Guides
+Data & Types
+* [Links & Services](#links-services)
+* [Printing & PDF](#printing-pdf)
+* [Printing & PDF](#printing-pdf)
+* [Printing & PDF](#printing-pdf)
+* [Printing & PDF](#printing-pdf)
 
+
+Guides
 * [Project Anatomy](#project-anatomy)
 * [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
@@ -64,9 +76,6 @@ Guides
 * [Formatting Strings](#formatting-strings)
 * [Tooling](#tooling)
 
-Misc
-* [Links & Services](#links-services)
-* [Printing & PDF](#printing-pdf)
 
 </div>
 
@@ -546,7 +555,7 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 
 ---
 
-# Data
+# Data & Types
 
 Memory representations of common data types.
 
@@ -897,6 +906,7 @@ Basic types that can be defined by the user and their memory representation. The
 
 ### References & Pointers
 
+References give safe access to another memory location. As can be seen below, lifetimes are not encoded at runtime. Pointers give unsafe access to other memory. There are no compile-time guarantees the pointer is valid.
 
 <datum>
     <name><code>&'a T</code></name>
@@ -910,9 +920,6 @@ Basic types that can be defined by the user and their memory representation. The
             <code>T</code>
         </memory>
     </memory-entry>
-    <zoom>
-        Target guaranteed.
-    </zoom>
 </datum>
 
 
@@ -928,9 +935,6 @@ Basic types that can be defined by the user and their memory representation. The
             <code>T</code>
         </memory>
     </memory-entry>
-    <zoom>
-        Target guaranteed.
-    </zoom>
 </datum>
 
 
@@ -960,8 +964,10 @@ Basic types that can be defined by the user and their memory representation. The
 </datum>
 
 
+Rust also has a number of special reference types that encode more than just an address. In particular:
+
 <datum>
-    <name><code>&[T]</code></name>
+    <name><code>&'a [T]</code></name>
     <visual>
         <ptr>
            <code>ptr</code><sub>4/8</sub>
@@ -971,12 +977,12 @@ Basic types that can be defined by the user and their memory representation. The
         </sized>
     </visual>
     <memory-entry class="double">
-        <memory class="any extrapadding" >
-            <visual>
-            <framed style="width: 30px;"><code>T</code></framed>
-            <framed style="width: 30px;"><code>T</code></framed>
-            <framed style="width: 30px;"><code>T</code></framed>
-            </visual>
+        <memory class="any" >
+            ...
+            <code>T</code>
+            <code>T</code>
+            <code>T</code>
+            ...
         </memory>
     </memory-entry>
 </datum>
@@ -984,7 +990,7 @@ Basic types that can be defined by the user and their memory representation. The
 
 
 <datum>
-    <name><code>&str</code></name>
+    <name><code>&'a str</code></name>
     <visual>
         <ptr>
            <code>ptr</code><sub>4/8</sub>
@@ -994,18 +1000,42 @@ Basic types that can be defined by the user and their memory representation. The
         </sized>
     </visual>
     <memory-entry class="double">
-        <memory class="any extrapadding">
-            <visual>
-            <code>___hello___</code>
-            </visual>
+        <memory class="any">
+            ...
+            <code>UTF-8</code>
+            ...
         </memory>
     </memory-entry>
 </datum>
 
+
+<datum>
+    <name><code>&'a dyn Trait</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <ptr>
+            <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <memory-entry>
+        <memory class="any">
+            <code>data</code>
+        </memory>
+    </memory-entry>
+    <memory-entry>
+        <memory class="static">
+            <code>vtable</code>
+        </memory>
+    </memory-entry>
+</datum>
 
 
 
 ### Standard Library Types
+
+Rust's standard library combines many of the above primitive types into useful types with special semantics:
 
 <datum>
     <name><code>Option&lt;T&gt;</code></name>
