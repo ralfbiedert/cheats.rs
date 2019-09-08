@@ -4,7 +4,7 @@ div.data {
 
 datum {
     display: inline-block;
-    margin-right: 30px;
+    margin-right: 40px;
     border-collapse: collapse;
     vertical-align: top;
     margin-bottom: 25px;
@@ -14,7 +14,7 @@ datum {
         background-color: salmon;
         display: block;
         padding: 5px;
-        font-size: 120%;
+        font-size: 110%;
     }
 
     visual.sized {
@@ -23,7 +23,7 @@ datum {
 
 
     zoom {
-        background-color: cornsilk;
+        background-color: #eee;
         display: block;
         border-style: solid;
         border-width: 1px;
