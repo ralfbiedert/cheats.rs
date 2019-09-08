@@ -961,7 +961,7 @@ References give safe access to another memory location. As can be seen below, li
 </datum>
 
 
-Rust also has a number of special reference types that encode more than just an address. In particular:
+Rust also has a number of special reference types that encode more than just an address, see below. The respective `&mut` version is identical and omitted:
 
 <datum>
     <name><code>&'a [T]</code></name>
