@@ -1,33 +1,79 @@
 
-div.data {
+
+datum.narrow {
+    margin-right: 20px;
 }
 
 datum {
     display: inline-block;
-    margin-right: 40px;
+    margin-right: 50px;
     border-collapse: collapse;
     vertical-align: top;
     margin-bottom: 25px;
 
     visual {
         text-align: center;
-        background-color: salmon;
+        // background-color: salmon;
+        background-color: white;
+        border-style: solid;
+        border-width: 1px;
+        border-color: lightgrey;
+        border-radius: 5px;
         display: block;
         padding: 5px;
         font-size: 110%;
     }
 
-    visual.sized {
+    .bytes {
+        background-color: lightgreen;
+    }
+
+    .sized {
         background-color: cyan;
     }
 
+    .float {
+        background-color: orchid;
+    }
+
+    .ptr {
+        background-color: lightskyblue;
+    }
+
+    .any {
+        background-color: salmon;
+    }
+
+
+    .enum {
+        background-color: lightgoldenrodyellow;
+    }
+
+    byte {
+        display: inline-block;
+        // background-color: mistyrose;
+        border-style: dashed;
+        border-width: 1px;
+        border-color: black;
+        border-radius: 5px;
+        width: 15px;
+    }
+
+    byte.sign::after {
+        content: "±";
+        // display: block;
+        position: relative;
+        top: -8px;
+        left: -3px;
+        font-size: 10px;
+    }
 
     zoom {
-        background-color: #eee;
+        background-color: #efefef;
         display: block;
         border-style: solid;
         border-width: 1px;
-        border-color: black;
+        border-color: gray;
         position: relative;
         text-align: center;
         width: 106%;
@@ -61,7 +107,7 @@ datum {
         position: relative;
         border-style: dashed;
         border-width: 3px;
-        border-color: lightskyblue;
+        border-color: salmon;
         width: 80%;
         left: 10%;
         top: 5px;
@@ -137,6 +183,9 @@ datum {
 
     pad {
         background-color: lightgreen;
+        border-style: dotted;
+        border-width: 1px;
+        border-color: black;
     }
 
     andor {
@@ -176,9 +225,5 @@ datum {
 
     sub {
         font-size: 50%;
-    }
-
-    byte {
-        display: inline;
     }
 }
