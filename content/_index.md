@@ -566,142 +566,142 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 
 <div class="data">
 
-<datum>
+<datum class="narrow">
     <name><code>u8</code></name>
-    <visual>
-        <code>_</code>
+    <visual class="bytes">
+        <byte><code></code></byte>
     </visual>
     <description><code>0 ..= 255</code></description>
 </datum>
 
-<datum>
+<datum class="narrow">
     <name><code>u16</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
+    <visual class="bytes">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
     </visual>
     <description><code>0 ..= 65_535</code></description>
 </datum>
 
-<datum>
+<datum class="narrow">
     <name><code>u32</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
+    <visual class="bytes">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
     </visual>
     <description style="position:absolute"><code>0 ..= 4_294_967_295</code></description>
 </datum>
 
-<datum>
+<datum class="narrow">
     <name><code>u64</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
+    <visual class="bytes">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
     </visual>
     <description style="position:absolute"><code>0 ..= 18_446_744_073_709_551_615</code></description>
 </datum>
 
-<datum>
+<datum class="narrow">
     <name><code>u128</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
+    <visual class="bytes">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
     </visual>
     <description><code>0 ..= 170_141_183_460_469_231_731_687_303_715_884_105_728</code></description>
 </datum>
 
 <br/>
 
-<datum>
+<datum class="narrow">
     <name><code>i8</code></name>
-    <visual>
-        <code>S</code>
+    <visual class="bytes">
+        <byte class="sign"><code></code></byte>
     </visual>
     <description style="position:absolute"><code>-128 ..= 127</code></description>
     <description style="visibility:hidden;"><code>0 ..= 255</code></description>
 </datum>
 
-<datum>
+<datum class="narrow">
     <name><code>i16</code></name>
-    <visual>
-        <code>_</code>
-        <code>S</code>
+    <visual class="bytes">
+        <byte><code></code></byte>
+        <byte class="sign"><code></code></byte>
     </visual>
     <description style="position:absolute; text-align: right;"><code>-32_768 ..=</code><br><code>32_767</code></description>
     <description style="visibility:hidden;"><code>0 ..= 65_535</code></description>
 </datum>
 
-<datum>
+<datum class="narrow">
     <name><code>i32</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>S</code>
+    <visual class="bytes">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte class="sign"><code></code></byte>
     </visual>
     <description style="position:absolute; text-align: right;"><code>-2_147_483_648 ..=</code><br><code>2_147_483_647</code></description>
 </datum>
 
-<datum>
+<datum class="narrow">
     <name><code>i64</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>S</code>
+    <visual class="bytes">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte class="sign"><code></code></byte>
     </visual>
     <description style="position:absolute; text-align: right;"><code>-9_223_372_036_854_775_808 ..=</code><br><code>9_223_372_036_854_775_807</code></description>
 </datum>
 
 
-<datum>
+<datum class="narrow">
     <name><code>i128</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>S</code>
+    <visual class="bytes">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte class="sign"><code></code></byte>
     </visual>
     <zoom>
-        With <code>S</code> being [<code>+- . . . . . . .</code>]
+        With ± being [<code>+- . . . . . . .</code>]
     </zoom>
     <description style="position:absolute; text-align: right;"><code>-170_141_183_460_469_231_731_687_303_715_884_105_728 ..=</code><br><code>170_141_183_460_469_231_731_687_303_715_884_105_727</code></description>
 </datum>
@@ -710,11 +710,11 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 
 <datum>
     <name><code>char</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
+    <visual class="bytes">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
     </visual>
     <description>Any UTF-8 <i>char</i>.</description>
 
@@ -723,14 +723,14 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 <datum>
     <name><code>usize</code></name>
     <visual class="sized">
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code style="color: white">_</code>
-        <code style="color: white">_</code>
-        <code style="color: white">_</code>
-        <code style="color: white">_</code>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
     </visual>
     <zoom>
         Same as <code>ptr</code> on platform.
@@ -741,14 +741,14 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 <datum>
     <name><code>isize</code></name>
     <visual class="sized">
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code>_</code>
-        <code style="color: white">_</code>
-        <code style="color: white">_</code>
-        <code style="color: white">_</code>
-        <code style="color: white">S</code>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
+        <byte class="sign" style="border-color: lightslategrey"><code></code></byte>
     </visual>
     <zoom>
         Same as <code>ptr</code> on platform.
@@ -765,140 +765,31 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
 
 <datum>
     <name><code>f32</code></name>
-    <visual>
-        <code>E</code>
-        <code>E</code>
-        <code>m</code>
-        <code>S</code>
+    <visual class="float">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte class="sign"><code></code></byte>
     </visual>
 </datum>
 
 
 <datum>
     <name><code>f64</code></name>
-    <visual>
-        <code>_</code>
-        <code>_</code>
-        <code>T</code>
-        <code>O</code>
-        <code>D</code>
-        <code>O</code>
-        <code>_</code>
-        <code>_</code>
+    <visual class="float">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code>T</code></byte>
+        <byte><code>O</code></byte>
+        <byte><code>D</code></byte>
+        <byte><code>O</code></byte>
+        <byte><code></code></byte>
+        <byte class="sign"><code></code></byte>
     </visual>
     <zoom>
         With <code>S</code> being [<code>+- . . . . . . .</code>]
     </zoom>
 </datum>
-
-
-### Basic Custom Types
-
-Basic types that can be defined by the user and their memory representation. The compiler might add additional padding under certain conditions.
-
-<datum>
-    <name>Any type <code>T</code></name>
-    <visual>
-       <framed>← <code>T</code> → </framed>
-    </visual>
-</datum>
-
-
-<datum>
-    <name><code>(A, B, C)</code></name>
-    <visual>
-       <framed><code>A</code></framed>
-       <framed style="width: 100px;"><code>B</code></framed>
-       <framed style="width: 50px;"><code>C</code></framed>
-    </visual>
-    <zoom>
-        Holds an A, B, C at once.
-    </zoom>
-</datum>
-
-
-<datum>
-    <name><code>[T; n]</code></name>
-    <visual>
-       <framed style="width: 30px;"><code>T</code></framed>
-       <framed style="width: 30px;"><code>T</code></framed>
-       <framed style="width: 30px;"><code>T</code></framed>
-       <span style="font-size:10px;">... n times</span>
-    </visual>
-    <zoom>
-        Only holds type T. Fixed size.
-    </zoom>
-</datum>
-
-
-<datum>
-    <name><code>[T]</code></name>
-    <visual>
-       <span style="font-size:10px;">...</span>
-       <framed style="width: 30px;"><code>T</code></framed>
-       <framed style="width: 30px;"><code>T</code></framed>
-       <framed style="width: 30px;"><code>T</code></framed>
-       <span style="font-size:10px;">... unspecified times</span>
-    </visual>
-    <zoom>
-        Is 'unsized', size not know at compile.
-    </zoom>
-</datum>
-
-
-<datum>
-    <name><code>enum E { A, B, C }</code></name>
-    <visual style="text-align: left;">
-        <pad><code>Tag</code></pad>
-        <framed>
-            <code>A</code>
-        </framed>
-    </visual>
-    <andor>or</andor>
-    <visual style="text-align: left;">
-        <pad><code>Tag</code></pad>
-        <framed style="width: 100px;">
-            <code>B</code>
-        </framed>
-    </visual>
-    <andor>or</andor>
-    <visual style="text-align: left;">
-        <pad><code>Tag</code></pad>
-        <framed style="width: 50px;">
-            <code>C</code>
-        </framed>
-    </visual>
-    <zoom>
-        Safely holds A or B or C.
-    </zoom>
-</datum>
-
-
-
-<datum>
-    <name><code>union { ... }</code></name>
-    <visual style="text-align: left;">
-        <framed>
-            <code>A</code>
-        </framed>
-    </visual>
-    <andor>and</andor>
-    <visual style="text-align: left;">
-        <framed style="width: 100px;">
-            <code>B</code>
-        </framed>
-    </visual>
-    <andor>and</andor>
-    <visual style="text-align: left;">
-        <framed style="width: 50px;">
-            <code>C</code>
-        </framed>
-    </visual>
-    <zoom>
-        Mushes A, B, C.
-    </zoom>
-</datum>
-
 
 
 
@@ -910,10 +801,8 @@ References give safe access to another memory location. As can be seen below, li
 
 <datum>
     <name><code>&'a T</code></name>
-    <visual>
-        <ptr>
+    <visual class="ptr">
            <code>ptr</code><sub>4/8</sub>
-        </ptr>
     </visual>
     <memory-entry>
         <memory class="any">
@@ -925,10 +814,8 @@ References give safe access to another memory location. As can be seen below, li
 
 <datum>
     <name><code>&'a mut T</code></name>
-    <visual>
-        <ptr>
-           <code>ptr</code><sub>4/8</sub>
-        </ptr>
+    <visual class="ptr">
+        <code>ptr</code><sub>4/8</sub>
     </visual>
     <memory-entry>
         <memory class="any">
@@ -940,10 +827,8 @@ References give safe access to another memory location. As can be seen below, li
 
 <datum>
     <name><code>*const T</code></name>
-    <visual>
-        <ptr>
-           <code>ptr</code><sub>4/8</sub>
-        </ptr>
+    <visual class="ptr">
+        <code>ptr</code><sub>4/8</sub>
     </visual>
     <zoom>
         No guarantees.
@@ -953,10 +838,8 @@ References give safe access to another memory location. As can be seen below, li
 
 <datum>
     <name><code>*mut T</code></name>
-    <visual>
-        <ptr>
-           <code>ptr</code><sub>4/8</sub>
-        </ptr>
+    <visual class="ptr">
+        <code>ptr</code><sub>4/8</sub>
     </visual>
     <zoom>
         No guarantees.
@@ -1032,6 +915,117 @@ Rust also has a number of special reference types that encode more than just an 
 </datum>
 
 
+### Custom & Compound Types
+
+Basic types that can be defined by the user and their memory representation. The compiler might add additional padding under certain conditions.
+
+<datum>
+    <name>Any type <code>T</code></name>
+    <visual>
+       <framed class="any">← <code>T</code> → </framed>
+    </visual>
+</datum>
+
+
+<datum>
+    <name><code>(A, B, C)</code></name>
+    <visual>
+       <framed class="any"><code>A</code></framed>
+       <framed class="any" style="width: 100px;"><code>B</code></framed>
+       <framed class="any" style="width: 50px;"><code>C</code></framed>
+    </visual>
+    <zoom>
+        Holds an A, B, C at once.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>[T; n]</code></name>
+    <visual>
+       <framed class="any" style="width: 30px;"><code>T</code></framed>
+       <framed class="any" style="width: 30px;"><code>T</code></framed>
+       <framed class="any" style="width: 30px;"><code>T</code></framed>
+       <span style="font-size:10px;">... n times</span>
+    </visual>
+    <zoom>
+        Only holds type T. Fixed size.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>[T]</code></name>
+    <visual>
+       <span style="font-size:10px;">...</span>
+       <framed class="any" style="width: 30px;"><code>T</code></framed>
+       <framed class="any" style="width: 30px;"><code>T</code></framed>
+       <framed class="any" style="width: 30px;"><code>T</code></framed>
+       <span style="font-size:10px;">... unspecified times</span>
+    </visual>
+    <zoom>
+        Is 'unsized', size not know at compile.
+    </zoom>
+</datum>
+
+
+<datum>
+    <name><code>enum E { A, B, C }</code></name>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any">
+            <code>A</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 100px;">
+            <code>B</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 50px;">
+            <code>C</code>
+        </framed>
+    </visual>
+    <zoom>
+        Safely holds A or B or C.
+    </zoom>
+</datum>
+
+
+
+<datum>
+    <name><code>union { ... }</code></name>
+    <visual style="text-align: left;">
+        <framed class="any">
+            <code>A</code>
+        </framed>
+    </visual>
+    <andor>and</andor>
+    <visual style="text-align: left;">
+        <framed class="any" style="width: 100px;">
+            <code>B</code>
+        </framed>
+    </visual>
+    <andor>and</andor>
+    <visual style="text-align: left;">
+        <framed class="any" style="width: 50px;">
+            <code>C</code>
+        </framed>
+    </visual>
+    <zoom>
+        Mushes A, B, C.
+    </zoom>
+</datum>
+
+
+
+
+
 
 ### Standard Library Types
 
@@ -1039,13 +1033,13 @@ Rust's standard library combines many of the above primitive types into useful t
 
 <datum>
     <name><code>Option&lt;T&gt;</code></name>
-    <visual style="text-align: left;">
+    <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
     </visual>
     <andor>or</andor>
-    <visual style="text-align: left;">
+    <visual class="enum">
         <pad><code>Tag</code></pad>
-        <framed style="width: 100px;">
+        <framed class="any" style="width: 100px;">
             <code>T</code>
         </framed>
     </visual>
@@ -1053,8 +1047,8 @@ Rust's standard library combines many of the above primitive types into useful t
 
 <datum>
     <name><code>Option&lt;T&gt;</code></name>
-    <visual>
-        <framed style="width: 100px;">
+    <visual class="enum">
+        <framed class="any" style="width: 100px;">
             <code>T</code>
         </framed>
     </visual>
