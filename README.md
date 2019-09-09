@@ -48,6 +48,7 @@ Takes additional inspiration from:
 * [The Book](https://doc.rust-lang.org/stable/book/) (some tables)
 * [Idiomatic Rust Libraries](https://killercup.github.io/rustfest-idiomatic-libs/#/) (Idiomatic Rust)
 * [Ferris](https://rustacean.net/) (Rust mascot by Karen Rustad Tölva)
+* [Rust container cheat sheet](https://docs.google.com/presentation/d/1q-c7UAyrUlM-eZyTo1pd8SZ0qwA_wYxmPZVOQkoDmH4/edit#slide=id.p) (For data layout; Raph Levien)
 
 
 
