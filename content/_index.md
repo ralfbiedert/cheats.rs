@@ -889,9 +889,6 @@ Basic types that can be defined by the user. The compiler might add additional p
        <framed class="any t"><code>T</code></framed>
        <note>... n times</note>
     </visual>
-    <zoom>
-        Only holds type T. Fixed size.
-    </zoom>
 </datum>
 
 
@@ -905,11 +902,10 @@ Basic types that can be defined by the user. The compiler might add additional p
        <framed class="any t"><code>T</code></framed>
        <note>... unspecified times</note>
     </visual>
-    <zoom>
-        Is 'unsized', size not know at compile.
-    </zoom>
 </datum>
 
+
+<br/>
 
 <!-- NEW ENTRY -->
 <datum>
@@ -1031,6 +1027,9 @@ References give safe access to another memory location. As can be seen below, li
 
 Rust also has a number of special reference types that encode more than just an address, see below. The respective `&mut` version is identical and omitted:
 
+
+<div style="padding-left:20px;">
+
 <!-- NEW ENTRY -->
 <datum style="margin-right:30px;">
     <name><code>&'a [T]</code></name>
@@ -1074,7 +1073,6 @@ Rust also has a number of special reference types that encode more than just an 
             <byte class="bytes"><code>8</code></byte>
             ...
         </memory>
-        <zoom>UTF-8 <b>bytes</b>, <i>not</i> chars!</zoom>
     </memory-entry>
 </datum>
 
@@ -1102,7 +1100,7 @@ Rust also has a number of special reference types that encode more than just an 
     </memory-entry>
 </datum>
 
-
+</div>
 
 
 ## Standard Library Types
@@ -1210,6 +1208,7 @@ Some common types:
 
 These dynamic collections grow when needed and are backed by the heap:
 
+<div style="padding-left:20px;">
 
 <!-- NEW ENTRY -->
 <datum>
@@ -1270,6 +1269,7 @@ These dynamic collections grow when needed and are backed by the heap:
     </memory-entry>
 </datum>
 
+</div>
 
 {{ tablesep() }}
 
