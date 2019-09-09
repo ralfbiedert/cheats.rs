@@ -559,10 +559,12 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 
 Memory representations of common data types.
 
+> This section is work in progress. Feedback very welcome (please open issue or PR).
+
 
 ## Integer Types
 
-Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Values depicted for little-endian architectures (e.g., x86-64).
+Memory representations are depicted for little-endian architectures (e.g., x86-64).
 
 
 <!-- NEW ENTRY -->
@@ -783,7 +785,7 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 
 ## Float Types
 
-Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes, depending on context), and S data containing the sign bit. Values again depicted for little-endian architectures (e.g., x86-64).
+Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes, depending on context), and S data containing the sign bit (TODO). Values again depicted for little-endian architectures (e.g., x86-64).
 
 
 
