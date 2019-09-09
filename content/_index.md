@@ -59,7 +59,7 @@ Misc
 <div class="column">
 
 Data & Types
-* [Integer Type](#integer-type)
+* [Integer Type](#integer-types)
 * [Float Types](#float-types)
 * [Custom Types](#custom-types)
 * [References & Pointers](#references-pointers-2)
