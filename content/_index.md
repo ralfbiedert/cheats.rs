@@ -1851,6 +1851,7 @@ They often require unstable and are subject to break.
 | {{ tab() }} `cargo rm <crate>` | Remove `<crate>` from your `Cargo.toml`.  |
 | {{ tab() }} `cargo upgrade <crate>` | Upgrade the version of `<crate>` to the latest.  |
 | `cargo flamegraph` | Visualize CPU time (`cargo install flamegraph`). {{ link(url = "https://github.com/ferrous-systems/flamegraph") }} {{ note( note="OSX, Linux only") }} |
+| `cargo cache` | Show statistics on or clean the local download cache of cargo. {{ link(url = "https://github.com/matthiaskrgr/cargo-cache") }} |
 
 </div>
 
