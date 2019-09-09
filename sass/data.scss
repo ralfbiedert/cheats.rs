@@ -1,7 +1,7 @@
 
 
 datum.narrow {
-    margin-right: 20px;
+    margin-right: 17px;
 }
 
 datum {
@@ -11,13 +11,22 @@ datum {
     vertical-align: top;
     margin-bottom: 25px;
 
+    .nogrow {
+        position: absolute;
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
+
+
     visual {
         text-align: center;
         // background-color: salmon;
         background-color: white;
         border-style: solid;
         border-width: 1px;
-        border-color: lightgrey;
+        border-color: darkgray;
         border-radius: 5px;
         display: block;
         padding: 5px;
@@ -44,9 +53,36 @@ datum {
         background-color: salmon;
     }
 
+    .cell {
+        background-color: gold;
+    }
+
+    .celled {
+        // background-color: gold;
+        border-style: solid;
+        box-sizing: border-box;
+        border-width: 4px;
+        border-color: gold;
+        // box-shadow:0px 0px 0px 4px inset gold;
+    }
 
     .enum {
         background-color: lightgoldenrodyellow;
+    }
+
+    .t {
+        background-color: salmon;
+        width: 30px;
+    }
+
+    .unsized::before {
+        content: " ←";
+        padding-left: 10px;
+    }
+
+    .unsized::after {
+        content: "→ ";
+        padding-right: 10px;
     }
 
     byte {
@@ -57,6 +93,7 @@ datum {
         border-color: black;
         border-radius: 5px;
         width: 15px;
+        height: 30px;
     }
 
     byte.sign::after {
@@ -102,12 +139,13 @@ datum {
     memory {
         display: inline-block;
         padding: 5px;
+        padding-bottom: 12px;
         font-size: 120%;
         text-align: center;
         position: relative;
         border-style: dashed;
-        border-width: 3px;
-        border-color: salmon;
+        border-width: 1px;
+        border-color: gray;
         width: 80%;
         left: 10%;
         top: 5px;
@@ -119,7 +157,7 @@ datum {
         background-color: navajowhite;
     }
 
-    memory.any {
+    memory.anymem {
         background-color: rgb(253, 236, 220);
     }
 
@@ -141,7 +179,7 @@ datum {
         z-index: -50;
     }
 
-    memory.any::after {
+    memory.anymem::after {
         content: "(any mem)";
         display: block;
         position: absolute;
@@ -176,6 +214,7 @@ datum {
         font-size: 9px;
     }
 
+
     name {
         text-align: left;
         display: block;
@@ -198,7 +237,7 @@ datum {
         display: inline-block;
         border-style: solid;
         border-width: 1px;
-        border-color: white;
+        border-color: black;
     }
 
 
@@ -214,6 +253,14 @@ datum {
         display: inline-block;
         width: 100px;
         background-color: lightskyblue;
+    }
+
+    .unsafe {
+        position: relative;
+        top: -3px;
+        border-style: solid;
+        border-width: 3px;
+        border-color: red;
     }
 
    sized {
