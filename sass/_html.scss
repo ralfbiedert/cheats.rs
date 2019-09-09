@@ -7,12 +7,15 @@
 body,
 html {
     height: 100%;
-}
+    overflow: hidden;
+    overflow-y: auto;
 
+}
 body {
     text-rendering: optimizeLegibility;
     font-family: "Open Sans", sans-serif;
 }
+
 
 h1,
 h2 {
