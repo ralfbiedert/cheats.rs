@@ -557,7 +557,7 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 Memory representations of common data types.
 
 
-### Integer Types
+## Integer Types
 
 Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Values depicted for little-endian architectures (e.g., x86-64).
 
@@ -780,7 +780,7 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 
 
 
-### Float Types
+## Float Types
 
 Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes, depending on context), and S data containing the sign bit. Values again depicted for little-endian architectures (e.g., x86-64).
 
@@ -820,7 +820,135 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
 
 
 
-### References & Pointers
+## Custom & Compound Types
+
+Basic types that can be defined by the user and their memory representation. The compiler might add additional padding under certain conditions.
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name class="nogrow"><code>T: Sized</code></name>
+    <name class="hidden">x</name>
+    <visual>
+       <framed class="any t"><code>T</code></framed>
+    </visual>
+    <!-- <description><code>T : Sized</code></description> -->
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>T: !Sized</code></name>
+    <visual>
+       <framed class="any unsized"><code>T</code></framed>
+    </visual>
+    <!-- <description><code>T : !Sized</code>, size not<br> known at compile.</description> -->
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>(A, B, C)</code></name>
+    <visual>
+       <framed class="any"><code>A</code></framed>
+       <framed class="any" style="width: 100px;"><code>B</code></framed>
+       <framed class="any" style="width: 50px;"><code>C</code></framed>
+    </visual>
+    <zoom>
+        Holds an A, B, C at once.
+    </zoom>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>[T; n]</code></name>
+    <visual>
+       <framed class="any t"><code>T</code></framed>
+       <framed class="any t"><code>T</code></framed>
+       <framed class="any t"><code>T</code></framed>
+       <note>... n times</note>
+    </visual>
+    <zoom>
+        Only holds type T. Fixed size.
+    </zoom>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>[T]</code></name>
+    <visual>
+       <note>...</note>
+       <framed class="any t"><code>T</code></framed>
+       <framed class="any t"><code>T</code></framed>
+       <framed class="any t"><code>T</code></framed>
+       <note>... unspecified times</note>
+    </visual>
+    <zoom>
+        Is 'unsized', size not know at compile.
+    </zoom>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>enum E { A, B, C }</code></name>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any">
+            <code>A</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 100px;">
+            <code>B</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 50px;">
+            <code>C</code>
+        </framed>
+    </visual>
+    <zoom>
+        Safely holds A or B or C.
+    </zoom>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>union { ... }</code></name>
+    <visual style="text-align: left;">
+        <framed class="any">
+            <code>A</code>
+        </framed>
+    </visual>
+    <andor>and</andor>
+    <visual style="text-align: left;">
+        <framed class="any" style="width: 100px;">
+            <code>B</code>
+        </framed>
+    </visual>
+    <andor>and</andor>
+    <visual style="text-align: left;">
+        <framed class="any" style="width: 50px;">
+            <code>C</code>
+        </framed>
+    </visual>
+    <zoom>
+        Mushes A, B, C.
+    </zoom>
+</datum>
+
+
+
+
+## References & Pointers
 
 References give safe access to another memory location. As can be seen below, lifetimes are not encoded at runtime. Pointers give unsafe access to other memory.
 
@@ -832,7 +960,7 @@ References give safe access to another memory location. As can be seen below, li
     </visual>
     <memory-entry>
         <memory class="anymem">
-            <framed class="any t"><code>T</code></framed>
+            <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
     <description>During <code>'a</code> any 'mem' <br/> this targets
@@ -848,7 +976,7 @@ References give safe access to another memory location. As can be seen below, li
     </visual>
     <memory-entry>
         <memory class="anymem">
-            <framed class="any t"><code>T</code></framed>
+            <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
     <description>Same, but location <br/> 'mem' may not be<br/> aliased.</description>
@@ -917,11 +1045,11 @@ Rust also has a number of special reference types that encode more than just an 
     <memory-entry class="double">
         <memory class="anymem">
             ...
-                <byte class="bytes"><code>U</code></byte>
-                <byte class="bytes"><code>T</code></byte>
-                <byte class="bytes"><code>F</code></byte>
-                <byte class="bytes"><code>-</code></byte>
-                <byte class="bytes"><code>8</code></byte>
+            <byte class="bytes"><code>U</code></byte>
+            <byte class="bytes"><code>T</code></byte>
+            <byte class="bytes"><code>F</code></byte>
+            <byte class="bytes"><code>-</code></byte>
+            <byte class="bytes"><code>8</code></byte>
             ...
         </memory>
         <zoom>UTF-8 bytes, <b>NOT</b> chars!</zoom>
@@ -953,140 +1081,11 @@ Rust also has a number of special reference types that encode more than just an 
 </datum>
 
 
-### Custom & Compound Types
-
-Basic types that can be defined by the user and their memory representation. The compiler might add additional padding under certain conditions.
 
 
-<!-- NEW ENTRY -->
-<datum>
-    <name class="nogrow">Any type <code>T</code></name>
-    <name class="hidden">x</name>
-    <visual>
-       <framed class="any t"><code>T</code></framed>
-    </visual>
-    <description><code>T : Sized</code></description>
-</datum>
+## Standard Library Types
 
-
-<!-- NEW ENTRY -->
-<datum>
-    <name>Any type <code>T</code></name>
-    <visual>
-       <framed class="any unsized"><code>T</code></framed>
-    </visual>
-    <description><code>T : !Sized</code>, size not<br> known at compile.</description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>(A, B, C)</code></name>
-    <visual>
-       <framed class="any"><code>A</code></framed>
-       <framed class="any" style="width: 100px;"><code>B</code></framed>
-       <framed class="any" style="width: 50px;"><code>C</code></framed>
-    </visual>
-    <zoom>
-        Holds an A, B, C at once.
-    </zoom>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>[T; n]</code></name>
-    <visual>
-       <framed class="any t"><code>T</code></framed>
-       <framed class="any t"><code>T</code></framed>
-       <framed class="any t"><code>T</code></framed>
-       <span style="font-size:10px;">... n times</span>
-    </visual>
-    <zoom>
-        Only holds type T. Fixed size.
-    </zoom>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>[T]</code></name>
-    <visual>
-       <span style="font-size:10px;">...</span>
-       <framed class="any t"><code>T</code></framed>
-       <framed class="any t"><code>T</code></framed>
-       <framed class="any t"><code>T</code></framed>
-       <span style="font-size:10px;">... unspecified times</span>
-    </visual>
-    <zoom>
-        Is 'unsized', size not know at compile.
-    </zoom>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>enum E { A, B, C }</code></name>
-    <visual class="enum" style="text-align: left;">
-        <pad><code>Tag</code></pad>
-        <framed class="any">
-            <code>A</code>
-        </framed>
-    </visual>
-    <andor>or</andor>
-    <visual class="enum" style="text-align: left;">
-        <pad><code>Tag</code></pad>
-        <framed class="any" style="width: 100px;">
-            <code>B</code>
-        </framed>
-    </visual>
-    <andor>or</andor>
-    <visual class="enum" style="text-align: left;">
-        <pad><code>Tag</code></pad>
-        <framed class="any" style="width: 50px;">
-            <code>C</code>
-        </framed>
-    </visual>
-    <zoom>
-        Safely holds A or B or C.
-    </zoom>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>union { ... }</code></name>
-    <visual style="text-align: left;">
-        <framed class="any">
-            <code>A</code>
-        </framed>
-    </visual>
-    <andor>and</andor>
-    <visual style="text-align: left;">
-        <framed class="any" style="width: 100px;">
-            <code>B</code>
-        </framed>
-    </visual>
-    <andor>and</andor>
-    <visual style="text-align: left;">
-        <framed class="any" style="width: 50px;">
-            <code>C</code>
-        </framed>
-    </visual>
-    <zoom>
-        Mushes A, B, C.
-    </zoom>
-</datum>
-
-
-
-
-
-
-### Standard Library Types
-
-Rust's standard library combines many of the above primitive types into useful types with special semantics:
-
+Rust's standard library combines many of the above primitive types into useful types with special semantics.
 
 <!-- NEW ENTRY -->
 <datum>
@@ -1100,7 +1099,7 @@ Rust's standard library combines many of the above primitive types into useful t
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>Cell<T></code></name>
+    <name><code>Cell&lt;T&gt;</code></name>
     <visual>
            <framed class="any unsized celled"><code>T</code></framed>
     </visual>
@@ -1109,11 +1108,42 @@ Rust's standard library combines many of the above primitive types into useful t
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>RefCell<T></code></name>
+    <name><code>RefCell&lt;T&gt;</code></name>
     <visual>
         <framed class="any celled"><code>Flag</code></framed>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
+</datum>
+
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>AtomicUsize</code></name>
+    <visual class="atomic">
+        <ptr class="celled sized">
+            <code>usize</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <description>Other atomic similarly.</description>
+</datum>
+
+
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>Box&lt;T&gt;</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <memory-entry>
+        <memory class="heap">
+        <framed class="any unsized"><code>T</code></framed>
+        </memory>
+    </memory-entry>
 </datum>
 
 
@@ -1130,33 +1160,136 @@ Rust's standard library combines many of the above primitive types into useful t
             <code>T</code>
         </framed>
     </visual>
-    <description>Tag may be omitted for certain T.</description>
+    <description>Tag may be omitted for <br> certain T.</description>
 </datum>
+
+
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>Box&lt;T&gt;</code></name>
-    <visual>
+    <name><code>Result&lt;T, E&gt;</code></name>
+    <visual class="enum">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 100px;">
+            <code>E</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 100px;">
+            <code>T</code>
+        </framed>
+    </visual>
+</datum>
+
+<br/>
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>Vec&lt;T&gt;</code></name>
+    <visual class="simplified">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
+        <sized>
+            <code>capacity</code><sub>4/8</sub>
+        </sized>
+        <sized>
+            <code>len</code><sub>4/8</sub>
+        </sized>
     </visual>
-    <memory-entry>
+    <memory-entry class="double">
         <memory class="heap">
-            <code>T</code>
+            <framed class="any t"><code>T</code></framed>
+            <framed class="any t"><code>T</code></framed>
+            <note>... len</note>
+            <br>
+            <note>← Capacity →</note>
         </memory>
     </memory-entry>
-    <description>If <code>T: Sized</code>, see exceptions.</description>
 </datum>
+
 
 
 <!-- NEW ENTRY -->
 <datum>
     <name><code>String</code></name>
-    <visual>
-       ← <code>TODO</code> →
+    <visual class="simplified">
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <sized>
+            <code>capacity</code><sub>4/8</sub>
+        </sized>
+        <sized>
+            <code>len</code><sub>4/8</sub>
+        </sized>
     </visual>
+    <memory-entry class="double">
+        <memory class="heap">
+            <byte class="bytes"><code>U</code></byte>
+            <byte class="bytes"><code>T</code></byte>
+            <byte class="bytes"><code>F</code></byte>
+            <byte class="bytes"><code>-</code></byte>
+            <byte class="bytes"><code>8</code></byte>
+            <note>... len</note>
+            <br>
+            <note>← Capacity →</note>
+        </memory>
+    </memory-entry>
 </datum>
+
+<br/>
+
+<!-- NEW ENTRY -->
+<datum class="quad">
+    <name><code>Rc&lt;T&gt;</code></name>
+    <visual class="simplified">
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <div style="position:absolute">
+        <memory-entry class="quad">
+            <memory class="heap">
+                <sized class="celled"><code>strong</code><sub>4/8</sub></sized></framed>
+                <sized class="celled"><code>weak</code><sub>4/8</sub></sized></framed>
+                <framed class="any unsized"><code>T</code></framed>
+            </memory>
+        </memory-entry>
+    </div>
+    <div style="width: 20px; height: 40px;">&nbsp;</div>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum class="quad">
+    <name><code>Arc&lt;T&gt;</code></name>
+    <visual class="simplified">
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <div style="position:absolute">
+        <memory-entry class="quad">
+            <memory class="heap">
+                <sized class="atomic"><code>strong</code><sub>4/8</sub></sized></framed>
+                <sized class="atomic"><code>weak</code><sub>4/8</sub></sized></framed>
+                <framed class="any unsized"><code>T</code></framed>
+            </memory>
+        </memory-entry>
+    </div>
+    <div style="width: 20px; height: 40px;">&nbsp;</div>
+</datum>
+
+
+
+
+{{ tablesep() }}
+
+<sup>*</sup> Some of the types have been slightly simplified for better clarity.
 
 
 ---
