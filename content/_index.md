@@ -680,7 +680,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum class="narrow">
+<datum class="narrow extrabottom">
     <name><code>i64</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
@@ -697,7 +697,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum class="narrow">
+<datum class="narrow extrabottom">
     <name><code>i128</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
@@ -1214,7 +1214,8 @@ These dynamic collections grow when needed and are backed by the heap:
 <!-- NEW ENTRY -->
 <datum>
     <name><code>Vec&lt;T&gt;</code></name>
-    <visual class="simplified">
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual class="simplified" style="width: 330px">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1242,7 +1243,8 @@ These dynamic collections grow when needed and are backed by the heap:
 <!-- NEW ENTRY -->
 <datum>
     <name><code>String</code></name>
-    <visual class="simplified">
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual class="simplified" style="width: 330px">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1282,7 +1284,7 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
            <code>ptr</code><sub>4/8</sub>
         </ptr>
     </visual>
-    <div style="position:absolute">
+    <div style="position:absolute; width: 10px;">
         <memory-entry class="quad">
             <memory class="heap">
                 <sized class="celled"><code>strong</code><sub>4/8</sub></sized>
@@ -1303,7 +1305,7 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
            <code>ptr</code><sub>4/8</sub>
         </ptr>
     </visual>
-    <div style="position:absolute">
+    <div style="position:absolute; width: 10px;">
         <memory-entry class="quad">
             <memory class="heap">
                 <sized class="atomic"><code>strong</code><sub>4/8</sub></sized>
