@@ -564,8 +564,6 @@ Memory representations of common data types.
 
 Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Values depicted for little-endian architectures (e.g., x86-64).
 
-<div class="data">
-
 
 <!-- NEW ENTRY -->
 <datum class="narrow">
