@@ -566,6 +566,8 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 
 <div class="data">
 
+
+<!-- NEW ENTRY -->
 <datum class="narrow">
     <name><code>u8</code></name>
     <visual class="bytes">
@@ -574,6 +576,8 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
     <description><code>0 ..= 255</code></description>
 </datum>
 
+
+<!-- NEW ENTRY -->
 <datum class="narrow">
     <name><code>u16</code></name>
     <visual class="bytes">
@@ -583,6 +587,8 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
     <description><code>0 ..= 65_535</code></description>
 </datum>
 
+
+<!-- NEW ENTRY -->
 <datum class="narrow">
     <name><code>u32</code></name>
     <visual class="bytes">
@@ -591,9 +597,11 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
         <byte><code></code></byte>
         <byte><code></code></byte>
     </visual>
-    <description style="position:absolute"><code>0 ..= 4_294_967_295</code></description>
+    <description class="nogrow"><code>0 ..= 4_294_967_295</code></description>
 </datum>
 
+
+<!-- NEW ENTRY -->
 <datum class="narrow">
     <name><code>u64</code></name>
     <visual class="bytes">
@@ -606,9 +614,11 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
         <byte><code></code></byte>
         <byte><code></code></byte>
     </visual>
-    <description style="position:absolute"><code>0 ..= 18_446_744_073_709_551_615</code></description>
+    <description class="nogrow"><code>0 ..= 18_446_744_073_709_551_615</code></description>
 </datum>
 
+
+<!-- NEW ENTRY -->
 <datum class="narrow">
     <name><code>u128</code></name>
     <visual class="bytes">
@@ -632,27 +642,34 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
     <description><code>0 ..= 170_141_183_460_469_231_731_687_303_715_884_105_728</code></description>
 </datum>
 
+
 <br/>
 
+
+<!-- NEW ENTRY -->
 <datum class="narrow">
     <name><code>i8</code></name>
     <visual class="bytes">
         <byte class="sign"><code></code></byte>
     </visual>
-    <description style="position:absolute"><code>-128 ..= 127</code></description>
+    <description class="nogrow"><code>-128 ..= 127</code></description>
     <description style="visibility:hidden;"><code>0 ..= 255</code></description>
 </datum>
 
+
+<!-- NEW ENTRY -->
 <datum class="narrow">
     <name><code>i16</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
         <byte class="sign"><code></code></byte>
     </visual>
-    <description style="position:absolute; text-align: right;"><code>-32_768 ..=</code><br><code>32_767</code></description>
+    <description class="nogrow" style="text-align: right;"><code>-32_768 ..=</code><br><code>32_767</code></description>
     <description style="visibility:hidden;"><code>0 ..= 65_535</code></description>
 </datum>
 
+
+<!-- NEW ENTRY -->
 <datum class="narrow">
     <name><code>i32</code></name>
     <visual class="bytes">
@@ -661,9 +678,11 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
         <byte><code></code></byte>
         <byte class="sign"><code></code></byte>
     </visual>
-    <description style="position:absolute; text-align: right;"><code>-2_147_483_648 ..=</code><br><code>2_147_483_647</code></description>
+    <description class="nogrow" style="text-align: right;"><code>-2_147_483_648 ..=</code><br><code>2_147_483_647</code></description>
 </datum>
 
+
+<!-- NEW ENTRY -->
 <datum class="narrow">
     <name><code>i64</code></name>
     <visual class="bytes">
@@ -676,10 +695,11 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
         <byte><code></code></byte>
         <byte class="sign"><code></code></byte>
     </visual>
-    <description style="position:absolute; text-align: right;"><code>-9_223_372_036_854_775_808 ..=</code><br><code>9_223_372_036_854_775_807</code></description>
+    <description class="nogrow" style="text-align: right;"><code>-9_223_372_036_854_775_808 ..=</code><br><code>9_223_372_036_854_775_807</code></description>
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum class="narrow">
     <name><code>i128</code></name>
     <visual class="bytes">
@@ -703,11 +723,14 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
     <zoom>
         With ± being [<code>+- . . . . . . .</code>]
     </zoom>
-    <description style="position:absolute; text-align: right;"><code>-170_141_183_460_469_231_731_687_303_715_884_105_728 ..=</code><br><code>170_141_183_460_469_231_731_687_303_715_884_105_727</code></description>
+    <description class="nogrow" style="text-align: right;"><code>-170_141_183_460_469_231_731_687_303_715_884_105_728 ..=</code><br><code>170_141_183_460_469_231_731_687_303_715_884_105_727</code></description>
 </datum>
+
 
 <br/>
 
+
+<!-- NEW ENTRY -->
 <datum>
     <name><code>char</code></name>
     <visual class="bytes">
@@ -720,6 +743,8 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 
 </datum>
 
+
+<!-- NEW ENTRY -->
 <datum>
     <name><code>usize</code></name>
     <visual class="sized">
@@ -738,6 +763,7 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>isize</code></name>
     <visual class="sized">
@@ -763,6 +789,7 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
 
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>f32</code></name>
     <visual class="float">
@@ -774,6 +801,7 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>f64</code></name>
     <visual class="float">
@@ -797,37 +825,43 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
 
 ### References & Pointers
 
-References give safe access to another memory location. As can be seen below, lifetimes are not encoded at runtime. Pointers give unsafe access to other memory. There are no compile-time guarantees the pointer is valid.
+References give safe access to another memory location. As can be seen below, lifetimes are not encoded at runtime. Pointers give unsafe access to other memory.
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>&'a T</code></name>
     <visual class="ptr">
            <code>ptr</code><sub>4/8</sub>
     </visual>
     <memory-entry>
-        <memory class="any">
-            <code>T</code>
+        <memory class="anymem">
+            <framed class="any t"><code>T</code></framed>
         </memory>
     </memory-entry>
+    <description>During <code>'a</code> any 'mem' <br/> this targets
+    must always <br>be a valid <code>t</code> of <code>T</code>.</description>
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>&'a mut T</code></name>
     <visual class="ptr">
         <code>ptr</code><sub>4/8</sub>
     </visual>
     <memory-entry>
-        <memory class="any">
-            <code>T</code>
+        <memory class="anymem">
+            <framed class="any t"><code>T</code></framed>
         </memory>
     </memory-entry>
+    <description>Same, but location <br/> 'mem' may not be<br/> aliased.</description>
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>*const T</code></name>
-    <visual class="ptr">
+    <visual class="ptr unsafe">
         <code>ptr</code><sub>4/8</sub>
     </visual>
     <zoom>
@@ -836,9 +870,10 @@ References give safe access to another memory location. As can be seen below, li
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>*mut T</code></name>
-    <visual class="ptr">
+    <visual class="ptr unsafe">
         <code>ptr</code><sub>4/8</sub>
     </visual>
     <zoom>
@@ -849,7 +884,8 @@ References give safe access to another memory location. As can be seen below, li
 
 Rust also has a number of special reference types that encode more than just an address, see below. The respective `&mut` version is identical and omitted:
 
-<datum>
+<!-- NEW ENTRY -->
+<datum style="margin-right:30px;">
     <name><code>&'a [T]</code></name>
     <visual>
         <ptr>
@@ -860,19 +896,18 @@ Rust also has a number of special reference types that encode more than just an 
         </sized>
     </visual>
     <memory-entry class="double">
-        <memory class="any" >
+        <memory class="anymem">
             ...
-            <code>T</code>
-            <code>T</code>
-            <code>T</code>
+            <framed class="any" style="width: 30px;"><code>T</code></framed>
+            <framed class="any" style="width: 30px;"><code>T</code></framed>
             ...
         </memory>
     </memory-entry>
 </datum>
 
 
-
-<datum>
+<!-- NEW ENTRY -->
+<datum style="margin-right:30px;">
     <name><code>&'a str</code></name>
     <visual>
         <ptr>
@@ -883,15 +918,21 @@ Rust also has a number of special reference types that encode more than just an 
         </sized>
     </visual>
     <memory-entry class="double">
-        <memory class="any">
+        <memory class="anymem">
             ...
-            <code>UTF-8</code>
+                <byte class="bytes"><code>U</code></byte>
+                <byte class="bytes"><code>T</code></byte>
+                <byte class="bytes"><code>F</code></byte>
+                <byte class="bytes"><code>-</code></byte>
+                <byte class="bytes"><code>8</code></byte>
             ...
         </memory>
+        <zoom>UTF-8 bytes, <b>NOT</b> chars!</zoom>
     </memory-entry>
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>&'a dyn Trait</code></name>
     <visual>
@@ -903,7 +944,7 @@ Rust also has a number of special reference types that encode more than just an 
         </ptr>
     </visual>
     <memory-entry>
-        <memory class="any">
+        <memory class="anymem">
             <code>data</code>
         </memory>
     </memory-entry>
@@ -919,14 +960,29 @@ Rust also has a number of special reference types that encode more than just an 
 
 Basic types that can be defined by the user and their memory representation. The compiler might add additional padding under certain conditions.
 
+
+<!-- NEW ENTRY -->
 <datum>
-    <name>Any type <code>T</code></name>
+    <name class="nogrow">Any type <code>T</code></name>
+    <name class="hidden">x</name>
     <visual>
-       <framed class="any">← <code>T</code> → </framed>
+       <framed class="any t"><code>T</code></framed>
     </visual>
+    <description><code>T : Sized</code></description>
 </datum>
 
 
+<!-- NEW ENTRY -->
+<datum>
+    <name>Any type <code>T</code></name>
+    <visual>
+       <framed class="any unsized"><code>T</code></framed>
+    </visual>
+    <description><code>T : !Sized</code>, size not<br> known at compile.</description>
+</datum>
+
+
+<!-- NEW ENTRY -->
 <datum>
     <name><code>(A, B, C)</code></name>
     <visual>
@@ -940,12 +996,13 @@ Basic types that can be defined by the user and their memory representation. The
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>[T; n]</code></name>
     <visual>
-       <framed class="any" style="width: 30px;"><code>T</code></framed>
-       <framed class="any" style="width: 30px;"><code>T</code></framed>
-       <framed class="any" style="width: 30px;"><code>T</code></framed>
+       <framed class="any t"><code>T</code></framed>
+       <framed class="any t"><code>T</code></framed>
+       <framed class="any t"><code>T</code></framed>
        <span style="font-size:10px;">... n times</span>
     </visual>
     <zoom>
@@ -954,13 +1011,14 @@ Basic types that can be defined by the user and their memory representation. The
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>[T]</code></name>
     <visual>
        <span style="font-size:10px;">...</span>
-       <framed class="any" style="width: 30px;"><code>T</code></framed>
-       <framed class="any" style="width: 30px;"><code>T</code></framed>
-       <framed class="any" style="width: 30px;"><code>T</code></framed>
+       <framed class="any t"><code>T</code></framed>
+       <framed class="any t"><code>T</code></framed>
+       <framed class="any t"><code>T</code></framed>
        <span style="font-size:10px;">... unspecified times</span>
     </visual>
     <zoom>
@@ -969,6 +1027,7 @@ Basic types that can be defined by the user and their memory representation. The
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>enum E { A, B, C }</code></name>
     <visual class="enum" style="text-align: left;">
@@ -997,7 +1056,7 @@ Basic types that can be defined by the user and their memory representation. The
 </datum>
 
 
-
+<!-- NEW ENTRY -->
 <datum>
     <name><code>union { ... }</code></name>
     <visual style="text-align: left;">
@@ -1031,6 +1090,37 @@ Basic types that can be defined by the user and their memory representation. The
 
 Rust's standard library combines many of the above primitive types into useful types with special semantics:
 
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>UnsafeCell&lt;T&gt;</code></name>
+    <visual class="cell">
+           <framed class="any unsized"><code>T</code></framed>
+    </visual>
+    <description>Magic type allowing <br>aliased mutability.</description>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>Cell<T></code></name>
+    <visual>
+           <framed class="any unsized celled"><code>T</code></framed>
+    </visual>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>RefCell<T></code></name>
+    <visual>
+        <framed class="any celled"><code>Flag</code></framed>
+        <framed class="any unsized celled"><code>T</code></framed>
+    </visual>
+</datum>
+
+
+<!-- NEW ENTRY -->
 <datum>
     <name><code>Option&lt;T&gt;</code></name>
     <visual class="enum" style="text-align: left;">
@@ -1043,19 +1133,10 @@ Rust's standard library combines many of the above primitive types into useful t
             <code>T</code>
         </framed>
     </visual>
+    <description>Tag may be omitted for certain T.</description>
 </datum>
 
-<datum>
-    <name><code>Option&lt;T&gt;</code></name>
-    <visual class="enum">
-        <framed class="any" style="width: 100px;">
-            <code>T</code>
-        </framed>
-    </visual>
-</datum>
-
-
-
+<!-- NEW ENTRY -->
 <datum>
     <name><code>Box&lt;T&gt;</code></name>
     <visual>
@@ -1072,6 +1153,7 @@ Rust's standard library combines many of the above primitive types into useful t
 </datum>
 
 
+<!-- NEW ENTRY -->
 <datum>
     <name><code>String</code></name>
     <visual>
