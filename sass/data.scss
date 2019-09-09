@@ -7,6 +7,7 @@ datum.narrow {
 datum.quad {
     margin-left:90px;
     margin-right: 130px;
+    margin-bottom: 40px;
 }
 
 datum {
@@ -48,7 +49,7 @@ datum {
     visual {
         text-align: center;
         // background-color: salmon;
-        background-color: white;
+        background-color: #fafafa;
         border-style: solid;
         border-width: 1px;
         border-color: darkgray;
@@ -60,6 +61,10 @@ datum {
 
     .bytes {
         background-color: lightgreen;
+    }
+
+    .char {
+        background-color: sandybrown;
     }
 
     .sized {
@@ -233,6 +238,7 @@ datum {
         font-size: 9px;
     }
 
+
     memory.static::after {
         content: "(static)";
         display: block;
@@ -269,6 +275,13 @@ datum {
         border-style: solid;
         border-width: 1px;
         border-color: black;
+    }
+
+    capacity {
+        position:absolute;
+        width:100%;
+        left:-4px;
+        bottom: -4px;
     }
 
 
