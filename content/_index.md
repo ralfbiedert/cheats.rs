@@ -59,11 +59,11 @@ Misc
 <div class="column">
 
 Data & Types
-* [Links & Services](#links-services)
-* [Printing & PDF](#printing-pdf)
-* [Printing & PDF](#printing-pdf)
-* [Printing & PDF](#printing-pdf)
-* [Printing & PDF](#printing-pdf)
+* [Integer Type](#integer-type)
+* [Float Types](#float-types)
+* [Custom Types](#custom-types)
+* [References & Pointers](#references-pointers-2)
+* [Standard Library Types](#standard-library-types)
 
 
 Guides
@@ -730,7 +730,7 @@ Where `_` denotes a single byte, and `S` the byte that carries the sign bit. Val
 <!-- NEW ENTRY -->
 <datum>
     <name><code>char</code></name>
-    <visual class="bytes">
+    <visual class="char">
         <byte><code></code></byte>
         <byte><code></code></byte>
         <byte><code></code></byte>
@@ -820,9 +820,9 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
 
 
 
-## Custom & Compound Types
+## Custom Types
 
-Basic types that can be defined by the user and their memory representation. The compiler might add additional padding under certain conditions.
+Basic types that can be defined by the user. The compiler might add additional padding under certain conditions.
 
 
 <!-- NEW ENTRY -->
@@ -854,10 +854,30 @@ Basic types that can be defined by the user and their memory representation. The
        <framed class="any" style="width: 100px;"><code>B</code></framed>
        <framed class="any" style="width: 50px;"><code>C</code></framed>
     </visual>
-    <zoom>
-        Holds an A, B, C at once.
-    </zoom>
 </datum>
+
+
+
+<!-- NEW ENTRY -->
+<datum style="margin-right:70px;">
+    <name class="nogrow"><code>struct S; </code></name>
+    <name class="hidden"><code>;</code></name>
+    <visual>
+        <code></code>
+    </visual>
+</datum>
+
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>struct S { b: B, c: C } </code></name>
+    <visual>
+       <framed class="any" style="width: 100px;"><code>B</code></framed>
+       <framed class="any" style="width: 50px;"><code>C</code></framed>
+    </visual>
+</datum>
+
 
 
 <!-- NEW ENTRY -->
@@ -948,7 +968,7 @@ Basic types that can be defined by the user and their memory representation. The
 
 
 
-## References & Pointers
+## References & Pointers {#references-pointers-2}
 
 References give safe access to another memory location. As can be seen below, lifetimes are not encoded at runtime. Pointers give unsafe access to other memory.
 
@@ -1006,6 +1026,8 @@ References give safe access to another memory location. As can be seen below, li
     </zoom>
 </datum>
 
+{{ tablesep() }}
+
 
 Rust also has a number of special reference types that encode more than just an address, see below. The respective `&mut` version is identical and omitted:
 
@@ -1052,7 +1074,7 @@ Rust also has a number of special reference types that encode more than just an 
             <byte class="bytes"><code>8</code></byte>
             ...
         </memory>
-        <zoom>UTF-8 bytes, <b>NOT</b> chars!</zoom>
+        <zoom>UTF-8 <b>bytes</b>, <i>not</i> chars!</zoom>
     </memory-entry>
 </datum>
 
@@ -1086,6 +1108,7 @@ Rust also has a number of special reference types that encode more than just an 
 ## Standard Library Types
 
 Rust's standard library combines many of the above primitive types into useful types with special semantics.
+Some common types:
 
 <!-- NEW ENTRY -->
 <datum>
@@ -1110,7 +1133,7 @@ Rust's standard library combines many of the above primitive types into useful t
 <datum>
     <name><code>RefCell&lt;T&gt;</code></name>
     <visual>
-        <framed class="any celled"><code>Flag</code></framed>
+        <sized class="celled"><code>Borrowed</code></sized>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
 </datum>
@@ -1120,8 +1143,8 @@ Rust's standard library combines many of the above primitive types into useful t
 <!-- NEW ENTRY -->
 <datum>
     <name><code>AtomicUsize</code></name>
-    <visual class="atomic">
-        <ptr class="celled sized">
+    <visual class="atomic simplified">
+        <ptr class="atomic">
             <code>usize</code><sub>4/8</sub>
         </ptr>
     </visual>
@@ -1183,7 +1206,9 @@ Rust's standard library combines many of the above primitive types into useful t
     </visual>
 </datum>
 
-<br/>
+{{ tablesep() }}
+
+These dynamic collections grow when needed and are backed by the heap:
 
 
 <!-- NEW ENTRY -->
@@ -1201,12 +1226,13 @@ Rust's standard library combines many of the above primitive types into useful t
         </sized>
     </visual>
     <memory-entry class="double">
-        <memory class="heap">
-            <framed class="any t"><code>T</code></framed>
-            <framed class="any t"><code>T</code></framed>
-            <note>... len</note>
-            <br>
-            <note>← Capacity →</note>
+        <memory class="heap capacity">
+            <div>
+                <framed class="any t"><code>T</code></framed>
+                <framed class="any t"><code>T</code></framed>
+                <note>... len</note>
+            </div>
+            <capacity>← <note>capacity</note> →</capacity>
         </memory>
     </memory-entry>
 </datum>
@@ -1229,19 +1255,24 @@ Rust's standard library combines many of the above primitive types into useful t
     </visual>
     <memory-entry class="double">
         <memory class="heap">
-            <byte class="bytes"><code>U</code></byte>
-            <byte class="bytes"><code>T</code></byte>
-            <byte class="bytes"><code>F</code></byte>
-            <byte class="bytes"><code>-</code></byte>
-            <byte class="bytes"><code>8</code></byte>
-            <note>... len</note>
-            <br>
-            <note>← Capacity →</note>
+            <div>
+                <byte class="bytes"><code>U</code></byte>
+                <byte class="bytes"><code>T</code></byte>
+                <byte class="bytes"><code>F</code></byte>
+                <byte class="bytes"><code>-</code></byte>
+                <byte class="bytes"><code>8</code></byte>
+                <note>... len</note>
+            </div>
+            <capacity>← <note>capacity</note> →</capacity>
         </memory>
     </memory-entry>
 </datum>
 
-<br/>
+
+{{ tablesep() }}
+
+Shared ownership of memory and resources, either from one thread (e.g., `Rc<T>`), or across multiple threads (e.g., `Arc<T>`).
+If the type does not contain a `Cell` for `T` itself these are often combined with one of the `Cell` types above to allow shared de-facto mutability.
 
 <!-- NEW ENTRY -->
 <datum class="quad">
@@ -1254,8 +1285,8 @@ Rust's standard library combines many of the above primitive types into useful t
     <div style="position:absolute">
         <memory-entry class="quad">
             <memory class="heap">
-                <sized class="celled"><code>strong</code><sub>4/8</sub></sized></framed>
-                <sized class="celled"><code>weak</code><sub>4/8</sub></sized></framed>
+                <sized class="celled"><code>strong</code><sub>4/8</sub></sized>
+                <sized class="celled"><code>weak</code><sub>4/8</sub></sized>
                 <framed class="any unsized"><code>T</code></framed>
             </memory>
         </memory-entry>
@@ -1275,8 +1306,8 @@ Rust's standard library combines many of the above primitive types into useful t
     <div style="position:absolute">
         <memory-entry class="quad">
             <memory class="heap">
-                <sized class="atomic"><code>strong</code><sub>4/8</sub></sized></framed>
-                <sized class="atomic"><code>weak</code><sub>4/8</sub></sized></framed>
+                <sized class="atomic"><code>strong</code><sub>4/8</sub></sized>
+                <sized class="atomic"><code>weak</code><sub>4/8</sub></sized>
                 <framed class="any unsized"><code>T</code></framed>
             </memory>
         </memory-entry>
@@ -1284,6 +1315,22 @@ Rust's standard library combines many of the above primitive types into useful t
     <div style="width: 20px; height: 40px;">&nbsp;</div>
 </datum>
 
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>Mutex&lt;T&gt;</code> / <code>RwLock&lt;T&gt;</code></name>
+    <visual class="simplified">
+        <ptr><code>ptr</code><sub>4/8</sub></ptr>
+        <sized class="atomic"><code>poisoned</code><sub>4/8</sub></sized>
+        <framed class="any unsized celled"><code>T</code></framed>
+    </visual>
+    <memory-entry>
+        <memory class="heap">
+            <code>lock</code>
+        </memory>
+    </memory-entry>
+</datum>
 
 
 
