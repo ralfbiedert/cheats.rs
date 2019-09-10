@@ -566,41 +566,38 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 <!-- NEW ENTRY -->
 <datum class="narrow">
-    <name><code>u8</code></name>
+    <name><code>u8</code>, <code>i8</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
     </visual>
-    <description><code>0 ..= 255</code></description>
 </datum>
 
 
 <!-- NEW ENTRY -->
 <datum class="narrow">
-    <name><code>u16</code></name>
+    <name><code>u16</code>, <code>i16</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
         <byte><code></code></byte>
     </visual>
-    <description><code>0 ..= 65_535</code></description>
 </datum>
 
 
 <!-- NEW ENTRY -->
 <datum class="narrow">
-    <name><code>u32</code></name>
+    <name><code>u32</code>, <code>i32</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
         <byte><code></code></byte>
         <byte><code></code></byte>
         <byte><code></code></byte>
     </visual>
-    <description class="nogrow"><code>0 ..= 4_294_967_295</code></description>
 </datum>
 
 
 <!-- NEW ENTRY -->
 <datum class="narrow">
-    <name><code>u64</code></name>
+    <name><code>u64</code>, <code>i64</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
         <byte><code></code></byte>
@@ -611,13 +608,12 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
         <byte><code></code></byte>
         <byte><code></code></byte>
     </visual>
-    <description class="nogrow"><code>0 ..= 18_446_744_073_709_551_615</code></description>
 </datum>
 
 
 <!-- NEW ENTRY -->
 <datum class="narrow">
-    <name><code>u128</code></name>
+    <name><code>u128</code>, <code>i128</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
         <byte><code></code></byte>
@@ -636,92 +632,8 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
         <byte><code></code></byte>
         <byte><code></code></byte>
     </visual>
-    <description><code>0 ..= 170_141_183_460_469_231_731_687_303_715_884_105_728</code></description>
 </datum>
 
-
-<br/>
-
-
-<!-- NEW ENTRY -->
-<datum class="narrow">
-    <name><code>i8</code></name>
-    <visual class="bytes">
-        <byte class="sign"><code></code></byte>
-    </visual>
-    <description class="nogrow"><code>-128 ..= 127</code></description>
-    <description style="visibility:hidden;"><code>0 ..= 255</code></description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum class="narrow">
-    <name><code>i16</code></name>
-    <visual class="bytes">
-        <byte><code></code></byte>
-        <byte class="sign"><code></code></byte>
-    </visual>
-    <description class="nogrow" style="text-align: right;"><code>-32_768 ..=</code><br><code>32_767</code></description>
-    <description style="visibility:hidden;"><code>0 ..= 65_535</code></description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum class="narrow">
-    <name><code>i32</code></name>
-    <visual class="bytes">
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte class="sign"><code></code></byte>
-    </visual>
-    <description class="nogrow" style="text-align: right;"><code>-2_147_483_648 ..=</code><br><code>2_147_483_647</code></description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum class="narrow extrabottom">
-    <name><code>i64</code></name>
-    <visual class="bytes">
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte class="sign"><code></code></byte>
-    </visual>
-    <description class="nogrow" style="text-align: right;"><code>-9_223_372_036_854_775_808 ..=</code><br><code>9_223_372_036_854_775_807</code></description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum class="narrow extrabottom">
-    <name><code>i128</code></name>
-    <visual class="bytes">
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte class="sign"><code></code></byte>
-    </visual>
-    <zoom>
-        With ± being [<code>+- . . . . . . .</code>]
-    </zoom>
-    <description class="nogrow" style="text-align: right;"><code>-170_141_183_460_469_231_731_687_303_715_884_105_728 ..=</code><br><code>170_141_183_460_469_231_731_687_303_715_884_105_727</code></description>
-</datum>
 
 
 <br/>
@@ -743,7 +655,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>usize</code></name>
+    <name><code>usize</code>, <code>isize</code></name>
     <visual class="sized">
         <byte><code></code></byte>
         <byte><code></code></byte>
@@ -758,32 +670,6 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
         Same as <code>ptr</code> on platform.
     </zoom>
 </datum>
-
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>isize</code></name>
-    <visual class="sized">
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
-        <byte class="sign" style="border-color: lightslategrey"><code></code></byte>
-    </visual>
-    <zoom>
-        Same as <code>ptr</code> on platform.
-    </zoom>
-</datum>
-
-
-
-## Float Types
-
-Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes, depending on context), and S data containing the sign bit (TODO). Values again depicted for little-endian architectures (e.g., x86-64).
-
 
 
 <!-- NEW ENTRY -->
@@ -811,11 +697,38 @@ Where `E` denotes exponent data, `M` or `m` a mantissa data (each bits or bytes,
         <byte><code></code></byte>
         <byte class="sign"><code></code></byte>
     </visual>
-    <zoom>
-        With <code>S</code> being [<code>+- . . . . . . .</code>]
-    </zoom>
 </datum>
 
+
+{{ tablesep() }}
+
+
+| Type | Max Value |
+|------| --------- |
+| `u8` | yy  |
+| `u16` | yy  |
+| `u32` | yy  |
+| `u64` | yy  |
+| `u128` | yy |
+
+{{ tablesep() }}
+
+
+| Type | Min Value | Max Value |
+|---------|-------|------|
+| `i8` | yy | zz |
+| `i16` | yy | zz |
+| `i32` | yy | zz |
+| `i64` | yy | zz |
+| `i128` | yy | zz |
+
+{{ tablesep() }}
+
+
+| Type | Sign Bits | Mantissa Bits | Exponent Bits |
+|---------|-----|------|------|
+| `f32` | 1 | yy | zz |
+| `f64` | 1 | yy | zz |
 
 
 
