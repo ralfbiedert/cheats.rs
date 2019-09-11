@@ -745,7 +745,7 @@ Simplified diagram for code written inside an `async` block :
 START --------------------> x.await --------------------> y.await --------------------> READY
 // ^                          ^     ^                               Future<Output=X> ready -^
 // Invoked via runtime        |     |
-// or an external .await      |     This might resume on another thread (next best avaialable),
+// or an external .await      |     This might resume on another thread (next best available),
 //                            |     or NOT AT ALL if Future was dropped.
 //                            |
 //                            Execute `x`. If ready: just continue execution; if not, return
