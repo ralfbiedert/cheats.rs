@@ -1142,6 +1142,7 @@ All major Rust books developed by the community.
 | {{ tab() }} [The Little Book of Rust Macros](https://danielkeep.github.io/tlborm/book/index.html) {{ experimental() }}| Community's collective knowledge of Rust macros. |
 | {{ tab() }} [The Reference](https://doc.rust-lang.org/stable/reference/) {{ experimental() }}  | Reference of the Rust language.  |
 | {{ tab() }} [The RFC Book ](https://rust-lang.github.io/rfcs/) | Look up accepted RFCs and how they change the language. |
+| {{ tab() }} [The Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/) | Collection of simple examples that demonstrate good practices. |
 | {{ tab() }} [The Rustc Guide](https://rust-lang.github.io/rustc-guide/index.html) | Explains how the compiler works internally. |
 | {{ tab() }} [The Rustdoc Book](https://doc.rust-lang.org/stable/rustdoc/) | Tips how to customize `cargo doc` and `rustdoc`. |
 | {{ tab() }} [The Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
