@@ -75,9 +75,6 @@ Misc
 
 
 
-{{ survey() }}
-
-
 
 <div class="noprint">
 
@@ -1194,9 +1191,6 @@ Online services which provide information or tooling.
 </div>
 
 {{ tablesep() }}
-
-
-{{ survey() }}
 
 
 
