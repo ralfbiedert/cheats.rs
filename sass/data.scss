@@ -1,13 +1,8 @@
 
 
-datum.narrow {
-    padding-right: 17px;
+datum.spaced {
+    margin-right: 30px;
 }
-
-datum.extrabottom {
-    padding-right: 17px;
-}
-
 
 datum.quad {
     padding-left:90px;
@@ -15,12 +10,18 @@ datum.quad {
 }
 
 datum {
+    box-sizing: border-box;
     display: inline-block;
-    margin-right: 30px;
     border-collapse: collapse;
     vertical-align: top;
     margin-bottom: 25px;
     font-size: 14px;
+
+    // For debugging purposes only
+    // border-style: solid;
+    // border-width: 1px;
+    // border-color: red;
+    // border-radius: 5px;
 
 
     note {
@@ -161,19 +162,18 @@ datum {
     memory-entry {
         display: inline-block;
         vertical-align: top;
+        position:relative;
         width: 100px;
     }
 
     memory-entry.double {
         width: 200px;
-        position:relative;
-        left:-40px;
+        // left:-40px;
     }
 
     memory-entry.quad {
         width: 375px;
-        position:relative;
-        left:-130px;
+        left:0px;
     }
 
 
@@ -208,20 +208,6 @@ datum {
 
     memory.static {
         background-color: burlywood;
-    }
-
-
-    memory::before {
-        content: "";
-        display: block;
-        position: absolute;
-        top: -10px;
-        left: 49%;
-        border-style: solid;
-        height: 7px;
-        border-width: 1px;
-        border-color: gray;
-        z-index: -50;
     }
 
     memory.anymem::after {
@@ -265,7 +251,12 @@ datum {
         background-color: lightgreen;
         border-style: dotted;
         border-width: 1px;
+        border-radius: 0px;
         border-color: black;
+
+        // Needed to suppress iOS font rendering over border
+        padding-bottom: 2px;
+
     }
 
     andor {
@@ -279,6 +270,10 @@ datum {
         border-style: solid;
         border-width: 1px;
         border-color: black;
+
+        // Needed to suppress iOS font rendering over border
+        padding-bottom: 1px;
+
     }
 
     capacity {
@@ -317,8 +312,27 @@ datum {
         width: 100px;
     }
 
+    memory-link {
+        display: block;
+        position: absolute;
+        top: -8px;
+        height: 7px;
+        font-size: 10px;
+        border-width: 1px;
+        border-color: gray;
+        z-index: -50;
+    }
+
 
     sub {
         font-size: 50%;
     }
+}
+
+
+
+spacer {
+    display: inline-block;
+    width: 15px;
+    height: 10px;
 }
