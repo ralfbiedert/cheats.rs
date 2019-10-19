@@ -881,6 +881,7 @@ Basic types that can be defined by the user. The compiler might add additional p
 
 References give safe access to another memory location. As can be seen below, lifetimes are not encoded at runtime. Pointers give unsafe access to other memory.
 
+
 <!-- NEW ENTRY -->
 <datum>
     <name><code>&'a T</code></name>
@@ -935,10 +936,14 @@ References give safe access to another memory location. As can be seen below, li
     </zoom>
 </datum>
 
+
 {{ tablesep() }}
 
 
 Rust also has a number of special reference types that encode more than just an address, see below. The respective `&mut` version is identical and omitted:
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 350px;">
 
 
 <div style="padding-left:20px;">
@@ -1014,7 +1019,8 @@ Rust also has a number of special reference types that encode more than just an 
 </datum>
 
 </div>
-
+</div>
+</div>
 
 ## Standard Library Types
 
@@ -1121,6 +1127,9 @@ Some common types:
 
 These dynamic collections grow when needed and are backed by the heap:
 
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 350px;">
 <div style="padding-left:20px;">
 
 <!-- NEW ENTRY -->
@@ -1183,11 +1192,17 @@ These dynamic collections grow when needed and are backed by the heap:
 </datum>
 
 </div>
+</div>
+</div>
 
 {{ tablesep() }}
 
 Shared ownership of memory and resources, either from one thread (e.g., `Rc<T>`), or across multiple threads (e.g., `Arc<T>`).
 If the type does not contain a `Cell` for `T` itself these are often combined with one of the `Cell` types above to allow shared de-facto mutability.
+
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 350px;">
 
 <!-- NEW ENTRY -->
 <datum class="quad">
@@ -1247,7 +1262,8 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
     </memory-entry>
 </datum>
 
-
+</div>
+</div>
 
 {{ tablesep() }}
 
