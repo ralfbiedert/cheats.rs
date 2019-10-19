@@ -4,10 +4,6 @@ datum.spaced {
     margin-right: 30px;
 }
 
-datum.quad {
-    padding-left:90px;
-    padding-right: 130px;
-}
 
 datum {
     box-sizing: border-box;
@@ -116,12 +112,12 @@ datum {
 
     .unsized::before {
         content: " ←";
-        padding-left: 10px;
+        padding-left: 2px;
     }
 
     .unsized::after {
         content: "→ ";
-        padding-right: 10px;
+        padding-right: 2px;
     }
 
     byte {
@@ -163,16 +159,16 @@ datum {
         display: inline-block;
         vertical-align: top;
         position:relative;
-        width: 100px;
+        width: 80px;
     }
 
     memory-entry.double {
-        width: 200px;
+        width: 180px;
         // left:-40px;
     }
 
     memory-entry.quad {
-        width: 375px;
+        width: 300px;
         left:0px;
     }
 
@@ -192,7 +188,7 @@ datum {
         border-width: 1px;
         border-color: gray;
         width: 80%;
-        left: 10%;
+        left: 5%;
         top: 5px;
         z-index: 100;
         margin-bottom: 10px;
@@ -294,7 +290,7 @@ datum {
 
     ptr {
         display: inline-block;
-        width: 100px;
+        width: 80px;
         background-color: lightskyblue;
     }
 
@@ -309,7 +305,7 @@ datum {
    sized {
         background-color: cyan;
         display: inline-block;
-        width: 100px;
+        width: 80px;
     }
 
     memory-link {

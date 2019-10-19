@@ -1135,7 +1135,7 @@ These dynamic collections grow when needed and are backed by the heap:
 <datum>
     <name><code>Vec&lt;T&gt;</code></name>
     <!-- For some reason we need the width for mobile not to line break -->
-    <visual class="simplified" style="width: 330px">
+    <visual class="simplified" style="width: 270px">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1167,7 +1167,7 @@ These dynamic collections grow when needed and are backed by the heap:
 <datum>
     <name><code>String</code></name>
     <!-- For some reason we need the width for mobile not to line break -->
-    <visual class="simplified" style="width: 330px">
+    <visual class="simplified" style="width: 270px">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1201,12 +1201,65 @@ Shared ownership of memory and resources, either from one thread (e.g., `Rc<T>`)
 If the type does not contain a `Cell` for `T` itself these are often combined with one of the `Cell` types above to allow shared de-facto mutability.
 
 
-<!-- Create a horizontal scrollable area on small displays to preserve layout-->
-<!-- <div style="overflow:auto;"> -->
-<div style="min-width: 100%; width: 350px;">
+<!-- NEW ENTRY -->
+<datum style="padding-right:200px;">
+    <name><code>Rc&lt;T&gt;</code></name>
+    <visual class="simplified">
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <div style="width: 0px;">
+        <memory-entry class="quad">
+            <memory-link style="left:15%">|</memory-link>
+            <memory class="heap">
+                <sized class="celled"><code>strong</code><sub>4/8</sub></sized>
+                <sized class="celled"><code>weak</code><sub>4/8</sub></sized>
+                <framed class="any unsized"><code>T</code></framed>
+            </memory>
+        </memory-entry>
+    </div>
+</datum>
 
 
-</div>
+<!-- NEW ENTRY -->
+<datum style="padding-right:200px;">
+    <name><code>Arc&lt;T&gt;</code></name>
+    <visual class="simplified">
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <div style="width: 0px;">
+        <memory-entry class="quad">
+            <memory-link style="left:15%">|</memory-link>
+            <memory class="heap">
+                <sized class="atomic"><code>strong</code><sub>4/8</sub></sized>
+                <sized class="atomic"><code>weak</code><sub>4/8</sub></sized>
+                <framed class="any unsized"><code>T</code></framed>
+            </memory>
+        </memory-entry>
+    </div>
+</datum>
+
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>Mutex&lt;T&gt;</code> / <code>RwLock&lt;T&gt;</code></name>
+    <visual class="simplified">
+        <ptr><code>ptr</code><sub>4/8</sub></ptr>
+        <sized class="atomic"><code>poisoned</code><sub>4/8</sub></sized>
+        <framed class="any unsized celled"><code>T</code></framed>
+    </visual>
+    <memory-entry>
+        <memory-link style="left:45%">|</memory-link>
+        <memory class="heap">
+            <code>lock</code>
+        </memory>
+    </memory-entry>
+</datum>
+
 
 {{ tablesep() }}
 
