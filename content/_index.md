@@ -568,7 +568,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum class="narrow">
+<datum class="spaced">
     <name><code>u8</code>, <code>i8</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
@@ -577,7 +577,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum class="narrow">
+<datum class="spaced" >
     <name><code>u16</code>, <code>i16</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
@@ -587,7 +587,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum class="narrow">
+<datum  class="spaced">
     <name><code>u32</code>, <code>i32</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
@@ -599,7 +599,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum class="narrow">
+<datum  class="spaced">
     <name><code>u64</code>, <code>i64</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
@@ -615,7 +615,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum class="narrow">
+<datum  class="spaced">
     <name><code>u128</code>, <code>i128</code></name>
     <visual class="bytes">
         <byte><code></code></byte>
@@ -643,7 +643,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>char</code></name>
     <visual class="char">
         <byte><code></code></byte>
@@ -657,7 +657,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>usize</code>, <code>isize</code></name>
     <visual class="sized">
         <byte><code></code></byte>
@@ -676,7 +676,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>f32</code></name>
     <visual class="float">
         <byte><code></code></byte>
@@ -688,7 +688,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>f64</code></name>
     <visual class="float">
         <byte><code></code></byte>
@@ -741,8 +741,10 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 Basic types that can be defined by the user. The compiler might add additional padding under certain conditions.
 
 
+<div>
+
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name class="nogrow"><code>T: Sized</code></name>
     <name class="hidden">x</name>
     <visual>
@@ -751,9 +753,8 @@ Basic types that can be defined by the user. The compiler might add additional p
     <!-- <description><code>T : Sized</code></description> -->
 </datum>
 
-
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>T: !Sized</code></name>
     <visual>
        <framed class="any unsized"><code>T</code></framed>
@@ -763,7 +764,7 @@ Basic types that can be defined by the user. The compiler might add additional p
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>(A, B, C)</code></name>
     <visual>
        <framed class="any"><code>A</code></framed>
@@ -771,7 +772,6 @@ Basic types that can be defined by the user. The compiler might add additional p
        <framed class="any" style="width: 50px;"><code>C</code></framed>
     </visual>
 </datum>
-
 
 
 <!-- NEW ENTRY -->
@@ -786,7 +786,7 @@ Basic types that can be defined by the user. The compiler might add additional p
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>struct S { b: B, c: C } </code></name>
     <visual>
        <framed class="any" style="width: 100px;"><code>B</code></framed>
@@ -795,9 +795,8 @@ Basic types that can be defined by the user. The compiler might add additional p
 </datum>
 
 
-
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>[T; n]</code></name>
     <visual>
        <framed class="any t"><code>T</code></framed>
@@ -809,7 +808,7 @@ Basic types that can be defined by the user. The compiler might add additional p
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>[T]</code></name>
     <visual>
        <note>...</note>
@@ -824,7 +823,7 @@ Basic types that can be defined by the user. The compiler might add additional p
 <br/>
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>enum E { A, B, C }</code></name>
     <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
@@ -853,7 +852,7 @@ Basic types that can be defined by the user. The compiler might add additional p
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>union { ... }</code></name>
     <visual style="text-align: left;">
         <framed class="any">
@@ -877,6 +876,7 @@ Basic types that can be defined by the user. The compiler might add additional p
     </zoom>
 </datum>
 
+</div>
 
 
 
@@ -886,12 +886,13 @@ References give safe access to another memory location. As can be seen below, li
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>&'a T</code></name>
     <visual class="ptr">
            <code>ptr</code><sub>4/8</sub>
     </visual>
     <memory-entry>
+        <memory-link style="left:46%">|</memory-link>
         <memory class="anymem">
             <framed class="any unsized"><code>T</code></framed>
         </memory>
@@ -902,12 +903,13 @@ References give safe access to another memory location. As can be seen below, li
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>&'a mut T</code></name>
     <visual class="ptr">
         <code>ptr</code><sub>4/8</sub>
     </visual>
     <memory-entry>
+        <memory-link style="left:46%">|</memory-link>
         <memory class="anymem">
             <framed class="any unsized"><code>T</code></framed>
         </memory>
@@ -917,7 +919,7 @@ References give safe access to another memory location. As can be seen below, li
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>*const T</code></name>
     <visual class="ptr unsafe">
         <code>ptr</code><sub>4/8</sub>
@@ -927,9 +929,8 @@ References give safe access to another memory location. As can be seen below, li
     </zoom>
 </datum>
 
-
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>*mut T</code></name>
     <visual class="ptr unsafe">
         <code>ptr</code><sub>4/8</sub>
@@ -949,10 +950,8 @@ Rust also has a number of special reference types that encode more than just an 
 <div style="min-width: 100%; width: 350px;">
 
 
-<div style="padding-left:20px;">
-
 <!-- NEW ENTRY -->
-<datum style="margin-right:30px;">
+<datum class="spaced">
     <name><code>&'a [T]</code></name>
     <visual>
         <ptr>
@@ -963,6 +962,7 @@ Rust also has a number of special reference types that encode more than just an 
         </sized>
     </visual>
     <memory-entry class="double">
+        <memory-link style="left:24%">|</memory-link>
         <memory class="anymem">
             ...
             <framed class="any" style="width: 30px;"><code>T</code></framed>
@@ -974,7 +974,7 @@ Rust also has a number of special reference types that encode more than just an 
 
 
 <!-- NEW ENTRY -->
-<datum style="margin-right:30px;">
+<datum class="spaced">
     <name><code>&'a str</code></name>
     <visual>
         <ptr>
@@ -985,6 +985,7 @@ Rust also has a number of special reference types that encode more than just an 
         </sized>
     </visual>
     <memory-entry class="double">
+        <memory-link style="left:24%">|</memory-link>
         <memory class="anymem">
             ...
             <byte class="bytes"><code>U</code></byte>
@@ -999,7 +1000,7 @@ Rust also has a number of special reference types that encode more than just an 
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>&'a dyn Trait</code></name>
     <visual>
         <ptr>
@@ -1010,18 +1011,19 @@ Rust also has a number of special reference types that encode more than just an 
         </ptr>
     </visual>
     <memory-entry>
+        <memory-link style="left:49%">|</memory-link>
         <memory class="anymem">
             <code>data</code>
         </memory>
     </memory-entry>
     <memory-entry>
+        <memory-link style="left:49%">|</memory-link>
         <memory class="static">
             <code>vtable</code>
         </memory>
     </memory-entry>
 </datum>
 
-</div>
 </div>
 
 
@@ -1031,7 +1033,7 @@ Rust's standard library combines many of the above primitive types into useful t
 Some common types:
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>UnsafeCell&lt;T&gt;</code></name>
     <visual class="cell">
            <framed class="any unsized"><code>T</code></framed>
@@ -1041,7 +1043,7 @@ Some common types:
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>Cell&lt;T&gt;</code></name>
     <visual>
            <framed class="any unsized celled"><code>T</code></framed>
@@ -1050,7 +1052,7 @@ Some common types:
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>RefCell&lt;T&gt;</code></name>
     <visual>
         <sized class="celled"><code>Borrowed</code></sized>
@@ -1058,10 +1060,8 @@ Some common types:
     </visual>
 </datum>
 
-
-
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>AtomicUsize</code></name>
     <visual class="atomic simplified">
         <ptr class="atomic">
@@ -1072,10 +1072,8 @@ Some common types:
 </datum>
 
 
-
-
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>Box&lt;T&gt;</code></name>
     <visual>
         <ptr>
@@ -1083,6 +1081,7 @@ Some common types:
         </ptr>
     </visual>
     <memory-entry>
+        <memory-link style="left:49%">|</memory-link>
         <memory class="heap">
         <framed class="any unsized"><code>T</code></framed>
         </memory>
@@ -1091,7 +1090,7 @@ Some common types:
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>Option&lt;T&gt;</code></name>
     <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
@@ -1105,7 +1104,6 @@ Some common types:
     </visual>
     <description>Tag may be omitted for <br> certain T.</description>
 </datum>
-
 
 
 <!-- NEW ENTRY -->
@@ -1132,8 +1130,6 @@ These dynamic collections grow when needed and are backed by the heap:
 
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
-<div style="min-width: 100%; width: 350px;">
-<div style="padding-left:20px;">
 
 <!-- NEW ENTRY -->
 <datum>
@@ -1148,9 +1144,10 @@ These dynamic collections grow when needed and are backed by the heap:
         </sized>
         <sized>
             <code>len</code><sub>4/8</sub>
-        </sized>
+        <!-- </sized> -->
     </visual>
     <memory-entry class="double">
+        <memory-link style="left:25%">|</memory-link>
         <memory class="heap capacity">
             <div>
                 <framed class="any t"><code>T</code></framed>
@@ -1163,6 +1160,8 @@ These dynamic collections grow when needed and are backed by the heap:
 </datum>
 
 
+<spacer>
+</spacer>
 
 <!-- NEW ENTRY -->
 <datum>
@@ -1180,6 +1179,7 @@ These dynamic collections grow when needed and are backed by the heap:
         </sized>
     </visual>
     <memory-entry class="double">
+        <memory-link style="left:25%">|</memory-link>
         <memory class="heap">
             <div>
                 <byte class="bytes"><code>U</code></byte>
@@ -1194,8 +1194,6 @@ These dynamic collections grow when needed and are backed by the heap:
     </memory-entry>
 </datum>
 
-</div>
-</div>
 
 {{ tablesep() }}
 
@@ -1207,61 +1205,6 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
 <!-- <div style="overflow:auto;"> -->
 <div style="min-width: 100%; width: 350px;">
 
-<!-- NEW ENTRY -->
-<datum class="quad">
-    <name><code>Rc&lt;T&gt;</code></name>
-    <visual class="simplified">
-        <ptr>
-           <code>ptr</code><sub>4/8</sub>
-        </ptr>
-    </visual>
-    <div style="width: 0px;">
-        <memory-entry class="quad">
-            <memory class="heap">
-                <sized class="celled"><code>strong</code><sub>4/8</sub></sized>
-                <sized class="celled"><code>weak</code><sub>4/8</sub></sized>
-                <framed class="any unsized"><code>T</code></framed>
-            </memory>
-        </memory-entry>
-    </div>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum class="quad">
-    <name><code>Arc&lt;T&gt;</code></name>
-    <visual class="simplified">
-        <ptr>
-           <code>ptr</code><sub>4/8</sub>
-        </ptr>
-    </visual>
-    <div style="width: 0px;">
-        <memory-entry class="quad">
-        <memory class="heap">
-            <sized class="atomic"><code>strong</code><sub>4/8</sub></sized>
-            <sized class="atomic"><code>weak</code><sub>4/8</sub></sized>
-            <framed class="any unsized"><code>T</code></framed>
-        </memory>
-        </memory-entry>
-    </div>
-</datum>
-
-
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>Mutex&lt;T&gt;</code> / <code>RwLock&lt;T&gt;</code></name>
-    <visual class="simplified">
-        <ptr><code>ptr</code><sub>4/8</sub></ptr>
-        <sized class="atomic"><code>poisoned</code><sub>4/8</sub></sized>
-        <framed class="any unsized celled"><code>T</code></framed>
-    </visual>
-    <memory-entry>
-        <memory class="heap">
-            <code>lock</code>
-        </memory>
-    </memory-entry>
-</datum>
 
 </div>
 
