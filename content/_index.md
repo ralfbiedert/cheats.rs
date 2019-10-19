@@ -945,7 +945,7 @@ References give safe access to another memory location. As can be seen below, li
 
 Rust also has a number of special reference types that encode more than just an address, see below. The respective `&mut` version is identical and omitted:
 
-<div style="overflow:auto;">
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="min-width: 100%; width: 350px;">
 
 
@@ -1023,7 +1023,7 @@ Rust also has a number of special reference types that encode more than just an 
 
 </div>
 </div>
-</div>
+
 
 ## Standard Library Types
 
@@ -1131,7 +1131,7 @@ Some common types:
 These dynamic collections grow when needed and are backed by the heap:
 
 
-<div style="overflow:auto;">
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="min-width: 100%; width: 350px;">
 <div style="padding-left:20px;">
 
@@ -1196,7 +1196,6 @@ These dynamic collections grow when needed and are backed by the heap:
 
 </div>
 </div>
-</div>
 
 {{ tablesep() }}
 
@@ -1204,7 +1203,8 @@ Shared ownership of memory and resources, either from one thread (e.g., `Rc<T>`)
 If the type does not contain a `Cell` for `T` itself these are often combined with one of the `Cell` types above to allow shared de-facto mutability.
 
 
-<div style="overflow:auto;">
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<!-- <div style="overflow:auto;"> -->
 <div style="min-width: 100%; width: 350px;">
 
 <!-- NEW ENTRY -->
@@ -1215,7 +1215,7 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
            <code>ptr</code><sub>4/8</sub>
         </ptr>
     </visual>
-    <div style="position:absolute; width: 10px;">
+    <div style="width: 0px;">
         <memory-entry class="quad">
             <memory class="heap">
                 <sized class="celled"><code>strong</code><sub>4/8</sub></sized>
@@ -1224,7 +1224,6 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
             </memory>
         </memory-entry>
     </div>
-    <div style="width: 20px; height: 40px;">&nbsp;</div>
 </datum>
 
 
@@ -1236,16 +1235,15 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
            <code>ptr</code><sub>4/8</sub>
         </ptr>
     </visual>
-    <div style="position:absolute; width: 10px;">
+    <div style="width: 0px;">
         <memory-entry class="quad">
-            <memory class="heap">
-                <sized class="atomic"><code>strong</code><sub>4/8</sub></sized>
-                <sized class="atomic"><code>weak</code><sub>4/8</sub></sized>
-                <framed class="any unsized"><code>T</code></framed>
-            </memory>
+        <memory class="heap">
+            <sized class="atomic"><code>strong</code><sub>4/8</sub></sized>
+            <sized class="atomic"><code>weak</code><sub>4/8</sub></sized>
+            <framed class="any unsized"><code>T</code></framed>
+        </memory>
         </memory-entry>
     </div>
-    <div style="width: 20px; height: 40px;">&nbsp;</div>
 </datum>
 
 
@@ -1265,7 +1263,6 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
     </memory-entry>
 </datum>
 
-</div>
 </div>
 
 {{ tablesep() }}
@@ -1304,6 +1301,7 @@ Basic project layout, and common files and folders, as used by Rust [tooling](#t
 
 An minimal library entry point with functions and modules looks like this:
 
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
@@ -1324,6 +1322,7 @@ For binaries (not depicted), function `fn main() {}` is the entry point.
 Unit tests (not depicted), usually reside in a `#[cfg(test)] mod test { }` next to their code.
 Integration tests and benchmarks, in their basic, form look like this:
 
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
@@ -1339,6 +1338,7 @@ fn my_sample() {
 </div>
 </div>
 
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
@@ -1465,7 +1465,8 @@ thread returns all the way up to runtime so it can drive another Future. Some ti
 
 Simplified diagram for code written inside an `async` block :
 
-<!-- Otherwise the rows wrap on small devices and look ugly -->
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
