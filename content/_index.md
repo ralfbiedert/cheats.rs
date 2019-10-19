@@ -1060,10 +1060,11 @@ Some common types:
     </visual>
 </datum>
 
+
 <!-- NEW ENTRY -->
 <datum class="spaced">
     <name><code>AtomicUsize</code></name>
-    <visual class="atomic simplified">
+    <visual class="atomic">
         <ptr class="atomic">
             <code>usize</code><sub>4/8</sub>
         </ptr>
@@ -1135,7 +1136,7 @@ These dynamic collections grow when needed and are backed by the heap:
 <datum>
     <name><code>Vec&lt;T&gt;</code></name>
     <!-- For some reason we need the width for mobile not to line break -->
-    <visual class="simplified" style="width: 270px">
+    <visual style="width: 270px">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1167,7 +1168,7 @@ These dynamic collections grow when needed and are backed by the heap:
 <datum>
     <name><code>String</code></name>
     <!-- For some reason we need the width for mobile not to line break -->
-    <visual class="simplified" style="width: 270px">
+    <visual style="width: 270px">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1204,7 +1205,7 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
 <!-- NEW ENTRY -->
 <datum style="padding-right:200px;">
     <name><code>Rc&lt;T&gt;</code></name>
-    <visual class="simplified">
+    <visual>
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1225,7 +1226,7 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
 <!-- NEW ENTRY -->
 <datum style="padding-right:200px;">
     <name><code>Arc&lt;T&gt;</code></name>
-    <visual class="simplified">
+    <visual>
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1234,8 +1235,8 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
         <memory-entry class="quad">
             <memory-link style="left:15%">|</memory-link>
             <memory class="heap">
-                <sized class="atomic"><code>strong</code><sub>4/8</sub></sized>
-                <sized class="atomic"><code>weak</code><sub>4/8</sub></sized>
+                <sized class="atomicx"><code>strong</code><sub>4/8</sub></sized>
+                <sized class="atomicx"><code>weak</code><sub>4/8</sub></sized>
                 <framed class="any unsized"><code>T</code></framed>
             </memory>
         </memory-entry>
@@ -1247,9 +1248,9 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
 <!-- NEW ENTRY -->
 <datum>
     <name><code>Mutex&lt;T&gt;</code> / <code>RwLock&lt;T&gt;</code></name>
-    <visual class="simplified">
+    <visual>
         <ptr><code>ptr</code><sub>4/8</sub></ptr>
-        <sized class="atomic"><code>poisoned</code><sub>4/8</sub></sized>
+        <sized class="atomicx"><code>poisoned</code><sub>4/8</sub></sized>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
     <memory-entry>
@@ -1259,11 +1260,6 @@ If the type does not contain a `Cell` for `T` itself these are often combined wi
         </memory>
     </memory-entry>
 </datum>
-
-
-{{ tablesep() }}
-
-<sup>*</sup> Some of the types have been slightly simplified for better clarity.
 
 
 ---
