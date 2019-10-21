@@ -682,7 +682,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
         <byte><code></code></byte>
         <byte><code></code></byte>
         <byte><code></code></byte>
-        <byte class="sign"><code></code></byte>
+        <byte><code></code></byte>
     </visual>
 </datum>
 
@@ -693,12 +693,12 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
     <visual class="float">
         <byte><code></code></byte>
         <byte><code></code></byte>
-        <byte><code>T</code></byte>
-        <byte><code>O</code></byte>
-        <byte><code>D</code></byte>
-        <byte><code>O</code></byte>
         <byte><code></code></byte>
-        <byte class="sign"><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
     </visual>
 </datum>
 
@@ -708,31 +708,23 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 | Type | Max Value |
 |------| --------- |
-| `u8` | yy  |
-| `u16` | yy  |
-| `u32` | yy  |
-| `u64` | yy  |
-| `u128` | yy |
+| `u8` | `255`  |
+| `u16` | `65_535`  |
+| `u32` | `4_294_967_295`  |
+| `u64` | `18_446_744_073_709_551_615`  |
+| `u128` | `340_282_366_920_938_463_463_374_607_431_768_211_455` |
 
 {{ tablesep() }}
-
 
 | Type | Min Value | Max Value |
 |---------|-------|------|
-| `i8` | yy | zz |
-| `i16` | yy | zz |
-| `i32` | yy | zz |
-| `i64` | yy | zz |
-| `i128` | yy | zz |
+| `i8` | `-128` | `127` |
+| `i16` | `-32_768` | `32_767` |
+| `i32` | `-2_147_483_648` | `2_147_483_647` |
+| `i64` | `-9_223_372_036_854_775_808` | `9_223_372_036_854_775_807` |
+| `i128` | `-max - 1` | `170_141_183_460_469_231_731_687_303_715_884_105_727` |
 
 {{ tablesep() }}
-
-
-| Type | Sign Bits | Mantissa Bits | Exponent Bits |
-|---------|-----|------|------|
-| `f32` | 1 | yy | zz |
-| `f64` | 1 | yy | zz |
-
 
 
 
@@ -1198,8 +1190,7 @@ These dynamic collections grow when needed and are backed by the heap:
 
 {{ tablesep() }}
 
-Shared ownership of memory and resources, either from one thread (e.g., `Rc<T>`), or across multiple threads (e.g., `Arc<T>`).
-If the type does not contain a `Cell` for `T` itself these are often combined with one of the `Cell` types above to allow shared de-facto mutability.
+Shared ownership of memory and resources. If the type does not contain a `Cell` for `T`, these are often combined with one of the `Cell` types above to allow shared de-facto mutability.
 
 
 <!-- NEW ENTRY -->
