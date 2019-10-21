@@ -60,9 +60,8 @@ Misc
 
 Data & Types
 * [Integer Types](#integer-types)
-* [Float Types](#float-types)
 * [Custom Types](#custom-types)
-* [References & Pointers](#references-pointers-2)
+* [References & Pointers](#references-pointers-ui)
 * [Standard Library Types](#standard-library-types)
 
 
@@ -82,9 +81,6 @@ Guides
 </div>
 </div>
 
-
-
-{{ survey() }}
 
 
 
@@ -872,7 +868,7 @@ Basic types that can be defined by the user. The compiler might add additional p
 
 
 
-## References & Pointers {#references-pointers-2}
+## References & Pointers {#references-pointers-ui}
 
 References give safe access to another memory location. As can be seen below, lifetimes are not encoded at runtime. Pointers give unsafe access to other memory.
 
@@ -1047,7 +1043,7 @@ Some common types:
 <datum class="spaced">
     <name><code>RefCell&lt;T&gt;</code></name>
     <visual>
-        <sized class="celled"><code>Borrowed</code></sized>
+        <sized class="celled"><code>borrowed</code></sized>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
 </datum>
@@ -1458,7 +1454,7 @@ Simplified diagram for code written inside an `async` block :
 START --------------------> x.await --------------------> y.await --------------------> READY
 // ^                          ^     ^                               Future<Output=X> ready -^
 // Invoked via runtime        |     |
-// or an external .await      |     This might resume on another thread (next best avaialable),
+// or an external .await      |     This might resume on another thread (next best available),
 //                            |     or NOT AT ALL if Future was dropped.
 //                            |
 //                            Execute `x`. If ready: just continue execution; if not, return
@@ -1855,6 +1851,7 @@ All major Rust books developed by the community.
 | {{ tab() }} [The Little Book of Rust Macros](https://danielkeep.github.io/tlborm/book/index.html) {{ experimental() }}| Community's collective knowledge of Rust macros. |
 | {{ tab() }} [The Reference](https://doc.rust-lang.org/stable/reference/) {{ experimental() }}  | Reference of the Rust language.  |
 | {{ tab() }} [The RFC Book ](https://rust-lang.github.io/rfcs/) | Look up accepted RFCs and how they change the language. |
+| {{ tab() }} [The Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/) | Collection of simple examples that demonstrate good practices. |
 | {{ tab() }} [The Rustc Guide](https://rust-lang.github.io/rustc-guide/index.html) | Explains how the compiler works internally. |
 | {{ tab() }} [The Rustdoc Book](https://doc.rust-lang.org/stable/rustdoc/) | Tips how to customize `cargo doc` and `rustdoc`. |
 | {{ tab() }} [The Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
@@ -1906,9 +1903,6 @@ Online services which provide information or tooling.
 </div>
 
 {{ tablesep() }}
-
-
-{{ survey() }}
 
 
 
