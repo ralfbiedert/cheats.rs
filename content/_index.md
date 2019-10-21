@@ -60,9 +60,8 @@ Misc
 
 Data & Types
 * [Integer Types](#integer-types)
-* [Float Types](#float-types)
 * [Custom Types](#custom-types)
-* [References & Pointers](#references-pointers-2)
+* [References & Pointers](#references-pointers-ui)
 * [Standard Library Types](#standard-library-types)
 
 
@@ -869,7 +868,7 @@ Basic types that can be defined by the user. The compiler might add additional p
 
 
 
-## References & Pointers {#references-pointers-2}
+## References & Pointers {#references-pointers-ui}
 
 References give safe access to another memory location. As can be seen below, lifetimes are not encoded at runtime. Pointers give unsafe access to other memory.
 
@@ -1044,7 +1043,7 @@ Some common types:
 <datum class="spaced">
     <name><code>RefCell&lt;T&gt;</code></name>
     <visual>
-        <sized class="celled"><code>Borrowed</code></sized>
+        <sized class="celled"><code>borrowed</code></sized>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
 </datum>
