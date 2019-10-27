@@ -59,7 +59,7 @@ Misc
 <div class="column">
 
 Data & Types
-* [Integer Types](#integer-types)
+* [Numeric Types](#numeric-types)
 * [Custom Types](#custom-types)
 * [References & Pointers](#references-pointers-ui)
 * [Standard Library Types](#standard-library-types)
@@ -558,7 +558,7 @@ Memory representations of common data types.
 > This section is work in progress. Feedback very welcome (please open issue or PR).
 
 
-## Integer Types
+## Numeric Types
 
 Memory representations are depicted for little-endian architectures (e.g., x86-64).
 
@@ -702,34 +702,28 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 {{ tablesep() }}
 
 
-| Type | Max Value |
-|------| --------- |
+| Type* | Max Value |
+|------| ---------:|
 | `u8` | `255`  |
 | `u16` | `65_535`  |
 | `u32` | `4_294_967_295`  |
 | `u64` | `18_446_744_073_709_551_615`  |
 | `u128` | `340_282_366_920_938_463_463_374_607_431_768_211_455` |
 
-{{ tablesep() }}
 
-| Type | Min Value | Max Value |
-|---------|-------|------|
-| `i8` | `-128` | `127` |
-| `i16` | `-32_768` | `32_767` |
-| `i32` | `-2_147_483_648` | `2_147_483_647` |
-| `i64` | `-9_223_372_036_854_775_808` | `9_223_372_036_854_775_807` |
-| `i128` | `-max - 1` | `170_141_183_460_469_231_731_687_303_715_884_105_727` |
+<div class="footnotes">
+    <sup>*</sup> <code>i8</code>, <code>i16</code>, ... values range from
+    <code>-max/2</code> to <code>max/2-1</code>, rounded to larger value.
+</div>
+
 
 {{ tablesep() }}
-
 
 
 ## Custom Types
 
 Basic types that can be defined by the user. The compiler might add additional padding under certain conditions.
 
-
-<div>
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -864,7 +858,6 @@ Basic types that can be defined by the user. The compiler might add additional p
     </zoom>
 </datum>
 
-</div>
 
 
 
@@ -934,9 +927,6 @@ References give safe access to another memory location. As can be seen below, li
 
 Rust also has a number of special reference types that encode more than just an address, see below. The respective `&mut` version is identical and omitted:
 
-<!-- Create a horizontal scrollable area on small displays to preserve layout-->
-<div style="min-width: 100%; width: 350px;">
-
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -988,7 +978,7 @@ Rust also has a number of special reference types that encode more than just an 
 
 
 <!-- NEW ENTRY -->
-<datum class="spaced">
+<datum class="spaced" style="padding-bottom: 165px;">
     <name><code>&'a dyn Trait</code></name>
     <visual>
         <ptr>
@@ -1001,18 +991,102 @@ Rust also has a number of special reference types that encode more than just an 
     <memory-entry>
         <memory-link style="left:49%">|</memory-link>
         <memory class="anymem">
-            <code>data</code>
+            <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
+    <memory-entry style="width:200px; position: absolute;">
+        <memory-link style="left:22%">|</memory-link>
+        <memory class="static-vtable" style="width: 210px;">
+            <table>
+                <tr class="vtable"><td><code>*Drop::drop(&mut T)</code></td></tr>
+                <tr class="vtable"><td><code>size</code></td></tr>
+                <tr class="vtable"><td><code>align</code></td></tr>
+                <tr class="vtable"><td><code>*Trait::f(&T, ...)</code></td></tr>
+                <tr class="vtable"><td><code>*Trait::g(&T, ...)</code></td></tr>
+            </table>
+        </memory>
+        <description>Where <code>*Drop::drop()</code>, <code>*Trait::f()</code>, ... are pointers to their respective <code>impl</code> for <code>T</code>.</description>
+    </memory-entry>
+
+</datum>
+
+
+{{ tablesep() }}
+
+Box is Rust's type for heap allocation that also comes in a number of special variants:
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>Box&lt;T&gt;</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
     <memory-entry>
         <memory-link style="left:49%">|</memory-link>
-        <memory class="static">
-            <code>vtable</code>
+        <memory class="heap">
+        <framed class="any unsized"><code>T</code></framed>
+        </memory>
+</datum>
+
+
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>Box&lt;[T]&gt;</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <sized>
+            <code>len</code><sub>4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry class="double">
+        <memory-link style="left:24%">|</memory-link>
+        <memory class="heap">
+            <framed class="any" style="width: 30px;"><code>T</code></framed>
+            <framed class="any" style="width: 30px;"><code>T</code></framed>
+            <framed class="any" style="width: 30px;"><code>T</code></framed>
+            ...
         </memory>
     </memory-entry>
 </datum>
 
-</div>
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>Box&lt;dyn Trait&gt;</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <ptr>
+            <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <memory-entry>
+        <memory-link style="left:49%">|</memory-link>
+        <memory class="heap">
+            <framed class="any unsized"><code>T</code></framed>
+        </memory>
+    </memory-entry>
+    <memory-entry>
+        <memory-link style="left:52%">|</memory-link>
+        <memory class="static-vtable" style="width: 105px;">
+            <table>
+                ...
+            </table>
+        </memory>
+        <description>Compare above.</description>
+    </memory-entry>
+</datum>
+
+
 
 
 ## Standard Library Types
@@ -1036,6 +1110,7 @@ Some common types:
     <visual>
            <framed class="any unsized celled"><code>T</code></framed>
     </visual>
+    <description>Allows <code>T</code>'s<br> to move in<br> and out.</description>
 </datum>
 
 
@@ -1046,6 +1121,9 @@ Some common types:
         <sized class="celled"><code>borrowed</code></sized>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
+    <description>Also support dynamic<br>
+    borrowing of <code>T</code>. Like <code>Cell</code> this<br>
+    is <code>Send</code>, but not <code>Sync</code>.</description>
 </datum>
 
 
@@ -1061,21 +1139,6 @@ Some common types:
 </datum>
 
 
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>Box&lt;T&gt;</code></name>
-    <visual>
-        <ptr>
-           <code>ptr</code><sub>4/8</sub>
-        </ptr>
-    </visual>
-    <memory-entry>
-        <memory-link style="left:49%">|</memory-link>
-        <memory class="heap">
-        <framed class="any unsized"><code>T</code></framed>
-        </memory>
-    </memory-entry>
-</datum>
 
 
 <!-- NEW ENTRY -->
@@ -1190,7 +1253,7 @@ Shared ownership of memory and resources. If the type does not contain a `Cell` 
 
 
 <!-- NEW ENTRY -->
-<datum style="padding-right:200px;">
+<datum style="padding-right:200px; padding-bottom:30px;">
     <name><code>Rc&lt;T&gt;</code></name>
     <visual>
         <ptr>
@@ -1207,11 +1270,13 @@ Shared ownership of memory and resources. If the type does not contain a `Cell` 
             </memory>
         </memory-entry>
     </div>
+    <description style="position:absolute">Share ownership of <code>T</code> in same thread. Needs nested <code>Cell</code>
+    <br>or <code>RefCell</code>to allow mutation. Is neither <code>Send</code> nor <code>Sync</code>.</description>
 </datum>
 
 
 <!-- NEW ENTRY -->
-<datum style="padding-right:200px;">
+<datum style="padding-right:200px; padding-bottom:30px;">
     <name><code>Arc&lt;T&gt;</code></name>
     <visual>
         <ptr>
@@ -1228,8 +1293,10 @@ Shared ownership of memory and resources. If the type does not contain a `Cell` 
             </memory>
         </memory-entry>
     </div>
-</datum>
+    <description style="position:absolute">Same, but allow sharing between threads IF contained<br>
+    <code>T</code> itself is <code>Send</code> and <code>Sync</code>.</description>
 
+</datum>
 
 
 <!-- NEW ENTRY -->
@@ -1246,7 +1313,25 @@ Shared ownership of memory and resources. If the type does not contain a `Cell` 
             <code>lock</code>
         </memory>
     </memory-entry>
+    <description style="position:absolute">Needs to be held in <code>Arc</code> to be shared between<br> threads,
+    always <code>Send</code> and <code>Sync</code>. Consider using <br> <a href="https://crates.io/crates/parking_lot">parking_lot</a> instead (faster, no heap usage).
+    </description>
 </datum>
+
+<!--
+## Traits
+
+Send & Sync
+
+<table>
+    <tr style="background-color:#ffcfaa;"><td></td><td><code>Send</code></td><td><code>!Send</code></td></tr>
+    <tr><td style="background-color:#ffcfaa;"><code>Sync</code></td><td><code>Send</code>,<code>Send</code>,<br><code>Send</code><code>Send</code><code>Send</code><code>Send</code></td><td><code>Send</code><code>Send</code><code>Send</code><code>Send</code><code>Send</code><code>Send</code><code>Send</code></td></tr>
+    <tr><td style="background-color:#ffcfaa;"><code>!Sync</code></td><td>Send</td><td>!Send</td></tr>
+</table>
+ -->
+
+{{ tablesep() }}
+
 
 
 ---

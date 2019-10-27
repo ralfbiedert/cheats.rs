@@ -190,7 +190,7 @@ datum {
     memory {
         display: inline-block;
         padding: 5px;
-        padding-bottom: 12px;
+        padding-bottom: 14px;
         font-size: 120%;
         text-align: center;
         position: relative;
@@ -214,6 +214,10 @@ datum {
     }
 
     memory.static {
+        background-color: burlywood;
+    }
+
+    memory.static-vtable {
         background-color: burlywood;
     }
 
@@ -245,6 +249,14 @@ datum {
         font-size: 9px;
     }
 
+    memory.static-vtable::after {
+        content: "(static vtable)";
+        display: block;
+        position: absolute;
+        bottom: 0px;
+        right: 2px;
+        font-size: 9px;
+    }
 
 
     description {
@@ -333,6 +345,11 @@ datum {
 
     sub {
         font-size: 50%;
+    }
+
+    tr.vtable {
+        border: 1px hsl(0, 0%, 95%) solid;
+        background: inherit !important;
     }
 }
 
