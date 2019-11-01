@@ -713,7 +713,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 
 <div class="footnotes">
     <sup>*</sup> <code>i8</code>, <code>i16</code>, ... values range from
-    <code>-max/2</code> to <code>max/2-1</code>, rounded to larger value.
+    <code>-max/2</code> to <code>max/2-1</code>, rounded towards negative infinity.
 </div>
 
 
