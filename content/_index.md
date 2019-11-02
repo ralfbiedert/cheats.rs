@@ -59,7 +59,7 @@ Misc
 <div class="column">
 
 Data & Types
-* [Numeric Types](#numeric-types)
+* [Basic Types](#basic-types)
 * [Custom Types](#custom-types)
 * [References & Pointers](#references-pointers-ui)
 * [Standard Library Types](#standard-library-types)
@@ -555,13 +555,13 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 
 Memory representations of common data types.
 
-> This section is work in progress. Feedback very welcome (please open issue or PR).
 
-
-## Numeric Types
+## Basic Types
 
 Memory representations are depicted for little-endian architectures (e.g., x86-64).
 
+
+#### Integer Types
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -634,24 +634,6 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 </datum>
 
 
-
-<br/>
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>char</code></name>
-    <visual class="char">
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-    </visual>
-    <description>Any UTF-8 <i>char</i>.</description>
-
-</datum>
-
-
 <!-- NEW ENTRY -->
 <datum class="spaced">
     <name><code>usize</code>, <code>isize</code></name>
@@ -669,6 +651,36 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
         Same as <code>ptr</code> on platform.
     </zoom>
 </datum>
+
+
+
+<br/>
+
+
+
+{{ tablesep() }}
+
+
+| Integer* | Max Value |
+|------| ---------:|
+| `u8` | `255`  |
+| `u16` | `65_535`  |
+| `u32` | `4_294_967_295`  |
+| `u64` | `18_446_744_073_709_551_615`  |
+| `u128` | `340_282_366_920_938_463_463_374_607_431_768_211_455` |
+
+
+<div class="footnotes">
+    <sup>*</sup> <code>i8</code>, <code>i16</code>, ... values range from
+    <code>-max/2</code> to <code>max/2</code>, rounded towards negative infinity.
+</div>
+
+
+
+{{ tablesep() }}
+
+
+#### Float Types
 
 
 <!-- NEW ENTRY -->
@@ -699,23 +711,135 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 </datum>
 
 
+Float types are slightly more complicated and follow [IEEE 754-2008](https://en.wikipedia.org/wiki/IEEE_754-2008_revision). For example, the bit view of a <code>f32</code> looks like this:
+
+
+<!-- NEW ENTRY -->
+<datum class="centered" style="opacity:0.7; margin-bottom:10px;">
+    <visual class="float">
+    <bitgroup>
+        <bit><code>S</code></bit>
+    </bitgroup>
+    <bitgroup>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+    </bitgroup>
+    <bitgroup>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+    </bitgroup>
+    </visual>
+</datum>
+
+
+
+Where `S` is the sign bit (`0` is positive, `1` negative), `E` are exponent bits, and `F` fraction bits. In case of a `f32`, this gives the following values:
+
+| f32 | S (1) | E (8) | F (23) | Value |
+|------| ---------| ---------| ---------| ---------|
+| Normalized number | ± | 1 to 254 | any | ±(1.F)<sub>2</sub> * 2<sup>E-127</sup>  |
+| Denormalized number | ± | 0 | non-zero | ±(0.F)<sub>2</sub> * 2<sup>-126</sup>  |
+| Zero | ± | 0 | 0 | ±0  |
+| Infinity | ± | 255 | 0 | ±∞  |
+| NaN | ± | 255 | non-zero | NaN  |
+
+
+{{ tablesep() }}
+
+Values of type `f64` are composed similarly:
+
+| f64 | S (1) | E (11) | F (52) | Value |
+|------| ---------| ---------| ---------| ---------|
+| Normalized number | ± | 1 to 2046 | any | ±(1.F)<sub>2</sub> * 2<sup>E-1023</sup>  |
+| Denormalized number | ± | 0 | non-zero | ±(0.F)<sub>2</sub> * 2<sup>-1022</sup>  |
+| Zero | ± | 0 | 0 | ±0  |
+| Infinity | ± | 2047 | 0 | ±∞  |
+| NaN | ± | 2047 | non-zero | NaN  |
+
+
 {{ tablesep() }}
 
 
-| Type* | Max Value |
-|------| ---------:|
-| `u8` | `255`  |
-| `u16` | `65_535`  |
-| `u32` | `4_294_967_295`  |
-| `u64` | `18_446_744_073_709_551_615`  |
-| `u128` | `340_282_366_920_938_463_463_374_607_431_768_211_455` |
 
+#### Textual Types
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>char</code></name>
+    <visual class="char">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+    </visual>
+    <description>Any UTF-8 <i>char</i>.</description>
+</datum>
+
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>str</code></name>
+    <visual>
+        <note>...</note>
+        <byte class="bytes"><code>U</code></byte>
+        <byte class="bytes"><code>T</code></byte>
+        <byte class="bytes"><code>F</code></byte>
+        <byte class="bytes"><code>-</code></byte>
+        <byte class="bytes"><code>8</code></byte>
+        <note>... unspecified times</note>
+    </visual>
+    <description>Rarely seen alone, but as <code>&'a str</code> instead.</description>
+</datum>
+
+Notice how:
+
+- `char` is always 4 bytes and only holds a single Unicode **scalar value** (thus possibly wasting space),
+- `str` is a byte-array of unknown length guaranteed to hold **UTF-8 code points** (but harder to index).
+
+<!--
+These are Rust's primitive textual types. On a text such as "I love 🦀" they work as follows:
+
+
+| Type | Description |
+|------| ---------|
+| `char` | Single, **always** 4-byte type, can hold any UTF-8 character such as `I`, `l` or `🦀`. |
+| `str` |  (e.g., `lo` or `ve 🦀`).  |
+| `&str` | `255`  |
+| `&[char]` | `255`  |
+| String | `255`  |
 
 <div class="footnotes">
-    <sup>*</sup> <code>i8</code>, <code>i16</code>, ... values range from
-    <code>-max/2</code> to <code>max/2-1</code>, rounded towards negative infinity.
-</div>
-
+    Also compare the visual representation of <code>&'a str</code> and <code>String</code> below.
+</div> -->
 
 {{ tablesep() }}
 
@@ -802,7 +926,10 @@ Basic types that can be defined by the user. The compiler might add additional p
 </datum>
 
 
-<br/>
+
+{{ tablesep() }}
+
+These **sum types** hold a value of either one of their sub types:
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -827,9 +954,9 @@ Basic types that can be defined by the user. The compiler might add additional p
             <code>C</code>
         </framed>
     </visual>
-    <zoom>
-        Safely holds A or B or C.
-    </zoom>
+    <description>
+        Safely holds A or B or C, also <br> called 'tagged union', though <br> compiler may omit tag.
+    </description>
 </datum>
 
 
@@ -853,9 +980,9 @@ Basic types that can be defined by the user. The compiler might add additional p
             <code>C</code>
         </framed>
     </visual>
-    <zoom>
-        Mushes A, B, C.
-    </zoom>
+    <description>
+        Not safe at runtime.
+    </description>
 </datum>
 
 
@@ -1244,6 +1371,7 @@ These dynamic collections grow when needed and are backed by the heap:
             <capacity>← <note>capacity</note> →</capacity>
         </memory>
     </memory-entry>
+    <description>Observe how <code>String</code> differs from <code>&str</code> and <code>&[char]</code>.</description>
 </datum>
 
 

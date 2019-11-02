@@ -4,6 +4,10 @@ datum.spaced {
     margin-right: 30px;
 }
 
+datum.centered {
+    margin: auto;
+}
+
 
 datum {
     box-sizing: border-box;
@@ -163,6 +167,11 @@ datum {
         top: -2px;
         z-index: -100;
         font-size: 12px;
+    }
+
+    bit {
+        margin: 0px;
+        padding: 0px;
     }
 
     memory-entry {
@@ -332,6 +341,13 @@ datum {
         width: 80px;
     }
 
+    bitgroup {
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+        padding: 2px;
+    }
+
     memory-link {
         display: block;
         position: absolute;
@@ -352,6 +368,7 @@ datum {
         border: 1px hsl(0, 0%, 95%) solid;
         background: inherit !important;
     }
+
 }
 
 
