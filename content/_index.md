@@ -233,7 +233,7 @@ Define units of code and their abstractions.
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
 | {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
 | `const fn f() {}`  | Constant `fn` usable at compile time, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
-| `async fn f() {}`  | **Async** {{ experimental() }} {{ edition(ed="'18") }} function transformation, makes `f` return an `impl Future`. {{ std(page="std/future/trait.Future.html") }} |
+| `async fn f() {}`  | **Async**  {{ edition(ed="'18") }} function transformation, makes `f` return an `impl Future`. {{ std(page="std/future/trait.Future.html") }} |
 | {{ tab() }} `async fn f() -> S {}`  | Same, but make `f` return an `impl Future<Output=S>`. |
 | {{ tab() }} `async { x }`  | Used within a function, make `{ x }` an `impl Future<Output=X>`. |
 | `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with trait [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html). |
@@ -266,7 +266,7 @@ Control execution within a function.
 | `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
 | `continue 'label`  | Same, but instead of enclosing loop marked with `'label`. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
-| `x.await` | Only works inside `async`. Yield flow until [Future](https://doc.rust-lang.org/std/future/trait.Future.html) or Stream {{ todo() }} `x` ready. {{ experimental() }} {{ edition(ed="'18") }} |
+| `x.await` | Only works inside `async`. Yield flow until [Future](https://doc.rust-lang.org/std/future/trait.Future.html) or Stream {{ todo() }} `x` ready. {{ edition(ed="'18") }} |
 | `return x`  | Early return from function. More idiomatic way is to end with expression. |
 | `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, ...). |
 | `x.f()` | Call member function, requires `f` takes `self`, `&self`, ... as first argument. |
