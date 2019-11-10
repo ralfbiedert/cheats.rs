@@ -68,10 +68,10 @@ Depending on what you do, you might also want to give credit to the persons and 
 
 ### Currently Known Third-Party Supporting Assets Used
 
-- normalize.css, Nicolas Gallagher and Jonathan Neal, MIT licensed
-- Fira Code, Nikita Prokopov, OFL-1.1
-- Zola Book theme, Vincent Prouillet, MIT licensed
-- prism.js, Lea Verou, MIT licensed
+- [normalize.css](https://github.com/necolas/normalize.css), Nicolas Gallagher and Jonathan Neal, MIT licensed
+- [Fira Code](https://github.com/tonsky/FiraCode), Nikita Prokopov, OFL-1.1
+- [Zola Book theme](https://github.com/getzola/zola), Vincent Prouillet, MIT licensed
+- [prism.js](https://prismjs.com/), Lea Verou, MIT licensed
 
 
 
