@@ -1588,13 +1588,11 @@ If you are used to programming Java or C, consider these.
 </div>
 
 
-<!-- | **API Design** | Follow the [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html)) to make your API feel Rustic. | -->
-<!-- |  | Add benchmarks (`#[bench]`) to ensure your code is fast. | -->
 
 {{ tablesep() }}
 
 > 🔥 We **highly** recommend you also follow the
-> [**API Guidelines**](https://rust-lang-nursery.github.io/api-guidelines/) ([**Checklist**](https://rust-lang-nursery.github.io/api-guidelines/checklist.html))
+> [**API Guidelines**](https://rust-lang.github.io/api-guidelines/) ([**Checklist**](https://rust-lang.github.io/api-guidelines/checklist.html))
 > for any shared project! 🔥
 
 
@@ -2058,7 +2056,7 @@ All major Rust books developed by the community.
 | Books&nbsp;️📚  | Description |
 |--------| -----------|
 | [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) | Standard introduction to Rust, **start here if you are new**. |
-| {{ tab() }} [The API Guidelines](https://rust-lang-nursery.github.io/api-guidelines/) | How to write idiomatic and re-usable Rust. |
+| {{ tab() }} [The API Guidelines](https://rust-lang.github.io/api-guidelines/) | How to write idiomatic and re-usable Rust. |
 | {{ tab() }} [The Async Book](https://rust-lang.github.io/async-book/)  {{ experimental() }} | Explains `async` code, `Futures`, ... |
 | {{ tab() }} [The Edition Guide](https://doc.rust-lang.org/nightly/edition-guide/) | Working with Rust 2015, Rust 2018, and beyond.  |
 | {{ tab() }} [The Little Book of Rust Macros](https://danielkeep.github.io/tlborm/book/index.html) {{ experimental() }}| Community's collective knowledge of Rust macros. |
@@ -2068,7 +2066,7 @@ All major Rust books developed by the community.
 | {{ tab() }} [The Rustc Guide](https://rust-lang.github.io/rustc-guide/index.html) | Explains how the compiler works internally. |
 | {{ tab() }} [The Rustdoc Book](https://doc.rust-lang.org/stable/rustdoc/) | Tips how to customize `cargo doc` and `rustdoc`. |
 | {{ tab() }} [The Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
-| {{ tab() }} [The SIMD Performance Guide](https://rust-lang-nursery.github.io/packed_simd/perf-guide/) {{ experimental() }} | Work with `u8x32` or `f32x8` to speed up your computations.  |
+| {{ tab() }} [The SIMD Performance Guide](https://rust-lang.github.io/packed_simd/perf-guide/) {{ experimental() }} | Work with `u8x32` or `f32x8` to speed up your computations.  |
 | {{ tab() }} [The Unsafe Code Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/)  {{ experimental() }} | Concise information about writing `unsafe` code. |
 | {{ tab() }} [The Unstable Book](https://doc.rust-lang.org/unstable-book/index.html) | Information about unstable items, e.g, `#![feature(...)]`.  |
 | [The Cargo Book](https://doc.rust-lang.org/cargo/) | How to use `cargo` and write `Cargo.toml`. |
@@ -2110,7 +2108,7 @@ Online services which provide information or tooling.
 |--------| -----------|
 | [crates.io](https://crates.io/) | All 3rd party libraries for Rust. |
 | [docs.rs](https://docs.rs/) | Documentation for 3rd party libraries, automatically generated from source. |
-| [libs.rs](https://libs.rs/) | Unofficial overview of quality Rust libraries and applications. |
+| [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 
 </div>
