@@ -38,17 +38,46 @@ Ralf Biedert (<a href="mailto:admin@xr.io">mail</a>)
 
 ### Copyright Information
 
-This cheat sheet ("work") consists of:
+We use the following model:
 
-- viewable text (tables, guides, snippets) addressing language-related content, as presented on the site [cheats.rs](https://cheats.rs) ("content")
-- code, logos, assets, fonts, graphics ("supporting assets")
+**tl;dr**, if you want to
+- copy a Rust snippet or example: it's CC0, just do it
+- copy or embed the entire site or sections: it's CC-BY, please give credit (also to 3rd party assets, see below).
+
+
+**In detail**, this cheat sheet ("work") consists of:
+
+- text (tables, guides, Rust snippets) addressing language-related content viewable on [cheats.rs](https://cheats.rs) ("content")
+- code (HTML + CSS), logos, assets, fonts, graphics and the resulting presentation ("supporting assets")
 - metadata, such as the real names of contributors (e.g., on Github or the site), information from the Git repo, any other information not directly related to end-user content ... ("metadata")
 
-The **content** of this work is licensed as CC0 from the European Union, with contributions from all over the world. If you _need_ to cite this work, e.g., for reasons of moral rights in the EU, or proper academic or business conduct, you can use "Rust Language Cheat Sheet (cheats.rs), Ralf Biedert et. al." or something similar.
+The **content** of this work is licensed as CC0 from the European Union, with contributions from all over the world.
 
-Third party **supporting assets** retain their original license. Supporting assets produced by this project (in particular code) are MIT licensed.
+Third party **supporting assets** retain their original license. Supporting assets produced by this project are CC-BY licensed (previously MIT).
 
-**Metadata** should be treated as **licensed only to the extent needed to contribute to, or use this work**. In particular, all contributors retain the full rights to their names, mail addresses, and related (meta-) information, except to the technical extent needed to make a contribution. They may not be used for any other purpose, unless given express permission by the individual in question.
+**Metadata** is not governed by any of these licenses.
+
+To give credit to this project you can use something like:
+
+> "Rust Language Cheat Sheet (cheats.rs), Ralf Biedert et. al."
+
+Depending on what you do, you might also want to give credit to the persons and projects below.
+
+
+
+
+### Currently Known Third-Party Supporting Assets Used
+
+- normalize.css, Nicolas Gallagher and Jonathan Neal, MIT licensed
+- Fira Code, Nikita Prokopov, OFL-1.1
+- Zola Book theme, Vincent Prouillet, MIT licensed
+- prism.js, Lea Verou, MIT licensed
+
+
+
+### Disclaimer
+
+We do our best to keep things correct, but no warranty is given any information presented on this site is actually true. Use at your own risk.
 
 
 ### Trademark Information
