@@ -26,7 +26,7 @@ function exit_if_fail {
 }
 
 
-#exit_if_fail zola -c $TOML_BASE check
+exit_if_fail zola -c $TOML_BASE check
 exit_if_fail zola -c $TOML_BASE build
 exit_if_fail npm run posthtml
 
