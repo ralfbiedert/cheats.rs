@@ -711,78 +711,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 </datum>
 
 
-Float types are slightly more complicated and follow [IEEE 754-2008](https://en.wikipedia.org/wiki/IEEE_754-2008_revision). For example, the bit view of a <code>f32</code> looks like this:
-
-
-<!-- NEW ENTRY -->
-<datum class="centered" style="opacity:0.7; margin-bottom:10px;">
-    <visual class="float">
-    <bitgroup>
-        <bit><code>S</code></bit>
-    </bitgroup>
-    <bitgroup>
-        <bit><code>E</code></bit>
-        <bit><code>E</code></bit>
-        <bit><code>E</code></bit>
-        <bit><code>E</code></bit>
-        <bit><code>E</code></bit>
-        <bit><code>E</code></bit>
-        <bit><code>E</code></bit>
-        <bit><code>E</code></bit>
-    </bitgroup>
-    <bitgroup>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-        <bit><code>F</code></bit>
-    </bitgroup>
-    </visual>
-</datum>
-
-
-
-Where `S` is the sign bit (`0` is positive, `1` negative), `E` are exponent bits, and `F` fraction bits. In case of a `f32`, this gives the following values:
-
-| f32 | S (1) | E (8) | F (23) | Value |
-|------| ---------| ---------| ---------| ---------|
-| Normalized number | ± | 1 to 254 | any | ±(1.F)<sub>2</sub> * 2<sup>E-127</sup>  |
-| Denormalized number | ± | 0 | non-zero | ±(0.F)<sub>2</sub> * 2<sup>-126</sup>  |
-| Zero | ± | 0 | 0 | ±0  |
-| Infinity | ± | 255 | 0 | ±∞  |
-| NaN | ± | 255 | non-zero | NaN  |
-
-
-{{ tablesep() }}
-
-Values of type `f64` are composed similarly:
-
-| f64 | S (1) | E (11) | F (52) | Value |
-|------| ---------| ---------| ---------| ---------|
-| Normalized number | ± | 1 to 2046 | any | ±(1.F)<sub>2</sub> * 2<sup>E-1023</sup>  |
-| Denormalized number | ± | 0 | non-zero | ±(0.F)<sub>2</sub> * 2<sup>-1022</sup>  |
-| Zero | ± | 0 | 0 | ±0  |
-| Infinity | ± | 2047 | 0 | ±∞  |
-| NaN | ± | 2047 | non-zero | NaN  |
-
+Float types are slightly more complicated and follow [IEEE 754-2008](https://en.wikipedia.org/wiki/IEEE_754-2008_revision).
 
 {{ tablesep() }}
 
@@ -1983,35 +1912,6 @@ They often require unstable and are subject to break.
 
 </div>
 
-
-
-<!--
-
-## Data Layout
-
-Primitive types:
-
-| Kind | 1 byte |  2 byte |  4 byte |  8 byte |  16 byte |
-|---|---|---|---|---|---|---|---|
-|**Signed**| `u8` |  `u16` |  `u32` |  `u64` |  `u128` |
-|**Unsigned**| `i8` |  `i16` |  `i32` |  `i64` |  `i128` |
-|**Float**|      |        |  `f32` |  `f64` |         |
-|**Boolean**| `true`, `false` |        |  |   |         |
-
-{{ tablesep() }}
-
-Advanced types:
-
-| Type | Bytes |  Description |
-|--- |---|---|
-|`()` | 0 | Unit types (also `struct S;`, `!`, ...) take up no memory. |
-|`T`| `mem::xxx(T)` | If `x: T` moved might produce additional runtime drop flag. |
-|`&T`| word<sup>*</sup> | References are plain pointers. |
-|`&'a T`| word<sup>*</sup> | Same as `&T`, lifetimes disappear in assembly (contrasting move). |
-|`&[T]`| 2 x word<sup>*</sup> | A slice is represented as `(ptr, len)`. |
-
-&nbsp; &nbsp; <sup>*</sup> whatever word size is on machine, usually 4 or 8 bytes.
- -->
 
 
 <!-- Don't render this section for printing, won't be helpful -->
