@@ -41,32 +41,24 @@ Ralf Biedert (<a href="mailto:admin@xr.io">mail</a>)
 We use the following model:
 
 **tl;dr**, if you want to
-- copy a Rust snippet or example: it's CC0, just do it
-- copy or embed the entire site or sections: it's CC-BY, please give credit (also to 3rd party assets, see below).
+- copy a Rust snippet or example: CC0, just do it
+- copy or embed the entire site: CC-BY, please give credit (also to 3rd party assets, see below).
 
 
 **In detail**, this cheat sheet ("work") consists of:
 
 - text (tables, guides, Rust snippets) addressing language-related content viewable on [cheats.rs](https://cheats.rs) ("content")
-- code (HTML + CSS), logos, assets, fonts, graphics and the resulting presentation ("supporting assets")
+- code (HTML + CSS; _not_ Rust code), logos, graphics, assets and the resulting presentation ("supporting assets")
 - metadata, such as the real names of contributors (e.g., on Github or the site), information from the Git repo, any other information not directly related to end-user content ... ("metadata")
 
 The **content** of this work is licensed as CC0 from the European Union, with contributions from all over the world.
 
-Third party **supporting assets** retain their original license. Supporting assets produced by this project are CC-BY licensed (previously MIT).
+**Supporting assets** produced by this project are CC-BY. Third party supporting assets retain their original license.
 
 **Metadata** is not governed by any of these licenses.
 
-To give credit to this project you can use something like:
 
-> "Rust Language Cheat Sheet (cheats.rs), Ralf Biedert et. al."
-
-Depending on what you do, you might also want to give credit to the persons and projects below.
-
-
-
-
-### Currently Known Third-Party Supporting Assets Used
+### Third Party Assets
 
 - [normalize.css](https://github.com/necolas/normalize.css), Nicolas Gallagher and Jonathan Neal, MIT licensed
 - [Fira Code](https://github.com/tonsky/FiraCode), Nikita Prokopov, OFL-1.1
@@ -79,10 +71,12 @@ Depending on what you do, you might also want to give credit to the persons and 
 
 We do our best to keep things correct, but no warranty is given any information presented on this site is actually true. Use at your own risk.
 
+Feel free to use [**this issue tracker**](https://github.com/ralfbiedert/cheats.rs/issues) to submit improvements.
+
 
 ### Trademark Information
 
-In any case, this work refers to trademarked products. In particular the "Rust" and "Cargo" names and logos are trademarks of the [Mozilla Foundation](https://foundation.mozilla.org/) and may only be used according to their trademark policy.
+This work refers to trademarked products. In particular the "Rust" and "Cargo" names and logos are trademarks of the [Mozilla Foundation](https://foundation.mozilla.org/) and may only be used according to their trademark policy.
 
 
 
