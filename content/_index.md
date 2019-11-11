@@ -1552,6 +1552,7 @@ fn my_algo(b: &mut Bencher) {
 </div>
 </div>
 
+{{ tablesep() }}
 
 
 ## Idiomatic Rust
@@ -1597,6 +1598,7 @@ If you are used to programming Java or C, consider these.
 
 
 
+{{ tablesep() }}
 
 
 
@@ -1702,6 +1704,7 @@ This leads to the following considerations when writing code inside an `async` c
 
 
 
+{{ tablesep() }}
 
 
 ## Closures
@@ -1766,10 +1769,7 @@ That gives the following advantages and disadvantages:
 </div>
 
 
-
-<!-- ## Important Traits
-
-xxx -->
+{{ tablesep() }}
 
 
 ## A Guide to Reading Lifetimes
@@ -1831,11 +1831,11 @@ When reading function or type signatures in particular:
 |  | The `'b: 'a` part is a **lifetime bound**, and means `'b` must **outlive** `'a`. |
 |  | Any address in an `&'b X` must exist at least as long as any in an `&'a Y`. |
 
-{{ tablesep() }}
 
 </div>
 
 
+{{ tablesep() }}
 
 
 ## Invisible Sugar
@@ -1858,6 +1858,7 @@ If something works that "shouldn't work now that you think about it", it might b
 </div>
 
 
+{{ tablesep() }}
 
 
 ## Formatting Strings
@@ -1911,6 +1912,9 @@ The full grammar is [specified in the
 | `{val:#x}` | Format `val` argument as hex, with a leading `0x` (alternate format for `x`). |
 
 </div>
+
+
+{{ tablesep() }}
 
 
 ## Tooling
