@@ -1891,26 +1891,7 @@ Install them with `rustup component add [tool]`.
 
 {{ tablesep() }}
 
-
-These are 3rd party tools and usually need to be installed with `cargo install cargo-[tool]` first.
-They often require unstable and are subject to break.
-
-
-<div class="header-lobstercrabs">
-
-| Command | Description |
-|--------| ---- |
-| `cargo asm` | Show generated assembly instructions for code. {{ link(url = "https://github.com/gnzlbg/cargo-asm") }}  |
-| `cargo outdated` | List upgradable dependencies. {{ link(url = "https://github.com/kbknapp/cargo-outdated") }}  |
-| `cargo tree` | Print dependencies as a tree. {{ link(url = "https://github.com/sfackler/cargo-tree") }}  |
-| `cargo-edit` | Meta package (`cargo install cargo-edit`) {{ link(url = "https://github.com/killercup/cargo-edit") }}. Provides: |
-| {{ tab() }} `cargo add <crate>` | Add latest version of `<crate>` to your `Cargo.toml`.  |
-| {{ tab() }} `cargo rm <crate>` | Remove `<crate>` from your `Cargo.toml`.  |
-| {{ tab() }} `cargo upgrade <crate>` | Upgrade the version of `<crate>` to the latest.  |
-| `cargo flamegraph` | Visualize CPU time (`cargo install flamegraph`). {{ link(url = "https://github.com/ferrous-systems/flamegraph") }} {{ note( note="OSX, Linux only") }} |
-| `cargo cache` | Show statistics on or clean the local download cache of cargo. {{ link(url = "https://github.com/matthiaskrgr/cargo-cache") }} |
-
-</div>
+A large number of additional cargo plugins [**can be found here**](https://crates.io/categories/development-tools::cargo-plugins?sort=downloads).
 
 
 
