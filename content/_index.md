@@ -125,14 +125,15 @@ Data types and memory locations defined via keywords.
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
 | `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
 | `const X: T = T();`  | Defines **constant** {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Copied into a temporary when used. |
-| `let x: T;`  | Allocate `T` bytes on stack bound as `x`. Assignable once, not mutable.  |
-| `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. {{ note( note="*") }} |
+| `let x: T;`  | Allocate `T` bytes on stack {{ note( note="1") }} bound as `x`. Assignable once, not mutable.  |
+| `let mut x: T;`  | Like `let`, but allow for mutability and mutable borrow. {{ note( note="2") }} |
 | {{ tab() }} `x = y;` | Moves `y` to `x`, invalidating `y` if `T` is not `Copy`, and copying `y` otherwise. |
 
 </div>
 
 <div class="footnotes">
-    <sup>*</sup> Note that technically <i>mutable</i> and <i>immutable</i>
+    <sup>1</sup> They live on the stack for synchronous code. For <code>async</code> code these variables become part of the async's state machine which may ultimately reside on the heap.<br>
+    <sup>2</sup> Note that technically <i>mutable</i> and <i>immutable</i>
     are a bit of a misnomer. Even if you have an immutable binding or shared
     reference, it might contain a
     <a href="https://doc.rust-lang.org/std/cell/index.html">Cell</a>,
@@ -1710,7 +1711,7 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 | Construct | How to read |
 |--------| -----------|
 | `let s: S = S(0)`  | A location that is `S`-sized, named `s`, and contains the value `S(0)`.|
-|   | If declared with `let`, that location lives on the stack. |
+|   | If declared with `let`, that location lives on the stack. {{ note( note="1") }} |
 |   | Generally, `s` can mean _location of `s`_, and _value within `s`_. |
 |   | As a location, `s = S(1)` means, assign value `S(1)` to location `s`. |
 |   | As a value, `f(s)` means call `f` with value inside of `s`. |
@@ -1736,6 +1737,12 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 | `&mut s` | Same, but will produce a mutable borrow. |
 |   | A `&mut` will allow the *owner of the borrow* (address) to change `s` content. |
 |   | This reiterates that not the value in `s`, but location of `s` is borrowed. |
+
+<div class="footnotes">
+    <sup>1</sup> Compare <a href="#data-structures">Data Structures</a> section above: while true for synchronous code, an <code>async</code> 'stack frame' might actually be placed on to the heap by the used async runtime.
+</div>
+
+
 
 {{ tablesep() }}
 
