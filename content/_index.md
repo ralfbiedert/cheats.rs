@@ -1719,10 +1719,10 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 |   | To explicitly talk about a location that can hold such a location we do `&S`. |
 | `&'a S`  | A `&S` is a **location that can hold** (at least) **an address**, called reference. |
 |   | Any address stored in here must be that of a valid `S`. |
-|   | Any address stored must _live_ at least for (_outlive_) duration `'a`. |
-|   | That means during `'a` memory targeted by `&S` can't be invalidated.  |
-|   | During `'a` target of `&S` may switch as long as new one also lives for `'a`.  |
-|   | Also, this `&S` must be stopped being used before `'a` ends. |
+|   | Any address stored must be proven to exist for at least (_outlive_) duration `'a`. |
+|   | In other words, the `&S` part sets bounds for what any address here must contain. |
+|   | While the `&'a` part sets bounds for how long any such address must at least live. |
+|   | The lifetime our containing location is unrelated, but naturally always shorter. |
 |   | Duration of `'a` is purely compile time view, based on static analysis. |
 | `&S`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
 |   | Within methods bodies, lifetimes are determined automatically. |
@@ -1750,7 +1750,7 @@ When reading function or type signatures in particular:
 
 | Construct | How to read |
 |--------| -----------|
-| `S<'a> {}` | Signals that `S` will hold at least one address (i.e., reference). |
+| `S<'a> {}` | Signals that `S` will contain{{ note( note="*") }} at least one address (i.e., reference). |
 |  | `'a` will be determined automatically by the user of this struct. |
 |  | `'a` will be chosen as small as possible. |
 | `f<'a>(x: &'a T)`  | Signals this function will accept an address (i.e., reference). |
@@ -1758,8 +1758,7 @@ When reading function or type signatures in particular:
 |   | `'a` will be determined automatically by the caller. |
 |   | `'a` will be chosen as small as possible. |
 |   | `'a` will be picked so that it **satisfies input and output** at call site. |
-|   | `'a` is mix of where `x` comes from and `f(x)` goes. |
-|   | **In addition, propagate borrow state** according to lifetime names! |
+|   | More importantly, **propagate borrow state** according to lifetime names! |
 |   | So while result address with `'a` is used, input address with `'a` is locked.  |
 |   | Here: while `s` from `let s = f(&x)` is around, `x` counts as 'borrowed'. |
 | `<'a, 'b: 'a>` | The lifetimes declared in `S<>` and `f<>` can also have bounds. |
@@ -1767,8 +1766,22 @@ When reading function or type signatures in particular:
 |  | The `'b: 'a` part is a **lifetime bound**, and means `'b` must **outlive** `'a`. |
 |  | Any address in an `&'b X` must exist at least as long as any in an `&'a Y`. |
 
+<div class="footnotes">
+    <sup>*</sup> Technically the struct may not hold any data (e.g., when using the <code>'a</code> only for <a href="https://doc.rust-lang.org/std/marker/struct.PhantomData.html">PhantomData</a> or function pointers) but still make use of the <code>'a</code> for communicating and requiring that some of its functions require reference of a certain lifetime.
+</div>
 
 </div>
+
+ <!--
+ TODO: ADVANCED GUIDE TO WORKING WIHT LIFETIMES
+
+ Taking into account
+ - slightly confusing cases like https://stackoverflow.com/questions/42637911/how-can-this-instance-seemingly-outlive-its-own-parameter-lifetime
+ - interplay between lifetime-baseed subtyping and assignability
+ - reading rules for when temporaries are created (note to self, compare 4abdb9f16b01c51562563b44f6593dc98f675210 in my playground)
+- simplified version of https://doc.rust-lang.org/nomicon/subtyping.html
+
+ -->
 
 
 {{ tablesep() }}
