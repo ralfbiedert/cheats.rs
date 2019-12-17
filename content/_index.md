@@ -562,7 +562,7 @@ Memory representations of common data types.
 Memory representations are depicted for little-endian architectures (e.g., x86-64).
 
 
-#### Integer Types
+#### Integer Types {{ ref(page="types/numeric.html") }}
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -681,7 +681,7 @@ Memory representations are depicted for little-endian architectures (e.g., x86-6
 {{ tablesep() }}
 
 
-#### Float Types
+#### Float Types {{ ref(page="types/numeric.html") }}
 
 
 <!-- NEW ENTRY -->
@@ -718,7 +718,7 @@ Float types are slightly more complicated and follow [IEEE 754-2008](https://en.
 
 
 
-#### Textual Types
+#### Textual Types {{ ref(page="types/textual.html") }}
 
 
 <!-- NEW ENTRY -->
