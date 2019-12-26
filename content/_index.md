@@ -776,7 +776,7 @@ These are Rust's primitive textual types. On a text such as "I love 🦀" they w
 
 ## Custom Types
 
-Basic types that can be defined by the user. The compiler might add additional padding under certain conditions.
+Basic types that can be defined by the user. Actual <b>layout</b> {{ ref(page="type-layout.html") }} is subject to <b>representation</b>. {{ ref(page="type-layout.html#representations") }} Additional padding can be present.
 
 
 <!-- NEW ENTRY -->
@@ -795,7 +795,7 @@ Basic types that can be defined by the user. The compiler might add additional p
     <visual>
        <framed class="any unsized"><code>T</code></framed>
     </visual>
-    <!-- <description><code>T : ?Sized</code>, size not<br> known at compile.</description> -->
+    <description>Dynamically<br>Sized Types {{ ref(page="dynamically-sized-types.html") }}</description>
 </datum>
 
 
