@@ -791,11 +791,11 @@ Basic types that can be defined by the user. The compiler might add additional p
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>T: !Sized</code></name>
+    <name><code>T: ?Sized</code></name>
     <visual>
        <framed class="any unsized"><code>T</code></framed>
     </visual>
-    <!-- <description><code>T : !Sized</code>, size not<br> known at compile.</description> -->
+    <!-- <description><code>T : ?Sized</code>, size not<br> known at compile.</description> -->
 </datum>
 
 
