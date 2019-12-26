@@ -898,13 +898,13 @@ These **sum types** hold a value of either one of their sub types:
             <code>A</code>
         </framed>
     </visual>
-    <andor>and</andor>
+    <andor>or</andor>
     <visual style="text-align: left;">
         <framed class="any" style="width: 100px;">
             <code>B</code>
         </framed>
     </visual>
-    <andor>and</andor>
+    <andor>or</andor>
     <visual style="text-align: left;">
         <framed class="any" style="width: 50px;">
             <code>C</code>
