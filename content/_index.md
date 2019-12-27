@@ -859,7 +859,7 @@ Basic types that can be defined by the user. Actual <b>layout</b> {{ ref(page="t
 
 {{ tablesep() }}
 
-These **sum types** hold a value of either one of their sub types:
+These **sum types** hold a value of one of their sub types:
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -870,14 +870,14 @@ These **sum types** hold a value of either one of their sub types:
             <code>A</code>
         </framed>
     </visual>
-    <andor>or</andor>
+    <andor>exclusive or</andor>
     <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
         <framed class="any" style="width: 100px;">
             <code>B</code>
         </framed>
     </visual>
-    <andor>or</andor>
+    <andor>exclusive or</andor>
     <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
         <framed class="any" style="width: 50px;">
@@ -898,20 +898,20 @@ These **sum types** hold a value of either one of their sub types:
             <code>A</code>
         </framed>
     </visual>
-    <andor>and</andor>
+    <andor>unsafe or</andor>
     <visual style="text-align: left;">
         <framed class="any" style="width: 100px;">
             <code>B</code>
         </framed>
     </visual>
-    <andor>and</andor>
+    <andor>unsafe or</andor>
     <visual style="text-align: left;">
         <framed class="any" style="width: 50px;">
             <code>C</code>
         </framed>
     </visual>
     <description>
-        Not safe at runtime.
+        Can unsafely reinterpret <br>memory. Result might <br> be undefined.
     </description>
 </datum>
 
