@@ -776,7 +776,7 @@ These are Rust's primitive textual types. On a text such as "I love 🦀" they w
 
 ## Custom Types
 
-Basic types that can be defined by the user. The compiler might add additional padding under certain conditions.
+Basic types that can be defined by the user. Actual <b>layout</b> {{ ref(page="type-layout.html") }} is subject to <b>representation</b>. {{ ref(page="type-layout.html#representations") }} Additional padding can be present.
 
 
 <!-- NEW ENTRY -->
@@ -791,11 +791,11 @@ Basic types that can be defined by the user. The compiler might add additional p
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>T: !Sized</code></name>
+    <name><code>T: ?Sized</code></name>
     <visual>
        <framed class="any unsized"><code>T</code></framed>
     </visual>
-    <!-- <description><code>T : !Sized</code>, size not<br> known at compile.</description> -->
+    <description>Dynamically<br>Sized Types {{ ref(page="dynamically-sized-types.html") }}</description>
 </datum>
 
 
@@ -859,7 +859,7 @@ Basic types that can be defined by the user. The compiler might add additional p
 
 {{ tablesep() }}
 
-These **sum types** hold a value of either one of their sub types:
+These **sum types** hold a value of one of their sub types:
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -870,14 +870,14 @@ These **sum types** hold a value of either one of their sub types:
             <code>A</code>
         </framed>
     </visual>
-    <andor>or</andor>
+    <andor>exclusive or</andor>
     <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
         <framed class="any" style="width: 100px;">
             <code>B</code>
         </framed>
     </visual>
-    <andor>or</andor>
+    <andor>exclusive or</andor>
     <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
         <framed class="any" style="width: 50px;">
@@ -898,20 +898,20 @@ These **sum types** hold a value of either one of their sub types:
             <code>A</code>
         </framed>
     </visual>
-    <andor>or</andor>
+    <andor>unsafe or</andor>
     <visual style="text-align: left;">
         <framed class="any" style="width: 100px;">
             <code>B</code>
         </framed>
     </visual>
-    <andor>or</andor>
+    <andor>unsafe or</andor>
     <visual style="text-align: left;">
         <framed class="any" style="width: 50px;">
             <code>C</code>
         </framed>
     </visual>
     <description>
-        Not safe at runtime.
+        Can unsafely reinterpret <br>memory. Result might <br> be undefined.
     </description>
 </datum>
 
