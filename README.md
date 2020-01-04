@@ -33,7 +33,7 @@ zola serve
 Build static offline copy:
 
 ```sh
-zola build --base-url="${PWD}/public/index.html" --output-dir=./public
+zola build --base-url=./public/index.html --output-dir=./public
 ```
 
 
