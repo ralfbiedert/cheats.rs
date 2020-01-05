@@ -30,12 +30,6 @@ Built with [Zola](https://www.getzola.org/), the static site generator written i
 zola serve
 ```
 
-Build static offline copy:
-
-```sh
-zola build --base-url="$PWD/public/index.html" --output-dir="$PWD/public"
-```
-
 
 
 # Contributing
