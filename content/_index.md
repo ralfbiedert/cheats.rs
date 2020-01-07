@@ -747,7 +747,7 @@ Float types are slightly more complicated and follow [IEEE 754-2008](https://en.
         <byte class="bytes"><code>8</code></byte>
         <note>... unspecified times</note>
     </visual>
-    <description>Rarely seen alone, but as <code>&'a str</code> instead.</description>
+    <description>Rarely seen alone, but as <code>&str</code> instead.</description>
 </datum>
 
 Notice how:
