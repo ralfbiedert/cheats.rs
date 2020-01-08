@@ -1493,7 +1493,7 @@ If you are used to programming Java or C, consider these.
 
 | Idiom | Code |
 |--------| ---- |
-| **Think in Expressions** | `x = if x { a } else { b };` |
+| **Think in Expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} | `x = if x { a } else { b };` |
 |  | `x = loop { break 5 };`  |
 |  | `fn f() -> u32 { 0 }`  |
 | **Think in Iterators** | `(1..10).map(f).collect()` |
