@@ -274,8 +274,8 @@ Control execution within a function.
 | {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
 | {{ tab() }} `X::f(&x)` | Same as `x.f()`. |
 | {{ tab() }} `X::f(&mut x)` | Same as `x.f()`. |
-| {{ tab() }} `S::f(&x)` | Same as `x.f()` if `X` [derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) to `S` (i.e., `x.f()` finds methods of `S`). |
-| {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T` (i.e., `x.f()` finds methods of `T` if in scope). |
+| {{ tab() }} `S::f(&x)` | Same as `x.f()` if `X` [derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) to `S`, i.e., `x.f()` finds methods of `S`. |
+| {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T`, i.e., `x.f()` finds methods of `T` if in scope. |
 | `X::f()` | Call associated function, e.g., `X::new()`. |
 | {{ tab() }} `<X as T>::f()` | Call trait method `T::f()` implemented for `X`. |
 </div>
