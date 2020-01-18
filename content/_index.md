@@ -1836,7 +1836,7 @@ unsafe fn unsafe_f(x: *mut u8) {
 
 **Undefined Behavior (UB)**
 - As mentioned, `unsafe` code implies [special promises](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html) to the compiler (it wouldn't need be `unsafe` otherwise).
-- Failure to uphold any promise makes the compiler produce wrong code, giving an undefined program.
+- Failure to uphold any promise makes the compiler produce _wrong_ code, giving an undefined program.
 - With undefined behavior _anything_ is possible. Insidiously, the effects may be 1) subtle, 2) manifest far away from the site of violation or 3) be visible only under certain conditions.
 - A seemingly _working_ program (incl. any number of unit tests) is no proof UB code might not fail on a whim.
 - Code with UB is objectively dangerous and invalid and should never exist.
