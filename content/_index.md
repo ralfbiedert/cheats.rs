@@ -72,6 +72,7 @@ Guides
 * [Closures](#closures)
 * [A Guide to Reading Lifetimes](#a-guide-to-reading-lifetimes)
 * [Invisible Sugar](#invisible-sugar)
+* [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
 * [Formatting Strings](#formatting-strings)
 * [Tooling](#tooling)
 
@@ -1805,6 +1806,84 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
 
 </div>
+
+
+{{ tablesep() }}
+
+
+## Unsafe, Unsound, Undefined
+
+Unsafe leads to unsound. Unsound leads to undefined. Undefined leads to the dark side of the force.
+
+
+**Unsafe Code**
+- Code marked `unsafe` has special permissions, e.g., to deref raw pointers, or invoke other `unsafe` functions.
+- Along come special **promises the author _must_ uphold to the compiler**, and the compiler will trustingly reason and optimize based on these promises.
+- By itself `unsafe` code is not _bad_, but dangerous, and needed for FFI, assembly, or some exotic data structures.
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```rust
+// `x` must always point to race-free, valid, aligned, initialized u8 memory.
+unsafe fn unsafe_f(x: *mut u8) {
+    my_native_lib(x);
+}
+```
+
+</div>
+</div>
+
+**Undefined Behavior (UB)**
+- As mentioned, `unsafe` code implies [special promises](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html) to the compiler (it wouldn't need be `unsafe` otherwise).
+- Failure to uphold any promise makes the compiler produce wrong code, giving an undefined program.
+- With undefined behavior _anything_ is possible. Insidiously, the effects may be 1) subtle, 2) manifest far away from the site of violation or 3) be visible only under certain conditions.
+- A seemingly _working_ program (incl. any number of unit tests) is no proof UB code might not fail on a whim.
+- Code with UB is objectively dangerous and invalid and should never exist.
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+
+```rust
+if user_pressed_x() {                                  // Even if user never pressed `x` compiler
+    let r: &mut u8 = unsafe { &mut *ptr::null_mut() }; // might have reasoned backwards b/c broken
+}                                                      // promise and tainted whole app.
+```
+
+</div>
+</div>
+
+**Unsound Code**
+- Any safe Rust that could (even only theoretically) produce undefined behavior is **unsound**.
+- Such safe Rust code should instead be tagged `unsafe` with all critical contracts documented.
+- Any `unsafe` Rust code that for its user unavoidably (and undocumented) exhibits UB is likewise unsound.
+- Unsound code is of particular concern in libraries, where its UB'ness depends on how the code is used.
+- As such, unsound code exposed through a library is a liability to users as it violates basic assumption many Rust users have, while unsound code within an application are accidents waiting to happen.
+
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```rust
+fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happens to be
+    unsafe { mem::transmute(x) }         // ok if invoked with an &u128, UB for practically
+}                                        // everything else.
+```
+
+</div>
+</div>
+
+{{ tablesep() }}
+
+
+>
+> **Responsible use of Unsafe**
+>
+> - Do not use `unsafe` unless you absolutely have to.
+> - Follow the [Nomicon](https://doc.rust-lang.org/nightly/nomicon/), [Unsafe Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/), **always** uphold **all** safety invariants, and **never** invoke [UB](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html).
+> - Minimize the use of `unsafe` and encapsulate it in a small, _boring_ units that are trivial to review.
+> - Each `unsafe` invocation should be accompanied by plain-text comments explaining why it is safe.
 
 
 {{ tablesep() }}
