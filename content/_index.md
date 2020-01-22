@@ -201,7 +201,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `*mut S` | Mutable raw pointer type w/o memory safety. |
 | `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., address, len, vtable, ... of _this_ `s`, like `0x1234`). |
 | `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
-| `ref s` | Legacy **bind by reference**. {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
+| `ref s` | **Bind by reference**. {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
 | `*r` | **Dereference** {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} a reference `r` to access what it points to. |
 | {{ tab() }} `*r = s;` | If `r` is a mutable reference, move or copy `s` to target memory. |
 | {{ tab() }} `s = *r;` | Make `s` a copy of whatever `r` references, if that is `Copy`. |
