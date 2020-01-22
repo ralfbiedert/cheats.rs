@@ -2091,6 +2091,7 @@ Online services which provide information or tooling.
 | Services&nbsp;⚙️ | Description |
 |--------| -----------|
 | [crates.io](https://crates.io/) | All 3rd party libraries for Rust. |
+| [std.rs](https://std.rs/) | Shortcut to `std` documentation. |
 | [docs.rs](https://docs.rs/) | Documentation for 3rd party libraries, automatically generated from source. |
 | [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
