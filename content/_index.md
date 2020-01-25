@@ -1855,11 +1855,10 @@ if user_pressed_x() {                                  // Even if user never pre
 </div>
 
 **Unsound Code**
-- Any safe Rust that could (even only theoretically) produce undefined behavior is **unsound**.
-- Such safe Rust code should instead be tagged `unsafe` with all critical contracts documented.
-- Any `unsafe` Rust code that for its user unavoidably (and undocumented) exhibits UB is likewise unsound.
-- Unsound code is of particular concern in libraries, where its UB'ness depends on how the code is used.
-- As such, unsound code exposed through a library is a liability to users as it violates basic assumption many Rust users have, while unsound code within an application are accidents waiting to happen.
+- Any "safe" Rust that could (even only theoretically) produce undefined behavior is _always_ **unsound**.
+- Such code should be in `unsafe` functions instead, with clear documentation what users must do to avoid UB.
+- Any `unsafe` Rust code that exhibits UB without documenting the conditions for safe use is likewise unsound.
+- Unsound code is a stability and security risk, and violates basic assumption many Rust users have.
 
 
 <div style="overflow:auto;">
