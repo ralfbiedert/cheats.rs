@@ -1819,7 +1819,7 @@ Unsafe leads to unsound. Unsound leads to undefined. Undefined leads to the dark
 **Unsafe Code**
 - Code marked `unsafe` has special permissions, e.g., to deref raw pointers, or invoke other `unsafe` functions.
 - Along come special **promises the author _must_ uphold to the compiler**, and the compiler will trustingly reason and optimize based on these promises.
-- By itself `unsafe` code is not _bad_, but dangerous, and needed for FFI, assembly, or some exotic data structures.
+- By itself `unsafe` code is not _bad_, but dangerous, and needed for FFI or exotic data structures.
 
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
@@ -1836,10 +1836,10 @@ unsafe fn unsafe_f(x: *mut u8) {
 
 **Undefined Behavior (UB)**
 - As mentioned, `unsafe` code implies [special promises](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html) to the compiler (it wouldn't need be `unsafe` otherwise).
-- Failure to uphold any promise makes the compiler produce wrong code, giving an undefined program.
-- After causing undefined behavior _anything_ is possible. Insidiously, the effects may be 1) subtle, 2) manifest far away from the site of violation or 3) be visible only under certain conditions.
+- Failure to uphold any promise makes compiler produce fallacious code, execution of which leads to UB.
+- After triggering undefined behavior _anything_ can happen. Insidiously, the effects may be 1) subtle, 2) manifest far away from the site of violation or 3) be visible only under certain conditions.
 - A seemingly _working_ program (incl. any number of unit tests) is no proof UB code might not fail on a whim.
-- Code triggering UB is objectively dangerous and invalid and should never exist.
+- Code with UB is objectively dangerous, invalid and should never exist.
 
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
@@ -1868,9 +1868,8 @@ if maybe_true() {                                      // At least* if positivel
 {{ tablesep() }}
 
 **Unsound Code**
-- Any "safe" Rust that could (even only theoretically) produce undefined behavior is _always_ **unsound**.
-- Such code should be in `unsafe` functions instead, with clear documentation what users must do to avoid UB.
-- Any `unsafe` Rust code that exhibits UB without documenting the conditions for safe use is likewise unsound.
+- Any "safe" `pub` Rust that could (even only theoretically) produce UB for any user input is always **unsound**.
+- As is `unsafe` code that may invoke UB on its own accord by violating above-mentioned promises.
 - Unsound code is a stability and security risk, and violates basic assumption many Rust users have.
 
 
@@ -1895,7 +1894,7 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 > - Do not use `unsafe` unless you absolutely have to.
 > - Follow the [Nomicon](https://doc.rust-lang.org/nightly/nomicon/), [Unsafe Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/), **always** uphold **all** safety invariants, and **never** invoke [UB](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html).
 > - Minimize the use of `unsafe` and encapsulate it in a small, _boring_ units that are trivial to review.
-> - Each `unsafe` invocation should be accompanied by plain-text comments explaining why it is safe.
+> - Each `unsafe` unit should be accompanied by plain-text reasoning outlining its safety.
 
 
 {{ tablesep() }}
