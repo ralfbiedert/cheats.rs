@@ -1818,8 +1818,8 @@ Unsafe leads to unsound. Unsound leads to undefined. Undefined leads to the dark
 
 **Unsafe Code**
 - Code marked `unsafe` has special permissions, e.g., to deref raw pointers, or invoke other `unsafe` functions.
-- Along come special **promises the author _must_ uphold to the compiler**, and the compiler will trustingly reason and optimize based on these promises.
-- By itself `unsafe` code is not _bad_, but dangerous, and needed for FFI or exotic data structures.
+- Along come special **promises the author _must_ uphold to the compiler**, and the compiler _will_ trust you.
+- By itself `unsafe` code is not bad, but dangerous, and needed for FFI or exotic data structures.
 
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
@@ -1846,32 +1846,21 @@ unsafe fn unsafe_f(x: *mut u8) {
 
 
 ```rust
-if maybe_true() {                                      // At least* if positively evaluated, behavior
-    let r: &mut u8 = unsafe { &mut *ptr::null_mut() }; // of the ENTIRE application is undefined.
-} else {                                               // Even if `r` didn't "do" anything, app might
-    println!("the spanish inquisition");               // execute both paths, neither, or do
-}                                                      // something else entirely.
+if maybe_true() {
+   let r: &u8 = unsafe { &*ptr::null() };    // Once this runs, ENTIRE app is undefined. Even if
+} else {                                     // line seemingly didn't do anything, app might now run
+    println!("the spanish inquisition");     // both paths, corrupt database, or anything else.
+}
 ```
 </div>
-</div>
-
-<div class="footnotes">
-    <sup>*</sup>As of today Rust does not have a formal specification.
-    Safe Rust is, with the exception of bugs, free of UB, but the exact bounds of UB in <code>unsafe</code> have yet to be determined.
-    That being said, these discussions (although C-specific) might be interesting to read:
-    <a href="http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html">What Every C Programmer Should Know About UB</a>,
-    <a href="https://stackoverflow.com/questions/18385020/can-code-that-will-never-be-executed-invoke-undefined-behavior">Can code never executed invoke UB?</a> (compare runtime vs. compile-time UB)
-    and
-    <a href="https://stackoverflow.com/questions/23153445/can-branches-with-undefined-behavior-be-assumed-unreachable-and-optimized-as-dea">Can branches with UB be assumed unreachable?</a>
 </div>
 
 {{ tablesep() }}
 
 **Unsound Code**
-- Any "safe" `pub` Rust that could (even only theoretically) produce UB for any user input is always **unsound**.
+- Any _safe_ Rust that could (even only theoretically) produce UB for any user input is always **unsound**.
 - As is `unsafe` code that may invoke UB on its own accord by violating above-mentioned promises.
 - Unsound code is a stability and security risk, and violates basic assumption many Rust users have.
-
 
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
@@ -1893,7 +1882,7 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 >
 > - Do not use `unsafe` unless you absolutely have to.
 > - Follow the [Nomicon](https://doc.rust-lang.org/nightly/nomicon/), [Unsafe Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/), **always** uphold **all** safety invariants, and **never** invoke [UB](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html).
-> - Minimize the use of `unsafe` and encapsulate it in a small, _boring_ units that are trivial to review.
+> - Minimize the use of `unsafe` and encapsulate it in the small, sound modules that are easy to review.
 > - Each `unsafe` unit should be accompanied by plain-text reasoning outlining its safety.
 
 
