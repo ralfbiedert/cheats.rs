@@ -244,7 +244,7 @@ Define units of code and their abstractions.
 | {{ tab() }} <code>&vert;x&vert; x + x</code> | Closure without block expression.  |
 | {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures. |
 | {{ tab() }} <code> return &vert;&vert; true </code> | Closures may sometimes look like logical ORs (here: return a closure). |
-| `unsafe {}` | If you need to crash your code in production; **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
+| `unsafe {}` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 
 </div>
 
@@ -1836,23 +1836,36 @@ unsafe fn unsafe_f(x: *mut u8) {
 
 **Undefined Behavior (UB)**
 - As mentioned, `unsafe` code implies [special promises](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html) to the compiler (it wouldn't need be `unsafe` otherwise).
-- Failure to uphold any promise makes the compiler produce _wrong_ code, giving an undefined program.
-- With undefined behavior _anything_ is possible. Insidiously, the effects may be 1) subtle, 2) manifest far away from the site of violation or 3) be visible only under certain conditions.
+- Failure to uphold any promise makes the compiler produce wrong code, giving an undefined program.
+- After causing undefined behavior _anything_ is possible. Insidiously, the effects may be 1) subtle, 2) manifest far away from the site of violation or 3) be visible only under certain conditions.
 - A seemingly _working_ program (incl. any number of unit tests) is no proof UB code might not fail on a whim.
-- Code with UB is objectively dangerous and invalid and should never exist.
+- Code triggering UB is objectively dangerous and invalid and should never exist.
 
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
 
 ```rust
-if user_pressed_x() {                                  // Even if user never pressed `x` compiler
-    let r: &mut u8 = unsafe { &mut *ptr::null_mut() }; // might have reasoned backwards b/c broken
-}                                                      // promise and tainted whole app.
+if maybe_true() {                                      // At least* if positively evaluated, behavior
+    let r: &mut u8 = unsafe { &mut *ptr::null_mut() }; // of the ENTIRE application is undefined.
+} else {                                               // Even if `r` didn't "do" anything, app might
+    println!("the spanish inquisition");               // execute both paths, neither, or do
+}                                                      // something else entirely.
 ```
+</div>
+</div>
 
+<div class="footnotes">
+    <sup>*</sup>As of today Rust does not have a formal specification.
+    Safe Rust is, with the exception of bugs, free of UB, but the exact bounds of UB in <code>unsafe</code> have yet to be determined.
+    That being said, these discussions (although C-specific) might be interesting to read:
+    <a href="http://blog.llvm.org/2011/05/what-every-c-programmer-should-know.html">What Every C Programmer Should Know About UB</a>,
+    <a href="https://stackoverflow.com/questions/18385020/can-code-that-will-never-be-executed-invoke-undefined-behavior">Can code never executed invoke UB?</a> (compare runtime vs. compile-time UB)
+    and
+    <a href="https://stackoverflow.com/questions/23153445/can-branches-with-undefined-behavior-be-assumed-unreachable-and-optimized-as-dea">Can branches with UB be assumed unreachable?</a>
 </div>
-</div>
+
+{{ tablesep() }}
 
 **Unsound Code**
 - Any "safe" Rust that could (even only theoretically) produce undefined behavior is _always_ **unsound**.
