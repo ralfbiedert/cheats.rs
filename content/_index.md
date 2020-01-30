@@ -397,6 +397,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 | `match m {}` | Initiate **pattern matching** {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }}, then use match arms, _c_. next table. |
 | `let S(x) = get();`  | Notably, `let` also pattern matches similar to the table below. |
 |  {{ tab() }} `let S { x } = s;` | Only `x` will be bound to value `s.x`. |
+|  {{ tab() }} `let S { x: a } = s;` | Similar, `a` will be bound to `s.x` (e.g., for when an `x` is already bound). |
 |  {{ tab() }} `let (_, b, _) = abc;` | Only `b` will be bound to value `abc.1`. |
 |  {{ tab() }} `let (a, ..) = abc;` | Ignoring 'the rest' also works. |
 |  {{ tab() }} `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
@@ -416,8 +417,9 @@ Pattern matching arms in `match` expressions. The left side of these arms can al
 |  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
 |  `E::B ( .. ) => {}` | Match enum tuple variant `B`, wildcard any index. |
 |  `E::C { .. } => {}` | Match enum struct variant `C`, wildcard any field. |
-|  `S { x: 0, y: 1 } => {}` | Match struct with specific params. |
-|  `S { x, y } => {}` | Match struct with any values, bind respective fields as variables `x` and `y`. |
+|  `S { x: 0, y: 1 } => {}` | Match struct with specific values (only accepts `s` with `s.x` of `0` and `s.y` of `1`). |
+|  `S { x: a, y: b } => {}` | Match struct with _any_(!) values and bind `s.x` to `a` and `s.y` to `b`. |
+|  {{ tab() }} `S { x, y } => {}` | Same, but shorthand with `s.x` and `s.y` bound as `x` and `y` respectively. |
 |  `S { .. } => {}` | Match struct with any values. |
 |  `D => {}` | Match enum variant `E::D` if `D` in `use`. |
 |  `D => {}` | Match anything, bind `D`; possibly false friend {{ bad() }} of `E::D` if `D` not in `use`. |
