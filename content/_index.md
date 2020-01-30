@@ -397,7 +397,6 @@ Constructs found in `match` or `let` expressions, or function parameters.
 | `match m {}` | Initiate **pattern matching** {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }}, then use match arms, _c_. next table. |
 | `let S(x) = get();`  | Notably, `let` also pattern matches similar to the table below. |
 |  {{ tab() }} `let S { x } = s;` | Only `x` will be bound to value `s.x`. |
-|  {{ tab() }} `let S { x: a } = s;` | Similar, `a` will be bound to `s.x` (e.g., for when an `x` is already bound). |
 |  {{ tab() }} `let (_, b, _) = abc;` | Only `b` will be bound to value `abc.1`. |
 |  {{ tab() }} `let (a, ..) = abc;` | Ignoring 'the rest' also works. |
 |  {{ tab() }} `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
