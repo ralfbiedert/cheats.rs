@@ -922,14 +922,21 @@ These **sum types** hold a value of one of their sub types:
 
 ## References & Pointers {#references-pointers-ui}
 
-References give safe access to another memory location. As can be seen below, lifetimes are not encoded at runtime. Pointers give unsafe access to other memory.
+References give safe access to other memory, raw pointers `unsafe` access.
+For some referents additional `payload` may be present (see below).
+The respective `mut` types are identical.
 
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
     <name><code>&'a T</code></name>
-    <visual class="ptr">
+    <visual>
+        <ptr>
            <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <payload>
+            <code>payload</code><sub>4/8</sub>
+        </payload>
     </visual>
     <memory-entry>
         <memory-link style="left:46%">|</memory-link>
@@ -937,54 +944,51 @@ References give safe access to another memory location. As can be seen below, li
             <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
-    <description>During <code>'a</code> any 'mem' <br/> this targets
-    must always <br>be a valid <code>t</code> of <code>T</code>.</description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>&'a mut T</code></name>
-    <visual class="ptr">
-        <code>ptr</code><sub>4/8</sub>
-    </visual>
-    <memory-entry>
-        <memory-link style="left:46%">|</memory-link>
-        <memory class="anymem">
-            <framed class="any unsized"><code>T</code></framed>
-        </memory>
-    </memory-entry>
-    <description>Same, but location <br/> 'mem' may not be<br/> aliased.</description>
+    <description>During <code>'a</code> any 'mem' this targets
+    must <br> always be a valid <code>t</code> of <code>T</code>.</description>
 </datum>
 
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
     <name><code>*const T</code></name>
-    <visual class="ptr unsafe">
-        <code>ptr</code><sub>4/8</sub>
+    <visual class="unsafe">
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <payload>
+            <code>payload</code><sub>4/8</sub>
+        </payload>
     </visual>
     <zoom>
         No guarantees.
     </zoom>
 </datum>
 
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>*mut T</code></name>
-    <visual class="ptr unsafe">
-        <code>ptr</code><sub>4/8</sub>
-    </visual>
-    <zoom>
-        No guarantees.
-    </zoom>
-</datum>
+<br/>
 
 
 {{ tablesep() }}
 
 
-Rust also has a number of special reference types that encode more than just an address, see below. The respective `&mut` version is identical and omitted:
+The `payload` depends on the base type of the referent. This applies to both references and pointers.
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>&'a T</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <memory-entry>
+        <memory-link style="left:46%">|</memory-link>
+        <memory class="anymem">
+            <framed class="any unsized"><code>T</code></framed>
+        </memory>
+    </memory-entry>
+</datum>
+
 
 
 <!-- NEW ENTRY -->
@@ -1067,82 +1071,6 @@ Rust also has a number of special reference types that encode more than just an 
         <description>Where <code>*Drop::drop()</code>, <code>*Trait::f()</code>, ... are pointers to their respective <code>impl</code> for <code>T</code>.</description>
     </memory-entry>
 
-</datum>
-
-
-{{ tablesep() }}
-
-Box is Rust's type for heap allocation that also comes in a number of special variants:
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>Box&lt;T&gt;</code></name>
-    <visual>
-        <ptr>
-           <code>ptr</code><sub>4/8</sub>
-        </ptr>
-    </visual>
-    <memory-entry>
-        <memory-link style="left:49%">|</memory-link>
-        <memory class="heap">
-        <framed class="any unsized"><code>T</code></framed>
-        </memory>
-</datum>
-
-
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>Box&lt;[T]&gt;</code></name>
-    <visual>
-        <ptr>
-           <code>ptr</code><sub>4/8</sub>
-        </ptr>
-        <sized>
-            <code>len</code><sub>4/8</sub>
-        </sized>
-    </visual>
-    <memory-entry class="double">
-        <memory-link style="left:24%">|</memory-link>
-        <memory class="heap">
-            <framed class="any" style="width: 30px;"><code>T</code></framed>
-            <framed class="any" style="width: 30px;"><code>T</code></framed>
-            <framed class="any" style="width: 30px;"><code>T</code></framed>
-            ...
-        </memory>
-    </memory-entry>
-</datum>
-
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>Box&lt;dyn Trait&gt;</code></name>
-    <visual>
-        <ptr>
-           <code>ptr</code><sub>4/8</sub>
-        </ptr>
-        <ptr>
-            <code>ptr</code><sub>4/8</sub>
-        </ptr>
-    </visual>
-    <memory-entry>
-        <memory-link style="left:49%">|</memory-link>
-        <memory class="heap">
-            <framed class="any unsized"><code>T</code></framed>
-        </memory>
-    </memory-entry>
-    <memory-entry>
-        <memory-link style="left:52%">|</memory-link>
-        <memory class="static-vtable" style="width: 105px;">
-            <table>
-                ...
-            </table>
-        </memory>
-        <description>Compare above.</description>
-    </memory-entry>
 </datum>
 
 
@@ -1237,16 +1165,39 @@ Some common types:
 
 {{ tablesep() }}
 
+
+Rust's basic type to put values on the heap is a `Box`:
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>Box&lt;T&gt;</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <payload>
+            <code>payload</code><sub>4/8</sub>
+        </payload>
+    </visual>
+    <memory-entry>
+        <memory-link style="left:49%">|</memory-link>
+        <memory class="heap">
+        <framed class="any unsized"><code>T</code></framed>
+        </memory>
+</datum>
+
+{{ tablesep() }}
+
+
 These dynamic collections grow when needed and are backed by the heap:
 
-
-<!-- Create a horizontal scrollable area on small displays to preserve layout-->
 
 <!-- NEW ENTRY -->
 <datum>
     <name><code>Vec&lt;T&gt;</code></name>
     <!-- For some reason we need the width for mobile not to line break -->
-    <visual style="width: 270px">
+    <visual>
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1278,7 +1229,7 @@ These dynamic collections grow when needed and are backed by the heap:
 <datum>
     <name><code>String</code></name>
     <!-- For some reason we need the width for mobile not to line break -->
-    <visual style="width: 270px">
+    <visual>
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1311,16 +1262,18 @@ These dynamic collections grow when needed and are backed by the heap:
 
 Shared ownership of memory and resources. If the type does not contain a `Cell` for `T`, these are often combined with one of the `Cell` types above to allow shared de-facto mutability.
 
-
 <!-- NEW ENTRY -->
-<datum style="padding-right:200px; padding-bottom:30px;">
+<datum>
     <name><code>Rc&lt;T&gt;</code></name>
-    <visual>
+    <visual style="width: 180px">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
+        <payload>
+            <code>payload</code><sub>4/8</sub>
+        </payload>
     </visual>
-    <div style="width: 0px;">
+    <div>
         <memory-entry class="quad">
             <memory-link style="left:15%">|</memory-link>
             <memory class="heap">
@@ -1330,18 +1283,21 @@ Shared ownership of memory and resources. If the type does not contain a `Cell` 
             </memory>
         </memory-entry>
     </div>
-    <description style="position:absolute">Share ownership of <code>T</code> in same thread. Needs nested <code>Cell</code>
+    <description>Share ownership of <code>T</code> in same thread. Needs nested <code>Cell</code>
     <br>or <code>RefCell</code>to allow mutation. Is neither <code>Send</code> nor <code>Sync</code>.</description>
 </datum>
 
 
 <!-- NEW ENTRY -->
-<datum style="padding-right:200px; padding-bottom:30px;">
+<datum>
     <name><code>Arc&lt;T&gt;</code></name>
-    <visual>
+    <visual style="width: 180px">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
+        <payload>
+            <code>payload</code><sub>4/8</sub>
+        </payload>
     </visual>
     <div style="width: 0px;">
         <memory-entry class="quad">
@@ -1353,16 +1309,16 @@ Shared ownership of memory and resources. If the type does not contain a `Cell` 
             </memory>
         </memory-entry>
     </div>
-    <description style="position:absolute">Same, but allow sharing between threads IF contained<br>
+    <description>Same, but allow sharing between threads IF contained<br>
     <code>T</code> itself is <code>Send</code> and <code>Sync</code>.</description>
-
 </datum>
 
+<br>
 
 <!-- NEW ENTRY -->
 <datum>
     <name><code>Mutex&lt;T&gt;</code> / <code>RwLock&lt;T&gt;</code></name>
-    <visual>
+    <visual style="width: 230px">
         <ptr><code>ptr</code><sub>4/8</sub></ptr>
         <sized class="atomicx"><code>poisoned</code><sub>4/8</sub></sized>
         <framed class="any unsized celled"><code>T</code></framed>
@@ -1373,7 +1329,7 @@ Shared ownership of memory and resources. If the type does not contain a `Cell` 
             <code>lock</code>
         </memory>
     </memory-entry>
-    <description style="position:absolute">Needs to be held in <code>Arc</code> to be shared between<br> threads,
+    <description>Needs to be held in <code>Arc</code> to be shared between<br> threads,
     always <code>Send</code> and <code>Sync</code>. Consider using <br> <a href="https://crates.io/crates/parking_lot">parking_lot</a> instead (faster, no heap usage).
     </description>
 </datum>

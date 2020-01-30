@@ -327,6 +327,17 @@ datum {
         background-color: lightskyblue;
     }
 
+    payload {
+        display: inline-block;
+        width: 80px;
+        background-color: whitesmoke;
+        border-style: dashed;
+        border-width: 1px;
+        border-color: black;
+        border-radius: 5px;
+    }
+
+
     .unsafe {
         position: relative;
         top: -3px;
