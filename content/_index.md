@@ -984,9 +984,31 @@ The `payload` depends on the base type of the referent. This applies to both ref
     <memory-entry>
         <memory-link style="left:46%">|</memory-link>
         <memory class="anymem">
+            <framed class="any t"><code>T</code></framed>
+        </memory>
+    </memory-entry>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>&'a T</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <sized>
+            <code>len</code><sub>4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry>
+        <memory-link style="left:46%">|</memory-link>
+        <memory class="anymem">
             <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
+    <description>If <code>T</code> is an unsized <code>struct</code> such <br>as <code>S { x: [u8] }</code>
+    field <code>len</code> is <br>length of dyn. sized content.</description>
 </datum>
 
 
@@ -1039,6 +1061,7 @@ The `payload` depends on the base type of the referent. This applies to both ref
     </memory-entry>
 </datum>
 
+<br>
 
 <!-- NEW ENTRY -->
 <datum class="spaced" style="padding-bottom: 165px;">
