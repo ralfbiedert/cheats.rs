@@ -1879,39 +1879,30 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 ## Formatting Strings
 
 Formatting applies to `print!`, `eprint!`, `write!` (and their -`ln` siblings like `println!`).
-The `format!` macro can create a formatted `String`.
+Each format argument is either empty `{}`, `{argument}`, or follows a basic [**syntax**](https://doc.rust-lang.org/std/fmt/index.html#syntax):
 
 <div class="cheats">
 
-
-Each format argument follows a basic grammar:
-
 ```
-{[argument][':'[[fill]align][sign]['#']['0'][width]['.' precision][type]]}
+{ [argument] ':' [[fill] align] [sign] ['#'] [width [$]] ['.' precision [$]] [type] }
 ```
-
-The full grammar is [specified in the
-`std::fmt`](https://doc.rust-lang.org/std/fmt/index.html#syntax) documentation, but here are some commonly used flags:
-
 
 <div class="header-undefined-color-3">
 
 | Element |  Meaning |
 |---------| ---------|
-| `argument` |  Omitted (next `{}`), number (`0`, `1`, ...) or identifier for named arguments. |
-| `align` | Left (`<`), center (`^`), or right (`>`) , if width is specified, fills with `fill`. |
-| `#` | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0). Pretty-print with `{:#?}`, for example. |
-| `0` | Zero-pads numeric values. |
-| `width` | Minimum width (&geq; 0), padding with `fill` (default to space). |
+| `argument` |  Number (`0`, `1`, ...) or argument name, e.g., `print!("{x}", x = 3)`. |
+| `fill` | The character to fill empty spaces with (e.g., `0`), if `width` is specified. |
+| `align` | Left (`<`), center (`^`), or right (`>`), if width is specified. |
+| `sign` | Can be `+` for sign to always be printed. |
+| `#` | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0), e.g. prettify Debug `?` or prefix hex with `0x`. |
+| `width` | Minimum width (&geq; 0), padding with `fill` (default to space). If starts with `0`, zero-padded. |
 | `precision` | Decimal digits (&geq; 0) for numerics, or max width for non-numerics. |
-| `type` | [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html) (`?`), hex (`x`), binary (`b`), or octal (`o`) ([there are more, using Traits](https://doc.rust-lang.org/std/fmt/index.html#traits)). |
+| `$` | Interpret `width` or `precision` as argument identifier instead to allow for dynamic formatting. |
+| `type` | [**Debug**](https://doc.rust-lang.org/std/fmt/trait.Debug.html) (`?`) formatting, hex (`x`), binary (`b`), octal (`o`), pointer (`p`), exp (`e`) ... [see more](https://doc.rust-lang.org/std/fmt/index.html#traits). |
 
 </div>
 
-
-<div class="footnotes">
-    Note that <a href="https://doc.rust-lang.org/std/fmt/index.html#width">width</a> and <a href="https://doc.rust-lang.org/std/fmt/index.html#precision">precision</a> can use other arguments as their values, allowing for dynamic sizing of fields.
-</div>
 
 {{ tablesep() }}
 
@@ -1920,8 +1911,8 @@ The full grammar is [specified in the
 
 | Example | Explanation |
 |---------|-------------|
-| `{:#?}` | Pretty-print the next argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
-| `{2:#?}` | Pretty-print the 3rd argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
+| `{:?}` | Print the next argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
+| `{2:#?}` | Pretty-print the 3rd argument [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html) formatting. |
 | `{val:^2$}` | Center the `val` named argument, width specified by the 3rd argument. |
 | `{:<10.3}` | Left align with width 10 and a precision of 3.|
 | `{val:#x}` | Format `val` argument as hex, with a leading `0x` (alternate format for `x`). |
