@@ -35,7 +35,7 @@ sed -i -e "s/_NOW_/$NOW/g" $DIST/sitemap.xml
 
 
 if [[ $1 == "--live" ]]; then
-    echo -e "Sending to ${_YELLOW}LIVE${_NC} environment."
+    echo -e "Sending to ${_GREEN}LIVE${_NC} environment."
 
     # Publish
     aws s3 cp $DIST s3://cheats.rs/ --recursive
@@ -44,7 +44,7 @@ else
     # Staging URL:
     # http://cheats.rs-staging.s3-website.eu-central-1.amazonaws.com/
 
-    echo -e "Sending to ${_GREEN}STAGING${_NC} environment."
+    echo -e "Sending to ${_YELLOW}STAGING${_NC} environment."
 
     # Staging
     aws s3 cp $DIST s3://cheats.rs-staging/ --recursive
