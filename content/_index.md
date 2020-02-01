@@ -238,7 +238,8 @@ Define units of code and their abstractions.
 | `async fn f() {}`  | **Async**  {{ edition(ed="'18") }} function transformation, makes `f` return an `impl Future`. {{ std(page="std/future/trait.Future.html") }} |
 | {{ tab() }} `async fn f() -> S {}`  | Same, but make `f` return an `impl Future<Output=S>`. |
 | {{ tab() }} `async { x }`  | Used within a function, make `{ x }` an `impl Future<Output=X>`. |
-| `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} don't confuse with trait [Fn](https://doc.rust-lang.org/std/ops/trait.Fn.html). |
+| `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }}, memory holding address of a callable. |
+| `Fn() -> S`  | **Callable Trait**, {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), implemented by closures, fn's ... |
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
 | {{ tab() }} <code>&vert;x&vert; {}</code> | Closure with a bound parameter `x`. |
 | {{ tab() }} <code>&vert;x&vert; x + x</code> | Closure without block expression.  |
