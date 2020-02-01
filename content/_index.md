@@ -119,7 +119,7 @@ Data types and memory locations defined via keywords.
 | `struct S {}` | Define a **struct** {{ book(page="ch05-00-structs.html") }} {{ ex(page="custom_types/structs.html") }} {{ std(page="std/keyword.struct.html") }} {{ ref(page="expressions/struct-expr.html") }} with named fields. |
 | {{ tab() }} `struct S { x: T }` | Define struct with named field `x` of type `T`. |
 | {{ tab() }} `struct S` &#8203;`(T);` | Define "tupled" struct with numbered field `.0` of type `T`. |
-| {{ tab() }} `struct S;` | Define zero sized unit struct. |
+| {{ tab() }} `struct S;` | Define **zero sized** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts")}} unit struct. Occupies no space, optimized away. |
 | `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
 | {{ tab() }}  `enum E { A, B`&#8203;`(), C {} }` | Define variants of enum; can be unit- `A`, tuple- `B` &#8203;`()` and struct-like `C{}`. |
 | {{ tab() }}  `enum E { A = 1 }` | If variants are only unit-like, allow discriminant values, e.g., for FFI. |
@@ -158,7 +158,7 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `S`&#8203; `(x)` | Create `struct S` &#8203;`(T)` or `use`'ed `enum E::S`&#8203; `()` with field `.0` set to `x`. |
 | `S` | If `S` is unit `struct S;` or `use`'ed `enum E::S` create value of `S`. |
 | `E::C { x: y }` | Create enum variant `C`. Other methods above also work. |
-| `()` | Empty tuple, both literal and type, aka **unit** {{ std(page="std/primitive.unit.html") }} |
+| `()` | Empty tuple, both literal and type, aka **unit**. {{ std(page="std/primitive.unit.html") }} |
 | `(x)` | Parenthesized expression. |
 | `(x,)` | Single-element **tuple** expression. {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
 | `(S,)` | Single-element tuple type. |
@@ -226,14 +226,14 @@ Define units of code and their abstractions.
 
 | Example | Explanation |
 |---------|-------------|
-| `trait T {}`  | Define a **trait**. {{ book(page="ch10-02-traits.html") }} {{ ex(page="trait.html") }} {{ ref(page="items/traits.html") }} |
+| `trait T {}`  | Define a **trait**; {{ book(page="ch10-02-traits.html") }} {{ ex(page="trait.html") }} {{ ref(page="items/traits.html") }} common behavior others can implement. |
 | `trait T : R {}` | `T` is subtrait of **supertrait** {{ ref(page="items/traits.html#supertraits") }} `R`. Any `S` must `impl R` before it can `impl T`. |
-| `impl S {}`  | **Implementation** {{ ref(page="items/implementations.html") }} of functionality for a type `S`. |
+| `impl S {}`  | **Implementation** {{ ref(page="items/implementations.html") }} of functionality for a type `S`, e.g., methods. |
 | `impl T for S {}`  | Implement trait `T` for type `S`. |
 | `impl !T for S {}` | Disable an automatically derived **auto trait** {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }}. |
 | `fn f() {}`  | Definition of a **function** {{ book(page="ch03-03-how-functions-work.html") }}  {{ ex(page="fn.html") }} {{ ref(page="items/functions.html") }}; or associated function if inside `impl`. |
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
-| {{ tab() }} `fn f(&self) {}`  | Define a method as part of an `impl`. |
+| {{ tab() }} `fn f(&self) {}`  | Define a method, e.g., within an `impl S {}`. |
 | `const fn f() {}`  | Constant `fn` usable at compile time, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
 | `async fn f() {}`  | **Async**  {{ edition(ed="'18") }} function transformation, makes `f` return an `impl Future`. {{ std(page="std/future/trait.Future.html") }} |
 | {{ tab() }} `async fn f() -> S {}`  | Same, but make `f` return an `impl Future<Output=S>`. |
@@ -242,9 +242,9 @@ Define units of code and their abstractions.
 | `Fn() -> S`  | **Callable Trait**, {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), implemented by closures, fn's ... |
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its captures. |
 | {{ tab() }} <code>&vert;x&vert; {}</code> | Closure with a bound parameter `x`. |
-| {{ tab() }} <code>&vert;x&vert; x + x</code> | Closure without block expression.  |
+| {{ tab() }} <code>&vert;x&vert; x + x</code> | Closure without block expression; may only consist of single expression.  |
 | {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures. |
-| {{ tab() }} <code> return &vert;&vert; true </code> | Closures may sometimes look like logical ORs (here: return a closure). |
+| {{ tab() }} <code> return &vert;&vert; true </code> | Closures sometimes look like logical ORs (here: return a closure). |
 | `unsafe {}` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 
 </div>
@@ -460,7 +460,7 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
 | `S<T> where T: R`  | Same as `S<T: R>` but more pleasant to read for longer bounds. |
 | `S<T = R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} for associated type.|
-| `S<'_>` | Inferred **anonymous lifetime**.  |
+| `S<'_>` | Inferred **anonymous lifetime**; asks compiler to _'figure it out'_ if obvious.  |
 | `S<_>` | Inferred **anonymous type**, e.g., as `let x: Vec<_> = iter.collect()`  |
 | `S::<T>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation, e.g. `f::<u32>()`. |
 | `trait T<X> {}`  | A trait generic over `X`. Can have multiple `impl T for S` (one per `X`). |
@@ -493,8 +493,8 @@ Rust has several ways to create string or char literals, depending on your needs
 
 | Example | Explanation |
 |--------|-------------|
-| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}} UTF-8, will escape `\n` to _line break_ `0xA`, ... |
-| `r"..."`, | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}} UTF-8, won't escape `\n`, ... |
+| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}} UTF-8, will interpret `\n` as _line break_ `0xA`, ... |
+| `r"..."`, | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}} UTF-8, won't interpret `\n`, ... |
 | `r#"..."#`, etc. | Raw string literal, UTF-8, but can also contain `"`. |
 | `b"..."` | **Byte string literal**; {{ ref(page="tokens.html#byte-and-byte-string-literals")}} constructs ASCII `[u8]`, not a string. |
 | `br"..."`, `br#"..."#`, etc. | Raw byte string literal, ASCII `[u8]`, combination of the above. |
@@ -562,7 +562,7 @@ Memory representations of common data types.
 
 ## Basic Types
 
-Memory representations are depicted for little-endian architectures (e.g., x86-64).
+Essential types built into the core of the language.
 
 
 #### Integer Types {{ ref(page="types/numeric.html") }}
@@ -733,7 +733,7 @@ Float types are slightly more complicated and follow [IEEE 754-2008](https://en.
         <byte><code></code></byte>
         <byte><code></code></byte>
     </visual>
-    <description>Any UTF-8 <i>char</i>.</description>
+    <description>Any UTF-8 scalar.</description>
 </datum>
 
 
@@ -779,7 +779,7 @@ These are Rust's primitive textual types. On a text such as "I love 🦀" they w
 
 ## Custom Types
 
-Basic types that can be defined by the user. Actual <b>layout</b> {{ ref(page="type-layout.html") }} is subject to <b>representation</b>. {{ ref(page="type-layout.html#representations") }} Additional padding can be present.
+Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.html") }} is subject to <b>representation</b>; {{ ref(page="type-layout.html#representations") }} padding can be present.
 
 
 <!-- NEW ENTRY -->
@@ -817,9 +817,10 @@ Basic types that can be defined by the user. Actual <b>layout</b> {{ ref(page="t
 <datum style="margin-right:70px;">
     <name class="nogrow"><code>struct S; </code></name>
     <name class="hidden"><code>;</code></name>
-    <visual>
+    <visual style="width: 15px;" class="empty">
         <code></code>
     </visual>
+    <!-- <description>Zero size.</description> -->
 </datum>
 
 

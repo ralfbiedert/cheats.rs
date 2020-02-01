@@ -63,6 +63,11 @@ datum {
         padding: 5px;
     }
 
+    visual.empty {
+        opacity: 0.4;
+        border-style: dashed;
+    }
+
 
     .bytes {
         background-color: lightgreen;
@@ -104,6 +109,7 @@ datum {
         border-color: gold;
         // box-shadow:0px 0px 0px 4px inset gold;
     }
+
 
     .atomicx {
         // background-color: gold;
