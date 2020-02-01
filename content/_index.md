@@ -1387,7 +1387,7 @@ Basic project layout, and common files and folders, as used by Rust [tooling](#t
 
 | Idiom | Code |
 |--------| ---- |
-| `benches/` | Benchmarks for your crate, run via `cargo bench`, only useful in nightly. {{ experimental() }} |
+| `benches/` | Benchmarks for your crate, run via `cargo bench`, requires nightly by default. <sup>*</sup> {{ experimental() }} |
 | `examples/` | Examples how to use your crate, run via `cargo run --example my_example`.  |
 | `src/` | Actual source code for your project. |
 | {{ tab() }} `build.rs` |  [Pre-build script](https://doc.rust-lang.org/cargo/reference/build-scripts.html), e.g., when compiling C / FFI, needs to be specified in `Cargo.toml`. |
@@ -1399,6 +1399,11 @@ Basic project layout, and common files and folders, as used by Rust [tooling](#t
 | `Cargo.toml` | Main project configuration. Defines dependencies, artifacts ... |
 | `Cargo.lock` | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
 </div>
+
+<div class="footnotes">
+    <sup>*</sup> On stable consider <a href="https://github.com/bheisler/criterion.rs">Criterion</a>.
+</div>
+
 
 {{ tablesep() }}
 
