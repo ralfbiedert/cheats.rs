@@ -1911,8 +1911,8 @@ Each format argument is either empty `{}`, `{argument}`, or follows a basic [**s
 
 | Example | Explanation |
 |---------|-------------|
-| `{:?}` | Print the next argument using [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html). |
-| `{2:#?}` | Pretty-print the 3rd argument [Debug](https://doc.rust-lang.org/std/fmt/trait.Debug.html) formatting. |
+| `{:?}` | Print the next argument using Debug. |
+| `{2:#?}` | Pretty-print the 3rd argument with Debug formatting. |
 | `{val:^2$}` | Center the `val` named argument, width specified by the 3rd argument. |
 | `{:<10.3}` | Left align with width 10 and a precision of 3.|
 | `{val:#x}` | Format `val` argument as hex, with a leading `0x` (alternate format for `x`). |
