@@ -426,9 +426,9 @@ Pattern matching arms in `match` expressions. The left side of these arms can al
 |  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
 |  `[a, 0] => {}` | **Slice pattern**, {{ ref(page="patterns.html?highlight=slice,pattern#slice-patterns") }} {{ link(url="https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html") }} match array with any value for `a` and `0` for second. |
-|  {{ tab() }} `[1, ..] => {}` | Match array starting with `1`, any value for rest; **subslice pattern**. {{ todo() }} |
-|  {{ tab() }} `[2, .., 5] => {}` | Match array starting with `1`, ending with `5`. |
-|  {{ tab() }} `[2, x @ .., 5] => {}` | Same, but also bind `x` to slice representing middle (_c._ next entry). |
+|  {{ tab() }} `[1, ..] => {}` | Match array starting with `1`, any value for rest; **subslice pattern**. {{ experimental() }} {{ todo() }} |
+|  {{ tab() }} `[2, .., 5] => {}` | Match array starting with `1`, ending with `5`. {{ experimental() }} |
+|  {{ tab() }} `[2, x @ .., 5] => {}` | Same, but also bind `x` to slice representing middle (_c._ next entry). {{ experimental() }} |
 | `x @ 1..=5 => {}` | Bind matched to `x`; **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} here `x` would be `1`, `2`, ... or `5`.  |
 | <code>0 &vert; 1 => {}</code> | Pattern alternatives (or-patterns).|
 | {{ tab() }}  <code>E::A &vert; E::Z </code> | Same, but on enum variants. |
