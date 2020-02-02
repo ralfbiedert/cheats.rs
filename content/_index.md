@@ -1386,7 +1386,7 @@ Basic project layout, and common files and folders, as used by Rust [tooling](#t
 
 <div class="header-red">
 
-| Idiom | Code |
+| Entry | Code |
 |--------| ---- |
 | `benches/` | Benchmarks for your crate, run via `cargo bench`, requires nightly by default. <sup>*</sup> {{ experimental() }} |
 | `examples/` | Examples how to use your crate, run via `cargo run --example my_example`.  |
