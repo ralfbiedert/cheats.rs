@@ -62,6 +62,7 @@ Data & Types
 * [Basic Types](#basic-types)
 * [Custom Types](#custom-types)
 * [References & Pointers](#references-pointers-ui)
+* [Closures](#closures-data)
 * [Standard Library Types](#standard-library-types)
 
 
@@ -69,7 +70,7 @@ Guides
 * [Project Anatomy](#project-anatomy)
 * [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
-* [Closures](#closures)
+* [Closures in APIs](#closures-in-apis)
 * [A Guide to Reading Lifetimes](#a-guide-to-reading-lifetimes)
 * [Invisible Sugar](#invisible-sugar)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
@@ -1103,7 +1104,7 @@ The `payload` depends on the base type of the referent. This applies to both ref
 
 
 
-## Closures
+## Closures {#closures-data}
 
 A closure is an ad-hoc function that comes with an automatically managed data block **capturing** {{ ref(page="types/closure.html#capture-modes") }}
 the environment you accessed when defining the closure. For example:
@@ -1431,14 +1432,9 @@ Send & Sync
 </table>
  -->
 
-{{ tablesep() }}
-
-
-
 ---
 
 # Guides
-
 
 ## Project Anatomy
 
@@ -1685,7 +1681,7 @@ This leads to the following considerations when writing code inside an `async` c
 {{ tablesep() }}
 
 
-## Closures
+## Closures in APIs
 
 There is a subtrait relationship `Fn` : `FnMut` : `FnOnce`. That means, a closure that
 implements `Fn`, also implements `FnMut` and `FnOnce`. Likewise, a closure
