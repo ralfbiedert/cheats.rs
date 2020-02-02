@@ -561,6 +561,66 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 
 ---
 
+# Standard Library
+
+
+## Traits
+
+
+These traits mark **special properties** of the underlying type.
+
+<div class="header-std-yellow">
+
+| A type `T` marked ... | Means `T` can ... |
+|---------|-------------|
+| `Copy` | Be copied bitwise; cheap & fast. Also means `x = t` will copy t instead of move. |
+| `Clone` | Be explicitly duplicated via `.clone()`. Might be expensive. |
+| `Send`<sup>*</sup> | Be moved between threads safely.  |
+| `Sync`<sup>*</sup> | Have its reference `&T` sent between threads safely. |
+| `Sized`<sup>*</sup> | Live on the stack and has a size known at compilation time. |
+
+
+<div class="footnotes">
+    <sup>*</sup> Automatically implemented by compiler where appropriate.
+</div>
+
+</div>
+
+
+{{ tablesep() }}
+
+Traits related to **iterators** and **collections**. You usually
+implement these yourself for types that can produce or hold multiple items of the same sort.
+
+<div class="header-std-green">
+
+| Implementing ... for `T` | Means `T` can ... | `T` is usually ... |
+|---------|-------------|---|
+| `IntoIterator` | Convert into an `Iterator`, work with `for` loops; | Container holding uniform items. |
+| `Iterator` | Produce actual items with `next()`; | Util struct walking container. |
+| `FromIterator<A>` | Allows `T` to collect via `Iterator::collect()`; | Generic container like `Vec`. |
+
+</div>
+
+{{ tablesep() }}
+
+
+
+Conversions XXX
+
+<div class="header-std-yellow">
+
+| Trait ... | Implementing ... for `S` means | Requiring `<A: ...>` means |
+|---------|-------------|----|
+| `Borrow<T>` | `S` can produce `&T`, must match `Eq`, ... | Caller can pass `t`, `&t`, `box_t` , ...|
+| `BorrowMut<T>` | `S` can produce `&mut T`, rest same. | Similar, `t`, `&mut t`, ...   |
+| `AsRef<T>` | `S` can produce `&T`. | Caller can pass `Box<T>` or XXX. |
+| `AsMut<T>` | `S` can produce `&mut T`. | Similar, but XXX  |
+
+</div>
+
+---
+
 # Data & Types
 
 Memory representations of common data types.
