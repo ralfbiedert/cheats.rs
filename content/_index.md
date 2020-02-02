@@ -1082,7 +1082,7 @@ The `payload` depends on the base type of the referent. This applies to both ref
             <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
-    <memory-entry style="width:200px; position: absolute;">
+    <memory-entry style="width:220px; position: absolute;">
         <memory-link style="left:22%">|</memory-link>
         <memory class="static-vtable" style="width: 210px;">
             <table>
@@ -1096,6 +1096,63 @@ The `payload` depends on the base type of the referent. This applies to both ref
         <description>Where <code>*Drop::drop()</code>, <code>*Trait::f()</code>, ... are pointers to their respective <code>impl</code> for <code>T</code>.</description>
     </memory-entry>
 
+</datum>
+
+
+
+## Closures
+
+A closure is an ad-hoc function that comes with an automatically managed data block **capturing** {{ ref(page="types/closure.html#capture-modes") }}
+the environment you accessed when defining the closure. For example:
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>move |x| x + y.f() + z</code></name>
+    <visual>
+       <framed class="any" style="width: 100px;"><code>Y</code></framed>
+       <framed class="any" style="width: 50px;"><code>Z</code></framed>
+    </visual>
+    <zoom>Anonymous closure type C1</zoom>
+    <!-- <description>Also produces anonymous <br><code>f_c1 (c: C1, x: T)</code>. Details depend<br> which <code>FnOnce</code>, <code>FnMut</code>, <code>Fn</code> is allowed.</description> -->
+</datum>
+
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>|x| x + y.f() + z</code></name>
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+    </visual>
+    <zoom>Anonymous closure type C2</zoom>
+    <memory-entry>
+        <memory-link style="left:44%">|</memory-link>
+        <memory class="anymem">
+            <framed class="any" style="width: 30px;"><code>Y</code></framed>
+        </memory>
+    </memory-entry>
+    <memory-entry>
+        <memory-link style="left:44%">|</memory-link>
+        <memory class="anymem">
+            <framed class="any" style="width: 30px;"><code>Z</code></framed>
+        </memory>
+    </memory-entry>
+    <!-- <description>Similar, but captured context by<br> reference. Details might differ <br> depending on types involved.</description> -->
+</datum>
+
+<!-- Little hack as description below was too cluttered. -->
+<datum>
+    <name>&nbsp;</name>
+    <description>
+    Also produces anonymous <code>fn</code> such as <code>f_c1 (C1, X)</code> or <br>
+    <code>f_c2 (&C2, X)</code>. Details depend which <code>FnOnce</code>, <code>FnMut</code>, <code>Fn</code> ...<br>
+    is supported, based on properties of captured types.
+    </description>
 </datum>
 
 
@@ -1388,13 +1445,13 @@ Basic project layout, and common files and folders, as used by Rust [tooling](#t
 
 | Entry | Code |
 |--------| ---- |
-| `benches/` | Benchmarks for your crate, run via `cargo bench`, requires nightly by default. <sup>*</sup> {{ experimental() }} |
-| `examples/` | Examples how to use your crate, run via `cargo run --example my_example`.  |
-| `src/` | Actual source code for your project. |
+| 📁 `benches/` | Benchmarks for your crate, run via `cargo bench`, requires nightly by default. <sup>*</sup> {{ experimental() }} |
+| 📁 `examples/` | Examples how to use your crate, run via `cargo run --example my_example`.  |
+| 📁 `src/` | Actual source code for your project. |
 | {{ tab() }} `build.rs` |  [Pre-build script](https://doc.rust-lang.org/cargo/reference/build-scripts.html), e.g., when compiling C / FFI, needs to be specified in `Cargo.toml`. |
 | {{ tab() }} `main.rs` | Default entry point for applications, this is what `cargo run` uses. |
 | {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f` starts. |
-| `tests/` | Integration tests go here, invoked via `cargo test`. Unit tests often stay in `src/` file. |
+| 📁 `tests/` | Integration tests go here, invoked via `cargo test`. Unit tests often stay in `src/` file. |
 | `.rustfmt.toml` | In case you want to [customize](https://rust-lang.github.io/rustfmt/) how `cargo fmt` works. |
 | `.clippy.toml` | Special configuration for certain [clippy lints](https://rust-lang.github.io/rust-clippy/master/index.html). |
 | `Cargo.toml` | Main project configuration. Defines dependencies, artifacts ... |
