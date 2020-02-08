@@ -51,6 +51,7 @@ Language Constructs
 Misc
 * [Links & Services](#links-services)
 * [Printing & PDF](#printing-pdf)
+* [Glossary](#glossary)
 
 
 </div>
@@ -469,8 +470,8 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | `S<_>` | Inferred **anonymous type**, e.g., as `let x: Vec<_> = iter.collect()`  |
 | `S::<T>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation, e.g. `f::<u32>()`. |
 | `trait T<X> {}`  | A trait generic over `X`. Can have multiple `impl T for S` (one per `X`). |
-| `trait T { type X; }`  | Defines **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} `X`. Only one `impl T for S` possible. |
-| {{ tab() }} `type X = R;`  | Set associated type within `impl T for S { type X = R; }`. |
+| `trait T { type X; }`  | Defines [associated type][#associated-type] `X`. Only one `impl T for S` possible. |
+| {{ tab() }} `type X = R;`  | Set [associated type][#associated-type] within `impl T for S { type X = R; }`. |
 | `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`.  |
 | `impl S<T> {}`  | Implement functionality for exactly `S<T>` (e.g., `S<u32>`).  |
 | `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-types-that-implement-traits") }}, returns an unknown-to-caller `S` that `impl T`. |
@@ -2136,7 +2137,6 @@ Online services which provide information or tooling.
 {{ tablesep() }}
 
 
-
 ## Printing & PDF
 
 > Want this Rust cheat sheet as a PDF download? <a href="javascript:window.print()"><b>Generate PDF</b></a> (or select File > Print – might take 10s so) and then "Save as PDF". It looks great in both Firefox's and Chrome's PDF exports. Alternatively use the <a href="rust_cheat_sheet.pdf"><b>cached PDF</b></a>.
@@ -2144,3 +2144,11 @@ Online services which provide information or tooling.
 </div>
 
 <footer>Ralf Biedert, {{ year() }} – <a href="https://cheats.rs">cheats.rs</a> <br/><br/> <a href="legal">Legal & Privacy</a></footer>
+
+
+## Glossary
+
+### Associated type
+
+Associated types {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }}
+connect a type placeholder with a trait such that the trait method definitions can use these placeholder types in their signatures.
