@@ -48,15 +48,6 @@ Language Constructs
 * [Comments](#comments)
 * [Miscellaneous](#miscellaneous)
 
-Misc
-* [Links & Services](#links-services)
-* [Printing & PDF](#printing-pdf)
-
-
-</div>
-
-
-<div class="column">
 
 Data & Types
 * [Basic Types](#basic-types)
@@ -65,6 +56,16 @@ Data & Types
 * [Closures](#closures-data)
 * [Standard Library Types](#standard-library-types)
 
+
+
+</div>
+
+
+<div class="column">
+
+Standard Library
+* [String Conversions](#string-conversions)
+<!-- * [Marker Traits](#XXX) -->
 
 Guides
 * [Project Anatomy](#project-anatomy)
@@ -76,6 +77,11 @@ Guides
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
 * [Formatting Strings](#formatting-strings)
 * [Tooling](#tooling)
+
+
+Misc
+* [Links & Services](#links-services)
+* [Printing & PDF](#printing-pdf)
 
 
 </div>
@@ -561,65 +567,8 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 
 ---
 
-# Standard Library
-
-
-## Traits
-
-
-These traits mark **special properties** of the underlying type.
-
-<div class="header-std-yellow">
-
-| A type `T` marked ... | Means `T` can ... |
-|---------|-------------|
-| `Copy` | Be copied bitwise; cheap & fast. Also means `x = t` will copy t instead of move. |
-| `Clone` | Be explicitly duplicated via `.clone()`. Might be expensive. |
-| `Send`<sup>*</sup> | Be moved between threads safely.  |
-| `Sync`<sup>*</sup> | Have its reference `&T` sent between threads safely. |
-| `Sized`<sup>*</sup> | Live on the stack and has a size known at compilation time. |
-
-
-<div class="footnotes">
-    <sup>*</sup> Automatically implemented by compiler where appropriate.
-</div>
-
-</div>
-
-
-{{ tablesep() }}
-
-Traits related to **iterators** and **collections**. You usually
-implement these yourself for types that can produce or hold multiple items of the same sort.
-
-<div class="header-std-green">
-
-| Implementing ... for `T` | Means `T` can ... | `T` is usually ... |
-|---------|-------------|---|
-| `IntoIterator` | Convert into an `Iterator`, work with `for` loops; | Container holding uniform items. |
-| `Iterator` | Produce actual items with `next()`; | Util struct walking container. |
-| `FromIterator<A>` | Allows `T` to collect via `Iterator::collect()`; | Generic container like `Vec`. |
-
-</div>
-
-{{ tablesep() }}
-
-
-
-Conversions XXX
-
-<div class="header-std-yellow">
-
-| Trait ... | Implementing ... for `S` means | Requiring `<A: ...>` means |
-|---------|-------------|----|
-| `Borrow<T>` | `S` can produce `&T`, must match `Eq`, ... | Caller can pass `t`, `&t`, `box_t` , ...|
-| `BorrowMut<T>` | `S` can produce `&mut T`, rest same. | Similar, `t`, `&mut t`, ...   |
-| `AsRef<T>` | `S` can produce `&T`. | Caller can pass `Box<T>` or XXX. |
-| `AsMut<T>` | `S` can produce `&mut T`. | Similar, but XXX  |
-
-</div>
-
----
+<!-- This whole section doesn't look good on print -->
+<div class="noprint">
 
 # Data & Types
 
@@ -1496,6 +1445,185 @@ Send & Sync
 
 ---
 
+<!-- End NOPRINT for datatypes -->
+</div>
+
+
+# Standard Library
+
+
+<div class="wip">
+
+> 🚧 This section is **WORK IN PROGRESS**. Comments, issues and PRs are very welcome. 🚧
+
+## Traits
+
+
+These traits mark **special properties** of the underlying type.
+
+<div class="header-std-yellow">
+
+| A type `T` marked ... | Means `T` can ... |
+|---------|-------------|
+| `Copy` | Be copied bitwise; cheap & fast. Also means `x = t` will copy t instead of move. |
+| `Clone` | Be explicitly duplicated via `.clone()`. Might be expensive. |
+| `Send`<sup>*</sup> | Be moved between threads safely.  |
+| `Sync`<sup>*</sup> | Have its reference `&T` sent between threads safely. |
+| `Sized`<sup>*</sup> | Live on the stack and has a size known at compilation time. |
+
+
+<div class="footnotes">
+    <sup>*</sup> Automatically implemented by compiler where appropriate.
+</div>
+
+</div>
+
+
+{{ tablesep() }}
+
+Traits related to **iterators** and **collections**. You usually
+implement these yourself for types that can produce or hold multiple items of the same sort.
+
+<div class="header-std-green">
+
+| Implementing ... for `T` | Means `T` can ... | `T` is usually ... |
+|---------|-------------|---|
+| `IntoIterator` | Convert into an `Iterator`, work with `for` loops; | Container holding uniform items. |
+| `Iterator` | Produce actual items with `next()`; | Util struct walking container. |
+| `FromIterator<A>` | Allows `T` to collect via `Iterator::collect()`; | Generic container like `Vec`. |
+
+</div>
+
+{{ tablesep() }}
+
+
+
+Conversions XXX
+
+<div class="header-std-yellow">
+
+| Trait ... | Implementing ... for `S` means | Requiring `<A: ...>` means |
+|---------|-------------|----|
+| `Borrow<T>` | `S` can produce `&T`, must match `Eq`, ... | Caller can pass `t`, `&t`, `box_t` , ...|
+| `BorrowMut<T>` | `S` can produce `&mut T`, rest same. | Similar, `t`, `&mut t`, ...   |
+| `AsRef<T>` | `S` can produce `&T`. | Caller can pass `Box<T>` or XXX. |
+| `AsMut<T>` | `S` can produce `&mut T`. | Similar, but XXX  |
+
+</div>
+
+
+{{ tablesep() }}
+
+
+## String Conversions
+
+If you **want** a string of type ...
+
+<div class="tabs">
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-1" name="tab-group-str" checked>
+        <label class="tab-label" for="tab-str-1"><code>String</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                <table class="stringconversion">
+                    <thead>
+                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>String</code></td><td><code>x.clone()</code></td></tr>
+                        <tr><td><code>CString</code></td><td><code>yy</code></td></tr>
+                        <tr><td><code>OSString</code></td><td><code>yy</code></td></tr>
+                        <tr><td><code>Vec&lt;u8&gt;</code></td><td><code>yy</code></td></tr>
+                        <tr><td><code>&str</code></td><td><code>x.to_owned()</code></td></tr>
+                        <tr><td><code>&CStr</code></td><td><code>yy</code></td></tr>
+                        <tr><td><code>&OSStr</code></td><td><code>yy</code></td></tr>
+                        <tr><td><code>&[u8]</code></td><td><code>yy</code></td></tr>
+                        <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-2" name="tab-group-str" >
+        <label class="tab-label" for="tab-str-2"><code>CString</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                TODO
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-3" name="tab-group-str" >
+        <label class="tab-label" for="tab-str-3"><code>OSString</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                TODO
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-4" name="tab-group-str" >
+        <label class="tab-label" for="tab-str-4"><code>Vec&lt;u8&gt;</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                TODO
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-5" name="tab-group-str" >
+        <label class="tab-label" for="tab-str-5"><code>&str</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                TODO
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-6" name="tab-group-str" >
+        <label class="tab-label" for="tab-str-6"><code>&CStr</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                TODO
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-7" name="tab-group-str" >
+        <label class="tab-label" for="tab-str-7"><code>&[u8]</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                TODO
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-8" name="tab-group-str" >
+        <label class="tab-label" for="tab-str-8"><code>&[u16]</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                TODO
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-9" name="tab-group-str" >
+        <label class="tab-label" for="tab-str-9"><code>*const c_char</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                TODO
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- END WIP section -->
+</div>
+
+---
+
 # Guides
 
 ## Project Anatomy
@@ -1526,8 +1654,40 @@ Basic project layout, and common files and folders, as used by Rust [tooling](#t
 
 {{ tablesep() }}
 
+<!-- Also not printing this table -->
+<div class="noprint">
 
-An minimal library entry point with functions and modules looks like this:
+Minimal examples for various entry points might look like:
+
+<div class="tabs">
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-anatomy-1" name="tab-group-anatomy" checked>
+<label class="tab-label" for="tab-anatomy-1"><b>Applications</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```
+// src/main.rs (default application entry point)
+
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+</div></div></div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-anatomy-2" name="tab-group-anatomy" >
+<label class="tab-label" for="tab-anatomy-2"><b>Libraries</b></label>
+<div class="tab-panel">
+<div class="tab-content">
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -1542,13 +1702,44 @@ mod m {
     pub fn g() {}  // No public path (`m` not public) from root, so `g`
 }                  // is not accessible from the outside of the crate.
 ```
+</div></div></div></div></div>
 
-</div>
-</div>
 
-For binaries (not depicted), function `fn main() {}` is the entry point.
-Unit tests (not depicted), usually reside in a `#[cfg(test)] mod test { }` next to their code.
-Integration tests and benchmarks, in their basic, form look like this:
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-anatomy-3" name="tab-group-anatomy" >
+<label class="tab-label" for="tab-anatomy-3"><b>Unit Tests</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```
+// src/my_module.rs (any file of your project)
+
+fn f() -> u32 { 0 }
+
+#[cfg(test)]
+mod test {
+    use super::f;           // Need to import items from parent module. Has
+                            // access to non-public members.
+    #[test]
+    fn ff() {
+        assert_eq!(f(), 0);
+    }
+}
+```
+</div></div></div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-anatomy-4" name="tab-group-anatomy" >
+<label class="tab-label" for="tab-anatomy-4"><b>Integration Tests</b></label>
+<div class="tab-panel">
+<div class="tab-content">
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -1562,9 +1753,16 @@ fn my_sample() {
     assert_eq!(my_crate::f(), 123); // Integration tests (and benchmarks) 'depend' to the crate like
 }                                   // a 3rd party would. Hence, they only see public items.
 ```
+</div></div></div></div></div>
 
-</div>
-</div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-anatomy-5" name="tab-group-anatomy" >
+<label class="tab-label" for="tab-anatomy-5"><b>Benchmarks</b></label>
+<div class="tab-panel">
+<div class="tab-content">
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -1585,8 +1783,13 @@ fn my_algo(b: &mut Bencher) {
     b.iter(|| black_box(my_crate::f())); // `black_box` prevents `f` from being optimized away.
 }
 ```
+</div></div></div></div></div>
 </div>
+
+<!-- End noprint of code examples -->
 </div>
+
+
 
 {{ tablesep() }}
 

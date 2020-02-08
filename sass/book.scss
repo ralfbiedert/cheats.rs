@@ -4,6 +4,7 @@
 @import "html";
 @import "page";
 @import "data";
+@import "tabs";
 
 
 img#logo {
@@ -47,6 +48,11 @@ div.toc {
 
 div.column {
     flex: 50%;
+}
+
+div.wip {
+    border: 2px dotted orange;
+    padding: 10px;
 }
 
 
@@ -129,6 +135,20 @@ div.survey {
         background-color: rgb(175, 161, 212);
     }
 }
+
+
+
+table.stringconversion {
+    th {
+        background-color: rgb(175, 161, 212);
+    }
+
+
+    th:nth-child(1) {
+        width: 250px;
+    }
+}
+
 
 
 span.good {

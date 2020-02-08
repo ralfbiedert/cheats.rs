@@ -1,0 +1,75 @@
+
+/**/
+/* TABS */
+/* https://codepen.io/Merri/pen/bytea */
+/**/
+
+.tabs {
+  font-size: 0;
+  margin: 5px 0;
+}
+
+.tabs:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+.tabs .tab {
+  display: inline;
+}
+
+.tabs .tab-label {
+  background: #eee;
+  border: 1px solid #ccc;
+  display: inline-block;
+//   font-size: 16px;
+  font-size: 1.3rem;
+  left: 1px;
+  margin-left: -1px;
+  padding: 10px;
+  position: relative;
+  vertical-align: bottom;
+  cursor: pointer;;
+}
+
+.tabs .tab > [type="radio"] {
+  clip: rect(0 0 0 0);
+  height: 1px;
+  opacity: 0;
+  position: fixed;
+  width: 1px;
+  z-index: -1;
+}
+
+.tabs .tab-panel {
+  display: inline;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  height: 0;
+  width: 0;
+}
+
+.tabs .tab-content {
+  box-sizing: border-box;
+  display: block;
+  background: white;
+  padding: 20px 20px 20px 20px;
+  border: 1px solid #ccc;
+  float: left;
+  font-size: 10pt;
+  margin-top: -1px;
+  width: 100%;
+}
+
+.tabs .tab [type="radio"]:checked + .tab-label {
+  background: white;
+  border-bottom-width: 0;
+  padding-bottom: 11px;
+  z-index: 1;
+}
+
+.tabs .tab [type="radio"]:checked ~ .tab-panel {
+  display: inline;
+}
