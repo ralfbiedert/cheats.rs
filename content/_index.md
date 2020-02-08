@@ -1602,6 +1602,7 @@ Send & Sync
 
 
 <!-- <div class="wip"> -->
+> 🚧 This section is **WORK IN PROGRESS**. Comments, issues and PRs are very welcome. 🚧
 
 ## Traits
 
@@ -1632,7 +1633,6 @@ These traits mark **special properties** of the underlying type.
 
 ## String Conversions
 
-> 🚧 This section is **WORK IN PROGRESS**. Comments, issues and PRs are very welcome. 🚧
 
 
 If you **want** a string of type ...
