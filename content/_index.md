@@ -1603,11 +1603,12 @@ Send & Sync
 
 <!-- <div class="wip"> -->
 
-<!--
 ## Traits
 
+#### Common Markers
 
 These traits mark **special properties** of the underlying type.
+
 
 <div class="header-std-yellow">
 
@@ -1626,24 +1627,57 @@ These traits mark **special properties** of the underlying type.
 
 </div>
 
-
 {{ tablesep() }}
+
+
+#### Iterators
 
 Traits related to **iterators** and **collections**. You usually
 implement these yourself for types that can produce or hold multiple items of the same sort.
 
-<div class="header-std-green">
 
-| Implementing ... for `T` | Means `T` can ... | `T` is usually ... |
-|---------|-------------|---|
-| `IntoIterator` | Convert into an `Iterator`, work with `for` loops; | Container holding uniform items. |
-| `Iterator` | Produce actual items with `next()`; | Util struct walking container. |
-| `FromIterator<A>` | Allows `T` to collect via `Iterator::collect()`; | Generic container like `Vec`. |
+<div class="tabs header-std-green">
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-trait-iter-1" name="tab-group-trait-iter" checked>
+<label class="tab-label" for="tab-trait-iter-1"><b>Implementing the Trait</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+<table><thead><tr><th>Implementing ... for <code>T</code></th><th>Means <code>T</code> can ...</th><th><code>T</code> is usually ...</th></tr></thead><tbody>
+<tr><td><code>IntoIterator</code></td><td>Convert into an <code>Iterator</code>, work with <code><span class="token keyword">for</span></code> loops;</td><td>Container holding uniform items.</td></tr>
+<tr><td><code>Iterator</code></td><td>Produce actual items with <code><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>;</td><td>Util struct walking container.</td></tr>
+<tr><td><code>FromIterator<span class="token operator">&lt;</span>A<span class="token operator">&gt;</span></code></td><td>Allows <code>T</code> to collect via <code>Iterator<span class="token punctuation">::</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>;</td><td>Generic container like <code>Vec</code>.</td></tr>
+</tbody></table>
+
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-trait-iter-2" name="tab-group-trait-iter" checked>
+<label class="tab-label" for="tab-trait-iter-2"><b>Requiring the Trait</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+<table><thead><tr><th>Implementing ... for <code>T</code></th><th>Means <code>T</code> can ...</th><th><code>T</code> is usually ...</th></tr></thead><tbody>
+<tr><td><code>IntoIterator</code></td><td>Convert into an <code>Iterator</code>, work with <code><span class="token keyword">for</span></code> loops;</td><td>Container holding uniform items.</td></tr>
+<tr><td><code>Iterator</code></td><td>Produce actual items with <code><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>;</td><td>Util struct walking container.</td></tr>
+<tr><td><code>FromIterator<span class="token operator">&lt;</span>A<span class="token operator">&gt;</span></code></td><td>Allows <code>T</code> to collect via <code>Iterator<span class="token punctuation">::</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>;</td><td>Generic container like <code>Vec</code>.</td></tr>
+</tbody></table>
+
+</div></div></div>
+
 
 </div>
 
 {{ tablesep() }}
 
+
+#### Type Conversions
 
 
 Conversions XXX
@@ -1657,11 +1691,8 @@ Conversions XXX
 | `AsRef<T>` | `S` can produce `&T`. | Caller can pass `Box<T>` or XXX. |
 | `AsMut<T>` | `S` can produce `&mut T`. | Similar, but XXX  |
 
-</div>
-
 
 {{ tablesep() }}
- -->
 
 ## String Conversions
 
