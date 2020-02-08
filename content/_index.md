@@ -2146,7 +2146,17 @@ If something works that "shouldn't work now that you think about it", it might b
 Unsafe leads to unsound. Unsound leads to undefined. Undefined leads to the dark side of the force.
 
 
+<div class="tabs">
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-unsafe-1" name="tab-unsafe" checked>
+<label class="tab-label" for="tab-unsafe-1"><b>Unsafe Code</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
 **Unsafe Code**
+
 - Code marked `unsafe` has special permissions, e.g., to deref raw pointers, or invoke other `unsafe` functions.
 - Along come special **promises the author _must_ uphold to the compiler**, and the compiler _will_ trust you.
 - By itself `unsafe` code is not bad, but dangerous, and needed for FFI or exotic data structures.
@@ -2160,9 +2170,15 @@ unsafe fn unsafe_f(x: *mut u8) {
     my_native_lib(x);
 }
 ```
+</div></div></div></div></div>
 
-</div>
-</div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-unsafe-2" name="tab-unsafe" >
+<label class="tab-label" for="tab-unsafe-2"><b>Undefine Behavior</b></label>
+<div class="tab-panel">
+<div class="tab-content">
 
 **Undefined Behavior (UB)**
 - As mentioned, `unsafe` code implies [special promises](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html) to the compiler (it wouldn't need be `unsafe` otherwise).
@@ -2182,10 +2198,16 @@ if maybe_true() {
     println!("the spanish inquisition");     // both paths, corrupt database, or anything else.
 }
 ```
-</div>
-</div>
+</div></div></div></div></div>
 
-{{ tablesep() }}
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-unsafe-3" name="tab-unsafe" >
+<label class="tab-label" for="tab-unsafe-3"><b>Unsound Code</b></label>
+<div class="tab-panel">
+<div class="tab-content">
 
 **Unsound Code**
 - Any _safe_ Rust that could (even only theoretically) produce UB for any user input is always **unsound**.
@@ -2201,11 +2223,11 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 }                                        // everything else.
 ```
 
-</div>
+</div></div></div></div></div>
+
 </div>
 
 {{ tablesep() }}
-
 
 >
 > **Responsible use of Unsafe**
