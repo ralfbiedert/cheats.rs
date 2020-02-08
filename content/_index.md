@@ -1452,10 +1452,9 @@ Send & Sync
 # Standard Library
 
 
-<div class="wip">
+<!-- <div class="wip"> -->
 
-> 🚧 This section is **WORK IN PROGRESS**. Comments, issues and PRs are very welcome. 🚧
-
+<!--
 ## Traits
 
 
@@ -1513,9 +1512,12 @@ Conversions XXX
 
 
 {{ tablesep() }}
-
+ -->
 
 ## String Conversions
+
+> 🚧 This section is **WORK IN PROGRESS**. Comments, issues and PRs are very welcome. 🚧
+
 
 If you **want** a string of type ...
 
@@ -1531,14 +1533,14 @@ If you **want** a string of type ...
                     </thead>
                     <tbody>
                         <tr><td><code>String</code></td><td><code>x.clone()</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>yy</code></td></tr>
-                        <tr><td><code>OSString</code></td><td><code>yy</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code></td><td><code>yy</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>x.to_owned()</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>yy</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>yy</code></td></tr>
-                        <tr><td><code>&[u8]</code></td><td><code>yy</code></td></tr>
-                        <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr>
+                        <tr><td><code>CString</code></td><td><code>x.into_string()?</code></td></tr>
+                        <tr><td><code>OSString</code></td><td><code>x.to_str()?.into()</code></td></tr>
+                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>String::from_utf8(x)?</code></td></tr>
+                        <tr><td><code>&str</code></td><td><code>x.into()</code></td></tr>
+                        <tr><td><code>&CStr</code></td><td><code>x.to_str()?.into()</code></td></tr>
+                        <tr><td><code>&OSStr</code></td><td><code>x.to_str()?.into()</code></td></tr>
+                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>String::from_utf8_lossy(x).into()</code></td></tr>
+                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
                 </table>
             </div>
@@ -1549,7 +1551,22 @@ If you **want** a string of type ...
         <label class="tab-label" for="tab-str-2"><code>CString</code></label>
         <div class="tab-panel">
             <div class="tab-content">
-                TODO
+                <table class="stringconversion">
+                    <thead>
+                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>String</code></td><td><code>CString::new(x)?</code></td></tr>
+                        <tr><td><code>CString</code></td><td><code>x.clone()</code></td></tr>
+                        <tr><td><code>OSString</code></td><td><code>CString::new(x.into_string()?)?</code></td></tr>
+                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>unsafe { CString::from_vec_unchecked(x) }</code></td></tr>
+                        <tr><td><code>&str</code></td><td><code>CString::new(x)?</code></td></tr>
+                        <tr><td><code>&CStr</code></td><td><code>x.into()</code></td></tr>
+                        <tr><td><code>&OSStr</code></td><td><code>CString::new(x.to_os_string().into_string()?)?</code></td></tr>
+                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>unsafe { CString::from_vec_unchecked(x.into()) }</code></td></tr>
+                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -1619,8 +1636,13 @@ If you **want** a string of type ...
 </div>
 
 
-<!-- END WIP section -->
+<div class="footnotes">
+    <sup>1</sup> You should or must (if <code>unsafe</code> calls are involved) ensure the raw data comes with a valid representation for the string type (e.g., being UTF-8 encoded data for a <code>String</code>).
 </div>
+
+
+<!-- END WIP section -->
+<!-- </div> -->
 
 ---
 
