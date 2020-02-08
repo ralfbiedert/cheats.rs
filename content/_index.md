@@ -1263,7 +1263,7 @@ Some common types:
 {{ tablesep() }}
 
 
-Rust's basic type to put values on the heap is a `Box`:
+Rust's basic types to put arbitrary values on the heap:
 
 
 <!-- NEW ENTRY -->
@@ -1284,11 +1284,8 @@ Rust's basic type to put values on the heap is a `Box`:
         </memory>
 </datum>
 
-{{ tablesep() }}
-
-
-These dynamic collections grow when needed and are backed by the heap:
-
+<spacer>
+</spacer>
 
 <!-- NEW ENTRY -->
 <datum>
@@ -1319,8 +1316,11 @@ These dynamic collections grow when needed and are backed by the heap:
 </datum>
 
 
-<spacer>
-</spacer>
+{{ tablesep() }}
+
+
+Various owned string types:
+
 
 <!-- NEW ENTRY -->
 <datum>
@@ -1353,6 +1353,61 @@ These dynamic collections grow when needed and are backed by the heap:
     </memory-entry>
     <description>Observe how <code>String</code> differs from <code>&str</code> and <code>&[char]</code>.</description>
 </datum>
+
+<spacer>
+</spacer>
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>CString</code></name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>4/8</sub>
+        </ptr>
+        <sized>
+            <code>len</code><sub>4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry class="double">
+        <memory-link style="left:25%">|</memory-link>
+        <memory class="heap">
+            <div>
+                <byte class="bytes"><code>A</code></byte>
+                <byte class="bytes"><code>B</code></byte>
+                <byte class="bytes"><code>C</code></byte>
+                <note>... len ...</note>
+                <byte class="bytes"><code>␀</code></byte>
+            </div>
+        </memory>
+    </memory-entry>
+    <description>Nul-terminated but w/o nul in middle.</description>
+</datum>
+
+
+<spacer>
+</spacer>
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>OSString</code> {{ todo() }}</name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual>
+        Platform Defined.
+    </visual>
+    <memory-entry class="double">
+        <memory-link style="left:25%">|</memory-link>
+        <memory class="heap">
+            <div>
+                <byte class="bytes"><code>?</code></byte>
+                <byte class="bytes"><code>?</code></byte>
+                <byte class="bytes"><code>?</code></byte>
+            </div>
+        </memory>
+    </memory-entry>
+</datum>
+
+
 
 
 {{ tablesep() }}
