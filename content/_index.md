@@ -580,7 +580,7 @@ Memory representations of common data types.
 Essential types built into the core of the language.
 
 
-#### Integer Types {{ ref(page="types/numeric.html") }}
+#### Numeric Types {{ ref(page="types/numeric.html") }}
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -655,55 +655,6 @@ Essential types built into the core of the language.
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>usize</code>, <code>isize</code></name>
-    <visual class="sized">
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
-    </visual>
-    <zoom>
-        Same as <code>ptr</code> on platform.
-    </zoom>
-</datum>
-
-
-
-<br/>
-
-
-
-{{ tablesep() }}
-
-
-| Integer* | Max Value |
-|------| ---------:|
-| `u8` | `255`  |
-| `u16` | `65_535`  |
-| `u32` | `4_294_967_295`  |
-| `u64` | `18_446_744_073_709_551_615`  |
-| `u128` | `340_282_366_920_938_463_463_374_607_431_768_211_455` |
-
-
-<div class="footnotes">
-    <sup>*</sup> <code>i8</code>, <code>i16</code>, ... values range from
-    <code>-max/2</code> to <code>max/2</code>, rounded towards negative infinity.
-</div>
-
-
-
-{{ tablesep() }}
-
-
-#### Float Types {{ ref(page="types/numeric.html") }}
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
     <name><code>f32</code></name>
     <visual class="float">
         <byte><code></code></byte>
@@ -730,7 +681,148 @@ Essential types built into the core of the language.
 </datum>
 
 
-Float types are slightly more complicated and follow [IEEE 754-2008](https://en.wikipedia.org/wiki/IEEE_754-2008_revision).
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>usize</code>, <code>isize</code></name>
+    <visual class="sized">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
+        <byte style="border-color: lightslategrey"><code></code></byte>
+    </visual>
+    <zoom>
+        Same as <code>ptr</code> on platform.
+    </zoom>
+</datum>
+
+
+
+<br/>
+
+
+{{ tablesep() }}
+
+
+
+
+<div class="tabs">
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-numeric-1" name="tab-group-numeric" checked>
+<label class="tab-label" for="tab-numeric-1"><b>Integer Types</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+<table><thead><tr><th>Integer*</th><th align="right">Max Value</th></tr></thead><tbody>
+<tr><td><code class=" language-rust">u8</code></td><td align="right"><code class=" language-rust"><span class="token number">255</span></code></td></tr>
+<tr><td><code class=" language-rust">u16</code></td><td align="right"><code class=" language-rust"><span class="token number">65_535</span></code></td></tr>
+<tr><td><code class=" language-rust">u32</code></td><td align="right"><code class=" language-rust"><span class="token number">4_294_967_295</span></code></td></tr>
+<tr><td><code class=" language-rust">u64</code></td><td align="right"><code class=" language-rust"><span class="token number">18_446_744_073_709_551_615</span></code></td></tr>
+<tr><td><code class=" language-rust">u128</code></td><td align="right"><code class=" language-rust"><span class="token number">340_282_366_920_938_463_463_374_607_431_768_211_455</span></code></td></tr>
+</tbody></table>
+
+<div class="footnotes">
+    <sup>*</sup> <code>i8</code>, <code>i16</code>, ... values range from
+    <code>-max/2</code> to <code>max/2</code>, rounded towards negative infinity.
+</div>
+
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-numeric-2" name="tab-group-numeric">
+<label class="tab-label" for="tab-numeric-2"><b>Float Types</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+Sample bit representation<sup>*</sup> for a <code>f32</code>:
+
+<!-- NEW ENTRY -->
+<datum class="centered" style="opacity:0.7; margin-bottom:10px;">
+    <visual class="float">
+    <bitgroup>
+        <bit><code>S</code></bit>
+    </bitgroup>
+    <bitgroup>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+        <bit><code>E</code></bit>
+    </bitgroup>
+    <bitgroup>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+        <bit><code>F</code></bit>
+    </bitgroup>
+    </visual>
+</datum>
+
+{{ tablesep() }}
+
+Explanation:
+
+<table><thead><tr><th>f32</th><th>S (1)</th><th>E (8)</th><th>F (23)</th><th>Value</th></tr></thead><tbody>
+<tr><td>Normalized number</td><td>±</td><td>1 to 254</td><td>any</td><td>±(1.F)<sub>2</sub> * 2<sup>E-127</sup></td></tr>
+<tr><td>Denormalized number</td><td>±</td><td>0</td><td>non-zero</td><td>±(0.F)<sub>2</sub> * 2<sup>-126</sup></td></tr>
+<tr><td>Zero</td><td>±</td><td>0</td><td>0</td><td>±0</td></tr>
+<tr><td>Infinity</td><td>±</td><td>255</td><td>0</td><td>±∞</td></tr>
+<tr><td>NaN</td><td>±</td><td>255</td><td>non-zero</td><td>NaN</td></tr>
+</tbody></table>
+
+{{ tablesep() }}
+
+Similarly, for <code>f64</code> types this would look like:
+
+<table><thead><tr><th>f64</th><th>S (1)</th><th>E (11)</th><th>F (52)</th><th>Value</th></tr></thead><tbody>
+<tr><td>Normalized number</td><td>±</td><td>1 to 2046</td><td>any</td><td>±(1.F)<sub>2</sub> * 2<sup>E-1023</sup></td></tr>
+<tr><td>Denormalized number</td><td>±</td><td>0</td><td>non-zero</td><td>±(0.F)<sub>2</sub> * 2<sup>-1022</sup></td></tr>
+<tr><td>Zero</td><td>±</td><td>0</td><td>0</td><td>±0</td></tr>
+<tr><td>Infinity</td><td>±</td><td>2047</td><td>0</td><td>±∞</td></tr>
+<tr><td>NaN</td><td>±</td><td>2047</td><td>non-zero</td><td>NaN</td></tr>
+</tbody></table>
+
+
+<div class="footnotes">
+    <sup>*</sup> Float types follow <a href="https://en.wikipedia.org/wiki/IEEE_754-2008_revision">IEEE 754-2008</a> and depend on platform endianness.
+</div>
+
+</div></div></div>
+
+
+</div>
+
+
 
 {{ tablesep() }}
 
@@ -1263,7 +1355,7 @@ Some common types:
 {{ tablesep() }}
 
 
-Rust's basic types to put arbitrary values on the heap:
+**General Purpose Heap Storage**
 
 
 <!-- NEW ENTRY -->
@@ -1319,7 +1411,7 @@ Rust's basic types to put arbitrary values on the heap:
 {{ tablesep() }}
 
 
-Various owned string types:
+**Owned Strings**
 
 
 <!-- NEW ENTRY -->
@@ -1412,7 +1504,9 @@ Various owned string types:
 
 {{ tablesep() }}
 
-Shared ownership of memory and resources. If the type does not contain a `Cell` for `T`, these are often combined with one of the `Cell` types above to allow shared de-facto mutability.
+**Shared Ownership**
+
+If the type does not contain a `Cell` for `T`, these are often combined with one of the `Cell` types above to allow shared de-facto mutability.
 
 <!-- NEW ENTRY -->
 <datum>
