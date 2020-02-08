@@ -465,13 +465,13 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | {{ tab() }} `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }}; if T has references, they must outlive `'a`.  |
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
 | `S<T> where T: R`  | Same as `S<T: R>` but more pleasant to read for longer bounds. |
-| `S<T = R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} for associated type.|
+| `S<T = R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} for [associated type](#associated-type).|
 | `S<'_>` | Inferred **anonymous lifetime**; asks compiler to _'figure it out'_ if obvious.  |
 | `S<_>` | Inferred **anonymous type**, e.g., as `let x: Vec<_> = iter.collect()`  |
 | `S::<T>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation, e.g. `f::<u32>()`. |
 | `trait T<X> {}`  | A trait generic over `X`. Can have multiple `impl T for S` (one per `X`). |
-| `trait T { type X; }`  | Defines [associated type][#associated-type] `X`. Only one `impl T for S` possible. |
-| {{ tab() }} `type X = R;`  | Set [associated type][#associated-type] within `impl T for S { type X = R; }`. |
+| `trait T { type X; }`  | Defines [associated type](#associated-type) `X`. Only one `impl T for S` possible. |
+| {{ tab() }} `type X = R;`  | Set [associated type](#associated-type) within `impl T for S { type X = R; }`. |
 | `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`.  |
 | `impl S<T> {}`  | Implement functionality for exactly `S<T>` (e.g., `S<u32>`).  |
 | `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-types-that-implement-traits") }}, returns an unknown-to-caller `S` that `impl T`. |
