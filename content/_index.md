@@ -1651,10 +1651,12 @@ If you **want** a string of type ...
                         <tr><td><code>String</code></td><td><code>x.clone()</code></td></tr>
                         <tr><td><code>CString</code></td><td><code>x.into_string()?</code></td></tr>
                         <tr><td><code>OsString</code></td><td><code>x.to_str()?.into()</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>x.to_str()?.into()</code></td></tr>
                         <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>String::from_utf8(x)?</code></td></tr>
                         <tr><td><code>&str</code></td><td><code>x.into()</code></td></tr>
                         <tr><td><code>&CStr</code></td><td><code>x.to_str()?.into()</code></td></tr>
                         <tr><td><code>&OSStr</code></td><td><code>x.to_str()?.into()</code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>x.to_str()?.into()</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>String::from_utf8_lossy(x).into()</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
@@ -1674,11 +1676,13 @@ If you **want** a string of type ...
                     <tbody>
                         <tr><td><code>String</code></td><td><code>CString::new(x)?</code></td></tr>
                         <tr><td><code>CString</code></td><td><code>x.clone()</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>CString::new(x.into_string()?)?</code></td></tr>
+                        <tr><td><code>OsString</code></td><td><code>CString::new(x.to_str()?)?</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>CString::new(x.to_str()?)?</code></td></tr>
                         <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>unsafe { CString::from_vec_unchecked(x) }</code></td></tr>
                         <tr><td><code>&str</code></td><td><code>CString::new(x)?</code></td></tr>
                         <tr><td><code>&CStr</code></td><td><code>x.into()</code></td></tr>
                         <tr><td><code>&OSStr</code></td><td><code>CString::new(x.to_os_string().into_string()?)?</code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>x.to_str()?.into()</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>unsafe { CString::from_vec_unchecked(x.into()) }</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
@@ -1699,10 +1703,38 @@ If you **want** a string of type ...
                         <tr><td><code>String</code></td><td><code>OsString::from(x)</code></td></tr>
                         <tr><td><code>CString</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
                         <tr><td><code>OsString</code></td><td><code>x.clone()</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
                         <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>{{ todo() }}</code></td></tr>
                         <tr><td><code>&str</code></td><td><code>OsString::from(x)</code></td></tr>
                         <tr><td><code>&CStr</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
                         <tr><td><code>&OSStr</code></td><td><code>x.into()</code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
+                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
+                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-35" name="tab-group-str" >
+        <label class="tab-label" for="tab-str-35"><code>PathBuf</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                <table class="stringconversion">
+                    <thead>
+                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>String</code></td><td><code>PathBuf::from(x)</code></td></tr>
+                        <tr><td><code>CString</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
+                        <tr><td><code>OsString</code></td><td><code>PathBuf::from(x)</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>x.clone()</code></td></tr>
+                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>{{ todo() }}</code></td></tr>
+                        <tr><td><code>&str</code></td><td><code>PathBuf::from(x)</code></td></tr>
+                        <tr><td><code>&CStr</code></td><td><code>PathBuf::from(x.to_str()?)</code></td></tr>
+                        <tr><td><code>&OSStr</code></td><td><code>PathBuf::from(x)</code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>x.into()</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
@@ -1723,10 +1755,12 @@ If you **want** a string of type ...
                         <tr><td><code>String</code></td><td><code>x.into_bytes()</code></td></tr>
                         <tr><td><code>CString</code></td><td><code>x.into_bytes()</code></td></tr>
                         <tr><td><code>OsString</code></td><td><code>{{todo()}}</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>{{todo()}}</code></td></tr>
                         <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>x.clone()</code></td></tr>
                         <tr><td><code>&str</code></td><td><code>x.as_bytes().into()</code></td></tr>
                         <tr><td><code>&CStr</code></td><td><code>x.to_bytes_with_nul().into()</code></td></tr>
                         <tr><td><code>&OSStr</code></td><td><code>{{todo()}}</code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>{{todo()}}</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>x.into()</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
@@ -1747,10 +1781,12 @@ If you **want** a string of type ...
                         <tr><td><code>String</code></td><td><code>x.as_str()</code></td></tr>
                         <tr><td><code>CString</code></td><td><code>x.to_str()?</code></td></tr>
                         <tr><td><code>OsString</code></td><td><code>x.to_str()?</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>x.to_str()?</code></td></tr>
                         <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>std::str::from_utf8(&x)?</code></td></tr>
                         <tr><td><code>&str</code></td><td><code>x</code></td></tr>
                         <tr><td><code>&CStr</code></td><td><code>x.to_str()?</code></td></tr>
                         <tr><td><code>&OSStr</code></td><td><code>x.to_str()?</code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>x.to_str()?</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>std::str::from_utf8(x)?</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
@@ -1771,10 +1807,12 @@ If you **want** a string of type ...
                         <tr><td><code>String</code></td><td><code>CString::new(x)?.as_c_str()</code></td></tr>
                         <tr><td><code>CString</code></td><td><code>x.as_c_str()</code></td></tr>
                         <tr><td><code>OsString</code></td><td><code>x.to_str()?</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>CStr::from_bytes_with_nul(x.to_str()?.as_bytes())?</code></td></tr>
                         <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>CStr::from_bytes_with_nul(&x)?</code></td></tr>
                         <tr><td><code>&str</code></td><td><code>CStr::from_bytes_with_nul(x.as_bytes())?</code></td></tr>
                         <tr><td><code>&CStr</code></td><td><code>x</code></td></tr>
                         <tr><td><code>&OSStr</code></td><td><code>{{todo()}}</code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>{{todo()}}</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>CStr::from_bytes_with_nul(x)?</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
@@ -1795,10 +1833,38 @@ If you **want** a string of type ...
                         <tr><td><code>String</code></td><td><code>OsStr::new(&x)</code></td></tr>
                         <tr><td><code>CString</code></td><td><code>{{todo()}}</code></td></tr>
                         <tr><td><code>OsString</code></td><td><code>x.as_os_str()</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>x.as_os_str()</code></td></tr>
                         <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
                         <tr><td><code>&str</code></td><td><code>OsStr::new(x)</code></td></tr>
                         <tr><td><code>&CStr</code></td><td><code>{{todo()}}</code></td></tr>
                         <tr><td><code>&OSStr</code></td><td><code>x</code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>x.as_os_str()</code></td></tr>
+                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
+                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <input class="tab-radio" type="radio" id="tab-str-85" name="tab-group-str" >
+        <label class="tab-label" for="tab-str-85"><code>&Path</code></label>
+        <div class="tab-panel">
+            <div class="tab-content">
+                <table class="stringconversion">
+                    <thead>
+                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>String</code></td><td><code>x.as_ref()</code></td></tr>
+                        <tr><td><code>CString</code></td><td><code>x.to_str()?.as_ref()</code></td></tr>
+                        <tr><td><code>OsString</code></td><td><code>x.as_ref()</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>x.as_ref()</code></td></tr>
+                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>{{ todo() }}</code></td></tr>
+                        <tr><td><code>&str</code></td><td><code>x.as_ref()</code></td></tr>
+                        <tr><td><code>&CStr</code></td><td><code>x.to_str()?.as_ref()</code></td></tr>
+                        <tr><td><code>&OSStr</code></td><td><code>x.as_ref()<code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>x</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
@@ -1819,10 +1885,12 @@ If you **want** a string of type ...
                         <tr><td><code>String</code></td><td><code>x.as_bytes()</code></td></tr>
                         <tr><td><code>CString</code></td><td><code>x.as_bytes()</code></td></tr>
                         <tr><td><code>OsString</code></td><td><code>{{todo()}}</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>{{todo()}}</code></td></tr>
                         <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>&x</code></td></tr>
                         <tr><td><code>&str</code></td><td><code>x.as_bytes()</code></td></tr>
                         <tr><td><code>&CStr</code></td><td><code>x.to_bytes_with_nul()</code></td></tr>
                         <tr><td><code>&OSStr</code></td><td><code>{{todo()}}</code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>{{todo()}}</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>x</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
@@ -1832,7 +1900,7 @@ If you **want** a string of type ...
     </div>
     <div class="tab">
         <input class="tab-radio" type="radio" id="tab-str-9" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-9"><b>Various Other</b></label>
+        <label class="tab-label" for="tab-str-9"><b>Other</b></label>
         <div class="tab-panel">
             <div class="tab-content">
                 TODO
