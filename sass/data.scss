@@ -8,7 +8,6 @@ datum.centered {
     margin: auto;
 }
 
-
 datum {
     box-sizing: border-box;
     display: inline-block;
@@ -99,6 +98,13 @@ datum {
 
     .cell {
         background-color: gold;
+    }
+
+    .platformdefined {
+        background-color:lightgrey;
+        border-style: dashed;
+        border-width: 2px;
+        border-color: darkblue;
     }
 
     .celled {

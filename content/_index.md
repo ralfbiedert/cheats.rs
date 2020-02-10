@@ -1484,8 +1484,8 @@ Some common types:
 <datum>
     <name><code>OsString</code> {{ todo() }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
-    <visual>
-        Platform Defined.
+    <visual class="platformdefined">
+        Platform Defined
     </visual>
     <memory-entry class="double">
         <memory-link style="left:25%">|</memory-link>
@@ -1494,12 +1494,38 @@ Some common types:
                 <byte class="bytes"><code>?</code></byte>
                 <byte class="bytes"><code>?</code></byte>
                 <byte class="bytes"><code>?</code></byte>
+                <byte class="bytes"><code>?</code></byte>
+                <byte class="bytes"><code>?</code></byte>
             </div>
         </memory>
     </memory-entry>
 </datum>
 
+<spacer>
+</spacer>
 
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>PathBuf</code> {{ todo() }}</name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual class="platformdefined">
+        <payload>
+            <code>OsString</code>
+        </payload>
+    </visual>
+    <memory-entry class="double">
+        <memory-link style="left:40%">|</memory-link>
+        <memory class="heap">
+            <div>
+                <byte class="bytes"><code>?</code></byte>
+                <byte class="bytes"><code>?</code></byte>
+                <byte class="bytes"><code>?</code></byte>
+                <byte class="bytes"><code>?</code></byte>
+                <byte class="bytes"><code>?</code></byte>
+            </div>
+        </memory>
+    </memory-entry>
+</datum>
 
 
 {{ tablesep() }}
@@ -1703,12 +1729,12 @@ If you **want** a string of type ...
                         <tr><td><code>String</code></td><td><code>OsString::from(x)</code></td></tr>
                         <tr><td><code>CString</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
                         <tr><td><code>OsString</code></td><td><code>x.clone()</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
+                        <tr><td><code>PathBuf</code></td><td><code>x.into_os_string()</code></td></tr>
                         <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>{{ todo() }}</code></td></tr>
                         <tr><td><code>&str</code></td><td><code>OsString::from(x)</code></td></tr>
                         <tr><td><code>&CStr</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
                         <tr><td><code>&OSStr</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>OsString::from(x.to_str()?)</code></td></tr>
+                        <tr><td><code>&Path</code></td><td><code>x.as_os_str().into()</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
