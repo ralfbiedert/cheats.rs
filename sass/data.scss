@@ -157,6 +157,18 @@ datum {
         height: 28px;
     }
 
+    word {
+        display: inline-block;
+        // background-color: mistyrose;
+        border-style: dashed;
+        border-width: 1px;
+        border-color: black;
+        border-radius: 5px;
+        width: 30px;
+        height: 28px;
+    }
+
+
     byte.sign::after {
         content: "±";
         // display: block;
