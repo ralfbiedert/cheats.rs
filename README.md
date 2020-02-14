@@ -1,6 +1,8 @@
 # ![Logo](/static/logo.png) Rust Language Cheat Sheet
 
- [**READ ONLINE**](https://cheats.rs) | [**DOWNLOAD PDF**](https://github.com/ralfbiedert/cheats.rs/releases/latest)
+ [**READ ONLINE**](https://cheats.rs) | [**CACHED PDF**](https://github.com/ralfbiedert/cheats.rs/releases/latest)†
+
+† PDF is only updated occasionally and mainly provided for mobile users who can't use the "Generate PDF" button on the site. Online version is generally recommended.
 
 
 # Background
