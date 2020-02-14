@@ -1,6 +1,6 @@
 # ![Logo](/static/logo.png) Rust Language Cheat Sheet
 
- [**READ ONLINE**](https://cheats.rs)
+ [**READ ONLINE**](https://cheats.rs) | [**DOWNLOAD PDF**](https://github.com/ralfbiedert/cheats.rs/releases/latest)
 
 
 # Background
