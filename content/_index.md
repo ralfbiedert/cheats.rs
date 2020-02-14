@@ -2030,6 +2030,47 @@ mod m {
 
 <!-- NEW TAB -->
 <div class="tab">
+<input class="tab-radio" type="radio" id="tab-anatomy-25" name="tab-group-anatomy" >
+<label class="tab-label" for="tab-anatomy-25"><b>Proc Macros</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```
+// src/lib.rs (default entry point for proc macros)
+
+extern crate proc_macro;  // Apparently needed to be imported like this.
+
+use proc_macro::TokenStream;
+
+#[proc_macro_attribute]   // Can now be used as `#[my_attribute]`
+pub fn my_attribute(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    item
+}
+```
+
+
+```
+// Cargo.toml
+
+[package]
+name = "my_crate"
+version = "0.1.0"
+
+[lib]
+crate_type = ["proc-macro"]
+```
+
+
+</div></div></div></div></div>
+
+
+
+<!-- NEW TAB -->
+<div class="tab">
 <input class="tab-radio" type="radio" id="tab-anatomy-3" name="tab-group-anatomy" >
 <label class="tab-label" for="tab-anatomy-3"><b>Unit Tests</b></label>
 <div class="tab-panel">
