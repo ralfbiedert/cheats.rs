@@ -1,6 +1,7 @@
 # ![Logo](/static/logo.png) Rust Language Cheat Sheet
 
- [**READ ONLINE**](https://cheats.rs) | [**CACHED PDF**](https://github.com/ralfbiedert/cheats.rs/releases/latest) †
+[![Read Online](/gfx/button_read-online.png)](https://cheats.rs)
+[![Cached PDF](/gfx/button_cached-pdf.png)](https://github.com/ralfbiedert/cheats.rs/releases/latest)
 
 † PDF is only updated occasionally and mainly provided for mobile users who can't use the "Generate PDF" button on the site. Online version is generally recommended.
 
@@ -52,6 +53,9 @@ Takes additional inspiration from:
 * [Ferris](https://rustacean.net/) (Rust mascot by Karen Rustad Tölva)
 * [Rust container cheat sheet](https://docs.google.com/presentation/d/1q-c7UAyrUlM-eZyTo1pd8SZ0qwA_wYxmPZVOQkoDmH4/edit#slide=id.p) (For data layout; Raph Levien)
 * That one IEEE 754-2008 Powerpoint deck I can't find anymore ...
+* [Da Button Factory](https://dabuttonfactory.com/) (Download / PDF buttons)
+
+
 
 
 # Legal & License
