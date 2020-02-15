@@ -1739,6 +1739,7 @@ If you **want** a string of type ...
                         <tr><td><code>&OSStr</code></td><td><code>CString::new(x.to_os_string().into_string()?)?</code></td></tr>
                         <tr><td><code>&Path</code></td><td><code>x.to_str()?.into()</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>unsafe { CString::from_vec_unchecked(x.into()) }</code></td></tr>
+                        <tr><td><code>*mut c_char</code><sup>1</sup></td><td><code>unsafe { CString::from_raw(x) }</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
                     </tbody>
                 </table>
@@ -1958,7 +1959,14 @@ If you **want** a string of type ...
         <label class="tab-label" for="tab-str-9"><b>Other</b></label>
         <div class="tab-panel">
             <div class="tab-content">
-                TODO
+                <table class="stringconversion-other">
+                    <thead>
+                        <tr><th>You <b>want</b></th><th>And <b>have</b> <code>x</code></th><th>Use this ...</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><b><code>*const c_char</code></b></td><td><b><code>CString</code></b></td><td><code>x.as_ptr()</code></td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
