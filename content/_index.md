@@ -64,6 +64,7 @@ Data & Types
 <div class="column">
 
 Standard Library
+* [Traits](#traits)
 * [String Conversions](#string-conversions)
 <!-- * [Marker Traits](#XXX) -->
 
@@ -202,8 +203,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (space for holding _any_ `&s`). |
 | {{ tab() }} `&[S]` | Special slice reference that contains (`address`, `length`). |
 | {{ tab() }} `&str` | Special string reference that contains (`address`, `length`). |
-| {{ tab() }} `&dyn S` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains (`address`, `vtable`). |
 | {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, ...) |
+| {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains (`address`, `vtable`). |
 | `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }} w/o memory safety. |
 | `*mut S` | Mutable raw pointer type w/o memory safety. |
 | `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., address, len, vtable, ... of _this_ `s`, like `0x1234`). |
@@ -1633,7 +1634,11 @@ Send & Sync
 
 ## Traits
 
-#### Common Markers
+Traits define common behavior. If a type `S` implements a `trait T`,  you know `S` can behave in a certain way as presribed by `T`.
+
+{{ tablesep() }}
+
+#### Common Marker Traits
 
 These traits mark **special properties** of the underlying type.
 
@@ -1653,6 +1658,29 @@ These traits mark **special properties** of the underlying type.
     <sup>*</sup> Automatically implemented by compiler where appropriate.
 </div>
 
+</div>
+
+{{ tablesep() }}
+
+
+#### Thread Safety
+
+The traits `Send` and `Sync` govern whether something can be sent between two threads. A **`T: Send`** can be moved to another thread, a **`T: Sync`** means `&T` can be moved to another thread.
+
+<!-- Shamelessly stolen from https://www.reddit.com/r/rust/comments/ctdkyr/understanding_sendsync/exk8grg/ -->
+<table class="sendsync">
+    <thead>
+        <tr><th>Examples</th><th><code>Send</code></th><th><code>!Send</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>Sync</code></td><td><i>Most types</i> ... <code>Mutex&lt;T&gt;</code>, <code>Arc&lt;T&gt;</code><sup>1,2</sup></td><td><code>MutexGuard&lt;T&gt;</code><sup>1</sup>, <code>RwLockReadGuard&lt;T&gt;</code><sup>1</sup></td></tr>
+        <tr><td><code>!Sync</code></td><td><code>Cell&lt;T&gt;</code><sup>2</sup>, <code>RefCell&lt;T&gt;</code><sup>2</sup></td><td><code>Rc&lt;T&gt;</code>, <code>Formatter</code>, <code>&dyn Trait</code></td></tr>
+    </tbody>
+</table>
+
+<div class="footnotes">
+    <sup>1</sup> If <code>T</code> is <code>Sync</code>. <br>
+    <sup>2</sup> If <code>T</code> is <code>Send</code>.
 </div>
 
 {{ tablesep() }}

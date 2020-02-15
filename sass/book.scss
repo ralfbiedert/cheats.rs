@@ -150,6 +150,30 @@ table.stringconversion {
 }
 
 
+table.sendsync {
+
+    th {
+        background-color: rgb(212, 247, 244);
+    }
+
+    td:nth-child(1) {
+        background-color: rgb(212, 247, 244);
+        text-align: center;
+        font-weight: bold;
+    }
+
+    th:nth-child(2) {
+        width: 300px;
+    }
+
+    th:nth-child(3) {
+        width: 300px;
+    }
+
+}
+
+
+
 
 span.good {
     color: green;
