@@ -2267,11 +2267,13 @@ A large number of additional cargo plugins [**can be found here**](https://crate
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
-General Rundown:
+General rundown: {{ link(url="https://github.com/japaric/rust-cross") }}
 
 1. Check [target is supported](https://forge.rust-lang.org/release/platform-support.html).
 1. Install target via **`rustup target install X`**.
-1. Install native toolchain (required to _link_, depends on target).
+1. Install native toolchain (required to _link_, depends on target). Get this from your target vendor (Google, Apple, ...). 
+Might not be available for your host (e.g., no iOS toolchain for Windows). **Some toolchains require additional build 
+steps** (e.g., Android's `make-standalone-toolchain.sh`). 
 1. Update **`~/cargo/.config`** like this:
     ```
     [target.aarch64-linux-android]
@@ -2291,8 +2293,6 @@ General Rundown:
 
 </div>
 </div>
-
-Also see [Everything You Need to Know About Cross Compiling](https://github.com/japaric/rust-cross). <sup>🔗</sup>
 
 
 {{ tablesep() }}
