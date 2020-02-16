@@ -2259,6 +2259,8 @@ A large number of additional cargo plugins [**can be found here**](https://crate
 
 ## Cross Compilation
 
+<div class="steps">
+
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
@@ -2287,7 +2289,12 @@ steps** (e.g., Android's `make-standalone-toolchain.sh`).
     ``` 
 1. Compile with **`cargo build --target=X`**      
 
+
+<!-- End overflow area -->
 </div>
+</div>
+
+<!-- End steps  -->
 </div>
 
 {{ tablesep() }}
