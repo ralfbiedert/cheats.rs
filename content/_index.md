@@ -713,7 +713,9 @@ Essential types built into the core of the language.
 {{ tablesep() }}
 
 
-
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
 
 <div class="tabs">
 
@@ -825,9 +827,11 @@ Similarly, for <code>f64</code> types this would look like:
 
 </div></div></div>
 
-
+<!-- End tabs -->
 </div>
 
+<!-- End overflow prevention -->
+</div></div>
 
 
 {{ tablesep() }}
@@ -2269,25 +2273,25 @@ General rundown: {{ link(url="https://github.com/japaric/rust-cross") }}
 
 1. Check [target is supported](https://forge.rust-lang.org/release/platform-support.html).
 1. Install target via **`rustup target install X`**.
-1. Install native toolchain (required to _link_, depends on target). Get this from your target vendor (Google, Apple, ...). 
-Might not be available for your host (e.g., no iOS toolchain for Windows). **Some toolchains require additional build 
-steps** (e.g., Android's `make-standalone-toolchain.sh`). 
+1. Install native toolchain (required to _link_, depends on target). Get this from your target vendor (Google, Apple, ...).
+Might not be available for your host (e.g., no iOS toolchain for Windows). **Some toolchains require additional build
+steps** (e.g., Android's `make-standalone-toolchain.sh`).
 1. Update **`~/cargo/.config`** like this:
     ```
     [target.aarch64-linux-android]
     linker = "[PATH_TO_TOOLCHAIN]/aarch64-linux-android/bin/aarch64-linux-android-clang"
     ```
-   or   
+   or
     ```
     [target.aarch64-linux-android]
     linker = "C:/[PATH_TO_TOOLCHAIN]/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang.cmd"
     ```
-1. Sometimes (depending on how compiler complains) you might also need to set an environment variable. Note that some platforms / configuration can be 
-**extremely** sensitive how paths are specified (e.g., `\` vs `/`) and quoted: 
+1. Sometimes (depending on how compiler complains) you might also need to set an environment variable. Note that some platforms / configuration can be
+**extremely** sensitive how paths are specified (e.g., `\` vs `/`) and quoted:
     ```
-    set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd  
-    ``` 
-1. Compile with **`cargo build --target=X`**      
+    set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
+    ```
+1. Compile with **`cargo build --target=X`**
 
 
 <!-- End overflow area -->
