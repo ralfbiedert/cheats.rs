@@ -695,10 +695,10 @@ Essential types built into the core of the language.
         <byte><code></code></byte>
         <byte><code></code></byte>
         <byte><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
-        <byte style="border-color: lightslategrey"><code></code></byte>
+        <byte style="border-color: lightslategrey;"><code></code></byte>
+        <byte style="border-color: lightslategrey;"><code></code></byte>
+        <byte style="border-color: lightslategrey;"><code></code></byte>
+        <byte style="border-color: lightslategrey;"><code></code></byte>
     </visual>
     <zoom>
         Same as <code>ptr</code> on platform.
@@ -1058,7 +1058,7 @@ The respective `mut` types are identical.
         </payload>
     </visual>
     <memory-entry>
-        <memory-link style="left:46%">|</memory-link>
+        <memory-link style="left:46%;">|</memory-link>
         <memory class="anymem">
             <framed class="any unsized"><code>T</code></framed>
         </memory>
@@ -1101,7 +1101,7 @@ The `payload` depends on the base type of the referent. This applies to both ref
         </ptr>
     </visual>
     <memory-entry>
-        <memory-link style="left:46%">|</memory-link>
+        <memory-link style="left:46%;">|</memory-link>
         <memory class="anymem">
             <framed class="any t"><code>T</code></framed>
         </memory>
@@ -1121,7 +1121,7 @@ The `payload` depends on the base type of the referent. This applies to both ref
         </sized>
     </visual>
     <memory-entry>
-        <memory-link style="left:46%">|</memory-link>
+        <memory-link style="left:46%;">|</memory-link>
         <memory class="anymem">
             <framed class="any unsized"><code>T</code></framed>
         </memory>
@@ -1144,7 +1144,7 @@ The `payload` depends on the base type of the referent. This applies to both ref
         </sized>
     </visual>
     <memory-entry class="double">
-        <memory-link style="left:24%">|</memory-link>
+        <memory-link style="left:24%;">|</memory-link>
         <memory class="anymem">
             ...
             <framed class="any" style="width: 30px;"><code>T</code></framed>
@@ -1167,7 +1167,7 @@ The `payload` depends on the base type of the referent. This applies to both ref
         </sized>
     </visual>
     <memory-entry class="double">
-        <memory-link style="left:24%">|</memory-link>
+        <memory-link style="left:24%;">|</memory-link>
         <memory class="anymem">
             ...
             <byte class="bytes"><code>U</code></byte>
@@ -1194,13 +1194,13 @@ The `payload` depends on the base type of the referent. This applies to both ref
         </ptr>
     </visual>
     <memory-entry>
-        <memory-link style="left:49%">|</memory-link>
+        <memory-link style="left:49%;">|</memory-link>
         <memory class="anymem">
             <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
     <memory-entry style="width:220px; position: absolute;">
-        <memory-link style="left:22%">|</memory-link>
+        <memory-link style="left:22%;">|</memory-link>
         <memory class="static-vtable" style="width: 210px;">
             <table>
                 <tr class="vtable"><td><code>*Drop::drop(&mut T)</code></td></tr>
@@ -1248,13 +1248,13 @@ the environment you accessed when defining the closure. For example:
     </visual>
     <zoom>Anonymous closure type C2</zoom>
     <memory-entry>
-        <memory-link style="left:44%">|</memory-link>
+        <memory-link style="left:44%;">|</memory-link>
         <memory class="anymem">
             <framed class="any" style="width: 30px;"><code>Y</code></framed>
         </memory>
     </memory-entry>
     <memory-entry>
-        <memory-link style="left:44%">|</memory-link>
+        <memory-link style="left:44%;">|</memory-link>
         <memory class="anymem">
             <framed class="any" style="width: 30px;"><code>Z</code></framed>
         </memory>
@@ -1380,7 +1380,7 @@ Some common types:
         </payload>
     </visual>
     <memory-entry>
-        <memory-link style="left:49%">|</memory-link>
+        <memory-link style="left:49%;">|</memory-link>
         <memory class="heap">
         <framed class="any unsized"><code>T</code></framed>
         </memory>
@@ -1406,7 +1406,7 @@ Some common types:
         </sized>
     </visual>
     <memory-entry class="double">
-        <memory-link style="left:25%">|</memory-link>
+        <memory-link style="left:25%;">|</memory-link>
         <memory class="heap capacity">
             <div>
                 <framed class="any t"><code>T</code></framed>
@@ -1441,7 +1441,7 @@ Some common types:
         </sized>
     </visual>
     <memory-entry class="double">
-        <memory-link style="left:25%">|</memory-link>
+        <memory-link style="left:25%;">|</memory-link>
         <memory class="heap">
             <div>
                 <byte class="bytes"><code>U</code></byte>
@@ -1473,7 +1473,7 @@ Some common types:
         </sized>
     </visual>
     <memory-entry class="double">
-        <memory-link style="left:25%">|</memory-link>
+        <memory-link style="left:25%;">|</memory-link>
         <memory class="heap">
             <div>
                 <byte class="bytes"><code>A</code></byte>
@@ -1499,7 +1499,7 @@ Some common types:
         Platform Defined
     </visual>
     <memory-entry class="double">
-        <memory-link style="left:25%">|</memory-link>
+        <memory-link style="left:25%;">|</memory-link>
         <memory class="heap">
             <div>
                 <byte class="bytes"><code>?</code></byte>
@@ -1526,7 +1526,7 @@ Some common types:
         </payload>
     </visual>
     <memory-entry class="double">
-        <memory-link style="left:40%">|</memory-link>
+        <memory-link style="left:40%;">|</memory-link>
         <memory class="heap">
             <div>
                 <byte class="bytes"><code>?</code></byte>
@@ -1549,7 +1549,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 <!-- NEW ENTRY -->
 <datum>
     <name><code>Rc&lt;T&gt;</code></name>
-    <visual style="width: 180px">
+    <visual style="width: 180px;">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1559,7 +1559,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
     </visual>
     <div>
         <memory-entry class="quad">
-            <memory-link style="left:15%">|</memory-link>
+            <memory-link style="left:15%;">|</memory-link>
             <memory class="heap">
                 <sized class="celled"><code>strong</code><sub>4/8</sub></sized>
                 <sized class="celled"><code>weak</code><sub>4/8</sub></sized>
@@ -1575,7 +1575,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 <!-- NEW ENTRY -->
 <datum>
     <name><code>Arc&lt;T&gt;</code></name>
-    <visual style="width: 180px">
+    <visual style="width: 180px;">
         <ptr>
            <code>ptr</code><sub>4/8</sub>
         </ptr>
@@ -1585,7 +1585,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
     </visual>
     <div style="width: 0px;">
         <memory-entry class="quad">
-            <memory-link style="left:15%">|</memory-link>
+            <memory-link style="left:15%;">|</memory-link>
             <memory class="heap">
                 <sized class="atomicx"><code>strong</code><sub>4/8</sub></sized>
                 <sized class="atomicx"><code>weak</code><sub>4/8</sub></sized>
@@ -1602,13 +1602,13 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 <!-- NEW ENTRY -->
 <datum>
     <name><code>Mutex&lt;T&gt;</code> / <code>RwLock&lt;T&gt;</code></name>
-    <visual style="width: 230px">
+    <visual style="width: 230px;">
         <ptr><code>ptr</code><sub>4/8</sub></ptr>
         <sized class="atomicx"><code>poisoned</code><sub>4/8</sub></sized>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
     <memory-entry>
-        <memory-link style="left:45%">|</memory-link>
+        <memory-link style="left:45%;">|</memory-link>
         <memory class="heap">
             <code>lock</code>
         </memory>
