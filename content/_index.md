@@ -146,14 +146,11 @@ Data types and memory locations defined via keywords.
 </div>
 
 <div class="footnotes">
-    <sup>1</sup> They live on the stack for synchronous code. For <code>async</code> code these variables become part of the async's state machine which may ultimately reside on the heap.<br>
-    <sup>2</sup> Note that technically <i>mutable</i> and <i>immutable</i>
-    are a bit of a misnomer. Even if you have an immutable binding or shared
-    reference, it might contain a
-    <a href="https://doc.rust-lang.org/std/cell/index.html">Cell</a>,
-    which supports so called <i>interior mutability</i>.
-</div>
 
+<sup>1</sup> They live on the stack for synchronous code. For `async` code these variables become part of the async's state machine which may ultimately reside on the heap.<br>
+<sup>2</sup> Note that technically _mutable_ and _immutable_ are a bit of a misnomer. Even if you have an immutable binding or shared reference, it might contain a [Cell](https://doc.rust-lang.org/std/cell/index.html), which supports so called _interior mutability_.
+
+</div>
 
 
 {{ tablesep() }}
@@ -192,7 +189,9 @@ Creating and accessing data structures; and some more _sigilic_ types.
 </div>
 
 <div class="footnotes">
-    <sup>*</sup> For now, see <a href="https://github.com/rust-lang/rust/issues/48055">tracking issue</a> and corresponding <a href="https://github.com/rust-lang/rfcs/pull/1909">RFC 1909</a>.
+
+<sup>*</sup> For now, see [tracking issue](https://github.com/rust-lang/rust/issues/48055) and corresponding [RFC 1909](https://github.com/rust-lang/rfcs/pull/1909).
+
 </div>
 
 
@@ -296,9 +295,6 @@ Control execution within a function.
 | {{ tab() }} `<X as T>::f()` | Call trait method `T::f()` implemented for `X`. |
 </div>
 
-
-<!-- | {{ tab() }}  <code>guard(&vert;&vert; s.go()); x.await;</code> | If inconsistent state across `await`, add drop guard to fix state. | -->
-<!-- | {{ tab() }} `async fn f() -> S {}`  | The call `f()` returns an `impl Future<Output=S>`, does not execute `f`! | -->
 
 
 ### Organizing Code
@@ -493,12 +489,6 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | {{ tab() }} `trait T: for<'a> R<'a> {}` | Any `S` that `impl T` would also have to fulfill `R` for any lifetime. |
 
 </div>
-
-
-<!-- These are a bit wonky to explain as they don't work everywhere and are a bit surprising. -->
-<!-- | {{ tab() }} `Box<dyn T>`  | Also works with other type parameters, here box with trait object `T`. | -->
-<!-- | {{ tab() }} `Box<impl T>`  | Box with an actual implementation of `T`. | -->
-
 
 
 
@@ -726,17 +716,20 @@ Essential types built into the core of the language.
 <div class="tab-panel">
 <div class="tab-content">
 
-<table><thead><tr><th>Integer*</th><th align="right">Max Value</th></tr></thead><tbody>
-<tr><td><code class=" language-rust">u8</code></td><td align="right"><code class=" language-rust"><span class="token number">255</span></code></td></tr>
-<tr><td><code class=" language-rust">u16</code></td><td align="right"><code class=" language-rust"><span class="token number">65_535</span></code></td></tr>
-<tr><td><code class=" language-rust">u32</code></td><td align="right"><code class=" language-rust"><span class="token number">4_294_967_295</span></code></td></tr>
-<tr><td><code class=" language-rust">u64</code></td><td align="right"><code class=" language-rust"><span class="token number">18_446_744_073_709_551_615</span></code></td></tr>
-<tr><td><code class=" language-rust">u128</code></td><td align="right"><code class=" language-rust"><span class="token number">340_282_366_920_938_463_463_374_607_431_768_211_455</span></code></td></tr>
-</tbody></table>
+
+
+|Integer*|Max Value|
+|---|---|
+|`u8`| `255` |
+|`u16` | `65_535` |
+|`u32`| `4_294_967_295` |
+|`u64`| `18_446_744_073_709_551_615` |
+|`u128`| `340_282_366_920_938_463_463_374_607_431_768_211_455` |
 
 <div class="footnotes">
-    <sup>*</sup> <code>i8</code>, <code>i16</code>, ... values range from
-    <code>-max/2</code> to <code>max/2</code>, rounded towards negative infinity.
+
+<sup>*</sup> `i8`, `i16`, ... values range from `-max/2` to `max/2`, rounded towards negative infinity.
+
 </div>
 
 </div></div></div>
@@ -750,7 +743,7 @@ Essential types built into the core of the language.
 <div class="tab-content">
 
 
-Sample bit representation<sup>*</sup> for a <code>f32</code>:
+Sample bit representation<sup>*</sup> for a `f32`:
 
 <!-- NEW ENTRY -->
 <datum class="centered" style="opacity:0.7; margin-bottom:10px;">
@@ -800,26 +793,25 @@ Sample bit representation<sup>*</sup> for a <code>f32</code>:
 
 Explanation:
 
-<table><thead><tr><th>f32</th><th>S (1)</th><th>E (8)</th><th>F (23)</th><th>Value</th></tr></thead><tbody>
-<tr><td>Normalized number</td><td>±</td><td>1 to 254</td><td>any</td><td>±(1.F)<sub>2</sub> * 2<sup>E-127</sup></td></tr>
-<tr><td>Denormalized number</td><td>±</td><td>0</td><td>non-zero</td><td>±(0.F)<sub>2</sub> * 2<sup>-126</sup></td></tr>
-<tr><td>Zero</td><td>±</td><td>0</td><td>0</td><td>±0</td></tr>
-<tr><td>Infinity</td><td>±</td><td>255</td><td>0</td><td>±∞</td></tr>
-<tr><td>NaN</td><td>±</td><td>255</td><td>non-zero</td><td>NaN</td></tr>
-</tbody></table>
+| f32 | S (1) | E (8) | F (23) | Value |
+|------| ---------| ---------| ---------| ---------|
+| Normalized number | ± | 1 to 254 | any | ±(1.F)<sub>2</sub> * 2<sup>E-127</sup>  |
+| Denormalized number | ± | 0 | non-zero | ±(0.F)<sub>2</sub> * 2<sup>-126</sup>  |
+| Zero | ± | 0 | 0 | ±0  |
+| Infinity | ± | 255 | 0 | ±∞  |
+| NaN | ± | 255 | non-zero | NaN  |
 
 {{ tablesep() }}
 
 Similarly, for <code>f64</code> types this would look like:
 
-<table><thead><tr><th>f64</th><th>S (1)</th><th>E (11)</th><th>F (52)</th><th>Value</th></tr></thead><tbody>
-<tr><td>Normalized number</td><td>±</td><td>1 to 2046</td><td>any</td><td>±(1.F)<sub>2</sub> * 2<sup>E-1023</sup></td></tr>
-<tr><td>Denormalized number</td><td>±</td><td>0</td><td>non-zero</td><td>±(0.F)<sub>2</sub> * 2<sup>-1022</sup></td></tr>
-<tr><td>Zero</td><td>±</td><td>0</td><td>0</td><td>±0</td></tr>
-<tr><td>Infinity</td><td>±</td><td>2047</td><td>0</td><td>±∞</td></tr>
-<tr><td>NaN</td><td>±</td><td>2047</td><td>non-zero</td><td>NaN</td></tr>
-</tbody></table>
-
+| f64 | S (1) | E (11) | F (52) | Value |
+|------| ---------| ---------| ---------| ---------|
+| Normalized number | ± | 1 to 2046 | any | ±(1.F)<sub>2</sub> * 2<sup>E-1023</sup>  |
+| Denormalized number | ± | 0 | non-zero | ±(0.F)<sub>2</sub> * 2<sup>-1022</sup>  |
+| Zero | ± | 0 | 0 | ±0  |
+| Infinity | ± | 2047 | 0 | ±∞  |
+| NaN | ± | 2047 | non-zero | NaN  |
 
 <div class="footnotes">
     <sup>*</sup> Float types follow <a href="https://en.wikipedia.org/wiki/IEEE_754-2008_revision">IEEE 754-2008</a> and depend on platform endianness.
@@ -874,22 +866,6 @@ Notice how:
 
 - `char` is always 4 bytes and only holds a single Unicode **scalar value** (thus possibly wasting space),
 - `str` is a byte-array of unknown length guaranteed to hold **UTF-8 code points** (but harder to index).
-
-<!--
-These are Rust's primitive textual types. On a text such as "I love 🦀" they work as follows:
-
-
-| Type | Description |
-|------| ---------|
-| `char` | Single, **always** 4-byte type, can hold any UTF-8 character such as `I`, `l` or `🦀`. |
-| `str` |  (e.g., `lo` or `ve 🦀`).  |
-| `&str` | `255`  |
-| `&[char]` | `255`  |
-| String | `255`  |
-
-<div class="footnotes">
-    Also compare the visual representation of <code>&'a str</code> and <code>String</code> below.
-</div> -->
 
 {{ tablesep() }}
 
@@ -1650,8 +1626,8 @@ may be a bit more tricky.
 <div class="footnotes">
 
 <sup>*</sup> An instance `t` where **`T: Send`** can be moved to another thread, a **`T: Sync`** means `&t` can be moved to another thread.<br>
-<sup>1</sup> If <code>T</code> is <code>Sync</code>. <br>
-<sup>2</sup> If <code>T</code> is <code>Send</code>.
+<sup>1</sup> If `T` is `Sync`. <br>
+<sup>2</sup> If `T` is `Send`.
 
 </div>
 
@@ -1715,7 +1691,7 @@ Let's assume you have a `struct C {}` that is your collection.
 * **`struct Iter {}`** &mdash; Create a struct to hold your iteration status (e.g., an index) for immutable iteration.
 * **`impl Iterator for Iter {}`** &mdash; Provide an implementation of `Iterator::next()` so it can produce elements.
 
-In addition, you might want to consider providing a convenience `fn iter(&self) -> Iter` inside your `impl C {}`.
+In addition, you might want to add a convenience `fn iter(&self) -> Iter` inside your `impl C {}`.
 
 **Mutable Iterators**
 
@@ -1764,288 +1740,250 @@ Conversions XXX
 If you **want** a string of type ...
 
 <div class="tabs">
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-1" name="tab-group-str" checked>
-        <label class="tab-label" for="tab-str-1"><code>String</code></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion">
-                    <thead>
-                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>String</code></td><td><code>x</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>x.into_string()?</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>x.to_str()?.into()</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>x.to_str()?.into()</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>String::from_utf8(x)?</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>x.to_str()?.into()</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>x.to_str()?.into()</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>x.to_str()?.into()</code></td></tr>
-                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>String::from_utf8_lossy(x).into()</code></td></tr>
-                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-2" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-2"><code>CString</code></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion">
-                    <thead>
-                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>String</code></td><td><code>CString::new(x)?</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>x</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>CString::new(x.to_str()?)?</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>CString::new(x.to_str()?)?</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>unsafe { CString::from_vec_unchecked(x) }</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>CString::new(x)?</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>CString::new(x.to_os_string().into_string()?)?</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>x.to_str()?.into()</code></td></tr>
-                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>unsafe { CString::from_vec_unchecked(x.into()) }</code></td></tr>
-                        <tr><td><code>*mut c_char</code><sup>1</sup></td><td><code>unsafe { CString::from_raw(x) }</code></td></tr>
-                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-3" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-3"><code>OsString</code></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion">
-                    <thead>
-                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>String</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>x.to_str()?.into()</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>x</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>x.into_os_string()</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>{{ todo() }}</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>x.to_str()?.into()</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>x.as_os_str().into()</code></td></tr>
-                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
-                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-35" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-35"><code>PathBuf</code></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion">
-                    <thead>
-                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>String</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>x.to_str()?.into()</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>x</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>{{ todo() }}</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>x.to_str()?.into()</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>x.into()</code></td></tr>
-                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
-                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-4" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-4"><code>Vec&lt;u8&gt;</code></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion">
-                    <thead>
-                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>String</code></td><td><code>x.into_bytes()</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>x.into_bytes()</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>x</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>x.as_bytes().into()</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>x.to_bytes_with_nul().into()</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>x.into()</code></td></tr>
-                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-5" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-5"><code>&str</code></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion">
-                    <thead>
-                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>String</code></td><td><code>x.as_str()</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>x.to_str()?</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>x.to_str()?</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>x.to_str()?</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>std::str::from_utf8(&x)?</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>x</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>x.to_str()?</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>x.to_str()?</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>x.to_str()?</code></td></tr>
-                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>std::str::from_utf8(x)?</code></td></tr>
-                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
-                    </tbody>
-                </table>
-             </div>
-        </div>
-    </div>
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-6" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-6"><code>&CStr</code></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion">
-                    <thead>
-                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>String</code></td><td><code>CString::new(x)?.as_c_str()</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>x.as_c_str()</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>x.to_str()?</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>CStr::from_bytes_with_nul(x.to_str()?.as_bytes())?</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>CStr::from_bytes_with_nul(&x)?</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>CStr::from_bytes_with_nul(x.as_bytes())?</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>x</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>CStr::from_bytes_with_nul(x)?</code></td></tr>
-                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-8" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-8"><code>&OsStr</code></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion">
-                    <thead>
-                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>String</code></td><td><code>OsStr::new(&x)</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>x.as_os_str()</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>x.as_os_str()</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>OsStr::new(x)</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>x</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>x.as_os_str()</code></td></tr>
-                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
-                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-85" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-85"><code>&Path</code></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion">
-                    <thead>
-                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>String</code></td><td><code>x.as_ref()</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>x.to_str()?.as_ref()</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>x.as_ref()</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>x.as_ref()</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>{{ todo() }}</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>x.as_ref()</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>x.to_str()?.as_ref()</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>x.as_ref()</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>x</code></td></tr>
-                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
-                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-7" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-7"><code>&[u8]</code></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion">
-                    <thead>
-                        <tr><th>If you <b>have</b> <code>x</code> of type ...</th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><code>String</code></td><td><code>x.as_bytes()</code></td></tr>
-                        <tr><td><code>CString</code></td><td><code>x.as_bytes()</code></td></tr>
-                        <tr><td><code>OsString</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>PathBuf</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>&x</code></td></tr>
-                        <tr><td><code>&str</code></td><td><code>x.as_bytes()</code></td></tr>
-                        <tr><td><code>&CStr</code></td><td><code>x.to_bytes_with_nul()</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>&Path</code></td><td><code>{{todo()}}</code></td></tr>
-                        <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>x</code></td></tr>
-                        <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="tab">
-        <input class="tab-radio" type="radio" id="tab-str-9" name="tab-group-str" >
-        <label class="tab-label" for="tab-str-9"><b>Other</b></label>
-        <div class="tab-panel">
-            <div class="tab-content">
-                <table class="stringconversion-other">
-                    <thead>
-                        <tr><th>You <b>want</b></th><th>And <b>have</b> <code>x</code></th><th>Use this ...</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><b><code>*const c_char</code></b></td><td><b><code>CString</code></b></td><td><code>x.as_ptr()</code></td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-1" name="tab-group-str" checked>
+<label class="tab-label" for="tab-str-1"><code>String</code></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion">
+            
+| If you **have** `x` of type ...| Use this ... |
+| --- | --- |
+|`String`|`x`|
+|`CString`|`x.into_string()?`|
+|`OsString`|`x.to_str()?.into()`|
+|`PathBuf`|`x.to_str()?.into()`|
+|`Vec&lt;u8&gt;`<sup>1</sup>|`String::from_utf8(x)?`|
+|`&str`|`x.into()`|
+|`&CStr`|`x.to_str()?.into()`|
+|`&OSStr`|`x.to_str()?.into()`|
+|`&Path`|`x.to_str()?.into()`|
+|`&[u8]` <sup>1</sup> |`String::from_utf8_lossy(x).into()`|
+                       
+</div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-2" name="tab-group-str" >
+<label class="tab-label" for="tab-str-2"><code>CString</code></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion">
+            
+| If you **have** `x` of type ...| Use this ... |
+| --- | --- |
+|`String`|`CString::new(x)?`|
+|`CString`|`x`|
+|`OsString`|`CString::new(x.to_str()?)?`|
+|`PathBuf`|`CString::new(x.to_str()?)?`|
+|`Vec&lt;u8&gt;`<sup>1</sup>|`unsafe { CString::from_vec_unchecked(x) }`|
+|`&str`|`CString::new(x)?`|
+|`&CStr`|`x.into()`|
+|`&OSStr`|`CString::new(x.to_os_string().into_string()?)?`|
+|`&Path`|`x.to_str()?.into()`|
+|`&[u8]`<sup>1</sup>|`unsafe { CString::from_vec_unchecked(x.into()) }`|
+|`*mut c_char`<sup>1</sup>|`unsafe { CString::from_raw(x) }`|
+                       
+</div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-3" name="tab-group-str" >
+<label class="tab-label" for="tab-str-3"><code>OsString</code></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion">
+            
+| If you **have** `x` of type ...| Use this ... |
+| --- | --- |
+|`String`|`x.into()`|
+|`CString`|`x.to_str()?.into()`|
+|`OsString`|`x`|
+|`PathBuf`|`x.into_os_string()`|
+|`Vec&lt;u8&gt;`<sup>1</sup>|`{{ todo() }}`|
+|`&str`|`x.into()`|
+|`&CStr`|`x.to_str()?.into()`|
+|`&OSStr`|`x.into()`|
+|`&Path`|`x.as_os_str().into()`|
+|`&[u8]`<sup>1</sup>|`{{todo()}}`|
+                       
+</div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-35" name="tab-group-str" >
+<label class="tab-label" for="tab-str-35"><code>PathBuf</code></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion">
+            
+| If you **have** `x` of type ...| Use this ... |
+| --- | --- |
+|`String`|`x.into()`|
+|`CString`|`x.to_str()?.into()`|
+|`OsString`|`x.into()`|
+|`PathBuf`|`x`|
+|`Vec&lt;u8&gt;`<sup>1</sup>|`{{ todo() }}`|
+|`&str`|`x.into()`|
+|`&CStr`|`x.to_str()?.into()`|
+|`&OSStr`|`x.into()`|
+|`&Path`|`x.into()`|
+|`&[u8]`<sup>1</sup>|`{{todo()}}`|
+                       
+</div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-4" name="tab-group-str" >
+<label class="tab-label" for="tab-str-4"><code>Vec&lt;u8&gt;</code></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion">
+            
+| If you **have** `x` of type ...| Use this ... |
+| --- | --- |
+|`String`|`x.into_bytes()`|
+|`CString`|`x.into_bytes()`|
+|`OsString`|`{{todo()}}`|
+|`PathBuf`|`{{todo()}}`|
+|`Vec&lt;u8&gt;`<sup>1</sup>|`x`|
+|`&str`|`x.as_bytes().into()`|
+|`&CStr`|`x.to_bytes_with_nul().into()`|
+|`&OSStr`|`{{todo()}}`|
+|`&Path`|`{{todo()}}`|
+|`&[u8]`<sup>1</sup>|`x.into()`|
+                       
+</div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-5" name="tab-group-str" >
+<label class="tab-label" for="tab-str-5"><code>&str</code></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion">
+            
+| If you **have** `x` of type ...| Use this ... |
+| --- | --- |
+|`String`|`x.as_str()`|
+|`CString`|`x.to_str()?`|
+|`OsString`|`x.to_str()?`|
+|`PathBuf`|`x.to_str()?`|
+|`Vec&lt;u8&gt;`<sup>1</sup>|`std::str::from_utf8(&x)?`|
+|`&str`|`x`|
+|`&CStr`|`x.to_str()?`|
+|`&OSStr`|`x.to_str()?`|
+|`&Path`|`x.to_str()?`|
+|`&[u8]`<sup>1</sup>|`std::str::from_utf8(x)?`|
+                       
+</div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-6" name="tab-group-str" >
+<label class="tab-label" for="tab-str-6"><code>&CStr</code></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion">
+            
+| If you **have** `x` of type ...| Use this ... |
+| --- | --- |
+|`String`|`CString::new(x)?.as_c_str()`|
+|`CString`|`x.as_c_str()`|
+|`OsString`|`x.to_str()?`|
+|`PathBuf`|`CStr::from_bytes_with_nul(x.to_str()?.as_bytes())?`|
+|`Vec&lt;u8&gt;`<sup>1</sup>|`CStr::from_bytes_with_nul(&x)?`|
+|`&str`|`CStr::from_bytes_with_nul(x.as_bytes())?`|
+|`&CStr`|`x`|
+|`&OSStr`|`{{todo()}}`|
+|`&Path`|`{{todo()}}`|
+|`&[u8]`<sup>1</sup>|`CStr::from_bytes_with_nul(x)?`|
+                       
+</div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-8" name="tab-group-str" >
+<label class="tab-label" for="tab-str-8"><code>&OsStr</code></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion">
+            
+| If you **have** `x` of type ...| Use this ... |
+| --- | --- |
+|`String`|`OsStr::new(&x)`|
+|`CString`|`{{todo()}}`|
+|`OsString`|`x.as_os_str()`|
+|`PathBuf`|`x.as_os_str()`|
+|`Vec&lt;u8&gt;`<sup>1</sup>|`{{todo()}}`|
+|`&str`|`OsStr::new(x)`|
+|`&CStr`|`{{todo()}}`|
+|`&OSStr`|`x`|
+|`&Path`|`x.as_os_str()`|
+|`&[u8]`<sup>1</sup>|`{{todo()}}`|
+                       
+</div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-85" name="tab-group-str" >
+<label class="tab-label" for="tab-str-85"><code>&Path</code></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion">
+            
+| If you **have** `x` of type ...| Use this ... |
+| --- | --- |
+|`String`|`x.as_ref()`|
+|`CString`|`x.to_str()?.as_ref()`|
+|`OsString`|`x.as_ref()`|
+|`PathBuf`|`x.as_ref()`|
+|`Vec&lt;u8&gt;`<sup>1</sup>|`{{ todo() }}`|
+|`&str`|`x.as_ref()`|
+|`&CStr`|`x.to_str()?.as_ref()`|
+|`&OSStr`|`x.as_ref()`|
+|`&Path`|`x`|
+|`&[u8]`<sup>1</sup>|`{{todo()}}`|
+                       
+</div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-7" name="tab-group-str" >
+<label class="tab-label" for="tab-str-7"><code>&[u8]</code></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion">
+            
+| If you **have** `x` of type ...| Use this ... |
+| --- | --- |
+|`String`|`x.as_bytes()`|
+|`CString`|`x.as_bytes()`|
+|`OsString`|`{{todo()}}`|
+|`PathBuf`|`{{todo()}}`|
+|`Vec&lt;u8&gt;`<sup>1</sup>|`&x`|
+|`&str`|`x.as_bytes()`|
+|`&CStr`|`x.to_bytes_with_nul()`|
+|`&OSStr`|`{{todo()}}`|
+|`&Path`|`{{todo()}}`|
+|`&[u8]`<sup>1</sup>|`x`|
+                       
+</div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-str-9" name="tab-group-str" >
+<label class="tab-label" for="tab-str-9"><b>Other</b></label>
+<div class="tab-panel">
+<div class="tab-content stringconversion-other">
+
+| You **want** | And **have** `x` | Use this ... |
+| --- | --- | --- |
+|<b>`*const c_char`</b>|<b>`CString`</b>|`x.as_ptr()`|
+
+
+</div></div></div>
+
+<!-- End tabs -->
 </div>
 
 
 <div class="footnotes">
-    <sup>1</sup> You should or must (if <code>unsafe</code> calls are involved) ensure the raw data comes with a valid representation for the string type (e.g., being UTF-8 encoded data for a <code>String</code>).
+
+<sup>1</sup> You should or must (if `unsafe` calls are involved) ensure the raw data comes with a valid representation for the string type (e.g., being UTF-8 encoded data for a `String`).
+    
 </div>
 
 
@@ -2079,7 +2017,9 @@ Basic project layout, and common files and folders, as used by Rust [tooling](#t
 </div>
 
 <div class="footnotes">
-    <sup>*</sup> On stable consider <a href="https://github.com/bheisler/criterion.rs">Criterion</a>.
+
+<sup>*</sup> On stable consider [Criterion](https://github.com/bheisler/criterion.rs).
+    
 </div>
 
 
@@ -2290,7 +2230,9 @@ Some commands and tools that are good to know.
 </div>
 
 <div class="footnotes">
-A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type <code>cargo build</code> or just <code>cargo b</code>.
+
+A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type `cargo build` or just `cargo b`.
+
 </div>
 
 
@@ -2432,12 +2374,13 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 
 
 <div class="footnotes">
-    {{ note(note="1") }} Technically <code>async</code> transforms the following code into an anonymous, compiler-generated state machine type, and <code>f()</code> instantiates that machine.
-    The state machine always <code>impl Future</code>, possibly <code>Send</code> & co, depending on types you used inside <code>async</code>. State machine driven by worker thread invoking
-    <code>Future::poll()</code> via runtime directly, or parent <code>.await</code> indirectly.
-    <br/>
-    {{ note(note="2") }} Right now Rust doesn't come with its own runtime. Use external crate instead, such as <a href="https://github.com/async-rs/async-std">async-std</a> or <a href="https://crates.io/crates/tokio">tokio 0.2+</a>.
-    Also, Futures in Rust are an MPV. There is <b>much</b> more utility stuff in the <a href="https://github.com/rust-lang-nursery/futures-rs">futures crate</a>.
+
+{{ note(note="1") }} Technically `async` transforms the following code into an anonymous, compiler-generated state machine type, and `f()` instantiates that machine.
+The state machine always `impl Future`, possibly `Send<` & co, depending on types you used inside `async`. State machine driven by worker thread invoking
+`Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
+{{ note(note="2") }} Right now Rust doesn't come with its own runtime. Use external crate instead, such as [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio).
+Also, Futures in Rust are an MPV. There is **much** more utility stuff in the [futures crate](https://github.com/rust-lang-nursery/futures-rs).
+    
 </div>
 
 {{ tablesep() }}
@@ -2503,11 +2446,11 @@ This leads to the following considerations when writing code inside an `async` c
 </div>
 
 <div class="footnotes">
-    {{ note(note="1") }} Here we assume <code>s</code> is any non-local that could temporarily be put into an invalid state;
-    <code>TL</code> is any thread local storage, and that the <code>async {}</code> containing the code is written
-    without assuming executor specifics.
-    <br/>
-    {{ note(note="2") }} Since <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html">Drop</a> is run in any case when <code>Future</code> is dropped, consider using drop guard that cleans up / fixes application state if it has to be left in bad condition across <code>.await</code> points.
+
+{{ note(note="1") }} Here we assume `s` is any non-local that could temporarily be put into an invalid state;
+`TL` is any thread local storage, and that the `async {}` containing the code is written
+without assuming executor specifics. <br/>
+{{ note(note="2") }} Since [Drop](https://doc.rust-lang.org/std/ops/trait.Drop.html) is run in any case when `Future` is dropped, consider using drop guard that cleans up / fixes application state if it has to be left in bad condition across `.await` points.
 
 </div>
 
@@ -2535,9 +2478,11 @@ From a call site perspective that means:
 </div>
 
 <div class="footnotes">
-    Notice how <b>asking</b> for a <code>Fn</code> closure as a function is
-    most restrictive for the caller; but <b>having</b> a <code>Fn</code>
-    closure as a caller is most compatible with any function.
+
+Notice how **asking** for a `Fn` closure as a function is
+most restrictive for the caller; but **having** a `Fn`
+closure as a caller is most compatible with any function.
+
 </div>
 
 
@@ -2557,10 +2502,12 @@ From the perspective of someone defining a closure:
 </div>
 
 <div class="footnotes">
-    <sup>*</sup> Rust <a href="https://doc.rust-lang.org/stable/reference/expressions/closure-expr.html">prefers capturing</a> by reference
-    (resulting in the most "compatible" <code>Fn</code> closures from a caller perspective), but can be
-    forced to capture its environment by copy or move via the
-    <code>move || {}</code> syntax.
+
+<sup>*</sup> Rust [prefers capturing](https://doc.rust-lang.org/stable/reference/expressions/closure-expr.html) by reference
+(resulting in the most "compatible" `Fn` closures from a caller perspective), but can be
+forced to capture its environment by copy or move via the
+`move || {}` syntax.
+    
 </div>
 
 {{ tablesep() }}
@@ -2618,7 +2565,9 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 |   | This reiterates that not the value in `s`, but location of `s` is borrowed. |
 
 <div class="footnotes">
-    <sup>1</sup> Compare <a href="#data-structures">Data Structures</a> section above: while true for synchronous code, an <code>async</code> 'stack frame' might actually be placed on to the heap by the used async runtime.
+
+<sup>1</sup> Compare [Data Structures](#data-structures) section above: while true for synchronous code, an `async` 'stack frame' might actually be placed on to the heap by the used async runtime.
+    
 </div>
 
 
@@ -2646,7 +2595,9 @@ When reading function or type signatures in particular:
 |  | Any address in an `&'b X` must exist at least as long as any in an `&'a Y`. |
 
 <div class="footnotes">
-    <sup>*</sup> Technically the struct may not hold any data (e.g., when using the <code>'a</code> only for <a href="https://doc.rust-lang.org/std/marker/struct.PhantomData.html">PhantomData</a> or function pointers) but still make use of the <code>'a</code> for communicating and requiring that some of its functions require reference of a certain lifetime.
+
+<sup>*</sup> Technically the struct may not hold any data (e.g., when using the `'a` only for [PhantomData](https://doc.rust-lang.org/std/marker/struct.PhantomData.html) or function pointers) but still make use of the `'a` for communicating and requiring that some of its functions require reference of a certain lifetime.
+    
 </div>
 
 </div>
@@ -2947,4 +2898,8 @@ Online services which provide information or tooling.
 
 </div>
 
-<footer>Ralf Biedert, {{ year() }} – <a href="https://cheats.rs">cheats.rs</a> <br/><br/> <a href="legal">Legal & Privacy</a></footer>
+<footer>
+
+Ralf Biedert, {{ year() }} – [cheats.rs](https://cheats.rs) <br/><br/> [Legal & Privacy](legal).
+
+</footer>
