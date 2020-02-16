@@ -69,6 +69,15 @@ div.survey {
     }
 }
 
+#cross-compilation-pretty-names {
+    display: none;
+}
+
+#cross-compilation-targets {
+    display: none;
+}
+
+
 .header-std-green {
     th {
         background-color: rgb(212, 247, 244);
@@ -133,6 +142,12 @@ div.survey {
 .header-lavender {
     th {
         background-color: rgb(175, 161, 212);
+    }
+}
+
+.header-tooling {
+    th {
+        background-color: rgb(161, 212, 197);
     }
 }
 

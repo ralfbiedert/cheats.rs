@@ -34,7 +34,7 @@ template = "index.html"
 
 <div class="column">
 
-Language Constructs
+**Language Constructs**
 * [Data Structures](#data-structures)
 * [References & Pointers](#references-pointers)
 * [Functions & Behavior](#functions-behavior)
@@ -49,7 +49,7 @@ Language Constructs
 * [Miscellaneous](#miscellaneous)
 
 
-Data & Types
+**Data & Types**
 * [Basic Types](#basic-types)
 * [Custom Types](#custom-types)
 * [References & Pointers](#references-pointers-ui)
@@ -63,13 +63,19 @@ Data & Types
 
 <div class="column">
 
-Standard Library
+**Standard Library**
 * [Traits](#traits)
 * [String Conversions](#string-conversions)
 <!-- * [Marker Traits](#XXX) -->
 
-Guides
+
+**Tooling**
 * [Project Anatomy](#project-anatomy)
+* [Cargo Commands](#cargo-commands)
+* [Cross Compilation Wizard](#cross-compilation-wizard)
+
+
+**Coding Guides**
 * [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
 * [Closures in APIs](#closures-in-apis)
@@ -77,10 +83,9 @@ Guides
 * [Invisible Sugar](#invisible-sugar)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
 * [Formatting Strings](#formatting-strings)
-* [Tooling](#tooling)
 
 
-Misc
+**Misc**
 * [Links & Services](#links-services)
 * [Printing & PDF](#printing-pdf)
 
@@ -1375,6 +1380,7 @@ Some common types:
         <memory class="heap">
         <framed class="any unsized"><code>T</code></framed>
         </memory>
+    </memory-entry>
 </datum>
 
 <spacer>
@@ -1393,7 +1399,7 @@ Some common types:
         </sized>
         <sized>
             <code>len</code><sub>4/8</sub>
-        <!-- </sized> -->
+        </sized>
     </visual>
     <memory-entry class="double">
         <memory-link style="left:25%">|</memory-link>
@@ -1629,36 +1635,43 @@ Send & Sync
 # Standard Library
 
 
+
 <!-- <div class="wip"> -->
 > 🚧 This section is **WORK IN PROGRESS**. Comments, issues and PRs are very welcome. 🚧
 
 ## Traits
 
-Traits define common behavior. If a type `S` implements a `trait T`,  you know `S` can behave in a certain way as presribed by `T`.
+Traits define common behavior. If a type `S` implements a `trait T`,  you know `S` can behave in a certain way as prescribed by `T`.
 
 {{ tablesep() }}
 
-#### Common Marker Traits
-
-These traits mark **special properties** of the underlying type.
+#### Having Known Size
 
 
 <div class="header-std-yellow">
 
-| A type `T` marked ... | Means `T` can ... |
+| A type `T` being | Means `T` ... |
 |---------|-------------|
-| `Copy` | Be copied bitwise; cheap & fast. Also means `x = t` will copy t instead of move. |
-| `Clone` | Be explicitly duplicated via `.clone()`. Might be expensive. |
-| `Send`<sup>*</sup> | Be moved between threads safely.  |
-| `Sync`<sup>*</sup> | Have its reference `&T` sent between threads safely. |
-| `Sized`<sup>*</sup> | Live on the stack and has a size known at compilation time. |
-
+| - | Cannot live on the stack or be members of arrays and vectors. |
+| **`Sized`**<sup>*</sup> | Can live on the stack and has a size known at compilation time. |
 
 <div class="footnotes">
     <sup>*</sup> Automatically implemented by compiler where appropriate.
 </div>
 
 </div>
+
+{{ tablesep() }}
+
+
+#### Duplicating Instances
+
+| A type `T` being | Means `T` ... |
+|---------|-------------|
+| - | Can only be moved. When calling `f(t)`, value `t` will be copied but old `t` made inaccessible. |
+| **`Clone`** | Provides manual `.clone()` method, which could be expensive to call.  |
+| **`Copy`** | Can be bitwise copied. You can call `f(t)` repeatedly, each time a new copy is provided. |
+
 
 {{ tablesep() }}
 
@@ -1919,7 +1932,7 @@ If you **want** a string of type ...
                         <tr><td><code>Vec&lt;u8&gt;</code><sup>1</sup></td><td><code>{{ todo() }}</code></td></tr>
                         <tr><td><code>&str</code></td><td><code>x.as_ref()</code></td></tr>
                         <tr><td><code>&CStr</code></td><td><code>x.to_str()?.as_ref()</code></td></tr>
-                        <tr><td><code>&OSStr</code></td><td><code>x.as_ref()<code></td></tr>
+                        <tr><td><code>&OSStr</code></td><td><code>x.as_ref()</code></td></tr>
                         <tr><td><code>&Path</code></td><td><code>x</code></td></tr>
                         <tr><td><code>&[u8]</code><sup>1</sup></td><td><code>{{todo()}}</code></td></tr>
                         <!-- <tr><td><code>*const c_char</code></td><td><code>yy</code></td></tr> -->
@@ -1983,7 +1996,8 @@ If you **want** a string of type ...
 
 ---
 
-# Guides
+# Tooling
+
 
 ## Project Anatomy
 
@@ -2194,6 +2208,93 @@ fn my_algo(b: &mut Bencher) {
 {{ tablesep() }}
 
 
+
+## Cargo Commands
+
+Some commands and tools that are good to know.
+
+
+<div class="header-tooling">
+
+| Command | Description |
+|--------| ---- |
+| `cargo init` | Create a new project for the latest edition. |
+| <code>cargo <span class="cargo-prefix">b</span>uild</code> | Build the project in debug mode (`--release` for all optimization). |
+| <code>cargo <span class="cargo-prefix">c</span>heck</code> | Check if project would compile (much faster). |
+| <code>cargo <span class="cargo-prefix">t</span>est</code> | Run tests for the project. |
+| <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
+| <code>cargo doc --open</code> | Locally generate documentation for your code and dependencies. |
+| `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
+| {{ tab() }} `expanded` |  Show with expanded macros, ... |
+| <code>cargo +{nightly, stable} ...</code>  | Runs command with given toolchain, e.g., for 'nightly only' tools. |
+| `rustup docs` | Open offline Rust documentation (incl. the books), good on a plane! |
+
+</div>
+
+<div class="footnotes">
+A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type <code>cargo build</code> or just <code>cargo b</code>.
+</div>
+
+
+{{ tablesep() }}
+
+
+These are optional `rustup` components.
+Install them with `rustup component add [tool]`.
+
+
+<div class="header-tooling">
+
+| Tool | Description |
+|--------| ---- |
+| `cargo clippy` | Additional ([lints](https://rust-lang.github.io/rust-clippy/master/)) catching common API misuses and unidiomatic code. {{ link(url = "https://github.com/rust-lang/rust-clippy") }} |
+| `cargo fmt` | Automatic code formatter (`rustup component add rustfmt`). {{ link(url = "https://github.com/rust-lang/rustfmt") }} |
+
+</div>
+
+{{ tablesep() }}
+
+A large number of additional cargo plugins [**can be found here**](https://crates.io/categories/development-tools::cargo-plugins?sort=downloads).
+
+
+{{ tablesep() }}
+
+
+<!-- Don't render this section for printing, won't be helpful -->
+<div class="noprint">
+
+
+## Cross Compilation Wizard
+
+<div id="cross-compilation-pretty-names">
+    <span class="cross-compilation-pretty-name" data-name="any">Any Platform</span>
+    <span class="cross-compilation-pretty-name" data-name="windows">Windows</span>
+    <span class="cross-compilation-pretty-name" data-name="android-xx-ww">Android XX YY</span>
+</div>
+
+<div id="cross-compilation-targets">
+    <a class="cross-compilation-descriptor" data-from="any" data-to="android-xx-ww" href="cross-compilation-wizard/xxx-to-yyy/index.html"></a>
+    <a class="cross-compilation-descriptor" data-from="windows" data-to="android-xx-ww" href="cross-compilation-wizard/xxx-to-yyy/index.html"></a>
+</div>
+
+
+
+<div id="cross-compilation-dropdowns">
+    <select id="cross-compile-dropdown-from" onchange="cross_compile_dropdown('from')"></select>   
+    <select id="cross-compile-dropdown-to" onchange="cross_compile_dropdown('to')"></select>
+</div>
+
+<div id="cross-compillation-cheat-container"></div>
+
+
+<!-- End noprint -->
+</div>
+
+---
+
+# Coding Guides
+
+
 ## Idiomatic Rust
 
 If you are used to programming Java or C, consider these.
@@ -2234,7 +2335,6 @@ If you are used to programming Java or C, consider these.
 > 🔥 We **highly** recommend you also follow the
 > [**API Guidelines**](https://rust-lang.github.io/api-guidelines/) ([**Checklist**](https://rust-lang.github.io/api-guidelines/checklist.html))
 > for any shared project! 🔥
-
 
 
 {{ tablesep() }}
@@ -2624,7 +2724,6 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 Formatting applies to `print!`, `eprint!`, `write!` (and their -`ln` siblings like `println!`).
 Each format argument is either empty `{}`, `{argument}`, or follows a basic [**syntax**](https://doc.rust-lang.org/std/fmt/index.html#syntax):
 
-<div class="cheats">
 
 ```
 { [argument] ':' [[fill] align] [sign] ['#'] [width [$]] ['.' precision [$]] [type] }
@@ -2664,55 +2763,6 @@ Each format argument is either empty `{}`, `{argument}`, or follows a basic [**s
 
 
 {{ tablesep() }}
-
-
-## Tooling
-
-Some commands and tools that are good to know.
-
-
-<div class="header-lobstercrabs">
-
-| Command | Description |
-|--------| ---- |
-| `cargo init` | Create a new project for the latest edition. |
-| <code>cargo <span class="cargo-prefix">b</span>uild</code> | Build the project in debug mode (`--release` for all optimization). |
-| <code>cargo <span class="cargo-prefix">c</span>heck</code> | Check if project would compile (much faster). |
-| <code>cargo <span class="cargo-prefix">t</span>est</code> | Run tests for the project. |
-| <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
-| <code>cargo doc --open</code> | Locally generate documentation for your code and dependencies. |
-| `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
-| {{ tab() }} `expanded` |  Show with expanded macros, ... |
-| <code>cargo +{nightly, stable} ...</code>  | Runs command with given toolchain, e.g., for 'nightly only' tools. |
-| `rustup docs` | Open offline Rust documentation (incl. the books), good on a plane! |
-
-</div>
-
-<div class="footnotes">
-A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type <code>cargo build</code> or just <code>cargo b</code>.
-</div>
-
-
-{{ tablesep() }}
-
-
-These are optional `rustup` components.
-Install them with `rustup component add [tool]`.
-
-
-<div class="header-lobstercrabs">
-
-| Tool | Description |
-|--------| ---- |
-| `cargo clippy` | Additional ([lints](https://rust-lang.github.io/rust-clippy/master/)) catching common API misuses and unidiomatic code. {{ link(url = "https://github.com/rust-lang/rust-clippy") }} |
-| `cargo fmt` | Automatic code formatter (`rustup component add rustfmt`). {{ link(url = "https://github.com/rust-lang/rustfmt") }} |
-
-</div>
-
-{{ tablesep() }}
-
-A large number of additional cargo plugins [**can be found here**](https://crates.io/categories/development-tools::cargo-plugins?sort=downloads).
-
 
 
 <!-- Don't render this section for printing, won't be helpful -->
@@ -2819,7 +2869,6 @@ Online services which provide information or tooling.
 </div>
 
 {{ tablesep() }}
-
 
 
 ## Printing & PDF
