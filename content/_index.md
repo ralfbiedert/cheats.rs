@@ -48,6 +48,9 @@ template = "index.html"
 * [Comments](#comments)
 * [Miscellaneous](#miscellaneous)
 
+**Behind the Scenes**
+* [Language Sugar](#language-sugar)
+
 
 **Data & Types**
 * [Basic Types](#basic-types)
@@ -79,8 +82,7 @@ template = "index.html"
 * [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
 * [Closures in APIs](#closures-in-apis)
-* [A Guide to Reading Lifetimes](#a-guide-to-reading-lifetimes)
-* [Invisible Sugar](#invisible-sugar)
+* [Reading Lifetimes](#reading-lifetimes)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
 * [Formatting Strings](#formatting-strings)
 
@@ -559,6 +561,34 @@ These sigils did not fit any other category but are good to know nonetheless.
 Rust supports all common operators you would expect to find in a language (`+`, `*`, `%`, `=`, `==`...).
 Since they behave no differently in Rust we do not list them here.
 For some of them Rust also supports **operator overloading**. {{ std(page="std/ops/index.html")}}
+
+---
+
+
+# Behind the Scenes
+
+## Language Sugar
+
+If something works that "shouldn't work now that you think about it", it might be due to one of these.
+
+
+<div class="header-language-sugar">
+
+
+| Name | Description |
+|--------| -----------|
+| **Coercions** {{ nom(page="coercions.html") }} | 'Weaken' types to match signature, e.g., `&mut T` to `&T`.  |
+| **Deref** {{ nom(page="vec-deref.html#deref") }} | [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, ... compatible with some target `S`. |
+| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic types.
+| **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
+| **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html?highlight=lifetime,el#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
+| **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
+
+</div>
+
+
+{{ tablesep() }}
+
 
 
 ---
@@ -1747,7 +1777,7 @@ If you **want** a string of type ...
 <label class="tab-label" for="tab-str-1"><code>String</code></label>
 <div class="tab-panel">
 <div class="tab-content stringconversion">
-            
+
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`x`|
@@ -1760,7 +1790,7 @@ If you **want** a string of type ...
 |`&OSStr`|`x.to_str()?.into()`|
 |`&Path`|`x.to_str()?.into()`|
 |`&[u8]` <sup>1</sup> |`String::from_utf8_lossy(x).into()`|
-                       
+
 </div></div></div>
 
 <!-- NEW TAB -->
@@ -1769,7 +1799,7 @@ If you **want** a string of type ...
 <label class="tab-label" for="tab-str-2"><code>CString</code></label>
 <div class="tab-panel">
 <div class="tab-content stringconversion">
-            
+
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`CString::new(x)?`|
@@ -1783,7 +1813,7 @@ If you **want** a string of type ...
 |`&Path`|`x.to_str()?.into()`|
 |`&[u8]`<sup>1</sup>|`unsafe { CString::from_vec_unchecked(x.into()) }`|
 |`*mut c_char`<sup>1</sup>|`unsafe { CString::from_raw(x) }`|
-                       
+
 </div></div></div>
 
 <!-- NEW TAB -->
@@ -1792,7 +1822,7 @@ If you **want** a string of type ...
 <label class="tab-label" for="tab-str-3"><code>OsString</code></label>
 <div class="tab-panel">
 <div class="tab-content stringconversion">
-            
+
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`x.into()`|
@@ -1805,7 +1835,7 @@ If you **want** a string of type ...
 |`&OSStr`|`x.into()`|
 |`&Path`|`x.as_os_str().into()`|
 |`&[u8]`<sup>1</sup>|`{{todo()}}`|
-                       
+
 </div></div></div>
 
 <!-- NEW TAB -->
@@ -1814,7 +1844,7 @@ If you **want** a string of type ...
 <label class="tab-label" for="tab-str-35"><code>PathBuf</code></label>
 <div class="tab-panel">
 <div class="tab-content stringconversion">
-            
+
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`x.into()`|
@@ -1827,7 +1857,7 @@ If you **want** a string of type ...
 |`&OSStr`|`x.into()`|
 |`&Path`|`x.into()`|
 |`&[u8]`<sup>1</sup>|`{{todo()}}`|
-                       
+
 </div></div></div>
 
 <!-- NEW TAB -->
@@ -1836,7 +1866,7 @@ If you **want** a string of type ...
 <label class="tab-label" for="tab-str-4"><code>Vec&lt;u8&gt;</code></label>
 <div class="tab-panel">
 <div class="tab-content stringconversion">
-            
+
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`x.into_bytes()`|
@@ -1849,7 +1879,7 @@ If you **want** a string of type ...
 |`&OSStr`|`{{todo()}}`|
 |`&Path`|`{{todo()}}`|
 |`&[u8]`<sup>1</sup>|`x.into()`|
-                       
+
 </div></div></div>
 
 <!-- NEW TAB -->
@@ -1858,7 +1888,7 @@ If you **want** a string of type ...
 <label class="tab-label" for="tab-str-5"><code>&str</code></label>
 <div class="tab-panel">
 <div class="tab-content stringconversion">
-            
+
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`x.as_str()`|
@@ -1871,7 +1901,7 @@ If you **want** a string of type ...
 |`&OSStr`|`x.to_str()?`|
 |`&Path`|`x.to_str()?`|
 |`&[u8]`<sup>1</sup>|`std::str::from_utf8(x)?`|
-                       
+
 </div></div></div>
 
 <!-- NEW TAB -->
@@ -1880,7 +1910,7 @@ If you **want** a string of type ...
 <label class="tab-label" for="tab-str-6"><code>&CStr</code></label>
 <div class="tab-panel">
 <div class="tab-content stringconversion">
-            
+
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`CString::new(x)?.as_c_str()`|
@@ -1893,7 +1923,7 @@ If you **want** a string of type ...
 |`&OSStr`|`{{todo()}}`|
 |`&Path`|`{{todo()}}`|
 |`&[u8]`<sup>1</sup>|`CStr::from_bytes_with_nul(x)?`|
-                       
+
 </div></div></div>
 
 <!-- NEW TAB -->
@@ -1902,7 +1932,7 @@ If you **want** a string of type ...
 <label class="tab-label" for="tab-str-8"><code>&OsStr</code></label>
 <div class="tab-panel">
 <div class="tab-content stringconversion">
-            
+
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`OsStr::new(&x)`|
@@ -1915,7 +1945,7 @@ If you **want** a string of type ...
 |`&OSStr`|`x`|
 |`&Path`|`x.as_os_str()`|
 |`&[u8]`<sup>1</sup>|`{{todo()}}`|
-                       
+
 </div></div></div>
 
 <!-- NEW TAB -->
@@ -1924,7 +1954,7 @@ If you **want** a string of type ...
 <label class="tab-label" for="tab-str-85"><code>&Path</code></label>
 <div class="tab-panel">
 <div class="tab-content stringconversion">
-            
+
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`x.as_ref()`|
@@ -1937,7 +1967,7 @@ If you **want** a string of type ...
 |`&OSStr`|`x.as_ref()`|
 |`&Path`|`x`|
 |`&[u8]`<sup>1</sup>|`{{todo()}}`|
-                       
+
 </div></div></div>
 
 <!-- NEW TAB -->
@@ -1946,7 +1976,7 @@ If you **want** a string of type ...
 <label class="tab-label" for="tab-str-7"><code>&[u8]</code></label>
 <div class="tab-panel">
 <div class="tab-content stringconversion">
-            
+
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`x.as_bytes()`|
@@ -1959,7 +1989,7 @@ If you **want** a string of type ...
 |`&OSStr`|`{{todo()}}`|
 |`&Path`|`{{todo()}}`|
 |`&[u8]`<sup>1</sup>|`x`|
-                       
+
 </div></div></div>
 
 <!-- NEW TAB -->
@@ -1983,7 +2013,7 @@ If you **want** a string of type ...
 <div class="footnotes">
 
 <sup>1</sup> You should or must (if `unsafe` calls are involved) ensure the raw data comes with a valid representation for the string type (e.g., being UTF-8 encoded data for a `String`).
-    
+
 </div>
 
 
@@ -2019,7 +2049,7 @@ Basic project layout, and common files and folders, as used by Rust [tooling](#t
 <div class="footnotes">
 
 <sup>*</sup> On stable consider [Criterion](https://github.com/bheisler/criterion.rs).
-    
+
 </div>
 
 
@@ -2380,7 +2410,7 @@ The state machine always `impl Future`, possibly `Send<` & co, depending on type
 `Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
 {{ note(note="2") }} Right now Rust doesn't come with its own runtime. Use external crate instead, such as [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio).
 Also, Futures in Rust are an MPV. There is **much** more utility stuff in the [futures crate](https://github.com/rust-lang-nursery/futures-rs).
-    
+
 </div>
 
 {{ tablesep() }}
@@ -2507,7 +2537,7 @@ From the perspective of someone defining a closure:
 (resulting in the most "compatible" `Fn` closures from a caller perspective), but can be
 forced to capture its environment by copy or move via the
 `move || {}` syntax.
-    
+
 </div>
 
 {{ tablesep() }}
@@ -2528,7 +2558,7 @@ That gives the following advantages and disadvantages:
 {{ tablesep() }}
 
 
-## A Guide to Reading Lifetimes
+## Reading Lifetimes
 
 Lifetimes can be overwhelming at times. Here is a simplified guide on how to read and interpret constructs containing lifetimes if you are familiar with C.
 
@@ -2567,7 +2597,7 @@ Lifetimes can be overwhelming at times. Here is a simplified guide on how to rea
 <div class="footnotes">
 
 <sup>1</sup> Compare [Data Structures](#data-structures) section above: while true for synchronous code, an `async` 'stack frame' might actually be placed on to the heap by the used async runtime.
-    
+
 </div>
 
 
@@ -2597,7 +2627,7 @@ When reading function or type signatures in particular:
 <div class="footnotes">
 
 <sup>*</sup> Technically the struct may not hold any data (e.g., when using the `'a` only for [PhantomData](https://doc.rust-lang.org/std/marker/struct.PhantomData.html) or function pointers) but still make use of the `'a` for communicating and requiring that some of its functions require reference of a certain lifetime.
-    
+
 </div>
 
 </div>
@@ -2616,28 +2646,6 @@ When reading function or type signatures in particular:
 
 {{ tablesep() }}
 
-
-## Invisible Sugar
-
-If something works that "shouldn't work now that you think about it", it might be due to one of these.
-
-
-<div class="header-lemongrass">
-
-
-| Name | Description |
-|--------| -----------|
-| **Coercions** {{ nom(page="coercions.html") }} | 'Weaken' types to match signature, e.g., `&mut T` to `&T`.  |
-| **Deref** {{ nom(page="vec-deref.html#deref") }} | [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, ... compatible with some target `S`. |
-| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic types.
-| **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
-| **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html?highlight=lifetime,el#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
-| **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
-
-</div>
-
-
-{{ tablesep() }}
 
 
 ## Unsafe, Unsound, Undefined
