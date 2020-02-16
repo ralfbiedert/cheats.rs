@@ -1766,11 +1766,16 @@ Conversions XXX
 {{ tablesep() }} -->
 
 
+
 ## String Conversions
 
 
-
 If you **want** a string of type ...
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
 
 <div class="tabs">
 
@@ -2011,6 +2016,9 @@ If you **want** a string of type ...
 
 <!-- End tabs -->
 </div>
+
+<!-- End overflow protection -->
+</div></div>
 
 
 <div class="footnotes">
