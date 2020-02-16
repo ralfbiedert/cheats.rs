@@ -5,6 +5,7 @@
 @import "page";
 @import "data";
 @import "tabs";
+@import "cross-compilation";
 
 
 img#logo {
@@ -55,7 +56,6 @@ div.wip {
     padding: 10px;
 }
 
-
 div.survey {
     margin-top: 40px;
     text-align: center;
@@ -69,12 +69,8 @@ div.survey {
     }
 }
 
-#cross-compilation-pretty-names {
-    display: none;
-}
-
-#cross-compilation-targets {
-    display: none;
+span.warning {
+    color: red;
 }
 
 
@@ -151,6 +147,11 @@ div.survey {
     }
 }
 
+.header-cross-compilation {
+    th {
+        background-color: rgb(168, 212, 131);
+    }
+}
 
 
 table.stringconversion {

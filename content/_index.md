@@ -71,8 +71,8 @@ template = "index.html"
 
 **Tooling**
 * [Project Anatomy](#project-anatomy)
-* [Cargo Commands](#cargo-commands)
-* [Cross Compilation Wizard](#cross-compilation-wizard)
+* [Cargo](#cargo)
+* [Cross Compilation](#cross-compilation)
 
 
 **Coding Guides**
@@ -1634,10 +1634,7 @@ Send & Sync
 
 # Standard Library
 
-
-
 <!-- <div class="wip"> -->
-> 🚧 This section is **WORK IN PROGRESS**. Comments, issues and PRs are very welcome. 🚧
 
 ## Traits
 
@@ -2209,7 +2206,7 @@ fn my_algo(b: &mut Bencher) {
 
 
 
-## Cargo Commands
+## Cargo
 
 Some commands and tools that are good to know.
 
@@ -2264,27 +2261,56 @@ A large number of additional cargo plugins [**can be found here**](https://crate
 <div class="noprint">
 
 
-## Cross Compilation Wizard
+## Cross Compilation
 
-<div id="cross-compilation-pretty-names">
-    <span class="cross-compilation-pretty-name" data-name="any">Any Platform</span>
-    <span class="cross-compilation-pretty-name" data-name="windows">Windows</span>
-    <span class="cross-compilation-pretty-name" data-name="android-xx-ww">Android XX YY</span>
+{{ work_in_progress() }}
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+General Rundown:
+
+1. Check [target is supported](https://forge.rust-lang.org/release/platform-support.html).
+1. Install target via **`rustup target install X`**.
+1. Install native toolchain (required to _link_, depends on target).
+1. Update **`~/cargo/.config`** like this:
+    ```
+    [target.aarch64-linux-android]
+    linker = "[PATH_TO_TOOLCHAIN]/aarch64-linux-android/bin/aarch64-linux-android-clang"
+    ```
+   or   
+    ```
+    [target.aarch64-linux-android]
+    linker = "C:/[PATH_TO_TOOLCHAIN]/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang.cmd"
+    ```
+1. Sometimes (depending on how compiler complains) you might also need to set an environment variable. Note that some platforms / configuration can be 
+**extremely** sensitive how paths are specified (e.g., `\` vs `/`) and quoted: 
+    ```
+    set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd  
+    ``` 
+1. Compile with **`cargo build --target=X`**      
+
+</div>
 </div>
 
-<div id="cross-compilation-targets">
-    <a class="cross-compilation-descriptor" data-from="any" data-to="android-xx-ww" href="cross-compilation-wizard/xxx-to-yyy/index.html"></a>
-    <a class="cross-compilation-descriptor" data-from="windows" data-to="android-xx-ww" href="cross-compilation-wizard/xxx-to-yyy/index.html"></a>
+Also see [Everything You Need to Know About Cross Compiling](https://github.com/japaric/rust-cross). <sup>🔗</sup>
+
+
+{{ tablesep() }}
+
+
+<div class="header-cross-compilation">
+
+| From | To | External Toolchain Guide |
+|--------| ---- |---- |
+| **Windows** | **Linux** | [**Guide**](cross-compilation/windows-to-android) |
+| **Windows** | **macOS** | Not Possible |
+
 </div>
 
+{{ tablesep() }}
 
-
-<div id="cross-compilation-dropdowns">
-    <select id="cross-compile-dropdown-from" onchange="cross_compile_dropdown('from')"></select>   
-    <select id="cross-compile-dropdown-to" onchange="cross_compile_dropdown('to')"></select>
-</div>
-
-<div id="cross-compillation-cheat-container"></div>
 
 
 <!-- End noprint -->

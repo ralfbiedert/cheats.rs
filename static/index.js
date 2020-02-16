@@ -3,8 +3,6 @@
 let codes = document.querySelectorAll("code");
 let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform); // https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
 
-const cross_compilation_suffix_prefix = "#cross-compilation-wizard";
-
 /// Enables or disables the playground.
 function show_playground(state) {
     let area_static = document.getElementById("hellostatic");
@@ -63,104 +61,6 @@ function set_survey(state) {
     !!localStorage && localStorage.setItem("survey2019", state);
 }
 
-// Called when a value was changed in the cross compilation dropdowns.
-function cross_compile_dropdown(which) {
-    let from_dropdown =  document.getElementById("cross-compile-dropdown-from");
-    let to_dropdown =  document.getElementById("cross-compile-dropdown-to");
-
-    let from = from_dropdown.options[from_dropdown.selectedIndex].value;
-    let to = to_dropdown.options[to_dropdown.selectedIndex].value;
-
-    history.replaceState({}, "", cross_compilation_suffix_prefix + "-" + from + "-to-" + to);
-
-
-    // fetch("cross-compilation-wizard/xxx-to-yyy/index.html" /*, options */)
-    //     .then((response) => response.text())
-    //     .then((html) => {
-    //         document.getElementById("ttt").innerHTML = html;
-    //     })
-    //     .catch((error) => {
-    //         console.warn(error);
-    //     });
-}
-
-// Does first time setup for cross compilation wizard.
-function cross_compile_dropdown_setup() {
-    let cross_froms = [];
-    let cross_tos = [];
-
-    let pretty_name = {};
-
-    let dropdown_from = document.getElementById("cross-compile-dropdown-from")
-    let dropdown_to = document.getElementById("cross-compile-dropdown-to")
-
-    // Update key => pretty mapping.
-    for (let item of document.getElementsByClassName("cross-compilation-pretty-name")) {
-        let key = item.getAttribute("data-name");
-        let value = item.innerText;
-
-        pretty_name[key] = value;
-    }
-
-    // Get all possible from / to targets.
-    for (let item of document.getElementsByClassName("cross-compilation-descriptor")) {
-        let from = item.getAttribute("data-from");
-        let to = item.getAttribute("data-to");
-
-        cross_froms.push(from);
-        cross_tos.push(to);
-    }
-
-    // Build from targets
-    for (let item of cross_froms) {
-        let element = document.createElement("option");
-        element.setAttribute("value", item);
-        element.innerText = pretty_name[item];
-        dropdown_from.appendChild(element);
-    }
-
-    // Build to targets.
-    for (let item of cross_tos) {
-        let element = document.createElement("option");
-        element.setAttribute("value", item);
-        element.innerText = pretty_name[item];
-        dropdown_to.appendChild(element);
-    }
-}
-
-// Reads the `#` target of our URL and updates the drop downs accordingly
-function cross_compilation_page_load_redirect() {
-    let hash = window.location.hash;
-
-    // Ignore all hashes not going to the wizard, or hashes linking to base target.
-    if (!hash.startsWith(cross_compilation_suffix_prefix) || hash === cross_compilation_suffix_prefix) {
-        return;
-    }
-
-    try {
-        let middle = hash.indexOf("-to-");
-        let from = hash.substr(cross_compilation_suffix_prefix.length + 1, middle - cross_compilation_suffix_prefix.length - 1);
-        let to = hash.substr(middle + 4);
-
-        // Sets option by value.
-        document.querySelector("#cross-compile-dropdown-from option[value='" + from +"']").selected = true;
-        document.querySelector("#cross-compile-dropdown-to option[value='" + to +"']").selected = true;
-
-        // This down here is a hack. We first set our href to our actual scrolling target
-        // so the browser scrolls; then we wait a bit and re-set the url to what it was before
-        // (the encoded scheme) so the user still sees it / can copy it.
-        let old_href = location.href;
-
-        location.href = "#cross-compilation-wizard";
-
-        setTimeout(() => {
-           location.href = old_href;
-        }, 100);
-    } catch (e) {
-        console.error("Error setting up Cross Compilation Wizard. This is a bug!");
-        console.error(e);
-    }
-}
 
 // Use proper syntax since we don't want to write ````rust ...``` all the time.
 codes.forEach(code => {
@@ -193,9 +93,6 @@ try {
     if (!survey || survey === "" || survey === "block") {
         set_survey("block");
     }
-
-    cross_compile_dropdown_setup();
-    cross_compilation_page_load_redirect();
 
 } catch (e) {
     console.log(e);
