@@ -1673,9 +1673,9 @@ may be a bit more tricky.
 
 Assume you have a collection `c` of type `C`:
 
-* **`c.into_iter()`** &mdash; Turns collection `c` into an **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} `i` and **consumes**<sup>*</sup> `c`. Requires **`IntoIterator`** {{ std(page="std/iter/trait.IntoIterator.html") }} for `C` to be implemented. Type of item depends on what `C` was.
 * **`c.iter()`** &mdash; Courtesy method **some** collections provide, returns **borrowing** Iterator, doesn't consume `c`.
 * **`c.iter_mut()`** &mdash; Same, but **mutably borrowing** Iterator that allow collection to be changed.
+* **`c.into_iter()`** &mdash; Turns collection `c` into an **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} `i` and **consumes**<sup>*</sup> `c`. Requires **`IntoIterator`** {{ std(page="std/iter/trait.IntoIterator.html") }} for `C` to be implemented. Type of item depends on what `C` was.
 
 
 **The Iterator**
@@ -1701,14 +1701,37 @@ Once you have an `i`:
 
 
 <!-- NEW TAB -->
-<!-- <div class="tab">
-<input class="tab-radio" type="radio" id="tab-trait-iter-2" name="tab-group-trait-iter" checked>
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-trait-iter-2" name="tab-group-trait-iter">
 <label class="tab-label" for="tab-trait-iter-2"><b>Implementing Iterators</b></label>
 <div class="tab-panel">
-<div class="tab-content"> -->
+<div class="tab-content">
+
+**Basics**
+
+Let's assume you have a `struct C {}` that is your collection.
 
 
-<!-- </div></div></div> -->
+* **`struct Iter {}`** &mdash; Create a struct to hold your iteration status (e.g., an index) for immutable iteration.
+* **`impl Iterator for Iter {}`** &mdash; Provide an implementation of `Iterator::next()` so it can produce elements.
+
+In addition, you might want to consider providing a convenience `fn iter(&self) -> Iter` inside your `impl C {}`.
+
+**Mutable Iterators**
+
+* **`struct IterMut {}`** &mdash; To provide mutable iterators create another struct that can hold `C` as `&mut`.
+* **`impl Iterator for IterMut {}`** &mdash; In that case `Iterator::Item` is probably a `&mut item`
+
+Similarly, providing a `fn iter_mut(&mut self) -> IterMut` might be a good idea.
+
+
+**Making Loops Work**
+* **`impl IntoIterator for C {}`** &mdash; Now `for` loops work as `for x in c {}`.
+* **`impl IntoIterator for &C {}`** &mdash; For conveninece you might want to add these as well.
+* **`impl IntoIterator for &mut C {}`** &mdash; Same ...
+
+
+</div></div></div>
 
 
 </div>
