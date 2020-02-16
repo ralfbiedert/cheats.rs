@@ -1618,17 +1618,6 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
     </description>
 </datum>
 
-<!--
-## Traits
-
-Send & Sync
-
-<table>
-    <tr style="background-color:#ffcfaa;"><td></td><td><code>Send</code></td><td><code>!Send</code></td></tr>
-    <tr><td style="background-color:#ffcfaa;"><code>Sync</code></td><td><code>Send</code>,<code>Send</code>,<br><code>Send</code><code>Send</code><code>Send</code><code>Send</code></td><td><code>Send</code><code>Send</code><code>Send</code><code>Send</code><code>Send</code><code>Send</code><code>Send</code></td></tr>
-    <tr><td style="background-color:#ffcfaa;"><code>!Sync</code></td><td>Send</td><td>!Send</td></tr>
-</table>
- -->
 
 ---
 
@@ -1642,62 +1631,107 @@ Send & Sync
 
 ## Traits
 
-Traits define common behavior. If a type `S` implements a `trait T`,  you know `S` can behave in a certain way as prescribed by `T`.
+Traits define common behavior. If `S` implements `trait T`, you know `S` can behave as prescribed by `T`. Below is an overview of traits that
+may be a bit more tricky.
 
-{{ tablesep() }}
-
-#### Having Known Size
-
-
-<div class="header-std-yellow">
-
-| A type `T` being | Means `T` ... |
-|---------|-------------|
-| - | Cannot live on the stack or be members of arrays and vectors. |
-| **`Sized`**<sup>*</sup> | Can live on the stack and has a size known at compilation time. |
-
-<div class="footnotes">
-    <sup>*</sup> Automatically implemented by compiler where appropriate.
-</div>
-
-</div>
-
-{{ tablesep() }}
-
-
-#### Duplicating Instances
-
-| A type `T` being | Means `T` ... |
-|---------|-------------|
-| - | Can only be moved. When calling `f(t)`, value `t` will be copied but old `t` made inaccessible. |
-| **`Clone`** | Provides manual `.clone()` method, which could be expensive to call.  |
-| **`Copy`** | Can be bitwise copied. You can call `f(t)` repeatedly, each time a new copy is provided. |
-
-
-{{ tablesep() }}
-
-
-#### Thread Safety
-
-The traits `Send` and `Sync` govern whether something can be sent between two threads. A **`T: Send`** can be moved to another thread, a **`T: Sync`** means `&T` can be moved to another thread.
+#### 🧵 Thread Safety
 
 <!-- Shamelessly stolen from https://www.reddit.com/r/rust/comments/ctdkyr/understanding_sendsync/exk8grg/ -->
 <table class="sendsync">
     <thead>
-        <tr><th>Examples</th><th><code>Send</code></th><th><code>!Send</code></th></tr>
+        <tr><th>Examples</th><th><code>Send</code><sup>*</sup></th><th><code>!Send</code></th></tr>
     </thead>
     <tbody>
-        <tr><td><code>Sync</code></td><td><i>Most types</i> ... <code>Mutex&lt;T&gt;</code>, <code>Arc&lt;T&gt;</code><sup>1,2</sup></td><td><code>MutexGuard&lt;T&gt;</code><sup>1</sup>, <code>RwLockReadGuard&lt;T&gt;</code><sup>1</sup></td></tr>
+        <tr><td><code>Sync</code><sup>*</sup></td><td><i>Most types</i> ... <code>Mutex&lt;T&gt;</code>, <code>Arc&lt;T&gt;</code><sup>1,2</sup></td><td><code>MutexGuard&lt;T&gt;</code><sup>1</sup>, <code>RwLockReadGuard&lt;T&gt;</code><sup>1</sup></td></tr>
         <tr><td><code>!Sync</code></td><td><code>Cell&lt;T&gt;</code><sup>2</sup>, <code>RefCell&lt;T&gt;</code><sup>2</sup></td><td><code>Rc&lt;T&gt;</code>, <code>Formatter</code>, <code>&dyn Trait</code></td></tr>
     </tbody>
 </table>
 
 <div class="footnotes">
-    <sup>1</sup> If <code>T</code> is <code>Sync</code>. <br>
-    <sup>2</sup> If <code>T</code> is <code>Send</code>.
+
+<sup>*</sup> An instance `t` where **`T: Send`** can be moved to another thread, a **`T: Sync`** means `&t` can be moved to another thread.<br>
+<sup>1</sup> If <code>T</code> is <code>Sync</code>. <br>
+<sup>2</sup> If <code>T</code> is <code>Send</code>.
+
+</div>
+
+
+#### 🚥 Iterators
+
+
+<div class="tabs header-std-green">
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-trait-iter-1" name="tab-group-trait-iter" checked>
+<label class="tab-label" for="tab-trait-iter-1"><b>Using Iterators</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+**Basics**
+
+Assume you have a collection `c` of type `C`:
+
+* **`c.into_iter()`** &mdash; Turns collection `c` into an **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} `i` and **consumes**<sup>*</sup> `c`. Requires **`IntoIterator`** {{ std(page="std/iter/trait.IntoIterator.html") }} for `C` to be implemented. Type of item depends on what `C` was.
+* **`c.iter()`** &mdash; Courtesy method **some** collections provide, returns **borrowing** Iterator, doesn't consume `c`.
+* **`c.iter_mut()`** &mdash; Same, but **mutably borrowing** Iterator that allow collection to be changed.
+
+
+**The Iterator**
+
+Once you have an `i`:
+
+* **`i.next()`** &mdash; Returns `Some(x)` next element `c` provides, or `None` if we're done.
+
+
+**For Loops**
+
+* **`for x in c {}`** &mdash; Syntactic sugar, calls `c.into_iter()` and loops `i` until `None`.
+
+
+
+<div class="footnotes">
+
+<sup>*</sup> If it looks as if it doesn't consume `c` that's because your type was `Copy`. For example, if you call `(&c).into_iter()` it will invoke `.into_iter()` on `&c` (which will consume the reference and turn it into an Iterator), but `c` remains untouched.
+
+</div>
+
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<!-- <div class="tab">
+<input class="tab-radio" type="radio" id="tab-trait-iter-2" name="tab-group-trait-iter" checked>
+<label class="tab-label" for="tab-trait-iter-2"><b>Implementing Iterators</b></label>
+<div class="tab-panel">
+<div class="tab-content"> -->
+
+
+<!-- </div></div></div> -->
+
+
 </div>
 
 {{ tablesep() }}
+
+<!--
+#### 📦 Type Conversions
+
+
+Conversions XXX
+
+<div class="header-std-yellow">
+
+| Trait ... | Implementing ... for `S` means | Requiring `<A: ...>` means |
+|---------|-------------|----|
+| `Borrow<T>` | `S` can produce `&T`, must match `Eq`, ... | Caller can pass `t`, `&t`, `box_t` , ...|
+| `BorrowMut<T>` | `S` can produce `&mut T`, rest same. | Similar, `t`, `&mut t`, ...   |
+| `AsRef<T>` | `S` can produce `&T`. | Caller can pass `Box<T>` or XXX. |
+| `AsMut<T>` | `S` can produce `&mut T`. | Similar, but XXX  |
+
+
+{{ tablesep() }} -->
 
 
 ## String Conversions

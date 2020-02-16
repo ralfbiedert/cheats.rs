@@ -87,12 +87,6 @@ span.warning {
     }
 }
 
-.header-std-yellow {
-    th {
-        background-color: rgb(233, 235, 204);
-    }
-}
-
 
 .header-red {
     th {
@@ -160,12 +154,22 @@ span.warning {
     }
 }
 
+.header-std-traits {
+    th {
+        background-color: rgb(233, 235, 204);
+    }
+
+    th:nth-child(1) {
+        width: 130px;
+    }
+}
+
+
 
 table.stringconversion {
     th {
         background-color: rgb(175, 161, 212);
     }
-
 
     th:nth-child(1) {
         width: 250px;
@@ -188,8 +192,12 @@ table.sendsync {
 
     td:nth-child(1) {
         background-color: rgb(212, 247, 244);
-        text-align: center;
+        text-align: left;
         font-weight: bold;
+    }
+
+    th:nth-child(1) {
+        width: 130px;
     }
 
     th:nth-child(2) {
