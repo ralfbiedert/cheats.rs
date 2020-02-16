@@ -5,8 +5,8 @@
   },
   "private": true,
   "dependencies": {
-    "htmlnano": "^0.2.4",
-    "posthtml-cli": "^0.5.1",
+    "htmlnano": "^0.2.5",
+    "posthtml-cli": "^0.5.3",
     "posthtml-img-autosize": "^0.1.4",
     "posthtml-inline-assets": "^3.0.0"
   }
