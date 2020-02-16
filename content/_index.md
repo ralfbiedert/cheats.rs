@@ -2257,10 +2257,6 @@ A large number of additional cargo plugins [**can be found here**](https://crate
 {{ tablesep() }}
 
 
-<!-- Don't render this section for printing, won't be helpful -->
-<div class="noprint">
-
-
 ## Cross Compilation
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
@@ -2294,11 +2290,7 @@ steps** (e.g., Android's `make-standalone-toolchain.sh`).
 </div>
 </div>
 
-
 {{ tablesep() }}
-
-<!-- End noprint -->
-</div>
 
 ---
 
