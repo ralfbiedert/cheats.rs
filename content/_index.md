@@ -564,6 +564,7 @@ For some of them Rust also supports **operator overloading**. {{ std(page="std/o
 
 ---
 
+<div class="magic">
 
 # Behind the Scenes
 
@@ -586,10 +587,12 @@ If something works that "shouldn't work now that you think about it", it might b
 
 </div>
 
-
 {{ tablesep() }}
 
+> **Editorial Comment** <sup>💬</sup> &mdash; While the features above will make your development life easier, they might sometimes hinder your understanding of what's going on. If you are relatively new to Rust and trying to get to the bottom of things, you should consider reading about them in more detail.
 
+<!-- End magic -->
+</div>
 
 ---
 
