@@ -2263,8 +2263,6 @@ A large number of additional cargo plugins [**can be found here**](https://crate
 
 ## Cross Compilation
 
-{{ work_in_progress() }}
-
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
@@ -2298,20 +2296,6 @@ Also see [Everything You Need to Know About Cross Compiling](https://github.com/
 
 
 {{ tablesep() }}
-
-
-<div class="header-cross-compilation">
-
-| From | To | External Toolchain Guide |
-|--------| ---- |---- |
-| **Windows** | **Linux** | [**Guide**](cross-compilation/windows-to-android) |
-| **Windows** | **macOS** | Not Possible |
-
-</div>
-
-{{ tablesep() }}
-
-
 
 <!-- End noprint -->
 </div>

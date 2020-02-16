@@ -6,15 +6,5 @@ weight = 100
 {{ cc_from_to(from="Windows", to="Android") }}
 
 
-## Pre
+## TODO
 
-A large number of additional cargo plugins
-
-this is
-
-```rust
-fn main() {
-}
-```
-
-so we **run** it.
