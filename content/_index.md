@@ -69,6 +69,7 @@ template = "index.html"
 **Standard Library**
 * [Traits](#traits)
 * [String Conversions](#string-conversions)
+* [String Formatting](#string-formatting)
 <!-- * [Marker Traits](#XXX) -->
 
 
@@ -84,7 +85,6 @@ template = "index.html"
 * [Closures in APIs](#closures-in-apis)
 * [Reading Lifetimes](#reading-lifetimes)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
-* [Formatting Strings](#formatting-strings)
 
 
 **Misc**
@@ -1792,7 +1792,7 @@ If you **want** a string of type ...
 |`CString`|`x.into_string()?`|
 |`OsString`|`x.to_str()?.into()`|
 |`PathBuf`|`x.to_str()?.into()`|
-|`Vec&lt;u8&gt;`<sup>1</sup>|`String::from_utf8(x)?`|
+|`Vec<u8>` <sup>1</sup> |`String::from_utf8(x)?`|
 |`&str`|`x.into()`|
 |`&CStr`|`x.to_str()?.into()`|
 |`&OSStr`|`x.to_str()?.into()`|
@@ -1814,13 +1814,13 @@ If you **want** a string of type ...
 |`CString`|`x`|
 |`OsString`|`CString::new(x.to_str()?)?`|
 |`PathBuf`|`CString::new(x.to_str()?)?`|
-|`Vec&lt;u8&gt;`<sup>1</sup>|`unsafe { CString::from_vec_unchecked(x) }`|
+|`Vec<u8>` <sup>1</sup> |`unsafe { CString::from_vec_unchecked(x) }`|
 |`&str`|`CString::new(x)?`|
 |`&CStr`|`x.into()`|
 |`&OSStr`|`CString::new(x.to_os_string().into_string()?)?`|
 |`&Path`|`x.to_str()?.into()`|
-|`&[u8]`<sup>1</sup>|`unsafe { CString::from_vec_unchecked(x.into()) }`|
-|`*mut c_char`<sup>1</sup>|`unsafe { CString::from_raw(x) }`|
+|`&[u8]` <sup>1</sup> |`unsafe { CString::from_vec_unchecked(x.into()) }`|
+|`*mut c_char` <sup>1</sup> |`unsafe { CString::from_raw(x) }`|
 
 </div></div></div>
 
@@ -1837,12 +1837,12 @@ If you **want** a string of type ...
 |`CString`|`x.to_str()?.into()`|
 |`OsString`|`x`|
 |`PathBuf`|`x.into_os_string()`|
-|`Vec&lt;u8&gt;`<sup>1</sup>|`{{ todo() }}`|
+|`Vec<u8>` <sup>1</sup> | {{ todo() }} |
 |`&str`|`x.into()`|
 |`&CStr`|`x.to_str()?.into()`|
 |`&OSStr`|`x.into()`|
 |`&Path`|`x.as_os_str().into()`|
-|`&[u8]`<sup>1</sup>|`{{todo()}}`|
+|`&[u8]` <sup>1</sup> | {{ todo() }} |
 
 </div></div></div>
 
@@ -1859,12 +1859,12 @@ If you **want** a string of type ...
 |`CString`|`x.to_str()?.into()`|
 |`OsString`|`x.into()`|
 |`PathBuf`|`x`|
-|`Vec&lt;u8&gt;`<sup>1</sup>|`{{ todo() }}`|
+|`Vec<u8>` <sup>1</sup> | {{ todo() }} |
 |`&str`|`x.into()`|
 |`&CStr`|`x.to_str()?.into()`|
 |`&OSStr`|`x.into()`|
 |`&Path`|`x.into()`|
-|`&[u8]`<sup>1</sup>|`{{todo()}}`|
+|`&[u8]` <sup>1</sup> | {{ todo() }} |
 
 </div></div></div>
 
@@ -1879,14 +1879,14 @@ If you **want** a string of type ...
 | --- | --- |
 |`String`|`x.into_bytes()`|
 |`CString`|`x.into_bytes()`|
-|`OsString`|`{{todo()}}`|
-|`PathBuf`|`{{todo()}}`|
-|`Vec&lt;u8&gt;`<sup>1</sup>|`x`|
+|`OsString`| {{ todo() }} |
+|`PathBuf`| {{ todo() }} |
+|`Vec<u8>` <sup>1</sup> |`x`|
 |`&str`|`x.as_bytes().into()`|
 |`&CStr`|`x.to_bytes_with_nul().into()`|
-|`&OSStr`|`{{todo()}}`|
-|`&Path`|`{{todo()}}`|
-|`&[u8]`<sup>1</sup>|`x.into()`|
+|`&OSStr`| {{ todo() }} |
+|`&Path`| {{ todo() }} |
+|`&[u8]` <sup>1</sup> |`x.into()`|
 
 </div></div></div>
 
@@ -1903,12 +1903,12 @@ If you **want** a string of type ...
 |`CString`|`x.to_str()?`|
 |`OsString`|`x.to_str()?`|
 |`PathBuf`|`x.to_str()?`|
-|`Vec&lt;u8&gt;`<sup>1</sup>|`std::str::from_utf8(&x)?`|
+|`Vec<u8>` <sup>1</sup> |`std::str::from_utf8(&x)?`|
 |`&str`|`x`|
 |`&CStr`|`x.to_str()?`|
 |`&OSStr`|`x.to_str()?`|
 |`&Path`|`x.to_str()?`|
-|`&[u8]`<sup>1</sup>|`std::str::from_utf8(x)?`|
+|`&[u8]` <sup>1</sup> |`std::str::from_utf8(x)?`|
 
 </div></div></div>
 
@@ -1925,12 +1925,12 @@ If you **want** a string of type ...
 |`CString`|`x.as_c_str()`|
 |`OsString`|`x.to_str()?`|
 |`PathBuf`|`CStr::from_bytes_with_nul(x.to_str()?.as_bytes())?`|
-|`Vec&lt;u8&gt;`<sup>1</sup>|`CStr::from_bytes_with_nul(&x)?`|
+|`Vec<u8>` <sup>1</sup> |`CStr::from_bytes_with_nul(&x)?`|
 |`&str`|`CStr::from_bytes_with_nul(x.as_bytes())?`|
 |`&CStr`|`x`|
-|`&OSStr`|`{{todo()}}`|
-|`&Path`|`{{todo()}}`|
-|`&[u8]`<sup>1</sup>|`CStr::from_bytes_with_nul(x)?`|
+|`&OSStr`| {{ todo() }} |
+|`&Path`| {{ todo() }} |
+|`&[u8]` <sup>1</sup> |`CStr::from_bytes_with_nul(x)?`|
 
 </div></div></div>
 
@@ -1944,15 +1944,15 @@ If you **want** a string of type ...
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`OsStr::new(&x)`|
-|`CString`|`{{todo()}}`|
+|`CString`| {{ todo() }} |
 |`OsString`|`x.as_os_str()`|
 |`PathBuf`|`x.as_os_str()`|
-|`Vec&lt;u8&gt;`<sup>1</sup>|`{{todo()}}`|
+|`Vec<u8>` <sup>1</sup> | {{ todo() }} |
 |`&str`|`OsStr::new(x)`|
-|`&CStr`|`{{todo()}}`|
+|`&CStr`| {{ todo() }} |
 |`&OSStr`|`x`|
 |`&Path`|`x.as_os_str()`|
-|`&[u8]`<sup>1</sup>|`{{todo()}}`|
+|`&[u8]` <sup>1</sup> | {{ todo() }} |
 
 </div></div></div>
 
@@ -1969,12 +1969,12 @@ If you **want** a string of type ...
 |`CString`|`x.to_str()?.as_ref()`|
 |`OsString`|`x.as_ref()`|
 |`PathBuf`|`x.as_ref()`|
-|`Vec&lt;u8&gt;`<sup>1</sup>|`{{ todo() }}`|
+|`Vec<u8>` <sup>1</sup> | {{ todo() }} |
 |`&str`|`x.as_ref()`|
 |`&CStr`|`x.to_str()?.as_ref()`|
 |`&OSStr`|`x.as_ref()`|
 |`&Path`|`x`|
-|`&[u8]`<sup>1</sup>|`{{todo()}}`|
+|`&[u8]` <sup>1</sup> | {{ todo() }} |
 
 </div></div></div>
 
@@ -1989,14 +1989,14 @@ If you **want** a string of type ...
 | --- | --- |
 |`String`|`x.as_bytes()`|
 |`CString`|`x.as_bytes()`|
-|`OsString`|`{{todo()}}`|
-|`PathBuf`|`{{todo()}}`|
-|`Vec&lt;u8&gt;`<sup>1</sup>|`&x`|
+|`OsString`| {{ todo() }} |
+|`PathBuf`| {{ todo() }} |
+|`Vec<u8>` <sup>1</sup> |`&x`|
 |`&str`|`x.as_bytes()`|
 |`&CStr`|`x.to_bytes_with_nul()`|
-|`&OSStr`|`{{todo()}}`|
-|`&Path`|`{{todo()}}`|
-|`&[u8]`<sup>1</sup>|`x`|
+|`&OSStr`| {{ todo() }} |
+|`&Path`| {{ todo() }} |
+|`&[u8]` <sup>1</sup> |`x`|
 
 </div></div></div>
 
@@ -2026,6 +2026,54 @@ If you **want** a string of type ...
 <sup>1</sup> You should or must (if `unsafe` calls are involved) ensure the raw data comes with a valid representation for the string type (e.g., being UTF-8 encoded data for a `String`).
 
 </div>
+
+{{ tablesep() }}
+
+
+## String Formatting
+
+Formatting applies to `print!`, `eprint!`, `write!` (and their -`ln` siblings like `println!`).
+Each format argument is either empty `{}`, `{argument}`, or follows a basic [**syntax**](https://doc.rust-lang.org/std/fmt/index.html#syntax):
+
+
+```
+{ [argument] ':' [[fill] align] [sign] ['#'] [width [$]] ['.' precision [$]] [type] }
+```
+
+<div class="header-undefined-color-3">
+
+| Element |  Meaning |
+|---------| ---------|
+| `argument` |  Number (`0`, `1`, ...) or argument name, e.g., `print!("{x}", x = 3)`. |
+| `fill` | The character to fill empty spaces with (e.g., `0`), if `width` is specified. |
+| `align` | Left (`<`), center (`^`), or right (`>`), if width is specified. |
+| `sign` | Can be `+` for sign to always be printed. |
+| `#` | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0), e.g. prettify Debug `?` or prefix hex with `0x`. |
+| `width` | Minimum width (&geq; 0), padding with `fill` (default to space). If starts with `0`, zero-padded. |
+| `precision` | Decimal digits (&geq; 0) for numerics, or max width for non-numerics. |
+| `$` | Interpret `width` or `precision` as argument identifier instead to allow for dynamic formatting. |
+| `type` | [**Debug**](https://doc.rust-lang.org/std/fmt/trait.Debug.html) (`?`) formatting, hex (`x`), binary (`b`), octal (`o`), pointer (`p`), exp (`e`) ... [see more](https://doc.rust-lang.org/std/fmt/index.html#traits). |
+
+</div>
+
+
+{{ tablesep() }}
+
+
+<div class="header-undefined-color-3">
+
+| Example | Explanation |
+|---------|-------------|
+| `{:?}` | Print the next argument using Debug. |
+| `{2:#?}` | Pretty-print the 3rd argument with Debug formatting. |
+| `{val:^2$}` | Center the `val` named argument, width specified by the 3rd argument. |
+| `{:<10.3}` | Left align with width 10 and a precision of 3.|
+| `{val:#x}` | Format `val` argument as hex, with a leading `0x` (alternate format for `x`). |
+
+</div>
+
+
+{{ tablesep() }}
 
 
 <!-- END WIP section -->
@@ -2758,51 +2806,6 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 
 {{ tablesep() }}
 
-
-## Formatting Strings
-
-Formatting applies to `print!`, `eprint!`, `write!` (and their -`ln` siblings like `println!`).
-Each format argument is either empty `{}`, `{argument}`, or follows a basic [**syntax**](https://doc.rust-lang.org/std/fmt/index.html#syntax):
-
-
-```
-{ [argument] ':' [[fill] align] [sign] ['#'] [width [$]] ['.' precision [$]] [type] }
-```
-
-<div class="header-undefined-color-3">
-
-| Element |  Meaning |
-|---------| ---------|
-| `argument` |  Number (`0`, `1`, ...) or argument name, e.g., `print!("{x}", x = 3)`. |
-| `fill` | The character to fill empty spaces with (e.g., `0`), if `width` is specified. |
-| `align` | Left (`<`), center (`^`), or right (`>`), if width is specified. |
-| `sign` | Can be `+` for sign to always be printed. |
-| `#` | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0), e.g. prettify Debug `?` or prefix hex with `0x`. |
-| `width` | Minimum width (&geq; 0), padding with `fill` (default to space). If starts with `0`, zero-padded. |
-| `precision` | Decimal digits (&geq; 0) for numerics, or max width for non-numerics. |
-| `$` | Interpret `width` or `precision` as argument identifier instead to allow for dynamic formatting. |
-| `type` | [**Debug**](https://doc.rust-lang.org/std/fmt/trait.Debug.html) (`?`) formatting, hex (`x`), binary (`b`), octal (`o`), pointer (`p`), exp (`e`) ... [see more](https://doc.rust-lang.org/std/fmt/index.html#traits). |
-
-</div>
-
-
-{{ tablesep() }}
-
-
-<div class="header-undefined-color-3">
-
-| Example | Explanation |
-|---------|-------------|
-| `{:?}` | Print the next argument using Debug. |
-| `{2:#?}` | Pretty-print the 3rd argument with Debug formatting. |
-| `{val:^2$}` | Center the `val` named argument, width specified by the 3rd argument. |
-| `{:<10.3}` | Left align with width 10 and a precision of 3.|
-| `{val:#x}` | Format `val` argument as hex, with a leading `0x` (alternate format for `x`). |
-
-</div>
-
-
-{{ tablesep() }}
 
 
 <!-- Don't render this section for printing, won't be helpful -->
