@@ -1,7 +1,7 @@
 {
   "name": "cheats.rs",
   "scripts": {
-    "posthtml": "cd public && posthtml index.html -u posthtml-img-autosize -u posthtml-inline-assets -u htmlnano"
+    "posthtml": "cd public && posthtml index.html -u posthtml-img-autosize -u posthtml-inline-assets -u htmlnano && node ../util/postprocess.js"
   },
   "private": true,
   "dependencies": {
