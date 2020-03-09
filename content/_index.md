@@ -85,6 +85,7 @@ template = "index.html"
 * [Closures in APIs](#closures-in-apis)
 * [Reading Lifetimes](#reading-lifetimes)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
+* [API Stability](#api-stability)
 
 
 **Misc**
@@ -413,10 +414,19 @@ Constructs found in `match` or `let` expressions, or function parameters.
 |  {{ tab() }} `let (_, b, _) = abc;` | Only `b` will be bound to value `abc.1`. |
 |  {{ tab() }} `let (a, ..) = abc;` | Ignoring 'the rest' also works. |
 |  {{ tab() }} `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
-| `if let Some(x) = get() {}`  | Branch if pattern can actually be assigned (e.g., `enum` variant). |
+| `if let Some(x) = get() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`.|
 
 </div>
+
+
+<div class="footnotes">
+
+<sup>*</sup> Desugars to `match get() { Some(x) => {}, _ => () }`.
+
+</div>
+
+
 
 {{ tablesep() }}
 
@@ -424,7 +434,7 @@ Pattern matching arms in `match` expressions. The left side of these arms can al
 
 <div class="cheats">
 
-| Example | Explanation |
+| Match Arm | Explanation |
 |---------|-------------|
 |  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
 |  `E::B ( .. ) => {}` | Match enum tuple variant `B`, wildcard any index. |
@@ -445,7 +455,7 @@ Pattern matching arms in `match` expressions. The left side of these arms can al
 | <code>0 &vert; 1 => {}</code> | Pattern alternatives (or-patterns).|
 | {{ tab() }}  <code>E::A &vert; E::Z </code> | Same, but on enum variants. |
 | {{ tab() }}  <code>E::C {x} &vert; E::D {x}</code> | Same, but bind `x` if all variants have it. |
-| `S { x } if x > 10`  | Pattern **match guards**, {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} {{ ref(page="expressions/match-expr.html#match-guards") }} condition must be true as well to match. |
+| `S { x } if x > 10 => {}`  | Pattern **match guards**, {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} {{ ref(page="expressions/match-expr.html#match-guards") }} condition must be true as well to match. |
 
 </div>
 
@@ -2802,6 +2812,98 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 > - Follow the [Nomicon](https://doc.rust-lang.org/nightly/nomicon/), [Unsafe Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/), **always** uphold **all** safety invariants, and **never** invoke [UB](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html).
 > - Minimize the use of `unsafe` and encapsulate it in the small, sound modules that are easy to review.
 > - Each `unsafe` unit should be accompanied by plain-text reasoning outlining its safety.
+
+
+
+{{ tablesep() }}
+
+
+
+## API Stability
+
+These changes can break client code, compare [**RFC 1105**](https://github.com/rust-lang/rfcs/blob/master/text/1105-api-evolution.md). Major changes (🔴) are **definitely breaking**, while minor changes (🟡) **might be breaking**:
+
+<div class="header-api-stability">
+
+
+{{ tablesep() }}
+
+| Crates |
+|---------|
+| 🔴 Making a crate that previously compiled for _stable_ require _nightly_. |
+| 🟡 Altering use of Cargo features (e.g., adding or removing features). |
+
+{{ tablesep() }}
+
+
+| Modules |
+|---------|
+| 🔴 Renaming / moving / removing any public items. |
+| 🟡 Adding new public items, as this might break code that does `use your_crate::*`. |
+
+{{ tablesep() }}
+
+| Structs |
+|---------|
+| 🔴 Adding private field when all current fields public. |
+| 🔴 Adding public field when no private field exists. |
+| 🟡 Adding or removing private fields when at least one already exists (before and after the change). |
+| 🟡 Going from a tuple struct with all private fields (with at least one field) to a normal struct, or vice versa. |
+
+{{ tablesep() }}
+
+| Enums |
+|---------|
+| 🔴 Adding new variants. |
+| 🔴 Adding new fields to a variant. |
+
+
+{{ tablesep() }}
+
+| Traits |
+|---------|
+| 🔴 Adding a non-defaulted item, breaks all existing `impl T for S {}`. |
+| 🔴 Any non-trivial change to item signatures, will affect either consumers or implementors. |
+| 🟡 Adding a defaulted item; might cause dispatch ambiguity with other existing trait. |
+| 🟡 Adding a defaulted type parameter. |
+
+{{ tablesep() }}
+
+| Traits |
+|---------|
+| 🔴 Implementing any "fundamental" trait, as _not_ implementing a fundamental trait already was a promise. |
+| 🟡 Implementing any non-fundamental trait; might also cause dispatch ambiguity. |
+
+{{ tablesep() }}
+
+| Inherent Implementations |
+|---------|
+| 🟡 Adding any inherent items; might cause clients to prefer that over trait fn and produce compile error. |
+
+{{ tablesep() }}
+
+| Signatures in Type Definitions |
+|---------|
+| 🔴 Tightening bounds (e.g., `<T>` to `<T: Clone>`). |
+| 🟡 Loosening bounds. |
+| 🟡 Adding defaulted type parameters. |
+| 🟡 Generalizing to generics. |
+
+| Signatures in Functions |
+|---------|
+| 🔴 Adding / removing arguments. |
+| 🟡 Introducing a new type parameter. |
+| 🟡 Generalizing to generics. |
+
+
+{{ tablesep() }}
+
+| Behavioral Changes |
+|---------|
+| 🔴 / 🟡 _Changing semantics might not cause compiler errors, but might make clients do wrong thing._ |
+
+
+</div>
 
 
 {{ tablesep() }}
