@@ -1822,15 +1822,15 @@ If you **want** a string of type ...
 | --- | --- |
 |`String`|`CString::new(x)?`|
 |`CString`|`x`|
-|`OsString`|`CString::new(x.to_str()?)?`|
+|`OsString` <sup>2</sup>|`CString::new(x.to_str()?)?`|
 |`PathBuf`|`CString::new(x.to_str()?)?`|
-|`Vec<u8>` <sup>1</sup> |`unsafe { CString::from_vec_unchecked(x) }`|
+|`Vec<u8>` <sup>1</sup> |`CString::new(x)?`|
 |`&str`|`CString::new(x)?`|
 |`&CStr`|`x.into()`|
-|`&OSStr`|`CString::new(x.to_os_string().into_string()?)?`|
+|`&OSStr` <sup>2</sup> |`CString::new(x.to_os_string().into_string()?)?`|
 |`&Path`|`x.to_str()?.into()`|
-|`&[u8]` <sup>1</sup> |`unsafe { CString::from_vec_unchecked(x.into()) }`|
-|`*mut c_char` <sup>1</sup> |`unsafe { CString::from_raw(x) }`|
+|`&[u8]` <sup>1</sup> |`CString::new(Vec::from(x))?`|
+|`*mut c_char` <sup>3</sup> |`unsafe { CString::from_raw(x) }`|
 
 </div></div></div>
 
@@ -1933,14 +1933,15 @@ If you **want** a string of type ...
 | --- | --- |
 |`String`|`CString::new(x)?.as_c_str()`|
 |`CString`|`x.as_c_str()`|
-|`OsString`|`x.to_str()?`|
+|`OsString` <sup>2</sup>|`x.to_str()?`|
 |`PathBuf`|`CStr::from_bytes_with_nul(x.to_str()?.as_bytes())?`|
 |`Vec<u8>` <sup>1</sup> |`CStr::from_bytes_with_nul(&x)?`|
 |`&str`|`CStr::from_bytes_with_nul(x.as_bytes())?`|
 |`&CStr`|`x`|
-|`&OSStr`| {{ todo() }} |
+|`&OSStr` <sup>2</sup>| {{ todo() }} |
 |`&Path`| {{ todo() }} |
 |`&[u8]` <sup>1</sup> |`CStr::from_bytes_with_nul(x)?`|
+|`*const c_char` <sup>1</sup> |`unsafe { CStr::from_ptr(x) }`|
 
 </div></div></div>
 
@@ -2004,7 +2005,7 @@ If you **want** a string of type ...
 |`Vec<u8>` <sup>1</sup> |`&x`|
 |`&str`|`x.as_bytes()`|
 |`&CStr`|`x.to_bytes_with_nul()`|
-|`&OSStr`| {{ todo() }} |
+|`&OSStr`| `x.as_bytes()` <sup>2</sup> |
 |`&Path`| {{ todo() }} |
 |`&[u8]` <sup>1</sup> |`x`|
 
@@ -2034,6 +2035,16 @@ If you **want** a string of type ...
 <div class="footnotes">
 
 <sup>1</sup> You should or must (if `unsafe` calls are involved) ensure the raw data comes with a valid representation for the string type (e.g., being UTF-8 encoded data for a `String`).
+
+<sup>2</sup> Only on some platforms `std::os::<your_os>::ffi::OsStrExt` exists with helper methods to get a raw `&[u8]` representation of the underlying `OsStr`. Use the rest of the table to go from there, e.g.:
+
+```
+use std::os::unix::ffi::OsStrExt;
+let bytes: &[u8] = my_os_str.as_bytes();
+CString::new(bytes)?
+```
+
+<sup>3</sup> The `c_char` **must** have come from a previous `CString`. If it comes from FFI see `&CStr` instead.
 
 </div>
 
