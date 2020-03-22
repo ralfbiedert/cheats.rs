@@ -54,6 +54,7 @@ Takes additional inspiration from:
 * [Rust container cheat sheet](https://docs.google.com/presentation/d/1q-c7UAyrUlM-eZyTo1pd8SZ0qwA_wYxmPZVOQkoDmH4/edit#slide=id.p) (For data layout; Raph Levien)
 * That one IEEE 754-2008 Powerpoint deck I can't find anymore ...
 * [Da Button Factory](https://dabuttonfactory.com/) (Download / PDF buttons)
+* [String Conversions](https://docs.google.com/spreadsheets/d/19vSPL6z2d50JlyzwxariaYD6EU2QQUQqIDOGbiGQC7Y/pubhtml?gid=0&single=true)
 
 
 
