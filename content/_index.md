@@ -2763,7 +2763,7 @@ unsafe fn unsafe_f(x: *mut u8) {
 <!-- NEW TAB -->
 <div class="tab">
 <input class="tab-radio" type="radio" id="tab-unsafe-2" name="tab-unsafe" >
-<label class="tab-label" for="tab-unsafe-2"><b>Undefine Behavior</b></label>
+<label class="tab-label" for="tab-unsafe-2"><b>Undefined Behavior</b></label>
 <div class="tab-panel">
 <div class="tab-content">
 
