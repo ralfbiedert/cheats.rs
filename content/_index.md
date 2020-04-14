@@ -393,7 +393,9 @@ In a `macro_rules!` implementation, the following macro captures can be used:
 | `$x:ident`   | An identifier, for example in `let x = 0;` the identifier is `x`. |
 | `$x:path`    | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`, …). |
 | `$x:literal` | A literal (e.g. `3`, `"foo"`, `b"bar"`, etc.). |
+| `$x:lifetime` | A lifetime (e.g. `'a`, `'static`, etc.). |
 | `$x:meta`    | A meta item; the things that go inside `#[...]` and `#![...]` attributes. |
+| `$x:vis`    | A visibility modifier;  `pub`, `pub(crate)`, etc. |
 | `$x:tt`      | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more details. |
 </div>
 
