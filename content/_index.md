@@ -3024,6 +3024,7 @@ Online services which provide information or tooling.
 | [docs.rs](https://docs.rs/) | Documentation for 3rd party libraries, automatically generated from source. |
 | [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
+| [Rust Search Extension](https://github.com/huhu/rust-search-extension) | Browser extension to search docs, crates,  attributes, books, and error codes, etc in the address bar instantly. Also with docs.rs enhancement.|
 
 </div>
 
