@@ -2374,35 +2374,45 @@ A large number of additional cargo plugins [**can be found here**](https://crate
 
 ## Cross Compilation
 
-<div class="steps">
+<!-- <div class="steps"> -->
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
-General rundown: {{ link(url="https://github.com/japaric/rust-cross") }}
+🔘 Check [target is supported](https://forge.rust-lang.org/release/platform-support.html).
 
-1. Check [target is supported](https://forge.rust-lang.org/release/platform-support.html).
-1. Install target via **`rustup target install X`**.
-1. Install native toolchain (required to _link_, depends on target). Get this from your target vendor (Google, Apple, ...).
-Might not be available for your host (e.g., no iOS toolchain for Windows). **Some toolchains require additional build
-steps** (e.g., Android's `make-standalone-toolchain.sh`).
-1. Update **`~/cargo/.config`** like this:
-    ```
-    [target.aarch64-linux-android]
-    linker = "[PATH_TO_TOOLCHAIN]/aarch64-linux-android/bin/aarch64-linux-android-clang"
-    ```
+🔘 Install target via **`rustup target install X`**.
+
+🔘 Install native toolchain (required to _link_, depends on target).
+
+Get this from your target vendor (Google, Apple, ...).
+Might not be available for your host (e.g., no iOS toolchain for Windows).
+
+**Some toolchains require additional build steps** (e.g., Android's `make-standalone-toolchain.sh`).
+
+🔘 Update **`~/cargo/.config`** like this:
+
+```
+[target.aarch64-linux-android]
+linker = "[PATH_TO_TOOLCHAIN]/aarch64-linux-android/bin/aarch64-linux-android-clang"
+```
+
    or
-    ```
-    [target.aarch64-linux-android]
-    linker = "C:/[PATH_TO_TOOLCHAIN]/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang.cmd"
-    ```
-1. Sometimes (depending on how compiler complains) you might also need to set an environment variable. Note that some platforms / configuration can be
+
+```
+[target.aarch64-linux-android]
+linker = "C:/[PATH_TO_TOOLCHAIN]/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang.cmd"
+```
+
+Sometimes (depending on how compiler complains) you might also need to set an environment variable. Note that some platforms / configuration can be
 **extremely** sensitive how paths are specified (e.g., `\` vs `/`) and quoted:
-    ```
-    set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
-    ```
-1. Compile with **`cargo build --target=X`**
+
+```
+set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
+```
+
+✔️ Compile with **`cargo build --target=X`**
 
 
 <!-- End overflow area -->
@@ -2410,7 +2420,7 @@ steps** (e.g., Android's `make-standalone-toolchain.sh`).
 </div>
 
 <!-- End steps  -->
-</div>
+<!-- </div> -->
 
 {{ tablesep() }}
 
