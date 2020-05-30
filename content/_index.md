@@ -479,11 +479,12 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | `S<T>`  | A **generic** {{ book(page="ch10-01-syntax.html") }} {{ ex(page="generics.html") }} type with a type parameter (`T` is placeholder name here). |
 | `S<T: R>`  | Type short hand **trait bound** {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} specification  (`R` _must_ be actual trait). |
 | {{ tab() }} `T: R, P: S`  | **Independent trait bounds** (here one for `T` and one for `P`). |
-| {{ tab() }} `T: R, S`  | Compile error {{ bad() }}, you probably want compound bound `R + S` below. |
+| {{ tab() }} `T: R, S`  | Compile error, {{ bad() }} you probably want compound bound `R + S` below. |
 | {{ tab() }} `T: R + S`  | **Compound trait bound** {{ book(page="ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax") }} {{ ex(page="generics/multi_bounds.html") }}, `T` must fulfill `R` and `S`. |
 | {{ tab() }} `T: R + 'a`  | Same, but w. lifetime. `T` must fulfill `R`, if `T` has lifetimes, must outlive `'a`. |
-| {{ tab() }} `T: ?Sized`         | Opt out of a pre-defined trait bound, here `Sized`. {{ todo() }} |
+| {{ tab() }} `T: ?Sized` | Opt out of a pre-defined trait bound, here `Sized`. {{ todo() }} |
 | {{ tab() }} `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }}; if T has references, they must outlive `'a`.  |
+| {{ tab() }} `T: 'static` | Same; does esp. _not_ mean value `t` _will_ {{ bad() }} live `'static`, only that it could. |
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
 | `S<T> where T: R`  | Same as `S<T: R>` but more pleasant to read for longer bounds. |
 | `S<T = R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} for associated type.|
