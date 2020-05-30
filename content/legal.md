@@ -15,7 +15,7 @@ Ralf Biedert (<a href="mailto:admin@xr.io">mail</a>)
 
 ### Hosting, GDPR, Privacy Information
 
-- The content on [cheats.rs](https://cheats.rs) is hosted on Amazon Web Services and dispatched via various edge locations (Cloudfront) around the globe. We enable "all" edge locations to minimize hops and latency and because, you know, you are worth it :)
+- The content on [cheats.rs](https://cheats.rs) is hosted on Amazon Web Services and dispatched via various edge locations (Cloudfront) around the globe. We enable "all" edge locations to minimize hops and latency, and because you are worth it :)
 - Access logs for content hosting are disabled in the AWS configuration, and we are not aware of any user tracking present in this configuration. Only aggregate statistics are provided, most notably, aggregated referrer information on a domain level, and aggregated visitor information on a country level, such as:
 
     ```
@@ -47,8 +47,8 @@ We use the following model:
 
 **In detail**, this cheat sheet ("work") consists of:
 
-- text (tables, guides, Rust snippets) addressing language-related content viewable on [cheats.rs](https://cheats.rs) ("content")
-- code (HTML + CSS; _not_ Rust code), logos, graphics, assets and the resulting presentation ("supporting assets")
+- text (tables, guides, Rust code) addressing language-related content viewable on [cheats.rs](https://cheats.rs) ("content")
+- code (Markdown, HTML, CSS), logos, graphics, assets and the resulting presentation ("supporting assets")
 - metadata, such as the real names of contributors (e.g., on Github or the site), information from the Git repo, any other information not directly related to end-user content ... ("metadata")
 
 The **content** of this work is licensed as CC0 from the European Union, with contributions from all over the world.
