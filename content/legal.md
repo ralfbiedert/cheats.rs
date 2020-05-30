@@ -32,6 +32,7 @@ Ralf Biedert (<a href="mailto:admin@xr.io">mail</a>)
     ```
 
 - Unfortunately, at the time of writing, we use embedded fonts that are hosted on Google Fonts (**help with fixing that would be greatly appreciated!**). No cookies are retained to our knowledge. Google has an entry on this matter: [What does using the Google Fonts API mean for the privacy of my users?](https://developers.google.com/fonts/faq).
+- The **Edit & Run** feature of the "Hello, Rust" section embeds the [Rust Playground](https://play.rust-lang.org/). All code entered there is sent to and processed on their servers.
 - The user's local storage may be used for storing user settings between sessions (e.g., dark mode, ligatures). This information never leaves the user's machine.
 - Supporting developer assets and metadata are usually hosted on Github so their privacy and tracking legalese applies.
 
@@ -60,10 +61,18 @@ The **content** of this work is licensed as CC0 from the European Union, with co
 
 ### Third Party Assets
 
+These assets are shipped with the site.
+
 - [normalize.css](https://github.com/necolas/normalize.css), Nicolas Gallagher and Jonathan Neal, MIT licensed
 - [Fira Code](https://github.com/tonsky/FiraCode), Nikita Prokopov, OFL-1.1
 - [Zola Book theme](https://github.com/getzola/zola), Vincent Prouillet, MIT licensed
 - [prism.js](https://prismjs.com/), Lea Verou, MIT licensed
+
+### Used Services
+
+These services are sometimes used by this site.
+
+- [The Rust Playground](https://play.rust-lang.org/), created by Jake Goulding, part of Integer 32; hosted via [play.rust-lang.org](https://play.rust-lang.org)
 
 
 

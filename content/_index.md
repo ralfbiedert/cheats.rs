@@ -119,8 +119,8 @@ fn main() {
 
 </div>
 <div id="helloplay"></div>
+<div id="helloinfo">Service provided by <a href="https://play.rust-lang.org/" target="_blank">play.rust-lang.org <sup>🔗</sup></a></div>
 <div id="helloctrl"><a href="javascript:show_playground(true);">▶️ Edit & Run</a></div>
-
 </div>
 
 

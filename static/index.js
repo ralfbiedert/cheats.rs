@@ -8,13 +8,16 @@ function show_playground(state) {
     let area_static = document.getElementById("hellostatic");
     let area_play = document.getElementById("helloplay");
     let area_ctrl = document.getElementById("helloctrl");
+    let area_info = document.getElementById("helloinfo");
 
     if (state) {
         area_static.style.display = "none";
+        area_info.style.display = "block";
         area_play.innerHTML = "<iframe src='https://play.rust-lang.org/' style='width:100%; height:500px;'></iframe>";
         area_ctrl.innerHTML = "<a href='javascript:show_playground(false);'>⏹️ Stop Editor</a>";
     } else {
         area_static.style.display = "block";
+        area_info.style.display = "none";
         area_play.innerHTML = "";
         area_ctrl.innerHTML = "<a href='javascript:show_playground(true);'>▶️ Edit & Run</a>";
     }
