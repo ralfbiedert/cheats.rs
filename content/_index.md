@@ -87,7 +87,6 @@ template = "index.html"
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
 * [API Stability](#api-stability)
 
-
 **Misc**
 * [Links & Services](#links-services)
 * [Printing & PDF](#printing-pdf)
@@ -1650,6 +1649,10 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 # Standard Library
 
 <!-- <div class="wip"> -->
+
+## How Do I ... ?
+
+
 
 ## Traits
 
