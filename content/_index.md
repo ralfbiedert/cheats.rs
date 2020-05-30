@@ -2954,6 +2954,9 @@ These are other great visual guides and tables.
 
 <div class="header-lavender">
 
+
+<!-- This is for major other "cheat sheet" like material on the web. Main question when adding: does it add something
+    significant not found elsewhere? -->
 | Cheat Sheets | Description |
 |--------| -----------|
 | [Rust Learning⭐](https://github.com/ctjhoa/rust-learning) | Probably the best collection of links about learning Rust.  |
@@ -2974,7 +2977,8 @@ All major Rust books developed by the community.
 
 <div class="header-lavender">
 
-
+<!-- Official Rust online "books" about Rust itself or major components (e.g., WebAssembly, Embedded, ...). Good test
+    for inclusion can be official community involvement, +1k Github stars, ... -->
 | Books&nbsp;️📚  | Description |
 |--------| -----------|
 | [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) | Standard introduction to Rust, **start here if you are new**. |
@@ -3009,6 +3013,7 @@ Comprehensive lookup tables for common components.
 
 <div class="header-lavender">
 
+<!-- Table-like sites, often auto-generated. -->
 | Tables&nbsp;📋| Description |
 |--------| -----------|
 | [Rust Changelog](https://github.com/rust-lang/rust/blob/master/RELEASES.md) | See all the things that changed in a particular version. |
@@ -3027,12 +3032,16 @@ Online services which provide information or tooling.
 
 <div class="header-lavender">
 
+<!-- Other online web services related to Rust. As a heuristic, things here should
+    be essential (or at least address a major concern as "best of class") and be
+    a self-contained, user-facing web site. -->
 | Services&nbsp;⚙️ | Description |
 |--------| -----------|
 | [crates.io](https://crates.io/) | All 3rd party libraries for Rust. |
 | [std.rs](https://std.rs/) | Shortcut to `std` documentation. |
 | [docs.rs](https://docs.rs/) | Documentation for 3rd party libraries, automatically generated from source. |
 | [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
+| [caniuse.rs](https://caniuse.rs/) | Check which feature is available on which edition. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 
 </div>
