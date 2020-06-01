@@ -3,20 +3,17 @@
 [![Read Online](/gfx/button_read-online.png)](https://cheats.rs)
 [![Cached PDF](/gfx/button_cached-pdf.png)](https://github.com/ralfbiedert/cheats.rs/releases/latest)
 
-† PDF is only updated occasionally and mainly provided for mobile users who can't use the "Generate PDF" button on the site. Online version is generally recommended.
+† PDF is only updated occasionally for those who can't use the "Generate PDF" button on the site; online version is generally recommended.
 
 
 # Background
 
-This is the "Rust Language Cheat Sheet". It is for users who
-* are **early Rust professionals** (experienced programmers, intermediate Rust users), and
-* prefer **visual, example-driven content**
+**A single-page Rust resource for people who like high information density.**
 
 Use cases, in order of priority:
-* "**identification guide**" for unknown or symbolic constructs encountered in code.
-* provide **further reading** from easy to advanced (Book to Nomicon).
-* quick lookup for **language related** problems.
-* **discover constructs** in the language you might not know.
+* **identification & lookup guide** for constructs encountered in code,
+* **discover** parts of the language you might not know,
+* **learn about Rust** if you have prior programming experience.
 
 Design guides:
 * have **high information density**; every word counts.
