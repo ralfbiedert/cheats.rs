@@ -1650,9 +1650,6 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 
 <!-- <div class="wip"> -->
 
-## How Do I ... ?
-
-
 
 ## Traits
 
