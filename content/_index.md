@@ -140,11 +140,11 @@ fn main() {
 <!-- NEW TAB -->
 <div class="tab">
 <input class="tab-radio" type="radio" id="tab-hello-3" name="tab-hello">
-<label class="tab-label" for="tab-hello-3"><b>Measurable Benefits</b></label>
+<label class="tab-label" for="tab-hello-3"><b>Strengths</b></label>
 <div class="tab-panel">
 <div class="tab-content">
 
-Some generally recognized reasons why Rust might be worth considering:
+Things Rust does measurably really well:
 
 - compiled code [about same performance](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html) as C / C++, and excellent [memory and energy efficiency](https://dl.acm.org/doi/10.1145/3136014.3136031)
 - can [avoid 70% of all (memory-related) safety issues](https://msrc-blog.microsoft.com/2019/07/22/why-rust-for-safe-systems-programming/) present in C / C++
@@ -159,15 +159,15 @@ Some generally recognized reasons why Rust might be worth considering:
 <!-- NEW TAB -->
 <div class="tab">
 <input class="tab-radio" type="radio" id="tab-hello-4" name="tab-hello">
-<label class="tab-label" for="tab-hello-4"><b>Known Issues</b></label>
+<label class="tab-label" for="tab-hello-4"><b>Weaknesses</b></label>
 <div class="tab-panel">
 <div class="tab-content">
 
 
-These are known issues people have been complaining about:
+Points commonly complained about:
 
 - steep learning curve<sup>1</sup> with compiler insisting you paying attention to "details" upfront
-- lack of support for or from certain libraries / platforms / IDEs<sup>1</sup>
+- missing libraries, platform support or IDE features<sup>1</sup>
 - notably longer compile times than C / C++<sup>1</sup>
 - no formal language specification ("compiler is specification"), can't legally be used in some domains
 - careless (use of) libraries can break safety guarantees for why Rust was picked in the first place
@@ -184,11 +184,11 @@ These are known issues people have been complaining about:
 <div class="tab-content">
 
 If you want to start developing Rust:
-- Download installer from [**rustup.rs**](https://rustup.rs/) (highly recommended for any platform)
-- Install an IDE:
+- download installer from [**rustup.rs**](https://rustup.rs/) (highly recommended for any platform)
+- install an IDE:
     - [IntelliJ](https://www.jetbrains.com/idea/) (free) or [CLion](https://www.jetbrains.com/clion/) (paid) with [**IntelliJ Rust**](https://intellij-rust.github.io/)
     - [Visual Studio Code](https://code.visualstudio.com/) with [**rust-analyzer**](https://rust-analyzer.github.io/)
-- Check links on this site, more [learning resources](https://www.rust-lang.org/learn) and [**where to ask questions**](https://www.rust-lang.org/community).
+- check links on this site, more [learning resources](https://www.rust-lang.org/learn) and [**where to ask questions**](https://www.rust-lang.org/community).
 </div></div></div>
 
 
