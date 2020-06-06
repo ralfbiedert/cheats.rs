@@ -166,13 +166,29 @@ Some generally recognized reasons why Rust might be worth considering:
 
 These are known issues people have been complaining about:
 
-- steep learning curve<sup>1</sup> with compiler insisting paying attention to "details" upfront
+- steep learning curve<sup>1</sup> with compiler insisting you paying attention to "details" upfront
 - lack of support for or from certain libraries / platforms / IDEs<sup>1</sup>
 - notably longer compile times than C / C++<sup>1</sup>
 - no formal language specification ("compiler is specification"), can't legally be used in some domains
 - careless (use of) libraries can break safety guarantees for why Rust was picked in the first place
 
 <sup>1</sup> Based on [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust).
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-hello-5" name="tab-hello">
+<label class="tab-label" for="tab-hello-5"><b>Getting Started</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+If you want to start developing Rust:
+- Download installer from [**rustup.rs**](https://rustup.rs/) (highly recommended for any platform)
+- Install an IDE:
+    - [IntelliJ](https://www.jetbrains.com/idea/) (free) or [CLion](https://www.jetbrains.com/clion/) (paid) with [**IntelliJ Rust**](https://intellij-rust.github.io/)
+    - [Visual Studio Code](https://code.visualstudio.com/) with [**rust-analyzer**](https://rust-analyzer.github.io/)
+- Check links on this site, more [learning resources](https://www.rust-lang.org/learn) and [**where to ask questions**](https://www.rust-lang.org/community).
 </div></div></div>
 
 
