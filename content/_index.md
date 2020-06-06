@@ -1723,7 +1723,7 @@ PRs for this section are very welcome. Idea is:
 |---------|-------------|
 | Parsing a number | `"42".parse::<u32>()?` |
 | Create a new file | `OpenOptions::new().create(true).write(true).open(PATH)?` |
-| Marco w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
+| Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
 | {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
 
 </div>
