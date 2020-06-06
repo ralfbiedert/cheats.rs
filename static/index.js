@@ -3,6 +3,17 @@
 let codes = document.querySelectorAll("code");
 let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform); // https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
 
+let subtitle_index = 0;
+
+const subtiles = [
+    "_NOW_HUMAN_",
+    "_GITHASH_",
+    "Same low price, 20% more content.",
+    "Recommended by 9 out of 10 dentists.",
+    "The #1 cheat sheet according to its authors.",
+    "This site was neither tested on nor approved by animals.",
+];
+
 /// Enables or disables the playground.
 function show_playground(state) {
     let area_static = document.getElementById("hellostatic");
@@ -62,6 +73,15 @@ function set_survey(state) {
     }
 
     !!localStorage && localStorage.setItem("survey2019", state);
+}
+
+
+// Called when the user clicks the subtitle (usually the date)
+function toggle_subtitle() {
+    let subtitle = document.getElementById("subtitle");
+
+    subtitle_index = (subtitle_index + 1) % subtiles.length;
+    subtitle.innerHTML = subtiles[subtitle_index];
 }
 
 

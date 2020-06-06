@@ -7,7 +7,7 @@ template = "index.html"
 
 <img id="logo" src="logo.png" alt="Ferris holding a cheat sheet."></img>
 <div class="title">Rust Language Cheat Sheet</div>
-<div class="subtitle">{{ date() }}</div>
+<div class="subtitle"><span id="subtitle" onclick="toggle_subtitle()">{{ date() }}</span></div>
 
 
 
