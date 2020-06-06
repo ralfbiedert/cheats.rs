@@ -140,7 +140,7 @@ fn main() {
 <!-- NEW TAB -->
 <div class="tab">
 <input class="tab-radio" type="radio" id="tab-hello-3" name="tab-hello">
-<label class="tab-label" for="tab-hello-3"><b>Measurable Advantages</b></label>
+<label class="tab-label" for="tab-hello-3"><b>Measurable Benefits</b></label>
 <div class="tab-panel">
 <div class="tab-content">
 
