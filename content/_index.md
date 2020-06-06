@@ -104,7 +104,18 @@ template = "index.html"
 
 ## Hello, Rust!
 
-If you have never seen Rust before, or if you want to try the things below:
+If you are new to Rust, or if you want to try the things below:
+
+
+<div class="tabs">
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-hello-1" name="tab-hello" checked>
+<label class="tab-label" for="tab-hello-1"><b>Hello World</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
 
 <div id="hellostatic">
 
@@ -120,6 +131,50 @@ fn main() {
 <div id="helloplay"></div>
 <div id="helloinfo">Service provided by <a href="https://play.rust-lang.org/" target="_blank">play.rust-lang.org <sup>🔗</sup></a></div>
 <div id="helloctrl"><a href="javascript:show_playground(true);">▶️ Edit & Run</a></div>
+
+
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-hello-3" name="tab-hello">
+<label class="tab-label" for="tab-hello-3"><b>Measurable Advantages</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+Some generally recognized reasons why Rust might be worth considering:
+
+- compiled code [about same performance](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html) as C / C++, and excellent [memory and energy efficiency](https://dl.acm.org/doi/10.1145/3136014.3136031)
+- can [avoid 70% of all (memory-related) safety issues](https://msrc-blog.microsoft.com/2019/07/22/why-rust-for-safe-systems-programming/) present in C / C++
+- strong type support allowing for ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others)
+- seamless C interop, and [dozens of supported platforms](https://forge.rust-lang.org/release/platform-support.html) (based on LLVM)
+- ["most loved language"](https://insights.stackoverflow.com/survey/2020#technology-most-loved-dreaded-and-wanted-languages) for 5 years in a row
+- built-in tooling like it's 2020 (e.g., `cargo`, `clippy`, `rustup`, ...)
+
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-hello-4" name="tab-hello">
+<label class="tab-label" for="tab-hello-4"><b>Known Issues</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+These are known issues people have been complaining about:
+
+- steep learning curve<sup>1</sup> with compiler insisting paying attention to "details" upfront
+- lack of support for or from certain libraries / platforms / IDEs<sup>1</sup>
+- notably longer compile times than C / C++<sup>1</sup>
+- no formal language specification ("compiler is specification"), can't legally be used in some domains
+- careless (use of) libraries can break safety guarantees for why Rust was picked in the first place
+
+<sup>1</sup> Based on [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust).
+</div></div></div>
+
+
 </div>
 
 
