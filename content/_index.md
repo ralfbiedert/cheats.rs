@@ -66,11 +66,12 @@ template = "index.html"
 
 <div class="column">
 
+
 **Standard Library**
+* [Common One-Liners](#common-one-liners)
 * [Traits](#traits)
 * [String Conversions](#string-conversions)
 * [String Formatting](#string-formatting)
-<!-- * [Marker Traits](#XXX) -->
 
 
 **Tooling**
@@ -1703,7 +1704,31 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 
 # Standard Library
 
-<!-- <div class="wip"> -->
+
+## Common One-Liners
+
+Snippets that are common, but still easy to forget. See [Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/) for more.
+
+
+<!--
+PRs for this section are very welcome. Idea is:
+- Should be `std` only for now, no 3rd party libs (maybe exception for `rand`?)
+- "Most people" should have encountered the problem
+- Is not just a trival method on an 'obvious' struct (e.g., Sort a slice by `x.sort()` is probably too obvious.)
+-->
+
+<div class="header-one-liners cheats">
+
+| Intent | Snippet |
+|---------|-------------|
+| Parsing a number | `"42".parse::<u32>()?` |
+| Create a new file | `OpenOptions::new().create(true).write(true).open(PATH)?` |
+| Marco w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
+| {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
+
+</div>
+
+{{ tablesep() }}
 
 
 ## Traits
@@ -1832,6 +1857,7 @@ Conversions XXX
 
 
 {{ tablesep() }} -->
+
 
 
 
@@ -2155,8 +2181,6 @@ Each format argument is either empty `{}`, `{argument}`, or follows a basic [**s
 {{ tablesep() }}
 
 
-<!-- END WIP section -->
-<!-- </div> -->
 
 ---
 
