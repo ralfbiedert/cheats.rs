@@ -2404,6 +2404,38 @@ fn my_algo(b: &mut Bencher) {
 }
 ```
 </div></div></div></div></div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-anatomy-6" name="tab-group-anatomy" >
+<label class="tab-label" for="tab-anatomy-6"><b>Build Scripts</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```
+// src/build.rs (sample pre-build script)
+
+// Also specify in `Cargo.toml` like this:
+// [package]
+// build = "src/build.rs"
+
+
+fn main() {
+    // You need to rely on env. vars for target; `#[cfg(...)]` are for host.
+    let target_os = env::var("CARGO_CFG_TARGET_OS");
+}
+```
+
+<sup>*</sup>[See here for list](https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-build-scripts) of environment variables set.
+
+</div></div></div></div></div>
+
+
+
 </div>
 
 <!-- End noprint of code examples -->
