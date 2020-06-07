@@ -164,15 +164,15 @@ Things Rust does measurably really well:
 <div class="tab-content">
 
 
-Points commonly complained about:
+Points you might run into:
 
-- steep learning curve<sup>1</sup> with compiler insisting you paying attention to "details" upfront
-- missing libraries, platform support or IDE features<sup>1</sup>
-- notably longer compile times than C / C++<sup>1</sup>
-- no formal language specification ("compiler is specification"), can't legally be used in some domains
+- steep learning curve<sup>1</sup>; compiler enforcing (esp. memory) rules that would be "best practices" elsewhere
+- missing Rust-native libs in some domains, missing target platforms (esp. some embedded), some IDE features<sup>1</sup>
+- longer compile times than "similar" code in other languages<sup>1</sup>
+- no formal language specification preventing use in some domains (aviation, medical, ...)
 - careless (use of) libraries can break safety guarantees for why Rust was picked in the first place
 
-<sup>1</sup> Based on [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust).
+<sup>1</sup> Compare [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust).
 </div></div></div>
 
 
