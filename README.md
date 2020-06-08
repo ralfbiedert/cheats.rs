@@ -36,6 +36,8 @@ zola serve
 
 Contributions are very welcome. You can PR bug fixes (broken links, typos, ...) directly. I am happy to evolve the current concept based on feedback and demands. Feel free to open an issue and discuss.
 
+If you want to contribute but prefer not to use Github, you can send feedback and comments to [webmaster@cheats.rs](mailto:webmaster@cheats.rs).
+
 
 
 # Credits
@@ -43,8 +45,9 @@ Contributions are very welcome. You can PR bug fixes (broken links, typos, ...) 
 Big shout-out to [all the contributors](https://github.com/ralfbiedert/cheats.rs/graphs/contributors) and people filing [issues](https://github.com/ralfbiedert/cheats.rs/issues) and [pull requests](https://github.com/ralfbiedert/cheats.rs/pulls) for being awesome!
 
 
-Takes additional inspiration from:
+Took additional inspiration from:
 
+* The Bronshtein and Semendyayev _Handbook of Mathematics_, the mother of all cheat sheets
 * [The Book](https://doc.rust-lang.org/stable/book/) (some tables)
 * [Idiomatic Rust Libraries](https://killercup.github.io/rustfest-idiomatic-libs/#/) (Idiomatic Rust)
 * [Ferris](https://rustacean.net/) (Rust mascot by Karen Rustad Tölva)

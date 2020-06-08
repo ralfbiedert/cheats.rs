@@ -9,14 +9,12 @@ weight = 100
 
 ### Operator
 
-Ralf Biedert (<a href="mailto:admin@xr.io">mail</a>)
-
-
+Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a href="https://xr.io">🔗</a></sup>
 
 ### Hosting, GDPR, Privacy Information
 
-- The content on [cheats.rs](https://cheats.rs) is hosted on Amazon Web Services and dispatched via various edge locations (Cloudfront) around the globe. We enable "all" edge locations to minimize hops and latency, and because you are worth it :)
-- Access logs for content hosting are disabled in the AWS configuration, and we are not aware of any user tracking present in this configuration. Only aggregate statistics are provided, most notably, aggregated referrer information on a domain level, and aggregated visitor information on a country level, such as:
+- The content on [cheats.rs](https://cheats.rs) is **hosted on Amazon Web Services** and dispatched via various edge locations (Cloudfront) around the globe. We enable "all" edge locations to minimize hops and latency, and because you are worth it :)
+- **Access logs** for content hosting are disabled in the AWS configuration, and we are **not aware of any user tracking** present in this configuration. Only aggregate statistics are provided, most notably, aggregated referrer information on a domain level, and aggregated visitor information on a country level, such as:
 
     ```
     cheats.rs               75.55%
@@ -33,8 +31,8 @@ Ralf Biedert (<a href="mailto:admin@xr.io">mail</a>)
 
 - Unfortunately, at the time of writing, we use embedded fonts that are hosted on Google Fonts (**help with fixing that would be greatly appreciated!**). No cookies are retained to our knowledge. Google has an entry on this matter: [What does using the Google Fonts API mean for the privacy of my users?](https://developers.google.com/fonts/faq).
 - The **Edit & Run** feature of the "Hello, Rust" section embeds the [Rust Playground](https://play.rust-lang.org/). All code entered there is sent to and processed on their servers.
-- The user's local storage may be used for storing user settings between sessions (e.g., dark mode, ligatures). This information never leaves the user's machine.
-- Supporting developer assets and metadata are usually hosted on Github so their privacy and tracking legalese applies.
+- The user's **local storage** may be used for storing user settings between sessions (e.g., dark mode, ligatures). This information never leaves the user's machine.
+- Supporting developer assets and metadata are usually **hosted on Github** so their privacy and tracking legalese applies.
 
 
 ### Copyright Information
@@ -85,7 +83,7 @@ Feel free to use [**this issue tracker**](https://github.com/ralfbiedert/cheats.
 
 ### Trademark Information
 
-This work refers to trademarked products. In particular the "Rust" and "Cargo" names and logos are trademarks of the [Mozilla Foundation](https://foundation.mozilla.org/) and may only be used according to their trademark policy.
+This work refers to trademarked products. In particular the "Rust" and "Cargo" names and logos are trademarks of the [**Mozilla Foundation**](https://foundation.mozilla.org/) and may only be used according to their trademark policy.
 
 
 
