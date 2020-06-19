@@ -2467,7 +2467,7 @@ Some commands and tools that are good to know.
 | `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
 | {{ tab() }} `expanded` |  Show with expanded macros, ... |
 | <code>cargo +{nightly, stable} ...</code>  | Runs command with given toolchain, e.g., for 'nightly only' tools. |
-| `rustup docs` | Open offline Rust documentation (incl. the books), good on a plane! |
+| `rustup doc` | Open offline Rust documentation (incl. the books), good on a plane! |
 
 </div>
 
