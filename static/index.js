@@ -1,5 +1,7 @@
 "use strict"
 
+const survey_key = "survey2020";
+
 let codes = document.querySelectorAll("code");
 let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform); // https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
 
@@ -68,11 +70,11 @@ function toggle_ligatures() {
 function set_survey(state) {
     let elements = document.getElementsByClassName("survey");
 
-    for (e of elements) {
+    for (var e of elements) {
         e.style.display = state;
     }
 
-    !!localStorage && localStorage.setItem("survey2019", state);
+    !!localStorage && localStorage.setItem(survey_key, state);
 }
 
 
@@ -103,7 +105,7 @@ try {
 
     let night_mode = !!localStorage && localStorage.getItem("night-mode");
     let ligatures = !!localStorage && localStorage.getItem("ligatures");
-    let survey = !!localStorage && localStorage.getItem("survey2019");
+    let survey = !!localStorage && localStorage.getItem(survey_key);
 
     if (night_mode === "night") {
         toggle_night_mode();

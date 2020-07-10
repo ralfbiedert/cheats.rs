@@ -63,9 +63,13 @@ div.wip {
 }
 
 div.survey {
-    margin-top: 40px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     text-align: center;
     display: none;
+    background-color: rgb(255, 238, 239);
 
     span.ignore {
         font-size: 70%;

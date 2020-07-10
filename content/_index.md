@@ -99,8 +99,6 @@ template = "index.html"
 </div>
 
 
-
-
 <div class="noprint">
 
 ## Hello, Rust!
