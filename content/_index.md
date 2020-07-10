@@ -137,6 +137,7 @@ fn main() {
 </div></div></div>
 
 
+
 <!-- NEW TAB -->
 <div class="tab">
 <input class="tab-radio" type="radio" id="tab-hello-3" name="tab-hello">
@@ -151,7 +152,7 @@ Things Rust does measurably really well:
 - strong type support allowing for ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others)
 - seamless C interop, and [dozens of supported platforms](https://forge.rust-lang.org/release/platform-support.html) (based on LLVM)
 - ["most loved language"](https://insights.stackoverflow.com/survey/2020#technology-most-loved-dreaded-and-wanted-languages) for 5 years in a row
-- built-in tooling like it's 2020 (e.g., `cargo`, `clippy`, `rustup`, ...)
+- modern tooling: `cargo` (builds _just work_), `clippy` (300+ code quality lints), `rustup` (easy toolchain mgmt)
 
 </div></div></div>
 
@@ -167,9 +168,9 @@ Things Rust does measurably really well:
 Points you might run into:
 
 - steep learning curve<sup>1</sup>; compiler enforcing (esp. memory) rules that would be "best practices" elsewhere
-- missing Rust-native libs in some domains, missing target platforms (esp. some embedded), some IDE features<sup>1</sup>
+- missing Rust-native libs in some domains, target platforms (esp. embedded), IDE features<sup>1</sup>
 - longer compile times than "similar" code in other languages<sup>1</sup>
-- no formal language specification preventing use in some domains (aviation, medical, ...)
+- no formal language specification, can prevent (legal) use in some domains (aviation, medical, ...)
 - careless (use of) libraries can break safety guarantees for why Rust was picked in the first place
 
 <sup>1</sup> Compare [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust).
@@ -2963,7 +2964,7 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 >
 > - Do not use `unsafe` unless you absolutely have to.
 > - Follow the [Nomicon](https://doc.rust-lang.org/nightly/nomicon/), [Unsafe Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/), **always** uphold **all** safety invariants, and **never** invoke [UB](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html).
-> - Minimize the use of `unsafe` and encapsulate it in the small, sound modules that are easy to review.
+> - Minimize the use of `unsafe` and encapsulate it in small, sound modules that are easy to review.
 > - Each `unsafe` unit should be accompanied by plain-text reasoning outlining its safety.
 
 
@@ -2974,7 +2975,7 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 
 ## API Stability
 
-These changes can break client code, compare [**RFC 1105**](https://github.com/rust-lang/rfcs/blob/master/text/1105-api-evolution.md). Major changes (🔴) are **definitely breaking**, while minor changes (🟡) **might be breaking**:
+When updating an API, these changes can break client code, compare [**RFC 1105**](https://github.com/rust-lang/rfcs/blob/master/text/1105-api-evolution.md). Major changes (🔴) are **definitely breaking**, while minor changes (🟡) **might be breaking**:
 
 <div class="header-api-stability">
 
