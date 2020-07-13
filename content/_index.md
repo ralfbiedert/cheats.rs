@@ -2630,7 +2630,7 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 The state machine always `impl Future`, possibly `Send<` & co, depending on types you used inside `async`. State machine driven by worker thread invoking
 `Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
 {{ note(note="2") }} Right now Rust doesn't come with its own runtime. Use external crate instead, such as [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio).
-Also, Futures in Rust are an MPV. There is **much** more utility stuff in the [futures crate](https://github.com/rust-lang-nursery/futures-rs).
+Also, Futures in Rust are an MVP. There is **much** more utility stuff in the [futures crate](https://github.com/rust-lang-nursery/futures-rs).
 
 </div>
 
