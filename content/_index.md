@@ -287,6 +287,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., address, len, vtable, ... of _this_ `s`, like `0x1234`). |
 | `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `ref s` | **Bind by reference**. {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
+| {{ tab() }} `let ref r = s;` | Equivalent to `let r = &s`. |
+| {{ tab() }} `let S { ref mut x } = s;` | Mutable ref binding (`let x = &mut s.x`), shorthand destructuring {{ below( target = "#pattern-matching") }} version. |
 | `*r` | **Dereference** {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} a reference `r` to access what it points to. |
 | {{ tab() }} `*r = s;` | If `r` is a mutable reference, move or copy `s` to target memory. |
 | {{ tab() }} `s = *r;` | Make `s` a copy of whatever `r` references, if that is `Copy`. |
@@ -481,7 +483,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 | Example | Explanation |
 |---------|-------------|
 | `match m {}` | Initiate **pattern matching** {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }}, then use match arms, _c_. next table. |
-| `let S(x) = get();`  | Notably, `let` also pattern matches similar to the table below. |
+| `let S(x) = get();`  | Notably, `let` also **destructures** {{ ex(page="flow_control/match/destructuring.html") }} similar to the table below. |
 |  {{ tab() }} `let S { x } = s;` | Only `x` will be bound to value `s.x`. |
 |  {{ tab() }} `let (_, b, _) = abc;` | Only `b` will be bound to value `abc.1`. |
 |  {{ tab() }} `let (a, ..) = abc;` | Ignoring 'the rest' also works. |
