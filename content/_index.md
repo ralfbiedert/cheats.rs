@@ -441,10 +441,14 @@ Code generation constructs expanded before the actual compilation happens.
 
 {{ tablesep() }}
 
+</div>
+
+
+<div class="cheats macro_rules">
 
 In a `macro_rules!` implementation, the following constructs are supported:
 
-| Example |  Explanation |
+| Within Macros |  Explanation |
 |---------|---------|
 | `$x:ty`  | Macro capture, also `$x:expr`, `$x:ty`, `$x:path`, ... see next table. |
 | `$x` |  Macro substitution in **macros by example**. {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
@@ -458,11 +462,11 @@ In a `macro_rules!` implementation, the following constructs are supported:
 
 {{ tablesep() }}
 
-When using macro captures, these specifiers are available:
+Also inside `macro_rules!`, when using captures, these specifiers are available:
 
-<div class="cheats">
+<div class="cheats macro_rules">
 
-| Macro Capture |  Explanation |
+| Capture |  Explanation |
 |---------|---------|
 | `$x:item`    | An item, like a function, struct, module, etc. |
 | `$x:block`   | A block `{}` of statements or expressions, e.g., `{ let x = 5; }` |
@@ -495,6 +499,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 |  {{ tab() }} `let S { x } = s;` | Only `x` will be bound to value `s.x`. |
 |  {{ tab() }} `let (_, b, _) = abc;` | Only `b` will be bound to value `abc.1`. |
 |  {{ tab() }} `let (a, ..) = abc;` | Ignoring 'the rest' also works. |
+|  {{ tab() }} `let (.., a, b) = (1, 2);` | Specific bindings take precedence over 'the rest', here `a` is `1`, `b` is `2`. |
 |  {{ tab() }} `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
 | `if let Some(x) = get() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`.|
@@ -2145,7 +2150,7 @@ If you **want** a string of type ...
 
 <div class="footnotes">
 
-<sup>1</sup> You should or must (if `unsafe` calls are involved) ensure the raw data comes with a valid representation for the string type (e.g., being UTF-8 encoded data for a `String`).
+<sup>1</sup> You should (or must, if `unsafe` calls are involved) ensure the raw data comes with a valid representation for the string type (e.g., being UTF-8 encoded data for a `String`).
 
 <sup>2</sup> Only on some platforms `std::os::<your_os>::ffi::OsStrExt` exists with helper methods to get a raw `&[u8]` representation of the underlying `OsStr`. Use the rest of the table to go from there, e.g.:
 
