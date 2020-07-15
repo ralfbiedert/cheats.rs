@@ -436,6 +436,16 @@ Code generation constructs expanded before the actual compilation happens.
 | Example |  Explanation |
 |---------|---------|
 | `m!()` |  **Macro** {{book(page="ch19-06-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation, also `m!{}`, `m![]` (depending on macro). |
+| `#[attr]`  | Outer **attribute**. {{ex(page="attribute.html")}} {{ref(page="attributes.html")}}, annotating the following item. |
+| `#![attr]` | Inner attribute, annotating the surrounding item. |
+
+{{ tablesep() }}
+
+
+In a `macro_rules!` implementation, the following constructs are supported:
+
+| Example |  Explanation |
+|---------|---------|
 | `$x:ty`  | Macro capture, also `$x:expr`, `$x:ty`, `$x:path`, ... see next table. |
 | `$x` |  Macro substitution in **macros by example**. {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
 | `$(x),*` | Macro repetition "zero or more times" in macros by example. |
@@ -443,14 +453,12 @@ Code generation constructs expanded before the actual compilation happens.
 | {{ tab() }} `$(x),+` | Same, but "one or more times". |
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
 | `$crate` | Special hygiene variable, crate where macros is defined. {{ todo() }} |
-| `#[attr]`  | Outer **attribute**. {{ex(page="attribute.html")}} {{ref(page="attributes.html")}}, annotating the following item. |
-| `#![attr]` | Inner attribute, annotating the surrounding item. |
 
 </div>
 
 {{ tablesep() }}
 
-In a `macro_rules!` implementation, the following macro captures can be used:
+When using macro captures, these specifiers are available:
 
 <div class="cheats">
 
