@@ -2,7 +2,7 @@
 weight = 1
 sort_by = "weight"
 template = "index.html"
-#insert_anchor_links = "right"
+insert_anchor_links = "right"
 +++
 
 <img id="logo" src="logo.png" alt="Ferris holding a cheat sheet."></img>
@@ -333,7 +333,7 @@ Define units of code and their abstractions.
 | {{ tab() }} <code>&vert;x&vert; x + x</code> | Closure without block expression; may only consist of single expression.  |
 | {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures. |
 | {{ tab() }} <code> return &vert;&vert; true </code> | Closures sometimes look like logical ORs (here: return a closure). |
-| `unsafe {}` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html?highlight=unsafe#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
+| `unsafe {}` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 
 </div>
 
@@ -413,7 +413,7 @@ Short-hand names of types, and methods to convert one type to another.
 
 | Example | Explanation |
 |---------|-------------|
-| `type T = S;`  | Create a **type alias** {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} {{ ref(page="items/type-aliases.html?highlight=alias#type-aliases") }}, i.e., another name for `S`. |
+| `type T = S;`  | Create a **type alias** {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} {{ ref(page="items/type-aliases.html#type-aliases") }}, i.e., another name for `S`. |
 | `Self`  | Type alias for **implementing type** {{ ref(page="types.html#self-types") }}, e.g. `fn new() -> Self`. |
 | `self`  | Method subject in `fn f(self) {}`, same as `fn f(self: Self) {}`. |
 |  {{ tab() }}  `&self`  | Same, but refers to self as borrowed, same as `f(self: &Self)`|
@@ -446,12 +446,25 @@ Code generation constructs expanded before the actual compilation happens.
 
 <div class="cheats macro_rules">
 
-In a `macro_rules!` implementation, the following constructs are supported:
+Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming") }} **macro by example** {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}} `macro_rules!` implementation these work:
 
 | Within Macros |  Explanation |
 |---------|---------|
-| `$x:ty`  | Macro capture, also `$x:expr`, `$x:ty`, `$x:path`, ... see next table. |
-| `$x` |  Macro substitution in **macros by example**. {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}}
+| `$x:ty`  | Macro capture, with the `ty` part being: |
+| {{ tab() }} `$x:item`    | An item, like a function, struct, module, etc. |
+| {{ tab() }} `$x:block`   | A block `{}` of statements or expressions, e.g., `{ let x = 5; }` |
+| {{ tab() }} `$x:stmt`    | A statement, e.g., `let x = 1 + 1;`, `String::new();` or `vec![];` |
+| {{ tab() }} `$x:expr`    | An expression, e.g., `x`, `1 + 1`, `String::new()` or `vec![]` |
+| {{ tab() }} `$x:pat`     | A pattern, e.g., `Some(t)`, `(17, 'a')` or `_`. |
+| {{ tab() }} `$x:ty`      | A type, e.g., `String`, `usize` or `Vec<u8>`. |
+| {{ tab() }} `$x:ident`   | An identifier, for example in `let x = 0;` the identifier is `x`. |
+| {{ tab() }} `$x:path`    | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`, …). |
+| {{ tab() }} `$x:literal` | A literal (e.g. `3`, `"foo"`, `b"bar"`, etc.). |
+| {{ tab() }} `$x:lifetime` | A lifetime (e.g. `'a`, `'static`, etc.). |
+| {{ tab() }} `$x:meta`    | A meta item; the things that go inside `#[...]` and `#![...]` attributes. |
+| {{ tab() }} `$x:vis`    | A visibility modifier;  `pub`, `pub(crate)`, etc. |
+| {{ tab() }} `$x:tt`      | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more details. |
+| `$x` |  Macro substitution, e.g., use the captured `$x:ty` from above. |
 | `$(x),*` | Macro repetition "zero or more times" in macros by example. |
 | {{ tab() }} `$(x),?` | Same, but "zero or one time". |
 | {{ tab() }} `$(x),+` | Same, but "one or more times". |
@@ -461,27 +474,6 @@ In a `macro_rules!` implementation, the following constructs are supported:
 </div>
 
 {{ tablesep() }}
-
-Also inside `macro_rules!`, when using captures, these specifiers are available:
-
-<div class="cheats macro_rules">
-
-| Capture |  Explanation |
-|---------|---------|
-| `$x:item`    | An item, like a function, struct, module, etc. |
-| `$x:block`   | A block `{}` of statements or expressions, e.g., `{ let x = 5; }` |
-| `$x:stmt`    | A statement, e.g., `let x = 1 + 1;`, `String::new();` or `vec![];` |
-| `$x:expr`    | An expression, e.g., `x`, `1 + 1`, `String::new()` or `vec![]` |
-| `$x:pat`     | A pattern, e.g., `Some(t)`, `(17, 'a')` or `_`. |
-| `$x:ty`      | A type, e.g., `String`, `usize` or `Vec<u8>`. |
-| `$x:ident`   | An identifier, for example in `let x = 0;` the identifier is `x`. |
-| `$x:path`    | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`, …). |
-| `$x:literal` | A literal (e.g. `3`, `"foo"`, `b"bar"`, etc.). |
-| `$x:lifetime` | A lifetime (e.g. `'a`, `'static`, etc.). |
-| `$x:meta`    | A meta item; the things that go inside `#[...]` and `#![...]` attributes. |
-| `$x:vis`    | A visibility modifier;  `pub`, `pub(crate)`, etc. |
-| `$x:tt`      | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more details. |
-</div>
 
 
 
@@ -534,7 +526,7 @@ Pattern matching arms in `match` expressions. The left side of these arms can al
 |  `D => {}` | Match anything, bind `D`; possibly false friend {{ bad() }} of `E::D` if `D` not in `use`. |
 |  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
-|  `[a, 0] => {}` | **Slice pattern**, {{ ref(page="patterns.html?highlight=slice,pattern#slice-patterns") }} {{ link(url="https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html") }} match array with any value for `a` and `0` for second. |
+|  `[a, 0] => {}` | **Slice pattern**, {{ ref(page="patterns.html#slice-patterns") }} {{ link(url="https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html") }} match array with any value for `a` and `0` for second. |
 |  {{ tab() }} `[1, ..] => {}` | Match array starting with `1`, any value for rest; **subslice pattern**.  {{ todo() }} |
 |  {{ tab() }} `[2, .., 5] => {}` | Match array starting with `1`, ending with `5`. |
 |  {{ tab() }} `[2, x @ .., 5] => {}` | Same, but also bind `x` to slice representing middle (_c._ next entry).  |
@@ -640,13 +632,13 @@ These sigils did not fit any other category but are good to know nonetheless.
 
 | Example | Explanation |
 |---------|-------------|
-| `!` | Always empty **never type**. {{ experimental() }} {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html?highlight=never#never-type") }} |
+| `!` | Always empty **never type**. {{ experimental() }} {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html#never-type") }} |
 | `_` | Unnamed variable binding, e.g., <code>&vert;x, _&vert; {}</code>.|
 | `_x` | Variable binding explicitly marked as unused. |
 | `1_234_567` | Numeric separator for visual clarity. |
 | `1_u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, ...). |
 | `0xBEEF`, `0o777`, `0b1001`  | Hexadecimal (`0x`), octal (`0o`) and binary (`0b`) integer literals. |
-| `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html?highlight=raw,iten#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html?highlight=raw,iden#raw-identifiers") }} for edition compatibility. |
+| `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html#raw-identifiers") }} for edition compatibility. |
 | `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
 
 </div>
@@ -680,7 +672,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Deref** {{ nom(page="vec-deref.html#deref") }} | [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, ... compatible with some target `S`. |
 | **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic types.
 | **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
-| **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html?highlight=lifetime,el#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
+| **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
 
 </div>
@@ -814,12 +806,12 @@ Essential types built into the core of the language.
     <visual class="sized">
         <byte><code></code></byte>
         <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte><code></code></byte>
-        <byte style="border-color: lightslategrey;"><code></code></byte>
-        <byte style="border-color: lightslategrey;"><code></code></byte>
-        <byte style="border-color: lightslategrey;"><code></code></byte>
-        <byte style="border-color: lightslategrey;"><code></code></byte>
+        <byte style="border-color: #888;"><code></code></byte>
+        <byte style="border-color: #888;"><code></code></byte>
+        <byte style="border-color: #aaa;"><code></code></byte>
+        <byte style="border-color: #aaa;"><code></code></byte>
+        <byte style="border-color: #aaa;"><code></code></byte>
+        <byte style="border-color: #aaa;"><code></code></byte>
     </visual>
     <zoom>
         Same as <code>ptr</code> on platform.
@@ -843,25 +835,54 @@ Essential types built into the core of the language.
 <!-- NEW TAB -->
 <div class="tab">
 <input class="tab-radio" type="radio" id="tab-numeric-1" name="tab-group-numeric" checked>
-<label class="tab-label" for="tab-numeric-1"><b>Integer Types</b></label>
+<label class="tab-label" for="tab-numeric-1"><b>Unsigned Types</b></label>
 <div class="tab-panel">
 <div class="tab-content">
 
 
 
-|Integer*|Max Value|
+|Type|Max Value|
 |---|---|
 |`u8`| `255` |
 |`u16` | `65_535` |
 |`u32`| `4_294_967_295` |
 |`u64`| `18_446_744_073_709_551_615` |
 |`u128`| `340_282_366_920_938_463_463_374_607_431_768_211_455` |
+|`usize`| Depending on platform pointer size, same as `u16`, `u32`, or `u64`. |
 
-<div class="footnotes">
 
-<sup>*</sup> `i8`, `i16`, ... values range from `-max/2` to `max/2`, rounded towards negative infinity.
+</div></div></div>
 
-</div>
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-numeric-3" name="tab-group-numeric">
+<label class="tab-label" for="tab-numeric-3"><b>Signed Types</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+
+|Type |Max Value|
+|---|---|
+|`i8`| `127` |
+|`i16` | `32_767` |
+|`i32`| `2_147_483_647` |
+|`i64`| `9_223_372_036_854_775_807` |
+|`i128`| `170_141_183_460_469_231_731_687_303_715_884_105_727` |
+|`isize`| Depending on platform pointer size, same as `i16`, `i32`, or `i64`. |
+
+{{ tablesep() }}
+
+|Type |Min Value|
+|---|---|
+|`i8`| `-128` |
+|`i16` | `-32_768` |
+|`i32`| `-2_147_483_648` |
+|`i64`| `-9_223_372_036_854_775_808` |
+|`i128`| `-170_141_183_460_469_231_731_687_303_715_884_105_728` |
+|`isize`| Depending on platform pointer size, same as `i16`, `i32`, or `i64`. |
+
 
 </div></div></div>
 
@@ -1022,7 +1043,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
     <visual>
        <framed class="any unsized"><code>T</code></framed>
     </visual>
-    <description>Dynamically<br>Sized Types {{ ref(page="dynamically-sized-types.html") }}</description>
+    <description>Dynamically<br>Sized Types {{ ref(page="dynamically-sized-types.html") }} {{ below(target = "#sized-types") }} </description>
 </datum>
 
 
@@ -1158,10 +1179,10 @@ The respective `mut` types are identical.
     <name><code>&'a T</code></name>
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <payload>
-            <code>payload</code><sub>4/8</sub>
+            <code>payload</code><sub>2/4/8</sub>
         </payload>
     </visual>
     <memory-entry>
@@ -1180,10 +1201,10 @@ The respective `mut` types are identical.
     <name><code>*const T</code></name>
     <visual class="unsafe">
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <payload>
-            <code>payload</code><sub>4/8</sub>
+            <code>payload</code><sub>2/4/8</sub>
         </payload>
     </visual>
     <zoom>
@@ -1204,7 +1225,7 @@ The `payload` depends on the base type of the referent. This applies to both ref
     <name><code>&'a T</code></name>
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
     </visual>
     <memory-entry>
@@ -1221,10 +1242,10 @@ The `payload` depends on the base type of the referent. This applies to both ref
     <name><code>&'a T</code></name>
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <sized>
-            <code>len</code><sub>4/8</sub>
+            <code>len</code><sub>2/4/8</sub>
         </sized>
     </visual>
     <memory-entry>
@@ -1244,10 +1265,10 @@ The `payload` depends on the base type of the referent. This applies to both ref
     <name><code>&'a [T]</code></name>
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <sized>
-            <code>len</code><sub>4/8</sub>
+            <code>len</code><sub>2/4/8</sub>
         </sized>
     </visual>
     <memory-entry class="double">
@@ -1267,10 +1288,10 @@ The `payload` depends on the base type of the referent. This applies to both ref
     <name><code>&'a str</code></name>
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <sized>
-            <code>len</code><sub>4/8</sub>
+            <code>len</code><sub>2/4/8</sub>
         </sized>
     </visual>
     <memory-entry class="double">
@@ -1294,10 +1315,10 @@ The `payload` depends on the base type of the referent. This applies to both ref
     <name><code>&'a dyn Trait</code></name>
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <ptr>
-            <code>ptr</code><sub>4/8</sub>
+            <code>ptr</code><sub>2/4/8</sub>
         </ptr>
     </visual>
     <memory-entry>
@@ -1347,10 +1368,10 @@ the environment you accessed when defining the closure. For example:
     <name><code>|x| x + y.f() + z</code></name>
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
     </visual>
     <zoom>Anonymous closure type C2</zoom>
@@ -1425,7 +1446,7 @@ Some common types:
     <name><code>AtomicUsize</code></name>
     <visual class="atomic">
         <ptr class="atomic">
-            <code>usize</code><sub>4/8</sub>
+            <code>usize</code><sub>2/4/8</sub>
         </ptr>
     </visual>
     <description>Other atomic similarly.</description>
@@ -1480,10 +1501,10 @@ Some common types:
     <name><code>Box&lt;T&gt;</code></name>
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <payload>
-            <code>payload</code><sub>4/8</sub>
+            <code>payload</code><sub>2/4/8</sub>
         </payload>
     </visual>
     <memory-entry>
@@ -1503,13 +1524,13 @@ Some common types:
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <sized>
-            <code>capacity</code><sub>4/8</sub>
+            <code>capacity</code><sub>2/4/8</sub>
         </sized>
         <sized>
-            <code>len</code><sub>4/8</sub>
+            <code>len</code><sub>2/4/8</sub>
         </sized>
     </visual>
     <memory-entry class="double">
@@ -1538,13 +1559,13 @@ Some common types:
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <sized>
-            <code>capacity</code><sub>4/8</sub>
+            <code>capacity</code><sub>2/4/8</sub>
         </sized>
         <sized>
-            <code>len</code><sub>4/8</sub>
+            <code>len</code><sub>2/4/8</sub>
         </sized>
     </visual>
     <memory-entry class="double">
@@ -1573,10 +1594,10 @@ Some common types:
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <sized>
-            <code>len</code><sub>4/8</sub>
+            <code>len</code><sub>2/4/8</sub>
         </sized>
     </visual>
     <memory-entry class="double">
@@ -1658,18 +1679,18 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
     <name><code>Rc&lt;T&gt;</code></name>
     <visual style="width: 180px;">
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <payload>
-            <code>payload</code><sub>4/8</sub>
+            <code>payload</code><sub>2/4/8</sub>
         </payload>
     </visual>
     <div>
         <memory-entry class="quad">
             <memory-link style="left:15%;">|</memory-link>
             <memory class="heap">
-                <sized class="celled"><code>strong</code><sub>4/8</sub></sized>
-                <sized class="celled"><code>weak</code><sub>4/8</sub></sized>
+                <sized class="celled"><code>strng</code><sub>2/4/8</sub></sized>
+                <sized class="celled"><code>weak</code><sub>2/4/8</sub></sized>
                 <framed class="any unsized"><code>T</code></framed>
             </memory>
         </memory-entry>
@@ -1684,18 +1705,18 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
     <name><code>Arc&lt;T&gt;</code></name>
     <visual style="width: 180px;">
         <ptr>
-           <code>ptr</code><sub>4/8</sub>
+           <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <payload>
-            <code>payload</code><sub>4/8</sub>
+            <code>payload</code><sub>2/4/8</sub>
         </payload>
     </visual>
     <div style="width: 0px;">
         <memory-entry class="quad">
             <memory-link style="left:15%;">|</memory-link>
             <memory class="heap">
-                <sized class="atomicx"><code>strong</code><sub>4/8</sub></sized>
-                <sized class="atomicx"><code>weak</code><sub>4/8</sub></sized>
+                <sized class="atomicx"><code>strng</code><sub>2/4/8</sub></sized>
+                <sized class="atomicx"><code>weak</code><sub>2/4/8</sub></sized>
                 <framed class="any unsized"><code>T</code></framed>
             </memory>
         </memory-entry>
@@ -1710,8 +1731,8 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 <datum>
     <name><code>Mutex&lt;T&gt;</code> / <code>RwLock&lt;T&gt;</code></name>
     <visual style="width: 230px;">
-        <ptr><code>ptr</code><sub>4/8</sub></ptr>
-        <sized class="atomicx"><code>poisoned</code><sub>4/8</sub></sized>
+        <ptr><code>ptr</code><sub>2/4/8</sub></ptr>
+        <sized class="atomicx"><code>poison</code><sub>2/4/8</sub></sized>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
     <memory-entry>
@@ -1768,7 +1789,7 @@ PRs for this section are very welcome. Idea is:
 Traits define common behavior. If `S` implements `trait T`, you know `S` can behave as prescribed by `T`. Below is an overview of traits that
 may be a bit more tricky.
 
-#### 🧵 Thread Safety
+#### 🧵 Thread Safety {#thread-safety}
 
 <!-- Shamelessly stolen from https://www.reddit.com/r/rust/comments/ctdkyr/understanding_sendsync/exk8grg/ -->
 <table class="sendsync">
@@ -1789,8 +1810,37 @@ may be a bit more tricky.
 
 </div>
 
+{{ tablesep() }}
 
-#### 🚥 Iterators
+
+#### 🐘 (Dynamically / Zero) Sized Types {#sized-types}
+
+- A type `T` is **`Sized`** {{ std(page="std/marker/trait.Sized.html") }} if at compile time it is known how many bytes it occupies.
+- Being sized means `impl Sized for T {}` holds. This happens automatically and cannot be user impl'ed.
+- Types that are not `Sized` are called **dynamically sized types** {{ book(page="ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait") }} {{ nom(page="exotic-sizes.html#dynamically-sized-types-dsts") }}  {{ ref(page="dynamically-sized-types.html#dynamically-sized-types") }} (DSTs).
+- Types that do not hold any data are called **zero sized types** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts") }} (ZSTs) and do not occupy any space.
+
+<div class="header-sized cheats">
+
+| Example | Explanation |
+|---------|-------------|
+| `struct A { x: u8 }` | Type `A` is sized, i.e., the trait `Sized` is automatically implemented. |
+| `struct B { x: [u8] }` | Since `[u8]` is a DST, `B` in turn becomes a DST, i.e., does not `impl Sized`. |
+| `struct C<T> { x: T }` | Type params **have** implicit `T: Sized` bound, e.g., `C<A>` is valid, `C<B>` is not. |
+| `struct D<T: ?Sized> { x: T }` | Using **`?Sized`** {{ ref(page="trait-bounds.html#sized") }} allows opt-out of that bound, i.e., `D<B>` is also valid. |
+| `struct E;` | Type `E` is zero-sized (and also sized) and will not consume memory. |
+| `trait F { fn f(&self); }` | Traits **do not have** an implicit `Sized` bound, i.e., `impl F for B {}` is valid.  |
+| {{ tab() }} `trait F: Sized {}` | Traits can however opt into `Sized` via supertraits.{{ above(target="#functions-behavior") }} |
+| `trait G { fn g(self); }` | For `Self`-like parameters this may still fail as they can't go on stack.  |
+| {{ tab() }} `fn g() where Self: Sized` | In that case method may be opt-ed out for non-`Sized` types in trait.  |
+
+
+</div>
+
+
+{{ tablesep() }}
+
+#### 🚥 Iterators {#iterators}
 
 
 <div class="tabs header-std-green">

@@ -22,6 +22,17 @@ div#helloinfo {
     display: none;
 }
 
+sup.target {
+    top: -10px;
+    left: 3px;
+    font-size: 40%;
+    display: none;
+}
+
+h1:hover sup.target { display: inline; }
+h2:hover sup.target { display: inline; }
+h3:hover sup.target { display: inline; }
+h4:hover sup.target { display: inline; }
 
 div.controls {
     font-size: 9px;
@@ -167,6 +178,12 @@ span.warning {
 .header-one-liners {
     th {
         background-color: rgb(194, 212, 131);
+    }
+}
+
+.header-sized {
+    th {
+        background-color: rgb(171, 204, 223);
     }
 }
 
