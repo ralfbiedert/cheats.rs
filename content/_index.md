@@ -1034,7 +1034,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
     <visual>
        <framed class="any t"><code>T</code></framed>
     </visual>
-    <!-- <description><code>T : Sized</code></description> -->
+    <description>Sized {{ below(target = "#sized-types") }} </description>
 </datum>
 
 <!-- NEW ENTRY -->
@@ -1043,7 +1043,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
     <visual>
        <framed class="any unsized"><code>T</code></framed>
     </visual>
-    <description>Dynamically<br>Sized Types {{ ref(page="dynamically-sized-types.html") }} {{ below(target = "#sized-types") }} </description>
+    <description>Maybe DST {{ below(target = "#sized-types") }} </description>
 </datum>
 
 
@@ -1065,7 +1065,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
     <visual style="width: 15px;" class="empty">
         <code></code>
     </visual>
-    <!-- <description>Zero size.</description> -->
+    <description>Zero-Sized {{ below(target = "#sized-types") }} </description>
 </datum>
 
 
@@ -1816,7 +1816,7 @@ may be a bit more tricky.
 #### 🐘 (Dynamically / Zero) Sized Types {#sized-types}
 
 - A type `T` is **`Sized`** {{ std(page="std/marker/trait.Sized.html") }} if at compile time it is known how many bytes it occupies.
-- Being sized means `impl Sized for T {}` holds. This happens automatically and cannot be user impl'ed.
+- Being `Sized` means `impl Sized for T {}` holds. This happens automatically and cannot be user impl'ed.
 - Types that are not `Sized` are called **dynamically sized types** {{ book(page="ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait") }} {{ nom(page="exotic-sizes.html#dynamically-sized-types-dsts") }}  {{ ref(page="dynamically-sized-types.html#dynamically-sized-types") }} (DSTs).
 - Types that do not hold any data are called **zero sized types** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts") }} (ZSTs) and do not occupy any space.
 
@@ -1824,15 +1824,15 @@ may be a bit more tricky.
 
 | Example | Explanation |
 |---------|-------------|
-| `struct A { x: u8 }` | Type `A` is sized, i.e., the trait `Sized` is automatically implemented. |
-| `struct B { x: [u8] }` | Since `[u8]` is a DST, `B` in turn becomes a DST, i.e., does not `impl Sized`. |
+| `struct A { x: u8 }` | Type `A` is sized, i.e., `impl Sized for A` holds, this is a 'regular' type. |
+| `struct B { x: [u8] }` | Since `[u8]` is a DST, `B` in turn becomes DST, i.e., does not `impl Sized`. |
 | `struct C<T> { x: T }` | Type params **have** implicit `T: Sized` bound, e.g., `C<A>` is valid, `C<B>` is not. |
 | `struct D<T: ?Sized> { x: T }` | Using **`?Sized`** {{ ref(page="trait-bounds.html#sized") }} allows opt-out of that bound, i.e., `D<B>` is also valid. |
 | `struct E;` | Type `E` is zero-sized (and also sized) and will not consume memory. |
 | `trait F { fn f(&self); }` | Traits **do not have** an implicit `Sized` bound, i.e., `impl F for B {}` is valid.  |
 | {{ tab() }} `trait F: Sized {}` | Traits can however opt into `Sized` via supertraits.{{ above(target="#functions-behavior") }} |
-| `trait G { fn g(self); }` | For `Self`-like parameters this may still fail as they can't go on stack.  |
-| {{ tab() }} `fn g() where Self: Sized` | In that case method may be opt-ed out for non-`Sized` types in trait.  |
+| `trait G { fn g(self); }` | For `Self`-like parameters `impl` may still fail as params can't go on stack.  |
+| {{ tab() }} `fn g() where Self: Sized` | In that case method may be opted out for non-`Sized` types in trait.  |
 
 
 </div>
