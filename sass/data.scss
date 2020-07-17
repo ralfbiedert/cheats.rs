@@ -428,3 +428,93 @@ spacer {
     width: 15px;
     height: 10px;
 }
+
+
+xxx {
+    display: inline-block;
+    height: 60px;
+
+    memory-lane {
+        width: 100%;
+        overflow-x: hidden;
+        white-space: nowrap;
+        display: block;
+        position: relative;
+    }
+
+    meta-lane {
+        width: 100%;
+        overflow-x: hidden;
+        white-space: nowrap;
+        display: block;
+        position: absolute;
+        z-index: 5;
+        height: 100px;
+    }
+
+    empty {
+        display: inline-block;
+        // background-color: mistyrose;
+        // border-style: dashed;
+        // border-width: 1px;
+        // border-color: black;
+        // border-radius: 5px;
+        width: 15px;
+        height: 28px;
+        position: relative;
+    }
+
+    byte {
+        display: inline-block;
+        // background-color: mistyrose;
+        border-style: dashed;
+        border-width: 1px;
+        border-color: black;
+        border-radius: 5px;
+        width: 15px;
+        height: 28px;
+        background-color: rgb(241, 241, 241);
+    }
+
+    byte2 {
+        display: inline-block;
+        // background-color: mistyrose;
+        border-width: 1px;
+        border-style: solid;
+        border-spacing: inherit;
+        box-sizing: border-box;
+        // padding: 5px;
+        border-radius: 5px;
+        // margin-left: 1px;
+        width: 30px;
+        height: 22px;
+        top: 3px;
+        left: 2px;
+        position: absolute;
+        text-align: center;
+        background-color: red;
+    }
+
+    label2 {
+        display: inline-block;
+        box-sizing: border-box;
+        // padding: 5px;
+        border-radius: 5px;
+        font-family: "Fira Code", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace;
+        width: 30px;
+        height: 22px;
+        top: 30px;
+        left: 2px;
+        position: absolute;
+        text-align: center;
+    }
+
+
+    xx {
+        text-align: center;
+        font-size: 0.8em;
+        font-family: "Fira Code", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace;
+       // display: inline-block;
+        // display: inline-block;
+    }
+}
