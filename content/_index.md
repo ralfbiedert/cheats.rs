@@ -576,7 +576,8 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-types-that-implement-traits") }}, returns an unknown-to-caller `S` that `impl T`. |
 | `fn f(x: &impl T)`  | Trait bound,"**impl traits**" {{ book(page="ch10-02-traits.html#trait-bound-syntax") }}, somewhat similar to `fn f<S:T>(x: &S)`. |
 | `fn f(x: &dyn T)`  | Marker for **dynamic dispatch** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }}, `f` will not be monomorphized. |
-| `fn f() where Self: R`  | In a `trait T {}`, mark `f` as accessible only on types that also `impl R`.  |
+| `fn f() where Self: R;`  | In `trait T {}`, make `f` accessible only on types known to also `impl R`.  |
+| {{ tab() }} `fn f() where Self: R {}  `  | Esp. useful w. default methods (non dflt. would need be impl'ed anyway). |
 | `for<'a>` | **Higher-ranked trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
 | {{ tab() }} `trait T: for<'a> R<'a> {}` | Any `S` that `impl T` would also have to fulfill `R` for any lifetime. |
 
@@ -1029,7 +1030,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name class="nogrow"><code>T: Sized</code></name>
+    <name class="nogrow"><code>T</code></name>
     <name class="hidden">x</name>
     <visual>
        <framed class="any t"><code>T</code></framed>
@@ -1218,7 +1219,7 @@ The respective `mut` types are identical.
 {{ tablesep() }}
 
 
-The `payload` depends on the base type of the referent. This applies to both references and pointers.
+The **`payload`** depends on the base type of the referent. This applies to both references and pointers.
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -1254,7 +1255,7 @@ The `payload` depends on the base type of the referent. This applies to both ref
             <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
-    <description>If <code>T</code> is an unsized <code>struct</code> such <br>as <code>S { x: [u8] }</code>
+    <description>If <code>T</code> is a DST <code>struct</code> such as<br> <code>S { x: [u8] }</code>
     field <code>len</code> is <br>length of dyn. sized content.</description>
 </datum>
 
@@ -1817,7 +1818,7 @@ may be a bit more tricky.
 
 - A type `T` is **`Sized`** {{ std(page="std/marker/trait.Sized.html") }} if at compile time it is known how many bytes it occupies.
 - Being `Sized` means `impl Sized for T {}` holds. This happens automatically and cannot be user impl'ed.
-- Types that are not `Sized` are called **dynamically sized types** {{ book(page="ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait") }} {{ nom(page="exotic-sizes.html#dynamically-sized-types-dsts") }}  {{ ref(page="dynamically-sized-types.html#dynamically-sized-types") }} (DSTs).
+- Types that are not `Sized` are called **dynamically sized types** {{ book(page="ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait") }} {{ nom(page="exotic-sizes.html#dynamically-sized-types-dsts") }}  {{ ref(page="dynamically-sized-types.html#dynamically-sized-types") }} (DSTs), sometimes **unsized**.
 - Types that do not hold any data are called **zero sized types** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts") }} (ZSTs) and do not occupy any space.
 
 <div class="header-sized cheats">
@@ -1832,7 +1833,6 @@ may be a bit more tricky.
 | `trait F { fn f(&self); }` | Traits **do not have** an implicit `Sized` bound, i.e., `impl F for B {}` is valid.  |
 | {{ tab() }} `trait F: Sized {}` | Traits can however opt into `Sized` via supertraits.{{ above(target="#functions-behavior") }} |
 | `trait G { fn g(self); }` | For `Self`-like parameters `impl` may still fail as params can't go on stack.  |
-| {{ tab() }} `fn g() where Self: Sized` | In that case method may be opted out for non-`Sized` types in trait.  |
 
 
 </div>
