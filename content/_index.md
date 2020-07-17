@@ -1832,7 +1832,7 @@ may be a bit more tricky.
 | `struct E;` | Type `E` is zero-sized (and also sized) and will not consume memory. |
 | `trait F { fn f(&self); }` | Traits **do not have** an implicit `Sized` bound, i.e., `impl F for B {}` is valid.  |
 | {{ tab() }} `trait F: Sized {}` | Traits can however opt into `Sized` via supertraits.{{ above(target="#functions-behavior") }} |
-| `trait G { fn g(self); }` | For `Self`-like parameters `impl` may still fail as params can't go on stack.  |
+| `trait G { fn g(self); }` | For `Self`-like parameters DST `impl` may still fail as params can't go on stack.  |
 
 
 </div>
