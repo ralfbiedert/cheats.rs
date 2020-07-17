@@ -9,6 +9,7 @@ TOML_BASE=config.toml
 # To color our `echo` output
 _YELLOW='\033[1;33m'
 _GREEN='\033[0;32m'
+_RED='\033[0;31m'
 _NC='\033[0m' # No Color
 
 # Substituions in generated files
@@ -40,6 +41,12 @@ sed -i -e "s/_GITHASH_/$GITHASH/g" $DIST/index.html
 
 if [[ $1 == "--live" ]]; then
     echo -e "Sending to ${_GREEN}LIVE${_NC} environment."
+
+    # Make sure we have committed so the public web site shows the right hash.
+    if [[ -n "$(git status --porcelain)" ]]; then
+        echo -e "You ${_RED}must commit${_NC} before going --live. Aborting ..."
+        exit 1
+    fi
 
     # Publish
     aws s3 cp $DIST s3://cheats.rs/ --recursive
