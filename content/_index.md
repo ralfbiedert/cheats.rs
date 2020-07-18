@@ -1069,7 +1069,7 @@ Notice how:
 
 <div class="footnotes">
 
-> <sup>💬</sup> For what seem to be browser bugs Safari and Edge render the hearts in Footnote 3 and 4 wrong, despite being able to differentiate it correctly in `s` and `r` above.
+> <sup>💬</sup> For what seem to be browser bugs Safari and Edge render the hearts in Footnote 3 and 4 wrong, despite being able to differentiate them correctly in `s` and `t` above.
 
 </div>
 
