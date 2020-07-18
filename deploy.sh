@@ -34,7 +34,7 @@ function exit_if_fail {
 }
 
 
-# exit_if_fail zola -c "$TOML_BASE" check
+exit_if_fail zola -c "$TOML_BASE" check
 exit_if_fail zola -c "$TOML_BASE" build
 exit_if_fail npm run posthtml_1     # This is absolutely terrible but apparently the asset inliner we use
 exit_if_fail npm run posthtml_2     # is unable to handle multiple files with different paths gracefully ...
@@ -62,7 +62,7 @@ if [[ $1 == "--live" ]]; then
     # Make sure we have committed so the public web site shows the right hash.
     if [[ -n "$(git status --porcelain)" ]]; then
         echo -e "You ${_RED}must commit${_NC} before going --live. Aborting ..."
-        # exit 1
+        exit 1
     fi
 
     # Publish
