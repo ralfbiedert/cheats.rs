@@ -1476,14 +1476,14 @@ Some common types:
 <!-- NEW ENTRY -->
 <datum>
     <name><code>Result&lt;T, E&gt;</code></name>
-    <visual class="enum">
+    <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
-        <framed class="any" style="width: 100px;">
+        <framed class="any" style="width: 50px;">
             <code>E</code>
         </framed>
     </visual>
     <andor>or</andor>
-    <visual class="enum">
+    <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
         <framed class="any" style="width: 100px;">
             <code>T</code>
