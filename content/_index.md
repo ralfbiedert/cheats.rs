@@ -1015,10 +1015,64 @@ Similarly, for <code>f64</code> types this would look like:
     <description>Rarely seen alone, but as <code>&str</code> instead.</description>
 </datum>
 
+
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div class="tabs">
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-textual-1" name="tab-group-textual" checked>
+<label class="tab-label" for="tab-textual-1"><b>Explanation</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
 Notice how:
 
-- `char` is always 4 bytes and only holds a single Unicode **scalar value** (thus possibly wasting space),
-- `str` is a byte-array of unknown length guaranteed to hold **UTF-8 code points** (but harder to index).
+- `char` is always 4 bytes and only holds a single Unicode **scalar value** {{ link(url="https://www.unicode.org/glossary/#unicode_scalar_value") }}, thus possibly wasting space.
+- `str` is a byte-array of unknown length guaranteed to hold **UTF-8 encoded code points** (but harder to index).
+
+
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-textual-2" name="tab-group-textual">
+<label class="tab-label" for="tab-textual-2"><b>Example</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+`let s = "I ❤ Rust"; ` <br>
+`let t = "I ❤️ Rust";`
+
+| Variant | Memory Representation<sup>2<sup> |
+|---------|-------------|
+| `s.as_bytes()` | `49` `20` <span class="force-code-color same-black"><b>`e2 9d a4`</b> </span> `20 52 75 73 74` <sup>3<sup> |
+| `s.chars()`<sup>1<sup> | `49 00 00 00 20 00 00 00` <span class="force-code-color same-black"><b>`64 27 00 00` </b></span> `20 00 00 00 52 00 00 00 75 00 00 00 73 00` ... |
+| `t.as_bytes()` | `49` `20` <span class="force-code-color same-black"><b>`e2 9d a4`</b> </span> <span class="force-code-color same-red"><b>`ef b8 8f`</b></span> `20 52 75 73 74` <sup>4<sup> |
+| `t.chars()`<sup>1<sup> | `49 00 00 00 20 00 00 00` <span class="force-code-color same-black"><b>`64 27 00 00`</b></span> <span class="force-code-color same-red"><b>`0f fe 01 00`</b></span> `20 00 00 00 52 00 00 00 75 00` ... |
+
+{{ tablesep() }}
+
+<div class="footnotes ">
+    <sup>1</sup> Result then collected into array and transmuted to bytes.<br>
+    <sup>2</sup> Values given in hex, on x86.<br>
+    <sup>3</sup> Notice how ❤, which has <a href="https://codepoints.net/U+2764">Unicode Code Point (U+2764)</a>, is represented as <span class="force-code-color same-black"><b>e2 9d a4</b> </span> in the <code>char</code>, but as <span class="force-code-color same-black"><b>64 27 00 00</b></span> inside the UTF-8 <code>str</code> (which is how the code point <a href="https://en.wikipedia.org/wiki/UTF-8#Description">gets encoded</a> as UTF-8). <br>
+    <sup>4</sup> Also observe how the emoji <a href="https://emojipedia.org/red-heart/">Red Heart ❤️</a>, is a combination of ❤ and the <a href="https://codepoints.net/U+FE0F">U+FE0F Varition Selector</a>, thus <code>t</code> has a higher char count than <code>s</code>.
+</div>
+
+
+
+
+</div></div></div>
+
+
+<!-- End tabs -->
+</div>
+
 
 {{ tablesep() }}
 

@@ -299,3 +299,8 @@ sup.mid {
 sup.expert {
     color: rgb(184, 0, 0);
 }
+
+.force-code-color.same-black code[class*="language-rust"], .force-code-color.same-black pre[class*="language-rust"], .force-code-color.same-black span[class*="token number"] { color: black; }
+.force-code-color.same-red code[class*="language-rust"], .force-code-color.same-red pre[class*="language-rust"], .force-code-color.same-red span[class*="token number"] { color: red; }
+.force-code-color.same-green code[class*="language-rust"], .force-code-color.same-green pre[class*="language-rust"] { color: green; }
+// .force-code-color code[class*="language-rust"], pre[class*="language-rust"] { color: #F00 }
