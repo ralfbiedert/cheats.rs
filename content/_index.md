@@ -1057,15 +1057,21 @@ Notice how:
 
 {{ tablesep() }}
 
-<div class="footnotes ">
+<div class="footnotes">
     <sup>1</sup> Result then collected into array and transmuted to bytes.<br>
     <sup>2</sup> Values given in hex, on x86.<br>
     <sup>3</sup> Notice how ❤, having <a href="https://codepoints.net/U+2764">Unicode Code Point (U+2764)</a>, is represented as <span class="force-code-color same-black"><b>64 27 00 00</b></span> inside the <code>char</code>, but got <a href="https://en.wikipedia.org/wiki/UTF-8#Description">UTF-8 encoded to</a> <span class="force-code-color same-black"><b>e2 9d a4</b></span> in the <code>str</code>.<br>
     <sup>4</sup> Also observe how the emoji <a href="https://emojipedia.org/red-heart/">Red Heart ❤️</a>, is a combination of ❤ and the <a href="https://codepoints.net/U+FE0F">U+FE0F Varition Selector</a>, thus <code>t</code> has a higher char count than <code>s</code>.
 </div>
 
+{{ tablesep() }}
 
 
+<div class="footnotes">
+
+> <sup>💬</sup> For what seem to be browser bugs Safari and Edge render the hearts in Footnote 3 and 4 wrong, despite being able to differentiate it correctly in `s` and `r` above.
+
+</div>
 
 </div></div></div>
 
