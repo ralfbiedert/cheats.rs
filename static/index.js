@@ -41,10 +41,10 @@ function toggle_night_mode() {
     let body = document.getElementsByTagName("body")[0];
     if (body.classList.contains("night-mode")) {
         body.classList.remove("night-mode");
-        !!localStorage && localStorage.setItem("night-mode", "day");
+        storage_set("night-mode", "day");
     } else {
         body.classList.add("night-mode");
-        !!localStorage && localStorage.setItem("night-mode", "night");
+        storage_set("night-mode", "night");
     }
 }
 
@@ -55,16 +55,28 @@ function toggle_ligatures() {
 
     if (codes_rust[0].style.fontVariantLigatures === "common-ligatures") {
         set = "none";
-        !!localStorage && localStorage.setItem("ligatures", "no-ligatures");
+        storage_set("ligatures", "no-ligatures");
     } else {
         set = "common-ligatures";
-        !!localStorage && localStorage.setItem("ligatures", "ligatures");
+        storage_set("ligatures", "ligatures");
     }
 
     codes_rust.forEach((code) => {
         code.style.fontVariantLigatures = set;
     });
 }
+
+
+// Sets something to local storage.
+function storage_set(key, value) {
+    !!localStorage && localStorage.setItem(key, value);
+}
+
+// Retrieves something from local storage.
+function storage_get(key) {
+    return !!localStorage && localStorage.getItem(key);
+}
+
 
 // Sets the survey state
 function set_survey(state) {
@@ -74,7 +86,7 @@ function set_survey(state) {
         e.style.display = state;
     }
 
-    !!localStorage && localStorage.setItem(survey_key, state);
+    storage_set(survey_key, state);
 }
 
 
@@ -103,9 +115,9 @@ try {
         button.style.visibility = "hidden";
     }
 
-    let night_mode = !!localStorage && localStorage.getItem("night-mode");
-    let ligatures = !!localStorage && localStorage.getItem("ligatures");
-    let survey = !!localStorage && localStorage.getItem(survey_key);
+    let night_mode = storage_get("night-mode");
+    let ligatures = storage_get("ligatures");
+    let survey = storage_get(survey_key);
 
     if (night_mode === "night") {
         toggle_night_mode();
@@ -115,9 +127,10 @@ try {
         toggle_ligatures();
     }
 
-    if (!survey || survey === "" || survey === "block") {
-        set_survey("block");
-    }
+    // Disabled for now because not needed
+    // if (!survey || survey === "" || survey === "block") {
+    //     set_survey("block");
+    // }
 
 } catch (e) {
     console.log(e);
