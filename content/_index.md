@@ -193,6 +193,8 @@ If you want to start developing Rust:
 
 </div>
 
+</div>
+
 
 ### Data Structures
 
