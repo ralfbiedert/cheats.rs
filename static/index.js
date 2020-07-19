@@ -2,7 +2,7 @@
 
 const survey_key = "survey2020";
 
-let codes = document.querySelectorAll("code");
+let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
 let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform); // https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
 
 let subtitle_index = 0;
@@ -53,7 +53,7 @@ function toggle_ligatures() {
     let body = document.getElementsByTagName("body")[0];
     let set = undefined;
 
-    if (codes[0].style.fontVariantLigatures === "common-ligatures") {
+    if (codes_rust[0].style.fontVariantLigatures === "common-ligatures") {
         set = "none";
         !!localStorage && localStorage.setItem("ligatures", "no-ligatures");
     } else {
@@ -61,7 +61,7 @@ function toggle_ligatures() {
         !!localStorage && localStorage.setItem("ligatures", "ligatures");
     }
 
-    codes.forEach((code) => {
+    codes_rust.forEach((code) => {
         code.style.fontVariantLigatures = set;
     });
 }
@@ -88,7 +88,7 @@ function toggle_subtitle() {
 
 
 // Use proper syntax since we don't want to write ````rust ...``` all the time.
-codes.forEach(code => {
+codes_rust.forEach(code => {
     code.className = "language-rust";
 });
 
