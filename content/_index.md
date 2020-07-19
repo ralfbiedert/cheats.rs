@@ -1024,15 +1024,30 @@ Similarly, for <code>f64</code> types this would look like:
 <!-- NEW TAB -->
 <div class="tab">
 <input class="tab-radio" type="radio" id="tab-textual-1" name="tab-group-textual" checked>
-<label class="tab-label" for="tab-textual-1"><b>Explanation</b></label>
+<label class="tab-label" for="tab-textual-1"><b>Basics</b></label>
 <div class="tab-panel">
 <div class="tab-content">
 
 
-Notice how:
+<!-- Notice how:
 
 - `char` is always 4 bytes and only holds a single Unicode **scalar value** {{ link(url="https://www.unicode.org/glossary/#unicode_scalar_value") }}, thus possibly wasting space.
 - `str` is a byte-array of unknown length guaranteed to hold **UTF-8 encoded code points** (but harder to index).
+ -->
+
+| Type | Description |
+|---------|-------------|
+| `char` | Type `char` is always 4 bytes and only holds a single Unicode **scalar value** {{ link(url="https://www.unicode.org/glossary/#unicode_scalar_value") }}. |
+| {{ tab() }} `let c = 'a';` | Often a `char` (unicode scalar) can coincide with your intuition of _character_. |
+| {{ tab() }} `let c = '❤';` | It can also hold many Unicode symbol _characters_. |
+| {{ tab() }} `let c = '❤️';` | But not always. Here ❤️ is **two** `char` (see Encoding) and **can't** {{ bad() }} be held by `c`.<sup>1</sup> |
+| `str` | Type `str` is `u8`-array of unknown length guaranteed to hold **UTF-8 encoded code points**. |
+| {{ tab() }} `let s = "a";` | It is usually never held directly, but as `&str`, which is was `s` here is. |
+| {{ tab() }} `let s = "❤❤️";` | A `str` can hold arbitrary _characters_, has variable length per _c._, and is hard to index. |
+
+<div class="footnotes">
+    <sup>1</sup> Fun fact, due to the <a href="https://en.wikipedia.org/wiki/Zero-width_joiner">Zero-width joiner</a> (⨝) what the user <i>perceives as a character</i> can get even more unpredictable: 👨‍👩‍👧 is in fact 👨⨝👩⨝👧, and rendering engines are free to either show them fused as one, or separately as three, depending on their abilities.
+</div>
 
 
 </div></div></div>
@@ -1041,7 +1056,7 @@ Notice how:
 <!-- NEW TAB -->
 <div class="tab">
 <input class="tab-radio" type="radio" id="tab-textual-2" name="tab-group-textual">
-<label class="tab-label" for="tab-textual-2"><b>Example</b></label>
+<label class="tab-label" for="tab-textual-2"><b>Encoding</b></label>
 <div class="tab-panel">
 <div class="tab-content">
 
