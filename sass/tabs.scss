@@ -30,6 +30,13 @@
   position: relative;
   vertical-align: bottom;
   cursor: pointer;;
+
+  // In some places we don't want our Rust-like color scheme b/c we have conflicting
+  // background colors.
+  .token.class-name, .token.keyword {
+      // font-weight: bold;
+      color: black;
+  }
 }
 
 .tabs .tab > [type="radio"] {

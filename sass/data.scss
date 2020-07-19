@@ -10,6 +10,7 @@ datum.centered {
 }
 
 datum {
+
     box-sizing: border-box;
     display: inline-block;
     border-collapse: collapse;
@@ -61,6 +62,12 @@ datum {
         border-radius: 5px;
         display: block;
         padding: 5px;
+
+        // In some places we don't want our Rust-like color scheme b/c we have conflicting
+        // background colors.
+        .token.class-name, .token.keyword {
+            color: black;
+        }
     }
 
     visual.empty {
@@ -238,6 +245,13 @@ datum {
         z-index: 100;
         margin-bottom: 10px;
         opacity: 0.4;
+
+        // In some places we don't want our Rust-like color scheme b/c we have conflicting
+        // background colors.
+        .token.class-name, .token.keyword {
+            color: black;
+        }
+
     }
 
     memory.heap {
