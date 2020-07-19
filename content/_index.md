@@ -1067,7 +1067,7 @@ Similarly, for <code>f64</code> types this would look like:
 
 | Strings | Description |
 |---------|-------------|
-| `let s = "a";` | A `str` is usually never held directly, but as `&str`, which is was `s` here is. |
+| `let s = "a";` | A `str` is usually never held directly, but as `&str`, like `s` here. |
 | `let s = "❤❤️";` | It can hold arbitrary text, has variable length per _c._, and is hard to index. |
 
 
