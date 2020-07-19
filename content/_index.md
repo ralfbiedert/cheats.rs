@@ -1023,8 +1023,24 @@ Similarly, for <code>f64</code> types this would look like:
 
 <!-- NEW TAB -->
 <div class="tab">
-<input class="tab-radio" type="radio" id="tab-textual-1" name="tab-group-textual" checked>
-<label class="tab-label" for="tab-textual-1"><b>Basics</b></label>
+<input class="tab-radio" type="radio" id="tab-textual-3" name="tab-group-textual" checked>
+<label class="tab-label" for="tab-textual-3"><b>Basics</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+| Type | Description |
+|---------|-------------|
+| `char` | Always 4 bytes and only holds a single Unicode **scalar value** {{ link(url="https://www.unicode.org/glossary/#unicode_scalar_value") }}. |
+| `str` | An `u8`-array of unknown length guaranteed to hold **UTF-8 encoded code points**. |
+
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-textual-1" name="tab-group-textual">
+<label class="tab-label" for="tab-textual-1"><b>Usage</b></label>
 <div class="tab-panel">
 <div class="tab-content">
 
@@ -1035,19 +1051,24 @@ Similarly, for <code>f64</code> types this would look like:
 - `str` is a byte-array of unknown length guaranteed to hold **UTF-8 encoded code points** (but harder to index).
  -->
 
-| Type | Description |
+| Chars | Description |
 |---------|-------------|
-| `char` | Type `char` is always 4 bytes and only holds a single Unicode **scalar value** {{ link(url="https://www.unicode.org/glossary/#unicode_scalar_value") }}. |
-| {{ tab() }} `let c = 'a';` | Often a `char` (unicode scalar) can coincide with your intuition of _character_. |
-| {{ tab() }} `let c = '❤';` | It can also hold many Unicode symbols. |
-| {{ tab() }} `let c = '❤️';` | But not always. Given emoji is **two** `char` (see Encoding) and **can't** {{ bad() }} be held by `c`.<sup>1</sup> |
-| `str` | Type `str` is `u8`-array of unknown length guaranteed to hold **UTF-8 encoded code points**. |
-| {{ tab() }} `let s = "a";` | It is usually never held directly, but as `&str`, which is was `s` here is. |
-| {{ tab() }} `let s = "❤❤️";` | A `str` can hold arbitrary text, has variable length per _c._, and is hard to index. |
+| `let c = 'a';` | Often a `char` (unicode scalar) can coincide with your intuition of _character_. |
+| `let c = '❤';` | It can also hold many Unicode symbols. |
+| `let c = '❤️';` | But not always. Given emoji is **two** `char` (see Encoding) and **can't** {{ bad() }} be held by `c`.<sup>1</sup> |
+| `c = 0xffff_ffff;` | Also, chars are **not allowed** {{ bad() }} to hold arbitrary bit patterns. |
 
 <div class="footnotes">
-    <sup>1</sup> Fun fact, due to the <a href="https://en.wikipedia.org/wiki/Zero-width_joiner">Zero-width joiner</a> (⨝) what the user <i>perceives as a character</i> can get even more unpredictable: 👨‍👩‍👧 is in fact 👨⨝👩⨝👧, and rendering engines are free to either show them fused as one, or separately as three, depending on their abilities.
+    <sup>1</sup> Fun fact, due to the <a href="https://en.wikipedia.org/wiki/Zero-width_joiner">Zero-width joiner</a> (⨝) what the user <i>perceives as a character</i> can get even more unpredictable: 👨‍👩‍👧 is in fact 5 chars 👨⨝👩⨝👧, and rendering engines are free to either show them fused as one, or separately as three, depending on their abilities.
 </div>
+
+
+{{ tablesep() }}
+
+| Strings | Description |
+|---------|-------------|
+| `let s = "a";` | A `str` is usually never held directly, but as `&str`, which is was `s` here is. |
+| `let s = "❤❤️";` | It can hold arbitrary text, has variable length per _c._, and is hard to index. |
 
 
 </div></div></div>
@@ -1898,10 +1919,33 @@ may be a bit more tricky.
 
 #### 🐘 (Dynamically / Zero) Sized Types {#sized-types}
 
-- A type `T` is **`Sized`** {{ std(page="std/marker/trait.Sized.html") }} if at compile time it is known how many bytes it occupies.
+
+<div class="tabs">
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-sized-1" name="tab-group-sized" checked>
+<label class="tab-label" for="tab-sized-1"><b>Overview</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+
+- A type `T` is **`Sized`** {{ std(page="std/marker/trait.Sized.html") }} if at compile time it is known how many bytes it occupies, `u8` and `&[u8]` are, `[u8]` isn't.
 - Being `Sized` means `impl Sized for T {}` holds. This happens automatically and cannot be user impl'ed.
 - Types that are not `Sized` are called **dynamically sized types** {{ book(page="ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait") }} {{ nom(page="exotic-sizes.html#dynamically-sized-types-dsts") }}  {{ ref(page="dynamically-sized-types.html#dynamically-sized-types") }} (DSTs), sometimes **unsized**.
 - Types that do not hold any data are called **zero sized types** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts") }} (ZSTs) and do not occupy any space.
+
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-sized-2" name="tab-group-sized">
+<label class="tab-label" for="tab-sized-2"><b>Examples</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
 
 <div class="header-sized cheats">
 
@@ -1916,8 +1960,13 @@ may be a bit more tricky.
 | {{ tab() }} `trait F: Sized {}` | Traits can however opt into `Sized` via supertraits.{{ above(target="#functions-behavior") }} |
 | `trait G { fn g(self); }` | For `Self`-like parameters DST `impl` may still fail as params can't go on stack.  |
 
+</div>
+
+
+</div></div></div>
 
 </div>
+
 
 
 {{ tablesep() }}
@@ -2756,7 +2805,16 @@ If you are used to programming Java or C, consider these.
 
 If you are familiar with async / await in C# or TypeScript, here are some things to keep in mind:
 
-<div class="header-orange">
+
+<div class="tabs header-orange">
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-async-1" name="tab-async" checked>
+<label class="tab-label" for="tab-async-1"><b>Basics</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
 
 | Construct | Explanation |
 |---------|-------------|
@@ -2769,8 +2827,6 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 | `runtime.block_on(sm);` {{ note(note="2") }}  | Outside an `async {}`, schedules `sm` to actually run. Would execute `g()`. |
 | `sm.await` | Inside an `async {}`, run `sm` until complete. Yield to runtime if `sm` not ready. |
 
-</div>
-
 
 <div class="footnotes">
 
@@ -2782,24 +2838,17 @@ Also, Futures in Rust are an MVP. There is **much** more utility stuff in the [f
 
 </div>
 
-{{ tablesep() }}
 
 
-<!-- Futures as seen by someone who holds an `impl Future<Output=X>` after calling `f()`:
+</div></div></div>
 
-- This `impl Future` is an anonymous, compiler-generated instance of a state machine.
-- After one or more `Future::poll()` calls it will be in state `Ready` and the `Output` will be available.
-- State progression initiated via `Runtime::block_on()` (and friends) if not in `async` context already.
-- State progression initiated via `.await` if called from existing `async` context.
 
-Futures as seen by someone who authors `async f() {}`:
-- The written code will be transformed into state machine code that will later be instantiated.
-- Derived traits of state machine depending on types you use inside. Always `Future`, maybe `Send`, ...
-- Actual execution of this state machine happens in context of runtime via `poll()`, never directly.
-- Runtime will execute from worker thread. Might or might not be thread that invoked runtime.
-- When executing, worker thread runs until end, or until it encounters _another_ state machine `x`.
-- If control passed to `x` via `x.await`, worker thread continues with that one instead.
-- At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker thread returns all the way up to runtime so it can drive another Future. -->
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-async-2" name="tab-async">
+<label class="tab-label" for="tab-async-2"><b>Execution Flow</b></label>
+<div class="tab-panel">
+<div class="tab-content">
 
 At each `x.await`, state machine passes control to subordinate state machine `x`. At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker
 thread returns all the way up to runtime so it can drive another Future. Some time later the runtime:
@@ -2828,9 +2877,18 @@ START --------------------> x.await --------------------> y.await --------------
 </div>
 </div>
 
-{{ tablesep() }}
+</div></div></div>
 
-This leads to the following considerations when writing code inside an `async` construct:
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-async-3" name="tab-async">
+<label class="tab-label" for="tab-async-3"><b>Caveats</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+With the execution flow in mind, some considerations when writing code inside an `async` construct:
 
 <div class="header-orange">
 
@@ -2853,6 +2911,11 @@ without assuming executor specifics. <br/>
 
 </div>
 
+</div></div></div>
+
+
+<!-- end tabs -->
+</div>
 
 
 {{ tablesep() }}
