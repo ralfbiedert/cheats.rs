@@ -15,6 +15,6 @@ zola build --base-url="$PWD/public/index.html" --output-dir="$PWD/public"
 - Select version: "Minified"
 - Select theme: "Default"
 - Select languages: "Rust" (and only Rust)
-- Select plugins: "Keep Markup"
+- Select plugins: "Keep Markup", "Highlight Keywords" (experimental)
 - Save files and replace the ones in `static`
-- Check the Git log, and discard some changes that happened in the CSS which now make the page look ugly (for example but not limited to: `font-style`, `background`, ...)
+- In `git`, discard changes to CSS which now make the page look ugly (for example but not limited to: `font-style`, `background`, ...)
