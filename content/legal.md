@@ -70,6 +70,7 @@ These assets are shipped with the site.
 - [Fira Code](https://github.com/tonsky/FiraCode), Nikita Prokopov, OFL-1.1
 - [Zola Book theme](https://github.com/getzola/zola), Vincent Prouillet, MIT licensed
 - [prism.js](https://prismjs.com/), Lea Verou, MIT licensed
+- [Tabbed CSS Panels](https://codepen.io/Merri/pen/bytea/), Vesa Piittinen, MIT licensed
 
 ### Used Services
 
