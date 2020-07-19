@@ -246,12 +246,27 @@ table.sendsync {
 
     th {
         background-color: rgb(212, 247, 244);
+
+        // In some places we don't want our Rust-like color scheme b/c we have conflicting
+        // background colors.
+        .token.class-name, .token.keyword {
+            // font-weight: bold;
+            color: black;
+        }
+
     }
 
     td:nth-child(1) {
         background-color: rgb(212, 247, 244);
         text-align: left;
         font-weight: bold;
+
+        // In some places we don't want our Rust-like color scheme b/c we have conflicting
+        // background colors.
+        .token.class-name, .token.keyword {
+            // font-weight: bold;
+            color: black;
+        }
     }
 
     th:nth-child(1) {
