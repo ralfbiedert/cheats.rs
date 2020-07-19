@@ -1944,7 +1944,7 @@ may be a bit more tricky.
 <!-- NEW TAB -->
 <div class="tab">
 <input class="tab-radio" type="radio" id="tab-sized-2" name="tab-group-sized">
-<label class="tab-label" for="tab-sized-2"><b>Examples</b></label>
+<label class="tab-label" for="tab-sized-2"><b>Sized in Bounds</b></label>
 <div class="tab-panel">
 <div class="tab-content">
 
