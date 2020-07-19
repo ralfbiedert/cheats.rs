@@ -1844,6 +1844,10 @@ PRs for this section are very welcome. Idea is:
 - Is not just a trival method on an 'obvious' struct (e.g., Sort a slice by `x.sort()` is probably too obvious.)
 -->
 
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
 <div class="header-one-liners cheats">
 
 | Intent | Snippet |
@@ -1856,6 +1860,9 @@ PRs for this section are very welcome. Idea is:
 <!-- | Run command, get output | `Command::new("ls").args(&["-la"]).output()?` | -->
 
 </div>
+
+</div></div>
+
 
 {{ tablesep() }}
 
