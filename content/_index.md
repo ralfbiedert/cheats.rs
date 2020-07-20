@@ -597,10 +597,10 @@ Rust has several ways to create string or char literals, depending on your needs
 | Example | Explanation |
 |--------|-------------|
 | `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}} UTF-8, will interpret `\n` as _line break_ `0xA`, ... |
-| `r"..."`, | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}} UTF-8, won't interpret `\n`, ... |
-| `r#"..."#`, etc. | Raw string literal, UTF-8, but can also contain `"`. |
+| `r"..."` | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}} UTF-8, won't interpret `\n`, ... |
+| `r#"..."#`, ... | Raw string literal, UTF-8, but can also contain `"`. Number of `#` can vary. |
 | `b"..."` | **Byte string literal**; {{ ref(page="tokens.html#byte-and-byte-string-literals")}} constructs ASCII `[u8]`, not a string. |
-| `br"..."`, `br#"..."#`, etc. | Raw byte string literal, ASCII `[u8]`, combination of the above. |
+| `br"..."`, `br#"..."#` | Raw byte string literal, ASCII `[u8]`, combination of the above. |
 | `'🦀'` | **Character literal**, {{ ref(page="tokens.html#character-and-string-literals")}} fixed 4 byte unicode '**char**'. {{ std(page="std/primitive.char.html") }} |
 | `b'x'` | ASCII **byte literal**. {{ ref(page="tokens.html#byte-literals")}} |
 
@@ -2414,7 +2414,7 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | 📁 `examples/` | Examples how to use your crate, they see your crate like external user would.  |
 | {{ tab() }} `my_example.rs` | Individual examples are run like **`cargo run --example my_example`**. |
 | 📁 `src/` | Actual source code for your project. |
-| {{ tab() }} `build.rs` |  [Pre-build script](https://doc.rust-lang.org/cargo/reference/build-scripts.html), e.g., when compiling C / FFI, needs to be specified in <code class="ignore-auto language-bash">Cargo.toml</code>. |
+| {{ tab() }} `build.rs` |  **Pre-build script** {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }}, e.g., when compiling C / FFI, needs to be specified in <code class="ignore-auto language-bash">Cargo.toml</code>. |
 | {{ tab() }} `main.rs` | Default entry point for applications, this is what **`cargo run`** uses. |
 | {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f()` starts. |
 | 📁 `tests/` | Integration tests go here, invoked via **`cargo test`**. Unit tests often stay in `src/` file. |
