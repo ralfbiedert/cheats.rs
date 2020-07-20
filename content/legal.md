@@ -31,7 +31,7 @@ Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a hr
 
 - Unfortunately, at the time of writing, we use embedded fonts that are hosted on Google Fonts (**help with fixing that would be greatly appreciated!**). No cookies are retained to our knowledge. Google has an entry on this matter: [What does using the Google Fonts API mean for the privacy of my users?](https://developers.google.com/fonts/faq).
 - The **Edit & Run** feature of the "Hello, Rust" section embeds the [Rust Playground](https://play.rust-lang.org/). All code entered there is sent to and processed on their servers.
-- The browser's **local storage** may be used for storing necessary settings between sessions (e.g., dark mode, ligatures, survey banner visibility), if you requested such a setting to take effect. This information never leaves your machine.
+- The browser's **local storage** may be necessary to store settings between sessions (e.g., dark mode, ligatures, survey banner visibility), if you requested such a setting to take effect. This information never leaves your machine.
 - Supporting developer assets and metadata are usually **hosted on Github** so their privacy and tracking legalese applies.
 - Once in a while we host our **Yearly Survey** that will be advertised with banners top and bottom.
 
