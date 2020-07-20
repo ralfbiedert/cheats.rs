@@ -382,8 +382,8 @@ Segment projects into smaller units and minimize dependencies.
 
 | Example | Explanation |
 |---------|-------------|
-| `mod m {}`  | Define a **module**, {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} get definition from inside `{}`. |
-| `mod m;`  | Define a module, get definition from `m.rs` or `m/mod.rs`. |
+| `mod m {}`  | Define a **module**, {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} get definition from inside `{}`. {{ below(target="#project-anatomy") }} |
+| `mod m;`  | Define a module, get definition from `m.rs` or `m/mod.rs`. {{ below(target="#project-anatomy") }}|
 | `a::b` | Namespace **path** {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, ...). |
 | {{ tab() }} `::b` | Search `b` relative to crate root. {{ deprecated() }} |
 | {{ tab() }} `crate::b` | Search `b` relative to crate root. {{ edition(ed="'18") }} |
@@ -2436,7 +2436,7 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 <!-- Also not printing this table -->
 <div class="noprint">
 
-Minimal examples for various entry points might look like:
+**Minimal examples** for various entry points might look like:
 
 <div class="tabs">
 
@@ -2641,6 +2641,20 @@ fn main() {
 <!-- End noprint of code examples -->
 </div>
 
+
+{{ tablesep() }}
+
+
+**Modules** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} and **source files** work as follows:
+
+- **Module tree** needs to be explicitly defined, is not implicitly built from **file system tree**. {{ link(url="http://www.sheshbabu.com/posts/rust-module-system/") }}
+- **Module tree root** equals library, app, ... entry point (e.g., `lib.rs`).
+- A `mod m {}` defines module in-file, while `mod m;` will read `m.rs` or `m/mod.rs`.
+    - Path of `.rs` based on nesting, e.g., `mod a { mod b { mod c; }}}` is either `a/b/c.rs` or `a/b/c/mod.rs`.
+    - Files not pathed from module tree root via some `mod m;` won't be touched by compiler! {{ bad() }}
+
+<!-- - **Visibility** of items (e.g., functions, fields) between modules governed by: "Is there visible path to item?"
+    - Visibility like `pub fn f() {}` does not mean "`f` is public", but "`f` at most public if all parents public`. -->
 
 
 {{ tablesep() }}
