@@ -223,7 +223,7 @@ Data types and memory locations defined via keywords.
 <div class="footnotes">
 
 <sup>1</sup> **Bound variables** {{ book(page="ch03-01-variables-and-mutability.html") }} {{ ex(page="variable_bindings.html") }} {{ ref(page="variables.html") }} live on stack for synchronous code. In `async {}` code they become part async's state machine, may reside on heap.<br>
-<sup>2</sup> Technically _mutable_ and _immutable_ are misnomer. Immutable binding or shared reference may still contain [Cell](https://doc.rust-lang.org/std/cell/index.html), giving _interior mutability_.
+<sup>2</sup> Technically _mutable_ and _immutable_ are misnomer. Immutable binding or shared reference may still contain Cell {{ std(page="std/cell/index.html") }}, giving _interior mutability_.
 
 </div>
 
