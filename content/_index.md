@@ -147,7 +147,7 @@ Things Rust does measurably really well:
 
 - compiled code [about same performance](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html) as C / C++, and excellent [memory and energy efficiency](https://dl.acm.org/doi/10.1145/3136014.3136031)
 - can [avoid 70% of all (memory-related) safety issues](https://msrc-blog.microsoft.com/2019/07/22/why-rust-for-safe-systems-programming/) present in C / C++
-- strong type support allowing for ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others)
+- strong type system prevents [data races](https://doc.rust-lang.org/nomicon/races.html), brings ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others)
 - seamless C interop, and [dozens of supported platforms](https://forge.rust-lang.org/release/platform-support.html) (based on LLVM)
 - ["most loved language"](https://insights.stackoverflow.com/survey/2020#technology-most-loved-dreaded-and-wanted-languages) for 5 years in a row
 - modern tooling: `cargo` (builds _just work_), `clippy` (300+ code quality lints), `rustup` (easy toolchain mgmt)
@@ -222,8 +222,8 @@ Data types and memory locations defined via keywords.
 
 <div class="footnotes">
 
-<sup>1</sup> **Bound variables** {{ book(page="ch03-01-variables-and-mutability.html") }} {{ ex(page="variable_bindings.html") }} {{ ref(page="variables.html") }} live on the stack for synchronous code. For `async` code these variables become part of the async's state machine which may ultimately reside on the heap.<br>
-<sup>2</sup> Note that technically _mutable_ and _immutable_ are a bit of a misnomer. Even if you have an immutable binding or shared reference, it might contain a [Cell](https://doc.rust-lang.org/std/cell/index.html), which supports so called _interior mutability_.
+<sup>1</sup> **Bound variables** {{ book(page="ch03-01-variables-and-mutability.html") }} {{ ex(page="variable_bindings.html") }} {{ ref(page="variables.html") }} live on stack for synchronous code. In `async {}` code they become part async's state machine, may reside on heap.<br>
+<sup>2</sup> Technically _mutable_ and _immutable_ are misnomer. Immutable binding or shared reference may still contain [Cell](https://doc.rust-lang.org/std/cell/index.html), giving _interior mutability_.
 
 </div>
 
@@ -511,7 +511,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 
 {{ tablesep() }}
 
-Pattern matching arms in `match` expressions. The left side of these arms can also be found in `let` expressions.
+Pattern matching arms in `match` expressions. Left side of these arms can also be found in `let` expressions.
 
 <div class="cheats">
 
@@ -589,7 +589,7 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 
 ### Strings & Chars
 
-Rust has several ways to create string or char literals, depending on your needs.
+Rust has several ways to create textual values.
 
 
 <div class="cheats">
@@ -651,9 +651,8 @@ These sigils did not fit any other category but are good to know nonetheless.
 
 ### Common Operators
 
-Rust supports all common operators you would expect to find in a language (`+`, `*`, `%`, `=`, `==`...).
-Since they behave no differently in Rust we do not list them here.
-For some of them Rust also supports **operator overloading**. {{ std(page="std/ops/index.html")}}
+Rust supports most operators you would expect (`+`, `*`, `%`, `=`, `==`...), including **overloading**. {{ std(page="std/ops/index.html")}} Since they behave no differently in Rust we do not list them here.
+
 
 ---
 
@@ -682,7 +681,7 @@ If something works that "shouldn't work now that you think about it", it might b
 
 {{ tablesep() }}
 
-> **Editorial Comment** <sup>💬</sup> &mdash; While the features above will make your development life easier, they might sometimes hinder your understanding of what's going on. If you are relatively new to Rust and trying to get to the bottom of things, you should consider reading about them in more detail.
+> **Editorial Comment** <sup>💬</sup> &mdash; The features above will make your life easier, but might hinder your understanding. If you are new to Rust, you should consider reading about them in more detail.
 
 <!-- End magic -->
 </div>
@@ -1269,7 +1268,7 @@ These **sum types** hold a value of one of their sub types:
 ## References & Pointers {#references-pointers-ui}
 
 References give safe access to other memory, raw pointers `unsafe` access.
-For some referents additional `payload` may be present (see below).
+For some referents additional `payload` may be present, see below.
 The respective `mut` types are identical.
 
 
@@ -1446,8 +1445,8 @@ The **`payload`** depends on the base type of the referent. This applies to both
 
 ## Closures {#closures-data}
 
-A closure is an ad-hoc function that comes with an automatically managed data block **capturing** {{ ref(page="types/closure.html#capture-modes") }}
-the environment you accessed when defining the closure. For example:
+Closures are ad-hoc functions along with automatically managed data block **capturing** {{ ref(page="types/closure.html#capture-modes") }}
+the environment accessed where closure was defined. For example:
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -1504,8 +1503,8 @@ the environment you accessed when defining the closure. For example:
 
 ## Standard Library Types
 
-Rust's standard library combines many of the above primitive types into useful types with special semantics.
-Some common types:
+Rust's standard library combines the above primitive types into useful types with special semantics, e.g.:
+
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -1857,7 +1856,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 
 ## Common One-Liners
 
-Snippets that are common, but still easy to forget. See [Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/) for more.
+Snippets that are common, but still easy to forget. See **Rust Cookbook** {{ link(url="https://rust-lang-nursery.github.io/rust-cookbook/") }} for more.
 
 
 <!--
@@ -1892,8 +1891,8 @@ PRs for this section are very welcome. Idea is:
 
 ## Traits
 
-Traits define common behavior. If `S` implements `trait T`, you know `S` can behave as prescribed by `T`. Below is an overview of traits that
-may be a bit more tricky.
+Traits define common behavior. If `S` implements `trait T`, you know `S` can behave as prescribed by `T`. Below is overview of traits that
+may be more tricky.
 
 #### 🧵 Thread Safety {#thread-safety}
 
@@ -1934,9 +1933,9 @@ may be a bit more tricky.
 
 
 - A type `T` is **`Sized`** {{ std(page="std/marker/trait.Sized.html") }} if at compile time it is known how many bytes it occupies, `u8` and `&[u8]` are, `[u8]` isn't.
-- Being `Sized` means `impl Sized for T {}` holds. This happens automatically and cannot be user impl'ed.
-- Types that are not `Sized` are called **dynamically sized types** {{ book(page="ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait") }} {{ nom(page="exotic-sizes.html#dynamically-sized-types-dsts") }}  {{ ref(page="dynamically-sized-types.html#dynamically-sized-types") }} (DSTs), sometimes **unsized**.
-- Types that do not hold any data are called **zero sized types** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts") }} (ZSTs) and do not occupy any space.
+- Being `Sized` means `impl Sized for T {}` holds. Happens automatically and cannot be user impl'ed.
+- Types not `Sized` are called **dynamically sized types** {{ book(page="ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait") }} {{ nom(page="exotic-sizes.html#dynamically-sized-types-dsts") }}  {{ ref(page="dynamically-sized-types.html#dynamically-sized-types") }} (DSTs), sometimes **unsized**.
+- Types without data are called **zero sized types** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts") }} (ZSTs), do not occupy space.
 
 </div></div></div>
 
@@ -1960,7 +1959,7 @@ may be a bit more tricky.
 | `struct E;` | Type `E` is zero-sized (and also sized) and will not consume memory. |
 | `trait F { fn f(&self); }` | Traits **do not have** an implicit `Sized` bound, i.e., `impl F for B {}` is valid.  |
 | {{ tab() }} `trait F: Sized {}` | Traits can however opt into `Sized` via supertraits.{{ above(target="#functions-behavior") }} |
-| `trait G { fn g(self); }` | For `Self`-like parameters DST `impl` may still fail as params can't go on stack.  |
+| `trait G { fn g(self); }` | For `Self`-like params DST `impl` may still fail as params can't go on stack.  |
 
 </div>
 
@@ -2010,7 +2009,7 @@ Once you have an `i`:
 
 <div class="footnotes">
 
-<sup>*</sup> If it looks as if it doesn't consume `c` that's because your type was `Copy`. For example, if you call `(&c).into_iter()` it will invoke `.into_iter()` on `&c` (which will consume the reference and turn it into an Iterator), but `c` remains untouched.
+<sup>*</sup> If it looks as if it doesn't consume `c` that's because type was `Copy`. For example, if you call `(&c).into_iter()` it will invoke `.into_iter()` on `&c` (which will consume the reference and turn it into an Iterator), but `c` remains untouched.
 
 </div>
 
@@ -2333,7 +2332,7 @@ If you **want** a string of type ...
 
 <div class="footnotes">
 
-<sup>1</sup> You should (or must, if `unsafe` calls are involved) ensure the raw data comes with a valid representation for the string type (e.g., being UTF-8 encoded data for a `String`).
+<sup>1</sup> You should, or must if call is `unsafe`, ensure raw data comes with a valid representation for the string type (e.g., UTF-8 data for a `String`).
 
 <sup>2</sup> Only on some platforms `std::os::<your_os>::ffi::OsStrExt` exists with helper methods to get a raw `&[u8]` representation of the underlying `OsStr`. Use the rest of the table to go from there, e.g.:
 
@@ -2728,8 +2727,7 @@ A large number of additional cargo plugins [**can be found here**](https://crate
 
 🔘 Install native toolchain (required to _link_, depends on target).
 
-Get this from your target vendor (Google, Apple, ...).
-Might not be available for your host (e.g., no iOS toolchain for Windows).
+Get from target vendor (Google, Apple, ...), might not be available on all hosts (e.g., no iOS toolchain on Windows).
 
 **Some toolchains require additional build steps** (e.g., Android's `make-standalone-toolchain.sh`).
 
@@ -2838,19 +2836,18 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 | {{ tab() }} `async fn f() {}`  | Function `f` returns an `impl Future<Output=()>`. |
 | {{ tab() }} `async fn f() -> S {}`  | Function `f` returns an `impl Future<Output=S>`. |
 | {{ tab() }} `async { x }`  | Transforms `{ x }` into an `impl Future<Output=X>`. |
-| `let sm = f();   ` | Calling `f()` that is `async` will **not** execute `f`, but produce state machine `sm`. {{ note(note="1") }} |
+| `let sm = f();   ` | Calling `f()` that is `async` will **not** execute `f`, but produce state machine `sm`. {{ note(note="1") }} {{ note(note="2") }} |
 | {{ tab() }} `sm = async { g() };`  | Likewise, does **not** execute the `{ g() }` block; produces state machine. |
-| `runtime.block_on(sm);` {{ note(note="2") }}  | Outside an `async {}`, schedules `sm` to actually run. Would execute `g()`. |
+| `runtime.block_on(sm);`  | Outside an `async {}`, schedules `sm` to actually run. Would execute `g()`. {{ note(note="3") }} {{ note(note="4") }}|
 | `sm.await` | Inside an `async {}`, run `sm` until complete. Yield to runtime if `sm` not ready. |
 
 
 <div class="footnotes">
 
-{{ note(note="1") }} Technically `async` transforms the following code into an anonymous, compiler-generated state machine type, and `f()` instantiates that machine.
-The state machine always `impl Future`, possibly `Send<` & co, depending on types you used inside `async`. State machine driven by worker thread invoking
-`Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
-{{ note(note="2") }} Right now Rust doesn't come with its own runtime. Use external crate instead, such as [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio).
-Also, Futures in Rust are an MVP. There is **much** more utility stuff in the [futures crate](https://github.com/rust-lang-nursery/futures-rs).
+{{ note(note="1") }} Technically `async` transforms following code into anonymous, compiler-generated state machine type; `f()` instantiates that machine. <br>
+{{ note(note="2") }} The state machine always `impl Future`, possibly `Send` & co, depending on types used inside `async`. <br>
+{{ note(note="3") }} State machine driven by worker thread invoking `Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
+{{ note(note="4") }} Rust doesn't come with runtime, need external crate instead, e.g., [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio). Also, more helpers in [futures crate](https://github.com/rust-lang-nursery/futures-rs).
 
 </div>
 
