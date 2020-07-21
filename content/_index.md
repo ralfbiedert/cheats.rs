@@ -2097,15 +2097,15 @@ If you **want** a string of type ...
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
 |`String`|`x`|
-|`CString`|`x.into_string()?`|
-|`OsString`|`x.to_str()?.into()`|
-|`PathBuf`|`x.to_str()?.into()`|
+|`CString`|`x.into_string()?` |
+|`OsString`|`x.to_str()?.to_string()`|
+|`PathBuf`|`x.to_str()?.to_string()`|
 |`Vec<u8>` <sup>1</sup> |`String::from_utf8(x)?`|
-|`&str`|`x.into()`|
-|`&CStr`|`x.to_str()?.into()`|
-|`&OSStr`|`x.to_str()?.into()`|
-|`&Path`|`x.to_str()?.into()`|
-|`&[u8]` <sup>1</sup> |`String::from_utf8_lossy(x).into()`|
+|`&str`|`x.to_string()` <sup>`i`</sup> |
+|`&CStr`|`x.to_str()?.to_string()` |
+|`&OsStr`|`x.to_str()?.to_string()`|
+|`&Path`|`x.to_str()?.to_string()`|
+|`&[u8]` <sup>1</sup> |`String::from_utf8_lossy(x).to_string()`|
 
 </div></div></div>
 
@@ -2124,9 +2124,9 @@ If you **want** a string of type ...
 |`PathBuf`|`CString::new(x.to_str()?)?`|
 |`Vec<u8>` <sup>1</sup> |`CString::new(x)?`|
 |`&str`|`CString::new(x)?`|
-|`&CStr`|`x.into()`|
-|`&OSStr` <sup>2</sup> |`CString::new(x.to_os_string().into_string()?)?`|
-|`&Path`|`x.to_str()?.into()`|
+|`&CStr`|`x.to_owned()` <sup>`i`</sup> |
+|`&OsStr` <sup>2</sup> |`CString::new(x.to_os_string().into_string()?)?`|
+|`&Path`|`CString::new(x.to_str()?)?`|
 |`&[u8]` <sup>1</sup> |`CString::new(Vec::from(x))?`|
 |`*mut c_char` <sup>3</sup> |`unsafe { CString::from_raw(x) }`|
 
@@ -2141,15 +2141,15 @@ If you **want** a string of type ...
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
-|`String`|`x.into()`|
-|`CString`|`x.to_str()?.into()`|
+|`String`|`OsString::from(x)` <sup>`i`</sup> |
+|`CString`|`OsString::from(x.to_str()?)`|
 |`OsString`|`x`|
 |`PathBuf`|`x.into_os_string()`|
 |`Vec<u8>` <sup>1</sup> | {{ todo() }} |
-|`&str`|`x.into()`|
-|`&CStr`|`x.to_str()?.into()`|
-|`&OSStr`|`x.into()`|
-|`&Path`|`x.as_os_str().into()`|
+|`&str`|`OsString::from(x)` <sup>`i`</sup>|
+|`&CStr`|`OsString::from(x.to_str()?)`|
+|`&OsStr`|`OsString::from(x)` <sup>`i`</sup>|
+|`&Path`|`x.as_os_str().to_owned()`|
 |`&[u8]` <sup>1</sup> | {{ todo() }} |
 
 </div></div></div>
@@ -2163,15 +2163,15 @@ If you **want** a string of type ...
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
-|`String`|`x.into()`|
-|`CString`|`x.to_str()?.into()`|
-|`OsString`|`x.into()`|
+|`String`|`PathBuf::from(x)` <sup>`i`</sup>|
+|`CString`|`PathBuf::from(x.to_str()?)`|
+|`OsString`|`PathBuf::from(x)` <sup>`i`</sup>|
 |`PathBuf`|`x`|
 |`Vec<u8>` <sup>1</sup> | {{ todo() }} |
-|`&str`|`x.into()`|
-|`&CStr`|`x.to_str()?.into()`|
-|`&OSStr`|`x.into()`|
-|`&Path`|`x.into()`|
+|`&str`|`PathBuf::from(x)` <sup>`i`</sup>|
+|`&CStr`|`PathBuf::from(x.to_str()?)`|
+|`&OsStr`|`PathBuf::from(x)` <sup>`i`</sup>|
+|`&Path`|`PathBuf::from(x)` <sup>`i`</sup>|
 |`&[u8]` <sup>1</sup> | {{ todo() }} |
 
 </div></div></div>
@@ -2190,11 +2190,11 @@ If you **want** a string of type ...
 |`OsString`| {{ todo() }} |
 |`PathBuf`| {{ todo() }} |
 |`Vec<u8>` <sup>1</sup> |`x`|
-|`&str`|`x.as_bytes().into()`|
-|`&CStr`|`x.to_bytes_with_nul().into()`|
-|`&OSStr`| {{ todo() }} |
+|`&str`|`Vec::from(x.as_bytes())`|
+|`&CStr`|`Vec::from(x.to_bytes_with_nul())`|
+|`&OsStr`| {{ todo() }} |
 |`&Path`| {{ todo() }} |
-|`&[u8]` <sup>1</sup> |`x.into()`|
+|`&[u8]` <sup>1</sup> |`x.to_vec()`|
 
 </div></div></div>
 
@@ -2214,7 +2214,7 @@ If you **want** a string of type ...
 |`Vec<u8>` <sup>1</sup> |`std::str::from_utf8(&x)?`|
 |`&str`|`x`|
 |`&CStr`|`x.to_str()?`|
-|`&OSStr`|`x.to_str()?`|
+|`&OsStr`|`x.to_str()?`|
 |`&Path`|`x.to_str()?`|
 |`&[u8]` <sup>1</sup> |`std::str::from_utf8(x)?`|
 
@@ -2236,7 +2236,7 @@ If you **want** a string of type ...
 |`Vec<u8>` <sup>1</sup> |`CStr::from_bytes_with_nul(&x)?`|
 |`&str`|`CStr::from_bytes_with_nul(x.as_bytes())?`|
 |`&CStr`|`x`|
-|`&OSStr` <sup>2</sup>| {{ todo() }} |
+|`&OsStr` <sup>2</sup>| {{ todo() }} |
 |`&Path`| {{ todo() }} |
 |`&[u8]` <sup>1</sup> |`CStr::from_bytes_with_nul(x)?`|
 |`*const c_char` <sup>1</sup> |`unsafe { CStr::from_ptr(x) }`|
@@ -2259,7 +2259,7 @@ If you **want** a string of type ...
 |`Vec<u8>` <sup>1</sup> | {{ todo() }} |
 |`&str`|`OsStr::new(x)`|
 |`&CStr`| {{ todo() }} |
-|`&OSStr`|`x`|
+|`&OsStr`|`x`|
 |`&Path`|`x.as_os_str()`|
 |`&[u8]` <sup>1</sup> | {{ todo() }} |
 
@@ -2274,14 +2274,14 @@ If you **want** a string of type ...
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
-|`String`|`x.as_ref()`|
-|`CString`|`x.to_str()?.as_ref()`|
-|`OsString`|`x.as_ref()`|
-|`PathBuf`|`x.as_ref()`|
+|`String`|`Path::new(x)` <sup>`r`</sup>|
+|`CString`|`Path::new(x.to_str()?)` |
+|`OsString`|`Path::new(x.to_str()?)` <sup>`r`</sup>|
+|`PathBuf`|`Path::new(x.to_str()?)` <sup>`r`</sup>|
 |`Vec<u8>` <sup>1</sup> | {{ todo() }} |
-|`&str`|`x.as_ref()`|
-|`&CStr`|`x.to_str()?.as_ref()`|
-|`&OSStr`|`x.as_ref()`|
+|`&str`|`Path::new(x)` <sup>`r`</sup>|
+|`&CStr`|`Path::new(x.to_str()?)` |
+|`&OsStr`|`Path::new(x)` <sup>`r`</sup>|
 |`&Path`|`x`|
 |`&[u8]` <sup>1</sup> | {{ todo() }} |
 
@@ -2303,7 +2303,7 @@ If you **want** a string of type ...
 |`Vec<u8>` <sup>1</sup> |`&x`|
 |`&str`|`x.as_bytes()`|
 |`&CStr`|`x.to_bytes_with_nul()`|
-|`&OSStr`| `x.as_bytes()` <sup>2</sup> |
+|`&OsStr`| `x.as_bytes()` <sup>2</sup> |
 |`&Path`| {{ todo() }} |
 |`&[u8]` <sup>1</sup> |`x`|
 
@@ -2331,6 +2331,9 @@ If you **want** a string of type ...
 
 
 <div class="footnotes">
+
+<sup>i</sup> Short form `x.into()` possible if type can be inferred. <br>
+<sup>r</sup> Short form `x.as_ref()` possible if type can be inferred.
 
 <sup>1</sup> You should, or must if call is `unsafe`, ensure raw data comes with a valid representation for the string type (e.g., UTF-8 data for a `String`).
 
