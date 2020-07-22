@@ -3,8 +3,7 @@
 const survey_key = "survey2020";
 
 let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
-let iOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform); // https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
-
+let memory_bars = document.querySelectorAll("memory-row");
 let subtitle_index = 0;
 
 const subtiles = [
@@ -108,13 +107,6 @@ codes_rust.forEach(code => {
 // Executed on page load, this runs all toggles the user might have clicked
 // the last time based on localStorage.
 try {
-    // iOS does not honor the ligature settings and always renders the font without them.
-    // Hide the button not to confuse users.
-    if (iOS) {
-        let button = document.getElementById("toggle_ligatures");
-        button.style.visibility = "hidden";
-    }
-
     let night_mode = storage_get("night-mode");
     let ligatures = storage_get("ligatures");
     let survey = storage_get(survey_key);
@@ -131,6 +123,24 @@ try {
     // if (!survey || survey === "" || survey === "block") {
     //     set_survey("block");
     // }
+
+
+    // Make sure all descriptions expand or collapse when clicked.
+    for (var e of memory_bars) {
+        e.onclick = (e) => {
+            let section = e.target.closest("lifetime-section");
+            let description = section.getElementsByTagName("explanation")[0];
+
+            // Some elements just don't have any
+            if (!description) return;
+
+            if (!description.style.display || description.style.display == "none") {
+                description.style.display = "inherit";
+            } else {
+                description.style.display = "none";
+            }
+        }
+    }
 
 } catch (e) {
     console.log(e);

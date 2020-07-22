@@ -9,7 +9,7 @@
 @import "normalize";
 @import "html";
 @import "page";
-@import "data";
+@import "visuals";
 @import "tabs";
 
 
@@ -320,6 +320,7 @@ sup.mid {
 sup.expert {
     color: rgb(184, 0, 0);
 }
+
 
 
 // Hack we need for highlighting the bytes in the `Textual Types` section

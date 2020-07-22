@@ -7,14 +7,23 @@ weight = 100
 # Legal Information
 
 
+## Hosting
+
+> This _Hosting_ section **only** applies to the site [**cheats.rs**](https://cheats.rs), not if you reached this work by other means.
+
 ### Operator
+
+<!-- NOTICE - THIS SECTION IS NOT COVERED BY CC- OR ANY OTHER LICENSE -->
 
 Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a href="https://xr.io">🔗</a></sup>
 
-### Hosting, GDPR, Privacy Information
+<!-- END NOTICE -->
 
-- The content on [cheats.rs](https://cheats.rs) is **hosted on Amazon Web Services** and dispatched via various edge locations (Cloudfront) around the globe. We enable "all" edge locations to minimize hops and latency, and because you are worth it :)
-- **Access logs** for content hosting are disabled in the AWS configuration, and we are **not aware of any user tracking** present in this configuration. Only aggregate statistics are provided, most notably, aggregated referrer information on a domain level, and aggregated visitor information on a country level, such as:
+
+### Privacy & GDPR
+
+- This site is **hosted on Amazon Web Services** and dispatched via various edge locations (Cloudfront) around the globe. We enable "all" edge locations to minimize hops and latency, and because you are worth it :)
+- **Access logs** in AWS are disabled, and we are **not aware of any user tracking**. Only aggregate statistics are provided, most notably, aggregated referrer domains, and aggregated visitor origins, such as:
 
     ```
     cheats.rs               75.55%
@@ -29,9 +38,9 @@ Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a hr
     United Kingdom          6.24%
     ```
 
-- Unfortunately, at the time of writing, we use embedded fonts that are hosted on Google Fonts (**help with fixing that would be greatly appreciated!**). No cookies are retained to our knowledge. Google has an entry on this matter: [What does using the Google Fonts API mean for the privacy of my users?](https://developers.google.com/fonts/faq).
+- We use Google Fonts for now (**help with fixing that would be greatly appreciated!**). No cookies are retained to our knowledge. See: [What does using the Google Fonts API mean for the privacy of my users?](https://developers.google.com/fonts/faq)
 - The **Edit & Run** feature of the "Hello, Rust" section embeds the [Rust Playground](https://play.rust-lang.org/). All code entered there is sent to and processed on their servers.
-- The browser's **local storage** may be necessary to store settings between sessions (e.g., dark mode, ligatures, survey banner visibility), if you requested such a setting to take effect. This information never leaves your machine.
+- The browser's **local storage** may be necessary to store settings between sessions (e.g., dark mode, ligatures, banner visibility), if you requested such a setting to take effect. This information never leaves your machine.
 - Supporting developer assets and metadata are usually **hosted on Github** so their privacy and tracking legalese applies.
 - Once in a while we host our **Yearly Survey** that will be advertised with banners top and bottom.
 
@@ -40,27 +49,14 @@ Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a hr
     We will use your anwsers to improve this site. As part of doing that we also plan to publish all answers somewhere (usually Github), unless there are legal or other reasons preventing us from doing so.
 
 
-### Copyright Information
 
-We use the following model:
+## Copyright Information
 
-**tl;dr**, if you want to
-- copy a Rust snippet or example: CC0, just do it
-- copy or embed the entire site: CC-BY, please give credit (also to 3rd party assets, see below).
+This work is CC-BY with the following exceptions:
 
-
-**In detail**, this cheat sheet ("work") consists of:
-
-- text (tables, guides, Rust code) addressing language-related content viewable on [cheats.rs](https://cheats.rs) ("content")
-- code (Markdown, HTML, CSS), logos, graphics, assets and the resulting presentation ("supporting assets")
-- metadata, such as the real names of contributors (e.g., on Github or the site), information from the Git repo, any other information not directly related to end-user content ... ("metadata")
-
-The **content** of this work is licensed as CC0 from the European Union, with contributions from all over the world.
-
-**Supporting assets** produced by this project are CC-BY. Third party supporting assets retain their original license.
-
-**Metadata** is not governed by any of these licenses.
-
+- Rust source snippets are CC-0.
+- Metadata (any data not directly needed to reproduce this work) and author names are not licensed.
+- While giving credit is appreciated, reproductions **must change the _Operator_ section** above, and **must not appear to be controlled or endorsed by the author** in any way.
 
 ### Third Party Assets
 
@@ -72,7 +68,7 @@ These assets are shipped with the site.
 - [prism.js](https://prismjs.com/), Lea Verou, MIT licensed
 - [Tabbed CSS Panels](https://codepen.io/Merri/pen/bytea/), Vesa Piittinen, MIT licensed
 
-### Used Services
+## Used Services
 
 These services are sometimes used by this site.
 
@@ -80,14 +76,14 @@ These services are sometimes used by this site.
 
 
 
-### Disclaimer
+## Disclaimer
 
 We do our best to keep things correct, but no warranty is given any information presented on this site is actually true. Use at your own risk.
 
 Feel free to use [**this issue tracker**](https://github.com/ralfbiedert/cheats.rs/issues) to submit improvements.
 
 
-### Trademark Information
+## Trademark Information
 
 This work refers to trademarked products. In particular the "Rust" and "Cargo" names and logos are trademarks of the [**Mozilla Foundation**](https://foundation.mozilla.org/) and may only be used according to their trademark policy.
 

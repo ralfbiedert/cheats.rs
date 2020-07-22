@@ -49,6 +49,7 @@ insert_anchor_links = "right"
 * [Miscellaneous](#miscellaneous)
 
 **Behind the Scenes**
+* [Memory & Lifetimes](#memory-lifetimes)
 * [Language Sugar](#language-sugar)
 
 
@@ -84,7 +85,6 @@ insert_anchor_links = "right"
 * [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
 * [Closures in APIs](#closures-in-apis)
-* [Reading Lifetimes](#reading-lifetimes)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
 * [API Stability](#api-stability)
 
@@ -660,6 +660,2539 @@ Rust supports most operators you would expect (`+`, `*`, `%`, `=`, `==`...), inc
 
 # Behind the Scenes
 
+
+<!-- Legacy target some pages use to link here -->
+<a name="reading-lifetimes"></a>
+
+## Memory & Lifetimes
+
+
+Why moves, references and lifetimes are how they are.
+
+
+> 🔥 This section is brand new, [**feedback very welcome**](https://github.com/ralfbiedert/cheats.rs/issues)! 🔥
+
+<div class="tabs ticktock lifetimes">
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-lt-1" name="tab-lt" checked>
+<label class="tab-label" for="tab-lt-1"><b>Types & Moves</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+<lifetime-section>
+<lifetime-example>
+    <section-header>Application Memory</section-header>
+    <memory-row>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2 hide" style="left: 57px;">S(1)</value>
+        </values>
+        <labels>
+            <label class="" style="right: 10px;">&nbsp;</label>
+        </labels>
+        <subtext>Application memory</subtext>
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+- Application memory is large array of unstructured bytes
+- Memory segmented into
+    - **stack** (most variables go here)
+    - **heap** (large, flexible memory, but always handled via stack proxy like `Box<T>`)
+    - **static** (most commonly used as resting place for `str` part of `&str`)
+- Segementation mostly irrelevant for us, real magic happens on stack.
+
+
+</explanation>
+</lifetime-section>
+
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <section-header>Variables</section-header>
+    <memory-row>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2 hide" style="left: 57px;">S(1)</value>
+            <value class="t byte2" style="left: 97.5px;">S(1)</value>
+        </values>
+        <labels>
+            <label class="byte2 hide" style="left: 57px;"><code>a</code></label>
+            <label class="byte2" style="left: 97.5px;"><code>t</code></label>
+        </labels>
+        <subtext>Variables</subtext>
+        <!-- <subtext><code>let t = S(1);</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+let t = S(1);
+```
+
+- Reserves memory location with name `t` of type `S` and the value `S(1)` stored inside.
+- If declared with `let` that location lives on stack. <sup>1</sup>
+- Generally, `t` can mean **location of** `t`, here `0x7`, and **value within** `t`, here `S(1)`.
+- Note that the term **_variable_** has some **linguistic ambiguity**, it can mean:
+    1. the **name** of the location ("rename that variable"),
+    1. the **location** itself, `0x7` ("tell me the address of that variable"),
+    1. the **value** contained within, `S(1)` ("increment that variable").
+
+> It is the **author's opinion** <sup>💬</sup>  that the linguistic ambiguity around "variables" (and "lifetimes" and "scopes" later)
+> are some one of the biggest
+> contributors to the confusion around learning the basics of lifetimes. Whenever you hear something
+> like "the _variable_ is borrowed", ask yourself "_what_ exactly is borrowed here"?
+
+
+<div class="footnotes">
+
+<sup>1</sup> Compare above,{{ above(target="#data-structures" ) }} true for fully synchronous code, but `async` stack frame might placed it on heap via runtime.
+
+</div>
+
+</explanation>
+</lifetime-section>
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <section-header>Move Semantics</section-header>
+    <memory-row>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2" style="left: 57px;">S(1)</value>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte2" style="left: 97.5px;"><code>t</code></label>
+        </labels>
+        <subtext>Moves</subtext>
+        <!-- <subtext><code>let a = t;</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+
+<explanation>
+
+```
+let a = t;
+```
+
+- This will **move** value within `t` to location of `a`, or copy it if `C` is `Copy`.
+- After move location `t` is **invalid** and cannot be read anymore.
+    - Technically the bits at that location are not really _empty_, but _undefined_.
+    - If you still had access to `t` (via `unsafe`) they might still _look_ like valid `S`, but
+    any attempt to use them as valid `S` is undefined behavior. {{ below(target="#unsafe-unsound-undefined") }}
+- We do not cover `Copy` types explicitly here. They change the rules a bit, but not much:
+    - They won't be dropped
+    - They never leave behind an 'empty' variable location.
+
+</explanation>
+</lifetime-section>
+
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <section-header>Type Safety</section-header>
+    <memory-row>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2" style="left: 57px;">S(1)</value>
+            <failed style="left: 177.5px;"><value class="atomic byte4">M { ... }</value></failed>
+            <denied style="left: 108px;">⛔</denied>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte2" style="left: 170px;"><code>c</code></label>
+        </labels>
+        <subtext>Type Safety</subtext>
+        <!-- <subtext><code>let c: S = M::new();</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+
+```
+let c: S = M::new();
+```
+
+- The **type of a variable** serves multiple important purposes, it:
+    1. dictates how the underlying bytes are to be interpreted,
+    1. allows only well-defined operations on these bytes
+    1. prevents random other values or bytes to be written to the location.
+- Here assignment fails to compile since the bytes of `M::new()` cannot be converted to form of type `S`.
+- **Conversions between types will _always_ fail** in general, **unless explicit rule allows it** (coercion, cast, ...).
+
+> As an excercise to the reader, any time you see a value of type A being assignable to a location of some type not-exactly-A you should ask yourself: _through what mechanism is this possible_?
+
+</explanation>
+</lifetime-section>
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <section-header>Scope & Drop</section-header>
+    <memory-row>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <drop><value class="t byte2" style="left: 57px;">S(1)</value><droparrow style="left:37px;">▼</droparrow></drop>
+            <value class="t byte2 hide" style="left: 87.5px;">C(2)</value>
+            <drop><value class="t byte2" style="left: 128px;">S(2)</value><droparrow style="left:107px;">▼</droparrow></drop>
+            <failed style="left: -27.5px;"><value class="t byte2" style="left: 128px;">S(3)</value></failed>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte2" style="left: 97.5px;"><code>t</code></label>
+            <label class="byte2" style="left: 136.5px;"><code>c</code></label>
+        </labels>
+        <subtext>Scope & Drop</subtext>
+        <!-- <subtext><code>{ let a = ...; }</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+{
+    let mut c = S(2);
+    c = S(3);  // <- Drop called on `c` before assignment.
+    let t = S(1);
+    let a = t;
+}   // <- Scope of `a`, `t`, `c` ends here, drop called on `a`, `c`.
+```
+
+- Once the 'name' of a non-vacated variable goes out of (drop-)**scope**, the contained value is **dropped**.
+    - Rule of tumb: execution reaches point where name of variable leaves `{}`-block it was defined in
+    - In detail more tricky, esp. temporaries, ...
+- Drop also invoked when new value assigned to existing variable location.
+- In that case **`Drop::drop()`** is called on the location of that value.
+    - In the example above `drop()` is called on `a`, twice on `c`, but not on `t`.
+- Most values get dropped most of the time; exceptions include `mem::forget()`, `Rc` cycles, `abort()`.
+
+</explanation>
+</lifetime-section>
+
+
+</div></div></div>
+
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-lt-2" name="tab-lt">
+<label class="tab-label" for="tab-lt-2"><b>Call Stack</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+<lifetime-section>
+<lifetime-example>
+    <section-header>Stack Frame</section-header>
+    <memory-row>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2" style="left: 57px;">S(1)</value>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte2" style="left: 97.5px;"><code>x</code></label>
+        </labels>
+        <subtext>Function Boundaries</subtext>
+        <!-- <subtext><code>fn f(x: S) {}</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+fn f(x: S) { ... }
+
+let a = S(1); // <- We are here
+f(a);
+```
+
+- When a **function is called**, memory for parameters (and return values) are reserved on stack.<sup>1</sup>
+- Here before `f` is invoked value in `a` is moved to 'agreed upon' location on stack, and during `f` works like 'local variable' `x`.
+
+<div class="footnotes">
+
+<sup>1</sup> Actual location depends on calling convention, might practically not end up on stack at all, but that doesn't change mental model.
+
+</div>
+
+</explanation>
+</lifetime-section>
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2" style="left: 131px;">S(1)</value>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte2" style="left: 97.5px;"><code>x</code></label>
+            <label class="byte2" style="left: 136px;"><code>x</code></label>
+        </labels>
+        <subtext>Nested Functions</subtext>
+        <!-- <subtext><code>fn f(x: S) { ... f(x) ... }</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+fn f(x: S) {
+    if once() { f(x) } // <- We are here (before recursion)
+}
+
+let a = S(1);
+f(a);
+```
+
+- **Recursively calling** functions, or calling other functions, likewise extends the stack frame.
+- Nesting too many invocations (esp. via unbounded self-recursion) will cause stack to grow, and eventually to overflow, terminating the app.
+
+</explanation>
+</lifetime-section>
+
+
+<lifetime-section>
+
+<lifetime-example class="not-first">
+    <section-header>Validity of Variables</section-header>
+    <memory-row>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t" style="opacity: 0.4;"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2" style="left: 131px;">S(1)</value>
+            <value class="atomic byte4" style="left: 190px;">M { }</value>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte2" style="left: 97.5px;"><code>x</code></label>
+            <label class="byte2" style="left: 174px;"><code>m</code></label>
+        </labels>
+        <subtext>Repurposing Memory</subtext>
+        <!-- <subtext><code>f(x); let m = M::new();</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+fn f(x: S) {
+    if once() { f(x) }
+    let m = M::new() // <- We are here (after recursion)
+}
+
+let a = S(1);
+f(a);
+```
+
+- Stack that previously held a certain type will be repurposed across (even within) functions.
+- Here, recursing on `f` produced second `x`, which after recursion was partially reused for `m`.
+
+> Key take away so far, there are multiple ways how a memory locations that previously held a valid value of a certain type stopped doing so in the meantime.
+> As we will see shortly, this has implications for pointers.
+
+</explanation>
+</lifetime-section>
+
+
+<lifetime-section>
+
+
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-lt-3" name="tab-lt">
+<label class="tab-label" for="tab-lt-3"><b>References & Pointers</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+<lifetime-section>
+<lifetime-example>
+    <section-header class="arrowed">Reference Types</section-header>
+    <memory-row>
+        <arrows>
+            <arrow style="left: 62px; width: 176px;">&nbsp;<tip>▼</tip></value>
+        </arrows>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2" style="left: 57px;">S(1)</value>
+            <value class="ptr byte4" style="left: 171px;">0x3</value>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte4" style="left: 171px;"><code>r</code></label>
+        </labels>
+        <subtext>References as Pointers</subtext>
+        <!-- <subtext><code>let r = &mut a;</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+let a = S(1);
+let r: &S = &a;
+```
+
+- A **reference type** such as `&S` or `&mut S` can hold the **location of** some `s`.
+- Here a type `&S`, bound as name `r`, holds _location of_ variable `a` (`0x3`), that must also be type `S`, obtained via `&a`.
+- If you think of variable `c` as _specific location_, a reference **`r` is a _switchboard for locations_**.
+- The type of the reference, like all other types, can often be inferred, so we omit it from now on:
+    ```
+    let r: &S = &a;
+    let r = &a;
+    ```
+<!-- - References on their own are **never** concerned with the _value within_ the location they point to. -->
+
+</explanation>
+</lifetime-section>
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <section-header class="arrowed">(Mutable) References</section-header>
+    <memory-row>
+        <arrows>
+            <arrow style="left: 62px; width: 176px;">&nbsp;<tip>▼</tip></value>
+        </arrows>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2" style="left: 57px;">S(2)</value>
+            <value class="ptr byte4" style="left: 171px;">0x3</value>
+            <value class="t byte2" style="left: 213px;">S(1)</value>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte4" style="left: 171px;"><code>r</code></label>
+            <label class="byte4" style="left: 193px;"><code>d</code></label>
+        </labels>
+        <subtext>Access to Non-Owned Memory</subtext>
+        <!-- <subtext><code>let d = r.clone(); *r = S(2);</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+let mut a = S(1);
+let r = &mut a;
+let d = r.clone();  // Valid to clone (or copy) from r-target.
+*r = S(2);          // Valid to set new S value to r-target.
+```
+
+
+- References can **read from**  (`&S`) and also **write to** (`&mut S`) location they point to.
+- The *dereference* `*r` means to not use the location of `r` but the **location `r` points to**.
+- In example above, clone `d` is created from `*r`, and `S(2)` written to `*r`.
+    - Method `Clone::clone(&T)` expects a reference itself, which is why we can use `d`, not `*d`.
+    - On assignment `*r = ...` old value in location also dropped (not shown above).
+
+</explanation>
+</lifetime-section>
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row>
+        <arrows>
+            <arrow style="left: 62px; width: 176px;">&nbsp;<tip>▼</tip></value>
+        </arrows>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2 hide" style="left: 57px;">S(2)</value>
+            <value class="ptr byte4" style="left: 171px;">0x3</value>
+            <value class="atomic byte4" style="top:-36px; left: 20px;">M { x }</value>
+            <denied style="left: -71px; top:-36px;">⛔</denied>
+            <denied style="left: -131px;">⛔</denied>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte4" style="left: 171px;"><code>r</code></label>
+            <label class="byte4" style="left: 193px;"><code>d</code></label>
+        </labels>
+        <subtext>References Guard Referents</subtext>
+        <!-- <subtext><code>let d = *r; *r = M::new();</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+let mut a = ...;
+let r = &mut a;
+let d = *a;       // Invalid to move out value, `a` would be empty.
+*r = M::new();    // invalid to store non S value, doesn't make sense.
+```
+
+- While bindings guarantee to always _hold_ valid data, references guarantee to always _point to_ valid data.
+- Esp. `&mut T` must provide same guarantees as variables, and some more as they can't dissolve the target:
+    - They do **not allow writing invalid** data.
+    - They do **not allow moving out** data (would leave target empty w/o owner knowing).
+
+</explanation>
+</lifetime-section>
+
+
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row>
+        <arrows>
+            <arrow style="left: 62px; width: 176px; border-color: red;">&nbsp;<tip style="color: red">▼</tip></value>
+        </arrows>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2 hide" style="left: 57px;">C(2)</value>
+            <value class="ptr byte4 unsafe" style="left: 171px;">0x3</value>
+        </values>
+        <labels>
+            <label class="byte2 hide" style="left: 57px;"><code>c</code></label>
+            <label class="byte4" style="left: 171px;"><code>p</code></label>
+        </labels>
+        <subtext>Raw Pointers</subtext>
+        <!-- <subtext><code>let p: *const S = ...;</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+let p: *const S = questionable_origin();
+```
+
+- In contrast to references, pointers come with almost no guarantees.
+- They may point to invalid or non-existent data.
+- Dereferencing them is `unsafe`, and treating an invalid `*p` as if it were valid is undefined behavior. {{ below(target="#unsafe-unsound-undefined") }}
+
+</explanation>
+</lifetime-section>
+
+</div></div></div>
+
+
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-lt-10" name="tab-lt">
+<label class="tab-label" for="tab-lt-10"><b>Lifetime Basics</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+<lifetime-section>
+<lifetime-example>
+    <memory-row>
+        <memory-backdrop class="past" style="padding-left: 7px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop class="past" style="padding-left: 3px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2 hide" style="left: 57px;">C(2)</value>
+            <value class="ptr byte4 hide" style="left: 171px;">0x3</value>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 37px;"><code>'a</code></label>
+            <label class="byte4" style="left: 59px;"><code>'b: 'c</code></label>
+            <label class="byte2" style="left: 81px;"><code>'c</code></label>
+            <label class="byte4" style="left: 139px;"><code>'d</code></label>
+        </labels>
+        <subtext>"Lifetime" of Things</subtext>
+        <!-- <subtext><code>f(); g(); h();</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+- Every entity in a program has some sort of _time it is alive_.
+- Loosely speaking, this _alive time_ of something can be<sup>1</sup>
+    1. the **LOC** (lines of code) where an **item is available** (e.g., a module name).
+    1. the **LOC** between when a _location_ is **initialized** with a value, and when the location is **abandoned**.
+    1. the **LOC** between when a location is first **used in a certain way**, and when that **usage stops**.
+    1. the LOC (or actual time) between when a _value_ is created, and when that value is dropped.
+- Within the rest of this section, we will refer to the items above:
+    1. as the **scope** of that item, irrelevant here.
+    1. as the **scope** of that variable or location.
+    1. as the **lifetime** of that usage.
+    1. might be useful when discussing open file descriptors, but also irrelevant here.
+- Likewise, lifetime parameters in code, e.g., `r: &'a S`, are
+    - concerned with how long any **location r _points to_** needs to be accessible or locked;
+    - unrelated to the 'existence time' of `r` itself (well, it needs to exist shorter, that's it).
+
+> <sup>1</sup> There is sometimes ambiguity in the docs differentiating the various _scopes_ and _lifetimes_.
+> We try to be pragmatic here, but suggestions are welcome.
+
+</explanation>
+</lifetime-section>
+
+
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row>
+        <memory-backdrop class="past" style="padding-left: 7px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop class="past" style="padding-left: 3px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <arrows>
+            <arrow style="left: 192px; width: 120px;">&nbsp;<tip>▼</tip></value>
+        </arrows>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2 hide" style="left: 38px;">S(0)</value>
+            <value class="t byte2 hide" style="left: 79px;">S(1)</value>
+            <value class="t byte2" style="left: 119px;">S(2)</value>
+            <value class="ptr byte4" style="left: 177px;">0xa</value>
+        </values>
+        <labels>
+            <label class="byte2 hide" style="left: 37px;"><code>a</code></label>
+            <label class="byte2 hide" style="left: 78px;"><code>b</code></label>
+            <label class="byte2" style="left: 118px;"><code>c</code></label>
+            <label class="byte4" style="left: 177px;"><code>r</code></label>
+        </labels>
+        <subtext>Meaning of <code>r: &'c S</code></subtext>
+        <!-- <subtext><code>r: &mut 'c S</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+- Assume you got a `r: &'c S` from somewhere it means:
+    - `r` holds an address of some `S`,
+    - any address `r` points to must and will exist for at least `c`,
+    - the variable `r` itself cannot live longer than `c`.
+
+
+
+</explanation>
+</lifetime-section>
+
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row>
+        <memory-backdrop class="past" style="padding-left: 7px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop class="past" style="padding-left: 3px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <arrows>
+            <arrow style="left: 118px; width: 193px;">&nbsp;<tip>▼</tip></value>
+        </arrows>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2" style="left: 38px;">S(0)</value>
+            <value class="t byte2" style="left: 79px;">S(3)</value>
+            <value class="t byte2" style="left: 119px;">S(2)</value>
+            <value class="ptr byte4" style="left: 177px;">0x6</value>
+            <denied style="left: -125px; top:-25px;">⛔</denied>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 37px;"><code>a</code></label>
+            <label class="byte2" style="left: 78px;"><code>b</code></label>
+            <label class="byte2" style="left: 118px;"><code>c</code></label>
+            <label class="byte4" style="left: 177px;"><code>r</code></label>
+        </labels>
+        <subtext>Typelikeness of Lifetimes</subtext>
+        <!-- <subtext><code>r = &mut b;</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+{
+    let b = S(3);
+    {
+        let c = S(2);
+        let r: &'c S = &c;      // Does not quite work since we can't name lifetimes of local
+        {                       // variables in a function body, but very same principle applies
+            let a = S(0);       // to functions next page.
+            r = &b;
+        }
+    }
+}
+```
+
+- Assume you got a `mut r: &mut 'c S` from somewhere.
+    - That is, a mutable location that can hold a mutable reference.
+- As mentioned, that reference must guard the targeted memory.
+- However, the **`'c` part**, like a type, also **guards what is allowed into `r`**.
+- Here assiging `&b` (`0x6`) to `r` is valid, but `&a` (`0x3`) would not, as location `&b` lives equal or longer than `&c`.
+
+</explanation>
+</lifetime-section>
+
+
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row>
+        <memory-backdrop class="past" style="padding-left: 7px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop class="past" style="padding-left: 3px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <arrows>
+            <arrow style="left: 118px; width: 193px;">&nbsp;<tip>▼</tip></value>
+        </arrows>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t borrowed"></byte>
+            <byte class="t borrowed"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2 hide" style="left: 38px;">S(0)</value>
+            <value class="t byte2" style="left: 79px;">&nbsp;</value>
+            <value class="t byte2 hide" style="left: 119px;">S(2)</value>
+            <value class="ptr byte4" style="left: 177px;">&nbsp;</value>
+            <failed style="left: -40px;"><value class="t bytes">S(4)</value></failed>
+            <denied style="left: -83px;">⛔</denied>
+        </values>
+        <labels>
+            <label class="byte2 hide" style="left: 37px;"><code>a</code></label>
+            <label class="byte2" style="left: 78px;"><code>b</code></label>
+            <label class="byte2 hide" style="left: 118px;"><code>c</code></label>
+            <label class="byte4 hide" style="left: 177px;"><code></code></label>
+        </labels>
+        <subtext>Borrowed State</subtext>
+        <!-- <subtext><code>... = &b; b = S(n);</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+let mut b = S(0);
+let r = &mut b;
+b = S(4);   // Will fail since `b` in borrowed state.
+f(r);
+
+```
+
+- Once the address of a variable is taken via `&b` or `&mut b` the variable is marked as **borrowed**.
+- While borrowed, the content of the addess cannot be modified anymore via the original binding `b`.
+- Once address taken via `&b` or `&mut b` stops being used (in terms of LOC) original binding `b` works again.
+
+
+</explanation>
+</lifetime-section>
+
+
+</div></div></div>
+
+
+<!-- NEW TAB -->
+<div class="tab">
+<input class="tab-radio" type="radio" id="tab-lt-11" name="tab-lt">
+<label class="tab-label" for="tab-lt-11"><b>Lifetime in Functions</b></label>
+<div class="tab-panel">
+<div class="tab-content">
+
+
+<lifetime-section>
+<lifetime-example>
+    <memory-row>
+        <memory-backdrop class="past" style="padding-left: 7px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop class="past" style="padding-left: 3px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t borrowed"></byte>
+            <byte class="t borrowed"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t borrowed"></byte>
+            <byte class="t borrowed"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2 hide" style="left: 38px;">S(0)</value>
+            <value class="t byte2" style="left: 79px;">S(1)</value>
+            <value class="t byte2" style="left: 119px;">S(2)</value>
+            <value class="ptr byte4" style="left: 177px;">?</value>
+            <value class="ptr byte4" style="left: 201px;">0x6</value>
+            <value class="ptr byte4" style="left: 224px;">0xa</value>
+        </values>
+        <labels>
+            <label class="byte2 hide" style="left: 37px;"><code>a</code></label>
+            <label class="byte4" style="left: 59px;"><code>b</code></label>
+            <label class="byte2" style="left: 81px;"><code>c</code></label>
+            <label class="byte4" style="left: 139px;"><code>r</code></label>
+            <label class="byte4" style="left: 165px;"><code>x</code></label>
+            <label class="byte4" style="left: 188px;"><code>y</code></label>
+        </labels>
+        <subtext>Function Parameters</subtext>
+        <!-- <subtext><code>let r = f(&b, &c);</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+fn f(x: &S, y:&S) -> &u8 { ... }
+
+let b = S(1);
+let c = S(2);
+
+let r = f(&b, &c);
+```
+
+- When calling functions that take and return references two interesting things happen:
+    - Local variables are placed in a borrowed state
+    - It is, during compilation, unknown which address will be returned.
+
+
+
+</explanation>
+</lifetime-section>
+
+
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row>
+        <memory-backdrop class="past" style="padding-left: 7px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop class="past" style="padding-left: 3px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t maybe-borrowed"></byte>
+            <byte class="t maybe-borrowed"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t maybe-borrowed"></byte>
+            <byte class="t maybe-borrowed"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2 hide" style="left: 38px;">S(0)</value>
+            <value class="t byte2" style="left: 79px;">S(1)</value>
+            <value class="t byte2" style="left: 119px;">S(2)</value>
+            <value class="ptr byte4" style="left: 177px;">?</value>
+            <value class="ptr byte4 hide" style="left: 201px;">0x6</value>
+            <value class="ptr byte4 hide" style="left: 224px;">0xa</value>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 37px;"><code>a</code></label>
+            <label class="byte4" style="left: 59px;"><code>b</code></label>
+            <label class="byte2" style="left: 81px;"><code>c</code></label>
+            <label class="byte4" style="left: 139px;"><code>r</code></label>
+            <label class="byte4 hide" style="left: 165px;"><code>x</code></label>
+            <label class="byte4 hide" style="left: 188px;"><code>y</code></label>
+        </labels>
+        <subtext>Problem of 'Borrowed' Propagation</subtext>
+        <!-- <subtext><code>let a = b;</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+let b = S(1);
+let c = S(2);
+
+let r = f(&b, &c);
+
+let a = b;   // Are we allowed to do this?
+let a = c;   // Which one is _really_ borrowed?
+
+print_byte(r);
+```
+
+- Since `f` can return only one address, only one of `b` and `c` needs to stay locked.
+
+
+</explanation>
+</lifetime-section>
+
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row>
+        <memory-backdrop class="past" style="padding-left: 7px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop class="past" style="padding-left: 3px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <arrows>
+            <arrow style="left: 210px; width: 102px;">&nbsp;<tip>▼</tip></value>
+        </arrows>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t borrowed"></byte>
+            <byte class="t borrowed"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2" style="left: 38px;">S(1)</value>
+            <value class="t byte2 hide" style="left: 79px;">S(1)</value>
+            <value class="t byte2" style="left: 119px;">S(2)</value>
+            <value class="ptr byte4" style="left: 177px;">y + _</value>
+            <value class="ptr byte4 hide" style="left: 201px;">0x6</value>
+            <value class="ptr byte4 hide" style="left: 224px;">0xa</value>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 37px;"><code>a</code></label>
+            <label class="byte4" style="left: 59px;"><code>b</code></label>
+            <label class="byte2" style="left: 81px;"><code>c</code></label>
+            <label class="byte4" style="left: 139px;"><code>r</code></label>
+            <label class="byte4 hide" style="left: 165px;"><code>x</code></label>
+            <label class="byte4 hide" style="left: 188px;"><code>y</code></label>
+        </labels>
+        <subtext>Lifetimes Propagate Borrowed State</subtext>
+        <!-- <subtext><code>f(x: &'x S, y: &'y S) -> &'y u8</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+fn f<'b, 'c>(x: &'b S, y: &'c S) -> &'c u8 { ... }
+
+let b = S(1);
+let c = S(2);
+
+let r = f(&b, &c); // We know returned reference is `c`-based, which must stay locked,
+                   // while `b` is free to move.
+
+let a = b;
+
+print_byte(r);
+```
+
+- In function signatures, the primary purpose of lifetime parameters `'x`, is to communicate
+    - **outside the function** to explain based on which input an output parameter is generated,
+    - **within the function** to guarantee only addresses that live at least `'x` are assigned.
+
+</explanation>
+</lifetime-section>
+
+
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row>
+        <memory-backdrop class="past" style="padding-left: 7px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte class="atomic"></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop class="past" style="padding-left: 3px;">
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2 hide" style="left: 38px;">S(1)</value>
+            <value class="t byte2 hide" style="left: 79px;">S(1)</value>
+            <value class="t byte2" style="left: 119px;">S(2)</value>
+            <value class="ptr byte4 hide" style="left: 177px;">y + 1</value>
+            <value class="ptr byte4 hide" style="left: 201px;">0x6</value>
+            <value class="ptr byte4 hide" style="left: 224px;">0xa</value>
+        </values>
+        <labels>
+            <label class="byte2 hide" style="left: 37px;"><code>a</code></label>
+            <label class="byte4 hide" style="left: 59px;"><code>b</code></label>
+            <label class="byte2" style="left: 81px;"><code>c</code></label>
+            <label class="byte4 hide" style="left: 139px;"><code>r</code></label>
+            <label class="byte4 hide" style="left: 165px;"><code>x</code></label>
+            <label class="byte4 hide" style="left: 188px;"><code>y</code></label>
+        </labels>
+        <!-- <subtext><code>{ let r = ... }</code></subtext> -->
+        <subtext>Unlocking</subtext>
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+let mut c = S(2);
+
+let r = f(&c);
+let s = r;
+                    // <- Not here, `s` prolongs locking of `c`.
+
+print_byte(s);
+
+let a = c;          // <- But here, no more use of `r` or `s`.
+
+
+```
+- A variable location is _unlocked_ again once the last use of any reference that may point to it ends.
+
+</explanation>
+</lifetime-section>
+
+
+
+
+</div></div></div>
+
+
+<!-- End tabs section -->
+</div>
+
+<div class="footnotes">
+
+Examples expand by clicking.
+
+</div>
+
+
+
+{{ tablesep() }}
+
+
+
+
 ## Language Sugar
 
 If something works that "shouldn't work now that you think about it", it might be due to one of these.
@@ -900,7 +3433,7 @@ Essential types built into the core of the language.
 Sample bit representation<sup>*</sup> for a `f32`:
 
 <!-- NEW ENTRY -->
-<datum class="centered" style="opacity:0.7; margin-bottom:10px;">
+<datum style="opacity:0.7; margin-bottom:10px;">
     <visual class="float">
     <bitgroup>
         <bit><code>S</code></bit>
@@ -1160,7 +3693,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
 <datum style="margin-right:70px;">
     <name class="nogrow"><code>struct S; </code></name>
     <name class="hidden"><code>;</code></name>
-    <visual style="width: 15px;" class="empty">
+    <visual style="width: 15px;" class="zst">
         <code></code>
     </visual>
     <description>Zero-Sized {{ below(target = "#sized-types") }} </description>
@@ -3007,226 +5540,6 @@ That gives the following advantages and disadvantages:
 {{ tablesep() }}
 
 
-## Reading Lifetimes
-
-Lifetimes can be overwhelming at times. Here is a simplified guide on how to read and interpret constructs containing lifetimes if you are familiar with C.
-
-<xxx>
-    <meta-lane>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty><byte2><xx>S(1)<xx></byte2></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-    </meta-lane>
-    <meta-lane>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty><label2><xx>s1<xx></label2></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-        <empty></empty>
-    </meta-lane>
-    <memory-lane>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-        <byte></byte>
-    </memory-lane>
-</xxx>
-
-
-<div class="header-magenta">
-
-| Construct | How to read |
-|--------| -----------|
-| `let s: S = S(0)`  | A location that is `S`-sized, named `s`, and contains the value `S(0)`.|
-|   | If declared with `let`, that location lives on the stack. {{ note( note="1") }} |
-|   | Generally, `s` can mean _location of `s`_, and _value within `s`_. |
-|   | As a location, `s = S(1)` means, assign value `S(1)` to location `s`. |
-|   | As a value, `f(s)` means call `f` with value inside of `s`. |
-|   | To explicitly talk about its location (address) we do `&s`. |
-|   | To explicitly talk about a location that can hold such a location we do `&S`. |
-| `&'a S`  | A `&S` is a **location that can hold** (at least) **an address**, called reference. |
-|   | Any address stored in here must be that of a valid `S`. |
-|   | Any address stored must be proven to exist for at least (_outlive_) duration `'a`. |
-|   | In other words, the `&S` part sets bounds for what any address here must contain. |
-|   | While the `&'a` part sets bounds for how long any such address must at least live. |
-|   | The lifetime our containing location is unrelated, but naturally always shorter. |
-|   | Duration of `'a` is purely compile time view, based on static analysis. |
-| `&S`  | Sometimes `'a` might be elided (or can't be specified) but it still exists. |
-|   | Within methods bodies, lifetimes are determined automatically. |
-|   | Within signatures, lifetimes may be 'elided' (annotated automatically). |
-|  `&s` | This will produce the **actual address of location `s`**, called 'borrow'. |
-|   | The moment `&s` is produced, location `s` is put into a **borrowed state**. |
-|   | Checking if in borrowed state is based on compile-time analysis. |
-|   | This analysis is based on all possible address propagation paths. |
-|   | As long as **any** `&s` could be around, `s` cannot be altered directly. |
-|   | For example, in `let a = &s; let b = a;`, also `b` needs to go. |
-|   | Borrowing of `s` stops once last `&s` is last used, not when `&s` dropped. |
-| `&mut s` | Same, but will produce a mutable borrow. |
-|   | A `&mut` will allow the *owner of the borrow* (address) to change `s` content. |
-|   | This reiterates that not the value in `s`, but location of `s` is borrowed. |
-
-<div class="footnotes">
-
-<sup>1</sup> Compare [Data Structures](#data-structures) section above: while true for synchronous code, an `async` 'stack frame' might actually be placed on to the heap by the used async runtime.
-
-</div>
-
-
-
-{{ tablesep() }}
-
-When reading function or type signatures in particular:
-
-| Construct | How to read |
-|--------| -----------|
-| `S<'a> {}` | Signals that `S` will contain{{ note( note="*") }} at least one address (i.e., reference). |
-|  | `'a` will be determined automatically by the user of this struct. |
-|  | `'a` will be chosen as small as possible. |
-| `f<'a>(x: &'a T)`  | Signals this function will accept an address (i.e., reference). |
-| {{ tab() }} {{ tab() }} {{ tab() }} {{ tab() }} `-> &'a S` | ... and that it returns one. |
-|   | `'a` will be determined automatically by the caller. |
-|   | `'a` will be chosen as small as possible. |
-|   | `'a` will be picked so that it **satisfies input and output** at call site. |
-|   | More importantly, **propagate borrow state** according to lifetime names! |
-|   | So while result address with `'a` is used, input address with `'a` is locked.  |
-|   | Here: while `s` from `let s = f(&x)` is around, `x` counts as 'borrowed'. |
-| `<'a, 'b: 'a>` | The lifetimes declared in `S<>` and `f<>` can also have bounds. |
-|  | The `<'a, 'b>` part means the type will handle at least 2 addresses. |
-|  | The `'b: 'a` part is a **lifetime bound**, and means `'b` must **outlive** `'a`. |
-|  | Any address in an `&'b X` must exist at least as long as any in an `&'a Y`. |
-
-<div class="footnotes">
-
-<sup>*</sup> Technically the struct may not hold any data (e.g., when using the `'a` only for [PhantomData](https://doc.rust-lang.org/std/marker/struct.PhantomData.html) or function pointers) but still make use of the `'a` for communicating and requiring that some of its functions require reference of a certain lifetime.
-
-</div>
-
-</div>
-
- <!--
- TODO: ADVANCED GUIDE TO WORKING WIHT LIFETIMES
-
- Taking into account
- - slightly confusing cases like https://stackoverflow.com/questions/42637911/how-can-this-instance-seemingly-outlive-its-own-parameter-lifetime
- - interplay between lifetime-baseed subtyping and assignability
- - reading rules for when temporaries are created (note to self, compare 4abdb9f16b01c51562563b44f6593dc98f675210 in my playground)
-- simplified version of https://doc.rust-lang.org/nomicon/subtyping.html
-
- -->
-
-
-{{ tablesep() }}
-
 
 
 ## Unsafe, Unsound, Undefined
@@ -3432,13 +5745,7 @@ When updating an API, these changes can break client code, compare [**RFC 1105**
 
 ## Links & Services
 
-These are other great visual guides and tables.
-
-{{ tool(src="link_containers.png", title="Containers", url="https://docs.google.com/presentation/d/1q-c7UAyrUlM-eZyTo1pd8SZ0qwA_wYxmPZVOQkoDmH4/edit") }}
-{{ tool(src="link_railroad.png", title="Macro Railroad", url="https://lukaslueg.github.io/macro_railroad_wasm_demo/") }}
-{{ tool(src="link_lifetimes.png", title="Lifetimes", url="https://rufflewind.com/2017-02-15/rust-move-copy-borrow") }}
-
-{{ tablesep() }}
+These are other great guides and tables.
 
 
 <div class="header-lavender">

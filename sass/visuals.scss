@@ -1,0 +1,764 @@
+
+// A span-like box, that can appear anywhere on the page, containing a visual representation
+// of some memory (e.g., Vec<T>), including a description and meta information.
+datum {
+    box-sizing: border-box;
+    display: inline-block;
+    border-collapse: collapse;
+    vertical-align: top;
+    margin-bottom: 25px;
+    font-size: 14px;
+
+    // For debugging purposes only
+    // border-style: solid;
+    // border-width: 1px;
+    // border-color: red;
+    // border-radius: 5px;
+
+    // Name of a type, shows first thing in a datum
+    name {
+        font-size: 15px;
+        text-align: left;
+        display: block;
+    }
+
+    // Prevents a datum entry (esp. a name) from growing the whole box.
+    .nogrow {
+        position: absolute; // TODO: Why does this here work again since parent isn't doesn't specify `position`?
+    }
+
+    // Hides an entry (esp. name), if that name was used as a sizing trick
+    .hidden {
+        visibility: hidden;
+    }
+
+    // The bread-and-butter elemetn, contains most actual visual representation.
+    // Some elements (like enums) might contain multiple of these
+    visual {
+        text-align: center;
+        // background-color: salmon;
+        background-color: #f2f2f2;
+        border-style: solid;
+        border-width: 1px;
+        border-color: darkgray;
+        border-radius: 5px;
+        display: block;
+        padding: 5px;
+
+
+        // Next to pointers, visualize the "other thing" that be be in fat pointers for slices & co.
+        payload {
+            display: inline-block;
+            width: 80px;
+            background-color: whitesmoke;
+            border-style: dashed;
+            border-width: 1px;
+            border-color: black;
+            border-radius: 5px;
+        }
+
+        // In some places we don't want our Rust-like color scheme b/c we have conflicting
+        // background colors.
+        .token.class-name, .token.keyword {
+            color: black;
+        }
+
+    }
+
+
+    // Visual representation of zero sized types
+    visual.zst {
+        opacity: 0.4;
+        border-style: dashed;
+    }
+
+    // Highlights unsafe types
+    visual.unsafe {
+        position: relative;
+        top: -3px;
+        border-style: solid;
+        border-width: 3px;
+        border-color: red;
+    }
+
+    // Inside the visual representation of memory, small plain text giving further explanations.
+    note {
+        font-size:9px;
+        display: inline-block;
+    }
+
+    // General visual representation of a byte contained in a memory location.
+    byte {
+        display: inline-block;
+        // background-color: mistyrose;
+        border-style: dashed;
+        border-width: 1px;
+        border-color: black;
+        border-radius: 5px;
+        width: 15px;
+        height: 28px;
+    }
+
+    // Same for "word" (here: something bigger than byte)
+    word {
+        display: inline-block;
+        // background-color: mistyrose;
+        border-style: dashed;
+        border-width: 1px;
+        border-color: black;
+        border-radius: 5px;
+        width: 30px;
+        height: 28px;
+    }
+
+    // The whitish bar below an element (originally intended to) contain an more detail
+    // information.
+    zoom {
+        background-color: cornsilk;
+        display: block;
+        border-style: solid;
+        border-width: 1px;
+        border-color: gray;
+        position: relative;
+        text-align: center;
+        width: 106%;
+        left: -3%;
+        top: -2px;
+        z-index: -100;
+        font-size: 12px;
+    }
+
+    // Sits below everything else and gives a general description and notes on that type / datum.
+    description {
+        display: block;
+        word-wrap: break-word;
+        font-size: 10px;
+    }
+
+
+    // Used primarily for the `f32` visual representation
+    bitgroup {
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+        padding: 2px;
+
+        bit {
+            margin: 0px;
+            padding: 0px;
+        }
+    }
+
+
+
+
+    // One of these boxes that sit below pointers and explain what that pointer pointed to.
+    // Contains other elements
+    memory-entry {
+        display: inline-block;
+        vertical-align: top;
+        position:relative;
+        width: 80px;
+
+        // In some places we don't want our Rust-like color scheme b/c we have conflicting
+        // background colors.
+        .token.class-name, .token.keyword {
+            color: black;
+        }
+
+
+        // The bread-and-butter for memory entries, contains the actual visual elements
+        // that make up the memory
+        memory {
+            display: inline-block;
+            padding: 5px;
+            padding-bottom: 14px;
+            font-size: 120%;
+            text-align: center;
+            position: relative;
+            border-style: dashed;
+            border-radius: 5px;
+            border-width: 1px;
+            border-color: gray;
+            width: 80%;
+            left: 5%;
+            top: 5px;
+            z-index: 100;
+            margin-bottom: 10px;
+            opacity: 0.4;
+        }
+
+        memory.extrapadding {
+            padding-bottom: 15px;
+        }
+
+        memory.heap {
+            background-color: #c6dbe7;
+        }
+
+        memory.anymem {
+            background-color: rgb(253, 236, 220);
+        }
+
+        memory.static {
+            background-color: burlywood;
+        }
+
+        memory.static-vtable {
+            background-color: burlywood;
+        }
+
+        memory.anymem::after {
+            content: "(any mem)";
+            display: block;
+            position: absolute;
+            bottom: 0px;
+            right: 2px;
+            font-size: 9px;
+        }
+
+        memory.heap::after {
+            content: "(heap)";
+            display: block;
+            position: absolute;
+            bottom: 0px;
+            right: 2px;
+            font-size: 9px;
+        }
+
+
+        memory.static::after {
+            content: "(static)";
+            display: block;
+            position: absolute;
+            bottom: 0px;
+            right: 2px;
+            font-size: 9px;
+        }
+
+        memory.static-vtable::after {
+            content: "(static vtable)";
+            display: block;
+            position: absolute;
+            bottom: 0px;
+            right: 2px;
+            font-size: 9px;
+        }
+
+        // The small, black line connecting a pointer with its memory
+        memory-link {
+            display: block;
+            position: absolute;
+            top: -8px;
+            height: 7px;
+            font-size: 10px;
+            border-width: 1px;
+            border-color: gray;
+            z-index: -50;
+        }
+    }
+
+    memory-entry.double {
+        width: 180px;
+        // left:-40px;
+    }
+
+    memory-entry.quad {
+        width: 300px;
+        left:0px;
+    }
+
+
+    // The framed border around most visual types
+    framed {
+        display: inline-block;
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+
+        // Needed to suppress iOS font rendering over border
+        padding-bottom: 1px;
+
+    }
+
+    // ... something with enums ...
+    pad {
+        background-color: lightgreen;
+        border-style: dotted;
+        border-width: 1px;
+        border-radius: 0px;
+        border-color: black;
+
+        // Needed to suppress iOS font rendering over border
+        padding-bottom: 2px;
+
+    }
+
+    // ... same ....
+    andor {
+        display: block;
+        text-align: center;
+        font-size: 10px;
+    }
+
+
+    // "Subscript" line in memory showing what capacity means
+    capacity {
+        position:absolute;
+        width:100%;
+        left:-4px;
+        bottom: -4px;
+    }
+
+    // Pointers and referenfces
+    ptr {
+        display: inline-block;
+        width: 80px;
+        background-color: lightskyblue;
+    }
+
+    // Sized types
+    sized {
+        background-color: cyan;
+        display: inline-block;
+        width: 80px;
+    }
+
+
+
+
+
+    //
+    // VISUAL COLORS AND BASIC STYLES OF MOST TYPE ELEMENTS
+    //
+    // (Yes this is a bit inconsistent, some tags bring their own colors, while most
+    //  others take a class ...)
+    //
+
+    .bytes {
+        background-color: lightgreen;
+    }
+
+    .char {
+        background-color: sandybrown;
+    }
+
+    .sized {
+        background-color: cyan;
+    }
+
+    .atomic {
+        background-color: mediumseagreen;
+    }
+
+    .float {
+        background-color: orchid;
+    }
+
+    .ptr {
+        background-color: lightskyblue;
+    }
+
+    .any {
+        background-color: salmon;
+    }
+
+    .cell {
+        background-color: gold;
+    }
+
+    .platformdefined {
+        background-color:lightgrey;
+        border-style: dashed;
+        border-width: 2px;
+        border-color: darkblue;
+    }
+
+    .celled {
+        // background-color: gold;
+        border-style: solid;
+        box-sizing: border-box;
+        border-width: 4px;
+        border-color: gold;
+        // box-shadow:0px 0px 0px 4px inset gold;
+    }
+
+
+    .atomicx {
+        // background-color: gold;
+        border-style: solid;
+        box-sizing: border-box;
+        border-width: 4px;
+        border-color: mediumseagreen;
+        // box-shadow:0px 0px 0px 4px inset gold;
+    }
+
+    .enum {
+        background-color: lightgoldenrodyellow;
+    }
+
+    .t {
+        background-color: salmon;
+        width: 30px;
+    }
+
+    .unsized::before {
+        content: " ←";
+        padding-left: 2px;
+    }
+
+    .unsized::after {
+        content: "→ ";
+        padding-right: 2px;
+    }
+
+
+    //
+    //
+    // OVERRIDES & ADJUSTMENTS FOR COMMON TAGS
+    //
+    //
+
+    // Make sure colors for code are consistent ... ugly as fuck, but works
+    code {
+        display: table-column;
+        background-color: inherit !important;
+        text-align: center !important;
+        vertical-align: middle;
+        text-shadow: 0em 0em !important;
+    }
+
+    sub {
+        font-size: 50%;
+    }
+
+    tr.vtable {
+        border: 1px hsl(0, 0%, 95%) solid;
+        background: inherit !important;
+    }
+}
+
+// Small datums need a bit of extra spacing or they look ugly
+datum.spaced {
+    margin-right: 30px;
+}
+
+
+// ... Can't remember why we needed these but they still look important.
+spacer {
+    display: inline-block;
+    width: 15px;
+    height: 10px;
+}
+
+
+// This contains a whole lifetime-example including description
+// and everything. Once this is hidden, nothing remains of that example.
+lifetime-section {
+
+    // The detailed explanation with code and bullets
+    explanation {
+        display: none;
+    }
+}
+
+
+// One vertical bar that stretches the whole width, containing a visual memory
+// representation, along with labels, ...
+//
+// Primarily a helper container just in case we want add things part of the lifetime example
+// but not part of the row
+lifetime-example {
+    display: inline-block;
+    // height: 60px;
+    width: 99%;
+    margin-bottom: 0px;
+
+    // Colored title bar to better visually separate entries
+    section-header {
+        width: 100%;
+        // display: block;
+        display: none;
+        font-weight: bold;
+        margin-bottom: 10px;
+        background-color: rgb(241, 235, 241);
+        // background-color: rgb(228, 207, 231);
+    }
+
+    // We we use arrows below we need more space
+    section-header.arrowed {
+        margin-bottom: 15px;
+    }
+
+    // Holds the memory row, which is byts, labels, values, ...
+    memory-row {
+        width: 100%;
+        position: relative;
+
+        // Contains bytes in particular in a visually distinct shape
+        memory-backdrop {
+            width: 100%;
+            overflow-x: hidden;
+            white-space: nowrap;
+            display: block;
+            user-select: none;  // otherwise toggling description causes empty space to highlight
+        }
+
+        memory-backdrop.past {
+            height: 5px;
+            opacity: 0.25;
+        }
+
+        // Used for references and pointers
+        arrows {
+            position: relative;
+            display: block;
+            height: 0px;
+            top: -8px;
+
+            arrow {
+                border-width: 1px;
+                border-left-style: solid;
+                border-top-style: solid;
+                border-right-style: solid;
+                border-spacing: inherit;
+                border-color: lightskyblue;
+                // opacity: 0.4;
+                box-sizing: border-box;
+
+                display: inline-block;
+                position: relative;
+
+                tip {
+                    position: absolute;
+                    line-height: 7px;
+                    font-size: 7px;
+                    color: lightskyblue;
+                    top: 2px;
+                    left: -4px;
+                }
+            }
+        }
+
+
+        // Contains value boxes that visually sit on top of bytes
+        values {
+            position: relative;
+            display: block;
+            height: 0px;
+            top: -30px;
+
+            denied {
+                display: inline-block;
+                position: relative;
+            }
+
+            failed {
+                display: inline-block;
+                position: relative;
+
+                top: -30px;
+
+                value {
+                    transform: rotate(-20deg);
+                }
+            }
+
+            drop {
+                display: inline-block;
+                position: relative;
+
+                top: 10px;
+
+
+                droparrow {
+                    display: inline-block;
+                    position: relative;
+                    bottom: -12px;
+                    font-size: 10px;
+                }
+            }
+
+
+            value {
+                display: inline-block;
+                position: relative;
+
+                text-align: center;
+                font-size: 0.8em;
+                font-family: "Fira Code", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace;
+                line-height: 22px;
+
+                border-width: 1px;
+                border-style: solid;
+                border-spacing: inherit;
+                box-sizing: border-box;
+                border-radius: 5px;
+            }
+
+            value.unsafe {
+                border-color: red;
+                border-width: 2px;
+            }
+        }
+
+
+        // Text below value boxes with variable names & co
+        labels {
+            position: relative;
+            display: block;
+            height: 0px;
+
+            label {
+                display: inline-block;
+                position: relative;
+
+                text-align: center;
+            }
+        }
+
+        // The single line immediately below the example
+        subtext {
+            position: relative;
+            display: block;
+            width: 100%;
+            text-align: right;
+            top: 0px;
+            // color:purple;
+            color: rgb(100, 4, 117);
+            font-weight: bold;
+            // background-color: magenta;
+        }
+
+        .byte2 {
+            width: 30px;
+            height: 22px;
+        }
+
+        .byte4 {
+            width: 66px;
+            height: 22px;
+        }
+    }
+
+    memory-row:hover {
+        cursor: pointer;
+    }
+
+    // Single visual byte, mostly contained in the memory-backdrop
+    byte {
+        display: inline-block;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #aaa;
+        border-radius: 5px;
+        width: 15px;
+        height: 28px;
+        background-color: rgb(253, 236, 220);
+    }
+
+    // Locations that are borrowed.
+    byte.borrowed {
+        border-color: black;
+        border-width: 2px;
+    }
+
+    // Locations that might be borrowed.
+    byte.maybe-borrowed {
+        border-color: black;
+        border-width: 2px;
+        border-style: dotted;
+    }
+
+    .t {
+        background-color: salmon;
+    }
+
+    .ptr {
+        background-color: lightskyblue;
+    }
+
+    .atomic {
+        background-color: mediumseagreen;
+    }
+
+    .hide {
+        visibility: hidden;
+    }
+
+
+    meta-lane {
+        width: 100%;
+        overflow-x: hidden;
+        white-space: nowrap;
+        display: block;
+        position: absolute;
+        height: 100px;
+    }
+
+
+    empty {
+        display: inline-block;
+        // background-color: mistyrose;
+        // border-style: dashed;
+        // border-width: 1px;
+        // border-color: black;
+        // border-radius: 5px;
+        width: 15px;
+        height: 28px;
+        position: relative;
+    }
+
+    label2 {
+        display: inline-block;
+        box-sizing: border-box;
+        // padding: 5px;
+        border-radius: 5px;
+        font-family: "Fira Code", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace;
+        width: 30px;
+        height: 22px;
+        top: 30px;
+        left: 2px;
+        position: absolute;
+        text-align: center;
+    }
+}
+
+lifetime-example.not-first {
+    margin-top: 40px;
+}
+
+
+// Experimental dynamic examples ... maybe later
+
+.ticktock.ticked .tick {
+    visibility: inherit;
+}
+
+.ticktock.ticked .tick.nodisplay {
+    display: inherit;
+}
+
+.ticktock.tocked .tick {
+    visibility: hidden;
+}
+
+.ticktock.tocked .tick.nodisplay {
+    display: none;
+}
+
+.ticktock.ticked .tock {
+    visibility: hidden;
+}
+
+.ticktock.ticked .tock.nodisplay {
+    display: none;
+}
+
+.ticktock.tocked .tock {
+    visibility: inherit;
+}
+
+.ticktock.tocked .tock.nodisplay {
+    display: inherit;
+}
