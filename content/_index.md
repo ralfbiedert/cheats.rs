@@ -1876,6 +1876,7 @@ PRs for this section are very welcome. Idea is:
 |---------|-------------|
 | Parse a number | `"42".parse::<u32>()?` |
 | Create a new file | `OpenOptions::new().create(true).write(true).open(PATH)?` |
+| Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
 | Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
 | {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
 
