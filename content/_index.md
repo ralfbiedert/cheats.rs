@@ -49,7 +49,7 @@ insert_anchor_links = "right"
 * [Miscellaneous](#miscellaneous)
 
 **Behind the Scenes**
-* [Memory & Lifetimes](#memory-lifetimes)
+* [Memory & Lifetimes](#memory-lifetimes)<sup>🔥new</sup>
 * [Language Sugar](#language-sugar)
 
 
@@ -740,12 +740,12 @@ Why moves, references and lifetimes are how they are.
 </lifetime-example>
 <explanation>
 
-- Application memory is large array of unstructured bytes
-- Memory segmented into
-    - **stack** (most variables go here)
-    - **heap** (large, flexible memory, but always handled via stack proxy like `Box<T>`)
-    - **static** (most commonly used as resting place for `str` part of `&str`)
-- Segementation mostly irrelevant for us, real magic happens on stack.
+- Application memory is a large array of unstructured bytes.
+- Memory is segmented, amongst others, into:
+    - **stack** (most variables go here),
+    - **heap** (large, flexible memory, but always handled via stack proxy like `Box<T>`),
+    - **static** (most commonly used as resting place for `str` part of `&str`).
+- Most real magic happens on stack, which is our focus.
 
 
 </explanation>
@@ -820,23 +820,22 @@ let t = S(1);
 
 - Reserves memory location with name `t` of type `S` and the value `S(1)` stored inside.
 - If declared with `let` that location lives on stack. <sup>1</sup>
-- Generally, `t` can mean **location of** `t`, here `0x7`, and **value within** `t`, here `S(1)`.
-- Note that the term **_variable_** has some **linguistic ambiguity**, it can mean:
+- Note that the term **_variable_** has some **linguistic ambiguity**,<sup>2</sup> it can mean:
     1. the **name** of the location ("rename that variable"),
     1. the **location** itself, `0x7` ("tell me the address of that variable"),
     1. the **value** contained within, `S(1)` ("increment that variable").
-
-> It is the **author's opinion** <sup>💬</sup>  that the linguistic ambiguity around "variables" (and "lifetimes" and "scopes" later)
-> are some one of the biggest
-> contributors to the confusion around learning the basics of lifetimes. Whenever you hear something
-> like "the _variable_ is borrowed", ask yourself "_what_ exactly is borrowed here"?
-
+- Specifically towards the compiler `t` can mean **location of** `t`, here `0x7`, and **value within** `t`, here `S(1)`.
 
 <div class="footnotes">
 
 <sup>1</sup> Compare above,{{ above(target="#data-structures" ) }} true for fully synchronous code, but `async` stack frame might placed it on heap via runtime.
 
 </div>
+
+> <sup>2</sup> It is the **author's opinion** that this ambiguity related to _variables_ (and _lifetimes_ and _scope_ later)
+> are some of the biggest
+> contributors to the confusion around learning the basics of lifetimes. Whenever you hear one of these terms ask yourself "what _exactly_ is meant here?"
+
 
 </explanation>
 </lifetime-section>
@@ -989,9 +988,9 @@ let c: S = M::new();
 ```
 
 - The **type of a variable** serves multiple important purposes, it:
-    1. dictates how the underlying bytes are to be interpreted,
-    1. allows only well-defined operations on these bytes
-    1. prevents random other values or bytes to be written to the location.
+    1. dictates how the underlying bits are to be interpreted,
+    1. allows only well-defined operations on these bits
+    1. prevents random other values or bits from being written to that location.
 - Here assignment fails to compile since the bytes of `M::new()` cannot be converted to form of type `S`.
 - **Conversions between types will _always_ fail** in general, **unless explicit rule allows it** (coercion, cast, ...).
 
@@ -1080,7 +1079,7 @@ let c: S = M::new();
 - Drop also invoked when new value assigned to existing variable location.
 - In that case **`Drop::drop()`** is called on the location of that value.
     - In the example above `drop()` is called on `a`, twice on `c`, but not on `t`.
-- Most values get dropped most of the time; exceptions include `mem::forget()`, `Rc` cycles, `abort()`.
+- Most non-`Copy` values get dropped most of the time; exceptions include `mem::forget()`, `Rc` cycles, `abort()`.
 
 </explanation>
 </lifetime-section>
@@ -1248,7 +1247,7 @@ f(a);
 ```
 
 - **Recursively calling** functions, or calling other functions, likewise extends the stack frame.
-- Nesting too many invocations (esp. via unbounded self-recursion) will cause stack to grow, and eventually to overflow, terminating the app.
+- Nesting too many invocations (esp. via unbounded recursion) will cause stack to grow, and eventually to overflow, terminating the app.
 
 </explanation>
 </lifetime-section>
@@ -1330,7 +1329,7 @@ f(a);
 - Stack that previously held a certain type will be repurposed across (even within) functions.
 - Here, recursing on `f` produced second `x`, which after recursion was partially reused for `m`.
 
-> Key take away so far, there are multiple ways how a memory locations that previously held a valid value of a certain type stopped doing so in the meantime.
+> Key take away so far, there are multiple ways how memory locations that previously held a valid values of a certain type stopped doing so in the meantime.
 > As we will see shortly, this has implications for pointers.
 
 </explanation>
@@ -1420,9 +1419,9 @@ let r: &S = &a;
 ```
 
 - A **reference type** such as `&S` or `&mut S` can hold the **location of** some `s`.
-- Here a type `&S`, bound as name `r`, holds _location of_ variable `a` (`0x3`), that must also be type `S`, obtained via `&a`.
-- If you think of variable `c` as _specific location_, a reference **`r` is a _switchboard for locations_**.
-- The type of the reference, like all other types, can often be inferred, so we omit it from now on:
+- Here type `&S`, bound as name `r`, holds _location of_ variable `a` (`0x3`), that must be type `S`, obtained via `&a`.
+- If you think of variable `c` as _specific location_, reference **`r` is a _switchboard for locations_**.
+- The type of the reference, like all other types, can often be inferred, so we might omit it from now on:
     ```
     let r: &S = &a;
     let r = &a;
@@ -1508,9 +1507,9 @@ let d = r.clone();  // Valid to clone (or copy) from r-target.
 
 
 - References can **read from**  (`&S`) and also **write to** (`&mut S`) location they point to.
-- The *dereference* `*r` means to not use the location of `r` but the **location `r` points to**.
+- The *dereference* `*r` means to neither use the _location of_ or _value within_ `r`, but the **location `r` points to**.
 - In example above, clone `d` is created from `*r`, and `S(2)` written to `*r`.
-    - Method `Clone::clone(&T)` expects a reference itself, which is why we can use `d`, not `*d`.
+    - Method `Clone::clone(&T)` expects a reference itself, which is why we can use `r`, not `*r`.
     - On assignment `*r = ...` old value in location also dropped (not shown above).
 
 </explanation>
@@ -1847,23 +1846,26 @@ let p: *const S = questionable_origin();
 </lifetime-example>
 <explanation>
 
-- Every entity in a program has some sort of _time it is alive_.
-- Loosely speaking, this _alive time_ of something can be<sup>1</sup>
+- Every entity in a program has some _time it is alive_.
+- Loosely speaking, this _alive time_ can be<sup>1</sup>
     1. the **LOC** (lines of code) where an **item is available** (e.g., a module name).
     1. the **LOC** between when a _location_ is **initialized** with a value, and when the location is **abandoned**.
     1. the **LOC** between when a location is first **used in a certain way**, and when that **usage stops**.
-    1. the LOC (or actual time) between when a _value_ is created, and when that value is dropped.
-- Within the rest of this section, we will refer to the items above:
-    1. as the **scope** of that item, irrelevant here.
-    1. as the **scope** of that variable or location.
-    1. as the **lifetime** of that usage.
-    1. might be useful when discussing open file descriptors, but also irrelevant here.
+    1. the **LOC (or actual time)** between when a _value_ is created, and when that value is dropped.
+- Within the rest of this section, we will refer to the items above as the:
+    1. **scope** of that item, irrelevant here.
+    1. **scope** of that variable or location.
+    1. **lifetime**<sup>2</sup> of that usage.
+    1. **lifetime** of that value, might be useful when discussing open file descriptors, but also irrelevant here.
 - Likewise, lifetime parameters in code, e.g., `r: &'a S`, are
-    - concerned with how long any **location r _points to_** needs to be accessible or locked;
-    - unrelated to the 'existence time' of `r` itself (well, it needs to exist shorter, that's it).
+    - concerned with how what LOC any **location r _points to_** needs to be accessible or locked;
+    - unrelated to the 'existence time' (as LOC) of `r` itself (well, it needs to exist shorter, that's it).
+- `&'static S` means address must be _valid during all lines of code_.
 
 > <sup>1</sup> There is sometimes ambiguity in the docs differentiating the various _scopes_ and _lifetimes_.
 > We try to be pragmatic here, but suggestions are welcome.
+>
+> <sup>2</sup> _Live lines_ might have been a more appropriate term ...
 
 </explanation>
 </lifetime-section>
@@ -2228,7 +2230,7 @@ let p: *const S = questionable_origin();
     - That is, a mutable location that can hold a mutable reference.
 - As mentioned, that reference must guard the targeted memory.
 - However, the **`'c` part**, like a type, also **guards what is allowed into `r`**.
-- Here assiging `&b` (`0x6`) to `r` is valid, but `&a` (`0x3`) would not, as location `&b` lives equal or longer than `&c`.
+- Here assiging `&b` (`0x6`) to `r` is valid, but `&a` (`0x3`) would not, as only `&b` lives equal or longer than `&c`.
 
 </explanation>
 </lifetime-section>
@@ -2404,13 +2406,14 @@ let p: *const S = questionable_origin();
 ```
 let mut b = S(0);
 let r = &mut b;
-b = S(4);   // Will fail since `b` in borrowed state.
-f(r);
 
+b = S(4);   // Will fail since `b` in borrowed state.
+
+print_byte(r);
 ```
 
 - Once the address of a variable is taken via `&b` or `&mut b` the variable is marked as **borrowed**.
-- While borrowed, the content of the addess cannot be modified anymore via the original binding `b`.
+- While borrowed, the content of the addess cannot be modified anymore via original binding `b`.
 - Once address taken via `&b` or `&mut b` stops being used (in terms of LOC) original binding `b` works again.
 
 
@@ -2603,8 +2606,8 @@ let r = f(&b, &c);
 ```
 
 - When calling functions that take and return references two interesting things happen:
-    - Local variables are placed in a borrowed state
-    - It is, during compilation, unknown which address will be returned.
+    - The used local variables are placed in a borrowed state,
+    - But it is during compilation unknown which address will be returned.
 
 
 
@@ -2979,9 +2982,12 @@ let a = b;
 print_byte(r);
 ```
 
-- In function signatures, the primary purpose of lifetime parameters `'x`, is to communicate
-    - **outside the function** to explain based on which input an output parameter is generated,
-    - **within the function** to guarantee only addresses that live at least `'x` are assigned.
+- Liftime parameters in signatures, like `'x`, solve that problem.
+- Their primary purpose is:
+    - **outside the function**, to explain based on which input address an output address is generated,
+    - **within the function**, to guarantee only addresses that live at least `'x` are assigned.
+- The actual lifetimes `'b`, `'c` are transparently picked by the compiler at **call site**, based on the borrowed variables the developer gave.
+- They are **not** equal to the _scope_ (which would be LOC from initialization to destruction) of `b` or `c`, but only a minimal subset of their scope called _lifetime_, that is, a minmal set of LOC based on how long `b` and `c` need to be borrowed to perform this call and use the obtained result.
 
 </explanation>
 </lifetime-section>

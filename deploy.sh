@@ -77,5 +77,5 @@ if [[ $1 == "--staging" ]]; then
     echo -e "Sending to ${_YELLOW}STAGING${_NC} environment."
 
     # Staging
-    aws s3 cp $DIST s3://cheats.rs-staging/ --recursive
+    aws s3 cp $FOLDER_DIST s3://cheats.rs-staging/ --recursive
 fi

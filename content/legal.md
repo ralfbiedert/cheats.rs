@@ -56,7 +56,7 @@ This work is CC-BY with the following exceptions:
 
 - Rust source snippets are CC-0.
 - Metadata (any data not directly needed to reproduce this work) and author names are not licensed.
-- While giving credit is appreciated, reproductions **must change the _Operator_ section** above, and **must not appear to be controlled or endorsed by the author** in any way.
+- While giving credit is appreciated, reproductions **must change the _Operator_ section** above, and must not appear to be controlled or endorsed by the author in any way.
 
 ### Third Party Assets
 
