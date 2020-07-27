@@ -20,7 +20,7 @@ Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a hr
 <!-- END NOTICE -->
 
 
-### Privacy & GDPR
+### Privacy, GDPR, Terms of Service
 
 - This site is **hosted on Amazon Web Services** and dispatched via various edge locations (Cloudfront) around the globe. We enable "all" edge locations to minimize hops and latency, and because you are worth it :)
 - **Access logs** in AWS are disabled, and we are **not aware of any user tracking**. Only aggregate statistics are provided, most notably, aggregated referrer domains, and aggregated visitor origins, such as:
@@ -42,11 +42,25 @@ Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a hr
 - The **Edit & Run** feature of the "Hello, Rust" section embeds the [Rust Playground](https://play.rust-lang.org/). All code entered there is sent to and processed on their servers.
 - The browser's **local storage** may be necessary to store settings between sessions (e.g., dark mode, ligatures, banner visibility), if you requested such a setting to take effect. This information never leaves your machine.
 - Supporting developer assets and metadata are usually **hosted on Github** so their privacy and tracking legalese applies.
-- Once in a while we host our **Yearly Survey** that will be advertised with banners top and bottom.
+- The **Feedback Buttons** allow you to send _sentiments_ and text.
 
-    That link will take you to an external site. No log-in or identifying information will be needed to participate, or will be collected by us. However, we obviously collect your answers, and that site might have its own privacy and cookie policy.
+    You are free to submit _organic feedback_ (i.e., ad-hoc, human-created) in whatever language, or with whatever words you desire, and any such feedback is fair use.
 
-    We will use your anwsers to improve this site. As part of doing that we also plan to publish all answers somewhere (usually Github), unless there are legal or other reasons preventing us from doing so.
+    The usage of bots or scripts, however, is not allowed and considered abuse.
+
+    We will store your submission, including context (e.g., section headers or user agents for site debugging). No identifiable information is preserved.
+
+    Should we find identifiable information was submitted by you by accident then we will attempt to remove it on a best-effort basis. However, no guarantees are giving such monitoring will take place, or is successful.
+
+    Storage happens in the European Union.
+
+    You agree to give us the right to use your feedback for improvements to this site, process it with 3rd party services (e.g., Google Translate), and to share and publish it (e.g., in Github tickets).
+
+    Access to raw data is generally available to the operators of this site and their designated persons (and theoretically our hosting provider, and 3rd parties that enforce access via legal means, e.g., the police).
+
+
+
+
 
 
 

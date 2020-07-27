@@ -4138,7 +4138,7 @@ Rust's standard library combines the above primitive types into useful types wit
 {{ tablesep() }}
 
 
-**General Purpose Heap Storage**
+#### General Purpose Heap Storage
 
 
 <!-- NEW ENTRY -->
@@ -4195,7 +4195,7 @@ Rust's standard library combines the above primitive types into useful types wit
 {{ tablesep() }}
 
 
-**Owned Strings**
+#### Owned Strings
 
 
 <!-- NEW ENTRY -->
@@ -4315,7 +4315,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 {{ tablesep() }}
 
-**Shared Ownership**
+#### Shared Ownership
 
 If the type does not contain a `Cell` for `T`, these are often combined with one of the `Cell` types above to allow shared de-facto mutability.
 

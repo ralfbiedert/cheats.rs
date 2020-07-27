@@ -68,6 +68,113 @@ sup.target {
     display: none;
 }
 
+// The feedback section
+feedback {
+    float: right;
+    position: relative;
+    display: none;
+
+    button-row {
+        float: right;
+
+        feedback-button {
+            text-align: right;
+            position: relative;
+            opacity: 0.4;
+        }
+
+        feedback-feedback {
+            visibility: hidden;
+            position: absolute;
+            // background-color: red;
+            top: -0.5em;
+            left: 0.7em;
+            opacity: 0.5;
+            transition: top 0.5s, opacity 0.3s;
+        }
+
+        feedback-button:hover {
+            opacity: 1.0;
+        }
+    }
+
+
+    feedback-form {
+        position: absolute;
+        display: none;
+        z-index: 1000;
+        width: 200px;
+        height: 120px;
+        top: 1.5em;
+        right: 0px;
+
+        background-color: #fafafa;
+
+        border-style: solid;
+        border-color: #aaa;
+        border-radius: 3px;
+        border-width: 1px;
+
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 2px;
+        padding-right: 2px;
+
+
+        hint {
+            font-size: 8px;
+            padding-left: 3px;
+            color: gray;
+            display: block;
+            opacity: 0.5;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            height: 70px;
+            width: 100%;
+
+            margin: 0px;
+
+            border-color: #eee;
+            border-style: solid;
+
+            font-size: 13px;
+            font-family: "Open Sans", sans-serif;
+
+            resize: none;
+        }
+
+        textarea:focus::placeholder {
+            color: transparent;
+        }
+
+        controls {
+            result {
+                margin-right: 40px;
+                position: relative;
+                float: left;
+                left: 0px;
+                opacity: 1.0;
+                transition: left 0.5s, opacity 0.5s;
+            }
+            // a {}
+            display: block;
+            height: 15px;
+            width: 100%;
+
+            padding-right: 2px;
+
+            font-size: 12px;
+            text-align: right;
+        }
+    }
+}
+
+feedback-button:hover {
+    cursor: pointer;
+}
+
 // Various CSS tricks for hover effects
 h1:hover sup.target { display: inline; }
 h2:hover sup.target { display: inline; }
@@ -79,24 +186,6 @@ h2:hover feedback { display: inline; }
 h3:hover feedback { display: inline; }
 h4:hover feedback { display: inline; }
 
-// The feedback section
-feedback {
-    display: inline;
-    float: right;
-    display: none;
-
-    feedback-button {
-
-    }
-
-    feedback-form {
-
-    }
-}
-
-feedback-button:hover {
-    cursor: pointer;
-}
 
 
 // Smaller text below some areas
