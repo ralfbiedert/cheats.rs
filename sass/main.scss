@@ -9,38 +9,34 @@
 @import "normalize";
 @import "html";
 @import "page";
-@import "visuals";
 @import "tabs";
+@import "visuals";
 
-
+// Main logo
 img#logo {
     position: relative;
     top: 40px;
 }
 
-div#helloctrl {
-    text-align: right;
+
+// "Rust Language Cheat Sheet"
+pagetitle {
+    text-align: center;
+    font-weight: 700;
+    font-size: 40px;
+    display: block;
 }
 
-div#helloinfo {
-    float: left;
-    font-size: 9px;
-    display: none;
+// Mostly the date
+subtitle {
+    text-align: center;
+    margin-bottom: 40px;
+    display: block;
 }
 
-sup.target {
-    top: -10px;
-    left: 3px;
-    font-size: 40%;
-    display: none;
-}
-
-h1:hover sup.target { display: inline; }
-h2:hover sup.target { display: inline; }
-h3:hover sup.target { display: inline; }
-h4:hover sup.target { display: inline; }
-
-div.controls {
+// The small JavaScript helper buttons
+page-controls {
+    display: block;
     font-size: 9px;
     text-align: right;
 
@@ -49,64 +45,73 @@ div.controls {
     }
 }
 
-div.title {
-    text-align: center;
-    font-weight: 700;
-    font-size: 40px;
-}
-
-div.subtitle {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-div.footnotes {
-    margin-top: 5px;
-    font-size: 80%;
-}
-
-div.toc {
+// The big table of content
+toc {
     display: flex;
     margin-top: 40px;
-}
+    display: block;
 
-div.column {
-    flex: 50%;
-}
-
-div.wip {
-    border: 2px dotted orange;
-    padding: 10px;
-}
-
-div.survey {
-    margin-top: 60px;
-    margin-bottom: 60px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    text-align: center;
-    display: none;
-    background-color: rgb(255, 238, 239);
-
-    span.ignore {
-        font-size: 70%;
-        position: relative;
-        right: -20px;
-        top: -10px;
+    // Each column
+    column {
+        vertical-align: top;
+        width: 49%;
+        // flex: 50%;
+        display: inline-block;
     }
 }
 
-div.steps {
-    border-left: solid 5px #e3b701;
-    border-left-style: dotted;
-    padding-left: 20px;
-
+// The target "url" anchors as part of headings
+sup.target {
+    top: -10px;
+    left: 3px;
+    font-size: 40%;
+    display: none;
 }
 
-span.warning {
-    color: red;
+// Various CSS tricks for hover effects
+h1:hover sup.target { display: inline; }
+h2:hover sup.target { display: inline; }
+h3:hover sup.target { display: inline; }
+h4:hover sup.target { display: inline; }
+
+h1:hover feedback { display: inline; }
+h2:hover feedback { display: inline; }
+h3:hover feedback { display: inline; }
+h4:hover feedback { display: inline; }
+
+// The feedback section
+feedback {
+    display: inline;
+    float: right;
+    display: none;
+
+    feedback-button {
+
+    }
+
+    feedback-form {
+
+    }
 }
 
+feedback-button:hover {
+    cursor: pointer;
+}
+
+
+// Smaller text below some areas
+footnotes {
+    margin-top: 5px;
+    font-size: 80%;
+    display: block;
+}
+
+
+
+
+//
+// RANDOM HEADER COLORS GO HERE
+//
 
 .header-std-green {
     th {
@@ -284,15 +289,6 @@ table.sendsync {
 }
 
 
-.magic {
-    background-image: url(magic.png);
-    padding: 5px;
-    background-size: 150px;
-    background-repeat: no-repeat;
-    background-position: right top;
-}
-
-
 span.good {
     color: green;
 }
@@ -322,7 +318,32 @@ sup.expert {
 }
 
 
+//
+// MISC SPECIAL ELEMENT MODIFIERS GO HERE
+//
+
+
+// In his house at R'lyeh, dead Cthulhu waits dreaming.
+.magic {
+    background-image: url(magic.png);
+    padding: 5px;
+    background-size: 150px;
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+
 
 // Hack we need for highlighting the bytes in the `Textual Types` section
 .force-code-color.same-black code[class*="language-rust"], .force-code-color.same-black pre[class*="language-rust"], .force-code-color.same-black span[class*="token number"] { color: black; }
 .force-code-color.same-red code[class*="language-rust"], .force-code-color.same-red pre[class*="language-rust"], .force-code-color.same-red span[class*="token number"] { color: red; }
+
+
+div#helloctrl {
+    text-align: right;
+}
+
+div#helloinfo {
+    float: left;
+    font-size: 9px;
+    display: none;
+}

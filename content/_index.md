@@ -6,8 +6,8 @@ insert_anchor_links = "right"
 +++
 
 <img id="logo" src="logo.png" alt="Ferris holding a cheat sheet."></img>
-<div class="title">Rust Language Cheat Sheet</div>
-<div class="subtitle"><span id="subtitle" onclick="toggle_subtitle()">{{ date() }}</span></div>
+<pagetitle>Rust Language Cheat Sheet</pagetitle>
+<subtitle><span id="subtitle" onclick="toggle_subtitle()">{{ date() }}</span></subtitle>
 
 
 
@@ -23,16 +23,16 @@ insert_anchor_links = "right"
 > is **work in progress** {{ experimental() }},
 > or **bad** {{ bad() }}.
 
-<div class="controls">
+<page-controls>
     <a id="toggle_ligatures" href="javascript:toggle_ligatures()">Fira Code Ligatures (<code>..=, =></code>)</a>
     <a href="javascript:toggle_night_mode()">Night Mode &#x1f4a1;</a>
-</div>
+</page-controls>
 
-<div class="noprint">
 
-<div class="toc">
+<noprint>
 
-<div class="column">
+<toc>
+<column>
 
 **Language Constructs**
 * [Data Structures](#data-structures)
@@ -60,13 +60,9 @@ insert_anchor_links = "right"
 * [Closures](#closures-data)
 * [Standard Library Types](#standard-library-types)
 
+</column>
 
-
-</div>
-
-
-<div class="column">
-
+<column>
 
 **Standard Library**
 * [Common One-Liners](#common-one-liners)
@@ -93,13 +89,12 @@ insert_anchor_links = "right"
 * [Printing & PDF](#printing-pdf)
 
 
-</div>
+</column>
+</toc>
 
-</div>
-</div>
+</noprint>
 
-
-<div class="noprint">
+<noprint>
 
 ## Hello, Rust!
 
@@ -193,7 +188,7 @@ If you want to start developing Rust:
 
 </div>
 
-</div>
+</noprint>
 
 
 ### Data Structures
@@ -220,12 +215,12 @@ Data types and memory locations defined via keywords.
 
 </div>
 
-<div class="footnotes">
+<footnotes>
 
 <sup>1</sup> **Bound variables** {{ book(page="ch03-01-variables-and-mutability.html") }} {{ ex(page="variable_bindings.html") }} {{ ref(page="variables.html") }} live on stack for synchronous code. In `async {}` code they become part async's state machine, may reside on heap.<br>
 <sup>2</sup> Technically _mutable_ and _immutable_ are misnomer. Immutable binding or shared reference may still contain Cell {{ std(page="std/cell/index.html") }}, giving _interior mutability_.
 
-</div>
+</footnotes>
 
 
 {{ tablesep() }}
@@ -263,11 +258,11 @@ Creating and accessing data structures; and some more _sigilic_ types.
 
 </div>
 
-<div class="footnotes">
+<footnotes>
 
 <sup>*</sup> For now, see [tracking issue](https://github.com/rust-lang/rust/issues/48055) and corresponding [RFC 1909](https://github.com/rust-lang/rfcs/pull/1909).
 
-</div>
+</footnotes>
 
 
 ### References & Pointers
@@ -501,11 +496,11 @@ Constructs found in `match` or `let` expressions, or function parameters.
 </div>
 
 
-<div class="footnotes">
+<footnotes>
 
 <sup>*</sup> Desugars to `match get() { Some(x) => {}, _ => () }`.
 
-</div>
+</footnotes>
 
 
 
@@ -658,8 +653,11 @@ Rust supports most operators you would expect (`+`, `*`, `%`, `=`, `==`...), inc
 
 <div class="magic">
 
+
+
 # Behind the Scenes
 
+<noprint>
 
 <!-- Legacy target some pages use to link here -->
 <a name="reading-lifetimes"></a>
@@ -752,11 +750,11 @@ Why moves, references and lifetimes are how they are.
     - protect themselves from errors while performing these operations.
 - Most tricky part is tied to **how stack evolves**, which is **our focus**.
 
-<div class="footnotes">
+<footnotes>
 
 <sup>1</sup> While for each part of the heap someone (the allocator) needs to perform bookkeeping at runtime, the stack is trivially managable: _take a few bytes more while you need them, they will be discarded once you leave_. The (for performance reasons desired) simplicity of this appraoch, along with the fact that you can tell others about such _transient_ locations (which in turn might want to access them long after you left), form the very essence of why _lifetimes_ exist; and are the subject of the rest of this chapter.
 
-</div>
+</footnotes>
 
 </explanation>
 </lifetime-section>
@@ -836,11 +834,11 @@ let t = S(1);
     1. the **value** contained within, `S(1)` ("increment that variable").
 - Specifically towards the compiler `t` can mean **location of** `t`, here `0x7`, and **value within** `t`, here `S(1)`.
 
-<div class="footnotes">
+<footnotes>
 
 <sup>1</sup> Compare above,{{ above(target="#data-structures" ) }} true for fully synchronous code, but `async` stack frame might placed it on heap via runtime.
 
-</div>
+</footnotes>
 
 > <sup>2</sup> It is the **author's opinion** that this ambiguity related to _variables_ (and _lifetimes_ and _scope_ later)
 > are some of the biggest
@@ -1177,11 +1175,11 @@ f(a);
 - When a **function is called**, memory for parameters (and return values) are reserved on stack.<sup>1</sup>
 - Here before `f` is invoked value in `a` is moved to 'agreed upon' location on stack, and during `f` works like 'local variable' `x`.
 
-<div class="footnotes">
+<footnotes>
 
 <sup>1</sup> Actual location depends on calling convention, might practically not end up on stack at all, but that doesn't change mental model.
 
-</div>
+</footnotes>
 
 </explanation>
 </lifetime-section>
@@ -3196,17 +3194,17 @@ let a = c;          // <- But here, no more use of `r` or `s`.
 <!-- End tabs section -->
 </div>
 
-<div class="footnotes">
+<footnotes>
 
 Examples expand by clicking.
 
-</div>
+</footnotes>
 
 
 
 {{ tablesep() }}
 
-
+</noprint>
 
 
 ## Language Sugar
@@ -3238,7 +3236,7 @@ If something works that "shouldn't work now that you think about it", it might b
 ---
 
 <!-- This whole section doesn't look good on print -->
-<div class="noprint">
+<noprint>
 
 # Data & Types
 
@@ -3516,9 +3514,9 @@ Similarly, for <code>f64</code> types this would look like:
 | Infinity | ± | 2047 | 0 | ±∞  |
 | NaN | ± | 2047 | non-zero | NaN  |
 
-<div class="footnotes">
+<footnotes>
     <sup>*</sup> Float types follow <a href="https://en.wikipedia.org/wiki/IEEE_754-2008_revision">IEEE 754-2008</a> and depend on platform endianness.
-</div>
+</footnotes>
 
 </div></div></div>
 
@@ -3608,9 +3606,9 @@ Similarly, for <code>f64</code> types this would look like:
 | `let c = '❤️';` | But not always. Given emoji is **two** `char` (see Encoding) and **can't** {{ bad() }} be held by `c`.<sup>1</sup> |
 | `c = 0xffff_ffff;` | Also, chars are **not allowed** {{ bad() }} to hold arbitrary bit patterns. |
 
-<div class="footnotes">
+<footnotes>
     <sup>1</sup> Fun fact, due to the <a href="https://en.wikipedia.org/wiki/Zero-width_joiner">Zero-width joiner</a> (⨝) what the user <i>perceives as a character</i> can get even more unpredictable: 👨‍👩‍👧 is in fact 5 chars 👨⨝👩⨝👧, and rendering engines are free to either show them fused as one, or separately as three, depending on their abilities.
-</div>
+</footnotes>
 
 
 {{ tablesep() }}
@@ -3643,21 +3641,21 @@ Similarly, for <code>f64</code> types this would look like:
 
 {{ tablesep() }}
 
-<div class="footnotes">
+<footnotes>
     <sup>1</sup> Result then collected into array and transmuted to bytes.<br>
     <sup>2</sup> Values given in hex, on x86.<br>
     <sup>3</sup> Notice how <code>❤</code>, having <a href="https://codepoints.net/U+2764">Unicode Code Point (U+2764)</a>, is represented as <span class="force-code-color same-black"><b>64 27 00 00</b></span> inside the <code>char</code>, but got <a href="https://en.wikipedia.org/wiki/UTF-8#Description">UTF-8 encoded to</a> <span class="force-code-color same-black"><b>e2 9d a4</b></span> in the <code>str</code>.<br>
     <sup>4</sup> Also observe how the emoji <a href="https://emojipedia.org/red-heart/">Red Heart <code>❤️</code></a>, is a combination of <code>❤</code> and the <a href="https://codepoints.net/U+FE0F">U+FE0F Varition Selector</a>, thus <code>t</code> has a higher char count than <code>s</code>.
-</div>
+</footnotes>
 
 {{ tablesep() }}
 
 
-<div class="footnotes">
+<footnotes>
 
 > <sup>💬</sup> For what seem to be browser bugs Safari and Edge render the hearts in Footnote 3 and 4 wrong, despite being able to differentiate them correctly in `s` and `t` above.
 
-</div>
+</footnotes>
 
 </div></div></div>
 
@@ -4397,7 +4395,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 ---
 
 <!-- End NOPRINT for datatypes -->
-</div>
+</noprint>
 
 
 # Standard Library
@@ -4457,13 +4455,13 @@ may be more tricky.
     </tbody>
 </table>
 
-<div class="footnotes">
+<footnotes>
 
 <sup>*</sup> An instance `t` where **`T: Send`** can be moved to another thread, a **`T: Sync`** means `&t` can be moved to another thread.<br>
 <sup>1</sup> If `T` is `Sync`. <br>
 <sup>2</sup> If `T` is `Send`.
 
-</div>
+</footnotes>
 
 {{ tablesep() }}
 
@@ -4557,11 +4555,11 @@ Once you have an `i`:
 
 
 
-<div class="footnotes">
+<footnotes>
 
 <sup>*</sup> If it looks as if it doesn't consume `c` that's because type was `Copy`. For example, if you call `(&c).into_iter()` it will invoke `.into_iter()` on `&c` (which will consume the reference and turn it into an Iterator), but `c` remains untouched.
 
-</div>
+</footnotes>
 
 </div></div></div>
 
@@ -4880,7 +4878,7 @@ If you **want** a string of type ...
 </div></div>
 
 
-<div class="footnotes">
+<footnotes>
 
 <sup>i</sup> Short form `x.into()` possible if type can be inferred. <br>
 <sup>r</sup> Short form `x.as_ref()` possible if type can be inferred.
@@ -4897,7 +4895,7 @@ CString::new(bytes)?
 
 <sup>3</sup> The `c_char` **must** have come from a previous `CString`. If it comes from FFI see `&CStr` instead.
 
-</div>
+</footnotes>
 
 {{ tablesep() }}
 
@@ -4976,17 +4974,17 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
 </div>
 
-<div class="footnotes">
+<footnotes>
 
 <sup>*</sup> On stable consider [Criterion](https://github.com/bheisler/criterion.rs).
 
-</div>
+</footnotes>
 
 
 {{ tablesep() }}
 
 <!-- Also not printing this table -->
-<div class="noprint">
+<noprint>
 
 **Minimal examples** for various entry points might look like:
 
@@ -5191,7 +5189,7 @@ fn main() {
 </div>
 
 <!-- End noprint of code examples -->
-</div>
+</noprint>
 
 
 {{ tablesep() }}
@@ -5235,11 +5233,11 @@ Commands and tools that are good to know.
 
 </div>
 
-<div class="footnotes">
+<footnotes>
 
 A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type `cargo build` or just `cargo b`.
 
-</div>
+</footnotes>
 
 
 {{ tablesep() }}
@@ -5395,14 +5393,14 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 | `sm.await` | Inside an `async {}`, run `sm` until complete. Yield to runtime if `sm` not ready. |
 
 
-<div class="footnotes">
+<footnotes>
 
 {{ note(note="1") }} Technically `async` transforms following code into anonymous, compiler-generated state machine type; `f()` instantiates that machine. <br>
 {{ note(note="2") }} The state machine always `impl Future`, possibly `Send` & co, depending on types used inside `async`. <br>
 {{ note(note="3") }} State machine driven by worker thread invoking `Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
 {{ note(note="4") }} Rust doesn't come with runtime, need external crate instead, e.g., [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio). Also, more helpers in [futures crate](https://github.com/rust-lang-nursery/futures-rs).
 
-</div>
+</footnotes>
 
 
 
@@ -5468,14 +5466,14 @@ With the execution flow in mind, some considerations when writing code inside an
 
 </div>
 
-<div class="footnotes">
+<footnotes>
 
 {{ note(note="1") }} Here we assume `s` is any non-local that could temporarily be put into an invalid state;
 `TL` is any thread local storage, and that the `async {}` containing the code is written
 without assuming executor specifics. <br/>
 {{ note(note="2") }} Since [Drop](https://doc.rust-lang.org/std/ops/trait.Drop.html) is run in any case when `Future` is dropped, consider using drop guard that cleans up / fixes application state if it has to be left in bad condition across `.await` points.
 
-</div>
+</footnotes>
 
 </div></div></div>
 
@@ -5505,13 +5503,13 @@ From a call site perspective that means:
 
 </div>
 
-<div class="footnotes">
+<footnotes>
 
 Notice how **asking** for a `Fn` closure as a function is
 most restrictive for the caller; but **having** a `Fn`
 closure as a caller is most compatible with any function.
 
-</div>
+</footnotes>
 
 
 
@@ -5752,7 +5750,7 @@ When updating an API, these changes can break client code, compare [**RFC 1105**
 
 
 <!-- Don't render this section for printing, won't be helpful -->
-<div class="noprint">
+<noprint>
 
 ---
 
@@ -5865,7 +5863,7 @@ Online services which provide information or tooling.
 
 > Want this Rust cheat sheet as a PDF download? <a href="javascript:window.print()"><b>Generate PDF</b></a> (or select File > Print – might take 10s so) and then "Save as PDF". It looks great in both Firefox's and Chrome's PDF exports. Alternatively use the <a href="https://github.com/ralfbiedert/cheats.rs/releases/download/2020-02-08/rust_cheat_sheet.pdf"><b>cached PDF</b></a>.
 
-</div>
+</noprint>
 
 <footer>
 

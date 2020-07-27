@@ -258,7 +258,10 @@ $largescreen-width: 1050px;
 
 // Larger screens
 @media print {
-    .noprint {
+    noprint {
         display: none;
     }
+    // .noprint {
+    //     display: none;
+    // }
 }
