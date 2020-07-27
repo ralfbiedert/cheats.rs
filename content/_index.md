@@ -740,13 +740,23 @@ Why moves, references and lifetimes are how they are.
 </lifetime-example>
 <explanation>
 
-- Application memory is a large array of unstructured bytes.
-- Memory is segmented, amongst others, into:
-    - **stack** (most variables go here),
+- Application memory in itself is just array of bytes.
+- It is segmented, amongst others, into:
+    - **stack** (small, low-overhead memory,<sup>1</sup> most _variables_ go here),
     - **heap** (large, flexible memory, but always handled via stack proxy like `Box<T>`),
-    - **static** (most commonly used as resting place for `str` part of `&str`).
-- Most real magic happens on stack, which is our focus.
+    - **static** (most commonly used as resting place for `str` part of `&str`),
+    - **code** (where bitcode of your functions reside).
+- Programming languages such as Rust give developers tools to:
+    - define what data goes into what segment,
+    - express a desire for bitcode with specific properties to be produced,
+    - protect themselves from errors while performing these operations.
+- Most tricky part is tied to **how stack evolves**, which is **our focus**.
 
+<div class="footnotes">
+
+<sup>1</sup> While for each part of the heap someone (the allocator) needs to perform bookkeeping at runtime, the stack is trivially managable: _take a few bytes more while you need them, they will be discarded once you leave_. The (for performance reasons desired) simplicity of this appraoch, along with the fact that you can tell others about such _transient_ locations (which in turn might want to access them long after you left), form the very essence of why _lifetimes_ exist; and are the subject of the rest of this chapter.
+
+</div>
 
 </explanation>
 </lifetime-section>
