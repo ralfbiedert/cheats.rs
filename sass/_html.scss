@@ -17,6 +17,16 @@ body {
     font-family: "Open Sans", sans-serif;
 }
 
+body.day-mode {
+    background-color: white;
+    color: black;
+}
+
+body.night-mode {
+    background-color: black;
+    color: white;
+}
+
 
 h1,
 h2 {

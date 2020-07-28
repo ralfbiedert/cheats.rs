@@ -57,12 +57,6 @@ datum {
             border-radius: 5px;
         }
 
-        // In some places we don't want our Rust-like color scheme b/c we have conflicting
-        // background colors.
-        .token.class-name, .token.keyword {
-            color: black;
-        }
-
     }
 
 
@@ -114,7 +108,6 @@ datum {
     // The whitish bar below an element (originally intended to) contain an more detail
     // information.
     zoom {
-        background-color: cornsilk;
         display: block;
         border-style: solid;
         border-width: 1px;
@@ -149,9 +142,6 @@ datum {
         }
     }
 
-
-
-
     // One of these boxes that sit below pointers and explain what that pointer pointed to.
     // Contains other elements
     memory-entry {
@@ -159,12 +149,6 @@ datum {
         vertical-align: top;
         position:relative;
         width: 80px;
-
-        // In some places we don't want our Rust-like color scheme b/c we have conflicting
-        // background colors.
-        .token.class-name, .token.keyword {
-            color: black;
-        }
 
 
         // The bread-and-butter for memory entries, contains the actual visual elements
@@ -443,6 +427,53 @@ datum.spaced {
     margin-right: 30px;
 }
 
+// In some places we don't want our Rust-like color scheme b/c we have conflicting
+// background colors.
+.day-mode datum {
+    framed .token.class-name, framed .token.keyword {
+        color: black;
+    }
+
+    pad code span.token.class-name {
+        color: black;
+    }
+
+    zoom {
+        background-color: cornsilk;
+    }
+}
+
+// In some places we don't want our Rust-like color scheme b/c we have conflicting
+// background colors.
+.night-mode datum {
+    framed .token.class-name, framed .token.keyword {
+        color: black;
+    }
+
+    // This is a bit of an ugly hack ...
+    ptr, payload, sized, pad, framed, byte, memory {
+        color: #333 !important;
+
+        code {
+            color: #333 !important;
+
+            span {
+                color: #333 !important;
+            }
+        }
+    }
+
+
+    note {
+        color: black;
+    }
+
+    zoom {
+        background-color: #222;
+
+    }
+}
+
 
 // ... Can't remember why we needed these but they still look important.
 spacer {
@@ -624,10 +655,7 @@ lifetime-example {
             width: 100%;
             text-align: right;
             top: 0px;
-            // color:purple;
-            color: rgb(100, 4, 117);
             font-weight: bold;
-            // background-color: magenta;
         }
 
         .byte2 {
@@ -654,7 +682,6 @@ lifetime-example {
         border-radius: 5px;
         width: 15px;
         height: 28px;
-        background-color: rgb(253, 236, 220);
     }
 
     // Locations that are borrowed.
@@ -668,18 +695,6 @@ lifetime-example {
         border-color: black;
         border-width: 2px;
         border-style: dotted;
-    }
-
-    .t {
-        background-color: salmon;
-    }
-
-    .ptr {
-        background-color: lightskyblue;
-    }
-
-    .atomic {
-        background-color: mediumseagreen;
     }
 
     .hide {
@@ -721,6 +736,58 @@ lifetime-example {
         left: 2px;
         position: absolute;
         text-align: center;
+    }
+}
+
+.day-mode lifetime-example {
+    subtext {
+        color: rgb(100, 4, 117);
+    }
+
+    byte {
+        background-color: rgb(253, 236, 220);
+    }
+
+    .t {
+        background-color: salmon;
+    }
+
+    .ptr {
+        background-color: lightskyblue;
+    }
+
+    .atomic {
+        background-color: mediumseagreen;
+    }
+
+    value  {
+        color: black;
+    }
+}
+
+.night-mode lifetime-example {
+    subtext {
+        color: rgb(169, 67, 187);
+    }
+
+    byte {
+        background-color: rgb(71, 66, 60);
+    }
+
+    .t {
+        background-color: salmon;
+    }
+
+    .ptr {
+        background-color: lightskyblue;
+    }
+
+    .atomic {
+        background-color: mediumseagreen;
+    }
+
+    value  {
+        color: black;
     }
 }
 

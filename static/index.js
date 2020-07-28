@@ -14,9 +14,19 @@ const subtiles = [
     "_GITHASH_",
     "Same low price, 20% more content.",
     "Recommended by 9 out of 10 dentists.",
-    "The #1 cheat sheet according to its authors.",
-    "This site was neither tested on nor approved by animals.",
+    "World's best cheat sheet according to its authors.",
+    "This site was tested on animals and got 4.5 stars.",
+    "Like Rust in a nutshell, for people with allergies.",
+    "All the things you ever wanted to know. And more.",
+    "Documentation of a Cargo cult.",
+    "Will the last person to leave this site please switch on night mode?",
+    "A collaboration between Zoo Berlin and Olympia Typewriters.",
 ];
+
+// Labels for which we don't want feedback, mainly because the button placement
+// would interfere with other buttons.
+const feedback_blacklist = ["", "behind-the-scenes", "data-types", "numeric-types-ref", "textual-types-ref", "standard-library", "traits", "tooling", "coding-guides", "misc"];
+
 
 /// Enables or disables the playground.
 function show_playground(state) {
@@ -43,9 +53,11 @@ function toggle_night_mode() {
     let body = document.getElementsByTagName("body")[0];
     if (body.classList.contains("night-mode")) {
         body.classList.remove("night-mode");
+        body.classList.add("day-mode");
         storage_set("night-mode", "day");
     } else {
         body.classList.add("night-mode");
+        body.classList.remove("day-mode");
         storage_set("night-mode", "night");
     }
 }
@@ -93,12 +105,26 @@ function set_survey(state) {
 
 
 // Called when the user clicks the subtitle (usually the date)
-function toggle_subtitle() {
+function toggle_subtitle(to_index) {
     let subtitle = document.getElementById("subtitle");
 
-    subtitle_index = (subtitle_index + 1) % subtiles.length;
+    if (!!to_index) {
+        subtitle_index = to_index;
+    } else {
+        subtitle_index = (subtitle_index + 1) % subtiles.length;
+    }
+
     subtitle.innerHTML = subtiles[subtitle_index];
 }
+
+/// Shows a random quote
+function random_quote() {
+    let SKIP = 2; // Skip first 2 entries
+    let rand = Math.random();
+    let index = SKIP + Math.floor((subtiles.length - SKIP) * rand);
+    toggle_subtitle(index);
+}
+
 
 // Performs the raw XHR call.
 function feedback_post(op, json, callback) {
@@ -186,6 +212,9 @@ function feedback_attach_buttons(list_of_header_tags) {
             let element_id = element.id;
             let feedback_id = "feedback-" + element_id;
             let feedback = document.createElement("feedback");
+
+            if (feedback_blacklist.includes(element_id)) continue;
+
             feedback.setAttribute("element-id", element_id);
             feedback.id = feedback_id;
             feedback.innerHTML = `
@@ -239,15 +268,11 @@ try {
     let survey = storage_get(SURVEY_KEY);
 
     // Don't attach feedback to h1, looks ugly and doesn't help.
-    feedback_attach_buttons(["h2", "h3", "h4"]);
+    feedback_attach_buttons(["h1", "h2", "h3", "h4"]);
 
-    if (night_mode === "night") {
-        toggle_night_mode();
-    }
-
-    if (ligatures === "ligatures") {
-        toggle_ligatures();
-    }
+    if (Math.random() < 0.1) { random_quote(); }
+    if (night_mode === "night") { toggle_night_mode(); }
+    if (ligatures === "ligatures") { toggle_ligatures(); }
 
     // Make sure all "memory-bars" descriptions expand or collapse when clicked.
     for (var e of memory_bars) {

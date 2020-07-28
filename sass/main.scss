@@ -11,6 +11,8 @@
 @import "page";
 @import "tabs";
 @import "visuals";
+@import "prism-day";
+@import "prism-night";
 
 // Main logo
 img#logo {
@@ -60,19 +62,12 @@ toc {
     }
 }
 
-// The target "url" anchors as part of headings
-sup.target {
-    top: -10px;
-    left: 3px;
-    font-size: 40%;
-    display: none;
-}
 
 // The feedback section
 feedback {
     float: right;
     position: relative;
-    display: none;
+    // display: none;
 
     button-row {
         float: right;
@@ -175,6 +170,18 @@ feedback-button:hover {
     cursor: pointer;
 }
 
+// The target "url" anchors as part of headings
+sup.target {
+    top: -10px;
+    left: 3px;
+    font-size: 40%;
+    // display: none;
+}
+
+// Looks ugly otherwise
+h4#textual-types-ref sup.target { font-size: 60%; top: -6px; }
+h4#numeric-types-ref sup.target { font-size: 60%; top: -6px; }
+
 // Various CSS tricks for hover effects
 h1:hover sup.target { display: inline; }
 h2:hover sup.target { display: inline; }
@@ -202,92 +209,95 @@ footnotes {
 // RANDOM HEADER COLORS GO HERE
 //
 
-.header-std-green {
+.night-mode .color-header th {
+    color: black;
+}
+
+.color-header.std-green {
     th {
         background-color: rgb(212, 247, 244);
     }
 }
 
-
-.header-red {
+.color-header.red  {
     th {
         background-color: rgb(235, 156, 162);
     }
 }
 
-.header-blue {
+.color-header.blue {
     th {
         background-color: rgb(128, 186, 209);
     }
 }
 
-.header-green {
+.color-header.green {
     th {
         background-color: rgb(164, 206, 164);
     }
 }
 
-.header-orange {
+.color-header.orange {
     th {
         background-color: rgb(241, 206, 159);
     }
 }
 
-.header-magenta {
+.color-header.magenta {
     th {
         background-color: rgb(216, 162, 226);
     }
 }
 
-.header-lemongrass {
+.color-header.lemongrass {
     th {
         background-color: rgb(211, 231, 157);
     }
 }
 
-.header-undefined-color-3 {
+.color-header.undefined-color-3 {
     th {
         background-color: rgb(157, 231, 203);
     }
 }
 
-.header-lobstercrabs {
+.color-header.lobstercrabs {
     th {
         background-color: rgb(231, 164, 147);
     }
 }
 
-.header-lavender {
+.color-header.lavender {
     th {
         background-color: rgb(175, 161, 212);
     }
 }
 
-.header-tooling {
+.color-header.tooling {
     th {
         background-color: rgb(161, 212, 197);
     }
 }
 
-.header-cross-compilation {
+.color-header.cross-compilation {
     th {
         background-color: rgb(168, 212, 131);
     }
 }
 
-.header-one-liners {
+.color-header.one-liners {
     th {
         background-color: rgb(194, 212, 131);
     }
 }
 
-.header-sized {
+.color-header.sized {
     th {
         background-color: rgb(171, 204, 223);
     }
 }
 
-.header-std-traits {
+.color-header.std-traits {
     th {
         background-color: rgb(233, 235, 204);
     }
@@ -297,14 +307,14 @@ footnotes {
     }
 }
 
-.header-language-sugar {
+.color-header.language-sugar {
     th {
         background-color: rgb(240, 140, 116);
     }
 }
 
 
-.header-api-stability {
+.color-header.api-stability {
     th {
         // background-color: rgb(221, 213, 179);
     }
@@ -336,15 +346,19 @@ footnotes {
 }
 
 
-table.sendsync {
 
+//
+// MISC SPECIAL HANDLING
+//
+
+
+table.sendsync {
     th {
         background-color: rgb(212, 247, 244);
 
         // In some places we don't want our Rust-like color scheme b/c we have conflicting
         // background colors.
         .token.class-name, .token.keyword {
-            // font-weight: bold;
             color: black;
         }
 
@@ -354,11 +368,11 @@ table.sendsync {
         background-color: rgb(212, 247, 244);
         text-align: left;
         font-weight: bold;
+        color: black;
 
         // In some places we don't want our Rust-like color scheme b/c we have conflicting
         // background colors.
         .token.class-name, .token.keyword {
-            // font-weight: bold;
             color: black;
         }
     }
@@ -374,36 +388,83 @@ table.sendsync {
     th:nth-child(3) {
         width: 300px;
     }
+}
 
+.day-mode table.sendsync {
+    color: black;
+
+    th {
+        color: black;
+    }
+}
+
+.night-mode table.sendsync {
+    color: white;
+
+    th {
+        color: black;
+    }
 }
 
 
-span.good {
-    color: green;
+.day-mode {
+    span.good {
+        color: green;
+    }
+
+    span.bad {
+        color: darkred;
+    }
+
+    span.cargo-prefix {
+        border: 1px solid rgb(200, 200, 200);
+    }
+
+    sup {
+        font-size: 65%;
+    }
+
+    sup.entry {
+        color: rgb(0, 110, 0);
+    }
+
+    sup.mid {
+        color: rgb(143, 93, 1);
+    }
+
+    sup.expert {
+        color: rgb(184, 0, 0);
+    }
 }
 
-span.bad {
-    color: darkred;
-}
+.night-mode {
+    span.good {
+        color: rgb(22, 184, 22);
+    }
 
-span.cargo-prefix {
-    border: 1px solid rgb(200, 200, 200);
-}
+    span.bad {
+        color: darkred;
+    }
 
-sup {
-    font-size: 65%;
-}
+    span.cargo-prefix {
+        border: 1px solid rgb(200, 200, 200);
+    }
 
-sup.entry {
-    color: rgb(0, 110, 0);
-}
+    sup {
+        font-size: 65%;
+    }
 
-sup.mid {
-    color: rgb(143, 93, 1);
-}
+    sup.entry {
+        color: rgb(8, 206, 8);
+    }
 
-sup.expert {
-    color: rgb(184, 0, 0);
+    sup.mid {
+        color: rgb(189, 130, 21);
+    }
+
+    sup.expert {
+        color: rgb(207, 27, 27);
+    }
 }
 
 
@@ -413,8 +474,9 @@ sup.expert {
 
 
 // In his house at R'lyeh, dead Cthulhu waits dreaming.
-.magic {
-    background-image: url(magic.png);
+magic {
+    display: block;
+    // background-image: url(magic.png);
     padding: 5px;
     background-size: 150px;
     background-repeat: no-repeat;
@@ -423,7 +485,7 @@ sup.expert {
 
 
 // Hack we need for highlighting the bytes in the `Textual Types` section
-.force-code-color.same-black code[class*="language-rust"], .force-code-color.same-black pre[class*="language-rust"], .force-code-color.same-black span[class*="token number"] { color: black; }
+.force-code-color.same-black code[class*="language-rust"], .force-code-color.same-black pre[class*="language-rust"], .force-code-color.same-black span[class*="token number"] { color: #555; }
 .force-code-color.same-red code[class*="language-rust"], .force-code-color.same-red pre[class*="language-rust"], .force-code-color.same-red span[class*="token number"] { color: red; }
 
 

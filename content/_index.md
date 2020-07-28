@@ -5,6 +5,7 @@ template = "index.html"
 insert_anchor_links = "right"
 +++
 
+
 <img id="logo" src="logo.png" alt="Ferris holding a cheat sheet."></img>
 <pagetitle>Rust Language Cheat Sheet</pagetitle>
 <subtitle><span id="subtitle" onclick="toggle_subtitle()">{{ date() }}</span></subtitle>
@@ -24,15 +25,14 @@ insert_anchor_links = "right"
 > or **bad** {{ bad() }}.
 
 <page-controls>
+    <!-- <a id="" href="" style="float: left; margin-left:5px;">X-Ray Mode 👓</a> -->
     <a id="toggle_ligatures" href="javascript:toggle_ligatures()">Fira Code Ligatures (<code>..=, =></code>)</a>
     <a href="javascript:toggle_night_mode()">Night Mode &#x1f4a1;</a>
 </page-controls>
 
 
 <noprint>
-
-<toc>
-<column>
+<toc><column>
 
 **Language Constructs**
 * [Data Structures](#data-structures)
@@ -88,9 +88,7 @@ insert_anchor_links = "right"
 * [Links & Services](#links-services)
 * [Printing & PDF](#printing-pdf)
 
-
-</column>
-</toc>
+</column></toc>
 
 </noprint>
 
@@ -101,18 +99,14 @@ insert_anchor_links = "right"
 If you are new to Rust, or if you want to try the things below:
 
 
-<div class="tabs">
+<tabs>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-hello-1" name="tab-hello" checked>
-<label class="tab-label" for="tab-hello-1"><b>Hello World</b></label>
-<div class="tab-panel">
-<div class="tab-content">
-
-
+<tab>
+<input type="radio" id="tab-hello-1" name="tab-hello" checked></input>
+<label for="tab-hello-1"><b>Hello World</b></label>
+<panel><div>
 <div id="hellostatic">
-
 
 ```rust
 fn main() {
@@ -120,23 +114,18 @@ fn main() {
 }
 ```
 
-
 </div>
 <div id="helloplay"></div>
 <div id="helloinfo">Service provided by <a href="https://play.rust-lang.org/" target="_blank">play.rust-lang.org <sup>🔗</sup></a></div>
 <div id="helloctrl"><a href="javascript:show_playground(true);">▶️ Edit & Run</a></div>
-
-
-</div></div></div>
-
+</div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-hello-3" name="tab-hello">
-<label class="tab-label" for="tab-hello-3"><b>Strengths</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-hello-3" name="tab-hello">
+<label for="tab-hello-3"><b>Strengths</b></label>
+<panel><div>
 
 Things Rust does measurably really well:
 
@@ -147,35 +136,30 @@ Things Rust does measurably really well:
 - ["most loved language"](https://insights.stackoverflow.com/survey/2020#technology-most-loved-dreaded-and-wanted-languages) for 5 years in a row
 - modern tooling: `cargo` (builds _just work_), `clippy` (300+ code quality lints), `rustup` (easy toolchain mgmt)
 
-</div></div></div>
-
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-hello-4" name="tab-hello">
-<label class="tab-label" for="tab-hello-4"><b>Weaknesses</b></label>
-<div class="tab-panel">
-<div class="tab-content">
-
+<tab>
+<input type="radio" id="tab-hello-4" name="tab-hello">
+<label for="tab-hello-4"><b>Weaknesses</b></label>
+<panel><div>
 
 Points you might run into:
 
 - steep learning curve<sup>1</sup>; compiler enforcing (esp. memory) rules that would be "best practices" elsewhere
 - missing Rust-native libs in some domains, target platforms (esp. embedded), IDE features<sup>1</sup>
 - longer compile times than "similar" code in other languages<sup>1</sup>
-- no formal language specification, can prevent (legal) use in some domains (aviation, medical, ...)
+- no formal language specification, can prevent legal use in some domains (aviation, medical, ...)
 - careless (use of) libraries can break safety guarantees for why Rust was picked in the first place
 
 <sup>1</sup> Compare [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust).
-</div></div></div>
-
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-hello-5" name="tab-hello">
-<label class="tab-label" for="tab-hello-5"><b>Getting Started</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-hello-5" name="tab-hello">
+<label for="tab-hello-5"><b>Getting Started</b></label>
+<panel><div>
 
 If you want to start developing Rust:
 - download installer from [**rustup.rs**](https://rustup.rs/) (highly recommended for any platform)
@@ -183,11 +167,9 @@ If you want to start developing Rust:
     - [IntelliJ](https://www.jetbrains.com/idea/) (free) or [CLion](https://www.jetbrains.com/clion/) (paid) with [**IntelliJ Rust**](https://intellij-rust.github.io/)
     - [Visual Studio Code](https://code.visualstudio.com/) with [**rust-analyzer**](https://rust-analyzer.github.io/)
 - check links on this site, more [learning resources](https://www.rust-lang.org/learn) and [**where to ask questions**](https://www.rust-lang.org/community).
-</div></div></div>
+</div></panel></tab>
 
-
-</div>
-
+</tabs>
 </noprint>
 
 
@@ -195,7 +177,7 @@ If you want to start developing Rust:
 
 Data types and memory locations defined via keywords.
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |---------|-------------|
@@ -213,7 +195,7 @@ Data types and memory locations defined via keywords.
 | `let mut x: T;`  | Like `let`, but allow for **mutability** {{ book(page="ch03-01-variables-and-mutability.html") }} {{ ex(page="variable_bindings/mut.html") }} and mutable borrow.{{ note( note="2") }} |
 | {{ tab() }} `x = y;` | Moves `y` to `x`, invalidating `y` if `T` is not **`Copy`**, {{ std(page="std/marker/trait.Copy.html") }} and copying `y` otherwise. |
 
-</div>
+</fixed-2-column>
 
 <footnotes>
 
@@ -227,7 +209,7 @@ Data types and memory locations defined via keywords.
 
 Creating and accessing data structures; and some more _sigilic_ types.
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |---------|-------------|
@@ -242,7 +224,7 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `(x)` | Parenthesized expression. |
 | `(x,)` | Single-element **tuple** expression. {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
 | `(S,)` | Single-element tuple type. |
-| `[S]` | Array type of unspecified length, i.e., **slice**. {{ std(page="std/primitive.slice.html") }}  {{ ex(page="primitives/array.html") }}  {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. {{ note( note="*") }} |
+| `[S]` | Array type of unspecified length, i.e., **slice**. {{ ex(page="primitives/array.html") }} {{ std(page="std/primitive.slice.html") }}   {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. {{ note( note="*") }} |
 | `[S; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} of fixed length `n` holding elements of type `S`. |
 | `[x; n]` | Array instance with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
 | `[x, y]` | Array instance with given elements `x` and `y`. |
@@ -256,7 +238,7 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `s.x` | Named **field access**, {{ ref(page="expressions/field-expr.html") }} might try to [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) if `x` not part of type `S`. |
 | `s.0` | Numbered field access, used for tuple types `S` &#8203;`(T)`. |
 
-</div>
+</fixed-2-column>
 
 <footnotes>
 
@@ -270,7 +252,7 @@ Creating and accessing data structures; and some more _sigilic_ types.
 Granting access to un-owned memory. Also see section on Generics & Constraints.
 
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |---------|-------------|
@@ -298,7 +280,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }}  `fn f<'a>(t: &'a T)`  | Same, for function. Caller decides `'a`. |
 | `'static`  | Special lifetime lasting the entire program execution. |
 
-</div>
+</fixed-2-column>
 
 
 
@@ -307,7 +289,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 
 Define units of code and their abstractions.
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |---------|-------------|
@@ -332,14 +314,14 @@ Define units of code and their abstractions.
 | {{ tab() }} <code> return &vert;&vert; true </code> | Closures sometimes look like logical ORs (here: return a closure). |
 | `unsafe {}` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ book(page="ch19-01-unsafe-rust.html#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 
-</div>
+</fixed-2-column>
 
 
 ### Control Flow
 
 Control execution within a function.
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |---------|-------------|
@@ -365,7 +347,7 @@ Control execution within a function.
 | {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T`, i.e., `x.f()` finds methods of `T` if in scope. |
 | `X::f()` | Call associated function, e.g., `X::new()`. |
 | {{ tab() }} `<X as T>::f()` | Call trait method `T::f()` implemented for `X`. |
-</div>
+</fixed-2-column>
 
 
 
@@ -373,7 +355,7 @@ Control execution within a function.
 
 Segment projects into smaller units and minimize dependencies.
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |---------|-------------|
@@ -398,7 +380,8 @@ Segment projects into smaller units and minimize dependencies.
 | `extern crate a;` | Declare dependency on external **crate** {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ex(page="crates/link.html#extern-crate") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }} {{ deprecated() }} ; just `use a::b` in {{ edition(ed="'18") }}.  |
 | `extern "C" {}`  | _Declare_ external dependencies and ABI (e.g., `"C"`) from **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 | `extern "C" fn f() {}`  | _Define_ function to be exported with ABI (e.g., `"C"`) to FFI. |
-</div>
+
+</fixed-2-column>
 
 
 
@@ -406,7 +389,7 @@ Segment projects into smaller units and minimize dependencies.
 
 Short-hand names of types, and methods to convert one type to another.
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |---------|-------------|
@@ -420,7 +403,7 @@ Short-hand names of types, and methods to convert one type to another.
 | `S as R`  | In `use` of symbol, import `S` as `R`, e.g., `use a::S as R`. |
 | `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and be a bit surprising. {{ nom(page="casts.html") }} |
 
-</div>
+</fixed-2-column>
 
 
 
@@ -428,7 +411,7 @@ Short-hand names of types, and methods to convert one type to another.
 
 Code generation constructs expanded before the actual compilation happens.
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example |  Explanation |
 |---------|---------|
@@ -438,10 +421,10 @@ Code generation constructs expanded before the actual compilation happens.
 
 {{ tablesep() }}
 
-</div>
+</fixed-2-column>
 
 
-<div class="cheats macro_rules">
+<fixed-2-column class="color-header macro_rules">
 
 Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming") }} **macro by example** {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}} `macro_rules!` implementation these work:
 
@@ -468,7 +451,7 @@ Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-wi
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
 | `$crate` | Special hygiene variable, crate where macros is defined. {{ todo() }} |
 
-</div>
+</fixed-2-column>
 
 {{ tablesep() }}
 
@@ -479,7 +462,7 @@ Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-wi
 Constructs found in `match` or `let` expressions, or function parameters.
 
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |---------|-------------|
@@ -493,7 +476,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 | `if let Some(x) = get() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`.|
 
-</div>
+</fixed-2-column>
 
 
 <footnotes>
@@ -508,7 +491,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 
 Pattern matching arms in `match` expressions. Left side of these arms can also be found in `let` expressions.
 
-<div class="cheats">
+<fixed-2-column>
 
 | Match Arm | Explanation |
 |---------|-------------|
@@ -533,7 +516,7 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 | {{ tab() }}  <code>E::C {x} &vert; E::D {x}</code> | Same, but bind `x` if all variants have it. |
 | `S { x } if x > 10 => {}`  | Pattern **match guards**, {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} {{ ref(page="expressions/match-expr.html#match-guards") }} condition must be true as well to match. |
 
-</div>
+</fixed-2-column>
 
 
 
@@ -546,7 +529,7 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 
 Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, ...
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |---------|-------------|
@@ -578,7 +561,7 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | `for<'a>` | **Higher-ranked trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
 | {{ tab() }} `trait T: for<'a> R<'a> {}` | Any `S` that `impl T` would also have to fulfill `R` for any lifetime. |
 
-</div>
+</fixed-2-column>
 
 
 
@@ -587,26 +570,26 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 Rust has several ways to create textual values.
 
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |--------|-------------|
 | `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}} UTF-8, will interpret `\n` as _line break_ `0xA`, ... |
 | `r"..."` | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}} UTF-8, won't interpret `\n`, ... |
-| `r#"..."#`, ... | Raw string literal, UTF-8, but can also contain `"`. Number of `#` can vary. |
+| `r#"..."#` | Raw string literal, UTF-8, but can also contain `"`. Number of `#` can vary. |
 | `b"..."` | **Byte string literal**; {{ ref(page="tokens.html#byte-and-byte-string-literals")}} constructs ASCII `[u8]`, not a string. |
 | `br"..."`, `br#"..."#` | Raw byte string literal, ASCII `[u8]`, combination of the above. |
 | `'🦀'` | **Character literal**, {{ ref(page="tokens.html#character-and-string-literals")}} fixed 4 byte unicode '**char**'. {{ std(page="std/primitive.char.html") }} |
 | `b'x'` | ASCII **byte literal**. {{ ref(page="tokens.html#byte-literals")}} |
 
-</div>
+</fixed-2-column>
 
 
 ### Comments
 
 No comment.
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |--------|-------------|
@@ -619,14 +602,14 @@ No comment.
 | ` ```rust ... ``` ` | In doc comments, include a [doc test](https://doc.rust-lang.org/rustdoc/documentation-tests.html) (doc code running on `cargo test`). |
 | `#` | In doc tests, hide line from documentation (` ```   # use x::hidden; ``` `). |
 
-</div>
+</fixed-2-column>
 
 
 ### Miscellaneous
 
 These sigils did not fit any other category but are good to know nonetheless.
 
-<div class="cheats">
+<fixed-2-column>
 
 | Example | Explanation |
 |---------|-------------|
@@ -639,7 +622,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html#raw-identifiers") }} for edition compatibility. |
 | `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
 
-</div>
+</fixed-2-column>
 
 
 
@@ -651,9 +634,7 @@ Rust supports most operators you would expect (`+`, `*`, `%`, `=`, `==`...), inc
 
 ---
 
-<div class="magic">
-
-
+<magic>
 
 # Behind the Scenes
 
@@ -668,16 +649,16 @@ Rust supports most operators you would expect (`+`, `*`, `%`, `=`, `==`...), inc
 Why moves, references and lifetimes are how they are.
 
 
-> 🔥 This section is brand new, [**feedback very welcome**](https://github.com/ralfbiedert/cheats.rs/issues)! 🔥
+> 🔥 This section is brand new, feedback very welcome! 🔥
 
-<div class="tabs ticktock lifetimes">
+<tabs class="lifetimes">
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-lt-1" name="tab-lt" checked>
-<label class="tab-label" for="tab-lt-1"><b>Types & Moves</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-lt-1" name="tab-lt" checked>
+<label for="tab-lt-1"><b>Types & Moves</b></label>
+<panel>
+<div>
 
 
 <lifetime-section>
@@ -1093,17 +1074,15 @@ let c: S = M::new();
 </lifetime-section>
 
 
-</div></div></div>
+</div></panel></tab>
 
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-lt-2" name="tab-lt">
-<label class="tab-label" for="tab-lt-2"><b>Call Stack</b></label>
-<div class="tab-panel">
-<div class="tab-content">
-
+<tab>
+<input type="radio" id="tab-lt-2" name="tab-lt">
+<label for="tab-lt-2"><b>Call Stack</b></label>
+<panel><div>
 
 <lifetime-section>
 <lifetime-example>
@@ -1343,19 +1322,14 @@ f(a);
 </explanation>
 </lifetime-section>
 
-
-<lifetime-section>
-
-
-</div></div></div>
+</div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-lt-3" name="tab-lt">
-<label class="tab-label" for="tab-lt-3"><b>References & Pointers</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-lt-3" name="tab-lt">
+<label for="tab-lt-3"><b>References & Pointers</b></label>
+<panel><div>
 
 <lifetime-section>
 <lifetime-example>
@@ -1683,17 +1657,16 @@ let p: *const S = questionable_origin();
 </explanation>
 </lifetime-section>
 
-</div></div></div>
+</div></panel></tab>
 
 
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-lt-10" name="tab-lt">
-<label class="tab-label" for="tab-lt-10"><b>Lifetime Basics</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-lt-10" name="tab-lt">
+<label for="tab-lt-10"><b>Lifetime Basics</b></label>
+<panel><div>
 
 
 <lifetime-section>
@@ -2046,8 +2019,8 @@ let p: *const S = questionable_origin();
 
 - Assume you got a `r: &'c S` from somewhere it means:
     - `r` holds an address of some `S`,
-    - any address `r` points to must and will exist for at least `c`,
-    - the variable `r` itself cannot live longer than `c`.
+    - any address `r` points to must and will exist for at least `'c`,
+    - the variable `r` itself cannot live longer than `'c`.
 
 
 
@@ -2228,7 +2201,9 @@ let p: *const S = questionable_origin();
         let r: &'c S = &c;      // Does not quite work since we can't name lifetimes of local
         {                       // variables in a function body, but very same principle applies
             let a = S(0);       // to functions next page.
-            r = &b;
+
+            r = &a;             // Location of `a` does not live sufficient many lines -> not ok.
+            r = &b;             // Location of `b` lives all lines of `c` and more -> ok.
         }
     }
 }
@@ -2428,16 +2403,15 @@ print_byte(r);
 </explanation>
 </lifetime-section>
 
-
-</div></div></div>
+</div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-lt-11" name="tab-lt">
-<label class="tab-label" for="tab-lt-11"><b>Lifetime in Functions</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-lt-11" name="tab-lt">
+<label for="tab-lt-11"><b>Lifetimes in Functions</b></label>
+<panel>
+<div>
 
 
 <lifetime-section>
@@ -3104,8 +3078,8 @@ print_byte(r);
         <memory-backdrop>
             <byte></byte>
             <byte></byte>
-            <byte></byte>
-            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
             <byte></byte>
             <byte></byte>
             <byte></byte>
@@ -3146,15 +3120,15 @@ print_byte(r);
             <byte></byte>
         </memory-backdrop>
         <values>
-            <value class="t byte2 hide" style="left: 38px;">S(1)</value>
+            <value class="t byte2" style="left: 38px;">S(2)</value>
             <value class="t byte2 hide" style="left: 79px;">S(1)</value>
-            <value class="t byte2" style="left: 119px;">S(2)</value>
+            <value class="t byte2 hide" style="left: 119px;">S(2)</value>
             <value class="ptr byte4 hide" style="left: 177px;">y + 1</value>
             <value class="ptr byte4 hide" style="left: 201px;">0x6</value>
             <value class="ptr byte4 hide" style="left: 224px;">0xa</value>
         </values>
         <labels>
-            <label class="byte2 hide" style="left: 37px;"><code>a</code></label>
+            <label class="byte2" style="left: 37px;"><code>a</code></label>
             <label class="byte4 hide" style="left: 59px;"><code>b</code></label>
             <label class="byte2" style="left: 81px;"><code>c</code></label>
             <label class="byte4 hide" style="left: 139px;"><code>r</code></label>
@@ -3185,14 +3159,9 @@ let a = c;          // <- But here, no more use of `r` or `s`.
 </explanation>
 </lifetime-section>
 
+</div></panel></tab>
+</tabs>
 
-
-
-</div></div></div>
-
-
-<!-- End tabs section -->
-</div>
 
 <footnotes>
 
@@ -3212,7 +3181,7 @@ Examples expand by clicking.
 If something works that "shouldn't work now that you think about it", it might be due to one of these.
 
 
-<div class="header-language-sugar">
+<div class="color-header language-sugar">
 
 
 | Name | Description |
@@ -3230,8 +3199,7 @@ If something works that "shouldn't work now that you think about it", it might b
 
 > **Editorial Comment** <sup>💬</sup> &mdash; The features above will make your life easier, but might hinder your understanding. If you are new to Rust, you should consider reading about them in more detail.
 
-<!-- End magic -->
-</div>
+</magic>
 
 ---
 
@@ -3379,14 +3347,13 @@ Essential types built into the core of the language.
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
-<div class="tabs">
+<tabs>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-numeric-1" name="tab-group-numeric" checked>
-<label class="tab-label" for="tab-numeric-1"><b>Unsigned Types</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-numeric-1" name="tab-group-numeric" checked>
+<label for="tab-numeric-1"><b>Unsigned Types</b></label>
+<panel><div>
 
 
 
@@ -3400,15 +3367,14 @@ Essential types built into the core of the language.
 |`usize`| Depending on platform pointer size, same as `u16`, `u32`, or `u64`. |
 
 
-</div></div></div>
+</div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-numeric-3" name="tab-group-numeric">
-<label class="tab-label" for="tab-numeric-3"><b>Signed Types</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-numeric-3" name="tab-group-numeric">
+<label for="tab-numeric-3"><b>Signed Types</b></label>
+<panel><div>
 
 
 
@@ -3433,15 +3399,14 @@ Essential types built into the core of the language.
 |`isize`| Depending on platform pointer size, same as `i16`, `i32`, or `i64`. |
 
 
-</div></div></div>
+</div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-numeric-2" name="tab-group-numeric">
-<label class="tab-label" for="tab-numeric-2"><b>Float Types</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-numeric-2" name="tab-group-numeric">
+<label for="tab-numeric-2"><b>Float Types</b></label>
+<panel><div>
 
 
 Sample bit representation<sup>*</sup> for a `f32`:
@@ -3518,10 +3483,10 @@ Similarly, for <code>f64</code> types this would look like:
     <sup>*</sup> Float types follow <a href="https://en.wikipedia.org/wiki/IEEE_754-2008_revision">IEEE 754-2008</a> and depend on platform endianness.
 </footnotes>
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- End tabs -->
-</div>
+</tabs>
 
 <!-- End overflow prevention -->
 </div></div>
@@ -3564,33 +3529,30 @@ Similarly, for <code>f64</code> types this would look like:
 </datum>
 
 
+{{ tablesep() }}
 
-<!-- Create a horizontal scrollable area on small displays to preserve layout-->
-<div class="tabs">
-
+<tabs>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-textual-3" name="tab-group-textual" checked>
-<label class="tab-label" for="tab-textual-3"><b>Basics</b></label>
-<div class="tab-panel">
-<div class="tab-content">
-
+<tab>
+<input type="radio" id="tab-textual-3" name="tab-group-textual" checked>
+<label for="tab-textual-3"><b>Basics</b></label>
+<panel><div>
 
 | Type | Description |
 |---------|-------------|
 | `char` | Always 4 bytes and only holds a single Unicode **scalar value** {{ link(url="https://www.unicode.org/glossary/#unicode_scalar_value") }}. |
 | `str` | An `u8`-array of unknown length guaranteed to hold **UTF-8 encoded code points**. |
 
-</div></div></div>
+</div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-textual-1" name="tab-group-textual">
-<label class="tab-label" for="tab-textual-1"><b>Usage</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-textual-1" name="tab-group-textual">
+<label for="tab-textual-1"><b>Usage</b></label>
+<panel><div>
+
 
 
 <!-- Notice how:
@@ -3619,15 +3581,15 @@ Similarly, for <code>f64</code> types this would look like:
 | `let s = "❤❤️";` | It can hold arbitrary text, has variable length per _c._, and is hard to index. |
 
 
-</div></div></div>
+</div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-textual-2" name="tab-group-textual">
-<label class="tab-label" for="tab-textual-2"><b>Encoding</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-textual-2" name="tab-group-textual">
+<label for="tab-textual-2"><b>Encoding</b></label>
+<panel><div>
+
 
 `let s = "I ❤ Rust"; ` <br>
 `let t = "I ❤️ Rust";`
@@ -3657,11 +3619,11 @@ Similarly, for <code>f64</code> types this would look like:
 
 </footnotes>
 
-</div></div></div>
+</div></panel></tab>
 
 
 <!-- End tabs -->
-</div>
+</tabs>
 
 
 {{ tablesep() }}
@@ -3669,7 +3631,7 @@ Similarly, for <code>f64</code> types this would look like:
 
 ## Custom Types
 
-Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.html") }} is subject to <b>representation</b>; {{ ref(page="type-layout.html#representations") }} padding can be present.
+Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.html") }} is subject to <b>representation</b>; {{ ref(page="type-layout.html#representations") }} padding can be present. <sup>1</sup>
 
 
 <!-- NEW ENTRY -->
@@ -3810,6 +3772,11 @@ These **sum types** hold a value of one of their sub types:
 </datum>
 
 
+<footnotes>
+
+<sup>1</sup> To be clear, the depiction of types here merely illustrates a _random_ representation. Unless a certain one is forced (e.g., via `#[repr(C)]`, Rust will, for example, be free to layout `A(u8, u16)` as `[u8 u16]` and `B(u8, u16)` as `[u16 u8]`, even inside the same application!
+
+</footnotes>
 
 
 ## References & Pointers {#references-pointers-ui}
@@ -3989,10 +3956,9 @@ The **`payload`** depends on the base type of the referent. This applies to both
 </datum>
 
 
-
 ## Closures {#closures-data}
 
-Closures are ad-hoc functions along with automatically managed data block **capturing** {{ ref(page="types/closure.html#capture-modes") }}
+Closures are ad-hoc functions along with an automatically managed data block **capturing** {{ ref(page="types/closure.html#capture-modes") }}
 the environment accessed where closure was defined. For example:
 
 <!-- NEW ENTRY -->
@@ -4417,7 +4383,7 @@ PRs for this section are very welcome. Idea is:
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
-<div class="header-one-liners cheats">
+<div class="color-header one-liners cheats">
 
 | Intent | Snippet |
 |---------|-------------|
@@ -4439,8 +4405,7 @@ PRs for this section are very welcome. Idea is:
 
 ## Traits
 
-Traits define common behavior. If `S` implements `trait T`, you know `S` can behave as prescribed by `T`. Below is overview of traits that
-may be more tricky.
+Traits define common behavior. If `S` implements `trait T`, you know `S` can behave as prescribed by `T`. Below is an overview of traits that may be more tricky.
 
 #### 🧵 Thread Safety {#thread-safety}
 
@@ -4469,14 +4434,14 @@ may be more tricky.
 #### 🐘 (Dynamically / Zero) Sized Types {#sized-types}
 
 
-<div class="tabs">
+<tabs>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-sized-1" name="tab-group-sized" checked>
-<label class="tab-label" for="tab-sized-1"><b>Overview</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-sized-1" name="tab-group-sized" checked>
+<label for="tab-sized-1"><b>Overview</b></label>
+<panel><div>
+
 
 
 
@@ -4485,18 +4450,18 @@ may be more tricky.
 - Types not `Sized` are called **dynamically sized types** {{ book(page="ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait") }} {{ nom(page="exotic-sizes.html#dynamically-sized-types-dsts") }}  {{ ref(page="dynamically-sized-types.html#dynamically-sized-types") }} (DSTs), sometimes **unsized**.
 - Types without data are called **zero sized types** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts") }} (ZSTs), do not occupy space.
 
-</div></div></div>
+</div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-sized-2" name="tab-group-sized">
-<label class="tab-label" for="tab-sized-2"><b>Sized in Bounds</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-sized-2" name="tab-group-sized">
+<label for="tab-sized-2"><b>Sized in Bounds</b></label>
+<panel><div>
 
 
-<div class="header-sized cheats">
+
+<div class="color-header sized cheats">
 
 | Example | Explanation |
 |---------|-------------|
@@ -4512,9 +4477,9 @@ may be more tricky.
 </div>
 
 
-</div></div></div>
+</div></panel></tab>
 
-</div>
+</tabs>
 
 
 
@@ -4523,14 +4488,14 @@ may be more tricky.
 #### 🚥 Iterators {#iterators}
 
 
-<div class="tabs header-std-green">
+<tabs class="color-header std-green">
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-trait-iter-1" name="tab-group-trait-iter" checked>
-<label class="tab-label" for="tab-trait-iter-1"><b>Using Iterators</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-trait-iter-1" name="tab-group-trait-iter" checked>
+<label for="tab-trait-iter-1"><b>Using Iterators</b></label>
+<panel><div>
+
 
 
 **Basics**
@@ -4561,15 +4526,15 @@ Once you have an `i`:
 
 </footnotes>
 
-</div></div></div>
+</div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-trait-iter-2" name="tab-group-trait-iter">
-<label class="tab-label" for="tab-trait-iter-2"><b>Implementing Iterators</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-trait-iter-2" name="tab-group-trait-iter">
+<label for="tab-trait-iter-2"><b>Implementing Iterators</b></label>
+<panel><div>
+
 
 **Basics**
 
@@ -4595,10 +4560,10 @@ Similarly, providing a `fn iter_mut(&mut self) -> IterMut` might be a good idea.
 * **`impl IntoIterator for &mut C {}`** &mdash; Same ...
 
 
-</div></div></div>
+</div></panel></tab>
 
 
-</div>
+</tabs>
 
 {{ tablesep() }}
 
@@ -4608,7 +4573,7 @@ Similarly, providing a `fn iter_mut(&mut self) -> IterMut` might be a good idea.
 
 Conversions XXX
 
-<div class="header-std-yellow">
+<div class="color-header std-yellow">
 
 | Trait ... | Implementing ... for `S` means | Requiring `<A: ...>` means |
 |---------|-------------|----|
@@ -4633,14 +4598,13 @@ If you **want** a string of type ...
 <div style="min-width: 100%; width: 650px;">
 
 
-<div class="tabs">
+<tabs>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-1" name="tab-group-str" checked>
-<label class="tab-label" for="tab-str-1"><code>String</code></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion">
+<tab>
+<input type="radio" id="tab-str-1" name="tab-group-str" checked>
+<label for="tab-str-1"><code>String</code></label>
+<panel><div class="stringconversion">
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
@@ -4655,14 +4619,13 @@ If you **want** a string of type ...
 |`&Path`|`x.to_str()?.to_string()`|
 |`&[u8]` <sup>1</sup> |`String::from_utf8_lossy(x).to_string()`|
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-2" name="tab-group-str" >
-<label class="tab-label" for="tab-str-2"><code>CString</code></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion">
+<tab>
+<input type="radio" id="tab-str-2" name="tab-group-str" >
+<label for="tab-str-2"><code>CString</code></label>
+<panel><div class="stringconversion">
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
@@ -4678,14 +4641,13 @@ If you **want** a string of type ...
 |`&[u8]` <sup>1</sup> |`CString::new(Vec::from(x))?`|
 |`*mut c_char` <sup>3</sup> |`unsafe { CString::from_raw(x) }`|
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-3" name="tab-group-str" >
-<label class="tab-label" for="tab-str-3"><code>OsString</code></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion">
+<tab>
+<input type="radio" id="tab-str-3" name="tab-group-str" >
+<label for="tab-str-3"><code>OsString</code></label>
+<panel><div class="stringconversion">
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
@@ -4700,14 +4662,13 @@ If you **want** a string of type ...
 |`&Path`|`x.as_os_str().to_owned()`|
 |`&[u8]` <sup>1</sup> | {{ todo() }} |
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-35" name="tab-group-str" >
-<label class="tab-label" for="tab-str-35"><code>PathBuf</code></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion">
+<tab>
+<input type="radio" id="tab-str-35" name="tab-group-str" >
+<label for="tab-str-35"><code>PathBuf</code></label>
+<panel><div class="stringconversion">
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
@@ -4722,14 +4683,13 @@ If you **want** a string of type ...
 |`&Path`|`PathBuf::from(x)` <sup>`i`</sup>|
 |`&[u8]` <sup>1</sup> | {{ todo() }} |
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-4" name="tab-group-str" >
-<label class="tab-label" for="tab-str-4"><code>Vec&lt;u8&gt;</code></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion">
+<tab>
+<input type="radio" id="tab-str-4" name="tab-group-str" >
+<label for="tab-str-4"><code>Vec&lt;u8&gt;</code></label>
+<panel><div class="stringconversion">
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
@@ -4744,14 +4704,13 @@ If you **want** a string of type ...
 |`&Path`| {{ todo() }} |
 |`&[u8]` <sup>1</sup> |`x.to_vec()`|
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-5" name="tab-group-str" >
-<label class="tab-label" for="tab-str-5"><code>&str</code></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion">
+<tab>
+<input type="radio" id="tab-str-5" name="tab-group-str" >
+<label for="tab-str-5"><code>&str</code></label>
+<panel><div class="stringconversion">
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
@@ -4766,14 +4725,13 @@ If you **want** a string of type ...
 |`&Path`|`x.to_str()?`|
 |`&[u8]` <sup>1</sup> |`std::str::from_utf8(x)?`|
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-6" name="tab-group-str" >
-<label class="tab-label" for="tab-str-6"><code>&CStr</code></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion">
+<tab>
+<input type="radio" id="tab-str-6" name="tab-group-str" >
+<label for="tab-str-6"><code>&CStr</code></label>
+<panel><div class="stringconversion">
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
@@ -4789,14 +4747,13 @@ If you **want** a string of type ...
 |`&[u8]` <sup>1</sup> |`CStr::from_bytes_with_nul(x)?`|
 |`*const c_char` <sup>1</sup> |`unsafe { CStr::from_ptr(x) }`|
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-8" name="tab-group-str" >
-<label class="tab-label" for="tab-str-8"><code>&OsStr</code></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion">
+<tab>
+<input type="radio" id="tab-str-8" name="tab-group-str" >
+<label for="tab-str-8"><code>&OsStr</code></label>
+<panel><div class="stringconversion">
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
@@ -4811,14 +4768,13 @@ If you **want** a string of type ...
 |`&Path`|`x.as_os_str()`|
 |`&[u8]` <sup>1</sup> | {{ todo() }} |
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-85" name="tab-group-str" >
-<label class="tab-label" for="tab-str-85"><code>&Path</code></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion">
+<tab>
+<input type="radio" id="tab-str-85" name="tab-group-str" >
+<label for="tab-str-85"><code>&Path</code></label>
+<panel><div class="stringconversion">
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
@@ -4833,14 +4789,13 @@ If you **want** a string of type ...
 |`&Path`|`x`|
 |`&[u8]` <sup>1</sup> | {{ todo() }} |
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-7" name="tab-group-str" >
-<label class="tab-label" for="tab-str-7"><code>&[u8]</code></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion">
+<tab>
+<input type="radio" id="tab-str-7" name="tab-group-str" >
+<label for="tab-str-7"><code>&[u8]</code></label>
+<panel><div class="stringconversion">
 
 | If you **have** `x` of type ...| Use this ... |
 | --- | --- |
@@ -4855,24 +4810,23 @@ If you **want** a string of type ...
 |`&Path`| {{ todo() }} |
 |`&[u8]` <sup>1</sup> |`x`|
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-str-9" name="tab-group-str" >
-<label class="tab-label" for="tab-str-9"><b>Other</b></label>
-<div class="tab-panel">
-<div class="tab-content stringconversion-other">
+<tab>
+<input type="radio" id="tab-str-9" name="tab-group-str" >
+<label for="tab-str-9"><b>Other</b></label>
+<panel><div class="stringconversion">
 
 | You **want** | And **have** `x` | Use this ... |
 | --- | --- | --- |
 |<b>`*const c_char`</b>|<b>`CString`</b>|`x.as_ptr()`|
 
 
-</div></div></div>
+</div></panel></tab>
 
 <!-- End tabs -->
-</div>
+</tabs>
 
 <!-- End overflow protection -->
 </div></div>
@@ -4910,7 +4864,7 @@ Each format argument is either empty `{}`, `{argument}`, or follows a basic [**s
 { [argument] ':' [[fill] align] [sign] ['#'] [width [$]] ['.' precision [$]] [type] }
 ```
 
-<div class="header-undefined-color-3">
+<div class="color-header undefined-color-3">
 
 | Element |  Meaning |
 |---------| ---------|
@@ -4930,7 +4884,7 @@ Each format argument is either empty `{}`, `{argument}`, or follows a basic [**s
 {{ tablesep() }}
 
 
-<div class="header-undefined-color-3">
+<div class="color-header undefined-color-3">
 
 | Example | Explanation |
 |---------|-------------|
@@ -4956,7 +4910,7 @@ Each format argument is either empty `{}`, `{argument}`, or follows a basic [**s
 
 Basic project layout, and common files and folders, as used by `cargo`. {{ below(target="#cargo") }}
 
-<div class="header-red">
+<div class="color-header red">
 
 | Entry | Code |
 |--------| ---- |
@@ -4968,8 +4922,8 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | {{ tab() }} `main.rs` | Default entry point for applications, this is what **`cargo run`** uses. |
 | {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f()` starts. |
 | 📁 `tests/` | Integration tests go here, invoked via **`cargo test`**. Unit tests often stay in `src/` file. |
-| `.rustfmt.toml` | In case you want to [customize](https://rust-lang.github.io/rustfmt/) how **`cargo fmt`** works. |
-| `.clippy.toml` | Special configuration for certain [clippy lints](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`** |
+| `.rustfmt.toml` | In case you want to [**customize**](https://rust-lang.github.io/rustfmt/) how **`cargo fmt`** works. |
+| `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`** |
 | <code class="ignore-auto language-bash">Cargo.toml</code> | Main project configuration. Defines dependencies, artifacts ... |
 | <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
 </div>
@@ -4988,14 +4942,14 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 
 **Minimal examples** for various entry points might look like:
 
-<div class="tabs">
+<tabs>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-anatomy-1" name="tab-group-anatomy" checked>
-<label class="tab-label" for="tab-anatomy-1"><b>Applications</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-anatomy-1" name="tab-group-anatomy" checked>
+<label for="tab-anatomy-1"><b>Applications</b></label>
+<panel><div>
+
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -5009,14 +4963,13 @@ fn main() {
 }
 ```
 
-</div></div></div></div></div>
+</div></div></div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-anatomy-2" name="tab-group-anatomy" >
-<label class="tab-label" for="tab-anatomy-2"><b>Libraries</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-anatomy-2" name="tab-group-anatomy" >
+<label for="tab-anatomy-2"><b>Libraries</b></label>
+<panel><div>
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -5031,15 +4984,15 @@ mod m {
     pub fn g() {}  // No public path (`m` not public) from root, so `g`
 }                  // is not accessible from the outside of the crate.
 ```
-</div></div></div></div></div>
+</div></div></div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-anatomy-25" name="tab-group-anatomy" >
-<label class="tab-label" for="tab-anatomy-25"><b>Proc Macros</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-anatomy-25" name="tab-group-anatomy" >
+<label for="tab-anatomy-25"><b>Proc Macros</b></label>
+<panel><div>
+
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -5071,16 +5024,15 @@ crate_type = ["proc-macro"]
 ```
 
 
-</div></div></div></div></div>
+</div></div></div></panel></tab>
 
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-anatomy-3" name="tab-group-anatomy" >
-<label class="tab-label" for="tab-anatomy-3"><b>Unit Tests</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-anatomy-3" name="tab-group-anatomy" >
+<label for="tab-anatomy-3"><b>Unit Tests</b></label>
+<panel><div>
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -5101,15 +5053,13 @@ mod test {
     }
 }
 ```
-</div></div></div></div></div>
-
+</div></div></div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-anatomy-4" name="tab-group-anatomy" >
-<label class="tab-label" for="tab-anatomy-4"><b>Integration Tests</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-anatomy-4" name="tab-group-anatomy" >
+<label for="tab-anatomy-4"><b>Integration Tests</b></label>
+<panel><div>
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -5123,16 +5073,16 @@ fn my_sample() {
     assert_eq!(my_crate::f(), 123); // Integration tests (and benchmarks) 'depend' to the crate like
 }                                   // a 3rd party would. Hence, they only see public items.
 ```
-</div></div></div></div></div>
+</div></div></div></panel></tab>
 
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-anatomy-5" name="tab-group-anatomy" >
-<label class="tab-label" for="tab-anatomy-5"><b>Benchmarks</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-anatomy-5" name="tab-group-anatomy" >
+<label for="tab-anatomy-5"><b>Benchmarks</b></label>
+<panel><div>
+
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -5153,14 +5103,13 @@ fn my_algo(b: &mut Bencher) {
     b.iter(|| black_box(my_crate::f())); // `black_box` prevents `f` from being optimized away.
 }
 ```
-</div></div></div></div></div>
+</div></div></div></panel></tab>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-anatomy-6" name="tab-group-anatomy" >
-<label class="tab-label" for="tab-anatomy-6"><b>Build Scripts</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-anatomy-6" name="tab-group-anatomy" >
+<label for="tab-anatomy-6"><b>Build Scripts</b></label>
+<panel><div>
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -5182,11 +5131,10 @@ fn main() {
 
 <sup>*</sup>[See here for list](https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-build-scripts) of environment variables set.
 
-</div></div></div></div></div>
+</div></div></div></panel></tab>
 
+</tabs>
 
-
-</div>
 
 <!-- End noprint of code examples -->
 </noprint>
@@ -5216,7 +5164,7 @@ fn main() {
 Commands and tools that are good to know.
 
 
-<div class="header-tooling">
+<div class="color-header tooling">
 
 | Command | Description |
 |--------| ---- |
@@ -5247,7 +5195,7 @@ These are optional `rustup` components.
 Install them with `rustup component add [tool]`.
 
 
-<div class="header-tooling">
+<div class="color-header tooling">
 
 | Tool | Description |
 |--------| ---- |
@@ -5324,7 +5272,7 @@ set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android2
 
 If you are used to programming Java or C, consider these.
 
-<div class="header-blue">
+<div class="color-header blue">
 
 | Idiom | Code |
 |--------| ---- |
@@ -5338,7 +5286,7 @@ If you are used to programming Java or C, consider these.
 | **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
 |  | `struct Charge(f32)` over `f32` |
-| **Provide Builders** | `Car::new("Model T").hp(20).run();` |
+| **Provide Builders** | `Car::new("Model T").hp(20).build();` |
 | **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
 |   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
 | **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
@@ -5371,14 +5319,14 @@ If you are used to programming Java or C, consider these.
 If you are familiar with async / await in C# or TypeScript, here are some things to keep in mind:
 
 
-<div class="tabs header-orange">
+<tabs class="color-header orange">
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-async-1" name="tab-async" checked>
-<label class="tab-label" for="tab-async-1"><b>Basics</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-async-1" name="tab-async" checked>
+<label for="tab-async-1"><b>Basics</b></label>
+<panel><div>
+
 
 
 | Construct | Explanation |
@@ -5404,15 +5352,15 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 
 
 
-</div></div></div>
+</div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-async-2" name="tab-async">
-<label class="tab-label" for="tab-async-2"><b>Execution Flow</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-async-2" name="tab-async">
+<label for="tab-async-2"><b>Execution Flow</b></label>
+<panel><div>
+
 
 At each `x.await`, state machine passes control to subordinate state machine `x`. At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker
 thread returns all the way up to runtime so it can drive another Future. Some time later the runtime:
@@ -5441,20 +5389,20 @@ START --------------------> x.await --------------------> y.await --------------
 </div>
 </div>
 
-</div></div></div>
+</div></panel></tab>
 
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-async-3" name="tab-async">
-<label class="tab-label" for="tab-async-3"><b>Caveats</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-async-3" name="tab-async">
+<label for="tab-async-3"><b>Caveats</b></label>
+<panel><div>
+
 
 With the execution flow in mind, some considerations when writing code inside an `async` construct:
 
-<div class="header-orange">
+<div class="color-header orange">
 
 
 | Constructs {{ note(note="1") }} | Explanation |
@@ -5475,11 +5423,10 @@ without assuming executor specifics. <br/>
 
 </footnotes>
 
-</div></div></div>
-
+</div></panel></tab>
 
 <!-- end tabs -->
-</div>
+</tabs>
 
 
 {{ tablesep() }}
@@ -5493,7 +5440,7 @@ that implements `FnMut` {{ std(page="std/ops/trait.FnMut.html") }} also implemen
 
 From a call site perspective that means:
 
-<div class="header-green">
+<div class="color-header green">
 
 | Signature | Function `g` can call ... |  Function `g` accepts ... |
 |--------| -----------| -----------|
@@ -5517,7 +5464,7 @@ closure as a caller is most compatible with any function.
 
 From the perspective of someone defining a closure:
 
-<div class="header-green">
+<div class="color-header green">
 
 | Closure | Implements<sup>*</sup> | Comment |
 |--------| -----------| --- |
@@ -5540,7 +5487,7 @@ forced to capture its environment by copy or move via the
 
 That gives the following advantages and disadvantages:
 
-<div class="header-green">
+<div class="color-header green">
 
 | Requiring | Advantage | Disadvantage |
 |--------| -----------| -----------|
@@ -5561,14 +5508,14 @@ That gives the following advantages and disadvantages:
 Unsafe leads to unsound. Unsound leads to undefined. Undefined leads to the dark side of the force.
 
 
-<div class="tabs">
+<tabs>
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-unsafe-1" name="tab-unsafe" checked>
-<label class="tab-label" for="tab-unsafe-1"><b>Unsafe Code</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-unsafe-1" name="tab-unsafe" checked>
+<label for="tab-unsafe-1"><b>Unsafe Code</b></label>
+<panel><div>
+
 
 **Unsafe Code**
 
@@ -5585,15 +5532,15 @@ unsafe fn unsafe_f(x: *mut u8) {
     my_native_lib(x);
 }
 ```
-</div></div></div></div></div>
+</div></div></div></panel></tab>
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-unsafe-2" name="tab-unsafe" >
-<label class="tab-label" for="tab-unsafe-2"><b>Undefined Behavior</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-unsafe-2" name="tab-unsafe" >
+<label for="tab-unsafe-2"><b>Undefined Behavior</b></label>
+<panel><div>
+
 
 **Undefined Behavior (UB)**
 - As mentioned, `unsafe` code implies [special promises](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html) to the compiler (it wouldn't need be `unsafe` otherwise).
@@ -5613,16 +5560,16 @@ if maybe_true() {
     println!("the spanish inquisition");     // both paths, corrupt database, or anything else.
 }
 ```
-</div></div></div></div></div>
+</div></div></div></panel></tab>
 
 
 
 <!-- NEW TAB -->
-<div class="tab">
-<input class="tab-radio" type="radio" id="tab-unsafe-3" name="tab-unsafe" >
-<label class="tab-label" for="tab-unsafe-3"><b>Unsound Code</b></label>
-<div class="tab-panel">
-<div class="tab-content">
+<tab>
+<input type="radio" id="tab-unsafe-3" name="tab-unsafe" >
+<label for="tab-unsafe-3"><b>Unsound Code</b></label>
+<panel><div>
+
 
 **Unsound Code**
 - Any _safe_ Rust that could (even only theoretically) produce UB for any user input is always **unsound**.
@@ -5638,9 +5585,9 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 }                                        // everything else.
 ```
 
-</div></div></div></div></div>
+</div></div></div></panel></tab>
 
-</div>
+</tabs>
 
 {{ tablesep() }}
 
@@ -5662,7 +5609,7 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 
 When updating an API, these changes can break client code, compare [**RFC 1105**](https://github.com/rust-lang/rfcs/blob/master/text/1105-api-evolution.md). Major changes (🔴) are **definitely breaking**, while minor changes (🟡) **might be breaking**:
 
-<div class="header-api-stability">
+<div class="color-header api-stability">
 
 
 {{ tablesep() }}
@@ -5762,7 +5709,7 @@ When updating an API, these changes can break client code, compare [**RFC 1105**
 These are other great guides and tables.
 
 
-<div class="header-lavender">
+<div class="color-header lavender">
 
 
 <!-- This is for major other "cheat sheet" like material on the web. Main question when adding: does it add something
@@ -5785,7 +5732,7 @@ These are other great guides and tables.
 All major Rust books developed by the community.
 
 
-<div class="header-lavender">
+<div class="color-header lavender">
 
 <!-- Official Rust online "books" about Rust itself or major components (e.g., WebAssembly, Embedded, ...). Good test
     for inclusion can be official community involvement, +1k Github stars, ... -->
@@ -5821,7 +5768,7 @@ All major Rust books developed by the community.
 
 Comprehensive lookup tables for common components.
 
-<div class="header-lavender">
+<div class="color-header lavender">
 
 <!-- Table-like sites, often auto-generated. -->
 | Tables&nbsp;📋| Description |
@@ -5840,7 +5787,7 @@ Comprehensive lookup tables for common components.
 
 Online services which provide information or tooling.
 
-<div class="header-lavender">
+<div class="color-header lavender">
 
 <!-- Other online web services related to Rust. As a heuristic, things here should
     be essential (or at least address a major concern as "best of class") and be

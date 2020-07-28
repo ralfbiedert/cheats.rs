@@ -1,0 +1,130 @@
+// Rules specific to the TABBED CARDS we use.
+//
+// Original author + source:
+// https://codepen.io/Merri/pen/bytea
+//
+//
+// Modified 2020, Ralf Biedert:
+// - Moved to tags instead of divs,
+// - Extracted color handling for better day / night operation
+
+
+tabs {
+    font-size: 0;
+    margin: 5px 0;
+    display: block;
+
+
+
+    > tab {
+        display: inline;
+
+        > panel {
+            display: inline;
+            display: inline-block;
+            overflow: hidden;
+            position: relative;
+            height: 0;
+            width: 0;
+        }
+
+        > panel > div {
+            box-sizing: border-box;
+            display: block;
+            padding: 20px 20px 20px 20px;
+            float: left;
+            font-size: 10pt;
+            margin-top: -1px;
+            width: 100%;
+        }
+
+        > label {
+            display: inline-block;
+            font-size: 1.3rem;
+            left: 1px;
+            margin-left: -1px;
+            padding: 10px;
+            position: relative;
+            vertical-align: bottom;
+            cursor: pointer;;
+
+            // In some places we don't want our Rust-like color scheme b/c we have conflicting
+            // background colors.
+            .token.class-name, .token.keyword {
+                // font-weight: bold;
+                color: black;
+            }
+        }
+
+        > input[type="radio"] {
+            clip: rect(0 0 0 0);
+            height: 1px;
+            opacity: 0;
+            position: fixed;
+            width: 1px;
+            z-index: -1;
+        }
+
+
+        > input[type="radio"]:checked + label {
+            border-bottom-width: 0;
+            padding-bottom: 11px;
+            z-index: 1;
+        }
+
+        > input[type="radio"]:checked ~ panel {
+            display: inline;
+        }
+    }
+}
+
+.day-mode tabs {
+    > tab {
+        > panel > div {
+            background-color: white;
+            border: 1px solid #ccc;
+        }
+
+        > label {
+            background: #eee;
+            border: 1px solid #ccc;
+
+            code span.token.class-name {
+                color: inherit;
+            }
+        }
+
+        > input[type="radio"]:checked + label {
+            background: white;
+        }
+    }
+}
+
+
+.night-mode tabs {
+    > tab {
+        > panel > div {
+            background-color: #111;
+            border: 1px solid #333;
+        }
+
+        > label {
+            background: #333;
+            border: 1px solid #333;
+
+            code span.token.class-name {
+                color: inherit;
+            }
+        }
+
+        > input[type="radio"]:checked + label {
+            background: #666;
+        }
+    }
+}
+
+tabs:after {
+    clear: both;
+    content: '';
+    display: table;
+}

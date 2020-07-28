@@ -50,7 +50,7 @@ Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a hr
 
     We will store your submission, including context (e.g., section headers or user agents for site debugging). No identifiable information is preserved.
 
-    Should we find identifiable information was submitted by you by accident then we will attempt to remove it on a best-effort basis. However, no guarantees are giving such monitoring will take place, or is successful.
+    Should we find identifiable information was submitted by you by accident then we will attempt to remove it on a best-effort basis. However, no guarantees are given such monitoring will take place, or is successful.
 
     Storage happens in the European Union.
 
