@@ -714,7 +714,7 @@ Why moves, references and lifetimes are how they are.
         <labels>
             <label class="" style="right: 10px;">&nbsp;</label>
         </labels>
-        <subtext>Application memory</subtext>
+        <subtext>Application Memory</subtext>
     </memory-row>
 </lifetime-example>
 <explanation>
