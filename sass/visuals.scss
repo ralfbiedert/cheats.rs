@@ -658,6 +658,12 @@ lifetime-example {
             font-weight: bold;
         }
 
+        subtext::after {
+            margin-left: 0.3em;
+            content: " ↕️";
+            font-size: 0.9em;
+        }
+
         .byte2 {
             width: 30px;
             height: 22px;

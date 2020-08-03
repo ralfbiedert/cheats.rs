@@ -3165,7 +3165,7 @@ let a = c;          // <- But here, no more use of `r` or `s`.
 
 <footnotes>
 
-Examples expand by clicking.
+↕️ Examples expand by clicking.
 
 </footnotes>
 
