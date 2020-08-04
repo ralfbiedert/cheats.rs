@@ -17,7 +17,6 @@ $largescreen-width: 1050px;
     }
 }
 
-
 .page {
     // position: absolute;
     // width: 100%;
@@ -153,14 +152,6 @@ $largescreen-width: 1050px;
     }
 }
 
-// Smaller font looks better on paper
-@media print {
-    html {
-        font-size: 7px;
-    }
-}
-
-
 // Small screens like phones.
 @media screen and (max-width: $smallscreen-width) {
     html {
@@ -209,7 +200,20 @@ $largescreen-width: 1050px;
 
 // When printing we hide some elements that don't make sense
 @media print {
+
+    html {
+        font-size: 7px;
+    }
+
     noprint {
+        display: none;
+    }
+
+    .target {
+        display: none;
+    }
+
+    feedback {
         display: none;
     }
 }

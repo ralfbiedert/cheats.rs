@@ -18,7 +18,7 @@ const subtiles = [
     "This site was tested on animals and got 4.5 stars.",
     "Like Rust in a nutshell, for people with allergies.",
     "All the things you ever wanted to know. And more.",
-    "Documentation of a Cargo cult.",
+    "A cargo-cult documentary.",
     "Will the last person to leave this site please switch on night mode?",
     "A collaboration between Zoo Berlin and Olympia Typewriters.",
 ];
