@@ -1839,7 +1839,7 @@ let p: *const S = questionable_origin();
     1. **lifetime**<sup>2</sup> of that usage.
     1. **lifetime** of that value, might be useful when discussing open file descriptors, but also irrelevant here.
 - Likewise, lifetime parameters in code, e.g., `r: &'a S`, are
-    - concerned with how what LOC any **location r _points to_** needs to be accessible or locked;
+    - concerned with LOC any **location r _points to_** needs to be accessible or locked;
     - unrelated to the 'existence time' (as LOC) of `r` itself (well, it needs to exist shorter, that's it).
 - `&'static S` means address must be _valid during all lines of code_.
 
