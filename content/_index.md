@@ -1816,10 +1816,10 @@ let p: *const S = questionable_origin();
             <value class="ptr byte4 hide" style="left: 171px;">0x3</value>
         </values>
         <labels>
-            <label class="byte2" style="left: 37px;"><code>'a</code></label>
+            <!-- <label class="byte2" style="left: 37px;"><code>'a</code></label>
             <label class="byte4" style="left: 59px;"><code>'b: 'c</code></label>
             <label class="byte2" style="left: 81px;"><code>'c</code></label>
-            <label class="byte4" style="left: 139px;"><code>'d</code></label>
+            <label class="byte4" style="left: 139px;"><code>'d</code></label> -->
         </labels>
         <subtext>"Lifetime" of Things</subtext>
         <!-- <subtext><code>f(); g(); h();</code></subtext> -->
@@ -2775,7 +2775,9 @@ let a = c;   // Which one is _really_ borrowed?
 print_byte(r);
 ```
 
-- Since `f` can return only one address, only one of `b` and `c` needs to stay locked.
+- Since `f` can return only one address, not in all cases `b` and `c` needs to stay locked.
+- In many cases we can get quality-of-life improvements.
+    - Notably, when we know one parameter _couldn't_ have been used in return value anymore.
 
 
 </explanation>
@@ -2964,12 +2966,13 @@ let a = b;
 print_byte(r);
 ```
 
-- Liftime parameters in signatures, like `'x`, solve that problem.
+- Liftime parameters in signatures, like `'c` above, solve that problem.
 - Their primary purpose is:
-    - **outside the function**, to explain based on which input address an output address is generated,
-    - **within the function**, to guarantee only addresses that live at least `'x` are assigned.
+    - **outside the function**, to explain based on which input address an output address could be generated,
+    - **within the function**, to guarantee only addresses that live at least `'c` are assigned.
 - The actual lifetimes `'b`, `'c` are transparently picked by the compiler at **call site**, based on the borrowed variables the developer gave.
 - They are **not** equal to the _scope_ (which would be LOC from initialization to destruction) of `b` or `c`, but only a minimal subset of their scope called _lifetime_, that is, a minmal set of LOC based on how long `b` and `c` need to be borrowed to perform this call and use the obtained result.
+- In some cases, like if `f` had `'c: 'b` instead, we still couldn't distinguish and both needed to stay locked.
 
 </explanation>
 </lifetime-section>
