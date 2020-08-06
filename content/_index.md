@@ -2775,7 +2775,7 @@ let a = c;   // Which one is _really_ borrowed?
 print_byte(r);
 ```
 
-- Since `f` can return only one address, not in all cases `b` and `c` needs to stay locked.
+- Since `f` can return only one address, not in all cases `b` and `c` need to stay locked.
 - In many cases we can get quality-of-life improvements.
     - Notably, when we know one parameter _couldn't_ have been used in return value anymore.
 
