@@ -895,7 +895,7 @@ let t = S(1);
 let a = t;
 ```
 
-- This will **move** value within `t` to location of `a`, or copy it if `C` is `Copy`.
+- This will **move** value within `t` to location of `a`, or copy it if `S` is `Copy`.
 - After move location `t` is **invalid** and cannot be read anymore.
     - Technically the bits at that location are not really _empty_, but _undefined_.
     - If you still had access to `t` (via `unsafe`) they might still _look_ like valid `S`, but
