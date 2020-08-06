@@ -316,7 +316,7 @@ footnotes {
 
 .color-header.api-stability {
     th {
-        // background-color: rgb(221, 213, 179);
+        background-color: rgb(221, 213, 179);
     }
 }
 
@@ -439,11 +439,11 @@ table.sendsync {
 
 .night-mode {
     span.good {
-        color: rgb(22, 184, 22);
+        color: lightgreen;
     }
 
     span.bad {
-        color: darkred;
+        color: red;
     }
 
     span.cargo-prefix {
