@@ -5176,6 +5176,8 @@ Commands and tools that are good to know.
 | <code>cargo <span class="cargo-prefix">c</span>heck</code> | Check if project would compile (much faster). |
 | <code>cargo <span class="cargo-prefix">t</span>est</code> | Run tests for the project. |
 | <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
+| {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies features with other dependents (can be confusing). |
+| {{ tab() }} `cargo run -p w` | Run main of sub-workspace `w`. Treats features more as you would expect. |
 | <code>cargo doc --open</code> | Locally generate documentation for your code and dependencies. |
 | `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
 | {{ tab() }} `expanded` |  Show with expanded macros, ... |
