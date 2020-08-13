@@ -5235,7 +5235,7 @@ Get from target vendor (Google, Apple, ...), might not be available on all hosts
 
 **Some toolchains require additional build steps** (e.g., Android's `make-standalone-toolchain.sh`).
 
-🔘 Update **`~/cargo/.config`** like this:
+🔘 Update **`~/.cargo/config.toml`** like this:
 
 ```
 [target.aarch64-linux-android]
