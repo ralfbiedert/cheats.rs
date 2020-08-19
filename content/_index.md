@@ -5249,12 +5249,18 @@ linker = "[PATH_TO_TOOLCHAIN]/aarch64-linux-android/bin/aarch64-linux-android-cl
 linker = "C:/[PATH_TO_TOOLCHAIN]/prebuilt/windows-x86_64/bin/aarch64-linux-android21-clang.cmd"
 ```
 
-Sometimes (depending on how compiler complains) you might also need to set an environment variable. Note that some platforms / configuration can be
-**extremely** sensitive how paths are specified (e.g., `\` vs `/`) and quoted:
+🔘 Set **environment variables** (optional, wait until compiler complains before setting):
 
 ```
 set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
+set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-ar.exe
+...
 ```
+
+Whether you set them depends on how compiler complains, not necessarily all are needed.
+
+> Some platforms / configurations can be **extremely sensitive** how paths are specified (e.g., `\` vs `/`) and quoted.
+
 
 ✔️ Compile with **`cargo build --target=X`**
 
