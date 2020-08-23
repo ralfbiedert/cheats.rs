@@ -67,6 +67,7 @@ insert_anchor_links = "right"
 **Standard Library**
 * [Common One-Liners](#common-one-liners)
 * [Traits](#traits)
+* [Number Conversions](#number-conversions)
 * [String Conversions](#string-conversions)
 * [String Formatting](#string-formatting)
 
@@ -347,6 +348,7 @@ Control execution within a function.
 | {{ tab() }} `T::f(&x)` | Same as `x.f()` if `X impl T`, i.e., `x.f()` finds methods of `T` if in scope. |
 | `X::f()` | Call associated function, e.g., `X::new()`. |
 | {{ tab() }} `<X as T>::f()` | Call trait method `T::f()` implemented for `X`. |
+
 </fixed-2-column>
 
 
@@ -4391,7 +4393,6 @@ PRs for this section are very welcome. Idea is:
 
 | Intent | Snippet |
 |---------|-------------|
-| Parse a number | `"42".parse::<u32>()?` |
 | Create a new file | `OpenOptions::new().create(true).write(true).open(PATH)?` |
 | Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
 | Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
@@ -4588,6 +4589,27 @@ Conversions XXX
 
 
 {{ tablesep() }} -->
+
+
+
+## Number Conversions
+
+As-correct-as-it-currently-gets number conversions.
+
+| ↓ Have / Want → | `u8` ... `i128` |  `f32` / `f64` | String |
+| --- | --- |  --- |--- |
+| `u8` ... `i128` | `u8::try_from(x)?` <sup>1</sup> |  `x as f32` <sup>3</sup> | `x.to_string()` |
+| `f32` / `f64` | `x as u8` <sup>2</sup> |  `x as f32` | `x.to_string()` |
+| `String` | `x.parse::<u8>()?` | `x.parse::<f32>()?` | `x` |
+
+
+<footnotes>
+
+<sup>1</sup> If type true subset `from()` works directly, e.g., `u32::from(my_u8)`. <br/>
+<sup>2</sup> Truncating (`11.9_f32 as u8` gives `11`) and saturating (`1024_f32 as u8` gives `255`). <br/>
+<sup>2</sup> Might misrepresent number  (`u64::MAX as f32`) or produce `Inf` (`u128::MAX as f32`).
+
+</footnotes>
 
 
 
