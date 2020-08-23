@@ -2375,7 +2375,7 @@ let p: *const S = questionable_origin();
             <value class="t byte2 hide" style="left: 38px;">S(0)</value>
             <value class="t byte2" style="left: 79px;">&nbsp;</value>
             <value class="t byte2 hide" style="left: 119px;">S(2)</value>
-            <value class="ptr byte4" style="left: 177px;">&nbsp;</value>
+            <value class="ptr byte4" style="left: 177px;">0x6</value>
             <failed style="left: -40px;"><value class="t bytes">S(4)</value></failed>
             <denied style="left: -83px;">⛔</denied>
         </values>
