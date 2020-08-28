@@ -4610,7 +4610,7 @@ As-correct-as-it-currently-gets number conversions.
 
 <sup>1</sup> If type true subset `from()` works directly, e.g., `u32::from(my_u8)`. <br/>
 <sup>2</sup> Truncating (`11.9_f32 as u8` gives `11`) and saturating (`1024_f32 as u8` gives `255`). <br/>
-<sup>2</sup> Might misrepresent number  (`u64::MAX as f32`) or produce `Inf` (`u128::MAX as f32`).
+<sup>3</sup> Might misrepresent number (`u64::MAX as f32`) or produce `Inf` (`u128::MAX as f32`).
 
 </footnotes>
 
