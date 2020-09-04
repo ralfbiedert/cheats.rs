@@ -3213,6 +3213,7 @@ If something works that "shouldn't work now that you think about it", it might b
 </magic>
 
 ---
+
 <!-- This whole section doesn't look good on print -->
 <noprint>
 
