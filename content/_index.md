@@ -243,7 +243,7 @@ Creating and accessing data structures; and some more _sigilic_ types.
 
 <footnotes>
 
-<sup>*</sup> For now, see [tracking issue](https://github.com/rust-lang/rust/issues/48055) and corresponding [RFC 1909](https://github.com/rust-lang/rfcs/pull/1909).
+<sup>*</sup> For now,{{ rfc( page ="1909-unsized-rvalues.html") }} pending completion of [tracking issue](https://github.com/rust-lang/rust/issues/48055).
 
 </footnotes>
 
@@ -3200,9 +3200,8 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
-| **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly dereference [scrutinee] and add `ref` and `ref mut` to bindings. |
+| **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly dereference [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and add `ref` and `ref mut` to bindings. |
 
-[scrutinee]: https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee
 
 </div>
 
@@ -5647,7 +5646,7 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 
 ## API Stability
 
-When updating an API, these changes can break client code, compare [**RFC 1105**](https://github.com/rust-lang/rfcs/blob/master/text/1105-api-evolution.md). Major changes (🔴) are **definitely breaking**, while minor changes (🟡) **might be breaking**:
+When updating an API, these changes can break client code.{{ rfc(page="1105-api-evolution.html") }} Major changes (🔴) are **definitely breaking**, while minor changes (🟡) **might be breaking**:
 
 <div class="color-header api-stability">
 
