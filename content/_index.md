@@ -4397,13 +4397,17 @@ PRs for this section are very welcome. Idea is:
 
 | Intent | Snippet |
 |---------|-------------|
-| Create a new file | `OpenOptions::new().create(true).write(true).open(PATH)?` |
+| Create a new file<sup>*</sup> | `OpenOptions::new().create(t).write(t).truncate(t).open(PATH)?` |
 | Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
 | Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
 | {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
 | Iterate _and_ edit `&mut [T]` if `T` Copy. | `Cell::from_mut(mut_slice).as_slice_of_cells()` |
 
-<!-- | Run command, get output | `Command::new("ls").args(&["-la"]).output()?` | -->
+<footnotes>
+
+<sup>*</sup> We're a bit short on space here, <code>t</code> means true.
+
+</footnotes>
 
 </div>
 
@@ -4769,13 +4773,13 @@ If you **want** a string of type ...
 |`String`|`CString::new(x)?.as_c_str()`|
 |`CString`|`x.as_c_str()`|
 |`OsString` <sup>2</sup>|`x.to_str()?`|
-|`PathBuf`|`CStr::from_bytes_with_nul(x.to_str()?.as_bytes())?`|
-|`Vec<u8>` <sup>1</sup> |`CStr::from_bytes_with_nul(&x)?`|
-|`&str`|`CStr::from_bytes_with_nul(x.as_bytes())?`|
+|`PathBuf`| {{ todo() }}<sup>,4</sup> |
+|`Vec<u8>` <sup>1</sup><sup>,5</sup> |`CStr::from_bytes_with_nul(&x)?`|
+|`&str`| {{ todo() }}<sup>,4</sup> |
 |`&CStr`|`x`|
 |`&OsStr` <sup>2</sup>| {{ todo() }} |
 |`&Path`| {{ todo() }} |
-|`&[u8]` <sup>1</sup> |`CStr::from_bytes_with_nul(x)?`|
+|`&[u8]` <sup>1</sup><sup>,5</sup> |`CStr::from_bytes_with_nul(x)?`|
 |`*const c_char` <sup>1</sup> |`unsafe { CStr::from_ptr(x) }`|
 
 </div></panel></tab>
@@ -4879,6 +4883,10 @@ CString::new(bytes)?
 ```
 
 <sup>3</sup> The `c_char` **must** have come from a previous `CString`. If it comes from FFI see `&CStr` instead.
+
+<sup>4</sup> No known shorthand as `x` will lack terminating `0x0`. Best way to probably go via `CString`.
+
+<sup>5</sup> Must ensure vector actually ends with `0x0`.
 
 </footnotes>
 
