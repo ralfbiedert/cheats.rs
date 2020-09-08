@@ -1573,7 +1573,7 @@ let d = r.clone();  // Valid to clone (or copy) from r-target.
 ```
 let mut a = ...;
 let r = &mut a;
-let d = *a;       // Invalid to move out value, `a` would be empty.
+let d = *r;       // Invalid to move out value, `a` would be empty.
 *r = M::new();    // invalid to store non S value, doesn't make sense.
 ```
 
