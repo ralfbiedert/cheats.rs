@@ -4397,7 +4397,8 @@ PRs for this section are very welcome. Idea is:
 
 | Intent | Snippet |
 |---------|-------------|
-| Create a new file<sup>*</sup> | `OpenOptions::new().create(t).write(t).truncate(t).open(PATH)?` |
+| Create a new file | `File::create(PATH)?` |
+| {{ tab() }}  Same, via OpenOptions<sup>*</sup> | `OpenOptions::new().create(t).write(t).truncate(t).open(PATH)?` |
 | Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
 | Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
 | {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
