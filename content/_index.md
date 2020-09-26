@@ -3784,7 +3784,7 @@ These **sum types** hold a value of one of their sub types:
 
 <footnotes>
 
-<sup>1</sup> To be clear, the depiction of types here merely illustrates a _random_ representation. Unless a certain one is forced (e.g., via `#[repr(C)]`, Rust will, for example, be free to layout `A(u8, u16)` as `[u8 u16]` and `B(u8, u16)` as `[u16 u8]`, even inside the same application!
+<sup>1</sup> To be clear, the depiction of types here merely illustrates a _random_ representation. Unless a certain one is forced (e.g., via `#[repr(C)]`, Rust will, for example, be free to layout `A(u8, u16)` as `u8 u16` and `B(u8, u16)` as `u16 u8`, even inside the same application!
 
 </footnotes>
 

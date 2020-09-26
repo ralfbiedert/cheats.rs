@@ -21,6 +21,7 @@ const subtiles = [
     "A cargo-cult documentary.",
     "Will the last person to leave this site please switch on night mode?",
     "A collaboration between Zoo Berlin and Olympia Typewriters.",
+    "Contains 140g of Rust per 100g of cheat sheet.",
 ];
 
 // Labels for which we don't want feedback, mainly because the button placement
