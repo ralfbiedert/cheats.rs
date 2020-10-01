@@ -1068,7 +1068,7 @@ let c: S = M::new();
 ```
 
 - Once the 'name' of a non-vacated variable goes out of (drop-)**scope**, the contained value is **dropped**.
-    - Rule of tumb: execution reaches point where name of variable leaves `{}`-block it was defined in
+    - Rule of thumb: execution reaches point where name of variable leaves `{}`-block it was defined in
     - In detail more tricky, esp. temporaries, ...
 - Drop also invoked when new value assigned to existing variable location.
 - In that case **`Drop::drop()`** is called on the location of that value.
