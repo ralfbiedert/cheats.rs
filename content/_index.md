@@ -3813,8 +3813,7 @@ The respective `mut` types are identical.
             <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
-    <description>During <code>'a</code> any 'mem' this targets
-    must <br> always be a valid <code>t</code> of <code>T</code>.</description>
+    <description>Must target some valid <code>t</code> of <code>T</code>, <br> and any such target must exist for <br> at least <code>'a</code>.</description>
 </datum>
 
 
