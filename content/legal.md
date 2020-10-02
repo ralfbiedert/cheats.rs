@@ -9,7 +9,7 @@ weight = 100
 
 ## Hosting
 
-> This _Hosting_ section **only** applies to the site [**cheats.rs**](https://cheats.rs), not if you reached this work by other means.
+This _Hosting_ section **only** applies to the site [**cheats.rs**](https://cheats.rs), not if you reached this work by other means.
 
 ### Operator
 

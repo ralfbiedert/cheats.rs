@@ -62,6 +62,10 @@ insert_anchor_links = "right"
 * [Closures](#closures-data)
 * [Standard Library Types](#standard-library-types)
 
+
+**Generics & Traits**
+* [Type Zoo](#type-zoo)
+
 </column>
 
 <column>
@@ -71,7 +75,7 @@ insert_anchor_links = "right"
 * [Traits](#traits)
 * [Number Conversions](#number-conversions)
 * [String Conversions](#string-conversions)
-* [String Formatting](#string-formatting)
+* [String Output](#string-output)
 
 
 **Tooling**
@@ -3209,7 +3213,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | Name | Description |
 |--------| -----------|
 | **Coercions** {{ nom(page="coercions.html") }} | 'Weaken' types to match signature, e.g., `&mut T` to `&T`.  |
-| **Deref** {{ nom(page="vec-deref.html#deref") }} | [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
+| **Deref** {{ nom(page="vec-deref.html#deref") }} {{ link(url="https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules") }} | [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
 | **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic types.
 | **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
@@ -4276,7 +4280,7 @@ Rust's standard library combines the above primitive types into useful types wit
             </div>
         </memory>
     </memory-entry>
-    <description></description>
+    <description>Encapsulates how operating system<br> represents strings (e.g., UTF-16 on <br>Windows).</description>
 </datum>
 
 <spacer>
@@ -4303,6 +4307,7 @@ Rust's standard library combines the above primitive types into useful types wit
             </div>
         </memory>
     </memory-entry>
+    <description>Encapsulates how operating system<br> represents paths.</description>
 </datum>
 
 
@@ -4389,6 +4394,240 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 
 
 
+# Generics & Traits
+
+How generics, traits and the type system work together.
+
+> 🚧 This section is work in progress. Please ignore ... 🚧
+
+## Type Zoo
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+
+<zoo>
+    <!-- Primitives -->
+    <entry style="left:38%; top: 10%;">
+        <type class="primitive"><code>u8</code></type>
+        <impl><code>impl { ... }</code></impl>
+        <trait-impl>⌾ <code>Copy</code></trait-impl>
+        <trait-impl>⌾ <code>XXX</code></trait-impl>
+    </entry>
+    <entry style="left:12%; top: 35%;">
+        <type class="primitive"><code>u16</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry style="left:25%; top: 20%;">
+        <type class="primitive"><code>f32</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry style="left:5%; top: 7%;">
+        <type class="primitive"><code>bool</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry style="left:33%; top: 32%;">
+        <type class="primitive"><code>char</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <label class="primitive" style="left:22%; top: 43%;">Primitive Types</label>
+    <!-- Composed -->
+    <entry style="left:55%; top: 15%;">
+        <type class="composed"><code>A</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry style="left:68%; top: 12%;">
+        <type class="composed"><code>B(u8)</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry style="left:82%; top: 34%;">
+        <type class="composed"><code>String</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry style="left:69%; top: 30%;">
+        <type class="composed"><code>Car</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry style="left:85%; top: 13%;">
+        <type class="composed"><code>Builder</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry style="left:55%; top: 35%;">
+        <type class="composed"><code>S&lt;u32&gt;</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <label class="composed"  style="left:70%; top: 43%;">Composite Types</label>
+    <!-- Generic -->
+    <!-- Group -->
+    <entry style="left:7%; top: 58%;">
+        <type class="generic"><code>X<'a></code></type>
+    </entry>
+    <entry style="left:6%; top: 59%;">
+        <type class="generic"><code>X<'a></code></type>
+    </entry>
+    <entry style="left:5%; top: 60%;">
+        <type class="generic"><code>X<'a></code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <!-- Group -->
+    <entry style="left:21%; top: 52%;">
+        <type class="generic"><code>&'a T</code></type>
+    </entry>
+    <entry style="left:20%; top: 53%;">
+        <type class="generic"><code>&'a T</code></type>
+    </entry>
+    <entry style="left:19%; top: 54%;">
+        <type class="generic"><code>&'a T</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <!-- Group -->
+    <entry style="left:31%; top: 68%;">
+        <type class="generic"><code>&mut 'a T</code></type>
+    </entry>
+    <entry style="left:30%; top: 69%;">
+        <type class="generic"><code>&mut 'a T</code></type>
+    </entry>
+    <entry style="left:29%; top: 70%;">
+        <type class="generic"><code>&mut 'a T</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <!-- Group -->
+    <entry style="left:17%; top: 78%;">
+        <type class="generic"><code>[T; n]</code></type>
+    </entry>
+    <entry style="left:16%; top: 79%;">
+        <type class="generic"><code>[T; n]</code></type>
+    </entry>
+    <entry style="left:15%; top: 80%;">
+        <type class="generic"><code>[T; n]</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <!-- Group -->
+    <entry style="left:38%; top: 58%;">
+        <type class="generic"><code>S&lt;T&gt;</code></type>
+    </entry>
+    <entry style="left:37%; top: 59%;">
+        <type class="generic"><code>S&lt;T&gt;</code></type>
+    </entry>
+    <entry style="left:36%; top: 60%;">
+        <type class="generic"><code>S&lt;T&gt;</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <label class="generic"  style="left:23%; top: 90%;">Generic Types / Type <b>Constructors</b></label>
+    <!-- Unsized -->
+    <entry style="left:65%; top: 60%;">
+        <type class="unsized"><code>str</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry style="left:85%; top: 70%;">
+        <type class="unsized"><code>[u8]</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry style="left:65%; top: 80%;">
+        <type class="unsized"><code>dyn Trait</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <label class="unsized" style="left:70%; top: 90%;">Unsized Types</label>
+</zoo>
+
+
+<!-- End scrollable overflow-->
+</div>
+</div>
+
+
+<tabs>
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-types-1" name="tab-group-types" checked>
+<label for="tab-types-1"><b>Basics</b></label>
+<panel><div>
+
+<!-- Section -->
+<generics-section id="zoo_primitives">
+<header>Primitive Types</header>
+<description>
+blah
+</description>
+</generics-section>
+
+<!-- Section -->
+<generics-section id="zoo_composite">
+<header>Composite Types</header>
+<description>
+blah
+</description>
+</generics-section>
+
+
+
+
+</div></panel></tab>
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-types-2" name="tab-group-types">
+<label for="tab-types-2"><b>TODO</b></label>
+<panel><div>
+
+
+<!-- Section -->
+<generics-section id="zoo_todo">
+<header>Todo</header>
+<description>
+
+Basic
+- `u8`, `bool`, `str`
+- `[u8; 1]` vs `[u8; 2]`
+- `S { x: u32 }`
+- `S<T>`
+
+- Author of S<T> says what can be implemented
+- User of S<T> says what exactly he wants
+-
+
+More
+- region of `'a`
+- `S<'a>`
+- `S<'a>` with 'a being type-like
+
+Traits
+- behaviors
+- T + X + ... (cuts down space)
+- Trait = property
+- Trait<X> ... generic over many X
+- Trait { type X } ... generic over one X
+
+
+</description>
+</generics-section>
+
+
+
+</div></panel></tab>
+
+</tabs>
+
+
+
+
+<script>
+
+for (e of document.querySelectorAll("zoo entry impl")) {
+    // e.style.display = "none";
+}
+
+for (e of document.querySelectorAll("zoo entry trait-impl")) {
+    // e.style.display = "none";
+}
+
+</script>
+
+
 # Standard Library
 
 
@@ -4408,14 +4647,37 @@ PRs for this section are very welcome. Idea is:
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
-<div class="color-header one-liners cheats">
 
-| Standard Library | Snippet |
+<tabs>
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-api-2" name="tab-api-sized">
+<label for="tab-api-2"><b>Strings</b></label>
+<panel><div class="color-header one-liners cheats">
+
+| Intent |  |
+|---------|-------------|
+| `format!("{}{}", x, y)` | Concatenate two strings (any `Display` type that is). |
+| `s.split("xxx")` | Concatenate two strings (any `Display` type that is). |
+| `s.split('/')` | Concatenate two strings (any `Display` type that is). |
+| `s.split(char::is_numeric)` | Concatenate two strings (any `Display` type that is). |
+
+
+</div></panel></tab>
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-api-1" name="tab-api-sized" checked>
+<label for="tab-api-1"><b>I/O</b></label>
+<panel><div class="color-header one-liners cheats">
+
+| Intent | Snippet |
 |---------|-------------|
 | Create a new file | `File::create(PATH)?` |
 | {{ tab() }}  Same, via OpenOptions<sup>*</sup> | `OpenOptions::new().create(t).write(t).truncate(t).open(PATH)?` |
-| Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
-| Iterate _and_ edit `&mut [T]` if `T` Copy. | `Cell::from_mut(mut_slice).as_slice_of_cells()` |
 
 <footnotes>
 
@@ -4423,20 +4685,42 @@ PRs for this section are very welcome. Idea is:
 
 </footnotes>
 
+</div></panel></tab>
 
-{{ tablesep() }}
 
-| Any Code | Snippet |
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-api-3" name="tab-api-sized">
+<label for="tab-api-3"><b>Cleaner Code</b></label>
+<panel><div class="color-header one-liners cheats">
+
+| Intent | Snippet |
 |---------|-------------|
 | Cleaner closure captures | <code>wants_closure({ let c = outer.clone(); move &vert;&vert; use_clone(c) })</code> |
+| Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
+| Iterate _and_ edit `&mut [T]` if `T` Copy. | `Cell::from_mut(mut_slice).as_slice_of_cells()` |
+
+</div></panel></tab>
+
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-api-4" name="tab-api-sized">
+<label for="tab-api-4"><b>Macros</b></label>
+<panel><div class="color-header one-liners cheats">
+
+| Intent | Snippet |
+|---------|-------------|
 | Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
 | {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
 
+</div></panel></tab>
 
 
+</tabs>
 
-
-</div>
 
 </div></div>
 
@@ -4926,10 +5210,86 @@ CString::new(bytes)?
 {{ tablesep() }}
 
 
-## String Formatting
+## String Output
 
-Formatting applies to `print!`, `eprint!`, `write!` (and their -`ln` siblings like `println!`).
-Each format argument is either empty `{}`, `{argument}`, or follows a basic [**syntax**](https://doc.rust-lang.org/std/fmt/index.html#syntax):
+How to convert types into a `String`, or output them.
+
+<tabs>
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-strop-1" name="tab-group-strop" checked>
+<label for="tab-strop-1"><code>API</code></label>
+<panel><div class="color-header undefined-color-3">
+
+Rust has, among others, these APIs to convert types to stringified output, collectively called _format_ macros:
+
+| Macro | Output | Notes |
+| --- | --- | --- |
+|`format!(fmt)` | `String` | Bread-and-butter "to `String`" converter. |
+|`print!(fmt)`| Console | Writes to standard output. |
+|`println!(fmt)`| Console | Writes to standard output. |
+|`eprint!(fmt)`| Console | Writes to standard error. |
+|`eprintln!(fmt)`| Console | Writes to standard error. |
+|`write!(dst, fmt)` | Buffer | Don't forget to also `use std::io::Write;` |
+|`writeln!(dst, fmt)` | Buffer | Don't forget to also `use std::io::Write;` |
+
+{{ tablesep() }}
+
+| Method | Notes |
+| --- | --- |
+|`x.to_string()` {{ std(page="std/string/trait.ToString.html") }} | Produces `String`, implemented for any `Display` type. |
+
+{{ tablesep() }}
+
+Here `fmt` is string literal such as `"hello {}"`, that specifies output (compare "Formatting" tab) and additional parameters.
+
+
+</div></panel></tab>
+
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-strop-2" name="tab-group-strop" checked>
+<label for="tab-strop-2"><code>Printable Types</code></label>
+<panel><div class="color-header undefined-color-3">
+
+In `format!` and friends, types convert via trait `Display` `"{}"` {{ std(page="std/fmt/trait.Display.html") }} or `Debug` `"{:?}"` {{ std(page="std/fmt/trait.Debug.html") }} , non exhaustive list:
+
+| Type | Implements |  |
+| --- | --- | --- |
+|`String`| `Debug, Display` | |
+|`CString`| `Debug` | |
+|`OsString`| `Debug` | |
+|`PathBuf`| `Debug` |  |
+|`Vec<u8>` | `Debug` | |
+|`&str`|`Debug, Display` | |
+|`&CStr`|`Debug` | |
+|`&OsStr`| `Debug` | |
+|`&Path`| `Debug` | |
+|`&[u8]` |`Debug` | |
+|`bool` |`Debug, Display` | |
+|`char` |`Debug, Display` | |
+|`u8` &hellip; `i128` |`Debug, Display` | |
+|`f32`, `f64` |`Debug, Display` | |
+|`!` |`Debug, Display` | |
+|`()` |`Debug` | |
+
+{{ tablesep() }}
+
+In short, pretty much everything is `Debug`, while more _special_ types might special handling or conversion. {{ above(target="#string-conversions" ) }}
+
+</div></panel></tab>
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-strop-3" name="tab-group-strop">
+<label for="tab-strop-3"><code>Formatting</code></label>
+<panel><div>
+
+Each argument designator in format macro is either empty `{}`, `{argument}`, or follows a basic [**syntax**](https://doc.rust-lang.org/std/fmt/index.html#syntax):
 
 
 ```
@@ -4944,11 +5304,11 @@ Each format argument is either empty `{}`, `{argument}`, or follows a basic [**s
 | `fill` | The character to fill empty spaces with (e.g., `0`), if `width` is specified. |
 | `align` | Left (`<`), center (`^`), or right (`>`), if width is specified. |
 | `sign` | Can be `+` for sign to always be printed. |
-| `#` | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0), e.g. prettify Debug `?` or prefix hex with `0x`. |
+| `#` | [Alternate formatting](https://doc.rust-lang.org/std/fmt/index.html#sign0), e.g. prettify `Debug`{{ std(page="std/fmt/trait.Debug.html") }} formatter `?` or prefix hex with `0x`. |
 | `width` | Minimum width (&geq; 0), padding with `fill` (default to space). If starts with `0`, zero-padded. |
 | `precision` | Decimal digits (&geq; 0) for numerics, or max width for non-numerics. |
 | `$` | Interpret `width` or `precision` as argument identifier instead to allow for dynamic formatting. |
-| `type` | [**Debug**](https://doc.rust-lang.org/std/fmt/trait.Debug.html) (`?`) formatting, hex (`x`), binary (`b`), octal (`o`), pointer (`p`), exp (`e`) ... [see more](https://doc.rust-lang.org/std/fmt/index.html#traits). |
+| **`type`** | `Debug`{{ std(page="std/fmt/trait.Debug.html") }} (`?`) formatting, hex (`x`), binary (`b`), octal (`o`), pointer (`p`), exp (`e`) ... [see more](https://doc.rust-lang.org/std/fmt/index.html#traits). |
 
 </div>
 
@@ -4958,18 +5318,48 @@ Each format argument is either empty `{}`, `{argument}`, or follows a basic [**s
 
 <div class="color-header undefined-color-3">
 
-| Example | Explanation |
+| Format Example | Explanation |
 |---------|-------------|
-| `{:?}` | Print the next argument using Debug. |
-| `{2:#?}` | Pretty-print the 3rd argument with Debug formatting. |
+| `{}` | Print the next argument using `Display`.{{ std(page="std/fmt/trait.Display.html") }} |
+| `{:?}` | Print the next argument using `Debug`.{{ std(page="std/fmt/trait.Debug.html") }} |
+| `{2:#?}` | Pretty-print the 3rd argument with `Debug`{{ std(page="std/fmt/trait.Debug.html") }} formatting. |
 | `{val:^2$}` | Center the `val` named argument, width specified by the 3rd argument. |
 | `{:<10.3}` | Left align with width 10 and a precision of 3.|
 | `{val:#x}` | Format `val` argument as hex, with a leading `0x` (alternate format for `x`). |
 
 </div>
 
+{{ tablesep() }}
+
+
+<div class="color-header undefined-color-3">
+
+| Full Example | Explanation |
+|---------|-------------|
+| `println!("{}", x)` | Print `x` using `Display`{{ std(page="std/fmt/trait.Display.html") }} on std. out and append new line. |
+| `format!("{a:.3} {b:?}", a = PI, b = 2)` | Convert `PI` with 3 digits, add space, b with `Debug`{{ std(page="std/fmt/trait.Debug.html") }}, return `String`. |
+
+</div>
+
+
+</div></panel></tab>
+
+
+</tabs>
+
 
 {{ tablesep() }}
+
+## String Utilities
+
+Various other `String` and `str` functions commonly needed.
+
+<div class="">
+
+
+</div>
+
+
 
 
 
@@ -5227,7 +5617,7 @@ Module trees and imports:
 
 **Modules** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} and **source files** work as follows:
 
-- **Module tree** needs to be explicitly defined, is not implicitly built from **file system tree**. {{ link(url="http://www.sheshbabu.com/posts/rust-module-system/") }}
+- **Module tree** needs to be explicitly defined, is **not** implicitly built from **file system tree**. {{ link(url="http://www.sheshbabu.com/posts/rust-module-system/") }}
 - **Module tree root** equals library, app, &hellip; entry point (e.g., `lib.rs`).
 - A `mod m {}` defines module in-file, while `mod m;` will read `m.rs` or `m/mod.rs`.
     - Path of `.rs` based on nesting, e.g., `mod a { mod b { mod c; }}}` is either `a/b/c.rs` or `a/b/c/mod.rs`.

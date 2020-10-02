@@ -6,7 +6,6 @@ const SURVEY_KEY = "survey2020";
 
 
 let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
-let memory_bars = document.querySelectorAll("memory-row");
 let subtitle_index = 0;
 
 let all_tabs_expanded = false; // Set `true` by script if asked to expand tabs
@@ -27,6 +26,9 @@ const subtiles = [
     "Contains 140g of Rust per 100g of cheat sheet.",
     "Prints best on Dunder Mifflin premium copy paper.",
 ];
+
+const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries
+
 
 // Labels for which we don't want feedback, mainly because the button placement
 // would interfere with other buttons.
@@ -210,9 +212,8 @@ function toggle_subtitle(to_index) {
 
 /// Shows a random quote
 function random_quote() {
-    let SKIP = 2; // Skip first 2 entries
     let rand = Math.random();
-    let index = SKIP + Math.floor((subtiles.length - SKIP) * rand);
+    let index = SKIP_FIRST_N_SUBTITLES + Math.floor((subtiles.length - SKIP_FIRST_N_SUBTITLES) * rand);
     toggle_subtitle(index);
 }
 
@@ -344,6 +345,77 @@ function feedback_attach_buttons(list_of_header_tags) {
     }
 }
 
+// Make sure all "memory-bars" descriptions expand or collapse when clicked.
+function memory_bars_expand_on_click() {
+    let memory_bars = document.querySelectorAll("memory-row");
+
+    for (let e of memory_bars) {
+        e.onclick = (e) => {
+            let section = e.target.closest("lifetime-section");
+            let description = section.getElementsByTagName("explanation")[0];
+
+            // Some elements just don't have any
+            if (!description) return;
+
+            if (!description.style.display || description.style.display == "none") {
+                description.style.display = "inherit";
+            } else {
+                description.style.display = "none";
+            }
+        }
+    }
+}
+
+
+// Make sure all "generics-section" expand when clicked.
+function generics_section_expand_on_click() {
+    let generics_section = document.querySelectorAll("generics-section > header");
+
+    for (let e of generics_section) {
+        e.onclick = (e) => {
+            // Ensure we hide all others
+            let all = document.querySelectorAll("generics-section > description");
+            for (let x of all) {
+                x.style.display = "none";
+            }
+
+            // Just expand the current one
+            let section = e.target.parentElement.querySelector("description");
+            section.style.display = "inherit";
+
+            // Make sure the zoo reflect the current section.
+            update_zoo_for_id(e.target.parentElement.id);
+        }
+    }
+}
+
+
+// Makes sure the zoo reflects a certain ID
+function update_zoo_for_id(id) {
+    // First, always reset the state of each element to default
+    for (let e of document.querySelectorAll("zoo > entry > type.primitive")) { e.style.visibility = "inherit" }
+    for (let e of document.querySelectorAll("zoo > entry > type.composed")) { e.style.visibility = "inherit" }
+    for (let e of document.querySelectorAll("zoo > entry > type.generic")) { e.style.visibility = "inherit" }
+    for (let e of document.querySelectorAll("zoo > entry > type.unsized")) { e.style.visibility = "inherit" }
+    for (let e of document.querySelectorAll("zoo > entry > impl")) { e.style.visibility = "hidden" }
+    for (let e of document.querySelectorAll("zoo > entry > trait-impl")) { e.style.visibility = "hidden" }
+    for (let e of document.querySelectorAll("zoo > label")) { e.style.visibility = "inherit" }
+
+
+    if (id === "zoo_primitives") {
+        for (let e of document.querySelectorAll("zoo > entry > type.composed")) { e.style.visibility = "hidden" }
+        for (let e of document.querySelectorAll("zoo > entry > type.generic")) { e.style.visibility = "hidden" }
+        for (let e of document.querySelectorAll("zoo > entry > type.unsized")) { e.style.visibility = "hidden" }
+        for (let e of document.querySelectorAll("zoo > label")) { e.style.visibility = "hidden" }
+        for (let e of document.querySelectorAll("zoo > label.primitive")) { e.style.visibility = "inherit" }
+    }
+
+    if (id === "zoo_composite") {
+        for (let e of document.querySelectorAll("zoo > entry > impl")) { e.style.visibility = "inherit" }
+        for (let e of document.querySelectorAll("zoo > entry > trait-impl")) { e.style.visibility = "inherit" }
+    }
+}
+
 
 // Use proper syntax since we don't want to write ````rust ...``` all the time.
 codes_rust.forEach(code => {
@@ -369,29 +441,16 @@ try {
         let survey = storage_get(SURVEY_KEY);
 
         // Don't attach feedback to h1, looks ugly and doesn't help.
-        feedback_attach_buttons(["h1", "h2", "h3", "h4"]);
+        feedback_attach_buttons(["h2", "h3", "h4"]);
 
         if (Math.random() < 0.1) { random_quote(); }
         if (night_mode === "night") { toggle_night_mode(); }
         if (ligatures === "ligatures") { toggle_ligatures(); }
         if (expand_everything === "true") { toggle_expand_all(); }
 
-        // Make sure all "memory-bars" descriptions expand or collapse when clicked.
-        for (let e of memory_bars) {
-            e.onclick = (e) => {
-                let section = e.target.closest("lifetime-section");
-                let explanation = section.getElementsByTagName("explanation")[0];
-
-                // Some elements just don't have any
-                if (!explanation) return;
-
-                if (!explanation.style.display || explanation.style.display == "none") {
-                    explanation.style.display = "inherit";
-                } else {
-                    explanation.style.display = "none";
-                }
-            }
-        }
+        // Make sure all interactive content works
+        memory_bars_expand_on_click();
+        generics_section_expand_on_click();
     }
 } catch (e) {
     console.log(e);

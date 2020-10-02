@@ -839,3 +839,140 @@ lifetime-example.not-first {
 .ticktock.tocked .tock.nodisplay {
     display: inherit;
 }
+
+
+zoo {
+    // font-size: 100px;
+    // background-color: red;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #f4f4f4;
+    height: 400px;
+    display: inline-block;
+    border-color: #ccc;
+    border-style: solid;
+    border-width: 1px;
+    position: relative;
+
+    label {
+        display: inline-block;
+        position: absolute;
+        color: gray;
+        font-size: 9pt;
+    }
+
+    entry {
+        display: inline-block;
+        width: 80px;
+        position: absolute;
+        font-size: 10pt;
+
+        type {
+            display: block;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            border-radius: 4px;
+            padding: 0px;
+            margin-bottom: 1px;
+            // margin-bottom: 1px;
+            text-align: center;
+            // Needed to suppress iOS font rendering over border
+            // padding-bottom: 1px;
+
+            code {
+                span {
+                    // Ugly hack ...
+                    color: black !important;
+                }
+            }
+        }
+
+        impl {
+            font-size: 80%;
+            display: block;
+            visibility: hidden;
+            background-color: limegreen;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            border-radius: 4px;
+            padding: 2px;
+
+            color: white;
+
+            code {
+                span {
+                    // Ugly hack ...
+                    color: white !important;
+                }
+            }
+        }
+
+        trait-impl {
+            font-size: 80%;
+            display: block;
+            visibility: hidden;
+            background-color: limegreen;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            border-radius: 4px;
+            padding: 2px;
+
+            code {
+                span {
+                    // Ugly hack ...
+                    color: #f0f0f0 !important;
+                }
+            }
+        }
+   }
+
+   type.primitive {
+       background-color: lightblue;
+   }
+
+   type.composed {
+       background-color: salmon;
+   }
+
+   type.generic {
+       background-color: #cfa5e9;
+   }
+
+   type.unsized {
+       background-color: orange;
+   }
+
+    // .unsized::before {
+    //     content: " ←";
+    //     padding-left: 2px;
+    //     opacity: 0.5;
+    // }
+
+    // .unsized::after {
+    //     content: "→ ";
+    //     padding-right: 2px;
+    //     opacity: 0.5;
+    // }
+}
+
+
+generics-section {
+    display: block;
+
+    header {
+        font-size: 14px;
+        font-weight: bolder;
+        background-color: #f1e9e0;
+        cursor: pointer;
+    }
+
+    description {
+        display: none;
+        background-color: green;
+    }
+
+    margin-bottom: 15px;
+}
