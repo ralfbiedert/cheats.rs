@@ -49,7 +49,7 @@ insert_anchor_links = "right"
 * [Miscellaneous](#miscellaneous)
 
 **Behind the Scenes**
-* [Memory & Lifetimes](#memory-lifetimes)<sup>🔥new</sup>
+* [Memory & Lifetimes](#memory-lifetimes)
 * [Language Sugar](#language-sugar)
 
 
@@ -65,7 +65,7 @@ insert_anchor_links = "right"
 <column>
 
 **Standard Library**
-* [Common One-Liners](#common-one-liners)
+* [One-Liners](#one-liners)
 * [Traits](#traits)
 * [Number Conversions](#number-conversions)
 * [String Conversions](#string-conversions)
@@ -653,8 +653,6 @@ Rust supports most operators you would expect (`+`, `*`, `%`, `=`, `==`...), inc
 
 Why moves, references and lifetimes are how they are.
 
-
-> 🔥 This section is brand new, feedback very welcome! 🔥
 
 <tabs class="lifetimes">
 
@@ -4376,7 +4374,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 # Standard Library
 
 
-## Common One-Liners
+## One-Liners
 
 Snippets that are common, but still easy to forget. See **Rust Cookbook** {{ link(url="https://rust-lang-nursery.github.io/rust-cookbook/") }} for more.
 
@@ -4394,13 +4392,11 @@ PRs for this section are very welcome. Idea is:
 
 <div class="color-header one-liners cheats">
 
-| Intent | Snippet |
+| Standard Library | Snippet |
 |---------|-------------|
 | Create a new file | `File::create(PATH)?` |
 | {{ tab() }}  Same, via OpenOptions<sup>*</sup> | `OpenOptions::new().create(t).write(t).truncate(t).open(PATH)?` |
 | Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
-| Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
-| {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
 | Iterate _and_ edit `&mut [T]` if `T` Copy. | `Cell::from_mut(mut_slice).as_slice_of_cells()` |
 
 <footnotes>
@@ -4408,6 +4404,19 @@ PRs for this section are very welcome. Idea is:
 <sup>*</sup> We're a bit short on space here, <code>t</code> means true.
 
 </footnotes>
+
+
+{{ tablesep() }}
+
+| Any Code | Snippet |
+|---------|-------------|
+| Cleaner closure captures | <code>wants_closure({ let cloned = outer.clone(); &vert;&vert; use_clone(cloned) })</code> |
+| Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
+| {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
+
+
+
+
 
 </div>
 
@@ -5215,9 +5224,10 @@ Commands and tools that are good to know.
 | {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies features with other dependents (can be confusing). |
 | {{ tab() }} `cargo run -p w` | Run main of sub-workspace `w`. Treats features more as you would expect. |
 | <code>cargo doc --open</code> | Locally generate documentation for your code and dependencies. |
-| `cargo rustc -- -Zunpretty=X` | Show more desugared Rust code, in particular with X being: |
-| {{ tab() }} `expanded` |  Show with expanded macros, ... |
-| <code>cargo +{nightly, stable} ...</code>  | Runs command with given toolchain, e.g., for 'nightly only' tools. |
+| <code>cargo +{nightly, stable} ...</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
+| `cargo +nightly ...` | Some nightly-only commands (substitute `...` with command below) |
+| {{ tab() }}  <code>build -Z timings</code> | Show what crates caused your build to take so long, highly useful. {{ experimental() }} {{ hot() }} |
+| {{ tab() }} `rustc -- -Zunpretty=expanded` |  Show expanded macros. {{ experimental() }} |
 | `rustup doc` | Open offline Rust documentation (incl. the books), good on a plane! |
 
 </div>
