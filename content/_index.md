@@ -4410,7 +4410,7 @@ PRs for this section are very welcome. Idea is:
 
 | Any Code | Snippet |
 |---------|-------------|
-| Cleaner closure captures | <code>wants_closure({ let cloned = outer.clone(); &vert;&vert; use_clone(cloned) })</code> |
+| Cleaner closure captures | <code>wants_closure({ let c = outer.clone(); move &vert;&vert; use_clone(c) })</code> |
 | Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
 | {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
 
