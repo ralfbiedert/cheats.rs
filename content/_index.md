@@ -89,8 +89,8 @@ insert_anchor_links = "right"
 * [Links & Services](#links-services)
 * [Printing & PDF](#printing-pdf)
 
-</column></toc>
-
+</column>
+</toc>
 </noprint>
 
 <noprint>
@@ -104,7 +104,7 @@ If you are new to Rust, or if you want to try the things below:
 
 <!-- NEW TAB -->
 <tab>
-<input type="radio" id="tab-hello-1" name="tab-hello" checked></input>
+<input type="radio" id="tab-hello-1" name="tab-hello" checked/>
 <label for="tab-hello-1"><b>Hello World</b></label>
 <panel><div>
 <div id="hellostatic">
@@ -1339,7 +1339,7 @@ f(a);
     <section-header class="arrowed">Reference Types</section-header>
     <memory-row>
         <arrows>
-            <arrow style="left: 62px; width: 176px;">&nbsp;<tip>▼</tip></value>
+            <arrow style="left: 62px; width: 176px;">&nbsp;<tip>▼</tip></arrow>
         </arrows>
         <memory-backdrop>
             <byte></byte>
@@ -1422,7 +1422,7 @@ let r: &S = &a;
     <section-header class="arrowed">(Mutable) References</section-header>
     <memory-row>
         <arrows>
-            <arrow style="left: 62px; width: 176px;">&nbsp;<tip>▼</tip></value>
+            <arrow style="left: 62px; width: 176px;">&nbsp;<tip>▼</tip></arrow>
         </arrows>
         <memory-backdrop>
             <byte></byte>
@@ -1505,7 +1505,7 @@ let d = r.clone();  // Valid to clone (or copy) from r-target.
 <lifetime-example class="not-first">
     <memory-row>
         <arrows>
-            <arrow style="left: 62px; width: 176px;">&nbsp;<tip>▼</tip></value>
+            <arrow style="left: 62px; width: 176px;">&nbsp;<tip>▼</tip></arrow>
         </arrows>
         <memory-backdrop>
             <byte></byte>
@@ -1590,7 +1590,7 @@ let d = *r;       // Invalid to move out value, `a` would be empty.
 <lifetime-example class="not-first">
     <memory-row>
         <arrows>
-            <arrow style="left: 62px; width: 176px; border-color: red;">&nbsp;<tip style="color: red">▼</tip></value>
+            <arrow style="left: 62px; width: 176px; border-color: red;">&nbsp;<tip style="color: red">▼</tip></arrow>
         </arrows>
         <memory-backdrop>
             <byte></byte>
@@ -1956,7 +1956,7 @@ let p: *const S = questionable_origin();
             <byte></byte>
         </memory-backdrop>
         <arrows>
-            <arrow style="left: 192px; width: 120px;">&nbsp;<tip>▼</tip></value>
+            <arrow style="left: 192px; width: 120px;">&nbsp;<tip>▼</tip></arrow>
         </arrows>
         <memory-backdrop>
             <byte></byte>
@@ -2131,7 +2131,7 @@ let p: *const S = questionable_origin();
             <byte></byte>
         </memory-backdrop>
         <arrows>
-            <arrow style="left: 118px; width: 193px;">&nbsp;<tip>▼</tip></value>
+            <arrow style="left: 118px; width: 193px;">&nbsp;<tip>▼</tip></arrow>
         </arrows>
         <memory-backdrop>
             <byte></byte>
@@ -2323,7 +2323,7 @@ let p: *const S = questionable_origin();
             <byte></byte>
         </memory-backdrop>
         <arrows>
-            <arrow style="left: 118px; width: 193px;">&nbsp;<tip>▼</tip></value>
+            <arrow style="left: 118px; width: 193px;">&nbsp;<tip>▼</tip></arrow>
         </arrows>
         <memory-backdrop>
             <byte></byte>
@@ -2384,7 +2384,6 @@ let p: *const S = questionable_origin();
             <label class="byte4 hide" style="left: 177px;"><code></code></label>
         </labels>
         <subtext>Borrowed State</subtext>
-        <!-- <subtext><code>... = &b; b = S(n);</code></subtext> -->
     </memory-row>
 </lifetime-example>
 <explanation>
@@ -2887,7 +2886,7 @@ print_byte(r);
             <byte></byte>
         </memory-backdrop>
         <arrows>
-            <arrow style="left: 210px; width: 102px;">&nbsp;<tip>▼</tip></value>
+            <arrow style="left: 210px; width: 102px;">&nbsp;<tip>▼</tip></arrow>
         </arrows>
         <memory-backdrop>
             <byte></byte>
@@ -5191,6 +5190,21 @@ fn main() {
 {{ tablesep() }}
 
 
+Module trees and imports:
+
+<tabs>
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-module-import-1" name="tab-group-module-import" checked>
+<label for="tab-module-import-1"><b>Module Trees</b></label>
+<panel><div>
+
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
 **Modules** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} and **source files** work as follows:
 
 - **Module tree** needs to be explicitly defined, is not implicitly built from **file system tree**. {{ link(url="http://www.sheshbabu.com/posts/rust-module-system/") }}
@@ -5201,6 +5215,83 @@ fn main() {
 
 <!-- - **Visibility** of items (e.g., functions, fields) between modules governed by: "Is there visible path to item?"
     - Visibility like `pub fn f() {}` does not mean "`f` is public", but "`f` at most public if all parents public`. -->
+
+
+</div></div></div></panel></tab>
+
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-module-import-2" name="tab-group-module-import">
+<label for="tab-module-import-2"><b>Namespaces</b></label>
+<panel><div>
+
+
+Rust has three kinds of **namespaces**: {{ link(url="https://gist.github.com/Koxiaet/8c05ebd4e0e9347eb05f265dfb7252e1") }}
+
+<table>
+    <thead>
+        <tr>
+            <th>Namespace <i>Types</i></th>
+            <th>Namespace <i>Functions</i></th>
+            <th>Namespace <i>Macros</i></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>mod X {}</code></td>
+            <td><code>fn X() {}</code></td>
+            <td><code>macro_rules! X { ... }</code></td>
+        </tr>
+        <tr>
+            <td><code>X</code> (crate)</td>
+            <td><code>const X: u8 = 1;</code></td>
+            <td><code></code></td>
+        </tr>
+        <tr>
+            <td><code>trait X {}</code></td>
+            <td><code>static X: u8 = 1;</code></td>
+            <td><code></code></td>
+        </tr>
+        <tr>
+            <td><code>enum X {}</code></td>
+            <td><code></code></td>
+            <td><code></code></td>
+        </tr>
+        <tr>
+            <td><code>union X { x: u8 }</code></td>
+            <td><code></code></td>
+            <td><code></code></td>
+        </tr>
+        <tr>
+            <td><code>struct X {}</code></td>
+            <td><code></code></td>
+            <td><code></code></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;"><code>struct X;</code></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;"><code>struct X();</code></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+- In any given scope, for example within a module, only one item item per namespace can exist, e.g.,
+    - `enum X {}` and `fn X() {}` can coexist
+    - `struct X;` and `const X` cannot coexist
+- With a `use my_crate::X;` all items called `X` will be imported.
+
+> Due to naming conventions (e.g., `fn` and `mod` are lowercase by convention) and _common sense_ (most developers just don't name all things `X`) you won't have to worry about these _kinds_ in most cases. They can, however, be a factor when designing macros.
+
+
+</div></panel></tab>
+
+
+</tabs>
 
 
 {{ tablesep() }}
@@ -5495,6 +5586,7 @@ without assuming executor specifics. <br/>
 There is a subtrait relationship `Fn` : `FnMut` : `FnOnce`. That means a closure that
 implements `Fn` {{ std(page="std/ops/trait.Fn.html") }} also implements `FnMut` and `FnOnce`. Likewise a closure
 that implements `FnMut` {{ std(page="std/ops/trait.FnMut.html") }} also implements `FnOnce`. {{ std(page="std/ops/trait.FnOnce.html") }}
+that implements `FnMut` {{ std(page="std/ops/trait.FnMut.html") }} also implements `FnOnce`. {{ std(page="std/ops/trait.FnOnce.html") }}
 
 From a call site perspective that means:
 
@@ -5559,6 +5651,9 @@ That gives the following advantages and disadvantages:
 {{ tablesep() }}
 
 
+
+<!-- ## Macro Hygiene -->
+<!-- {{ tablesep() }} -->
 
 
 ## Unsafe, Unsound, Undefined
