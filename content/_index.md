@@ -5223,6 +5223,7 @@ Commands and tools that are good to know.
 | <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
 | {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies features with other dependents (can be confusing). |
 | {{ tab() }} `cargo run -p w` | Run main of sub-workspace `w`. Treats features more as you would expect. |
+| `cargo tree` | Show dependency graph. |
 | <code>cargo doc --open</code> | Locally generate documentation for your code and dependencies. |
 | <code>cargo +{nightly, stable} ...</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
 | `cargo +nightly ...` | Some nightly-only commands (substitute `...` with command below) |
