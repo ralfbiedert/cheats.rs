@@ -5261,7 +5261,7 @@ Rust has three kinds of **namespaces**: {{ link(url="https://gist.github.com/Kox
             <td><code></code></td>
         </tr>
         <tr>
-            <td><code>union X { x: u8 }</code></td>
+            <td><code>union X {}</code></td>
             <td><code></code></td>
             <td><code></code></td>
         </tr>
@@ -5271,20 +5271,26 @@ Rust has three kinds of **namespaces**: {{ link(url="https://gist.github.com/Kox
             <td><code></code></td>
         </tr>
         <tr>
-            <td colspan="2" style="text-align: center;"><code>struct X;</code></td>
+            <td colspan="2" style="text-align: center;"><code>struct X;</code><sup>1</sup></td>
             <td></td>
         </tr>
         <tr>
-            <td colspan="2" style="text-align: center;"><code>struct X();</code></td>
+            <td colspan="2" style="text-align: center;"><code>struct X();</code><sup>1</sup></td>
             <td></td>
         </tr>
     </tbody>
 </table>
 
+<footnotes>
+
+<sup>1</sup> Counts in <i>Types</i> and in <i>Functions</i>.
+
+</footnotes>
+
 - In any given scope, for example within a module, only one item item per namespace can exist, e.g.,
     - `enum X {}` and `fn X() {}` can coexist
     - `struct X;` and `const X` cannot coexist
-- With a `use my_crate::X;` all items called `X` will be imported.
+- With a `use my_mod::X;` all items called `X` will be imported.
 
 > Due to naming conventions (e.g., `fn` and `mod` are lowercase by convention) and _common sense_ (most developers just don't name all things `X`) you won't have to worry about these _kinds_ in most cases. They can, however, be a factor when designing macros.
 
