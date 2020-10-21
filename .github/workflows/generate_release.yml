@@ -34,7 +34,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.time.outputs.now }}
-        release_name: PDF ${{ steps.time.outputs.time }}
+        release_name: PDF ${{ steps.time.outputs.now }}
     - name: Upload PDF asset
       uses: actions/upload-release-asset@v1
       env:
