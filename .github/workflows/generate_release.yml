@@ -14,23 +14,19 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v2
-
     - name: Build docker image
       run: |
           docker/build.sh cheats-box
-
     - name: Generate PDF
       run: |
           docker run                             \
               --rm                               \
               --volume $PWD:/workspace/cheats.rs \
               cheats-box ./generate_pdf.sh cheats.rs/rust_cheat_sheet.pdf
-
     - name: Generate current time stamp
       id: time
       run: |
           echo "::set-output name=now::$(date +'%Y-%m-%d-%H%M%S')"
-
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
@@ -39,9 +35,6 @@ jobs:
       with:
         tag_name: ${{ steps.time.outputs.now }}
         release_name: PDF ${{ steps.time.outputs.time }}
-        # FIXME: WIP remove later (make unpublished release)
-        draf: true
-
     - name: Upload PDF asset
       uses: actions/upload-release-asset@v1
       env:
