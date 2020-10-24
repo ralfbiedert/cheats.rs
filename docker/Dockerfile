@@ -2,6 +2,7 @@ FROM ubuntu:latest
 
 ARG ZOLA_URL
 ARG CHROME_URL
+ARG UID
 
 WORKDIR /workspace
 
@@ -26,7 +27,7 @@ RUN export DEBIAN_FRONTEND=noninteractive              \
  && rm -rf /var/lib/apt/lists/* zola.tgz chrome.deb    \
  && apt-get clean
 
-RUN useradd --create-home runner \
+RUN useradd --create-home --uid $UID runner \
  && chown runner:runner /workspace
 
 USER runner

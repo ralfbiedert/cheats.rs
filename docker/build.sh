@@ -23,7 +23,7 @@ echo "ZOLA  : $zola_url"
 echo "CHROME: $chrome_url"
 echo "----------"
 
-if ! docker build --tag $tag --build-arg ZOLA_URL=$zola_url --build-arg CHROME_URL=$chrome_url $script_dir; then
+if ! docker build --tag $tag --build-arg ZOLA_URL=$zola_url --build-arg CHROME_URL=$chrome_url --build-arg UID=$(id -u) $script_dir; then
     echo "ERR: Failed to build docker image!"
     exit 1
 fi
