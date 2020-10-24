@@ -22,6 +22,7 @@ jobs:
           docker run                             \
               --rm                               \
               --volume $PWD:/workspace/cheats.rs \
+              --cap-add=SYS_ADMIN                \
               cheats-box ./generate_pdf.sh cheats.rs/rust_cheat_sheet.pdf
     - name: Generate current time stamp
       id: time

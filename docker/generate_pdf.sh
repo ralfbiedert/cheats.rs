@@ -13,7 +13,8 @@ zola_pid=$!
 # FIXME: Is there a better way to check if zola us up?
 while ps $zola_pid >& /dev/null; do
     sleep 0.5
-    if wkhtmltopdf http://127.0.0.1:1111 $output; then
+    if nc -z localhost 1111; then
+        google-chrome --headless --disable-gpu --print-to-pdf=$output --print-to-pdf-no-header http://localhost:1111
         exit 0
     fi
 done
