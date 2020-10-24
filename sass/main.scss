@@ -34,6 +34,10 @@ subtitle {
     text-align: center;
     margin-bottom: 40px;
     display: block;
+
+    span {
+        cursor: pointer;
+    }
 }
 
 // The small JavaScript helper buttons

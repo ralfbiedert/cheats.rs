@@ -130,12 +130,12 @@ fn main() {
 
 Things Rust does measurably really well:
 
-- compiled code [about same performance](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html) as C / C++, and excellent [memory and energy efficiency](https://dl.acm.org/doi/10.1145/3136014.3136031)
+- compiled code [about same performance](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html) as C / C++, and excellent [memory and energy efficiency](https://dl.acm.org/doi/10.1145/3136014.3136031).
 - can [avoid 70% of all safety issues](https://www.chromium.org/Home/chromium-security/memory-safety) present in C / C++, and most memory issues.
-- strong type system prevents [data races](https://doc.rust-lang.org/nomicon/races.html), brings ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others)
-- seamless C interop, and [dozens of supported platforms](https://forge.rust-lang.org/release/platform-support.html) (based on LLVM)
-- ["most loved language"](https://insights.stackoverflow.com/survey/2020#technology-most-loved-dreaded-and-wanted-languages) for 5 years in a row
-- modern tooling: `cargo` (builds _just work_), `clippy` (300+ code quality lints), `rustup` (easy toolchain mgmt)
+- strong type system prevents [data races](https://doc.rust-lang.org/nomicon/races.html), brings ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others).
+- seamless C interop, and [dozens of supported platforms](https://forge.rust-lang.org/release/platform-support.html) (based on LLVM).
+- ["most loved language"](https://insights.stackoverflow.com/survey/2020#technology-most-loved-dreaded-and-wanted-languages) for 5 years in a row.
+- modern tooling: `cargo` (builds _just work_), `clippy` (300+ code quality lints), `rustup` (easy toolchain mgmt).
 
 </div></panel></tab>
 
@@ -147,11 +147,11 @@ Things Rust does measurably really well:
 
 Points you might run into:
 
-- steep learning curve<sup>1</sup>; compiler enforcing (esp. memory) rules that would be "best practices" elsewhere
-- missing Rust-native libs in some domains, target platforms (esp. embedded), IDE features<sup>1</sup>
-- longer compile times than "similar" code in other languages<sup>1</sup>
-- no formal language specification, can prevent legal use in some domains (aviation, medical, ...)
-- careless (use of) libraries can break safety guarantees for why Rust was picked in the first place
+- steep learning curve<sup>1</sup>; compiler enforcing (esp. memory) rules that would be "best practices" elsewhere.
+- missing Rust-native libs in some domains, target platforms (esp. embedded), IDE features<sup>1</sup>.
+- longer compile times than "similar" code in other languages<sup>1</sup>.
+- no formal language specification, can prevent legal use in some domains (aviation, medical, ...).
+- careless (use of `unsafe` in) libraries can break safety guarantees for why Rust was picked in the first place.
 
 <sup>1</sup> Compare [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust).
 </div></panel></tab>
@@ -337,7 +337,7 @@ Control execution within a function.
 | {{ tab() }} `break x`  | Same, but make `x` value of the loop expression (only in actual `loop`). |
 | {{ tab() }} `break 'label`  | Exit not only this loop, but the enclosing one marked with `'label`. |
 | `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
-| `continue 'label`  | Same, but instead of enclosing loop marked with `'label`. |
+| `continue 'label`  | Same but instead of this loop, enclosing loop marked with 'label. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 | `x.await` | Only works inside `async`. Yield flow until **`Future`** {{ std(page="std/future/trait.Future.html") }} or Stream `x` ready. {{ ref(page="expressions/await-expr.html#await-expressions") }} {{ edition(ed="'18") }} |
 | `return x`  | Early return from function. More idiomatic way is to end with expression. |
@@ -5747,6 +5747,46 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 
 </div></div></div></panel></tab>
 
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-unsafe-4" name="tab-unsafe" >
+<label for="tab-unsafe-4"><b>Common Mistakes</b></label>
+<panel><div>
+
+Based on this study {{ link(url="https://cseweb.ucsd.edu/~yiying/RustStudy-PLDI20.pdf") }} if your `unsafe` code goes wrong it was likely:
+
+
+**Unsound Encapsulation**
+- failure to properly reason about lifetimes (e.g., over-extending lifetimes)
+- failure to account for interior mutability (e.g., improper aliasing; `&self` instead of `&mut self`)
+- failure to check arguments or (FFI) return values
+
+
+**Memory Safety** (_the C committee sends their regards_)
+- buffer overflow (e.g., wrong bounds calculation)
+- null pointer dereference (e.g., failure to check for `null`)
+- reading uninitialized memory
+- invalid free (esp. due to accidentally dropping uninitialized value)
+- use after free (due to wrong reasoning about lifetimes)
+- double free (e.g., duplicating non-Copy data)
+
+**Threading**
+- invalid data sharing between threads (e.g., share pointer to local variable)
+- lack of atomic operations; or wrong atomic ordering
+- failure to account for interior mutability
+- double `Mutex` / `RwLock` lock (e.g., due to misunderstanding `match` scopes)<sup>1</sup>
+- `Condvar` waiting without notification<sup>1</sup>
+- accidentally blocking while waiting on empty unbounded channel<sup>1</sup>
+
+<footnotes>
+
+<sup>1</sup> These can also occur in safe code.
+
+</footnotes>
+
+</div></panel></tab>
+
 </tabs>
 
 {{ tablesep() }}
@@ -5757,8 +5797,8 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 > - Do not use `unsafe` unless you absolutely have to.
 > - Follow the [Nomicon](https://doc.rust-lang.org/nightly/nomicon/), [Unsafe Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/), **always** uphold **all** safety invariants, and **never** invoke [UB](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html).
 > - Minimize the use of `unsafe` and encapsulate it in small, sound modules that are easy to review.
+> - Never create unsound abstractions; if you can't encapsulate `unsafe` properly, don't do it.
 > - Each `unsafe` unit should be accompanied by plain-text reasoning outlining its safety.
-
 
 
 {{ tablesep() }}
