@@ -1,11 +1,9 @@
 name: generate-release
 
-# FIXME: once we deploy this action only be sensitive to master branch
-on: [push]
-#on:
-#  push:
-#    branches:
-#      - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   generate_release:
