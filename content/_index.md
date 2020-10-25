@@ -10,7 +10,6 @@ insert_anchor_links = "right"
 <pagetitle>Rust Language Cheat Sheet</pagetitle>
 <subtitle><span id="subtitle" onclick="toggle_subtitle()">{{ date() }}</span></subtitle>
 
-<!-- bump -->
 
 > Contains clickable links to
 > **The Book** {{ book(page="") }},
