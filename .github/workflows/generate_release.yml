@@ -24,24 +24,10 @@ jobs:
               --volume $PWD:/workspace/cheats.rs \
               --cap-add=SYS_ADMIN                \
               cheats-box ./generate_pdf.sh cheats.rs/rust_cheat_sheet.pdf
-    - name: Generate current time stamp
-      id: time
-      run: |
-          echo "::set-output name=now::$(date +'%Y-%m-%d-%H%M%S')"
-    - name: Create release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        tag_name: ${{ steps.time.outputs.now }}
-        release_name: PDF ${{ steps.time.outputs.now }}
-    - name: Upload PDF asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./rust_cheat_sheet.pdf
-        asset_name: rust_cheat_sheet.pdf
-        asset_content_type: application/pdf
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest-release"
+        prerelease: false
+        title: "Latest Release"
+        files: rust_cheat_sheet.pdf
