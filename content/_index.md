@@ -5592,7 +5592,6 @@ without assuming executor specifics. <br/>
 There is a subtrait relationship `Fn` : `FnMut` : `FnOnce`. That means a closure that
 implements `Fn` {{ std(page="std/ops/trait.Fn.html") }} also implements `FnMut` and `FnOnce`. Likewise a closure
 that implements `FnMut` {{ std(page="std/ops/trait.FnMut.html") }} also implements `FnOnce`. {{ std(page="std/ops/trait.FnOnce.html") }}
-that implements `FnMut` {{ std(page="std/ops/trait.FnMut.html") }} also implements `FnOnce`. {{ std(page="std/ops/trait.FnOnce.html") }}
 
 From a call site perspective that means:
 
