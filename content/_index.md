@@ -4972,7 +4972,7 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`** |
 | <code class="ignore-auto language-bash">Cargo.toml</code> | Main project configuration. Defines dependencies, artifacts ... |
 | <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
-| `build.rs` |  **Pre-build script** {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }}, e.g., when compiling C / FFI, needs to be specified in <code class="ignore-auto language-bash">Cargo.toml</code>. |
+| `build.rs` |  **Pre-build script** {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }}, e.g., when compiling C / FFI. |
 </div>
 
 <footnotes>
