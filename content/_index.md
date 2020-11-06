@@ -4965,7 +4965,6 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | 📁 `examples/` | Examples how to use your crate, they see your crate like external user would.  |
 | {{ tab() }} `my_example.rs` | Individual examples are run like **`cargo run --example my_example`**. |
 | 📁 `src/` | Actual source code for your project. |
-| {{ tab() }} `build.rs` |  **Pre-build script** {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }}, e.g., when compiling C / FFI, needs to be specified in <code class="ignore-auto language-bash">Cargo.toml</code>. |
 | {{ tab() }} `main.rs` | Default entry point for applications, this is what **`cargo run`** uses. |
 | {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f()` starts. |
 | 📁 `tests/` | Integration tests go here, invoked via **`cargo test`**. Unit tests often stay in `src/` file. |
@@ -4973,6 +4972,7 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`** |
 | <code class="ignore-auto language-bash">Cargo.toml</code> | Main project configuration. Defines dependencies, artifacts ... |
 | <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
+| `build.rs` |  **Pre-build script** {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }}, e.g., when compiling C / FFI, needs to be specified in <code class="ignore-auto language-bash">Cargo.toml</code>. |
 </div>
 
 <footnotes>
@@ -5163,12 +5163,7 @@ fn my_algo(b: &mut Bencher) {
 <div style="min-width: 100%; width: 650px;">
 
 ```
-// src/build.rs (sample pre-build script)
-
-// Also specify in `Cargo.toml` like this:
-// [package]
-// build = "src/build.rs"
-
+// build.rs (sample pre-build script)
 
 fn main() {
     // You need to rely on env. vars for target; `#[cfg(...)]` are for host.
