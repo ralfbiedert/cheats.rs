@@ -258,7 +258,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 |---------|-------------|
 | `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (space for holding _any_ `&s`). |
 | {{ tab() }} `&[S]` | Special slice reference that contains (`address`, `length`). |
-| {{ tab() }} `&str` | Special string reference that contains (`address`, `length`). |
+| {{ tab() }} `&str` | Special string slice reference that contains (`address`, `length`). |
 | {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, ...) |
 | {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains (`address`, `vtable`). |
 | `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }} w/o memory safety. |
@@ -3703,6 +3703,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
        <framed class="any t"><code>T</code></framed>
        <note>... n times</note>
     </visual>
+    <description>Fixed array of <code>n</code> elements.</description>
 </datum>
 
 
@@ -3716,6 +3717,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
        <framed class="any t"><code>T</code></framed>
        <note>... unspecified times</note>
     </visual>
+    <description><b>Slice type</b> of unknown-many elements. Neither <br> <code>Sized</code> (nor carries <code>len</code> information), and most<br> often lives behind reference as <code>&[T]</code>. {{ below(target="#references-pointers-ui") }}</description>
 </datum>
 
 
@@ -3898,6 +3900,7 @@ The **`payload`** depends on the base type of the referent. This applies to both
             ...
         </memory>
     </memory-entry>
+    <description>Regular <b>slice reference</b> (i.e., the <br>reference type of a slice type <code>[T]</code>) <br>often seen as <code>&[T]</code> if <code>'a</code> elided.</description>
 </datum>
 
 
@@ -3924,6 +3927,7 @@ The **`payload`** depends on the base type of the referent. This applies to both
             ...
         </memory>
     </memory-entry>
+    <description><b>String slice reference</b> (i.e., the <br>reference type of string type <code>str</code>),<br> with <code>len</code> being byte length.</description>
 </datum>
 
 <br>
