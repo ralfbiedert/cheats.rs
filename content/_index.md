@@ -3835,10 +3835,10 @@ The respective `mut` types are identical.
 <br/>
 
 
-{{ tablesep() }}
+### Pointer Payload {#pointer-payload}
 
-
-The **`payload`** depends on the base type of the referent. This applies to both references and pointers.
+Many reference and pointer types can carry an extra field.
+This **`payload`**, if it exists, is either element- or byte-length of the target, or a pointer to a <i>vtable</i>.
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -3854,6 +3854,7 @@ The **`payload`** depends on the base type of the referent. This applies to both
             <framed class="any t"><code>T</code></framed>
         </memory>
     </memory-entry>
+    <description>No payload for <br><i>normal</i>, sized <br>referents.</description>
 </datum>
 
 
@@ -4134,6 +4135,7 @@ Rust's standard library combines the above primitive types into useful types wit
         <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
+    <description>For some <code>T</code> stack proxy may carry <br>payload{{ above (target="#custom-types") }} (e.g., <code>Box<[T]></code>).</description>
 </datum>
 
 <spacer>
