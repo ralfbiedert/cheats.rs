@@ -3900,7 +3900,7 @@ The **`payload`** depends on the base type of the referent. This applies to both
             ...
         </memory>
     </memory-entry>
-    <description>Regular <b>slice reference</b> (i.e., the <br>reference type of a slice type <code>[T]</code>) <br>often seen as <code>&[T]</code> if <code>'a</code> elided.</description>
+    <description>Regular <b>slice reference</b> (i.e., the <br>reference type of a slice type <code>[T]</code>) {{ above (target="#custom-types") }} <br>often seen as <code>&[T]</code> if <code>'a</code> elided.</description>
 </datum>
 
 
