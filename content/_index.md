@@ -44,7 +44,7 @@ insert_anchor_links = "right"
 * [Pattern Matching](#pattern-matching)
 * [Generics & Constraints](#generics-constraints)
 * [Strings & Chars](#strings-chars)
-* [Comments](#comments)
+* [Documentation](#documentation)
 * [Miscellaneous](#miscellaneous)
 
 **Behind the Scenes**
@@ -149,7 +149,7 @@ Points you might run into:
 - steep learning curve<sup>1</sup>; compiler enforcing (esp. memory) rules that would be "best practices" elsewhere.
 - missing Rust-native libs in some domains, target platforms (esp. embedded), IDE features<sup>1</sup>.
 - longer compile times than "similar" code in other languages<sup>1</sup>.
-- no formal language specification, can prevent legal use in some domains (aviation, medical, ...).
+- no formal language specification, can prevent legal use in some domains (aviation, medical, &hellip;).
 - careless (use of `unsafe` in) libraries can break safety guarantees for why Rust was picked in the first place.
 
 <sup>1</sup> Compare [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust).
@@ -259,11 +259,11 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (space for holding _any_ `&s`). |
 | {{ tab() }} `&[S]` | Special slice reference that contains (`address`, `length`). |
 | {{ tab() }} `&str` | Special string slice reference that contains (`address`, `length`). |
-| {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, ...) |
+| {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, &hellip;) |
 | {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains (`address`, `vtable`). |
 | `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }} w/o memory safety. |
 | `*mut S` | Mutable raw pointer type w/o memory safety. |
-| `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., address, len, vtable, ... of _this_ `s`, like `0x1234`). |
+| `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., address, len, vtable, &hellip; of _this_ `s`, like `0x1234`). |
 | `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `ref s` | **Bind by reference**. {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
 | {{ tab() }} `let ref r = s;` | Equivalent to `let r = &s`. |
@@ -306,7 +306,7 @@ Define units of code and their abstractions.
 | {{ tab() }} `async fn f() -> S {}`  | Same, but make `f` return an `impl Future<Output=S>`. |
 | {{ tab() }} `async { x }`  | Used within a function, make `{ x }` an `impl Future<Output=X>`. |
 | `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }}, memory holding address of a callable. |
-| `Fn() -> S`  | **Callable Trait**, {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), implemented by closures, fn's ... |
+| `Fn() -> S`  | **Callable Trait**, {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), implemented by closures, fn's &hellip; |
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its **captures**. {{ ref(page="types/closure.html#capture-modes") }} |
 | {{ tab() }} <code>&vert;x&vert; {}</code> | Closure with a bound parameter `x`. |
 | {{ tab() }} <code>&vert;x&vert; x + x</code> | Closure without block expression; may only consist of single expression.  |
@@ -340,8 +340,8 @@ Control execution within a function.
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 | `x.await` | Only works inside `async`. Yield flow until **`Future`** {{ std(page="std/future/trait.Future.html") }} or Stream `x` ready. {{ ref(page="expressions/await-expr.html#await-expressions") }} {{ edition(ed="'18") }} |
 | `return x`  | Early return from function. More idiomatic way is to end with expression. |
-| `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, ...). |
-| `x.f()` | Call member function, requires `f` takes `self`, `&self`, ... as first argument. |
+| `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, &hellip;). |
+| `x.f()` | Call member function, requires `f` takes `self`, `&self`, &hellip; as first argument. |
 | {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
 | {{ tab() }} `X::f(&x)` | Same as `x.f()`. |
 | {{ tab() }} `X::f(&mut x)` | Same as `x.f()`. |
@@ -364,7 +364,7 @@ Segment projects into smaller units and minimize dependencies.
 |---------|-------------|
 | `mod m {}`  | Define a **module**, {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} get definition from inside `{}`. {{ below(target="#project-anatomy") }} |
 | `mod m;`  | Define a module, get definition from `m.rs` or `m/mod.rs`. {{ below(target="#project-anatomy") }}|
-| `a::b` | Namespace **path** {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, ...). |
+| `a::b` | Namespace **path** {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, &hellip;). |
 | {{ tab() }} `::b` | Search `b` relative to crate root. {{ deprecated() }} |
 | {{ tab() }} `crate::b` | Search `b` relative to crate root. {{ edition(ed="'18") }} |
 | {{ tab() }} `self::b`  | Search `b` relative to current module. |
@@ -427,7 +427,7 @@ Code generation constructs expanded before the actual compilation happens.
 </fixed-2-column>
 
 
-<fixed-2-column class="color-header macro_rules">
+<fixed-2-column class="color-header special_example">
 
 Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming") }} **macro by example** {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}} `macro_rules!` implementation these work:
 
@@ -441,7 +441,7 @@ Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-wi
 | {{ tab() }} `$x:pat`     | A pattern, e.g., `Some(t)`, `(17, 'a')` or `_`. |
 | {{ tab() }} `$x:ty`      | A type, e.g., `String`, `usize` or `Vec<u8>`. |
 | {{ tab() }} `$x:ident`   | An identifier, for example in `let x = 0;` the identifier is `x`. |
-| {{ tab() }} `$x:path`    | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`, …). |
+| {{ tab() }} `$x:path`    | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`). |
 | {{ tab() }} `$x:literal` | A literal (e.g. `3`, `"foo"`, `b"bar"`, etc.). |
 | {{ tab() }} `$x:lifetime` | A lifetime (e.g. `'a`, `'static`, etc.). |
 | {{ tab() }} `$x:meta`    | A meta item; the things that go inside `#[...]` and `#![...]` attributes. |
@@ -513,7 +513,7 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 |  {{ tab() }} `[1, ..] => {}` | Match array starting with `1`, any value for rest; **subslice pattern**.  {{ todo() }} |
 |  {{ tab() }} `[2, .., 5] => {}` | Match array starting with `1`, ending with `5`. |
 |  {{ tab() }} `[2, x @ .., 5] => {}` | Same, but also bind `x` to slice representing middle (_c._ next entry).  |
-| `x @ 1..=5 => {}` | Bind matched to `x`; **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} here `x` would be `1`, `2`, ... or `5`.  |
+| `x @ 1..=5 => {}` | Bind matched to `x`; **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} here `x` would be `1`, `2`, &hellip; or `5`.  |
 | <code>0 &vert; 1 => {}</code> | Pattern alternatives (or-patterns).|
 | {{ tab() }}  <code>E::A &vert; E::Z </code> | Same, but on enum variants. |
 | {{ tab() }}  <code>E::C {x} &vert; E::D {x}</code> | Same, but bind `x` if all variants have it. |
@@ -530,7 +530,7 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 
 ### Generics & Constraints
 
-Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, ...
+Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, &hellip;
 
 <fixed-2-column>
 
@@ -546,6 +546,9 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | {{ tab() }} `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }}; if T has references, they must outlive `'a`.  |
 | {{ tab() }} `T: 'static` | Same; does esp. _not_ mean value `t` _will_ {{ bad() }} live `'static`, only that it could. |
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
+| `S<const N: usize>` | Generic const bound; user of type `S` can provide constant value `N`. {{ experimental() }} |
+| {{ tab() }} `S<10>` | Where used, const bounds can be provided as primitive values. |
+| {{ tab() }} `S<{5+5}>` | Expressions must be put in curly brackets. |
 | `S<T> where T: R`  | Almost same as `S<T: R>` but more pleasant to read for longer bounds. |
 | {{ tab() }} `S<T> where u8: R<T>`  | Also allows you to make conditional statements involving _other_ types. |
 | `S<T = R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} for associated type.|
@@ -578,8 +581,8 @@ Rust has several ways to create textual values.
 
 | Example | Explanation |
 |--------|-------------|
-| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}} UTF-8, will interpret `\n` as _line break_ `0xA`, ... |
-| `r"..."` | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}} UTF-8, won't interpret `\n`, ... |
+| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}} UTF-8, will interpret `\n` as _line break_ `0xA`, &hellip; |
+| `r"..."` | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}} UTF-8, won't interpret `\n`, &hellip; |
 | `r#"..."#` | Raw string literal, UTF-8, but can also contain `"`. Number of `#` can vary. |
 | `b"..."` | **Byte string literal**; {{ ref(page="tokens.html#byte-and-byte-string-literals")}} constructs ASCII `[u8]`, not a string. |
 | `br"..."`, `br#"..."#` | Raw byte string literal, ASCII `[u8]`, combination of the above. |
@@ -589,22 +592,35 @@ Rust has several ways to create textual values.
 </fixed-2-column>
 
 
-### Comments
+### Documentation
 
-No comment.
+Debuggers hate him. Avoid bugs with this one weird trick.
+
 
 <fixed-2-column>
 
 | Example | Explanation |
 |--------|-------------|
 | `//` | Line comment, use these to document code flow or _internals_. |
-| `///` | Outer line **doc comment**, {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types. |
+| `///` | Outer line **doc com ment**, {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types. |
 | `//!` | Inner line doc comment, mostly used at start of file to document module. |
 | `/*...*/` | Block comment. |
 | `/**...*/` | Outer block doc comment. |
 | `/*!...*/` | Inner block doc comment. |
-| ` ```rust ... ``` ` | In doc comments, include a [doc test](https://doc.rust-lang.org/rustdoc/documentation-tests.html) (doc code running on `cargo test`). |
-| `#` | In doc tests, hide line from documentation (` ```   # use x::hidden; ``` `). |
+
+</fixed-2-column>
+
+{{ tablesep() }}
+
+
+<fixed-2-column  class="color-header special_example">
+
+| Within Doc Comments | Explanation |
+|--------|-------------|
+| ` ```rust ... ``` ` | Include a [doc test](https://doc.rust-lang.org/rustdoc/documentation-tests.html) (doc code running on `cargo test`). |
+| `#` | Hide line from documentation (` ```   # use x::hidden; ``` `). |
+| <code>[&#96;S&#96;]</code> | Create a link to struct, enum, trait, function, &hellip; `S`. |
+| <code>[&#96;S&#96;]&#40;crate::S&#41;</code> | Paths can also be used, in the form of markdown links. |
 
 </fixed-2-column>
 
@@ -622,7 +638,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | {{ tab() }} `let _ = x;`  | Unnamed assignment is no-op, does **not** {{ bad() }} move out `x` or preserve scope! |
 | `_x` | Variable binding explicitly marked as unused. |
 | `1_234_567` | Numeric separator for visual clarity. |
-| `1_u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, ...). |
+| `1_u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, &hellip;). |
 | `0xBEEF`, `0o777`, `0b1001`  | Hexadecimal (`0x`), octal (`0o`) and binary (`0b`) integer literals. |
 | `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html#raw-identifiers") }} for edition compatibility. |
 | `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
@@ -634,7 +650,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 
 ### Common Operators
 
-Rust supports most operators you would expect (`+`, `*`, `%`, `=`, `==`...), including **overloading**. {{ std(page="std/ops/index.html")}} Since they behave no differently in Rust we do not list them here.
+Rust supports most operators you would expect (`+`, `*`, `%`, `=`, `==`, &hellip;), including **overloading**. {{ std(page="std/ops/index.html")}} Since they behave no differently in Rust we do not list them here.
 
 
 ---
@@ -984,7 +1000,7 @@ let c: S = M::new();
     1. allows only well-defined operations on these bits
     1. prevents random other values or bits from being written to that location.
 - Here assignment fails to compile since the bytes of `M::new()` cannot be converted to form of type `S`.
-- **Conversions between types will _always_ fail** in general, **unless explicit rule allows it** (coercion, cast, ...).
+- **Conversions between types will _always_ fail** in general, **unless explicit rule allows it** (coercion, cast, &hellip;).
 
 > As an excercise to the reader, any time you see a value of type A being assignable to a location of some type not-exactly-A you should ask yourself: _through what mechanism is this possible_?
 
@@ -1067,7 +1083,7 @@ let c: S = M::new();
 
 - Once the 'name' of a non-vacated variable goes out of (drop-)**scope**, the contained value is **dropped**.
     - Rule of thumb: execution reaches point where name of variable leaves `{}`-block it was defined in
-    - In detail more tricky, esp. temporaries, ...
+    - In detail more tricky, esp. temporaries, &hellip;
 - Drop also invoked when new value assigned to existing variable location.
 - In that case **`Drop::drop()`** is called on the location of that value.
     - In the example above `drop()` is called on `a`, twice on `c`, but not on `t`.
@@ -3192,7 +3208,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | Name | Description |
 |--------| -----------|
 | **Coercions** {{ nom(page="coercions.html") }} | 'Weaken' types to match signature, e.g., `&mut T` to `&T`.  |
-| **Deref** {{ nom(page="vec-deref.html#deref") }} | [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, ... compatible with some target `S`. |
+| **Deref** {{ nom(page="vec-deref.html#deref") }} | [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
 | **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic types.
 | **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
@@ -3604,9 +3620,9 @@ Similarly, for <code>f64</code> types this would look like:
 | Variant | Memory Representation<sup>2<sup> |
 |---------|-------------|
 | `s.as_bytes()` | `49` `20` <span class="force-code-color same-black"><b>`e2 9d a4`</b> </span> `20 52 75 73 74` <sup>3<sup> |
-| `s.chars()`<sup>1<sup> | `49 00 00 00 20 00 00 00` <span class="force-code-color same-black"><b>`64 27 00 00` </b></span> `20 00 00 00 52 00 00 00 75 00 00 00 73 00` ... |
+| `s.chars()`<sup>1<sup> | `49 00 00 00 20 00 00 00` <span class="force-code-color same-black"><b>`64 27 00 00` </b></span> `20 00 00 00 52 00 00 00 75 00 00 00 73 00` &hellip; |
 | `t.as_bytes()` | `49` `20` <span class="force-code-color same-black"><b>`e2 9d a4`</b> </span> <span class="force-code-color same-red"><b>`ef b8 8f`</b></span> `20 52 75 73 74` <sup>4<sup> |
-| `t.chars()`<sup>1<sup> | `49 00 00 00 20 00 00 00` <span class="force-code-color same-black"><b>`64 27 00 00`</b></span> <span class="force-code-color same-red"><b>`0f fe 01 00`</b></span> `20 00 00 00 52 00 00 00 75 00` ... |
+| `t.chars()`<sup>1<sup> | `49 00 00 00 20 00 00 00` <span class="force-code-color same-black"><b>`64 27 00 00`</b></span> <span class="force-code-color same-red"><b>`0f fe 01 00`</b></span> `20 00 00 00 52 00 00 00 75 00` &hellip; |
 
 {{ tablesep() }}
 
@@ -4585,7 +4601,7 @@ Similarly, providing a `fn iter_mut(&mut self) -> IterMut` might be a good idea.
 **Making Loops Work**
 * **`impl IntoIterator for C {}`** &mdash; Now `for` loops work as `for x in c {}`.
 * **`impl IntoIterator for &C {}`** &mdash; For conveninece you might want to add these as well.
-* **`impl IntoIterator for &mut C {}`** &mdash; Same ...
+* **`impl IntoIterator for &mut C {}`** &mdash; Same &hellip;
 
 
 </div></panel></tab>
@@ -4619,9 +4635,9 @@ Conversions XXX
 
 As-correct-as-it-currently-gets number conversions.
 
-| ↓ Have / Want → | `u8` ... `i128` |  `f32` / `f64` | String |
+| ↓ Have / Want → | `u8` &hellip; `i128` |  `f32` / `f64` | String |
 | --- | --- |  --- |--- |
-| `u8` ... `i128` | `u8::try_from(x)?` <sup>1</sup> |  `x as f32` <sup>3</sup> | `x.to_string()` |
+| `u8` &hellip; `i128` | `u8::try_from(x)?` <sup>1</sup> |  `x as f32` <sup>3</sup> | `x.to_string()` |
 | `f32` / `f64` | `x as u8` <sup>2</sup> |  `x as f32` | `x.to_string()` |
 | `String` | `x.parse::<u8>()?` | `x.parse::<f32>()?` | `x` |
 
@@ -4640,7 +4656,7 @@ As-correct-as-it-currently-gets number conversions.
 ## String Conversions
 
 
-If you **want** a string of type ...
+If you **want** a string of type &hellip;
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -4655,7 +4671,7 @@ If you **want** a string of type ...
 <label for="tab-str-1"><code>String</code></label>
 <panel><div class="stringconversion">
 
-| If you **have** `x` of type ...| Use this ... |
+| If you **have** `x` of type &hellip;| Use this &hellip; |
 | --- | --- |
 |`String`|`x`|
 |`CString`|`x.into_string()?` |
@@ -4676,7 +4692,7 @@ If you **want** a string of type ...
 <label for="tab-str-2"><code>CString</code></label>
 <panel><div class="stringconversion">
 
-| If you **have** `x` of type ...| Use this ... |
+| If you **have** `x` of type &hellip;| Use this &hellip; |
 | --- | --- |
 |`String`|`CString::new(x)?`|
 |`CString`|`x`|
@@ -4698,7 +4714,7 @@ If you **want** a string of type ...
 <label for="tab-str-3"><code>OsString</code></label>
 <panel><div class="stringconversion">
 
-| If you **have** `x` of type ...| Use this ... |
+| If you **have** `x` of type &hellip;| Use this &hellip; |
 | --- | --- |
 |`String`|`OsString::from(x)` <sup>`i`</sup> |
 |`CString`|`OsString::from(x.to_str()?)`|
@@ -4719,7 +4735,7 @@ If you **want** a string of type ...
 <label for="tab-str-35"><code>PathBuf</code></label>
 <panel><div class="stringconversion">
 
-| If you **have** `x` of type ...| Use this ... |
+| If you **have** `x` of type &hellip;| Use this &hellip; |
 | --- | --- |
 |`String`|`PathBuf::from(x)` <sup>`i`</sup>|
 |`CString`|`PathBuf::from(x.to_str()?)`|
@@ -4740,7 +4756,7 @@ If you **want** a string of type ...
 <label for="tab-str-4"><code>Vec&lt;u8&gt;</code></label>
 <panel><div class="stringconversion">
 
-| If you **have** `x` of type ...| Use this ... |
+| If you **have** `x` of type &hellip;| Use this &hellip; |
 | --- | --- |
 |`String`|`x.into_bytes()`|
 |`CString`|`x.into_bytes()`|
@@ -4761,7 +4777,7 @@ If you **want** a string of type ...
 <label for="tab-str-5"><code>&str</code></label>
 <panel><div class="stringconversion">
 
-| If you **have** `x` of type ...| Use this ... |
+| If you **have** `x` of type &hellip;| Use this &hellip; |
 | --- | --- |
 |`String`|`x.as_str()`|
 |`CString`|`x.to_str()?`|
@@ -4782,7 +4798,7 @@ If you **want** a string of type ...
 <label for="tab-str-6"><code>&CStr</code></label>
 <panel><div class="stringconversion">
 
-| If you **have** `x` of type ...| Use this ... |
+| If you **have** `x` of type &hellip;| Use this &hellip; |
 | --- | --- |
 |`String`|`CString::new(x)?.as_c_str()`|
 |`CString`|`x.as_c_str()`|
@@ -4804,7 +4820,7 @@ If you **want** a string of type ...
 <label for="tab-str-8"><code>&OsStr</code></label>
 <panel><div class="stringconversion">
 
-| If you **have** `x` of type ...| Use this ... |
+| If you **have** `x` of type &hellip;| Use this &hellip; |
 | --- | --- |
 |`String`|`OsStr::new(&x)`|
 |`CString`| {{ todo() }} |
@@ -4825,7 +4841,7 @@ If you **want** a string of type ...
 <label for="tab-str-85"><code>&Path</code></label>
 <panel><div class="stringconversion">
 
-| If you **have** `x` of type ...| Use this ... |
+| If you **have** `x` of type &hellip;| Use this &hellip; |
 | --- | --- |
 |`String`|`Path::new(x)` <sup>`r`</sup>|
 |`CString`|`Path::new(x.to_str()?)` |
@@ -4846,7 +4862,7 @@ If you **want** a string of type ...
 <label for="tab-str-7"><code>&[u8]</code></label>
 <panel><div class="stringconversion">
 
-| If you **have** `x` of type ...| Use this ... |
+| If you **have** `x` of type &hellip;| Use this &hellip; |
 | --- | --- |
 |`String`|`x.as_bytes()`|
 |`CString`|`x.as_bytes()`|
@@ -4867,7 +4883,7 @@ If you **want** a string of type ...
 <label for="tab-str-9"><b>Other</b></label>
 <panel><div class="stringconversion">
 
-| You **want** | And **have** `x` | Use this ... |
+| You **want** | And **have** `x` | Use this &hellip; |
 | --- | --- | --- |
 |<b>`*const c_char`</b>|<b>`CString`</b>|`x.as_ptr()`|
 
@@ -5214,7 +5230,7 @@ Module trees and imports:
 **Modules** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} and **source files** work as follows:
 
 - **Module tree** needs to be explicitly defined, is not implicitly built from **file system tree**. {{ link(url="http://www.sheshbabu.com/posts/rust-module-system/") }}
-- **Module tree root** equals library, app, ... entry point (e.g., `lib.rs`).
+- **Module tree root** equals library, app, &hellip; entry point (e.g., `lib.rs`).
 - A `mod m {}` defines module in-file, while `mod m;` will read `m.rs` or `m/mod.rs`.
     - Path of `.rs` based on nesting, e.g., `mod a { mod b { mod c; }}}` is either `a/b/c.rs` or `a/b/c/mod.rs`.
     - Files not pathed from module tree root via some `mod m;` won't be touched by compiler! {{ bad() }}
@@ -5381,7 +5397,7 @@ A large number of additional cargo plugins [**can be found here**](https://crate
 
 🔘 Install native toolchain (required to _link_, depends on target).
 
-Get from target vendor (Google, Apple, ...), might not be available on all hosts (e.g., no iOS toolchain on Windows).
+Get from target vendor (Google, Apple, &hellip;), might not be available on all hosts (e.g., no iOS toolchain on Windows).
 
 **Some toolchains require additional build steps** (e.g., Android's `make-standalone-toolchain.sh`).
 
@@ -5603,11 +5619,11 @@ From a call site perspective that means:
 
 <div class="color-header green">
 
-| Signature | Function `g` can call ... |  Function `g` accepts ... |
+| Signature | Function `g` can call &hellip; |  Function `g` accepts &hellip; |
 |--------| -----------| -----------|
-| `g<F: FnOnce()>(f: F)`  | ... `f()` once. |  `Fn`, `FnMut`, `FnOnce`  |
-| `g<F: FnMut()>(mut f: F)`  | ... `f()` multiple times. | `Fn`, `FnMut` |
-| `g<F: Fn()>(f: F)`  | ... `f()` multiple times.  | `Fn` |
+| `g<F: FnOnce()>(f: F)`  | &hellip; `f()` once. |  `Fn`, `FnMut`, `FnOnce`  |
+| `g<F: FnMut()>(mut f: F)`  | &hellip; `f()` multiple times. | `Fn`, `FnMut` |
+| `g<F: Fn()>(f: F)`  | &hellip; `f()` multiple times.  | `Fn` |
 
 </div>
 
@@ -6004,7 +6020,7 @@ Online services which provide information or tooling.
 | [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
 | [caniuse.rs](https://caniuse.rs/) | Check which feature is available on which edition. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
-| [Rust Search Extension](https://rust.extension.sh/) | Browser extension to search docs, crates, attributes, books, ...|
+| [Rust Search Extension](https://rust.extension.sh/) | Browser extension to search docs, crates, attributes, books, &hellip;|
 
 </div>
 
