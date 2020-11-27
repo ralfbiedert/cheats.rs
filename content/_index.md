@@ -4630,6 +4630,10 @@ Conversions XXX
 {{ tablesep() }} -->
 
 
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
 
 ## Number Conversions
 
@@ -4650,7 +4654,9 @@ As-correct-as-it-currently-gets number conversions.
 
 </footnotes>
 
-
+<!-- end overflow -->
+</div>
+</div>
 
 
 ## String Conversions
