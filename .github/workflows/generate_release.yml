@@ -3,7 +3,7 @@ name: generate-release
 on:
   push:
     branches:
-      - pdf-release
+      - master
 
 jobs:
   generate_release:
