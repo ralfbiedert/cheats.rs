@@ -1,7 +1,7 @@
 # ![Logo](/static/logo.png) Rust Language Cheat Sheet
 
 [![Read Online](/gfx/button_read-online.png)](https://cheats.rs)
-[![Cached PDF](/gfx/button_cached-pdf.png)](https://github.com/ralfbiedert/cheats.rs/releases/download/latest-release/rust_cheat_sheet.pdf)
+[![Cached PDF](/gfx/button_cached-pdf.png)](https://cheats.rs/rust_cheat_sheet.pdf)
 
 † PDF is only updated occasionally for those who can't use the "Generate PDF" button on the site; online version is generally recommended.
 
