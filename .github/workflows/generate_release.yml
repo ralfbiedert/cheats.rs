@@ -30,7 +30,7 @@ jobs:
         aws-region: us-east-1
     - name: Upload PDF to S3
       run: |
-          aws cp cheats.rs/rust_cheat_sheet.pdf s3://cheats.rs/rust_cheat_sheet.pdf
+          aws s3 cp cheats.rs/rust_cheat_sheet.pdf s3://cheats.rs/rust_cheat_sheet.pdf
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
