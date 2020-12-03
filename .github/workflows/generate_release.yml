@@ -8,26 +8,26 @@ on:
 jobs:
   generate_release:
     runs-on: ubuntu-latest
-    name: Generate release
+    name: Generate release.
     steps:
-    - name: Checkout project
+    - name: Checkout project.
       uses: actions/checkout@v2
-    - name: Build docker image
+    - name: Build Docker image.
       run: |
           docker/build.sh cheats-box
-    - name: Generate PDF
+    - name: Generate PDF.
       run: |
           docker run                             \
               --rm                               \
               --volume $PWD:/workspace/cheats.rs \
               --cap-add=SYS_ADMIN                \
               cheats-box ./generate_pdf.sh cheats.rs/rust_cheat_sheet.pdf
-    - name: Configure AWS credentials
+    - name: Configure AWS credentials.
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-    - name: Upload PDF to S3
+    - name: Upload PDF to S3.
       run: |
           aws s3 cp rust_cheat_sheet.pdf s3://cheats.rs/rust_cheat_sheet.pdf

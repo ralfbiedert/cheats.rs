@@ -23,12 +23,14 @@ insert_anchor_links = "right"
 > is **work in progress** {{ experimental() }},
 > or **bad** {{ bad() }}.
 
+
+<noprint>
 <page-controls>
     <!-- <a id="" href="" style="float: left; margin-left:5px;">X-Ray Mode 👓</a> -->
     <a id="toggle_ligatures" href="javascript:toggle_ligatures()">Fira Code Ligatures (<code>..=, =></code>)</a>
     <a href="javascript:toggle_night_mode()">Night Mode &#x1f4a1;</a>
 </page-controls>
-
+</noprint>
 
 <noprint>
 <toc><column>
