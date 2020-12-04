@@ -6044,6 +6044,12 @@ Online services which provide information or tooling.
 
 <footer>
 
-[Ralf Biedert](https://xr.io), {{ year() }} – [cheats.rs](https://cheats.rs) <br/><br/> [Legal & Privacy](legal)
+[Ralf Biedert](https://xr.io), {{ year() }} – [cheats.rs](https://cheats.rs)
+
+<noprint>
+
+[Legal & Privacy](legal)
+
+</noprint>
 
 </footer>
