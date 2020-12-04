@@ -604,7 +604,7 @@ Debuggers hate him. Avoid bugs with this one weird trick.
 | Example | Explanation |
 |--------|-------------|
 | `//` | Line comment, use these to document code flow or _internals_. |
-| `///` | Outer line **doc com ment**, {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types. |
+| `///` | Outer line **doc comment**, {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types. |
 | `//!` | Inner line doc comment, mostly used at start of file to document module. |
 | `/*...*/` | Block comment. |
 | `/**...*/` | Outer block doc comment. |
