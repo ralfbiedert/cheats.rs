@@ -496,9 +496,9 @@ Constructs found in `match` or `let` expressions, or function parameters.
 
 Pattern matching arms in `match` expressions. Left side of these arms can also be found in `let` expressions.
 
-<fixed-2-column>
+<fixed-2-column class="color-header special_example">
 
-| Match Arm | Explanation |
+| Within Match Arm | Explanation |
 |---------|-------------|
 |  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
 |  `E::B ( .. ) => {}` | Match enum tuple variant `B`, wildcard any index. |
