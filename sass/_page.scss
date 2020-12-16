@@ -150,6 +150,10 @@ $largescreen-width: 1050px;
         width: 100%;
         left: 0;
     }
+
+    .hide_on_small {
+        display: none;
+    }
 }
 
 // Small screens like phones.
