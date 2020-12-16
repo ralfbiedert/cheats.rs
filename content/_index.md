@@ -28,6 +28,7 @@ insert_anchor_links = "right"
 <page-controls>
     <!-- <a id="" href="" style="float: left; margin-left:5px;">X-Ray Mode 👓</a> -->
     <a id="toggle_ligatures" href="javascript:toggle_ligatures()">Fira Code Ligatures (<code>..=, =></code>)</a>
+    <a id="expand_everything" href="javascript:toggle_expand_all()">Expand all the things?</a>
     <a href="javascript:toggle_night_mode()">Night Mode &#x1f4a1;</a>
 </page-controls>
 </noprint>

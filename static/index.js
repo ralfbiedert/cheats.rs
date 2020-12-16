@@ -9,6 +9,8 @@ let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
 let memory_bars = document.querySelectorAll("memory-row");
 let subtitle_index = 0;
 
+let all_tabs_expanded = false;
+
 const subtiles = [
     "_NOW_HUMAN_",
     "_GITHASH_",
@@ -82,6 +84,92 @@ function toggle_ligatures() {
     });
 }
 
+// Called by toggle button, setting in localStorage.
+function toggle_expand_all() {
+    let toggle_button = document.getElementById("expand_everything");
+
+    if (!all_tabs_expanded) {
+        //
+        // Expand all the tabs
+        //
+        let tabs = document.querySelectorAll("tab");
+        for (let tab of tabs) {
+            tab.style.display = "block";
+        }
+
+        let panels = document.querySelectorAll("tab > panel");
+        for (let panel of panels) {
+            panel.style.display = "initial";
+        }
+
+        let labels = document.querySelectorAll("tab > label");
+        for (let label of labels) {
+            label.style.display = "inline-block";
+            label.style.width = "100%";
+            label.style.cursor = "initial";
+            label.style.marginTop = "10px";
+        }
+
+        let inputs = document.querySelectorAll("tab > input");
+        for (let input of inputs) {
+            input.checked = false;
+        }
+
+        //
+        // Expand all lifetime sections
+        //
+        let lifetime_explanations = document.querySelectorAll("lifetime-section > explanation");
+        for (let le of lifetime_explanations) {
+            le.style.display = "inherit";
+        }
+
+        storage_set("expand_everything", "true");
+        toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";
+        all_tabs_expanded = true;
+    } else {
+        //
+        // Expand all the tabs
+        //
+        let tabs = document.querySelectorAll("tab");
+        for (let tab of tabs) {
+            tab.style.display = "";
+        }
+
+        let panels = document.querySelectorAll("tab > panel");
+        for (let panel of panels) {
+            panel.style.display = "";
+        }
+
+        let labels = document.querySelectorAll("tab > label");
+        for (let label of labels) {
+            label.style.display = "";
+            label.style.width = "";
+            label.style.cursor = "";
+            label.style.marginTop = "";
+        }
+
+        // TODO: This makes the _last_ tab activate, which is wrong. Instead we'd want
+        // the first tab to activate ... (but this code here is just so much easier).
+        let inputs = document.querySelectorAll("tab > input");
+        for (let input of inputs) {
+            input.checked = true;
+        }
+
+        //
+        // Expand all lifetime sections
+        //
+        let lifetime_explanations = document.querySelectorAll("lifetime-section > explanation");
+        for (let le of lifetime_explanations) {
+            le.style.display = "none";
+        }
+
+        storage_set("expand_everything", "false");
+        toggle_button.innerHTML = "Expand all the things?";
+        all_tabs_expanded = false;
+    }
+
+}
+
 
 // Sets something to local storage.
 function storage_set(key, value) {
@@ -98,7 +186,7 @@ function storage_get(key) {
 function set_survey(state) {
     let elements = document.getElementsByClassName("survey");
 
-    for (var e of elements) {
+    for (let e of elements) {
         e.style.display = state;
     }
 
@@ -207,10 +295,10 @@ function feedback_quick_submit(feedback_id) {
 
 // Given a list of header tags, attach feedback buttons to that header.
 function feedback_attach_buttons(list_of_header_tags) {
-    for (var tagname of list_of_header_tags) {
+    for (let tagname of list_of_header_tags) {
         let elements = document.getElementsByTagName(tagname);
 
-        for (var element of elements) {
+        for (let element of elements) {
             let element_id = element.id;
             let feedback_id = "feedback-" + element_id;
             let feedback = document.createElement("feedback");
@@ -267,6 +355,7 @@ codes_rust.forEach(code => {
 try {
     let night_mode = storage_get("night-mode");
     let ligatures = storage_get("ligatures");
+    let expand_everything = storage_get("expand_everything");
     let survey = storage_get(SURVEY_KEY);
 
     // Don't attach feedback to h1, looks ugly and doesn't help.
@@ -275,20 +364,21 @@ try {
     if (Math.random() < 0.1) { random_quote(); }
     if (night_mode === "night") { toggle_night_mode(); }
     if (ligatures === "ligatures") { toggle_ligatures(); }
+    if (expand_everything === "true") { toggle_expand_all(); }
 
     // Make sure all "memory-bars" descriptions expand or collapse when clicked.
-    for (var e of memory_bars) {
+    for (let e of memory_bars) {
         e.onclick = (e) => {
             let section = e.target.closest("lifetime-section");
-            let description = section.getElementsByTagName("explanation")[0];
+            let explanation = section.getElementsByTagName("explanation")[0];
 
             // Some elements just don't have any
-            if (!description) return;
+            if (!explanation) return;
 
-            if (!description.style.display || description.style.display == "none") {
-                description.style.display = "inherit";
+            if (!explanation.style.display || explanation.style.display == "none") {
+                explanation.style.display = "inherit";
             } else {
-                description.style.display = "none";
+                explanation.style.display = "none";
             }
         }
     }
