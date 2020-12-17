@@ -6028,7 +6028,7 @@ Online services which provide information or tooling.
 
 ## Printing & PDF
 
-> Want this Rust cheat sheet as a PDF download? <a href="javascript:window.print()"><b>Generate PDF</b></a> (or select File > Print – might take 10s so) and then "Save as PDF". It looks great in both Firefox's and Chrome's PDF exports. Alternatively use the <a href="https://cheats.rs/rust_cheat_sheet.pdf"><b>cached PDF</b></a>.
+> Want this Rust cheat sheet as a PDF download? Download the <a href="https://cheats.rs/rust_cheat_sheet.pdf"><b>latest PDF here</b></a>. Alternatively, generate a PDF via <i>File > Print</i> and then "Save as PDF" (works great in Chrome, has some issues in Firefox).
 
 </noprint>
 
