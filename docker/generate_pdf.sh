@@ -14,7 +14,7 @@ zola_pid=$!
 while ps $zola_pid >& /dev/null; do
     sleep 0.5
     if nc -z localhost 1111; then
-        google-chrome --headless --disable-gpu --print-to-pdf=$output --print-to-pdf-no-header http://localhost:1111
+        google-chrome --headless --disable-gpu --print-to-pdf=$output --print-to-pdf-no-header http://localhost:1111#_print
         exit 0
     fi
 done

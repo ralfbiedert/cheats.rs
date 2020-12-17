@@ -9,7 +9,8 @@ let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
 let memory_bars = document.querySelectorAll("memory-row");
 let subtitle_index = 0;
 
-let all_tabs_expanded = false;
+let all_tabs_expanded = false; // Set `true` by script if asked to expand tabs
+let print_mode = false; // If asked (via #xxx) to render for printing
 
 const subtiles = [
     "_NOW_HUMAN_",
@@ -21,7 +22,7 @@ const subtiles = [
     "Like Rust in a nutshell, for people with allergies.",
     "All the things you ever wanted to know. And more.",
     "A cargo-cult documentary.",
-    "Will the last person to leave this site please switch on night mode?",
+    "Will the last person please switch on night mode?",
     "A collaboration between Zoo Berlin and Olympia Typewriters.",
     "Contains 140g of Rust per 100g of cheat sheet.",
     "Prints best on Dunder Mifflin premium copy paper.",
@@ -105,7 +106,7 @@ function toggle_expand_all() {
         let labels = document.querySelectorAll("tab > label");
         for (let label of labels) {
             label.style.display = "inline-block";
-            label.style.width = "100%";
+            // label.style.width = "100%";
             label.style.cursor = "initial";
             label.style.marginTop = "10px";
         }
@@ -143,7 +144,7 @@ function toggle_expand_all() {
         let labels = document.querySelectorAll("tab > label");
         for (let label of labels) {
             label.style.display = "";
-            label.style.width = "";
+            // label.style.width = "";
             label.style.cursor = "";
             label.style.marginTop = "";
         }
@@ -349,36 +350,46 @@ codes_rust.forEach(code => {
     code.className = "language-rust";
 });
 
+// Check if we have been asked to print
+if (window.location.hash == "#_print") {
+    print_mode = true;
+}
 
-// Executed on page load, this runs all toggles the user might have clicked
-// the last time based on localStorage.
 try {
-    let night_mode = storage_get("night-mode");
-    let ligatures = storage_get("ligatures");
-    let expand_everything = storage_get("expand_everything");
-    let survey = storage_get(SURVEY_KEY);
+    if (print_mode) {
+        // In print mode, all we care for is to enable a few things
+        toggle_ligatures();
+        toggle_expand_all();
+    } else {
+        // Executed on page load, this runs all toggles the user might have clicked
+        // the last time based on localStorage.
+        let night_mode = storage_get("night-mode");
+        let ligatures = storage_get("ligatures");
+        let expand_everything = storage_get("expand_everything");
+        let survey = storage_get(SURVEY_KEY);
 
-    // Don't attach feedback to h1, looks ugly and doesn't help.
-    feedback_attach_buttons(["h1", "h2", "h3", "h4"]);
+        // Don't attach feedback to h1, looks ugly and doesn't help.
+        feedback_attach_buttons(["h1", "h2", "h3", "h4"]);
 
-    if (Math.random() < 0.1) { random_quote(); }
-    if (night_mode === "night") { toggle_night_mode(); }
-    if (ligatures === "ligatures") { toggle_ligatures(); }
-    if (expand_everything === "true") { toggle_expand_all(); }
+        if (Math.random() < 0.1) { random_quote(); }
+        if (night_mode === "night") { toggle_night_mode(); }
+        if (ligatures === "ligatures") { toggle_ligatures(); }
+        if (expand_everything === "true") { toggle_expand_all(); }
 
-    // Make sure all "memory-bars" descriptions expand or collapse when clicked.
-    for (let e of memory_bars) {
-        e.onclick = (e) => {
-            let section = e.target.closest("lifetime-section");
-            let explanation = section.getElementsByTagName("explanation")[0];
+        // Make sure all "memory-bars" descriptions expand or collapse when clicked.
+        for (let e of memory_bars) {
+            e.onclick = (e) => {
+                let section = e.target.closest("lifetime-section");
+                let explanation = section.getElementsByTagName("explanation")[0];
 
-            // Some elements just don't have any
-            if (!explanation) return;
+                // Some elements just don't have any
+                if (!explanation) return;
 
-            if (!explanation.style.display || explanation.style.display == "none") {
-                explanation.style.display = "inherit";
-            } else {
-                explanation.style.display = "none";
+                if (!explanation.style.display || explanation.style.display == "none") {
+                    explanation.style.display = "inherit";
+                } else {
+                    explanation.style.display = "none";
+                }
             }
         }
     }

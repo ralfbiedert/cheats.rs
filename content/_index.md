@@ -662,7 +662,6 @@ Rust supports most operators you would expect (`+`, `*`, `%`, `=`, `==`, &hellip
 
 # Behind the Scenes
 
-<noprint>
 
 <!-- Legacy target some pages use to link here -->
 <a name="reading-lifetimes"></a>
@@ -3197,7 +3196,6 @@ let a = c;          // <- But here, no more use of `r` or `s`.
 
 {{ tablesep() }}
 
-</noprint>
 
 
 ## Language Sugar
@@ -3229,8 +3227,6 @@ If something works that "shouldn't work now that you think about it", it might b
 
 ---
 
-<!-- This whole section doesn't look good on print -->
-<noprint>
 
 # Data & Types
 
@@ -4391,8 +4387,6 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 
 ---
 
-<!-- End NOPRINT for datatypes -->
-</noprint>
 
 
 # Standard Library
@@ -5015,8 +5009,6 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 
 {{ tablesep() }}
 
-<!-- Also not printing this table -->
-<noprint>
 
 **Minimal examples** for various entry points might look like:
 
@@ -5213,9 +5205,6 @@ fn main() {
 
 </tabs>
 
-
-<!-- End noprint of code examples -->
-</noprint>
 
 
 {{ tablesep() }}
