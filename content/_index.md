@@ -4398,7 +4398,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 
 How generics, traits and the type system work together.
 
-> 🚧 This section is work in progress. Please ignore ... 🚧
+> 🚧 This section is work in progress; testing UX on various devices. Please ignore ... 🚧
 
 ## Type Zoo
 
@@ -4657,12 +4657,23 @@ PRs for this section are very welcome. Idea is:
 <label for="tab-api-2"><b>Strings</b></label>
 <panel><div class="color-header one-liners cheats">
 
-| Intent |  |
+| Intent | Snippet |
 |---------|-------------|
-| `format!("{}{}", x, y)` | Concatenate two strings (any `Display` type that is). |
-| `s.split("xxx")` | Concatenate two strings (any `Display` type that is). |
-| `s.split('/')` | Concatenate two strings (any `Display` type that is). |
-| `s.split(char::is_numeric)` | Concatenate two strings (any `Display` type that is). |
+| Concatenate strings (any `Display`{{ below(target="#string-output") }} that is). <sup>1</sup> | `format!("{}{}", x, y)` |
+| Split by separator pattern. {{ std(page="std/str/pattern/trait.Pattern.html") }} {{ link(url="https://stackoverflow.com/a/38138985") }} | `s.split(pattern)` |
+| {{ tab() }} ... with `&str` | `s.split("abc")` |
+| {{ tab() }} ... with `char` | `s.split('/')` |
+| {{ tab() }} ... with closure | `s.split(char::is_numeric)`|
+| Split by whitespace. | `s.split_whitespace()` |
+| Split by newlines. | `s.lines()` |
+| Split by regular expression.<sup>2</sup> | ` Regex::new(r"\s")?.split("one two three")` |
+
+<footnotes>
+
+<sup>1</sup> Allocates; might not be fastest solution if `x` is `String` already.<br>
+<sup>2</sup> Requires [regex](https://crates.io/crates/regex) crate.
+
+</footnotes>
 
 
 </div></panel></tab>
@@ -4691,22 +4702,6 @@ PRs for this section are very welcome. Idea is:
 
 <!-- NEW TAB -->
 <tab>
-<input type="radio" id="tab-api-3" name="tab-api-sized">
-<label for="tab-api-3"><b>Cleaner Code</b></label>
-<panel><div class="color-header one-liners cheats">
-
-| Intent | Snippet |
-|---------|-------------|
-| Cleaner closure captures | <code>wants_closure({ let c = outer.clone(); move &vert;&vert; use_clone(c) })</code> |
-| Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
-| Iterate _and_ edit `&mut [T]` if `T` Copy. | `Cell::from_mut(mut_slice).as_slice_of_cells()` |
-
-</div></panel></tab>
-
-
-
-<!-- NEW TAB -->
-<tab>
 <input type="radio" id="tab-api-4" name="tab-api-sized">
 <label for="tab-api-4"><b>Macros</b></label>
 <panel><div class="color-header one-liners cheats">
@@ -4715,6 +4710,22 @@ PRs for this section are very welcome. Idea is:
 |---------|-------------|
 | Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
 | {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
+
+</div></panel></tab>
+
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-api-3" name="tab-api-sized">
+<label for="tab-api-3"><b>Esoterics</b></label>
+<panel><div class="color-header one-liners cheats">
+
+| Intent | Snippet |
+|---------|-------------|
+| Cleaner closure captures | <code>wants_closure({ let c = outer.clone(); move &vert;&vert; use_clone(c) })</code> |
+| Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
+| Iterate _and_ edit `&mut [T]` if `T` Copy. | `Cell::from_mut(mut_slice).as_slice_of_cells()` |
 
 </div></panel></tab>
 
@@ -5346,21 +5357,6 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 
 
 </tabs>
-
-
-{{ tablesep() }}
-
-## String Utilities
-
-Various other `String` and `str` functions commonly needed.
-
-<div class="">
-
-
-</div>
-
-
-
 
 
 ---
