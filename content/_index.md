@@ -62,9 +62,9 @@ insert_anchor_links = "right"
 * [Closures](#closures-data)
 * [Standard Library Types](#standard-library-types)
 
-
+<!--
 **Generics & Traits**
-* [Type Zoo](#type-zoo)
+* [Type Zoo](#type-zoo) -->
 
 </column>
 
