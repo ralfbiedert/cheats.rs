@@ -4653,7 +4653,7 @@ PRs for this section are very welcome. Idea is:
 
 <!-- NEW TAB -->
 <tab>
-<input type="radio" id="tab-api-2" name="tab-api-sized">
+<input type="radio" id="tab-api-2" name="tab-api-sized" checked>
 <label for="tab-api-2"><b>Strings</b></label>
 <panel><div class="color-header one-liners cheats">
 
@@ -4681,7 +4681,7 @@ PRs for this section are very welcome. Idea is:
 
 <!-- NEW TAB -->
 <tab>
-<input type="radio" id="tab-api-1" name="tab-api-sized" checked>
+<input type="radio" id="tab-api-1" name="tab-api-sized">
 <label for="tab-api-1"><b>I/O</b></label>
 <panel><div class="color-header one-liners cheats">
 
@@ -5230,7 +5230,7 @@ How to convert types into a `String`, or output them.
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-strop-1" name="tab-group-strop" checked>
-<label for="tab-strop-1"><code>API</code></label>
+<label for="tab-strop-1"><code>APIs</code></label>
 <panel><div class="color-header undefined-color-3">
 
 Rust has, among others, these APIs to convert types to stringified output, collectively called _format_ macros:
@@ -5262,7 +5262,7 @@ Here `fmt` is string literal such as `"hello {}"`, that specifies output (compar
 
 <!-- NEW TAB -->
 <tab>
-<input type="radio" id="tab-strop-2" name="tab-group-strop" checked>
+<input type="radio" id="tab-strop-2" name="tab-group-strop">
 <label for="tab-strop-2"><code>Printable Types</code></label>
 <panel><div class="color-header undefined-color-3">
 
@@ -5289,7 +5289,7 @@ In `format!` and friends, types convert via trait `Display` `"{}"` {{ std(page="
 
 {{ tablesep() }}
 
-In short, pretty much everything is `Debug`, while more _special_ types might special handling or conversion. {{ above(target="#string-conversions" ) }}
+In short, pretty much everything is `Debug`; more _special_ types might need special handling or conversion {{ above(target="#string-conversions" ) }} to `Display`.
 
 </div></panel></tab>
 
