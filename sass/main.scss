@@ -308,6 +308,12 @@ footnotes {
     }
 }
 
+.color-header.abstract-machine {
+    th {
+        background-color: rgb(171, 214, 203);
+    }
+}
+
 .color-header.std-traits {
     th {
         background-color: rgb(233, 235, 204);
@@ -487,7 +493,7 @@ table.sendsync {
 // In his house at R'lyeh, dead Cthulhu waits dreaming.
 magic {
     display: block;
-    // background-image: url(magic.png);
+    background-image: url(magic.png);
     padding: 5px;
     background-size: 150px;
     background-repeat: no-repeat;

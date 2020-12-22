@@ -25,6 +25,8 @@ const subtiles = [
     "A collaboration between Zoo Berlin and Olympia Typewriters.",
     "Contains 140g of Rust per 100g of cheat sheet.",
     "Prints best on Dunder Mifflin premium copy paper.",
+    "May contain R-rated content.",
+    "What if the Mayas made a typo and meant 2021?",
 ];
 
 const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries
@@ -372,7 +374,7 @@ function generics_section_expand_on_click() {
     let generics_section = document.querySelectorAll("generics-section > header");
 
     for (let e of generics_section) {
-        e.onclick = (e) => {
+        e.onclick = (_) => {
             // Ensure we hide all others
             let all = document.querySelectorAll("generics-section > description");
             for (let x of all) {
@@ -380,11 +382,11 @@ function generics_section_expand_on_click() {
             }
 
             // Just expand the current one
-            let section = e.target.parentElement.querySelector("description");
+            let section = e.parentElement.querySelector("description");
             section.style.display = "inherit";
 
             // Make sure the zoo reflect the current section.
-            update_zoo_for_id(e.target.parentElement.id);
+            update_zoo_for_id(e.parentElement.id);
         }
     }
 }
@@ -393,26 +395,34 @@ function generics_section_expand_on_click() {
 // Makes sure the zoo reflects a certain ID
 function update_zoo_for_id(id) {
     // First, always reset the state of each element to default
-    for (let e of document.querySelectorAll("zoo > entry > type.primitive")) { e.style.visibility = "inherit" }
-    for (let e of document.querySelectorAll("zoo > entry > type.composed")) { e.style.visibility = "inherit" }
-    for (let e of document.querySelectorAll("zoo > entry > type.generic")) { e.style.visibility = "inherit" }
-    for (let e of document.querySelectorAll("zoo > entry > type.unsized")) { e.style.visibility = "inherit" }
-    for (let e of document.querySelectorAll("zoo > entry > impl")) { e.style.visibility = "hidden" }
-    for (let e of document.querySelectorAll("zoo > entry > trait-impl")) { e.style.visibility = "hidden" }
-    for (let e of document.querySelectorAll("zoo > label")) { e.style.visibility = "inherit" }
+    // for (let e of document.querySelectorAll("zoo > entry > type.primitive")) { e.style.visibility = "inherit" }
+    // for (let e of document.querySelectorAll("zoo > entry > type.composed")) { e.style.visibility = "inherit" }
+    // for (let e of document.querySelectorAll("zoo > entry > type.generic")) { e.style.visibility = "inherit" }
+    // for (let e of document.querySelectorAll("zoo > entry > type.unsized")) { e.style.visibility = "inherit" }
+    // for (let e of document.querySelectorAll("zoo > entry > impl")) { e.style.visibility = "hidden" }
+    // for (let e of document.querySelectorAll("zoo > entry > trait-impl")) { e.style.visibility = "hidden" }
+    // for (let e of document.querySelectorAll("zoo > label")) { e.style.visibility = "inherit" }
 
 
-    if (id === "zoo_primitives") {
-        for (let e of document.querySelectorAll("zoo > entry > type.composed")) { e.style.visibility = "hidden" }
-        for (let e of document.querySelectorAll("zoo > entry > type.generic")) { e.style.visibility = "hidden" }
-        for (let e of document.querySelectorAll("zoo > entry > type.unsized")) { e.style.visibility = "hidden" }
-        for (let e of document.querySelectorAll("zoo > label")) { e.style.visibility = "hidden" }
-        for (let e of document.querySelectorAll("zoo > label.primitive")) { e.style.visibility = "inherit" }
+    if (id === "ttg-types" || id === "ttg-equivalence") {
+        // for (let e of document.querySelectorAll("zoo > entry > type.generic")) { e.style.visibility = "hidden" }
+        // for (let e of document.querySelectorAll("zoo > label")) { e.style.visibility = "hidden" }
+        // for (let e of document.querySelectorAll("zoo > label.primitive")) { e.style.visibility = "inherit" }
+        // for (let e of document.querySelectorAll("zoo > label.composed")) { e.style.visibility = "inherit" }
+        // for (let e of document.querySelectorAll("zoo > label.unsized")) { e.style.visibility = "inherit" }
     }
 
+    if (id === "ttg-impl-s") {
+        // for (let e of document.querySelectorAll("zoo > entry > type.generic")) { e.style.visibility = "hidden" }
+        // for (let e of document.querySelectorAll("zoo > label")) { e.style.visibility = "hidden" }
+        // for (let e of document.querySelectorAll("zoo > entry > impl")) { e.style.visibility = "inherit" }
+        // for (let e of document.querySelectorAll("zoo > entry > type.generic ~ impl")) { e.style.visibility = "hidden" }
+    }
+
+
     if (id === "zoo_composite") {
-        for (let e of document.querySelectorAll("zoo > entry > impl")) { e.style.visibility = "inherit" }
-        for (let e of document.querySelectorAll("zoo > entry > trait-impl")) { e.style.visibility = "inherit" }
+        // for (let e of document.querySelectorAll("zoo > entry > impl")) { e.style.visibility = "inherit" }
+        // for (let e of document.querySelectorAll("zoo > entry > trait-impl")) { e.style.visibility = "inherit" }
     }
 }
 

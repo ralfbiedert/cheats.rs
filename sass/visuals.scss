@@ -841,30 +841,94 @@ lifetime-example.not-first {
 }
 
 
+// The `zoo` (read: THE zoo) is the main 800px wide element
+// that shows all types together side by side
 zoo {
     // font-size: 100px;
     // background-color: red;
     width: 100%;
-    border-radius: 20px;
     background-color: #f4f4f4;
-    height: 400px;
+    height: 575px;
+    // height: 110%;
     display: inline-block;
     border-color: #ccc;
     border-style: solid;
     border-width: 1px;
+    border-radius: 20px;
     position: relative;
 
-    label {
-        display: inline-block;
+    entry {
         position: absolute;
-        color: gray;
-        font-size: 9pt;
+
+        impl {
+            // visibility: hidden;
+        }
+
+        trait-impl {
+            // visibility: hidden;
+        }
     }
 
+    label {
+        // visibility: hidden;
+    }
+
+    region {
+        border-color: #ccc;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 20px;
+        width: 98%;
+        left: 1%;
+        top: 5px;
+        position: relative;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    region-label {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        // margin-top: 10px;
+        color: gray;
+        font-size: 9pt;
+        text-align: right;
+        display: block;
+        vertical-align: top;
+    }
+
+    group {
+        position: absolute;
+        display: inline-block;
+        // background-color: red;
+                // width: 100%;
+        height: 100%;
+    }
+}
+
+// A `mini-zoo` contains a few types (and impls) next to each other, mostly block-inline.
+mini-zoo {
+    display: inline-block;
+    position: relative;
+    margin-top: 10px;
+
+    entry {
+        vertical-align: top;
+    }
+
+    person {
+        display: inline-block;
+        // background-color: red;
+    }
+}
+
+
+// Shared attributes by both `zoo` and `mini-zoo`
+.zoo {
+    // This is one "block" combining a type (e.g., a `u8`) with all impls and traits.
     entry {
         display: inline-block;
         width: 80px;
-        position: absolute;
         font-size: 10pt;
 
         type {
@@ -891,7 +955,6 @@ zoo {
         impl {
             font-size: 80%;
             display: block;
-            visibility: hidden;
             background-color: limegreen;
             border-style: solid;
             border-width: 1px;
@@ -904,16 +967,103 @@ zoo {
             code {
                 span {
                     // Ugly hack ...
-                    color: white !important;
+                    color: black !important;
+                }
+            }
+        }
+
+        function {
+            font-size: 90%;
+            display: block;
+            background-color: lavender;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            border-radius: 4px;
+            padding: 2px;
+
+            color: white;
+
+            code {
+                span {
+                    // Ugly hack ...
+                    color: black !important;
                 }
             }
         }
 
         trait-impl {
-            font-size: 80%;
+            font-size: 85%;
             display: block;
-            visibility: hidden;
             background-color: limegreen;
+            position: relative;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            border-radius: 4px;
+            padding: 2px;
+            z-index: 2;
+
+            code {
+                span {
+                    // Ugly hack ...
+                    color: black !important;
+                }
+            }
+        }
+
+        machine {
+            display: block;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            border-radius: 4px;
+            padding: 0px;
+            margin-bottom: 1px;
+            background-color: orange;
+            // margin-bottom: 1px;
+            text-align: center;
+            // Needed to suppress iOS font rendering over border
+            // padding-bottom: 1px;
+
+            code {
+                span {
+                    // Ugly hack ...
+                    color: black !important;
+                }
+            }
+        }
+
+
+        macro {
+            font-size: 85%;
+            display: block;
+            background-color: linen;
+            position: relative;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            border-radius: 4px;
+            padding: 2px;
+            z-index: 2;
+
+            code {
+                span {
+                    // Ugly hack ...
+                    color: black !important;
+                }
+            }
+        }
+
+        associated-type {
+            font-size: 70%;
+            width: 75%;
+            left: 20%;
+            z-index: 1;
+            position: relative;
+            top: -3px;
+            display: block;
+            background-color: gray;
             border-style: solid;
             border-width: 1px;
             border-color: black;
@@ -927,23 +1077,62 @@ zoo {
                 }
             }
         }
-   }
+    }
 
-   type.primitive {
-       background-color: lightblue;
-   }
+    note {
+        font-size: 7pt;
+        color: #aaa;
+        line-height: 1.3;
+        display: inline-block;
+        margin-top: 2px;
+    }
 
-   type.composed {
-       background-color: salmon;
-   }
+    narrow-entry {
+        display: inline-block;
+        // width: 80px;
+        font-size: 10pt;
+    }
 
-   type.generic {
-       background-color: #cfa5e9;
-   }
+    // Free floating label
+    label {
+        display: inline-block;
+        position: absolute;
+        color: gray;
+        font-size: 9pt;
+        font-weight: bold;
+    }
 
-   type.unsized {
-       background-color: orange;
-   }
+    .grayed {
+        opacity: 0.5;
+    }
+
+    machine.bad {
+        background-color: coral;
+    }
+
+    machine.good {
+        background-color: darkseagreen;
+    }
+
+    .primitive {
+        background-color: lightblue;
+    }
+
+    .composed {
+        background-color: salmon;
+    }
+
+    .generic {
+        background-color: #cfa5e9;
+    }
+
+    .dotted {
+        border-color: gray;
+        border-style: dashed;
+        border-width: 1px;
+        box-sizing: border-box;
+        // background-color: #dfb5f9;
+    }
 
     // .unsized::before {
     //     content: " ←";
@@ -958,7 +1147,7 @@ zoo {
     // }
 }
 
-
+// In the table below the `zoo`, one section of text (containing a header and description).
 generics-section {
     display: block;
 
@@ -969,10 +1158,48 @@ generics-section {
         cursor: pointer;
     }
 
+    // header::after {
+    //     margin-right: 0.8em;
+    //     float: right;
+    //     content: " ↕️";
+    //     font-size: 0.9em;
+    // }
+
+
     description {
         display: none;
-        background-color: green;
+        // background-color: green;
     }
 
     margin-bottom: 15px;
+}
+
+
+mini-table {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+
+    table {
+        margin: auto;
+        width: 75% !important;
+        border-color: gray;
+        border-style: dashed;
+        border-width: 1px;
+
+
+        th.subheader {
+
+        }
+
+        tr.subheader {
+            background-color: #eee;
+            border-bottom: 1px solid black;
+        }
+    }
+
+    subtitle {
+        font-size: 80%;
+    }
 }
