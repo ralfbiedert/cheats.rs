@@ -3313,7 +3313,7 @@ If something works that "shouldn't work now that you think about it", it might b
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
-<div style="min-width: 100%; width: 650px;">
+<div style="min-width: 100%; width: 750px;">
 
 
 <zoo class="zoo">
@@ -3570,7 +3570,6 @@ A walk through the jungle of types, traits, and implementations that (might poss
 <generics-section id="ttg-types">
 <header>Types</header>
 <description>
-
 
 <mini-zoo class="zoo">
     <entry>
@@ -4934,6 +4933,11 @@ let b: S;
 
 </tabs>
 
+<footnotes>
+
+Examples expand by clicking.
+
+</footnotes>
 
 
 

@@ -847,7 +847,6 @@ zoo {
     // font-size: 100px;
     // background-color: red;
     width: 100%;
-    background-color: #f4f4f4;
     height: 575px;
     // height: 110%;
     display: inline-block;
@@ -1154,7 +1153,6 @@ generics-section {
     header {
         font-size: 14px;
         font-weight: bolder;
-        background-color: #f1e9e0;
         cursor: pointer;
     }
 
@@ -1174,6 +1172,29 @@ generics-section {
     margin-bottom: 15px;
 }
 
+.day-mode {
+    zoo {
+        background-color: #f4f4f4;
+    }
+
+    generics-section {
+        header {
+            background-color: #f1e9e0;
+        }
+    }
+}
+
+.night-mode {
+    zoo {
+        background-color: #3a3131;
+    }
+
+    generics-section {
+        header {
+            background-color: #52452f;
+        }
+    }
+}
 
 mini-table {
     display: block;
