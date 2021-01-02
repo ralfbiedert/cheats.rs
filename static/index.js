@@ -128,6 +128,14 @@ function toggle_expand_all() {
             le.style.display = "inherit";
         }
 
+        //
+        // Expand all types sections
+        //
+        let types_explanations = document.querySelectorAll("generics-section > description");
+        for (let te of types_explanations) {
+            te.style.display = "inherit";
+        }
+
         storage_set("expand_everything", "true");
         toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";
         all_tabs_expanded = true;
@@ -161,11 +169,19 @@ function toggle_expand_all() {
         }
 
         //
-        // Expand all lifetime sections
+        // Collapse all lifetime sections
         //
         let lifetime_explanations = document.querySelectorAll("lifetime-section > explanation");
         for (let le of lifetime_explanations) {
             le.style.display = "none";
+        }
+
+        //
+        // Collapse all types sections
+        //
+        let types_explanations = document.querySelectorAll("generics-section > description");
+        for (let te of types_explanations) {
+            te.style.display = "none";
         }
 
         storage_set("expand_everything", "false");
