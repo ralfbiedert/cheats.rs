@@ -3631,8 +3631,9 @@ A walk through the jungle of types, traits, and implementations that (might poss
     - Trick question: all of these types are totally different -->
 - May be obvious but `u8`, `&u8`, `&mut u8` entirely different from each other
 - Any `t: T` only accepts values from exactly `T`, e.g.,
-    - `f(0_u8)` can't be called with `f(&0_u8)` instead
-    - `f(0_u8)` can't be called with `f(0_i8)` instead (yes, `0 != 0` when it comes to types &hellip;)
+    - `f(0_u8)` can't be called with `f(&0_u8)`
+    - `f(&mut my_u8)` can't be called with `f(&my_u8)`
+    - `f(0_u8)` can't be called with `f(0_i8)` (yes, `0 != 0` when it comes to types &hellip;)
 
 <mini-table>
 
@@ -4542,7 +4543,7 @@ Why is that?
     - `trait From<I> {}`
     - `trait Deref { type O; }`
 - Remember we said traits are "membership lists" for types and called the list `Self`?
-- Turns out, parameters `I` (for input) and `O` (for output) are just more _rows_ to list of that trait:
+- Turns out, parameters `I` (for input) and `O` (for output) are just more _columns_ to list of that trait:
 
 ```
 impl From<u8> for u16 {}

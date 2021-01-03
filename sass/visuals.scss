@@ -944,6 +944,8 @@ mini-zoo {
             // padding-bottom: 1px;
 
             code {
+                color: black !important;
+
                 span {
                     // Ugly hack ...
                     color: black !important;
@@ -984,6 +986,9 @@ mini-zoo {
             color: white;
 
             code {
+                // Ugly hack ...
+                color: black !important;
+
                 span {
                     // Ugly hack ...
                     color: black !important;
@@ -1002,8 +1007,10 @@ mini-zoo {
             border-radius: 4px;
             padding: 2px;
             z-index: 2;
+            color: black;
 
             code {
+
                 span {
                     // Ugly hack ...
                     color: black !important;
@@ -1184,18 +1191,6 @@ generics-section {
     }
 }
 
-.night-mode {
-    zoo {
-        background-color: #3a3131;
-    }
-
-    generics-section {
-        header {
-            background-color: #52452f;
-        }
-    }
-}
-
 mini-table {
     display: block;
     text-align: center;
@@ -1208,19 +1203,41 @@ mini-table {
         border-color: gray;
         border-style: dashed;
         border-width: 1px;
-
-
-        th.subheader {
-
-        }
-
-        tr.subheader {
-            background-color: #eee;
-            border-bottom: 1px solid black;
-        }
     }
 
     subtitle {
         font-size: 80%;
+    }
+}
+
+
+.day-mode {
+    mini-table {
+        table {
+            tr.subheader {
+                background-color: #eee;
+            }
+        }
+    }
+
+}
+
+.night-mode {
+    zoo {
+        background-color: #3a3131;
+    }
+
+    mini-table {
+        table {
+            tr.subheader {
+                background-color: rgb(88, 76, 76);
+            }
+        }
+    }
+
+    generics-section {
+        header {
+            background-color: #52452f;
+        }
     }
 }
