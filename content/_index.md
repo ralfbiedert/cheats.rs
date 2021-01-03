@@ -70,7 +70,9 @@ insert_anchor_links = "right"
 
 **Standard Library**
 * [One-Liners](#one-liners)
-* [Traits](#traits)
+* [Thread Safety](#thread-safety)
+* [Dynamically / Zero Sized Types](#sized-types)
+* [Iterators](#iterators)
 * [Number Conversions](#number-conversions)
 * [String Conversions](#string-conversions)
 * [String Output](#string-output)
@@ -3356,40 +3358,40 @@ If something works that "shouldn't work now that you think about it", it might b
 <group style="left: 30px; top:53%; width: 200px;">
     <!-- Group -->
     <entry style="left:50px; top: 8%;">
-        <type class="generic"><code>Vec&lt;T&gt;</code></type>
+        <type class="composed"><code>Vec&lt;T&gt;</code></type>
     </entry>
     <entry style="left:45px; top: 9%;">
-        <type class="generic"><code>Vec&lt;T&gt;</code></type>
+        <type class="composed"><code>Vec&lt;T&gt;</code></type>
     </entry>
     <entry style="left:40px; top: 10%;">
         <type class="generic dotted"><code>Vec&lt;T&gt;</code></type>
     </entry>
     <!-- Group -->
     <entry style="left:170px; top: 2%;">
-        <type class="generic"><code>&'a T</code></type>
+        <type class="primitive"><code>&'a T</code></type>
     </entry>
     <entry style="left:165px; top: 3%;">
-        <type class="generic"><code>&'a T</code></type>
+        <type class="primitive"><code>&'a T</code></type>
     </entry>
     <entry style="left:160px; top: 4%;">
         <type class="generic dotted"><code>&'a T</code></type>
     </entry>
     <!-- Group -->
     <entry style="left:140px; top: 18%;">
-        <type class="generic"><code>&mut 'a T</code></type>
+        <type class="primitive"><code>&mut 'a T</code></type>
     </entry>
     <entry style="left:135px; top: 19%;">
-        <type class="generic"><code>&mut 'a T</code></type>
+        <type class="primitive"><code>&mut 'a T</code></type>
     </entry>
     <entry style="left:130px; top: 20%;">
         <type class="generic dotted"><code>&mut 'a T</code></type>
     </entry>
     <!-- Group -->
     <entry style="left:40px; top: 28%;">
-        <type class="generic"><code>[T; n]</code></type>
+        <type class="primitive"><code>[T; n]</code></type>
     </entry>
     <entry style="left:35px; top: 29%;">
-        <type class="generic"><code>[T; n]</code></type>
+        <type class="primitive"><code>[T; n]</code></type>
     </entry>
     <entry style="left:30px; top: 30%;">
         <type class="generic dotted"><code>[T; n]</code></type>
@@ -3514,10 +3516,10 @@ If something works that "shouldn't work now that you think about it", it might b
         <note>{{ bad() }} Illegal impl. of trait with differing <b>OUT</b> params.</note>
     </entry>
     <entry style="left:510px; top: 15px;">
-        <type class="generic"><code>T</code></type>
+        <type class="composed"><code>T</code></type>
     </entry>
     <entry style="left:505px; top: 20px;">
-        <type class="generic"><code>T</code></type>
+        <type class="composed"><code>T</code></type>
     </entry>
     <entry style="left:500px; top: 25px;">
         <type class="generic dotted"><code>T</code></type>
@@ -3612,13 +3614,13 @@ A walk through the jungle of types, traits, and implementations that (might poss
         <type class="primitive"><code>u8</code></type>
     </entry>
     <entry>
-        <type class="generic"><code>&u8</code></type>
+        <type class="primitive"><code>&u8</code></type>
     </entry>
     <entry>
-        <type class="generic"><code>&mut u8</code></type>
+        <type class="primitive"><code>&mut u8</code></type>
     </entry>
     <entry>
-        <type class="generic"><code>[u8; 1]</code></type>
+        <type class="primitive"><code>[u8; 1]</code></type>
     </entry>
     <entry>
         <type class="composed"><code>String</code></type>
@@ -4024,10 +4026,10 @@ Venison::new("rudolph").eat();
 
 <mini-zoo class="zoo">
     <entry>
-        <type class="generic"><code>Vec&lt;u8&gt;</code></type>
+        <type class="composed"><code>Vec&lt;u8&gt;</code></type>
     </entry>
     <entry>
-        <type class="generic"><code>Vec&lt;char&gt;</code></type>
+        <type class="composed"><code>Vec&lt;char&gt;</code></type>
     </entry>
 </mini-zoo>
 
@@ -4188,13 +4190,13 @@ struct MyArray<T, const N: usize> {
         <code style="text-align:center; width: 100%;">→</code>
     </narrow-entry>
     <entry>
-        <type class="generic"><code>Num&lt;u8&gt;</code></type>
+        <type class="composed"><code>Num&lt;u8&gt;</code></type>
     </entry>
     <entry>
-        <type class="generic"><code>Num&lt;f32&gt;</code></type>
+        <type class="composed"><code>Num&lt;f32&gt;</code></type>
     </entry>
     <entry>
-        <type class="generic"><code>Num&lt;Cmplx&gt;</code></type>
+        <type class="composed"><code>Num&lt;Cmplx&gt;</code></type>
     </entry>
     <narrow-entry>
         <code style="text-align:center; width: 50px;">&nbsp;</code>
@@ -4912,7 +4914,7 @@ ogg.play(mixer);
 
 Trait author assumes:
 - developers would customize API for `Self` type (but in only one way),
-- users do not need, or should not have, ability to influence customization.
+- users do not need, or should not have, ability to influence customization for specific `Self`.
 
 > As you can see here, the term **input** or **output** does **not** (necessarily) have anything to do with whether `I` or `O` are inputs or outputs to an actual function!
 
@@ -4986,13 +4988,13 @@ Like examples above, in particular trait author assumes:
         <code style="text-align:center; width: 100%;">→</code>
     </narrow-entry>
     <entry>
-        <type class="generic"><code>S&lt;u8&gt;</code></type>
+        <type class="composed"><code>S&lt;u8&gt;</code></type>
     </entry>
     <entry>
-        <type class="generic"><code>S&lt;char&gt;</code></type>
+        <type class="composed"><code>S&lt;char&gt;</code></type>
     </entry>
     <entry>
-        <type class="generic grayed"><code>S&lt;str&gt;</code></type>
+        <type class="composed grayed"><code>S&lt;str&gt;</code></type>
     </entry>
 </mini-zoo>
 
@@ -5012,13 +5014,13 @@ struct S<T> { ... }
         <code style="text-align:center; width: 100%;">→</code>
     </narrow-entry>
     <entry>
-        <type class="generic"><code>S&lt;u8&gt;</code></type>
+        <type class="composed"><code>S&lt;u8&gt;</code></type>
     </entry>
     <entry>
-        <type class="generic"><code>S&lt;char&gt;</code></type>
+        <type class="composed"><code>S&lt;char&gt;</code></type>
     </entry>
     <entry>
-        <type class="generic"><code>S&lt;str&gt;</code></type>
+        <type class="composed"><code>S&lt;str&gt;</code></type>
     </entry>
 </mini-zoo>
 
@@ -5054,6 +5056,24 @@ struct S<T> where T: ?Sized { ... }
     - user must provide specific `'a` to instantiate type (compiler will help within methods),
     - as `Vec<f32>` and `Vec<u8>` are different types, so are `S<'p>` and `S<'q>`,
     - meaning you can't just assign value of type `S<'a>` to variable expecting `S<'b>` (exception: "subtype" relationship for lifetimes, e.g. `'a` outliving `'b`).
+
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="generic dotted"><code>S&lt;'a&gt;</code></type>
+    </entry>
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+    <entry>
+        <type class="composed"><code>S&lt;'auto&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>S&lt;'static&gt;</code></type>
+    </entry>
+</mini-zoo>
+
+
 - `'static` is only nameable instance of the _typespace_ lifetimes.
 
 ```
@@ -6420,11 +6440,9 @@ PRs for this section are very welcome. Idea is:
 {{ tablesep() }}
 
 
-## Traits
 
-Traits define common behavior. If `S` implements `trait T`, you know `S` can behave as prescribed by `T`. Below is an overview of traits that may be more tricky.
+## Thread Safety {#thread-safety}
 
-#### 🧵 Thread Safety {#thread-safety}
 
 <!-- Shamelessly stolen from https://www.reddit.com/r/rust/comments/ctdkyr/understanding_sendsync/exk8grg/ -->
 <table class="sendsync">
@@ -6448,8 +6466,45 @@ Traits define common behavior. If `S` implements `trait T`, you know `S` can beh
 {{ tablesep() }}
 
 
-#### 🐘 (Dynamically / Zero) Sized Types {#sized-types}
+## (Dynamically / Zero) Sized Types {#sized-types}
 
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="composed"><code>MostTypes</code></type>
+        <trait-impl>⌾ <code>Sized</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="primitive"><code>str</code></type>
+        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="primitive"><code>[u8]</code></type>
+        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="primitive"><code>dyn Trait</code></type>
+        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="primitive"><code>...</code></type>
+        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+
+{{ tablesep() }}
 
 <tabs>
 
@@ -6502,7 +6557,74 @@ Traits define common behavior. If `S` implements `trait T`, you know `S` can beh
 
 {{ tablesep() }}
 
-#### 🚥 Iterators {#iterators}
+## Iterators {#iterators}
+
+
+<mini-zoo class="zoo" style="margin-right: 20px;">
+    <entry>
+        <type class="composed"><code>SomeItem</code></type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="generic dotted"><code>C&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">IntoItrtr</code></trait-impl>
+        <associated-type class="grayed"><code>I = T;</code></associated-type>
+        <associated-type class="grayed"><code>T = InIt&lt;T&gt;</code></associated-type>
+        <note>Iterate over <code>T</code>.</note>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-right: 20px;">
+    <entry>
+        <type class="generic dotted"><code>IntoIter&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
+        <associated-type class="grayed"><code>I = T;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="generic dotted grayed"><code>&C&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">IntoItrtr</code></trait-impl>
+        <associated-type class="grayed"><code>I = T;</code></associated-type>
+        <associated-type class="grayed"><code>T = It&lt;T&gt;</code></associated-type>
+        <note>Iterate over <code>&T</code>.</note>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-right: 20px;">
+    <entry>
+        <type class="generic dotted"><code>Iter&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
+        <associated-type class="grayed"><code>I = T;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="generic dotted grayed"><code>&mut C&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">IntoItrtr</code></trait-impl>
+        <associated-type class="grayed"><code>I = T;</code></associated-type>
+        <associated-type class="grayed"><code>T = ItM&lt;T&gt;</code></associated-type>
+        <note>Iterate over <code>&mut T</code>.</note>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-right: 20px;">
+    <entry>
+        <type class="generic dotted"><code>IterMut&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
+        <associated-type class="grayed"><code>I = T;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+
+
+
+
+{{ tablesep() }}
 
 
 <tabs class="color-header std-green">
@@ -6558,17 +6680,17 @@ Once you have an `i`:
 Let's assume you have a `struct C {}` that is your collection.
 
 
-* **`struct Iter {}`** &mdash; Create a struct to hold your iteration status (e.g., an index) for immutable iteration.
-* **`impl Iterator for Iter {}`** &mdash; Provide an implementation of `Iterator::next()` so it can produce elements.
+* **`struct IntoIter {}`** &mdash; Create a struct to hold your iteration status (e.g., an index) for value iteration.
+* **`impl Iterator for IntoIter {}`** &mdash; Provide an implementation of `Iterator::next()` so it can produce elements.
 
-In addition, you might want to add a convenience `fn iter(&self) -> Iter` inside your `impl C {}`.
+In addition, you might want to add a convenience `C::iter(&self) -> IntoIter`.
 
 **Mutable Iterators**
 
 * **`struct IterMut {}`** &mdash; To provide mutable iterators create another struct that can hold `C` as `&mut`.
 * **`impl Iterator for IterMut {}`** &mdash; In that case `Iterator::Item` is probably a `&mut item`
 
-Similarly, providing a `fn iter_mut(&mut self) -> IterMut` might be a good idea.
+Similarly, providing a `C::iter_mut(&mut self) -> IterMut` might be a good idea.
 
 
 **Making Loops Work**
