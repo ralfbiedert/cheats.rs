@@ -3589,9 +3589,9 @@ A walk through the jungle of types, traits, and implementations that (might poss
 
 | Type |   Values |
 | --- | --- |
-| `u8`  |  `{ 0_u8, 1_u8, ..., 255_u8 }` |
+| `u8`  |  <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code> |
 | `char`  | `{ 'a', 'b', ... '🦀' }` |
-| `struct S(u8, char)`  | `{ (0_u8, 'a'), ... (255_u8, '🦀')` } |
+| `struct S(u8, char)`  | <code>{ (0<sub>u8</sub>, 'a'), ... (255<sub>u8</sub>, '🦀') }</code> |
 | `enum E { A(u8), B(char) }`  | `{ 'a', 'b', ... '🦀' }` |
 
 <subtitle>Sample types and sample values.</subtitle>
@@ -3631,16 +3631,18 @@ A walk through the jungle of types, traits, and implementations that (might poss
     - Trick question: all of these types are totally different -->
 - May be obvious but `u8`, `&u8`, `&mut u8` entirely different from each other
 - Any `t: T` only accepts values from exactly `T`, e.g.,
-    - `f(0_u8)` can't be called with `f(&0_u8)`
-    - `f(&mut my_u8)` can't be called with `f(&my_u8)`
-    - `f(0_u8)` can't be called with `f(0_i8)` (yes, `0 != 0` when it comes to types &hellip;)
+    - `f(0_u8)` can't be called with `f(&0_u8)`,
+    - `f(&mut my_u8)` can't be called with `f(&my_u8)`,
+    - `f(0_u8)` can't be called with `f(0_i8)`.
+
+>  Yes, `0 != 0` (in a mathematical sense) when it comes to types! In a language sense, the operation  <code>==(0<sub>u8</sub>, 0<sub>u16</sub>)</code> just isn't defined to prevent happy little accidents.
 
 <mini-table>
 
 | Type | Values |
 | --- | --- |
-| `u8`  | `{ 0_u8, 1_u8, ..., 255_u8 }` |
-| `u16`  | `{ 0_u16, 1_u16, ..., 65_535_u16 }` |
+| `u8`  | <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code> |
+| `u16`  | <code>{ 0<sub>u16</sub>, 1<sub>u16</sub>, ..., 65_535<sub>u16</sub> }</code> |
 | `&u8`  | <code>{ 0xffaa<sub>&u8</sub>, 0xffbb<sub>&u8</sub>, ... }</code> |
 | `&mut u8`  | <code>{ 0xffaa<sub>&mut u8</sub>, 0xffbb<sub>&mut u8</sub>, ... }</code> |
 
@@ -3694,12 +3696,11 @@ impl Port {
 }
 ```
 
-- Types usually come with implementation, e.g., `impl Port {}`, behavior _related_ to type
+- Types usually come with implementation, e.g., `impl Port {}`, behavior _related_ to type:
     - **associated functions** `Port::new(80)`
     - **methods** `port.close()`
-<!-- - _Where_, _what_ functionality belongs somewhat arbitrary
-    - `impl X {}` associates specific behavior with specific type
-    - nothing except good taste prevents us from having `i8::play_sound()` -->
+
+> What's considered _related_ is more philosophical than technical, nothing (except good taste) would prevent a `u8::play_sound()` from happening.
 
 
 </description>
@@ -3726,11 +3727,11 @@ impl Port {
     </entry>
 </mini-zoo>
 
-- **Traits**:
-    - Are way to "abstract" behavior
-    - Trait author declares semantically _this trait means ..._
-    - Other can implement ("subscribe to") that behavior
-- Think about trait as "membership list" for types.
+- **Traits** ...
+    - are way to "abstract" behavior,
+    - trait author declares semantically _this trait means X_,
+    - other can implement ("subscribe to") that behavior for their type.
+- Think about trait as "membership list" for types:
 
 
 <mini-table>
@@ -3788,7 +3789,7 @@ impl Port {
 </mini-table>
 
 
-- Whoever is part of that membership list will adhere to behavior of list
+- Whoever is part of that membership list will adhere to behavior of list.
 - Also includes associated methods, functions, ...
 
 ```
@@ -3811,8 +3812,8 @@ trait ShowHex {
 trait Copy { }
 ```
 
-- Traits without methods often called **marker traits**
-- `Copy` is example marker trait, meaning _memory may be copied bitwise_
+- Traits without methods often called **marker traits**.
+- `Copy` is example marker trait, meaning _memory may be copied bitwise_.
 
 <mini-zoo class="zoo">
     <entry>
@@ -3838,8 +3839,8 @@ trait Copy { }
 ```
 impl ShowHex for Port { ... }
 ```
-- Traits are implemented for types 'at some point'
-- This adds the type to the trait memebership list:
+- Traits are implemented for types 'at some point'.
+- Implementation `impl A for B` add type `B` to the trait memebership list:
 
 <mini-table>
 
@@ -3858,7 +3859,7 @@ impl ShowHex for Port { ... }
 </mini-table>
 </mini-table>
 
-- Alternatively, you can think of the type getting a "badge" for its membership:
+- Visually, you can think of the type getting a "badge" for its membership:
 
 <mini-zoo class="zoo">
     <entry>
@@ -3928,10 +3929,10 @@ impl ShowHex for Port { ... }
 
 **Interfaces**
 
-- In **Java**, Alice creates interface `Eat`
-- When Bob authors `Venison`, he must decide if `Venison` implements `Eat` or not
+- In **Java**, Alice creates interface `Eat`.
+- When Bob authors `Venison`, he must decide if `Venison` implements `Eat` or not.
 - In other words, all membership must be exhaustively declared during type definition.
-- When using `Venison`, Santa can make use of behavior provided by `Eat`
+- When using `Venison`, Santa can make use of behavior provided by `Eat`:
 
 ```
 // Santa imports `Venison` to create it, can `eat()` if he wants.
@@ -3980,9 +3981,9 @@ new Venison("rudolph").eat();
 
 **Traits**
 
-- In **Rust**, Alice creates trait `Eat`
-- Bob creates type `Venison` and decides not to implement `Eat` (he might not even know about `Eat`)
-- Someone<sup>*</sup> later decides adding `Eat` to `Venison` would be a really good idea
+- In **Rust**, Alice creates trait `Eat`.
+- Bob creates type `Venison` and decides not to implement `Eat` (he might not even know about `Eat`).
+- Someone<sup>*</sup> later decides adding `Eat` to `Venison` would be a really good idea.
 - When using `Venison` he must import `Eat` separately:
 
 ```
@@ -4052,10 +4053,10 @@ Venison::new("rudolph").eat();
     </entry>
 </mini-zoo>
 
-- `Vec<>` is no type, does not occupy memory, can't even be translated to code
+- `Vec<>` is no type, does not occupy memory, can't even be translated to code.
 - `Vec<>` is **type constructor**, a "template" or "recipe to create types"
-    - allows 3<sup>rd</sup> party to construct concrete type via parameter
-    - only then would this `Vec<UserType>` become real type itself
+    - allows 3<sup>rd</sup> party to construct concrete type via parameter,
+    - only then would this `Vec<UserType>` become real type itself.
 
 </description>
 </generics-section>
@@ -4084,7 +4085,7 @@ Venison::new("rudolph").eat();
     </entry>
 </mini-zoo>
 
-- Parameter for `Vec<>` often named `T` therefore `Vec<T>`
+- Parameter for `Vec<>` often named `T` therefore `Vec<T>`.
 - `T` "variable name for type" for user to plug in something specfic, `Vec<f32>`, `S<u8>`, &hellip;
 
 
@@ -4132,9 +4133,9 @@ fn f() {
     </entry>
 </mini-zoo>
 
-- Some type constructors not only accept specific type, but also **specific constant**
-- `[T; n]` constructs array of type `T` and length `n`
-- For custom types can be declared as `MyArray<T, const N: usize>`
+- Some type constructors not only accept specific type, but also **specific constant**.
+- `[T; n]` constructs array of type `T` and length `n`.
+- For custom types declared as `MyArray<T, const N: usize>`.
 
 <mini-table>
 
@@ -4211,11 +4212,11 @@ struct MyArray<T, const N: usize> {
     </entry>
 </mini-zoo>
 
-- `T` can be any type, how can we _reason_ about (write code) for such a `Num<T>`?
-- parameter **bounds**
-    - limit what types (**trait bound**) or values (**const bound** {{ todo() }}) allowed
+- If `T` can be any type, how can we _reason_ about (write code) for such a `Num<T>`?
+- Parameter **bounds**:
+    - limit what types (**trait bound**) or values (**const bound** {{ todo() }}) allowed,
     - we now can make use of these limits!
-- trait bounds act as "membership check":
+- Trait bounds act as "membership check":
 
 <mini-table>
 
@@ -4223,7 +4224,7 @@ struct MyArray<T, const N: usize> {
 
 ```
 // Type can only be constructed for some `T` if that
-// T is part of `Absolute` membership list
+// T is part of `Absolute` membership list.
 struct Num<T> where T: Absolute {
     ...
 }
@@ -4259,39 +4260,9 @@ struct Arrayf32<const N: usize> {
 
 <footnotes>
 
-Note that in example we add bounds to the struct. In practice it is nicer add bounds to the respective impl blocks instead, see later this section.
+We add bounds to the struct here. In practice it's nicer add bounds to the respective impl blocks instead, see later this section.
 
 </footnotes>
-
-
-
-
-
-<!-- - Assuming we have the following types in our type universe, some implement `Absolute` others don't.
-- Alice can assume any `Num<>` will only ever have `x` that implements `Absolute`.
-- Santa may only ever create `Num<>` with `u8`, `f32` and `Cmplx`. -->
-
-<!-- <mini-zoo class="zoo">
-    <entry>
-        <type class="primitive"><code>u8</code></type>
-        <trait-impl>⌾ <code>Absolute</code></trait-impl>
-    </entry>
-    <entry>
-        <type class="primitive"><code>f32</code></type>
-        <trait-impl>⌾ <code>Absolute</code></trait-impl>
-    </entry>
-    <entry>
-        <type class="primitive"><code>char</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>Cmplx</code></type>
-        <trait-impl>⌾ <code>Absolute</code></trait-impl>
-    </entry>
-    <entry>
-        <type class="composed"><code>File</code></type>
-    </entry>
-</mini-zoo>
- -->
 
 > Note to self, is `const N: usize` a "const bound"? It seemingly acts as one, limiting the choice of values for N (albeit to specific types only).
 
@@ -4342,8 +4313,8 @@ where
 { ... }
 ```
 
-- Long trait bounds can look intimidating
-- In practice, each `+ X` addition to a bound merely cuts down space of eligible types
+- Long trait bounds can look intimidating.
+- In practice, each `+ X` addition to a bound merely cuts down space of eligible types.
 
 </description>
 </generics-section>
@@ -4364,12 +4335,13 @@ impl<T> S<T> where T: Absolute + Dim + Mul {
 }
 ```
 It can be read as:
+- here is a recipe,
 - for any type `T` (the `impl <T>` part),
 - where<!--sup>*</sup--> that type must be member of the `Absolute + Dim + Mul` traits,
-- add an implementation block to that `S<T>`,
+- you may add an implementation block to that `S<T>`,
 - containing the methods ...
 
-You can think of such `impl<T> ... {} ` code as **abstractly implementing a family of behavior**. Most notably, they allow 3<sup>rd</sup> parties to transparently materialize implementations similarly to how type constructors materialize types:
+You can think of such `impl<T> ... {} ` code as **abstractly implementing a family of behaviors**. Most notably, they allow 3<sup>rd</sup> parties to transparently materialize implementations similarly to how type constructors materialize types:
 
 ```
 // If compiler encounters this, it will
@@ -4399,7 +4371,7 @@ Can also write "family implementations" so they apply trait to many types:
 impl<T> Serialize for T where T: ToHex { ... }
 ```
 
-These are called **blanket implementations**
+These are called **blanket implementations**.
 
 <mini-table>
 
@@ -4444,10 +4416,10 @@ These are called **blanket implementations**
 </mini-table>
 
 
-They can be neat way to give
-- foreign types
-- lots of functionality
-- in a modular way
+They can be neat way to give:
+- foreign types,
+- lots of functionality,
+- in a modular way,
 - if they just implement a narrow interface.
 
 </description>
@@ -4483,7 +4455,7 @@ They can be neat way to give
 
 {{ tablesep() }}
 
-Notice how some traits can be "attached" multiple times, while others just once?
+Notice how some traits can be "attached" multiple times, but others just once?
 
 <mini-zoo class="zoo">
     <entry style="left:300px; top: 25px;">
@@ -4539,11 +4511,11 @@ Notice how some traits can be "attached" multiple times, while others just once?
 
 Why is that?
 
-- Traits themselves can be generic over two kinds of parameters:
+- Traits themselves can be generic over two **kinds of parameters**:
     - `trait From<I> {}`
     - `trait Deref { type O; }`
 - Remember we said traits are "membership lists" for types and called the list `Self`?
-- Turns out, parameters `I` (for input) and `O` (for output) are just more _columns_ to list of that trait:
+- Turns out, parameters `I` (for **input**) and `O` (for **output**) are just more _columns_ to that trait's list:
 
 ```
 impl From<u8> for u16 {}
@@ -4594,9 +4566,11 @@ impl Deref for String { type O = str; }
 
 
 Now here's the twist,
-- **any output `O` parameters must be uniquely determined by input parameters `I`**
+- **any output `O` parameters must be uniquely determined by input parameters `I`**,
 - (in the same way as a relation `X Y` would represent a function),
-- `Self` counts as an input
+- `Self` counts as an input.
+
+A more complex example:
 
 ```
 trait Complex<I1, I2> {
@@ -4605,7 +4579,7 @@ trait Complex<I1, I2> {
 }
 ```
 
-- this creates a relation relation of types named `Complex`
+- this creates a relation relation of types named `Complex`,
 - with 3 inputs (`Self` is always one) and 2 outputs, and it holds `(Self, I1, I2) => (O1, O2)`
 
 <mini-table>
@@ -4635,7 +4609,7 @@ trait Complex<I1, I2> {
 
 <!-- Section -->
 <generics-section id="xxx">
-<header>Trait Parameters and Implementors</header>
+<header>Trait Authoring Considerations (In Short)</header>
 <description>
 
 <mini-zoo class="zoo">
@@ -4705,8 +4679,8 @@ trait Complex<I1, I2> {
 </mini-zoo>
 
 - Parameter choice (input vs. output) also determines who may be allowed to add members:
-    - `I` parameters allow "familes of implementations" be forwarded to user (Santa)
-    - `O` parameters must be determined by trait implementor (Alice or Bob)
+    - `I` parameters allow "familes of implementations" be forwarded to user (Santa),
+    - `O` parameters must be determined by trait implementor (Alice or Bob).
 
 ```
 trait A<I> { }
@@ -4761,8 +4735,103 @@ impl B for X { type O = u32; }
 
 </mini-table>
 
-
 </mini-table>
+
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Trait Authoring Considerations (In Detail)</header>
+<description>
+
+Choice of parameters goes along with purpose trait has to fill:
+
+**No Additional Parameters**
+
+```
+trait PlaySound {
+    fn play(&self, volume: f32);
+}
+
+impl PlaySound for MP3 { ... }
+impl PlaySound for Ogg { ... }
+
+mp3.play(0_f32);
+```
+
+
+Trait author assumes:
+- neither implementor nor user need to customize behavior.
+
+{{ tablesep() }}
+
+**Input Parameters**
+
+```
+trait PlaySound<I> {
+    fn play(&self, volume: I);
+}
+
+impl PlaySound<f32> for MP3 { ... }
+impl PlaySound<u8> for MP3 { ... }
+impl PlaySound<Mixer> for MP3 { ... }
+impl<T> PlaySound<T> for Ogg where T: AudioDevice { ... }
+
+mp3.play(0_f32);
+mp3.play(mixer);
+```
+
+Trait author assumes:
+- developers would customize similar behavior in multiple ways for same `Self` type,
+- users (may want) ability to decide for which `I`-types ability should be possible.
+
+{{ tablesep() }}
+
+**Output Parameters**
+
+```
+trait PlaySound {
+    type O;
+    fn play(&self, volume: Self::O);
+}
+
+impl PlaySound for MP3 { type O = f32; }
+impl PlaySound for OGG { type O = Mixer; }
+
+mp3.play(0_f32);
+ogg.play(mixer);
+```
+
+Trait author assumes:
+- developers would customize similar behavior for `Self` type (but in only one way),
+- users do not need, or should not have, ability to influence customization.
+
+> As you can see here, the term **input** or **output** does **not** (necessarily) have anything to do with whether `I` or `O` are inputs or outputs to an actual function!
+
+{{ tablesep() }}
+
+**Multiple In- and Output Parameters**
+
+```
+trait PlaySound<I> {
+    type O;
+    fn play(&self, volume: I) -> Self::O;
+}
+
+impl PlaySound<u8> for MP3 { type O = DigitalDevice; }
+impl PlaySound<f32> for MP3 { type O = AnalogDevice; }
+impl<T> PlaySound<T> for OGG { type O = GenericDevice; }
+
+mp3.play(0_u8).flip_bits();
+mp3.play(0_f32).rewind_tape();
+```
+
+Like examples above, in particular:
+- users may want ability to decide for which `I`-types ability should be possible,
+- for given inputs, developer should determine resulting output type.
 
 
 </description>
@@ -4798,8 +4867,8 @@ impl B for X { type O = u32; }
 struct S<T> { ... }
 ```
 
-- `T` can be any concrete type
-- However, there exists invisible default bound `T: Sized`, so `S<str>` is not possible out of box
+- `T` can be any concrete type.
+- However, there exists invisible default bound `T: Sized`, so `S<str>` is not possible out of box.
 - Instead we have to add `T : ?Sized` to opt-out of that bound:
 
 <mini-zoo class="zoo">
@@ -4849,10 +4918,10 @@ struct S<T> where T: ?Sized { ... }
 </mini-zoo>
 
 - Lifetimes act<sup>*</sup> like type parameters:
-    - User must provide specific `'a` to instantiate type (compiler will help within methods)
-    - Like `Vec<f32>` and `Vec<u8>` are different types, so are `S<'p>` and `S<'q>`
-    - Means you can't just assign value of type `S<'a>` to variable expecting `S<'b>` (exception: "subtype" relationship for lifetimes, e.g. `'a` outliving `'b`)
-- `'static` is only nameable instance of the _typespace_ lifetimes
+    - user must provide specific `'a` to instantiate type (compiler will help within methods),
+    - as `Vec<f32>` and `Vec<u8>` are different types, so are `S<'p>` and `S<'q>`,
+    - meaning you can't just assign value of type `S<'a>` to variable expecting `S<'b>` (exception: "subtype" relationship for lifetimes, e.g. `'a` outliving `'b`).
+- `'static` is only nameable instance of the _typespace_ lifetimes.
 
 ```
 // `'a is free parameter here (user can pass any specific lifetime)
