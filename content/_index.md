@@ -738,7 +738,7 @@ The abstract machine
 
 
 > Practically this means:
-> - before assuming your **CPU** will do `A` when writing `B` you'd need positive proof **via some specification**(!) If you don't have that all you can assume is that your **abstract machine** will act accordingly.
+> - before assuming your **CPU** will do `A` when writing `B` you'd need positive proof **via documentation**(!) If you don't have that any CPU / memory / bus behavior you observe is _coincidental_.
 > - if you violate the (more intricate) requirements of the abtract machine you're actually writing for the optimizer will make your CPU do something **entirely** different {{ below(target="#unsafe-unsound-undefined")}}
 
 <!-- Legacy target some pages use to link here -->
@@ -4609,7 +4609,7 @@ trait Complex<I1, I2> {
 
 <!-- Section -->
 <generics-section id="xxx">
-<header>Trait Authoring Considerations (In Short)</header>
+<header>Trait Authoring Considerations (Abstract)</header>
 <description>
 
 <mini-zoo class="zoo">
@@ -4744,48 +4744,127 @@ impl B for X { type O = u32; }
 
 <!-- Section -->
 <generics-section id="xxx">
-<header>Trait Authoring Considerations (In Detail)</header>
+<header>Trait Authoring Considerations (Example)</header>
 <description>
 
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+        <associated-type class=""><code>type O;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
+        <associated-type class=""><code>type O;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+
+
+{{ tablesep() }}
+
 Choice of parameters goes along with purpose trait has to fill:
+
+
 
 **No Additional Parameters**
 
 ```
-trait PlaySound {
+trait Audio {
     fn play(&self, volume: f32);
 }
 
-impl PlaySound for MP3 { ... }
-impl PlaySound for Ogg { ... }
+impl Audio for MP3 { ... }
+impl Audio for Ogg { ... }
 
 mp3.play(0_f32);
 ```
 
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>MP3</code></type>
+        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>Ogg</code></type>
+        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+{{ tablesep() }}
 
 Trait author assumes:
-- neither implementor nor user need to customize behavior.
+- neither implementor nor user need to customize API.
 
 {{ tablesep() }}
 
 **Input Parameters**
 
 ```
-trait PlaySound<I> {
+trait Audio<I> {
     fn play(&self, volume: I);
 }
 
-impl PlaySound<f32> for MP3 { ... }
-impl PlaySound<u8> for MP3 { ... }
-impl PlaySound<Mixer> for MP3 { ... }
-impl<T> PlaySound<T> for Ogg where T: AudioDevice { ... }
+impl Audio<f32> for MP3 { ... }
+impl Audio<u8> for MP3 { ... }
+impl Audio<Mixer> for MP3 { ... }
+impl<T> Audio<T> for Ogg where T: HeadsetControl { ... }
 
 mp3.play(0_f32);
 mp3.play(mixer);
 ```
 
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>MP3</code></type>
+        <trait-impl class="">⌾ <code>Audio&lt;f32&gt;</code></trait-impl>
+        <trait-impl class="">⌾ <code>Audio&lt;u8&gt;</code></trait-impl>
+        <trait-impl class="">⌾ <code>Audio&lt;Mix&gt;</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>Ogg</code></type>
+        <trait-impl class="dotted">⌾ <code>Audio&lt;T&gt;</code></trait-impl>
+        <note>... where <code>T</code> is <code>HeadsetCtrl</code>.</note>
+    </entry>
+</mini-zoo>
+
+
+{{ tablesep() }}
+
 Trait author assumes:
-- developers would customize similar behavior in multiple ways for same `Self` type,
+- developers would customize API in multiple ways for same `Self` type,
 - users (may want) ability to decide for which `I`-types ability should be possible.
 
 {{ tablesep() }}
@@ -4793,20 +4872,46 @@ Trait author assumes:
 **Output Parameters**
 
 ```
-trait PlaySound {
+trait Audio {
     type O;
     fn play(&self, volume: Self::O);
 }
 
-impl PlaySound for MP3 { type O = f32; }
-impl PlaySound for OGG { type O = Mixer; }
+impl Audio for MP3 { type O = f32; }
+impl Audio for Ogg { type O = Mixer; }
 
 mp3.play(0_f32);
 ogg.play(mixer);
 ```
 
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+        <associated-type class=""><code>type O;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>MP3</code></type>
+        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+        <associated-type class=""><code>O = f32;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>Ogg</code></type>
+        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+        <associated-type class=""><code>O = Mixer;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+
+{{ tablesep() }}
+
 Trait author assumes:
-- developers would customize similar behavior for `Self` type (but in only one way),
+- developers would customize API for `Self` type (but in only one way),
 - users do not need, or should not have, ability to influence customization.
 
 > As you can see here, the term **input** or **output** does **not** (necessarily) have anything to do with whether `I` or `O` are inputs or outputs to an actual function!
@@ -4816,20 +4921,48 @@ Trait author assumes:
 **Multiple In- and Output Parameters**
 
 ```
-trait PlaySound<I> {
+trait Audio<I> {
     type O;
     fn play(&self, volume: I) -> Self::O;
 }
 
-impl PlaySound<u8> for MP3 { type O = DigitalDevice; }
-impl PlaySound<f32> for MP3 { type O = AnalogDevice; }
-impl<T> PlaySound<T> for OGG { type O = GenericDevice; }
+impl Audio<u8> for MP3 { type O = DigitalDevice; }
+impl Audio<f32> for MP3 { type O = AnalogDevice; }
+impl<T> Audio<T> for Ogg { type O = GenericDevice; }
 
 mp3.play(0_u8).flip_bits();
 mp3.play(0_f32).rewind_tape();
 ```
 
-Like examples above, in particular:
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
+        <associated-type class=""><code>type O;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>MP3</code></type>
+        <trait-impl class="">⌾ <code>Audio&lt;u8&gt;</code></trait-impl>
+        <associated-type class=""><code>O = DD;</code></associated-type>
+        <trait-impl class="">⌾ <code>Audio&lt;f32&gt;</code></trait-impl>
+        <associated-type class=""><code>O = AD;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>Ogg</code></type>
+        <trait-impl class="dotted">⌾ <code>Audio&lt;T&gt;</code></trait-impl>
+        <associated-type class=""><code>O = GD;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+
+{{ tablesep() }}
+
+Like examples above, in particular trait author assumes:
 - users may want ability to decide for which `I`-types ability should be possible,
 - for given inputs, developer should determine resulting output type.
 

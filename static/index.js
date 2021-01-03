@@ -391,56 +391,20 @@ function generics_section_expand_on_click() {
 
     for (let e of generics_section) {
         e.onclick = (_) => {
-            // Ensure we hide all others
-            let all = document.querySelectorAll("generics-section > description");
-            for (let x of all) {
-                x.style.display = "none";
-            }
-
             // Just expand the current one
-            let section = e.parentElement.querySelector("description");
-            section.style.display = "inherit";
+            let description = e.parentElement.querySelector("description");
 
-            // Make sure the zoo reflect the current section.
-            update_zoo_for_id(e.parentElement.id);
+            if (!description.style.display || description.style.display == "none") {
+                console.log(1)
+                description.style.display = "inherit";
+            } else {
+                console.log(2)
+                description.style.display = "none";
+            }
         }
     }
 }
 
-
-// Makes sure the zoo reflects a certain ID
-function update_zoo_for_id(id) {
-    // First, always reset the state of each element to default
-    // for (let e of document.querySelectorAll("zoo > entry > type.primitive")) { e.style.visibility = "inherit" }
-    // for (let e of document.querySelectorAll("zoo > entry > type.composed")) { e.style.visibility = "inherit" }
-    // for (let e of document.querySelectorAll("zoo > entry > type.generic")) { e.style.visibility = "inherit" }
-    // for (let e of document.querySelectorAll("zoo > entry > type.unsized")) { e.style.visibility = "inherit" }
-    // for (let e of document.querySelectorAll("zoo > entry > impl")) { e.style.visibility = "hidden" }
-    // for (let e of document.querySelectorAll("zoo > entry > trait-impl")) { e.style.visibility = "hidden" }
-    // for (let e of document.querySelectorAll("zoo > label")) { e.style.visibility = "inherit" }
-
-
-    if (id === "ttg-types" || id === "ttg-equivalence") {
-        // for (let e of document.querySelectorAll("zoo > entry > type.generic")) { e.style.visibility = "hidden" }
-        // for (let e of document.querySelectorAll("zoo > label")) { e.style.visibility = "hidden" }
-        // for (let e of document.querySelectorAll("zoo > label.primitive")) { e.style.visibility = "inherit" }
-        // for (let e of document.querySelectorAll("zoo > label.composed")) { e.style.visibility = "inherit" }
-        // for (let e of document.querySelectorAll("zoo > label.unsized")) { e.style.visibility = "inherit" }
-    }
-
-    if (id === "ttg-impl-s") {
-        // for (let e of document.querySelectorAll("zoo > entry > type.generic")) { e.style.visibility = "hidden" }
-        // for (let e of document.querySelectorAll("zoo > label")) { e.style.visibility = "hidden" }
-        // for (let e of document.querySelectorAll("zoo > entry > impl")) { e.style.visibility = "inherit" }
-        // for (let e of document.querySelectorAll("zoo > entry > type.generic ~ impl")) { e.style.visibility = "hidden" }
-    }
-
-
-    if (id === "zoo_composite") {
-        // for (let e of document.querySelectorAll("zoo > entry > impl")) { e.style.visibility = "inherit" }
-        // for (let e of document.querySelectorAll("zoo > entry > trait-impl")) { e.style.visibility = "inherit" }
-    }
-}
 
 
 // Use proper syntax since we don't want to write ````rust ...``` all the time.
