@@ -1089,6 +1089,10 @@ mini-zoo {
         }
     }
 
+    entry.wide {
+        width: 115px;
+    }
+
     note {
         font-size: 7pt;
         color: #aaa;
@@ -1184,17 +1188,6 @@ generics-section {
     margin-bottom: 15px;
 }
 
-.day-mode {
-    zoo {
-        background-color: #f4f4f4;
-    }
-
-    generics-section {
-        header {
-            background-color: #f1e9e0;
-        }
-    }
-}
 
 mini-table {
     display: block;
@@ -1217,6 +1210,21 @@ mini-table {
 
 
 .day-mode {
+    zoo {
+        background-color: #f4f4f4;
+
+        region.your-crate {
+            background-color: #f4faf4;
+            border-color: green;
+        }
+    }
+
+    generics-section {
+        header {
+            background-color: #f1e9e0;
+        }
+    }
+
     mini-table {
         table {
             tr.subheader {
@@ -1230,6 +1238,17 @@ mini-table {
 .night-mode {
     zoo {
         background-color: #3a3131;
+
+        region.your-crate {
+            background-color: #343a34;
+            border-color: green;
+        }
+    }
+
+    generics-section {
+        header {
+            background-color: #52452f;
+        }
     }
 
     mini-table {
@@ -1237,12 +1256,6 @@ mini-table {
             tr.subheader {
                 background-color: rgb(88, 76, 76);
             }
-        }
-    }
-
-    generics-section {
-        header {
-            background-color: #52452f;
         }
     }
 }

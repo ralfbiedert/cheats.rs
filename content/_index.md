@@ -3463,7 +3463,7 @@ If something works that "shouldn't work now that you think about it", it might b
 <region-label>Items defined in upstream crates.</region-label>
 
 <!-- REGION -->
-<region style="height: 190px; background-color: #f4faf4; border-color: green;">
+<region class="your-crate" style="height: 190px;">
 <!-- traits -->
 <group style="left:5px; width: 200px;">
     <entry style="left:10px; top: 25px;">
@@ -6560,63 +6560,63 @@ PRs for this section are very welcome. Idea is:
 ## Iterators {#iterators}
 
 
-<mini-zoo class="zoo" style="margin-right: 20px;">
-    <entry>
+<!-- <mini-zoo class="zoo" style="margin-right: 20px;">
+    <entry class="wide">
         <type class="composed"><code>SomeItem</code></type>
     </entry>
-</mini-zoo>
+</mini-zoo> -->
 
 <mini-zoo class="zoo" style="">
-    <entry>
-        <type class="generic dotted"><code>C&lt;T&gt;</code></type>
+    <entry class="wide">
+        <type class="generic dotted"><code>Collection&lt;T&gt;</code></type>
         <trait-impl class="">⌾ <code style="">IntoItrtr</code></trait-impl>
-        <associated-type class="grayed"><code>I = T;</code></associated-type>
-        <associated-type class="grayed"><code>T = InIt&lt;T&gt;</code></associated-type>
+        <associated-type class="grayed"><code>Item = T;</code></associated-type>
+        <associated-type class="grayed"><code>To = IntoIter&lt;T&gt;</code></associated-type>
         <note>Iterate over <code>T</code>.</note>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo" style="margin-right: 20px;">
-    <entry>
+    <entry class="wide">
         <type class="generic dotted"><code>IntoIter&lt;T&gt;</code></type>
         <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
-        <associated-type class="grayed"><code>I = T;</code></associated-type>
+        <associated-type class="grayed"><code>Item = T;</code></associated-type>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo" style="">
-    <entry>
-        <type class="generic dotted grayed"><code>&C&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">IntoItrtr</code></trait-impl>
-        <associated-type class="grayed"><code>I = T;</code></associated-type>
-        <associated-type class="grayed"><code>T = It&lt;T&gt;</code></associated-type>
+    <entry class="wide">
+        <type class="generic dotted grayed"><code>&Collection&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">IntoIter</code></trait-impl>
+        <associated-type class="grayed"><code>Item = &T;</code></associated-type>
+        <associated-type class="grayed"><code>To = Iter&lt;T&gt;</code></associated-type>
         <note>Iterate over <code>&T</code>.</note>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo" style="margin-right: 20px;">
-    <entry>
+    <entry class="wide">
         <type class="generic dotted"><code>Iter&lt;T&gt;</code></type>
         <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
-        <associated-type class="grayed"><code>I = T;</code></associated-type>
+        <associated-type class="grayed"><code>Item = &T;</code></associated-type>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo" style="">
-    <entry>
-        <type class="generic dotted grayed"><code>&mut C&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">IntoItrtr</code></trait-impl>
-        <associated-type class="grayed"><code>I = T;</code></associated-type>
-        <associated-type class="grayed"><code>T = ItM&lt;T&gt;</code></associated-type>
+    <entry class="wide">
+        <type class="generic dotted grayed"><code>&mut Collectn&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">IntoIter</code></trait-impl>
+        <associated-type class="grayed"><code>Item = &mut T;</code></associated-type>
+        <associated-type class="grayed"><code>To = IterMut&lt;T&gt;</code></associated-type>
         <note>Iterate over <code>&mut T</code>.</note>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo" style="margin-right: 20px;">
-    <entry>
+    <entry class="wide">
         <type class="generic dotted"><code>IterMut&lt;T&gt;</code></type>
         <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
-        <associated-type class="grayed"><code>I = T;</code></associated-type>
+        <associated-type class="grayed"><code>Item = &mut T;</code></associated-type>
     </entry>
 </mini-zoo>
 
