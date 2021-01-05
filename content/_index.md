@@ -4183,12 +4183,14 @@ struct MyArray<T, const N: usize> {
 <description>
 
 <mini-zoo class="zoo">
+    <person>🧔</person>
     <entry>
         <type class="generic dotted"><code>Num&lt;T&gt;</code></type>
     </entry>
     <narrow-entry>
         <code style="text-align:center; width: 100%;">→</code>
     </narrow-entry>
+    <person>🎅</person>
     <entry>
         <type class="composed"><code>Num&lt;u8&gt;</code></type>
     </entry>
@@ -4756,6 +4758,12 @@ impl B for X { type O = u32; }
 </mini-zoo>
 
 <mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
     <entry>
         <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
     </entry>
@@ -4797,12 +4805,20 @@ mp3.play(0_f32);
 ```
 
 <mini-zoo class="zoo">
+    <person>👩‍🦰</person>
     <entry>
         <trait-impl class="">⌾ <code>Audio</code></trait-impl>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <person>🧔</person>
     <entry>
         <type class="composed"><code>MP3</code></type>
         <trait-impl class="">⌾ <code>Audio</code></trait-impl>
@@ -4840,12 +4856,20 @@ mp3.play(mixer);
 ```
 
 <mini-zoo class="zoo">
+    <person>👩‍🦰</person>
     <entry>
         <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <person>🧔</person>
     <entry>
         <type class="composed"><code>MP3</code></type>
         <trait-impl class="">⌾ <code>Audio&lt;f32&gt;</code></trait-impl>
@@ -4887,6 +4911,7 @@ ogg.play(mixer);
 ```
 
 <mini-zoo class="zoo">
+    <person>👩‍🦰</person>
     <entry>
         <trait-impl class="">⌾ <code>Audio</code></trait-impl>
         <associated-type class=""><code>type O;</code></associated-type>
@@ -4894,6 +4919,13 @@ ogg.play(mixer);
 </mini-zoo>
 
 <mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <person>🧔</person>
     <entry>
         <type class="composed"><code>MP3</code></type>
         <trait-impl class="">⌾ <code>Audio</code></trait-impl>
@@ -4937,6 +4969,7 @@ mp3.play(0_f32).rewind_tape();
 ```
 
 <mini-zoo class="zoo">
+    <person>👩‍🦰</person>
     <entry>
         <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
         <associated-type class=""><code>type O;</code></associated-type>
@@ -4944,6 +4977,13 @@ mp3.play(0_f32).rewind_tape();
 </mini-zoo>
 
 <mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <person>🧔</person>
     <entry>
         <type class="composed"><code>MP3</code></type>
         <trait-impl class="">⌾ <code>Audio&lt;u8&gt;</code></trait-impl>
