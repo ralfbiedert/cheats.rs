@@ -6569,7 +6569,7 @@ PRs for this section are very welcome. Idea is:
 <mini-zoo class="zoo" style="">
     <entry class="wide">
         <type class="generic dotted"><code>Collection&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">IntoItrtr</code></trait-impl>
+        <trait-impl class="">⌾ <code style="">IntoIter</code></trait-impl>
         <associated-type class="grayed"><code>Item = T;</code></associated-type>
         <associated-type class="grayed"><code>To = IntoIter&lt;T&gt;</code></associated-type>
         <note>Iterate over <code>T</code>.</note>
