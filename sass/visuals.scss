@@ -1036,12 +1036,7 @@ mini-zoo {
             // Needed to suppress iOS font rendering over border
             // padding-bottom: 1px;
 
-            code {
-                span {
-                    // Ugly hack ...
-                    color: black !important;
-                }
-            }
+            color: black !important;
         }
 
 
