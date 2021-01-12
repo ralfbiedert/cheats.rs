@@ -123,7 +123,7 @@ fn main() {
 
 </div>
 <div id="helloplay"></div>
-<div id="helloinfo">Service provided by <a href="https://play.rust-lang.org/" target="_blank">play.rust-lang.org <sup>🔗</sup></a></div>
+<div id="helloinfo">Service provided by <a href="https://play.rust-lang.org/" target="_blank" rel="noopener">play.rust-lang.org <sup>🔗</sup></a></div>
 <div id="helloctrl"><a href="javascript:show_playground(true);">▶️ Edit & Run</a></div>
 </div></panel></tab>
 
@@ -713,7 +713,7 @@ The abstract machine
 - contains concepts such as memory regions (_stack_, ...), execution semantics, ...
 - _knows_ and _sees_ things your CPU might not care about,
 - forms a contract between the programmer and the machine,
-- and **exploits all of the above for optimizations**.<sup>*</sup>
+- and **exploits all of the above for optimizations**.
 
 
 <!-- <footnotes>
@@ -3654,16 +3654,18 @@ A walk through the jungle of types, traits, and implementations that (might poss
 
 
 
-- However, Rust might sometimes help to **convert between types**<sup>*</sup>
+- However, Rust might sometimes help to **convert between types**<sup>1</sup>
     - **casts** manually convert values of types, `0_i8 as u8`
-    - **coercions**  {{ above(target="#language-sugar") }} automatically convert types if safe, `let x: u32 = 0_u8;`
+    - **coercions**  {{ above(target="#language-sugar") }} automatically convert types if safe<sup>2</sup>, `let x: &u8 = &mut 0_u8;`
 
 
 
 
 <footnotes>
 
-<sup>*</sup> Casts and coercions convert values from one set (e.g., `u8`) to another (e.g., `u16`), possibly adding CPU instructions to do so; and in such differ from **subtyping**, which would imply type and subtype are part of the same set (e.g., `u8` being subtype of `u16` and `0_u8` being the same as `0_u16`) where such a conversion would be purely a compile time check. Rust does not use subtyping for regular types (and `0_u8` _does_ differ from `0_u16`) but sort-of for lifetimes. {{ link(url = "https://featherweightmusings.blogspot.com/2014/03/subtyping-and-coercion-in-rust.html") }}
+<sup>1</sup> Casts and coercions convert values from one set (e.g., `u8`) to another (e.g., `u16`), possibly adding CPU instructions to do so; and in such differ from **subtyping**, which would imply type and subtype are part of the same set (e.g., `u8` being subtype of `u16` and `0_u8` being the same as `0_u16`) where such a conversion would be purely a compile time check. Rust does not use subtyping for regular types (and `0_u8` _does_ differ from `0_u16`) but sort-of for lifetimes. {{ link(url = "https://featherweightmusings.blogspot.com/2014/03/subtyping-and-coercion-in-rust.html") }}
+
+<sup>2</sup> Safety here is not just physical concept (e.g., <code>&u8</code> can't be coerced to <code>&u128</code>), but also whether 'history has shown that such a conversion would lead to programming errors'.
 
 </footnotes>
 
@@ -5776,11 +5778,13 @@ These **sum types** hold a value of one of their sub types:
 </datum>
 
 
+<blockquote>
 <footnotes>
 
 <sup>1</sup> To be clear, the depiction of types here merely illustrates a _random_ representation. Unless a certain one is forced (e.g., via `#[repr(C)]`, Rust will, for example, be free to layout `A(u8, u16)` as `u8 u16` and `B(u8, u16)` as `u16 u8`, even inside the same application!
 
 </footnotes>
+</blockquote>
 
 
 ## References & Pointers {#references-pointers-ui}
@@ -5964,8 +5968,8 @@ This **`payload`**, if it exists, is either element- or byte-length of the targe
 
 ## Closures {#closures-data}
 
-Closures are ad-hoc functions along with an automatically managed data block **capturing** {{ ref(page="types/closure.html#capture-modes") }}
-the environment accessed where closure was defined. For example:
+Ad-hoc functions with an automatically managed data block **capturing** {{ ref(page="types/closure.html#capture-modes") }}
+environment where closure was defined. For example:
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -5975,7 +5979,7 @@ the environment accessed where closure was defined. For example:
        <framed class="any" style="width: 50px;"><code>Z</code></framed>
     </visual>
     <zoom>Anonymous closure type C1</zoom>
-    <!-- <description>Also produces anonymous <br><code>f_c1 (c: C1, x: T)</code>. Details depend<br> which <code>FnOnce</code>, <code>FnMut</code>, <code>Fn</code> is allowed.</description> -->
+    <!-- <description>Also produces anonymous <br><code>f<sub>c1</sub> (c: C1, x: T)</code>. Details depend<br> which <code>FnOnce</code>, <code>FnMut</code>, <code>Fn</code> is allowed.</description> -->
 </datum>
 
 
@@ -6008,15 +6012,22 @@ the environment accessed where closure was defined. For example:
 </datum>
 
 <!-- Little hack as description below was too cluttered. -->
-<datum>
+<!-- <datum>
     <name>&nbsp;</name>
     <description>
     Also produces anonymous <code>fn</code> such as <code>f_c1 (C1, X)</code> or <br>
     <code>f_c2 (&C2, X)</code>. Details depend which <code>FnOnce</code>, <code>FnMut</code>, <code>Fn</code> ...<br>
     is supported, based on properties of captured types.
     </description>
-</datum>
+</datum> -->
 
+<blockquote>
+<footnotes>
+
+Also produces anonymous <code>fn</code> such as <code>f<sub>c1</sub>(C1, X)</code> or <code>f<sub>c2</sub>(&C2, X)</code>. Details depend which <code>FnOnce</code>, <code>FnMut</code>, <code>Fn</code> ... is supported, based on properties of captured types.
+
+</footnotes>
+</blockquote>
 
 
 
