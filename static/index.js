@@ -26,7 +26,7 @@ const subtiles = [
     "Contains 140g of Rust per 100g of cheat sheet.",
     "Prints best on Dunder Mifflin premium copy paper.",
     "May contain R-rated content.",
-    "What if the Mayas made a typo and meant 2021?",
+    "What if the Mayas meant 2021?",
 ];
 
 const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries

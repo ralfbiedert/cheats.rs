@@ -278,9 +278,10 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `*r` | **Dereference** {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} a reference `r` to access what it points to. |
 | {{ tab() }} `*r = s;` | If `r` is a mutable reference, move or copy `s` to target memory. |
 | {{ tab() }} `s = *r;` | Make `s` a copy of whatever `r` references, if that is `Copy`. |
-| {{ tab() }} `s = *my_box;` | [Special case](https://www.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8/) for `Box` that can also move out Box'ed content if it isn't `Copy`. |
+| {{ tab() }} `s = *r;` | Won't work {{ bad() }} if `*r` is not `Copy`, as that would move and leave empty place. |
+| {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://www.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8") }} for `Box` that can also move out Box'ed content if it isn't `Copy`. |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}}, duration of a flow in static analysis. |
-| {{ tab() }}  `&'a S`  | Only accepts a `s` with an address that lives `'a` or longer. |
+| {{ tab() }}  `&'a S`  | Only accepts an address holding an `s`; addr. existing `'a` or longer. |
 | {{ tab() }}  `&'a mut S`  | Same, but allow content of address to be changed. |
 | {{ tab() }}  `struct S<'a> {}`  | Signals `S` will contain address with lifetime `'a`. Creator of `S` decides `'a`. |
 | {{ tab() }} `trait T<'a> {}` | Signals a `S` which `impl T for S` might contain address. |
@@ -427,7 +428,7 @@ Code generation constructs expanded before the actual compilation happens.
 |---------|---------|
 | `m!()` |  **Macro** {{book(page="ch19-06-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation, also `m!{}`, `m![]` (depending on macro). |
 | `#[attr]`  | Outer **attribute**. {{ex(page="attribute.html")}} {{ref(page="attributes.html")}}, annotating the following item. |
-| `#![attr]` | Inner attribute, annotating the surrounding item. |
+| `#![attr]` | Inner attribute, annotating the _upper_, surrounding item. |
 
 {{ tablesep() }}
 
@@ -553,7 +554,7 @@ Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, 
 | {{ tab() }} `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }}; if T has references, they must outlive `'a`.  |
 | {{ tab() }} `T: 'static` | Same; does esp. _not_ mean value `t` _will_ {{ bad() }} live `'static`, only that it could. |
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
-| `S<const N: usize>` | Generic const bound; user of type `S` can provide constant value `N`. {{ experimental() }} |
+| `S<const N: usize>` | **Generic const bound**; {{ todo() }} user of type `S` can provide constant value `N`. {{ experimental() }} |
 | {{ tab() }} `S<10>` | Where used, const bounds can be provided as primitive values. |
 | {{ tab() }} `S<{5+5}>` | Expressions must be put in curly brackets. |
 | `S<T> where T: R`  | Almost same as `S<T: R>` but more pleasant to read for longer bounds. |
@@ -712,7 +713,7 @@ The abstract machine
 - is not a runtime, and does not have any runtime overhead, but is a _computing model abstraction_,
 - contains concepts such as memory regions (_stack_, ...), execution semantics, ...
 - _knows_ and _sees_ things your CPU might not care about,
-- forms a contract between the programmer and the machine,
+- forms a contract between programmer and machine,
 - and **exploits all of the above for optimizations**.
 
 
@@ -729,9 +730,9 @@ The abstract machine
 
 | Without AM  | With AM |
 |---------|-------------|
-| `0xffff_ffff` would make a valid `char`. {{ bad() }} | Memory is more than just bits.  |
+| `0xffff_ffff` would make a valid `char`. {{ bad() }} | Memory more than just bits.  |
 | `0xff` and `0xff` are same pointer. {{ bad() }} | Pointers can come from different _domains_.  |
-| Any r/w on pointer `0xff` always fine. {{ bad() }} | Read and write reference may not exist same time.  |
+| Any r/w pointer on `0xff` always fine. {{ bad() }} | Read and write reference may not exist same time.  |
 | Null reference is just `0x0` in some register. {{ bad() }} | Holding `0x0` in reference summons Cthulhu.  |
 
 </div>
@@ -740,8 +741,9 @@ The abstract machine
 
 
 > Practically this means:
-> - before assuming your **CPU** will do `A` when writing `B` you'd need positive proof **via documentation**(!) If you don't have that any CPU / memory / bus behavior you observe is _coincidental_.
-> - if you violate the (more intricate) requirements of the abtract machine you're actually writing for the optimizer will make your CPU do something **entirely** different {{ below(target="#unsafe-unsound-undefined")}}
+> - before assuming your **CPU** will do `A` when writing `B` you'd need positive proof **via documentation**(!),
+> - if you don't have that any physical behavior is _coincidental_,
+> - violating abtract machine and optimizer makes CPU do something **entirely else** &mdash; **undefined behavior**.{{ below(target="#unsafe-unsound-undefined")}}
 
 <!-- Legacy target some pages use to link here -->
 <a name="reading-lifetimes"></a>
@@ -3303,7 +3305,7 @@ If something works that "shouldn't work now that you think about it", it might b
 
 {{ tablesep() }}
 
-> **Editorial Comment** <sup>💬</sup> &mdash; The features above will make your life easier, but might hinder your understanding. If you are new to Rust, you should consider reading about them in more detail.
+> **Editorial Comment** <sup>💬</sup> &mdash; The features above will make your life easier, but might hinder your understanding. If any (type-related) operation ever feels _inconsistent_ it might be worth revisiting this list.
 
 
 </magic>
@@ -3510,9 +3512,9 @@ If something works that "shouldn't work now that you think about it", it might b
     <entry style="left:400px; top: 25px;">
         <type class="composed"><code>Container</code></type>
         <trait-impl class="">⌾ <code>Deref</code></trait-impl>
-        <associated-type class="grayed"><code>type u8;</code></associated-type>
+        <associated-type class="grayed"><code>Tgt = u8;</code></associated-type>
         <trait-impl class="">⌾ <code>Deref</code></trait-impl>
-        <associated-type class="grayed"><code>type f32;</code></associated-type>
+        <associated-type class="grayed"><code>Tgt = f32;</code></associated-type>
         <note>{{ bad() }} Illegal impl. of trait with differing <b>OUT</b> params.</note>
     </entry>
     <entry style="left:510px; top: 15px;">
@@ -3631,7 +3633,7 @@ A walk through the jungle of types, traits, and implementations that (might poss
 
 <!-- - Question: which of the types above is different from all others?
     - Trick question: all of these types are totally different -->
-- May be obvious but `u8`, `&u8`, `&mut u8` entirely different from each other
+- May be obvious but &nbsp; `u8`, &nbsp;&nbsp; `&u8`, &nbsp;&nbsp; `&mut u8`, entirely different from each other
 - Any `t: T` only accepts values from exactly `T`, e.g.,
     - `f(0_u8)` can't be called with `f(&0_u8)`,
     - `f(&mut my_u8)` can't be called with `f(&my_u8)`,
@@ -3793,8 +3795,8 @@ impl Port {
 </mini-table>
 
 
-- Whoever is part of that membership list will adhere to behavior of list.
-- Also includes associated methods, functions, ...
+- **Whoever is part of that membership list will adhere to behavior of list.**
+- Traits can also include associated methods, functions, ...
 
 ```
 trait ShowHex {
@@ -3988,7 +3990,7 @@ new Venison("rudolph").eat();
 - In **Rust**, Alice creates trait `Eat`.
 - Bob creates type `Venison` and decides not to implement `Eat` (he might not even know about `Eat`).
 - Someone<sup>*</sup> later decides adding `Eat` to `Venison` would be a really good idea.
-- When using `Venison` he must import `Eat` separately:
+- When using `Venison` Santa must import `Eat` separately:
 
 ```
 // Santa needs to import `Venison` to create it, and import `Eat` for trait method.
@@ -4138,7 +4140,7 @@ fn f() {
 </mini-zoo>
 
 - Some type constructors not only accept specific type, but also **specific constant**.
-- `[T; n]` constructs array of type `T` and length `n`.
+- `[T; n]` constructs array type holding `T` type `n` times.
 - For custom types declared as `MyArray<T, const N: usize>`.
 
 <mini-table>
@@ -4270,7 +4272,7 @@ We add bounds to the struct here. In practice it's nicer add bounds to the respe
 
 </footnotes>
 
-> Note to self, is `const N: usize` a "const bound"? It seemingly acts as one, limiting the choice of values for N (albeit to specific types only).
+<!-- > Note to self, is `const N: usize` a "const bound"? It seemingly acts as one, limiting the choice of values for N (albeit to specific types only). -->
 
 </description>
 </generics-section>
@@ -4341,10 +4343,9 @@ impl<T> S<T> where T: Absolute + Dim + Mul {
 }
 ```
 It can be read as:
-- here is a recipe,
-- for any type `T` (the `impl <T>` part),
+- here is an implementation recipe for any type `T` (the `impl <T>` part),
 - where<!--sup>*</sup--> that type must be member of the `Absolute + Dim + Mul` traits,
-- you may add an implementation block to that `S<T>`,
+- you may add an implementation block to `S<T>`,
 - containing the methods ...
 
 You can think of such `impl<T> ... {} ` code as **abstractly implementing a family of behaviors**. Most notably, they allow 3<sup>rd</sup> parties to transparently materialize implementations similarly to how type constructors materialize types:
@@ -4422,11 +4423,7 @@ These are called **blanket implementations**.
 </mini-table>
 
 
-They can be neat way to give:
-- foreign types,
-- lots of functionality,
-- in a modular way,
-- if they just implement a narrow interface.
+They can be neat way to give foreign types functionality in a modular way if they just implement another interface.
 
 </description>
 </generics-section>
@@ -6488,7 +6485,23 @@ PRs for this section are very welcome. Idea is:
 </div></div>
 
 
-{{ tablesep() }}
+<!-- {{ tablesep() }}
+
+
+## Attributes
+
+| xxx | Target | yyy |
+|---------|-----|--------|
+| `#[derive(A, B, C)]` | Types | asds |
+| {{ tab() }} `#[derive(A, B, C)]` | | asds |
+| `#[must_use]`  | | asds |
+| `#[repr(C)]` | |  asds |
+| `#[test]` | |  asds |
+| `#[bench]` | |  asds |
+| `#[macro_export]` | |  asds |
+| `#[cfg]` | |  asds |
+| `#[bench]` | |  asds | -->
+
 
 
 
@@ -6523,13 +6536,36 @@ PRs for this section are very welcome. Idea is:
     <entry>
         <type class="composed"><code>MostTypes</code></type>
         <trait-impl>⌾ <code>Sized</code></trait-impl>
+        <note>Normal types.</note>
     </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <narrow-entry style="width: 60px;">
+        <code style="text-align:center; width: 100%;">vs.</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="zero"><code>Z</code></type>
+        <trait-impl>⌾ <code>Sized</code></trait-impl>
+        <note>Zero sized.</note>
+    </entry>
+</mini-zoo>
+
+
+<mini-zoo class="zoo">
+    <narrow-entry style="width: 60px;">
+        <code style="text-align:center; width: 100%;">vs.</code>
+    </narrow-entry>
 </mini-zoo>
 
 <mini-zoo class="zoo" style="">
     <entry>
         <type class="primitive"><code>str</code></type>
         <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
+        <note>Dynamically sized.</note>
     </entry>
 </mini-zoo>
 
@@ -7187,8 +7223,8 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 |---------|-------------|
 | `{}` | Print the next argument using `Display`.{{ std(page="std/fmt/trait.Display.html") }} |
 | `{:?}` | Print the next argument using `Debug`.{{ std(page="std/fmt/trait.Debug.html") }} |
-| `{2:#?}` | Pretty-print the 3rd argument with `Debug`{{ std(page="std/fmt/trait.Debug.html") }} formatting. |
-| `{val:^2$}` | Center the `val` named argument, width specified by the 3rd argument. |
+| `{2:#?}` | Pretty-print the 3<sup>rd</sup> argument with `Debug`{{ std(page="std/fmt/trait.Debug.html") }} formatting. |
+| `{val:^2$}` | Center the `val` named argument, width specified by the 3<sup>rd</sup> argument. |
 | `{:<10.3}` | Left align with width 10 and a precision of 3.|
 | `{val:#x}` | Format `val` argument as hex, with a leading `0x` (alternate format for `x`). |
 
@@ -8258,9 +8294,9 @@ Online services which provide information or tooling.
     a self-contained, user-facing web site. -->
 | Services&nbsp;⚙️ | Description |
 |--------| -----------|
-| [crates.io](https://crates.io/) | All 3rd party libraries for Rust. |
+| [crates.io](https://crates.io/) | All 3<sup>rd</sup> party libraries for Rust. |
 | [std.rs](https://std.rs/) | Shortcut to `std` documentation. |
-| [docs.rs](https://docs.rs/) | Documentation for 3rd party libraries, automatically generated from source. |
+| [docs.rs](https://docs.rs/) | Documentation for 3<sup>rd</sup> party libraries, automatically generated from source. |
 | [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
 | [caniuse.rs](https://caniuse.rs/) | Check which feature is available on which edition. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
