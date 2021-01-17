@@ -27,6 +27,21 @@ const subtiles = [
     "Prints best on Dunder Mifflin premium copy paper.",
     "May contain R-rated content.",
     "What if the Mayas meant 2021?",
+    "Your mission, should you choose to accept it: Put Rust on a Mars rover. <br> This message will self-destruct in 5 seconds.",
+    ["The self-destruct mechanism was written in JavaScript ...", false],
+    "Turned out the Señor Developer job wasn't much of a pay bump.",
+    "Testing Bekenstein's limit one entry a time.",
+    "The 7 naughty words you're not allowed to say on television:",
+    ["Undefined.", false],
+    ["Runtime.", false],
+    ["Inheritance.", false],
+    ["Globals.", false],
+    ["Unwrap.", false],
+    ["Allocation.", false],
+    ["RIIR ... (JK, we all just pretend we don't like that one.)", false],
+    "Good news is, after Rust, learning German will be <i>so</i> much easier.",
+    "Night mode is dark and full of errors.",
+    "^Z^Z^Z^Z^X^quit:help! ... how do I exit this thing?.",
 ];
 
 const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries
@@ -225,13 +240,32 @@ function toggle_subtitle(to_index) {
         subtitle_index = (subtitle_index + 1) % subtiles.length;
     }
 
-    subtitle.innerHTML = subtiles[subtitle_index];
+    // Can either be "xxx", or a ("xxx", false) pair, in which case we have
+    // to get the first element.
+    let subtitle_entry = subtiles[subtitle_index];
+    console.log(subtitle_entry);
+    if (subtitle_entry[1] === false) {
+        subtitle_entry = subtitle_entry[0];
+    }
+
+    subtitle.innerHTML = subtitle_entry;
 }
 
 /// Shows a random quote
 function random_quote() {
-    let rand = Math.random();
-    let index = SKIP_FIRST_N_SUBTITLES + Math.floor((subtiles.length - SKIP_FIRST_N_SUBTITLES) * rand);
+    let index = false;
+
+    while (index === false) {
+        let rand = Math.random();
+
+        index = SKIP_FIRST_N_SUBTITLES + Math.floor((subtiles.length - SKIP_FIRST_N_SUBTITLES) * rand);
+
+        // If 2nd index was false we should ignore entry since it's follow up.
+        if (subtiles[index][1] === false) {
+            index = false;
+        }
+    }
+
     toggle_subtitle(index);
 }
 

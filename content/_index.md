@@ -343,6 +343,7 @@ Control execution within a function.
 | `break`  | **Break expression** {{ ref(page="expressions/loop-expr.html#break-expressions") }} to exit a loop. |
 | {{ tab() }} `break x`  | Same, but make `x` value of the loop expression (only in actual `loop`). |
 | {{ tab() }} `break 'label`  | Exit not only this loop, but the enclosing one marked with `'label`. |
+| {{ tab() }} `break 'label x`  |  Same, but make `x` the value of the enclosing loop marked with `'label`. |
 | `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
 | `continue 'label`  | Same but instead of this loop, enclosing loop marked with 'label. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
@@ -741,9 +742,9 @@ The abstract machine
 
 
 > Practically this means:
-> - before assuming your **CPU** will do `A` when writing `B` you'd need positive proof **via documentation**(!),
+> - before assuming your **CPU** will do `A` when writing `B` you need positive proof **via documentation**(!),
 > - if you don't have that any physical behavior is _coincidental_,
-> - violating abtract machine and optimizer makes CPU do something **entirely else** &mdash; **undefined behavior**.{{ below(target="#unsafe-unsound-undefined")}}
+> - violate the abtract machine's contract and the optimizer makes your CPU do something **entirely else** &mdash; **undefined behavior**.{{ below(target="#unsafe-unsound-undefined")}}
 
 <!-- Legacy target some pages use to link here -->
 <a name="reading-lifetimes"></a>
@@ -6093,7 +6094,7 @@ Rust's standard library combines the above primitive types into useful types wit
             <code>T</code>
         </framed>
     </visual>
-    <description>Tag may be omitted for <br> certain T.</description>
+    <description>Tag may be omitted for <br> certain T, e.g., <code>NonNull</code>.</description>
 </datum>
 
 
@@ -6458,7 +6459,7 @@ PRs for this section are very welcome. Idea is:
 | Intent | Snippet |
 |---------|-------------|
 | Macro w. variable arguments | `macro_rules! var_args { ($($args:expr),*) => {{ }} }` |
-| {{ tab() }} Using the arguments | {{ tab() }} ` $( f($args); )*` |
+| {{ tab() }} Using `args`, e.g., calling `f` multiple times. | {{ tab() }} ` $( f($args); )*` |
 
 </div></panel></tab>
 
