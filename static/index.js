@@ -27,7 +27,8 @@ const subtiles = [
     "Prints best on Dunder Mifflin premium copy paper.",
     "May contain R-rated content.",
     "What if the Mayas meant 2021?",
-    "Your mission, should you choose to accept it: Put Rust on a Mars rover. <br> This message will self-destruct in 5 seconds.",
+    "Your mission, should you choose to accept it: Put Rust on a Mars rover.",
+    ["This message will self-destruct in 5 seconds.", false],
     ["The self-destruct mechanism was written in JavaScript ...", false],
     "Turned out the Señor Developer job wasn't much of a pay bump.",
     "Testing Bekenstein's limit one entry a time.",
@@ -231,21 +232,39 @@ function set_survey(state) {
 
 
 // Called when the user clicks the subtitle (usually the date)
-function toggle_subtitle(to_index) {
+function advance_subtitle(to_index) {
     let subtitle = document.getElementById("subtitle");
+    let subtitle_entry = "UNDEFINED";
 
     if (!!to_index) {
+        // If called with specific index use that and stop thinking
+        // about it.
+        subtitle_entry = subtiles[to_index];
         subtitle_index = to_index;
     } else {
-        subtitle_index = (subtitle_index + 1) % subtiles.length;
-    }
+        // If not called with specific index (normal onclick behavior),
+        // increase number.
+        let next_possible_index = (subtitle_index + 1) % subtiles.length;
 
-    // Can either be "xxx", or a ("xxx", false) pair, in which case we have
-    // to get the first element.
-    let subtitle_entry = subtiles[subtitle_index];
-    console.log(subtitle_entry);
-    if (subtitle_entry[1] === false) {
-        subtitle_entry = subtitle_entry[0];
+        // Is this now a follow-up entry?
+        //
+        // Yes: Show it.
+        // No: Cycle back between the initial SKIP_FIRST_N_SUBTITLES.
+        //
+        // To figure out if follow-up entry, check if ("xxx", false) pair.
+
+        subtitle_entry = subtiles[next_possible_index];
+
+        if (subtitle_entry[1] === false) {
+            // If that was a ("xxx", false) follow-up pair, get actual content and show.
+            subtitle_index = next_possible_index;
+            subtitle_entry = subtitle_entry[0];
+        } else {
+            // If was not a follow-up, rotate between first keys only.
+            next_possible_index = next_possible_index % SKIP_FIRST_N_SUBTITLES;
+            subtitle_index = next_possible_index;
+            subtitle_entry = subtiles[next_possible_index];
+        }
     }
 
     subtitle.innerHTML = subtitle_entry;
@@ -255,6 +274,7 @@ function toggle_subtitle(to_index) {
 function random_quote() {
     let index = false;
 
+    // Keep picking random numbers until we find some not a follow-up.
     while (index === false) {
         let rand = Math.random();
 
@@ -266,7 +286,7 @@ function random_quote() {
         }
     }
 
-    toggle_subtitle(index);
+    advance_subtitle(index);
 }
 
 

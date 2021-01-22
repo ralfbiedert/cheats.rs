@@ -8,7 +8,7 @@ insert_anchor_links = "right"
 
 <img id="logo" class="hide_on_small" src="logo.png" alt="Ferris holding a cheat sheet."></img>
 <pagetitle>Rust Language Cheat Sheet</pagetitle>
-<subtitle><span id="subtitle" onclick="toggle_subtitle()">{{ date() }}</span></subtitle>
+<subtitle><span id="subtitle" onclick="advance_subtitle()">{{ date() }}</span></subtitle>
 
 
 > Contains clickable links to
@@ -624,12 +624,22 @@ Debuggers hate him. Avoid bugs with this one weird trick.
 
 <fixed-2-column  class="color-header special_example">
 
+
 | Within Doc Comments | Explanation |
 |--------|-------------|
-| ` ```rust ... ``` ` | Include a [doc test](https://doc.rust-lang.org/rustdoc/documentation-tests.html) (doc code running on `cargo test`). |
+| ` ```...``` ` | Include a [**doc test**](https://doc.rust-lang.org/rustdoc/documentation-tests.html) (doc code running on `cargo test`). |
+| ` ```X,Y ...``` ` | Same, and include optional configurations; with `X`, `Y` being ... |
+| {{ tab() }} <code style="color: gray;">rust</code> | Make it explicit test is written in Rust; implied by Rust tooling. |
+| {{ tab() }} <code style="color: gray; opacity: 0.3;">-</code> | Compile test. Run test. Fail if panic. **Default behavior**. |
+| {{ tab() }} <code style="color: gray;">should_panic</code> | Compile test. Run test. Execution should panic. If not, fail test. |
+| {{ tab() }} <code style="color: gray;">no_run</code> | Compile test. Fail test if code can't be compiled, Don't run test. |
+| {{ tab() }} <code style="color: gray;">compile_fail</code> | Compile test but fail test if code _can_ be compiled. |
+| {{ tab() }} <code style="color: gray;">ignore</code> | Do not compile. Do not run. Prefer option above instead. |
+| {{ tab() }} <code style="color: gray;">edition2018</code> | Execute code as Rust '18; default is '15. |
 | `#` | Hide line from documentation (` ```   # use x::hidden; ``` `). |
 | <code>[&#96;S&#96;]</code> | Create a link to struct, enum, trait, function, &hellip; `S`. |
 | <code>[&#96;S&#96;]&#40;crate::S&#41;</code> | Paths can also be used, in the form of markdown links. |
+
 
 </fixed-2-column>
 
