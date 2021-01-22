@@ -7379,7 +7379,7 @@ name = "my_crate"
 version = "0.1.0"
 
 [lib]
-crate_type = ["proc-macro"]
+proc-macro = true
 ```
 
 
