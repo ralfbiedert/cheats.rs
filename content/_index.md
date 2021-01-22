@@ -134,7 +134,7 @@ fn main() {
 <label for="tab-hello-3"><b>Strengths</b></label>
 <panel><div>
 
-Things Rust does measurably really well:
+**Things Rust does measurably really well**
 
 - compiled code [about same performance](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html) as C / C++, and excellent [memory and energy efficiency](https://dl.acm.org/doi/10.1145/3136014.3136031).
 - can [avoid 70% of all safety issues](https://www.chromium.org/Home/chromium-security/memory-safety) present in C / C++, and most memory issues.
@@ -151,7 +151,7 @@ Things Rust does measurably really well:
 <label for="tab-hello-4"><b>Weaknesses</b></label>
 <panel><div>
 
-Points you might run into:
+**Points you might run into**
 
 - steep learning curve<sup>1</sup>; compiler enforcing (esp. memory) rules that would be "best practices" elsewhere.
 - missing Rust-native libs in some domains, target platforms (esp. embedded), IDE features<sup>1</sup>.
@@ -165,15 +165,42 @@ Points you might run into:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-hello-5" name="tab-hello">
-<label for="tab-hello-5"><b>Getting Started</b></label>
+<label for="tab-hello-5"><b>Installation</b></label>
 <panel><div>
 
-If you want to start developing Rust:
-- download installer from [**rustup.rs**](https://rustup.rs/) (highly recommended for any platform)
-- install an IDE:
-    - [IntelliJ](https://www.jetbrains.com/idea/) (free) or [CLion](https://www.jetbrains.com/clion/) (paid) with [**IntelliJ Rust**](https://intellij-rust.github.io/)
-    - [Visual Studio Code](https://code.visualstudio.com/) with [**rust-analyzer**](https://rust-analyzer.github.io/)
-- check links on this site, more [learning resources](https://www.rust-lang.org/learn) and [**where to ask questions**](https://www.rust-lang.org/community).
+**Download**
+- Get installer from [**rustup.rs**](https://rustup.rs/) (highly recommended for any platform)
+
+
+**IDEs**
+- [IntelliJ](https://www.jetbrains.com/idea/) (free) or [CLion](https://www.jetbrains.com/clion/) (paid) with [**IntelliJ Rust**](https://intellij-rust.github.io/) {{ hot() }}
+- [Visual Studio Code](https://code.visualstudio.com/) with [**rust-analyzer**](https://rust-analyzer.github.io/)
+
+
+</div></panel></tab>
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-hello-6" name="tab-hello">
+<label for="tab-hello-6"><b>First Steps</b></label>
+<panel><div>
+
+<!-- Note - Please ONLY submit PRs linking to high-quality, "permanent" sites
+            dedicated to learning Rust that work in a browser, are moderately
+            condensed, and have a public Git repo and issue tracker.
+            Also, this section should be very short <=3 entries, so it should only list
+            "the best of their kind".
+             -->
+
+**Modular Beginner Resources**
+- [**Tour of Rust**](https://tourofrust.com/TOC_en.html) - Live code and explanations, side by side.
+- [**Rust in Easy English**](https://dhghomon.github.io/easy_rust/Chapter_3.html) - 60+ concepts, simple English, example-driven.
+
+In addition, have a look at the ususal suspects. {{ book(page="") }} {{ ex(page="") }} {{ std(page="std") }}
+
+
+> **Author's Opinion** <sup>💬</sup> &mdash; If you have never seen or used any Rust it might be good to visit one of the links above before continuing; the next chapter might feel a bit terse otherwise.
+
 </div></panel></tab>
 
 </tabs>
@@ -3316,7 +3343,7 @@ If something works that "shouldn't work now that you think about it", it might b
 
 {{ tablesep() }}
 
-> **Editorial Comment** <sup>💬</sup> &mdash; The features above will make your life easier, but might hinder your understanding. If any (type-related) operation ever feels _inconsistent_ it might be worth revisiting this list.
+> **Author's Opinion** <sup>💬</sup> &mdash; The features above will make your life easier, but might hinder your understanding. If any (type-related) operation ever feels _inconsistent_ it might be worth revisiting this list.
 
 
 </magic>
@@ -3324,7 +3351,7 @@ If something works that "shouldn't work now that you think about it", it might b
 
 ## Types, Traits, Generics
 
-> 🚧 This section is work in progress. Probably contains glaring errors. Feedback welcome. 🚧
+The building blocks of compile-time safety.
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -3570,7 +3597,6 @@ A walk through the jungle of types, traits, and implementations that (might poss
 
 
 ### Type Paraphernalia
-
 
 <tabs>
 
@@ -8049,46 +8075,6 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 ```
 
 </div></div></div></panel></tab>
-
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-unsafe-4" name="tab-unsafe" >
-<label for="tab-unsafe-4"><b>Common Mistakes</b></label>
-<panel><div>
-
-Based on this study {{ link(url="https://cseweb.ucsd.edu/~yiying/RustStudy-PLDI20.pdf") }} if your `unsafe` code goes wrong it was likely:
-
-
-**Unsound Encapsulation**
-- failure to properly reason about lifetimes (e.g., over-extending lifetimes)
-- failure to account for interior mutability (e.g., improper aliasing; `&self` instead of `&mut self`)
-- failure to check arguments or (FFI) return values
-
-
-**Memory Safety** (_the C committee sends their regards_)
-- buffer overflow (e.g., wrong bounds calculation)
-- null pointer dereference (e.g., failure to check for `null`)
-- reading uninitialized memory
-- invalid free (esp. due to accidentally dropping uninitialized value)
-- use after free (due to wrong reasoning about lifetimes)
-- double free (e.g., duplicating non-Copy data)
-
-**Threading**
-- invalid data sharing between threads (e.g., share pointer to local variable)
-- lack of atomic operations; or wrong atomic ordering
-- failure to account for interior mutability
-- double `Mutex` / `RwLock` lock (e.g., due to misunderstanding `match` scopes)<sup>1</sup>
-- `Condvar` waiting without notification<sup>1</sup>
-- accidentally blocking while waiting on empty unbounded channel<sup>1</sup>
-
-<footnotes>
-
-<sup>1</sup> These can also occur in safe code.
-
-</footnotes>
-
-</div></panel></tab>
 
 </tabs>
 

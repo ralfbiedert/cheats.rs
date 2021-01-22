@@ -43,6 +43,7 @@ const subtiles = [
     "Good news is, after Rust, learning German will be <i>so</i> much easier.",
     "Night mode is dark and full of errors.",
     "^Z^Z^Z^Z^X^quit:help! ... how do I exit this thing?.",
+    "If it smells like rust and tastes like rust, it's probably not Rust.",
 ];
 
 const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries
@@ -487,7 +488,7 @@ try {
         // Don't attach feedback to h1, looks ugly and doesn't help.
         feedback_attach_buttons(["h2", "h3", "h4"]);
 
-        if (Math.random() < 0.1) { random_quote(); }
+        if (Math.random() < 0.15) { random_quote(); }
         if (night_mode === "night") { toggle_night_mode(); }
         if (ligatures === "ligatures") { toggle_ligatures(); }
         if (expand_everything === "true") { toggle_expand_all(); }

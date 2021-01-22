@@ -34,10 +34,9 @@ zola serve
 
 # Contributing
 
-Contributions are very welcome. You can PR bug fixes (broken links, typos, ...) directly. I am happy to evolve the current concept based on feedback and demands. Feel free to open an issue and discuss.
+Contributions are welcome and you can PR bug fixes directly. If you somehow ended up here but prefer not to use Github write to [webmaster@cheats.rs](mailto:webmaster@cheats.rs), or use the on-site buttons.
 
-If you want to contribute but prefer not to use Github, you can send feedback and comments to [webmaster@cheats.rs](mailto:webmaster@cheats.rs).
-
+Constructive feedback would be most actionable, but if you just want to vent your frustration that's fine too :)
 
 
 # Credits
