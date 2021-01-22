@@ -7277,12 +7277,12 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | 📁 `examples/` | Examples how to use your crate, they see your crate like external user would.  |
 | {{ tab() }} `my_example.rs` | Individual examples are run like **`cargo run --example my_example`**. |
 | 📁 `src/` | Actual source code for your project. |
-| {{ tab() }} `build.rs` |  **Pre-build script** {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }}, e.g., when compiling C / FFI, needs to be specified in <code class="ignore-auto language-bash">Cargo.toml</code>. |
 | {{ tab() }} `main.rs` | Default entry point for applications, this is what **`cargo run`** uses. |
 | {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f()` starts. |
 | 📁 `tests/` | Integration tests go here, invoked via **`cargo test`**. Unit tests often stay in `src/` file. |
 | `.rustfmt.toml` | In case you want to [**customize**](https://rust-lang.github.io/rustfmt/) how **`cargo fmt`** works. |
 | `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`** |
+| `build.rs` |  **Pre-build script** {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }}, e.g., when compiling C / FFI, needs to be specified in <code class="ignore-auto language-bash">Cargo.toml</code>. |
 | <code class="ignore-auto language-bash">Cargo.toml</code> | Main project configuration. Defines dependencies, artifacts ... |
 | <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
 </div>
