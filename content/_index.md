@@ -7273,8 +7273,7 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 
 | Entry | Code |
 |--------| ---- |
-| 📁 `.cargo/` | Cargo local configurstion folder.  |
-| {{ tab() }} `config.toml` | If you want to [**customize**](https://doc.rust-lang.org/cargo/reference/config.html) visit the link. |
+| 📁 `.cargo/` | Project-local cargo configuration, may contain **`config.toml`**. {{ link( url="https://doc.rust-lang.org/cargo/reference/config.html") }} |
 | 📁 `benches/` | Benchmarks for your crate, run via **`cargo bench`**, requires nightly by default. <sup>*</sup> {{ experimental() }} |
 | 📁 `examples/` | Examples how to use your crate, they see your crate like external user would.  |
 | {{ tab() }} `my_example.rs` | Individual examples are run like **`cargo run --example my_example`**. |
@@ -7475,12 +7474,7 @@ fn my_algo(b: &mut Bencher) {
 <div style="min-width: 100%; width: 650px;">
 
 ```
-// src/build.rs (sample pre-build script)
-
-// Also specify in `Cargo.toml` like this:
-// [package]
-// build = "src/build.rs"
-
+// build.rs (sample pre-build script)
 
 fn main() {
     // You need to rely on env. vars for target; `#[cfg(...)]` are for host.
