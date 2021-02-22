@@ -7557,7 +7557,7 @@ Module trees and imports:
 <panel><div>
 
 
-Rust has three kinds of **namespaces**: {{ link(url="https://gist.github.com/Koxiaet/8c05ebd4e0e9347eb05f265dfb7252e1") }}
+Rust has three kinds of **namespaces**:
 
 <table>
     <thead>
