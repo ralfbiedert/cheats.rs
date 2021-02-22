@@ -54,7 +54,7 @@ insert_anchor_links = "right"
 * [The Abstract Machine](#the-abstract-machine)
 * [Memory & Lifetimes](#memory-lifetimes)
 * [Language Sugar](#language-sugar)
-* [Types, Traits, Generics](#types-traits-generics)<sup>🔥{{ experimental() }}</sup>
+* [Types, Traits, Generics](#types-traits-generics)
 
 
 **Data Layout**
