@@ -157,7 +157,7 @@ fn main() {
 - missing Rust-native libs in some domains, target platforms (esp. embedded), IDE features<sup>1</sup>.
 - longer compile times than "similar" code in other languages<sup>1</sup>.
 - no formal language specification, can prevent legal use in some domains (aviation, medical, &hellip;).
-- careless (use of `unsafe` in) libraries can break safety guarantees for which Rust was picked in the first place.
+- careless (use of `unsafe` in) libraries can secretly break safety guarantees.
 
 <sup>1</sup> Compare [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust).
 </div></panel></tab>
