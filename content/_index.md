@@ -754,19 +754,11 @@ The abstract machine
 - forms a contract between programmer and machine,
 - and **exploits all of the above for optimizations**.
 
-
-<!-- <footnotes>
-
-<sup>*</sup> The last point is particulalry important, doing something perfectly legal on your CPU might violate contract with abstract machine, causing undefined behavior.
-
-</footnotes>
- -->
-
 {{ tablesep() }}
 
 <div class="color-header abstract-machine">
 
-| Without AM  | With AM |
+| Without AM<sup>*</sup>  | With AM<sup>*</sup> |
 |---------|-------------|
 | `0xffff_ffff` would make a valid `char`. {{ bad() }} | Memory more than just bits.  |
 | `0xff` and `0xff` are same pointer. {{ bad() }} | Pointers can come from different _domains_.  |
@@ -775,7 +767,15 @@ The abstract machine
 
 </div>
 
+<footnotes>
+
+<sup>*</sup> Items on the left are examples of actual assumptions people have wrongly held when reasoning about Rust. Items on the right are their _more correct_ counterparts (although the exact specification of some of these concepts in the language might still be pending).
+
+</footnotes>
+
+
 {{ tablesep() }}
+
 
 
 > Practically this means:
