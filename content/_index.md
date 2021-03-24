@@ -7825,12 +7825,13 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 | `sm.await` | Inside an `async {}`, run `sm` until complete. Yield to runtime if `sm` not ready. |
 
 
+
 <footnotes>
 
-{{ note(note="1") }} Technically `async` transforms following code into anonymous, compiler-generated state machine type; `f()` instantiates that machine. <br>
-{{ note(note="2") }} The state machine always `impl Future`, possibly `Send` & co, depending on types used inside `async`. <br>
-{{ note(note="3") }} State machine driven by worker thread invoking `Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
-{{ note(note="4") }} Rust doesn't come with runtime, need external crate instead, e.g., [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio). Also, more helpers in [futures crate](https://github.com/rust-lang-nursery/futures-rs).
+<sup>1</sup> Technically `async` transforms following code into anonymous, compiler-generated state machine type; `f()` instantiates that machine. <br>
+<sup>2</sup> The state machine always `impl Future`, possibly `Send` & co, depending on types used inside `async`. <br>
+<sup>3</sup> State machine driven by worker thread invoking `Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
+<sup>4</sup> Rust doesn't come with runtime, need external crate instead, e.g., [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio). Also, more helpers in [futures crate](https://github.com/rust-lang-nursery/futures-rs).
 
 </footnotes>
 
