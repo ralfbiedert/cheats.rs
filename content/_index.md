@@ -8291,7 +8291,7 @@ Online services which provide information or tooling.
 | [std.rs](https://std.rs/) | Shortcut to `std` documentation. |
 | [docs.rs](https://docs.rs/) | Documentation for 3<sup>rd</sup> party libraries, automatically generated from source. |
 | [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
-| [caniuse.rs](https://caniuse.rs/) | Check which feature is available on which edition. |
+| [caniuse.rs](https://caniuse.rs/) | Check which Rust version introduced or stabilized a feature. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 | [Rust Search Extension](https://rust.extension.sh/) | Browser extension to search docs, crates, attributes, books, &hellip;|
 
