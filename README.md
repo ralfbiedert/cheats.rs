@@ -3,10 +3,6 @@
 [![Read Online](/gfx/button_read-online.png)](https://cheats.rs)
 [![Cached PDF](/gfx/button_cached-pdf.png)](https://cheats.rs/rust_cheat_sheet.pdf)
 
-† PDF is only updated occasionally for those who can't use the "Generate PDF" button on the site; online version is generally recommended.
-
-
-# Background
 
 **A single-page Rust resource for people who like high information density.**
 

@@ -262,13 +262,13 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `[S; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} of fixed length `n` holding elements of type `S`. |
 | `[x; n]` | Array instance with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
 | `[x, y]` | Array instance with given elements `x` and `y`. |
-| `x[0]` | Collection indexing. Overloadable [Index](https://doc.rust-lang.org/std/ops/trait.Index.html), [IndexMut](https://doc.rust-lang.org/std/ops/trait.IndexMut.html) |
-| `x[..]` | Collection slice-like indexing via [RangeFull](https://doc.rust-lang.org/std/ops/struct.RangeFull.html), _c_. slices.  |
-| `x[a..]` | Collection slice-like indexing via [RangeFrom](https://doc.rust-lang.org/std/ops/struct.RangeFrom.html). |
-| `x[..b]` | Collection slice-like indexing [RangeTo](https://doc.rust-lang.org/std/ops/struct.RangeTo.html). |
-| `x[a..b]` | Collection slice-like indexing via [Range](https://doc.rust-lang.org/std/ops/struct.Range.html). |
-| `a..b` | Right-exclusive **range** {{ ref(page="expressions/range-expr.html") }} creation, also seen as `..b`.  |
-| `a..=b` | Inclusive range creation, also seen as `..=b`. |
+| `x[0]` | Collection indexing, here w. `usize`. Implementable with [**Index**](https://doc.rust-lang.org/std/ops/trait.Index.html), [**IndexMut**](https://doc.rust-lang.org/std/ops/trait.IndexMut.html). |
+| {{ tab() }} `x[..]` | Same, via range (here _full range_), also `x[a..b]`, `x[a..=b]`, ... _c_. below.  |
+| `a..b` | **Right-exclusive range** {{ std(page="std/ops/struct.Range.html") }} {{ ref(page="expressions/range-expr.html") }} creation, e.g., `1..3` means `1, 2`.  |
+| `..b` | Right-exclusive **range to** {{ std(page="std/ops/struct.RangeTo.html") }} without starting point.  |
+| `a..=b` | **Inclusive range** {{ std(page="std/ops/struct.RangeInclusive.html") }}, `1..=3` means `1, 2, 3`. |
+| `..=b` | Inclusive **range from** {{ std(page="std/ops/struct.RangeFrom.html") }} without starting point.  |
+| `..` | **Full range** {{ std(page="std/ops/struct.RangeFull.html") }}, usually means _the whole collection_.   |
 | `s.x` | Named **field access**, {{ ref(page="expressions/field-expr.html") }} might try to [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) if `x` not part of type `S`. |
 | `s.0` | Numbered field access, used for tuple types `S` &#8203;`(T)`. |
 
@@ -566,7 +566,7 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 
 ### Generics & Constraints
 
-Generics combine with many other constructs such as `struct S<T>`, `fn f<T>()`, &hellip;
+Generics combine with type constructors, traits and functions to give your users more flexibility.
 
 <fixed-2-column>
 
@@ -638,7 +638,7 @@ Debuggers hate him. Avoid bugs with this one weird trick.
 | Example | Explanation |
 |--------|-------------|
 | `//` | Line comment, use these to document code flow or _internals_. |
-| `///` | Outer line **doc comment**, {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types. |
+| `///` | Outer line **doc comment**, {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types, traits, functions, &hellip; |
 | `//!` | Inner line doc comment, mostly used at start of file to document module. |
 | `/*...*/` | Block comment. |
 | `/**...*/` | Outer block doc comment. |
@@ -6411,6 +6411,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 </datum>
 
 
+
 ---
 
 
@@ -8253,6 +8254,11 @@ All major Rust books developed by the community.
 
 </div>
 
+<footnotes>
+
+For more inofficial books see [Little Book of Rust Books](https://lborb.github.io/book/title-page.html).
+
+</footnotes>
 
 <!-- Disabled for now as looks abandoned w/o content -->
 <!-- | {{ tab() }} [SIMD Performance Guide](https://rust-lang.github.io/packed_simd/perf-guide/) {{ experimental() }} | Work with `u8x32` or `f32x8` to speed up your computations.  | -->
