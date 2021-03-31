@@ -17,6 +17,20 @@ body {
     font-family: "Open Sans", sans-serif;
 }
 
+// Preliminary background until day-mode / night-mode class is added by Javascript.
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: white;
+        color: black;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222;
+        color: white;
+    }
+}
+
 body.day-mode {
     background-color: white;
     color: black;
