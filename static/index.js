@@ -74,18 +74,43 @@ function show_playground(state) {
     }
 }
 
-// Called by toggle button, enable or disable night mode and persist setting in localStorage.
-function toggle_night_mode() {
+// Called on page load, get the user's preference on night mode, either from storage or system settings.
+function get_night_mode() {
+    let night_mode = storage_get("night-mode");
+    if(!night_mode) {
+        // For the first time the page is loaded, check for user preference
+        if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            night_mode = "night";
+        } else {
+            night_mode = "day";
+        }
+        storage_set("night-mode", night_mode);
+    }
+    return night_mode;
+}
+
+// Update the body's class that affects on either day or night mode, based on the given mode.
+function update_night_mode(night_mode) {
     let body = document.getElementsByTagName("body")[0];
-    if (body.classList.contains("night-mode")) {
-        body.classList.remove("night-mode");
-        body.classList.add("day-mode");
-        storage_set("night-mode", "day");
-    } else {
+    if (night_mode === "night") {
         body.classList.add("night-mode");
         body.classList.remove("day-mode");
-        storage_set("night-mode", "night");
+    } else {
+        body.classList.remove("night-mode");
+        body.classList.add("day-mode");
     }
+}
+
+// Called by toggle button, enable or disable night mode and persist setting in localStorage.
+function toggle_night_mode() {
+    let night_mode = storage_get("night-mode");
+    if(night_mode === "night") {
+        night_mode = "day";
+    } else {
+        night_mode = "night";
+    }
+    storage_set("night-mode", night_mode);
+    update_night_mode(night_mode);
 }
 
 // Called by toggle button, enable or disable ligatures persist setting in localStorage.
@@ -480,7 +505,7 @@ try {
     } else {
         // Executed on page load, this runs all toggles the user might have clicked
         // the last time based on localStorage.
-        let night_mode = storage_get("night-mode");
+        let night_mode = get_night_mode();
         let ligatures = storage_get("ligatures");
         let expand_everything = storage_get("expand_everything");
         let survey = storage_get(SURVEY_KEY);
@@ -489,7 +514,7 @@ try {
         feedback_attach_buttons(["h2", "h3", "h4"]);
 
         if (Math.random() < 0.15) { random_quote(); }
-        if (night_mode === "night") { toggle_night_mode(); }
+        update_night_mode(night_mode);
         if (ligatures === "ligatures") { toggle_ligatures(); }
         if (expand_everything === "true") { toggle_expand_all(); }
 
