@@ -12,13 +12,14 @@ html {
     // overflow-y: auto;
 
 }
+
 body {
     text-rendering: optimizeLegibility;
     font-family: "Open Sans", sans-serif;
 }
 
 // Preliminary background until day-mode / night-mode class is added by Javascript.
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
     body {
         background-color: white;
         color: black;

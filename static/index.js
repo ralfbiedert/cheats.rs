@@ -75,22 +75,16 @@ function show_playground(state) {
 }
 
 // Called on page load, get the user's preference on night mode, either from storage or system settings.
-function get_night_mode() {
-    let night_mode = storage_get("night-mode");
-    if(!night_mode) {
-        // For the first time the page is loaded, check for user preference
-        if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            night_mode = "night";
-        } else {
-            night_mode = "day";
-        }
-        storage_set("night-mode", night_mode);
+function get_browser_night_mode() {
+    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return "night";
+    } else {
+        return "day";
     }
-    return night_mode;
 }
 
 // Update the body's class that affects on either day or night mode, based on the given mode.
-function update_night_mode(night_mode) {
+function set_body_night_mode(night_mode) {
     let body = document.getElementsByTagName("body")[0];
     if (night_mode === "night") {
         body.classList.add("night-mode");
@@ -103,14 +97,16 @@ function update_night_mode(night_mode) {
 
 // Called by toggle button, enable or disable night mode and persist setting in localStorage.
 function toggle_night_mode() {
-    let night_mode = storage_get("night-mode");
+    let night_mode = storage_get("night-mode") || get_browser_night_mode();
+
     if(night_mode === "night") {
         night_mode = "day";
     } else {
         night_mode = "night";
     }
+
     storage_set("night-mode", night_mode);
-    update_night_mode(night_mode);
+    set_body_night_mode(night_mode);
 }
 
 // Called by toggle button, enable or disable ligatures persist setting in localStorage.
@@ -505,18 +501,18 @@ try {
     } else {
         // Executed on page load, this runs all toggles the user might have clicked
         // the last time based on localStorage.
-        let night_mode = get_night_mode();
         let ligatures = storage_get("ligatures");
         let expand_everything = storage_get("expand_everything");
-        let survey = storage_get(SURVEY_KEY);
+        let night_mode = storage_get("night-mode") || get_browser_night_mode();
 
         // Don't attach feedback to h1, looks ugly and doesn't help.
         feedback_attach_buttons(["h2", "h3", "h4"]);
 
         if (Math.random() < 0.15) { random_quote(); }
-        update_night_mode(night_mode);
         if (ligatures === "ligatures") { toggle_ligatures(); }
         if (expand_everything === "true") { toggle_expand_all(); }
+
+        set_body_night_mode(night_mode);
 
         // Make sure all interactive content works
         memory_bars_expand_on_click();
