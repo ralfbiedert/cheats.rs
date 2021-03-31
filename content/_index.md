@@ -8131,7 +8131,7 @@ When updating an API, these changes can break client code.{{ rfc(page="1105-api-
 
 | Enums |
 |---------|
-| 🔴 Adding new variants. |
+| 🔴 Adding new variants; can be mitigated with early `#[non_exhaustive]` {{ ref(page="attributes/type_system.html#the-non_exhaustive-attribute") }} |
 | 🔴 Adding new fields to a variant. |
 
 
