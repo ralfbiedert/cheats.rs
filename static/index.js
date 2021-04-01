@@ -44,6 +44,7 @@ const subtiles = [
     "Night mode is dark and full of errors.",
     "^Z^Z^Z^Z^X^quit:help! ... how do I exit this thing?.",
     "If it smells like rust and tastes like rust, it's probably not Rust.",
+    "In memoriam of the 1 Github star we lost April 1st, 2021. You will be missed.",
 ];
 
 const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries
