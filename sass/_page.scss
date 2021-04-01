@@ -178,6 +178,25 @@ $largescreen-width: 1050px;
     fixed-2-column > table tr td:nth-child(1) {
         width: 235px;
     }
+
+    fixed-3-column > table tr td:nth-child(1) {
+        width: 235px;
+    }
+
+    fixed-2-column.extra-wide > table tr td:nth-child(1) {
+        width: 300px;
+    }
+
+    fixed-3-column.extra-wide > table tr td:nth-child(1) {
+        width: 300px;
+    }
+
+    fixed-3-column > table tr td:nth-child(2) {
+        text-align: left;
+        width: 40px;
+        padding-left: 5px;
+    }
+
 }
 
 
@@ -198,6 +217,24 @@ $largescreen-width: 1050px;
 
     fixed-2-column > table tr td:nth-child(1) {
         width: 235px;
+    }
+
+    fixed-3-column > table tr td:nth-child(1) {
+        width: 235px;
+    }
+
+    fixed-2-column.extra-wide > table tr td:nth-child(1) {
+        width: 300px;
+    }
+
+    fixed-3-column.extra-wide > table tr td:nth-child(1) {
+        width: 300px;
+    }
+
+    fixed-3-column > table tr td:nth-child(2) {
+        text-align: left;
+        width: 40px;
+        padding-left: 5px;
     }
 }
 
