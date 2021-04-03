@@ -7975,9 +7975,9 @@ Attributes used by Rust tools to improve code quality:
 
 | Formatting | On | Explanation |
 |-------|---|-------------|
-| `#[rustfmt::skip]` |  `*` | Prevent `cargo fmt` from cleaning up item. {{ link(url="https://github.com/rust-lang/rustfmt#tips") }}|
-| `#![rustfmt::skip::macros(x)]` |  `CM` | ... from cleaning up macro `x`. {{ link(url="https://github.com/rust-lang/rustfmt#tips") }}|
-| `#![rustfmt::skip::attributes(x)]` |  `CM` | ... from cleaning up attribute `x`. {{ link(url="https://github.com/rust-lang/rustfmt#tips") }}|
+| `#[rustfmt::skip]` |  `*` | Prevent `cargo fmt` from cleaning up item. {{ link(url="https://github.com/rust-lang/rustfmt") }}|
+| `#![rustfmt::skip::macros(x)]` |  `CM` | ... from cleaning up macro `x`. {{ link(url="https://github.com/rust-lang/rustfmt") }}|
+| `#![rustfmt::skip::attributes(x)]` |  `CM` | ... from cleaning up attribute `x`. {{ link(url="https://github.com/rust-lang/rustfmt") }}|
 
 </fixed-3-column>
 
