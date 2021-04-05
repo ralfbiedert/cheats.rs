@@ -18,3 +18,9 @@ zola build --base-url="$PWD/public/index.html" --output-dir="$PWD/public"
 - Select plugins: "Keep Markup", "Highlight Keywords" (experimental)
 - Save files and replace the ones in `static`
 - In `git`, discard changes to CSS which now make the page look ugly (for example but not limited to: `font-style`, `background`, ...)
+
+
+### Convert unwilling images to data URIs?
+
+- https://ezgif.com/image-to-datauri
+- Add to `postprocess.js`

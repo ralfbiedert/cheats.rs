@@ -11,6 +11,8 @@ let subtitle_index = 0;
 let all_tabs_expanded = false; // Set `true` by script if asked to expand tabs
 let print_mode = false; // If asked (via #xxx) to render for printing
 
+const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries
+
 const subtiles = [
     "_NOW_HUMAN_",
     "_GITHASH_",
@@ -45,9 +47,8 @@ const subtiles = [
     "^Z^Z^Z^Z^X^quit:help! ... how do I exit this thing?.",
     "If it smells like rust and tastes like rust, it's probably not Rust.",
     "In memoriam of the 1 Github star we lost April 1st, 2021. You will be missed.",
+    "The R in ASMR stands for Rust.",
 ];
-
-const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries
 
 
 // Labels for which we don't want feedback, mainly because the button placement

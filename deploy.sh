@@ -9,7 +9,7 @@ FOLDER_PREP=public       # Zola output folder
 FOLDER_DIST=public.clean # Our own publish folder after asset inlining
 
 # Only these files are allowed to move from $FOLDER_PREP to $FOLDER_DIST (and end up on S3)
-FOLDER_DIST_WHITELIST=("index.html" "favicon32.png" "404.html" "legal" "sitemap.xml" "robots.txt")
+FOLDER_DIST_WHITELIST=("index.html" "404.html" "legal" "sitemap.xml" "robots.txt")
 
 # To color our `echo` output
 _YELLOW='\033[1;33m'
@@ -22,22 +22,19 @@ NOW_SITEMAP=`date +"%Y-%m-%dT%H:%M:%S+02:00"`
 NOW_HUMAN=`date +"%d.%m.%Y"`
 GITHASH=`git rev-parse --short HEAD`
 
-# https://stackoverflow.com/questions/5195607/checking-bash-exit-status-of-several-commands-efficiently
-function exit_if_fail {
-    "$@"
-    local status=$?
-    if [ $status -ne 0 ]; then
-        echo "error with '$1'" >&2
-        exit 1
-    fi
-    return $status
+function abort() {
+    echo "Error executing previous command."
+    exit 1
 }
 
+# Make sure we _only_ allow final (packaged) files as S3 gets messy otherwise
+rm -rf "$FOLDER_PREP"; mkdir "$FOLDER_PREP";
+rm -rf "$FOLDER_DIST"; mkdir "$FOLDER_DIST";
 
-exit_if_fail zola -c "$TOML_BASE" check
-exit_if_fail zola -c "$TOML_BASE" build
-exit_if_fail npm run posthtml_1     # This is absolutely terrible but apparently the asset inliner we use
-exit_if_fail npm run posthtml_2     # is unable to handle multiple files with different paths gracefully ...
+# exit_if_fail zola -c "$TOML_BASE" check
+zola -c "$TOML_BASE" build || abort
+npm run posthtml_1 || abort  # This is absolutely terrible but apparently the asset inliner we use
+npm run posthtml_2 || abort  # is unable to handle multiple files with different paths gracefully ...
 
 # Update deployment date in sitemap.xml
 sed -i -e "s/_NOW_SITEMAP_/$NOW_SITEMAP/g" "$FOLDER_PREP/sitemap.xml"
@@ -45,15 +42,17 @@ sed -i -e "s/_NOW_HUMAN_/$NOW_HUMAN/g" "$FOLDER_PREP/index.html"
 sed -i -e "s/_GITHASH_/$GITHASH/g" "$FOLDER_PREP/index.html"
 
 
-# Make sure we _only_ allow final (packaged) files as S3 gets messy otherwise
-rm -rf "$FOLDER_DIST"; mkdir "$FOLDER_DIST";
-
 # Only more expressly allowed files
 for item in ${FOLDER_DIST_WHITELIST[*]}
 do
     echo "Copying $FOLDER_PREP/$item to $FOLDER_DIST/"
     cp -rf "$FOLDER_PREP/$item" "$FOLDER_DIST"
 done
+
+
+# Early debug exit (USE THIS ONE, or there will be pain and suffering)
+# exit 0
+
 
 # Now we can publish
 if [[ $1 == "--live" ]]; then
