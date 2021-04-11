@@ -267,9 +267,9 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | {{ tab() }} `x[..]` | Same, via range (here _full range_), also `x[a..b]`, `x[a..=b]`, ... _c_. below.  |
 | `a..b` | **Right-exclusive range** {{ std(page="std/ops/struct.Range.html") }} {{ ref(page="expressions/range-expr.html") }} creation, e.g., `1..3` means `1, 2`.  |
 | `..b` | Right-exclusive **range to** {{ std(page="std/ops/struct.RangeTo.html") }} without starting point.  |
-| `a..=b` | **Inclusive range** {{ std(page="std/ops/struct.RangeInclusive.html") }}, `1..=3` means `1, 2, 3`. |
+| `a..=b` | **Inclusive range**, {{ std(page="std/ops/struct.RangeInclusive.html") }} `1..=3` means `1, 2, 3`. |
 | `..=b` | Inclusive **range from** {{ std(page="std/ops/struct.RangeFrom.html") }} without starting point.  |
-| `..` | **Full range** {{ std(page="std/ops/struct.RangeFull.html") }}, usually means _the whole collection_.   |
+| `..` | **Full range**, {{ std(page="std/ops/struct.RangeFull.html") }} usually means _the whole collection_.   |
 | `s.x` | Named **field access**, {{ ref(page="expressions/field-expr.html") }} might try to [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) if `x` not part of type `S`. |
 | `s.0` | Numbered field access, used for tuple types `S` &#8203;`(T)`. |
 
@@ -310,7 +310,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `s = *r;` | Make `s` a copy of whatever `r` references, if that is `Copy`. |
 | {{ tab() }} `s = *r;` | Won't work {{ bad() }} if `*r` is not `Copy`, as that would move and leave empty place. |
 | {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://www.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8") }} for `Box` that can also move out Box'ed content if it isn't `Copy`. |
-| `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}}, duration of a flow in static analysis. |
+| `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} duration of a flow in static analysis. |
 | {{ tab() }}  `&'a S`  | Only accepts an address holding an `s`; addr. existing `'a` or longer. |
 | {{ tab() }}  `&'a mut S`  | Same, but allow content of address to be changed. |
 | {{ tab() }}  `struct S<'a> {}`  | Signals `S` will contain address with lifetime `'a`. Creator of `S` decides `'a`. |
@@ -335,7 +335,7 @@ Define units of code and their abstractions.
 | `trait T : R {}` | `T` is subtrait of **supertrait** {{ ref(page="items/traits.html#supertraits") }} `R`. Any `S` must `impl R` before it can `impl T`. |
 | `impl S {}`  | **Implementation** {{ ref(page="items/implementations.html") }} of functionality for a type `S`, e.g., methods. |
 | `impl T for S {}`  | Implement trait `T` for type `S`. |
-| `impl !T for S {}` | Disable an automatically derived **auto trait** {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }}. |
+| `impl !T for S {}` | Disable an automatically derived **auto trait**. {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }} |
 | `fn f() {}`  | Definition of a **function**; {{ book(page="ch03-03-how-functions-work.html") }}  {{ ex(page="fn.html") }} {{ ref(page="items/functions.html") }} or associated function if inside `impl`. |
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
 | {{ tab() }} `fn f(&self) {}`  | Define a **method**, {{ book(page="ch05-03-method-syntax.html") }}  {{ ex(page="fn/methods.html") }} e.g., within an `impl S {}`. |
@@ -369,7 +369,7 @@ Control execution within a function.
 | `loop {}`  | **Loop infinitely** {{ ref(page="expressions/loop-expr.html#infinite-loops") }} until `break`. Can yield value with `break x`. |
 | `for x in iter {}` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
 | `if x {} else {}`  | **Conditional branch** {{ ref(page="expressions/if-expr.html") }} if expression is true. |
-| `'label: loop {}` | **Loop label** {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}}, useful for flow control in nested loops. |
+| `'label: loop {}` | **Loop label**, {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} useful for flow control in nested loops. |
 | `break`  | **Break expression** {{ ref(page="expressions/loop-expr.html#break-expressions") }} to exit a loop. |
 | {{ tab() }} `break x`  | Same, but make `x` value of the loop expression (only in actual `loop`). |
 | {{ tab() }} `break 'label`  | Exit not only this loop, but the enclosing one marked with `'label`. |
@@ -440,7 +440,7 @@ Short-hand names of types, and methods to convert one type to another.
 | `self`  | Method subject in `fn f(self) {}`, same as `fn f(self: Self) {}`. |
 |  {{ tab() }}  `&self`  | Same, but refers to self as borrowed, same as `f(self: &Self)`|
 |  {{ tab() }}  `&mut self`  | Same, but mutably borrowed, same as `f(self: &mut Self)` |
-|  {{ tab() }}  `self: Box<Self>`  | [Arbitrary self type](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart pointers (`my_box.f_of_self()`). |
+|  {{ tab() }}  `self: Box<Self>`  | [**Arbitrary self type**](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart pointers (`my_box.f_of_self()`). |
 | `S as T`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`, e.g., `<S as T>::f()`. |
 | `S as R`  | In `use` of symbol, import `S` as `R`, e.g., `use a::S as R`. |
 | `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and be a bit surprising. {{ nom(page="casts.html") }} |
@@ -3294,9 +3294,9 @@ If something works that "shouldn't work now that you think about it", it might b
 
 | Name | Description |
 |--------| -----------|
-| **Coercions** {{ nom(page="coercions.html") }} | 'Weaken' types to match signature, e.g., `&mut T` to `&T`.  |
+| **Coercions** {{ nom(page="coercions.html") }} | _Weaken_ types to match signature, e.g., `&mut T` to `&T`.  |
 | **Deref** {{ nom(page="vec-deref.html#deref") }} {{ link(url="https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules") }} | [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
-| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic types.
+| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic items, e.g., `Option`, `drop`, ...
 | **Reborrow** | Since `x: &mut T` can't be copied; move new `&mut *x` instead. |
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
@@ -3561,6 +3561,8 @@ A walk through the jungle of types, traits, and implementations that (might poss
 
 
 ### Type Paraphernalia
+
+Allowing users to _bring their own types_ and avoid code duplication.
 
 <tabs>
 
@@ -6114,6 +6116,7 @@ Rust's standard library combines the above primitive types into useful types wit
             <code>T</code>
         </framed>
     </visual>
+    <description>Note how, like any <code>enum</code>,<br> stack size is max of <code>T</code> or <code>E</code>.</description>
 </datum>
 
 {{ tablesep() }}
@@ -6517,7 +6520,7 @@ PRs for this section are very welcome. Idea is:
     </thead>
     <tbody>
         <tr><td><code>Sync</code><sup>*</sup></td><td><i>Most types</i> ... <code>Mutex&lt;T&gt;</code>, <code>Arc&lt;T&gt;</code><sup>1,2</sup></td><td><code>MutexGuard&lt;T&gt;</code><sup>1</sup>, <code>RwLockReadGuard&lt;T&gt;</code><sup>1</sup></td></tr>
-        <tr><td><code>!Sync</code></td><td><code>Cell&lt;T&gt;</code><sup>2</sup>, <code>RefCell&lt;T&gt;</code><sup>2</sup></td><td><code>Rc&lt;T&gt;</code>, <code>Formatter</code>, <code>&dyn Trait</code></td></tr>
+        <tr><td><code>!Sync</code></td><td><code>Cell&lt;T&gt;</code><sup>2</sup>, <code>RefCell&lt;T&gt;</code><sup>2</sup></td><td><code>Rc&lt;T&gt;</code>, <code>&dyn Trait</code>, <code>*const T</code><sup>3</sup>, <code>*mut T</code><sup>3</sup></td></tr>
     </tbody>
 </table>
 
@@ -6525,7 +6528,8 @@ PRs for this section are very welcome. Idea is:
 
 <sup>*</sup> An instance `t` where **`T: Send`** can be moved to another thread, a **`T: Sync`** means `&t` can be moved to another thread.<br>
 <sup>1</sup> If `T` is `Sync`. <br>
-<sup>2</sup> If `T` is `Send`.
+<sup>2</sup> If `T` is `Send`. <br>
+<sup>3</sup> If you need to send a raw pointer, create newtype `struct Ptr(*const u8)` and `unsafe impl Send for Ptr {}`. Just ensure you _may_ send it.
 
 </footnotes>
 
