@@ -31,7 +31,7 @@ function abort() {
 rm -rf "$FOLDER_PREP"; mkdir "$FOLDER_PREP";
 rm -rf "$FOLDER_DIST"; mkdir "$FOLDER_DIST";
 
-# exit_if_fail zola -c "$TOML_BASE" check
+zola -c "$TOML_BASE" check || abort
 zola -c "$TOML_BASE" build || abort
 npm run posthtml_1 || abort  # This is absolutely terrible but apparently the asset inliner we use
 npm run posthtml_2 || abort  # is unable to handle multiple files with different paths gracefully ...
