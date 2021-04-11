@@ -5790,7 +5790,6 @@ These **sum types** hold a value of one of their sub types:
 ## References & Pointers {#references-pointers-ui}
 
 References give safe access to other memory, raw pointers `unsafe` access.
-For some referents additional `payload` may be present, see below.
 The respective `mut` types are identical.
 
 
@@ -5802,7 +5801,7 @@ The respective `mut` types are identical.
            <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <payload>
-            <code>payload</code><sub>2/4/8</sub>
+            <code>meta</code><sub>2/4/8</sub>
         </payload>
     </visual>
     <memory-entry>
@@ -5823,7 +5822,7 @@ The respective `mut` types are identical.
            <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <payload>
-            <code>payload</code><sub>2/4/8</sub>
+            <code>meta</code><sub>2/4/8</sub>
         </payload>
     </visual>
     <zoom>
@@ -5834,10 +5833,10 @@ The respective `mut` types are identical.
 <br/>
 
 
-### Pointer Payload {#pointer-payload}
+### Pointer Meta {#pointer-meta}
 
-Many reference and pointer types can carry an extra field.
-This **`payload`**, if it exists, is either element- or byte-length of the target, or a pointer to a <i>vtable</i>.
+Many reference and pointer types can carry an extra field, **pointer metadata**. {{ std(page="nightly/std/ptr/trait.Pointee.html#pointer-metadata") }}
+It can be the element- or byte-length of the target, or a pointer to a <i>vtable</i>. Pointers with meta are called **fat**, otherwise **thin**.
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -5853,7 +5852,7 @@ This **`payload`**, if it exists, is either element- or byte-length of the targe
             <framed class="any t"><code>T</code></framed>
         </memory>
     </memory-entry>
-    <description>No payload for <br><i>normal</i>, sized <br>referents.</description>
+    <description>No meta for <br><i>normal</i>, sized <br>referents (thin).</description>
 </datum>
 
 
@@ -5875,7 +5874,7 @@ This **`payload`**, if it exists, is either element- or byte-length of the targe
         </memory>
     </memory-entry>
     <description>If <code>T</code> is a DST <code>struct</code> such as<br> <code>S { x: [u8] }</code>
-    field <code>len</code> is <br>length of dyn. sized content.</description>
+    meta field <code>len</code> is <br>length of dyn. sized content.</description>
 </datum>
 
 
@@ -5927,7 +5926,7 @@ This **`payload`**, if it exists, is either element- or byte-length of the targe
             ...
         </memory>
     </memory-entry>
-    <description><b>String slice reference</b> (i.e., the <br>reference type of string type <code>str</code>),<br> with <code>len</code> being byte length.</description>
+    <description><b>String slice reference</b> (i.e., the <br>reference type of string type <code>str</code>),<br> with meta <code>len</code> being byte length.</description>
 </datum>
 
 <br>
@@ -5960,7 +5959,7 @@ This **`payload`**, if it exists, is either element- or byte-length of the targe
                 <tr class="vtable"><td><code>*Trait::g(&T, ...)</code></td></tr>
             </table>
         </memory>
-        <description>Where <code>*Drop::drop()</code>, <code>*Trait::f()</code>, ... are pointers to their respective <code>impl</code> for <code>T</code>.</description>
+        <description>Meta points to vtable, where <code>*Drop::drop()</code>, <code>*Trait::f()</code>, ... are pointers to their respective <code>impl</code> for <code>T</code>.</description>
     </memory-entry>
 
 </datum>
@@ -6133,7 +6132,7 @@ Rust's standard library combines the above primitive types into useful types wit
            <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <payload>
-            <code>payload</code><sub>2/4/8</sub>
+            <code>meta</code><sub>2/4/8</sub>
         </payload>
     </visual>
     <memory-entry>
@@ -6142,7 +6141,7 @@ Rust's standard library combines the above primitive types into useful types wit
         <framed class="any unsized"><code>T</code></framed>
         </memory>
     </memory-entry>
-    <description>For some <code>T</code> stack proxy may carry <br>payload{{ above (target="#custom-types") }} (e.g., <code>Box<[T]></code>).</description>
+    <description>For some <code>T</code> stack proxy may carry <br>meta{{ above (target="#custom-types") }} (e.g., <code>Box<[T]></code>).</description>
 </datum>
 
 <spacer>
@@ -6313,7 +6312,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
            <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <payload>
-            <code>payload</code><sub>2/4/8</sub>
+            <code>meta</code><sub>2/4/8</sub>
         </payload>
     </visual>
     <div>
@@ -6339,7 +6338,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
            <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <payload>
-            <code>payload</code><sub>2/4/8</sub>
+            <code>meta</code><sub>2/4/8</sub>
         </payload>
     </visual>
     <div style="width: 0px;">
