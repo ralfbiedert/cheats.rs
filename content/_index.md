@@ -200,7 +200,7 @@ fn main() {
 In addition, have a look at the ususal suspects. {{ book(page="") }} {{ ex(page="") }} {{ std(page="std") }}
 
 
-> **Author's Opinion** <sup>💬</sup> &mdash; If you have never seen or used any Rust it might be good to visit one of the links above before continuing; the next chapter might feel a bit terse otherwise.
+> **Opinion** <sup>💬</sup> &mdash; If you have never seen or used any Rust it might be good to visit one of the links above before continuing; the next chapter might feel a bit terse otherwise.
 
 </div></panel></tab>
 
@@ -343,8 +343,8 @@ Define units of code and their abstractions.
 | `async fn f() {}`  | **Async**  {{ ref(page="items/functions.html#async-functions") }} {{ edition(ed="'18") }} function transformation, makes `f` return an `impl` **`Future`**. {{ std(page="std/future/trait.Future.html") }} |
 | {{ tab() }} `async fn f() -> S {}`  | Same, but make `f` return an `impl Future<Output=S>`. |
 | {{ tab() }} `async { x }`  | Used within a function, make `{ x }` an `impl Future<Output=X>`. |
-| `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }}, memory holding address of a callable. |
-| `Fn() -> S`  | **Callable Trait**, {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), implemented by closures, fn's &hellip; |
+| `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} memory holding address of a callable. |
+| `Fn() -> S`  | **Callable Trait** {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), implemented by closures, fn's &hellip; |
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its **captures**. {{ ref(page="types/closure.html#capture-modes") }} |
 | {{ tab() }} <code>&vert;x&vert; {}</code> | Closure with a bound parameter `x`. |
 | {{ tab() }} <code>&vert;x&vert; x + x</code> | Closure without block expression; may only consist of single expression.  |
@@ -458,14 +458,23 @@ Code generation constructs expanded before the actual compilation happens.
 | Example |  Explanation |
 |---------|---------|
 | `m!()` |  **Macro** {{book(page="ch19-06-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation, also `m!{}`, `m![]` (depending on macro). |
+| `#[attr]`  | Outer **attribute**. {{ex(page="attribute.html")}} {{ref(page="attributes.html")}}, annotating the following item. |
+| `#![attr]` | Inner attribute, annotating the _upper_, surrounding item. |
+
+</fixed-2-column>
+
+{{ tablesep() }}
+
+<fixed-2-column class="color-header special_example">
+
+| Inside Macros |  Explanation |
+|---------|---------|
 | `$x:ty`  | Macro capture (here a type). |
 | `$x` |  Macro substitution, e.g., use the captured `$x:ty` from above. |
 | `$(x),*` | Macro repetition "zero or more times" in macros by example. |
 | {{ tab() }} `$(x),?` | Same, but "zero or one time". |
 | {{ tab() }} `$(x),+` | Same, but "one or more times". |
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
-| `#[attr]`  | Outer **attribute**. {{ex(page="attribute.html")}} {{ref(page="attributes.html")}}, annotating the following item. |
-| `#![attr]` | Inner attribute, annotating the _upper_, surrounding item. |
 
 <footnotes>
 
@@ -525,15 +534,16 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 |  `D => {}` | Match enum variant `E::D` if `D` in `use`. |
 |  `D => {}` | Match anything, bind `D`; possibly false friend {{ bad() }} of `E::D` if `D` not in `use`. |
 |  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
+| <code>0 &vert; 1 => {}</code> | Pattern alternatives, **or-patterns**. {{ rfc( page ="2535-or-patterns.html") }}|
+| {{ tab() }}  <code>E::A &vert; E::Z </code> | Same, but on enum variants. |
+| {{ tab() }}  <code>E::C {x} &vert; E::D {x}</code> | Same, but bind `x` if all variants have it. |
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
 |  `[a, 0] => {}` | **Slice pattern**, {{ ref(page="patterns.html#slice-patterns") }} {{ link(url="https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html") }} match array with any value for `a` and `0` for second. |
 |  {{ tab() }} `[1, ..] => {}` | Match array starting with `1`, any value for rest; **subslice pattern**.  {{ todo() }} |
 |  {{ tab() }} `[1, .., 5] => {}` | Match array starting with `1`, ending with `5`. |
 |  {{ tab() }} `[1, x @ .., 5] => {}` | Same, but also bind `x` to slice representing middle (_c._ next entry).  |
 | `x @ 1..=5 => {}` | Bind matched to `x`; **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} here `x` would be `1`, `2`, &hellip; or `5`.  |
-| <code>0 &vert; 1 => {}</code> | Pattern alternatives (or-patterns).|
-| {{ tab() }}  <code>E::A &vert; E::Z </code> | Same, but on enum variants. |
-| {{ tab() }}  <code>E::C {x} &vert; E::D {x}</code> | Same, but bind `x` if all variants have it. |
+| {{ tab() }} `Err(x @ Error {..}) => {}` | Also works nested, here `x` binds to `Error`, esp. useful with `if` below. |
 | `S { x } if x > 10 => {}`  | Pattern **match guards**, {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} {{ ref(page="expressions/match-expr.html#match-guards") }} condition must be true as well to match. |
 
 </fixed-2-column>
@@ -577,9 +587,9 @@ Generics combine with type constructors, traits and functions to give your users
 | {{ tab() }} `type X = R;`  | Set associated type within `impl T for S { type X = R; }`. |
 | `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`.  |
 | `impl S<T> {}`  | Implement functionality for exactly `S<T>` (e.g., `S<u32>`).  |
-| `fn f() -> impl T`  | **Existential types** {{ book(page="ch10-02-traits.html#returning-types-that-implement-traits") }}, returns an unknown-to-caller `S` that `impl T`. |
-| `fn f(x: &impl T)`  | Trait bound,"**impl traits**" {{ book(page="ch10-02-traits.html#trait-bound-syntax") }}, somewhat similar to `fn f<S:T>(x: &S)`. |
-| `fn f(x: &dyn T)`  | Marker for **dynamic dispatch** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }}, `f` will not be monomorphized. |
+| `fn f() -> impl T`  | **Existential types**, {{ book(page="ch10-02-traits.html#returning-types-that-implement-traits") }} returns an unknown-to-caller `S` that `impl T`. |
+| `fn f(x: &impl T)`  | Trait bound,"**impl traits**", {{ book(page="ch10-02-traits.html#trait-bound-syntax") }} somewhat similar to `fn f<S:T>(x: &S)`. |
+| `fn f(x: &dyn T)`  | Marker for **dynamic dispatch**, {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }} `f` will not be monomorphized. |
 | `fn f() where Self: R;`  | In `trait T {}`, make `f` accessible only on types known to also `impl R`.  |
 | {{ tab() }} `fn f() where Self: R {}  `  | Esp. useful w. default methods (non dflt. would need be impl'ed anyway). |
 | `for<'a>` | **Higher-ranked trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
@@ -722,7 +732,7 @@ The abstract machine
 
 <div class="color-header abstract-machine">
 
-| Without AM<sup>*</sup>  | With AM<sup>*</sup> |
+| Without AM<sup>*</sup>  | With AM |
 |---------|-------------|
 | `0xffff_ffff` would make a valid `char`. {{ bad() }} | Memory more than just bits.  |
 | `0xff` and `0xff` are same pointer. {{ bad() }} | Pointers can come from different _domains_.  |
@@ -733,7 +743,7 @@ The abstract machine
 
 <footnotes>
 
-<sup>*</sup> Items on the left are examples of actual assumptions people have wrongly held when reasoning about Rust. Items on the right are their _more correct_ counterparts (although the exact specification of some of these concepts in the language might still be pending).
+<sup>*</sup> Things people may incorrectly assume they _should get away with_ if Rust targeted CPU directly, and _more correct_ counterparts.
 
 </footnotes>
 
@@ -3307,7 +3317,7 @@ If something works that "shouldn't work now that you think about it", it might b
 
 {{ tablesep() }}
 
-> **Author's Opinion** <sup>💬</sup> &mdash; The features above will make your life easier, but might hinder your understanding. If any (type-related) operation ever feels _inconsistent_ it might be worth revisiting this list.
+> **Opinion** <sup>💬</sup> &mdash; The features above will make your life easier, but might hinder your understanding. If any (type-related) operation ever feels _inconsistent_ it might be worth revisiting this list.
 
 
 </magic>
@@ -3599,7 +3609,6 @@ Allowing users to _bring their own types_ and avoid code duplication.
 | `u8`  |  <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code> |
 | `char`  | `{ 'a', 'b', ... '🦀' }` |
 | `struct S(u8, char)`  | <code>{ (0<sub>u8</sub>, 'a'), ... (255<sub>u8</sub>, '🦀') }</code> |
-| `enum E { A(u8), B(char) }`  | `{ 'a', 'b', ... '🦀' }` |
 
 <subtitle>Sample types and sample values.</subtitle>
 
@@ -5852,7 +5861,7 @@ It can be the element- or byte-length of the target, or a pointer to a <i>vtable
             <framed class="any t"><code>T</code></framed>
         </memory>
     </memory-entry>
-    <description>No meta for <br><i>normal</i>, sized <br>referents (thin).</description>
+    <description>No meta for <br>sized target.<br>(pointer is thin).</description>
 </datum>
 
 
@@ -6080,6 +6089,23 @@ Rust's standard library combines the above primitive types into useful types wit
 </datum>
 
 
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>Result&lt;T, E&gt;</code></name>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 50px;">
+            <code>E</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 100px;">
+            <code>T</code>
+        </framed>
+    </visual>
+</datum>
 
 
 <!-- NEW ENTRY -->
@@ -6099,24 +6125,6 @@ Rust's standard library combines the above primitive types into useful types wit
 </datum>
 
 
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>Result&lt;T, E&gt;</code></name>
-    <visual class="enum" style="text-align: left;">
-        <pad><code>Tag</code></pad>
-        <framed class="any" style="width: 50px;">
-            <code>E</code>
-        </framed>
-    </visual>
-    <andor>or</andor>
-    <visual class="enum" style="text-align: left;">
-        <pad><code>Tag</code></pad>
-        <framed class="any" style="width: 100px;">
-            <code>T</code>
-        </framed>
-    </visual>
-    <description>Note how, like any <code>enum</code>,<br> stack size is max of <code>T</code> or <code>E</code>.</description>
-</datum>
 
 {{ tablesep() }}
 
@@ -6471,7 +6479,7 @@ PRs for this section are very welcome. Idea is:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-api-3" name="tab-api-sized">
-<label for="tab-api-3"><b>Esoterics</b></label>
+<label for="tab-api-3"><b>Esoterics</b><sup style="font-size:90%;">⛤</sup></label>
 <panel><div class="color-header one-liners cheats">
 
 | Intent | Snippet |
@@ -7243,7 +7251,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 | Full Example | Explanation |
 |---------|-------------|
 | `println!("{}", x)` | Print `x` using `Display`{{ std(page="std/fmt/trait.Display.html") }} on std. out and append new line. |
-| `format!("{a:.3} {b:?}", a = PI, b = 2)` | Convert `PI` with 3 digits, add space, b with `Debug`{{ std(page="std/fmt/trait.Debug.html") }}, return `String`. |
+| `format!("{a:.3} {b:?}", a = PI, b = 2)` | Convert `PI` with 3 digits, add space, b with `Debug` {{ std(page="std/fmt/trait.Debug.html") }}, return `String`. |
 
 </div>
 
@@ -7281,7 +7289,7 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | 📁 `tests/` | Integration tests go here, invoked via **`cargo test`**. Unit tests often stay in `src/` file. |
 | `.rustfmt.toml` | In case you want to [**customize**](https://rust-lang.github.io/rustfmt/) how **`cargo fmt`** works. |
 | `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`** |
-| `build.rs` |  **Pre-build script** {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }}, e.g., when compiling C / FFI. |
+| `build.rs` |  **Pre-build script**, {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }} useful when compiling C / FFI, ... |
 | <code class="ignore-auto language-bash">Cargo.toml</code> | Main **project manifest**, {{ link(url="https://doc.rust-lang.org/cargo/reference/manifest.html") }} Defines dependencies, artifacts ... |
 | <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
 </div>
@@ -7510,9 +7518,11 @@ Module trees and imports:
 
 - **Module tree** needs to be explicitly defined, is **not** implicitly built from **file system tree**. {{ link(url="http://www.sheshbabu.com/posts/rust-module-system/") }}
 - **Module tree root** equals library, app, &hellip; entry point (e.g., `lib.rs`).
-- A `mod m {}` defines module in-file, while `mod m;` will read `m.rs` or `m/mod.rs`.
-    - Path of `.rs` based on nesting, e.g., `mod a { mod b { mod c; }}}` is either `a/b/c.rs` or `a/b/c/mod.rs`.
-    - Files not pathed from module tree root via some `mod m;` won't be touched by compiler! {{ bad() }}
+
+Actual **module definitions** work as follows:
+- A **`mod m {}`** defines module in-file, while **`mod m;`** will read `m.rs` or `m/mod.rs`.
+- Path of `.rs` based on **nesting**, e.g., `mod a { mod b { mod c; }}}` is either `a/b/c.rs` or `a/b/c/mod.rs`.
+- Files not pathed from module tree root via some `mod m;` won't be touched by compiler! {{ bad() }}
 
 <!-- - **Visibility** of items (e.g., functions, fields) between modules governed by: "Is there visible path to item?"
     - Visibility like `pub fn f() {}` does not mean "`f` is public", but "`f` at most public if all parents public`. -->
@@ -7525,7 +7535,7 @@ Module trees and imports:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-module-import-2" name="tab-group-module-import">
-<label for="tab-module-import-2"><b>Namespaces</b></label>
+<label for="tab-module-import-2"><b>Namespaces</b><sup style="font-size:90%;">⛤</sup></label>
 <panel><div>
 
 
@@ -8340,10 +8350,10 @@ With the execution flow in mind, some considerations when writing code inside an
 
 <footnotes>
 
-{{ note(note="1") }} Here we assume `s` is any non-local that could temporarily be put into an invalid state;
+<sup>1</sup> Here we assume `s` is any non-local that could temporarily be put into an invalid state;
 `TL` is any thread local storage, and that the `async {}` containing the code is written
 without assuming executor specifics. <br/>
-{{ note(note="2") }} Since [Drop](https://doc.rust-lang.org/std/ops/trait.Drop.html) is run in any case when `Future` is dropped, consider using drop guard that cleans up / fixes application state if it has to be left in bad condition across `.await` points.
+<sup>2</sup> Since [Drop](https://doc.rust-lang.org/std/ops/trait.Drop.html) is run in any case when `Future` is dropped, consider using drop guard that cleans up / fixes application state if it has to be left in bad condition across `.await` points.
 
 </footnotes>
 

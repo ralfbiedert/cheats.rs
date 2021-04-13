@@ -31,6 +31,7 @@ tabs {
             box-sizing: border-box;
             display: block;
             padding: 20px 20px 20px 20px;
+            border-radius: 0px 5px 5px 5px;
             float: left;
             font-size: 10pt;
             margin-top: -1px;
@@ -45,7 +46,8 @@ tabs {
             padding: 10px;
             position: relative;
             vertical-align: bottom;
-            cursor: pointer;;
+            cursor: pointer;
+            border-radius: 8px 3px 0px 0px;
 
             // In some places we don't want our Rust-like color scheme b/c we have conflicting
             // background colors.
