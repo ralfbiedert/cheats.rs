@@ -63,6 +63,8 @@ https://prismjs.com/download.html#themes=prism-dark&languages=markup+css+clike+j
 	blockquote code[class*="language-"],
 	pre[class*="language-"] {
 		background: #313131;
+		border-radius: 2px;
+		border: #414141 solid 1px;
 	}
 
 	/* Inline code */

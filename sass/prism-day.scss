@@ -65,6 +65,8 @@ https://prismjs.com/download.html#themes=prism&languages=rust */
 	blockquote code[class*="language-"],
 	pre[class*="language-"] {
 		background: #fafafa;
+		border-radius: 2px;
+		border: #f1f1f1 solid 1px;
 	}
 
 	/* Inline code */

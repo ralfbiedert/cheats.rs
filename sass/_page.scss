@@ -49,6 +49,7 @@ $largescreen-width: 1050px;
             margin: 0;
             margin-bottom: .85em;
             padding: 10px 10px 1px 10px;
+	    	border-radius: 3px;
         }
         code {
             display: inline-block;
@@ -101,6 +102,7 @@ $largescreen-width: 1050px;
 
         blockquote {
             background-color: #e1f3ff; // border-left: 4px solid #e5e5e5;
+            border: #d1e3ef solid 1px;
         }
 
         table {
@@ -121,6 +123,7 @@ $largescreen-width: 1050px;
 
         blockquote {
             background-color: #00243b; // border-left: 4px solid #e5e5e5;
+            border: #00344b solid 1px;
         }
 
         table {
