@@ -6479,7 +6479,7 @@ PRs for this section are very welcome. Idea is:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-api-3" name="tab-api-sized">
-<label for="tab-api-3"><b>Esoterics</b><sup style="font-size:90%;">⛤</sup></label>
+<label for="tab-api-3"><b>Esoterics</b></label>
 <panel><div class="color-header one-liners cheats">
 
 | Intent | Snippet |
@@ -7535,7 +7535,7 @@ Actual **module definitions** work as follows:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-module-import-2" name="tab-group-module-import">
-<label for="tab-module-import-2"><b>Namespaces</b><sup style="font-size:90%;">⛤</sup></label>
+<label for="tab-module-import-2"><b>Namespaces</b></label>
 <panel><div>
 
 
