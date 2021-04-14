@@ -262,24 +262,28 @@ footnotes {
 .color-header.red  {
     th {
         background-color: rgb(235, 156, 162);
+        border-color: rgb(200, 126, 140);
     }
 }
 
 .color-header.blue {
     th {
         background-color: rgb(128, 186, 209);
+        border-color: rgb(98, 146, 180);
     }
 }
 
 .color-header.green {
     th {
         background-color: rgb(164, 206, 164);
+        border-color: rgb(140, 180, 130);
     }
 }
 
 .color-header.orange {
     th {
         background-color: rgb(241, 206, 159);
+        border-color: rgb(220, 180, 120);
     }
 }
 
@@ -298,6 +302,7 @@ footnotes {
 .color-header.undefined-color-3 {
     th {
         background-color: rgb(157, 231, 203);
+        border-color: rgb(120, 210, 180);
     }
 }
 
@@ -310,12 +315,14 @@ footnotes {
 .color-header.lavender {
     th {
         background-color: rgb(175, 161, 212);
+        border-color: rgb(144, 140, 190);
     }
 }
 
 .color-header.tooling {
     th {
         background-color: rgb(161, 212, 197);
+        border-color: rgb(134, 202, 151);
     }
 }
 
@@ -328,18 +335,21 @@ footnotes {
 .color-header.one-liners {
     th {
         background-color: rgb(194, 212, 131);
+        border-color: rgb(174, 202, 111);
     }
 }
 
 .color-header.sized {
     th {
         background-color: rgb(171, 204, 223);
+        border-color: rgb(151, 197, 200);
     }
 }
 
 .color-header.abstract-machine {
     th {
         background-color: rgb(171, 214, 203);
+        border-color: rgb(151, 200, 180);
     }
 }
 
@@ -356,6 +366,7 @@ footnotes {
 .color-header.language-sugar {
     th {
         background-color: rgb(240, 140, 116);
+        border-color: rgb(220, 120, 100);
     }
 }
 
@@ -363,6 +374,7 @@ footnotes {
 .color-header.api-stability {
     th {
         background-color: rgb(221, 213, 179);
+        border-color: rgb(200, 190, 150);
     }
 }
 
@@ -370,6 +382,7 @@ footnotes {
 .color-header.special_example {
     th {
         background-color: rgb(241, 233, 224);
+        border-color: rgb(221, 213, 204);
     }
 }
 
@@ -382,6 +395,7 @@ footnotes {
 .stringconversion {
     th {
         background-color: rgb(175, 161, 212);
+        border-color: rgb(150, 143, 200);
     }
 
     th:nth-child(1) {
@@ -406,6 +420,7 @@ footnotes {
 table.sendsync {
     th {
         background-color: rgb(212, 247, 244);
+        border-bottom: rgb(200, 220, 220) 1px solid !important;
 
         // In some places we don't want our Rust-like color scheme b/c we have conflicting
         // background colors.
