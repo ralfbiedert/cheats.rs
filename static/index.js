@@ -130,6 +130,26 @@ function toggle_ligatures() {
     });
 }
 
+// Opens or closes the blue box on top of the page.
+function toggle_legend() {
+    let short = document.querySelectorAll("symbol-legend.short")[0];
+    let long = document.querySelectorAll("symbol-legend.long")[0];
+    let href = document.querySelectorAll("blockquote.legend div a")[0]
+
+    console.log(href);
+
+    if (short.style.display == "" || short.style.display == "block") {
+        short.style.display = "none";
+        long.style.display = "block";
+        href.text = "➖";
+    } else {
+        short.style.display = "block";
+        long.style.display = "none";
+        href.text = "➕";
+    }
+}
+
+
 // Called by toggle button, setting in localStorage.
 function toggle_expand_all() {
     let toggle_button = document.getElementById("expand_everything");

@@ -11,17 +11,79 @@ insert_anchor_links = "right"
 <subtitle><span id="subtitle" onclick="advance_subtitle()">{{ date() }}</span></subtitle>
 
 
-> Contains clickable links to
-> **The Book** {{ book(page="") }},
-> **Rust by Example** {{ ex(page="") }},
-> **Std Docs** {{ std(page="std") }},
-> **Nomicon** {{ nom(page="") }},
-> **Reference** {{ ref(page="") }}.
-> Other symbols used:
-> largely **deprecated** {{ deprecated() }},
-> has a **minimum edition** {{ edition(ed="'18") }},
-> is **work in progress** {{ experimental() }},
-> or **bad** {{ bad() }}.
+<blockquote class="legend">
+
+<symbol-legend class="short">
+
+Contains clickable links to
+**The Book** {{ book(page="") }},
+**Rust by Example** {{ ex(page="") }},
+**Std Docs** {{ std(page="std") }},
+**Nomicon** {{ nom(page="") }},
+**Reference** {{ ref(page="") }}.
+
+</symbol-legend>
+
+<symbol-legend class="long">
+
+<twocolumn>
+<column>
+
+**Clickable symbols** <br>
+<br> <legend-symbol> {{ book(page="") }} </legend-symbol> **The Book**
+<br> <legend-symbol> {{ ex(page="") }} </legend-symbol> **Rust by Example**
+<br> <legend-symbol> {{ std(page="std") }} </legend-symbol>  **Std Docs**
+<br> <legend-symbol> {{ nom(page="") }} </legend-symbol> **Nomicon**
+<br> <legend-symbol> {{ ref(page="") }} </legend-symbol> **Reference**
+<br> <legend-symbol> {{ rfc(page="") }} </legend-symbol> Official **RFC** documents
+<br> <legend-symbol> {{ link(url="https://cheats.rs") }} </legend-symbol> The **internet**
+<br> <legend-symbol> {{ above(target="#") }} </legend-symbol> On this page, **above**
+<br> <legend-symbol> {{ below(target="#") }} </legend-symbol> On this page, **below**
+
+
+<!-- - **Rust by Example** {{ ex(page="") }}
+- **Std Docs** {{ std(page="std") }}
+- **Nomicon** {{ nom(page="") }}
+- **Reference** {{ ref(page="") }}
+- Official **RFC** Documents {{ rfc(page="") }}
+- The **internet** {{ link(url="https://cheats.rs") }}
+- On this page, **above** {{ above(target="#") }}
+- On this page, **below** {{ below(target="#") }} -->
+
+</column>
+<column>
+
+<!-- **Other**
+- Largely **deprecated** {{ deprecated() }}
+- Has **minimum edition** requirement {{ edition(ed="'18") }}
+- Requires **Rust nightly** (or is incomplete) {{ experimental() }}
+- Intentionally **wrong example** or **pitfall** {{ bad() }}
+- Slightly **esoteric**, rarely used or advanced. {{ esoteric() }}
+- Something with **outstanding utility** {{ hot() }}
+- Is **missing good link** or explanation {{ todo() }}
+- **Opinionated** {{ opinionated() }} -->
+
+**Other symbols** <br>
+<br> <legend-symbol> {{ deprecated() }}   </legend-symbol>Largely **deprecated**
+<br> <legend-symbol> {{ edition(ed="'18") }} </legend-symbol>Has **minimum edition** requirement
+<br> <legend-symbol> {{ experimental() }} </legend-symbol>Requires **Rust nightly** (or is incomplete)
+<br> <legend-symbol> {{ bad() }}   </legend-symbol>Intentionally **wrong example** or **pitfall**
+<br> <legend-symbol> {{ esoteric() }}   </legend-symbol>Slightly **esoteric**, rarely used or advanced
+<br> <legend-symbol> {{ hot() }}   </legend-symbol>Something with **outstanding utility**
+<br> <legend-symbol> {{ todo() }} </legend-symbol> Is **missing good link** or explanation
+<br> <legend-symbol> {{ opinionated() }} </legend-symbol> **Opinionated**
+
+</column>
+</twocolumn>
+</symbol-legend>
+
+<div style="text-align: right; height: 1px;">
+    <span style="font-size: 10px; position: relative; top: -20px; opacity: 0.5;">
+        <a href="javascript:toggle_legend();" style="">➕</a>
+    </span>
+</div>
+
+</blockquote>
 
 
 <noprint>
@@ -200,7 +262,7 @@ fn main() {
 In addition, have a look at the ususal suspects. {{ book(page="") }} {{ ex(page="") }} {{ std(page="std") }}
 
 
-> **Opinion** <sup>💬</sup> &mdash; If you have never seen or used any Rust it might be good to visit one of the links above before continuing; the next chapter might feel a bit terse otherwise.
+> **Opinion** {{ opinionated() }} &mdash; If you have never seen or used any Rust it might be good to visit one of the links above before continuing; the next chapter might feel a bit terse otherwise.
 
 </div></panel></tab>
 
@@ -223,7 +285,7 @@ Data types and memory locations defined via keywords.
 | `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
 | {{ tab() }}  `enum E { A, B`&#8203;`(), C {} }` | Define variants of enum; can be unit- `A`, tuple- `B` &#8203;`()` and struct-like `C{}`. |
 | {{ tab() }}  `enum E { A = 1 }` | If variants are only unit-like, allow discriminant values, e.g., for FFI. |
-| `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. |
+| `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. {{ esoteric() }} |
 | `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
 | `const X: T = T();`  | Defines **constant** {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Copied into a temporary when used. |
 | `let x: T;`  | Allocate `T` bytes on stack{{ note( note="1") }} bound as `x`. Assignable once, not mutable.  |
@@ -300,8 +362,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }} w/o memory safety. |
 | {{ tab() }} `*mut S` | Mutable raw pointer type w/o memory safety. |
-| {{ tab() }} `&raw const s` | Create raw pointer w/o going through reference; _c_. `ptr:addr_of!()` {{ std(page="std/ptr/macro.addr_of.html") }} {{ experimental() }}  |
-| {{ tab() }} `&raw mut s` | Same, but mutable. {{ experimental() }} Raw ptrs. are needed for unaligned, packed fields.  |
+| {{ tab() }} `&raw const s` | Create raw pointer w/o going through reference; _c_. `ptr:addr_of!()` {{ std(page="std/ptr/macro.addr_of.html") }} {{ experimental() }} {{ esoteric() }}  |
+| {{ tab() }} `&raw mut s` | Same, but mutable. {{ experimental() }} Raw ptrs. are needed for unaligned, packed fields. {{ esoteric() }} |
 | `ref s` | **Bind by reference**. {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
 | {{ tab() }} `let ref r = s;` | Equivalent to `let r = &s`. |
 | {{ tab() }} `let S { ref mut x } = s;` | Mutable ref binding (`let x = &mut s.x`), shorthand destructuring {{ below( target = "#pattern-matching") }} version. |
@@ -503,7 +565,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 |  {{ tab() }} `let (.., a, b) = (1, 2);` | Specific bindings take precedence over 'the rest', here `a` is `1`, `b` is `2`. |
 |  {{ tab() }} `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
 | `if let Some(x) = get() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
-| `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`.|
+| `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`. {{ esoteric() }} |
 
 </fixed-2-column>
 
@@ -592,7 +654,7 @@ Generics combine with type constructors, traits and functions to give your users
 | `fn f(x: &dyn T)`  | Marker for **dynamic dispatch**, {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }} `f` will not be monomorphized. |
 | `fn f() where Self: R;`  | In `trait T {}`, make `f` accessible only on types known to also `impl R`.  |
 | {{ tab() }} `fn f() where Self: R {}  `  | Esp. useful w. default methods (non dflt. would need be impl'ed anyway). |
-| `for<'a>` | **Higher-ranked trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} |
+| `for<'a>` | **Higher-ranked trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} {{ esoteric() }} |
 | {{ tab() }} `trait T: for<'a> R<'a> {}` | Any `S` that `impl T` would also have to fulfill `R` for any lifetime. |
 
 </fixed-2-column>
@@ -3317,7 +3379,7 @@ If something works that "shouldn't work now that you think about it", it might b
 
 {{ tablesep() }}
 
-> **Opinion** <sup>💬</sup> &mdash; The features above will make your life easier, but might hinder your understanding. If any (type-related) operation ever feels _inconsistent_ it might be worth revisiting this list.
+> **Opinion** {{ opinionated() }} &mdash; The features above will make your life easier, but might hinder your understanding. If any (type-related) operation ever feels _inconsistent_ it might be worth revisiting this list.
 
 
 </magic>
@@ -4448,7 +4510,7 @@ They can be neat way to give foreign types functionality in a modular way if the
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-types-3" name="tab-group-types">
-<label for="tab-types-3"><b>Advanced Concepts</b></label>
+<label for="tab-types-3"><b>Advanced Concepts</b>{{ esoteric() }}</label>
 <panel><div>
 
 
@@ -5418,7 +5480,7 @@ Essential types built into the core of the language.
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-numeric-2" name="tab-group-numeric">
-<label for="tab-numeric-2"><b>Float Types</b></label>
+<label for="tab-numeric-2"><b>Float Types</b>{{ esoteric() }}</label>
 <panel><div>
 
 
@@ -5600,7 +5662,7 @@ Similarly, for <code>f64</code> types this would look like:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-textual-2" name="tab-group-textual">
-<label for="tab-textual-2"><b>Encoding</b></label>
+<label for="tab-textual-2"><b>Encoding</b>{{ esoteric() }}</label>
 <panel><div>
 
 
@@ -6479,7 +6541,7 @@ PRs for this section are very welcome. Idea is:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-api-3" name="tab-api-sized">
-<label for="tab-api-3"><b>Esoterics</b> {{ esoteric() }}</label>
+<label for="tab-api-3"><b>Esoterics</b>{{ esoteric() }}</label>
 <panel><div class="color-header one-liners cheats">
 
 | Intent | Snippet |
@@ -7279,7 +7341,7 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 
 | Entry | Code |
 |--------| ---- |
-| 📁 `.cargo/` | **Project-local cargo configuration**, may contain **`config.toml`**. {{ link( url="https://doc.rust-lang.org/cargo/reference/config.html") }} |
+| 📁 `.cargo/` | **Project-local cargo configuration**, may contain **`config.toml`**. {{ link( url="https://doc.rust-lang.org/cargo/reference/config.html") }} {{ esoteric() }} |
 | 📁 `benches/` | Benchmarks for your crate, run via **`cargo bench`**, requires nightly by default. <sup>*</sup> {{ experimental() }} |
 | 📁 `examples/` | Examples how to use your crate, they see your crate like external user would.  |
 | {{ tab() }} `my_example.rs` | Individual examples are run like **`cargo run --example my_example`**. |
@@ -7288,7 +7350,7 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f()` starts. |
 | 📁 `tests/` | Integration tests go here, invoked via **`cargo test`**. Unit tests often stay in `src/` file. |
 | `.rustfmt.toml` | In case you want to [**customize**](https://rust-lang.github.io/rustfmt/) how **`cargo fmt`** works. |
-| `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`** |
+| `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`**  {{ esoteric() }} |
 | `build.rs` |  **Pre-build script**, {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }} useful when compiling C / FFI, ... |
 | <code class="ignore-auto language-bash">Cargo.toml</code> | Main **project manifest**, {{ link(url="https://doc.rust-lang.org/cargo/reference/manifest.html") }} Defines dependencies, artifacts ... |
 | <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
@@ -7351,44 +7413,6 @@ mod m {
 </div></div></div></panel></tab>
 
 
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-anatomy-25" name="tab-group-anatomy" >
-<label for="tab-anatomy-25"><b>Proc Macros</b></label>
-<panel><div>
-
-
-<!-- Create a horizontal scrollable area on small displays to preserve layout-->
-<div style="overflow:auto;">
-<div style="min-width: 100%; width: 650px;">
-
-```
-// src/lib.rs (default entry point for proc macros)
-
-extern crate proc_macro;  // Apparently needed to be imported like this.
-
-use proc_macro::TokenStream;
-
-#[proc_macro_attribute]   // Can now be used as `#[my_attribute]`
-pub fn my_attribute(_attr: TokenStream, item: TokenStream) -> TokenStream {
-    item
-}
-```
-
-
-```
-// Cargo.toml
-
-[package]
-name = "my_crate"
-version = "0.1.0"
-
-[lib]
-proc-macro = true
-```
-
-
-</div></div></div></panel></tab>
 
 
 
@@ -7492,6 +7516,47 @@ fn main() {
 
 </div></div></div></panel></tab>
 
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-anatomy-25" name="tab-group-anatomy" >
+<label for="tab-anatomy-25"><b>Proc Macros</b>{{ esoteric() }}</label>
+<panel><div>
+
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```
+// src/lib.rs (default entry point for proc macros)
+
+extern crate proc_macro;  // Apparently needed to be imported like this.
+
+use proc_macro::TokenStream;
+
+#[proc_macro_attribute]   // Can now be used as `#[my_attribute]`
+pub fn my_attribute(_attr: TokenStream, item: TokenStream) -> TokenStream {
+    item
+}
+```
+
+
+```
+// Cargo.toml
+
+[package]
+name = "my_crate"
+version = "0.1.0"
+
+[lib]
+proc-macro = true
+```
+
+
+</div></div></div></panel></tab>
+
+
 </tabs>
 
 
@@ -7535,7 +7600,7 @@ Actual **module definitions** work as follows:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-module-import-2" name="tab-group-module-import">
-<label for="tab-module-import-2"><b>Namespaces</b></label>
+<label for="tab-module-import-2"><b>Namespaces</b>{{ esoteric() }}</label>
 <panel><div>
 
 
@@ -8531,7 +8596,7 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 {{ tablesep() }}
 
 >
-> **Responsible use of Unsafe**
+> **Responsible use of Unsafe** {{ opinionated() }}
 >
 > - Do not use `unsafe` unless you absolutely have to.
 > - Follow the [Nomicon](https://doc.rust-lang.org/nightly/nomicon/), [Unsafe Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/), **always** uphold **all** safety invariants, and **never** invoke [UB](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html).

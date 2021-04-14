@@ -44,10 +44,10 @@ subtitle {
 page-controls {
     display: block;
     font-size: 9px;
-    text-align: right;
+    // text-align: right;
 
     a {
-        margin-left: 15px;
+        margin-right: 15px;
     }
 }
 
@@ -58,6 +58,23 @@ flip {
 }
 
 
+symbol-legend {
+    display: block;
+}
+
+symbol-legend.long {
+    display: none;
+}
+
+symbol-legend.short {
+    // display: none;
+}
+
+legend-symbol {
+    display: inline-block;
+    width: 50px;
+}
+
 // The big table of content
 toc {
     display: flex;
@@ -65,6 +82,18 @@ toc {
     display: block;
 
     // Each column
+    column {
+        vertical-align: top;
+        width: 49%;
+        // flex: 50%;
+        display: inline-block;
+    }
+}
+
+twocolumn {
+    display: flex;
+    display: block;
+
     column {
         vertical-align: top;
         width: 49%;
