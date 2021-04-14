@@ -6479,7 +6479,7 @@ PRs for this section are very welcome. Idea is:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-api-3" name="tab-api-sized">
-<label for="tab-api-3"><b>Esoterics</b></label>
+<label for="tab-api-3"><b>Esoterics</b> {{ esoteric() }}</label>
 <panel><div class="color-header one-liners cheats">
 
 | Intent | Snippet |
