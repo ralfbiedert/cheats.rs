@@ -136,8 +136,6 @@ function toggle_legend() {
     let long = document.querySelectorAll("symbol-legend.long")[0];
     let href = document.querySelectorAll("blockquote.legend div a")[0]
 
-    console.log(href);
-
     if (short.style.display == "" || short.style.display == "block") {
         short.style.display = "none";
         long.style.display = "block";
