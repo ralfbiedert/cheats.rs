@@ -202,7 +202,7 @@ fn main() {
 - compiled code [about same performance](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html) as C / C++, and excellent [memory and energy efficiency](https://dl.acm.org/doi/10.1145/3136014.3136031).
 - can [avoid 70% of all safety issues](https://www.chromium.org/Home/chromium-security/memory-safety) present in C / C++, and most memory issues.
 - strong type system prevents [data races](https://doc.rust-lang.org/nomicon/races.html), brings ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others).
-- seamless C interop, and [dozens of supported platforms](https://forge.rust-lang.org/release/platform-support.html) (based on LLVM).
+- seamless C interop, and [dozens of supported platforms](https://doc.rust-lang.org/rustc/platform-support.html) (based on LLVM).
 - ["most loved language"](https://insights.stackoverflow.com/survey/2020#technology-most-loved-dreaded-and-wanted-languages) for 5 years in a row.
 - modern tooling: `cargo` (builds _just work_), `clippy` (300+ code quality lints), `rustup` (easy toolchain mgmt).
 
@@ -7745,7 +7745,7 @@ A large number of additional cargo plugins [**can be found here**](https://crate
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
 
-🔘 Check [target is supported](https://forge.rust-lang.org/release/platform-support.html).
+🔘 Check [target is supported](https://doc.rust-lang.org/rustc/platform-support.html).
 
 🔘 Install target via **`rustup target install X`**.
 
@@ -8828,7 +8828,7 @@ Comprehensive lookup tables for common components.
 |--------| -----------|
 | [Rust Changelog](https://github.com/rust-lang/rust/blob/master/RELEASES.md) | See all the things that changed in a particular version. |
 | [Rust Forge](https://forge.rust-lang.org/) | Lists release train and links for people working on the compiler. |
-| {{ tab() }} [Rust Platform Support](https://forge.rust-lang.org/release/platform-support.html) | All supported platforms and their Tier. |
+| {{ tab() }} [Rust Platform Support](https://doc.rust-lang.org/rustc/platform-support.html) | All supported platforms and their Tier. |
 | {{ tab() }} [Rust Component History](https://rust-lang.github.io/rustup-components-history/) | Check **nightly** status of various Rust tools for a platform. |
 | [ALL the Clippy Lints](https://rust-lang.github.io/rust-clippy/master/) | All the [**clippy**](https://github.com/rust-lang/rust-clippy) lints you might be interested in. |
 | [Configuring Rustfmt](https://rust-lang.github.io/rustfmt/) | All [**rustfmt**](https://github.com/rust-lang/rustfmt) options you can use in `.rustfmt.toml`. |
