@@ -199,12 +199,12 @@ fn main() {
 
 **Things Rust does measurably really well**
 
-- compiled code [about same performance](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html) as C / C++, and excellent [memory and energy efficiency](https://dl.acm.org/doi/10.1145/3136014.3136031).
-- can [avoid 70% of all safety issues](https://www.chromium.org/Home/chromium-security/memory-safety) present in C / C++, and most memory issues.
-- strong type system prevents [data races](https://doc.rust-lang.org/nomicon/races.html), brings ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others).
-- seamless C interop, and [dozens of supported platforms](https://doc.rust-lang.org/rustc/platform-support.html) (based on LLVM).
-- ["most loved language"](https://insights.stackoverflow.com/survey/2020#technology-most-loved-dreaded-and-wanted-languages) for 5 years in a row.
-- modern tooling: `cargo` (builds _just work_), `clippy` (300+ code quality lints), `rustup` (easy toolchain mgmt).
+- Compiled code [about same performance](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html) as C / C++, and excellent [memory and energy efficiency](https://dl.acm.org/doi/10.1145/3136014.3136031).
+- Can [avoid 70% of all safety issues](https://www.chromium.org/Home/chromium-security/memory-safety) present in C / C++, and most memory issues.
+- Strong type system prevents [data races](https://doc.rust-lang.org/nomicon/races.html), brings ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others).
+- Seamless C interop, and [dozens of supported platforms](https://doc.rust-lang.org/rustc/platform-support.html) (based on LLVM).
+- ["Most loved language"](https://insights.stackoverflow.com/survey/2020#technology-most-loved-dreaded-and-wanted-languages) for 5 years in a row.
+- Modern tooling: `cargo` (builds _just work_), `clippy` (300+ code quality lints), `rustup` (easy toolchain mgmt).
 
 </div></panel></tab>
 
@@ -216,11 +216,11 @@ fn main() {
 
 **Points you might run into**
 
-- steep learning curve<sup>1</sup>; compiler enforcing (esp. memory) rules that would be "best practices" elsewhere.
-- missing Rust-native libs in some domains, target platforms (esp. embedded), IDE features<sup>1</sup>.
-- longer compile times than "similar" code in other languages<sup>1</sup>.
-- no formal language specification, can prevent legal use in some domains (aviation, medical, &hellip;).
-- careless (use of `unsafe` in) libraries can secretly break safety guarantees.
+- Steep learning curve;<sup>1</sup> compiler enforcing (esp. memory) rules that would be "best practices" elsewhere.
+- Missing Rust-native libs in some domains, target platforms (esp. embedded), IDE features.<sup>1</sup>
+- Longer compile times than "similar" code in other languages.<sup>1</sup>
+- No formal language specification, can prevent legal use in some domains (aviation, medical, &hellip;).
+- Careless (use of `unsafe` in) libraries can secretly break safety guarantees.
 
 <sup>1</sup> Compare [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust).
 </div></panel></tab>
@@ -682,7 +682,7 @@ Rust has several ways to create textual values.
 
 <footnotes>
 
-<sup>1</sup> Supports multiple lines out of the box. Just keep in mind `Debug` (i.e., `dbg!(x)` and `println!("{:?}", x)`) might render them as `\n`, while `println!("{}", x)` renders them _proper_.
+<sup>1</sup> Supports multiple lines out of the box. Just keep in mind `Debug`{{ below(target="#string-output") }} (e.g., `dbg!(x)` and `println!("{:?}", x)`) might render them as `\n`, while `Display`{{ below(target="#string-output") }} (e.g., `println!("{}", x)`) renders them _proper_.
 
 </footnotes>
 
@@ -696,9 +696,9 @@ Debuggers hate him. Avoid bugs with this one weird trick.
 
 | Example | Explanation |
 |--------|-------------|
-| `//` | Line comment, use these to document code flow or _internals_. |
 | `///` | Outer line **doc comment**, {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types, traits, functions, &hellip; |
 | `//!` | Inner line doc comment, mostly used at start of file to document module. |
+| `//` | Line comment, use these to document code flow or _internals_. |
 | `/*...*/` | Block comment. |
 | `/**...*/` | Outer block doc comment. |
 | `/*!...*/` | Inner block doc comment. |
@@ -905,7 +905,7 @@ Why moves, references and lifetimes are how they are.
 <explanation>
 
 - Application memory in itself is just array of bytes.
-- It is segmented, amongst others, into:
+- Operating environment usually segments that, amongst others, into:
     - **stack** (small, low-overhead memory,<sup>1</sup> most _variables_ go here),
     - **heap** (large, flexible memory, but always handled via stack proxy like `Box<T>`),
     - **static** (most commonly used as resting place for `str` part of `&str`),
@@ -1006,7 +1006,7 @@ let t = S(1);
 
 </footnotes>
 
-> <sup>2</sup> It is the **author's opinion** that this ambiguity related to _variables_ (and _lifetimes_ and _scope_ later)
+> <sup>2</sup> It is the **author's opinion** {{ opinionated() }} that this ambiguity related to _variables_ (and _lifetimes_ and _scope_ later)
 > are some of the biggest
 > contributors to the confusion around learning the basics of lifetimes. Whenever you hear one of these terms ask yourself "what _exactly_ is meant here?"
 
@@ -1228,9 +1228,9 @@ let c: S = M::new();
             <failed style="left: -27.5px;"><value class="t byte2" style="left: 128px;">S(3)</value></failed>
         </values>
         <labels>
-            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte2" style="left: 57px;"><code></code></label>
             <label class="byte2" style="left: 97.5px;"><code>t</code></label>
-            <label class="byte2" style="left: 136.5px;"><code>c</code></label>
+            <!-- <label class="byte2" style="left: 136.5px;"><code>c</code></label> -->
         </labels>
         <subtext>Scope & Drop</subtext>
         <!-- <subtext><code>{ let a = ...; }</code></subtext> -->

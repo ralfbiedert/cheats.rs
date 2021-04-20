@@ -11,12 +11,6 @@ Use cases, in order of priority:
 * **discover** parts of the language you might not know,
 * **learn about Rust** if you have prior programming experience.
 
-Design guides:
-* have **high information density**; every word counts.
-* be **printer and mobile friendly**
-* don't repeat what's better explained elsewhere, but do state the very essence.
-* have **memorable URL** :)
-
 
 # Building
 
