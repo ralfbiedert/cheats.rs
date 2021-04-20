@@ -6800,7 +6800,7 @@ PRs for this section are very welcome. Idea is:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-trait-iter-1" name="tab-group-trait-iter" checked>
-<label for="tab-trait-iter-1"><b>Using Iterators</b></label>
+<label for="tab-trait-iter-1"><b>Obtaining Iterators</b></label>
 <panel><div>
 
 
