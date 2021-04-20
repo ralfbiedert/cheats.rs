@@ -670,15 +670,21 @@ Rust has several ways to create textual values.
 
 | Example | Explanation |
 |--------|-------------|
-| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}} UTF-8, will interpret `\n` as _line break_ `0xA`, &hellip; |
-| `r"..."` | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}} UTF-8, won't interpret `\n`, &hellip; |
-| `r#"..."#` | Raw string literal, UTF-8, but can also contain `"`. Number of `#` can vary. |
-| `b"..."` | **Byte string literal**; {{ ref(page="tokens.html#byte-and-byte-string-literals")}} constructs ASCII `[u8]`, not a string. |
-| `br"..."`, `br#"..."#` | Raw byte string literal, ASCII `[u8]`, combination of the above. |
+| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}}<sup>, 1</sup> UTF-8, will interpret `\n` as _line break_ `0xA`, &hellip;  |
+| `r"..."` | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}}<sup>, 1</sup> UTF-8, won't interpret `\n`, &hellip; |
+| `r#"..."#` | Raw string literal, UTF-8, but can also contain `"`. Number of `#` can vary.|
+| `b"..."` | **Byte string literal**; {{ ref(page="tokens.html#byte-and-byte-string-literals")}}<sup>, 1</sup> constructs ASCII `[u8]`, not a string. |
+| `br"..."`, `br#"..."#` | Raw byte string literal, ASCII `[u8]`, combination of the above.|
 | `'🦀'` | **Character literal**, {{ ref(page="tokens.html#character-and-string-literals")}} fixed 4 byte unicode '**char**'. {{ std(page="std/primitive.char.html") }} |
 | `b'x'` | ASCII **byte literal**. {{ ref(page="tokens.html#byte-literals")}} |
 
 </fixed-2-column>
+
+<footnotes>
+
+<sup>1</sup> Supports multiple lines out of the box. Just keep in mind `Debug` (i.e., `dbg!(x)` and `println!("{:?}", x)`) might render them as `\n`, while `println!("{}", x)` renders them _proper_.
+
+</footnotes>
 
 
 ### Documentation

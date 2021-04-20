@@ -49,6 +49,7 @@ const subtiles = [
     "In memoriam of the 1 Github star we lost April 1st, 2021. You will be missed.",
     "The R in ASMR stands for Rust.",
     "Chuck Norris doesn't fear concurrency. Concurreny fears Chuck Norris.",
+    "Teaching endianness since 1820.",
 ];
 
 
