@@ -6896,11 +6896,13 @@ Conversions XXX
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
 <div style="min-width: 100%; width: 650px;">
+<div class="color-header number">
 
 
 ## Number Conversions
 
-As-correct-as-it-currently-gets number conversions.
+
+As-<b style="">correct</b>-as-it-currently-gets number conversions.
 
 | ↓ Have / Want → | `u8` &hellip; `i128` |  `f32` / `f64` | String |
 | --- | --- |  --- |--- |
@@ -6912,14 +6914,76 @@ As-correct-as-it-currently-gets number conversions.
 <footnotes>
 
 <sup>1</sup> If type true subset `from()` works directly, e.g., `u32::from(my_u8)`. <br/>
-<sup>2</sup> Truncating (`11.9_f32 as u8` gives `11`) and saturating (`1024_f32 as u8` gives `255`). <br/>
+<sup>2</sup> Truncating (`11.9_f32 as u8` gives `11`) and saturating (`1024_f32 as u8` gives `255`); _c_. below. <br/>
 <sup>3</sup> Might misrepresent number (`u64::MAX as f32`) or produce `Inf` (`u128::MAX as f32`).
 
 </footnotes>
 
+
+{{ tablesep() }}
+
+Some mathematical <b style="">pitfalls</b> when dealing with numbers.
+
+<tabs>
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-number-ops-2" name="tab-number-ops" checked>
+<label for="tab-number-ops-2"><b>Casting Pitfalls</b> {{ bad() }}</label>
+<panel><div class="">
+
+
+| Cast<sup>1</sup> | Gives | Note |
+| --- | --- | --- |
+| `3.9_f32 as u8` | `3` | Rounds towards zero, consider `x.round()` first. |
+| `314_f32 as u8` | `255` | Takes closest available number. |
+| `f32::INFINITY as u8` | `255` | Same, treats `INFINITY` as _really_ large number.|
+| `f32::NAN as u8` | `0` | - |
+| `_314 as u8` | `58` | Truncates excess bits. |
+| `_200 as i8` | `56` | - |
+| `_257 as i8` | `-1` | - |
+
+</div></panel></tab>
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-number-ops-3" name="tab-number-ops">
+<label for="tab-number-ops-3"><b>Arithmetical Pitfalls</b> {{ bad() }}</label>
+<panel><div class="">
+
+| Operation<sup>1</sup> | Gives | Note |
+| --- | --- | --- |
+| `200_u8 / 0_u8` | Compile error. | - |
+| `200_u8 / _0` <sup>d</sup> | Panic. | Regular math may panic; here: division by zero. |
+| `200_u8 / _0` <sup>r</sup> | Panic. | Same. |
+| `200_u8 + 200_u8` |  Compile error. | - |
+| `200_u8 + _200` <sup>d</sup> | Panic. | Consider `checked_`, `wrapping_`, ... instead. {{ std(page="std/primitive.isize.html#method.checked_add") }}|
+| `200_u8 + _200` <sup>r</sup> | `144` | In release mode this will overflow. |
+| `0.8_f32 + 0.1_f32` | `0.90000004` | - |
+| `1.0_f32 / 0.0_f32` | `f32::INFINITY` | - |
+| `0.0_f32 / 0.0_f32` | `f32::NaN` | - |
+
+</div></panel></tab>
+
+</tabs>
+
+<footnotes>
+
+<sup>1</sup> Expression `_100` means any variable or expression that might contain the value `100`, e.g., `100_i32`, but is opaque to compiler.<br/>
+<sup>d</sup> Debug build.<br/>
+<sup>r</sup> Release build.<br/>
+
+</footnotes>
+
+> In short, while all math will fail at domain limit, **casts and floating point** math won't panic; **integer** math may.
+
+
 <!-- end overflow -->
 </div>
 </div>
+</div>
+
 
 
 ## String Conversions
