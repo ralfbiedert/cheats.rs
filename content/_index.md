@@ -6971,7 +6971,7 @@ Some mathematical <b style="">pitfalls</b> when dealing with numbers.
 
 <footnotes>
 
-<sup>1</sup> Expression `_100` means any variable or expression that might contain the value `100`, e.g., `100_i32`, but is opaque to compiler.<br/>
+<sup>1</sup> Expression `_100` means anything that might contain the value `100`, e.g., `100_i32`, but is opaque to compiler.<br/>
 <sup>d</sup> Debug build.<br/>
 <sup>r</sup> Release build.<br/>
 
