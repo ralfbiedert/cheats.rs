@@ -5775,22 +5775,6 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>struct S { a: A, b: B } </code></name>
-    <visual style="width: 166px;">
-       <framed class="any" style="width: 100px;"><code>A</code></framed>
-       <framed class="any" style="width: 50px;"><code>B</code></framed>
-    </visual>
-    <andor>or maybe</andor>
-    <visual>
-       <framed class="any" style="width: 50px;"><code>B</code></framed>
-       <pad><code style="">↦</code></pad>
-       <framed class="any" style="width: 100px;"><code>A</code></framed>
-    </visual>
-    <description>Unless a representation is forced <br>(e.g., via <code>#[repr(C)]</code>), struct layout<br> unspecified; may also contain padding.</description>
-</datum>
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
     <name><code>(A, B, C)</code></name>
     <visual style="width: 182px;">
        <framed class="any"><code>A</code></framed>
@@ -5803,22 +5787,32 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
        <framed class="any"><code>A</code></framed>
        <framed class="any" style="width: 50px;"><code>C</code></framed>
     </visual>
+    <description>Unless a representation is forced <br>(e.g., via <code>#[repr(C)]</code>), type layout<br> unspecified.</description>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>struct S { b: B, c: C } </code></name>
+    <visual style="width: 166px;">
+       <framed class="any" style="width: 100px;"><code>B</code></framed>
+       <framed class="any" style="width: 50px;"><code>C</code></framed>
+    </visual>
     <andor>or maybe</andor>
     <visual>
        <framed class="any" style="width: 50px;"><code>C</code></framed>
        <pad><code style="">↦</code></pad>
        <framed class="any" style="width: 100px;"><code>B</code></framed>
-       <pad><code style="">↦</code></pad>
-       <framed class="any"><code>A</code></framed>
     </visual>
-
+    <description>Compiler may also add padding.</description>
 </datum>
+
 
 
 <blockquote>
 <footnotes>
 
-Also note, two types `A(X, Y)` and `B(X, Y)` with exactly the same fields can still have differing layout; unspecified layout for same type can change between versions, or for any number of reasons.
+Also note, two types `A(X, Y)` and `B(X, Y)` with exactly the same fields can still have differing layout; never `transmute()` without representation guarantees.
 
 </footnotes>
 </blockquote>
