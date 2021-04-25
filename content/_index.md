@@ -8004,11 +8004,11 @@ Attributes affecting the whole crate or app:
 
 | Builds | On | Explanation |
 |--------|---| ----------|
-| `#![windows_subsystem = "x"]` | `C` | On Windows, make a `console` or `windows` app. {{ ref(page="runtime.html#the-windows_subsystem-attribute") }}|
-| `#![crate_name = "x"]` | `C`  | Specifiy current crate name, e.g., when not using `cargo`. {{ todo() }} {{ ref(page="crates-and-source-files.html#the-crate_name-attribute") }}|
-| `#![crate_type = "bin"]` | `C`  | Specifiy current crate type (`bin`, `lib`, `dylib`, `cdylib`, ...). {{ ref(page="linkage.html") }}|
-| `#![recursion_limit = "123"]` | `C` | Set _compile-time_ recursion limit for deref, macros, ... {{ ref(page="attributes/limits.html#the-recursion_limit-attribute") }}|
-| `#![type_length_limit = "456"]` | `C` | Limits maximum number of type substitutions. {{ ref(page="attributes/limits.html#the-type_length_limit-attribute") }}|
+| `#![windows_subsystem = "x"]` | `C` | On Windows, make a `console` or `windows` app. {{ ref(page="runtime.html#the-windows_subsystem-attribute") }} {{ esoteric() }} |
+| `#![crate_name = "x"]` | `C`  | Specifiy current crate name, e.g., when not using `cargo`. {{ todo() }} {{ ref(page="crates-and-source-files.html#the-crate_name-attribute") }} {{ esoteric() }} |
+| `#![crate_type = "bin"]` | `C`  | Specifiy current crate type (`bin`, `lib`, `dylib`, `cdylib`, ...). {{ ref(page="linkage.html") }} {{ esoteric() }} |
+| `#![recursion_limit = "123"]` | `C` | Set _compile-time_ recursion limit for deref, macros, ... {{ ref(page="attributes/limits.html#the-recursion_limit-attribute") }} {{ esoteric() }} |
+| `#![type_length_limit = "456"]` | `C` | Limits maximum number of type substitutions. {{ ref(page="attributes/limits.html#the-type_length_limit-attribute") }} {{ esoteric() }} |
 
 
 {{ tablesep() }}
