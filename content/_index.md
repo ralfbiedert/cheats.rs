@@ -6532,13 +6532,13 @@ PRs for this section are very welcome. Idea is:
 | Intent | Snippet |
 |---------|-------------|
 | Create a new file | `File::create(PATH)?` |
-| {{ tab() }}  Same, via OpenOptions<sup>*</sup> | `OpenOptions::new().create(t).write(t).truncate(t).open(PATH)?` |
+| {{ tab() }}  Same, via OpenOptions | `OpenOptions::new().create(true).write(true).truncate(true).open(PATH)?` |
 
-<footnotes>
+<!-- <footnotes>
 
 <sup>*</sup> We're a bit short on space here, <code>t</code> means true.
 
-</footnotes>
+</footnotes> -->
 
 </div></panel></tab>
 
