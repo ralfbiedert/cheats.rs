@@ -8281,8 +8281,8 @@ Environment variables and outputs related to the pre-build script.
 | Input Environment | Explanation {{ ref(page="environment-variables.html#environment-variables-cargo-sets-for-build-scripts") }} |
 |-------|-------------|
 | `CARGO_FEATURE_X` |  Environment variable set for each feature `x` activated.  |
-| {{ tab() }} `CARGO_CFG_SERDE` |  If feature `serde` were enabled. |
-| {{ tab() }} `CARGO_CFG_SOME_FEATURE` | If feature `some-feature` were enabled; dash `-` converted to `_`. |
+| {{ tab() }} `CARGO_FEATURE_SERDE` |  If feature `serde` were enabled. |
+| {{ tab() }} `CARGO_FEATURE_SOME_FEATURE` | If feature `some-feature` were enabled; dash `-` converted to `_`. |
 | `CARGO_CFG_X` | Exposes cfg's; joins mult. opts. by `,` and converts `-` to `_`.|
 | {{ tab() }} `CARGO_CFG_TARGET_OS=macos` |  If `target_os` were set to `macos`. |
 | {{ tab() }} `CARGO_CFG_TARGET_FEATURE=avx,avx2` |  If `target_feature` were set to `avx` and `avx2`. |
@@ -8643,7 +8643,7 @@ unsafe fn unsafe_f(x: *mut u8) {
 
 
 ```rust
-if maybe_true() {
+if should_be_true() {
    let r: &u8 = unsafe { &*ptr::null() };    // Once this runs, ENTIRE app is undefined. Even if
 } else {                                     // line seemingly didn't do anything, app might now run
     println!("the spanish inquisition");     // both paths, corrupt database, or anything else.

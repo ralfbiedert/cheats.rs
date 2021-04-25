@@ -50,6 +50,7 @@ const subtiles = [
     "The R in ASMR stands for Rust.",
     "Chuck Norris doesn't fear concurrency. Concurrency fears Chuck Norris.",
     "Teaching endianness since 1820.",
+    "Whether this is a cheat sheet or book only depends on your font size.",
 ];
 
 
