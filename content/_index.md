@@ -5713,7 +5713,7 @@ Similarly, for <code>f64</code> types this would look like:
 
 ## Custom Types
 
-Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.html") }} is subject to <b>representation</b>; {{ ref(page="type-layout.html#representations") }} padding can be present. <sup>1</sup>
+Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.html") }} is subject to <b>representation</b>; {{ ref(page="type-layout.html#representations") }} padding can be present.
 
 
 <!-- NEW ENTRY -->
@@ -5733,39 +5733,6 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
        <framed class="any unsized"><code>T</code></framed>
     </visual>
     <description>Maybe DST {{ below(target = "#sized-types") }} </description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>(A, B, C)</code></name>
-    <visual>
-       <framed class="any"><code>A</code></framed>
-       <framed class="any" style="width: 100px;"><code>B</code></framed>
-       <framed class="any" style="width: 50px;"><code>C</code></framed>
-    </visual>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum style="margin-right:70px;">
-    <name class="nogrow"><code>struct S; </code></name>
-    <name class="hidden"><code>;</code></name>
-    <visual style="width: 15px;" class="zst">
-        <code></code>
-    </visual>
-    <description>Zero-Sized {{ below(target = "#sized-types") }} </description>
-</datum>
-
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>struct S { b: B, c: C } </code></name>
-    <visual>
-       <framed class="any" style="width: 100px;"><code>B</code></framed>
-       <framed class="any" style="width: 50px;"><code>C</code></framed>
-    </visual>
 </datum>
 
 
@@ -5794,6 +5761,67 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
     </visual>
     <description><b>Slice type</b> of unknown-many elements. Neither <br> <code>Sized</code> (nor carries <code>len</code> information), and most<br> often lives behind reference as <code>&[T]</code>. {{ below(target="#references-pointers-ui") }}</description>
 </datum>
+
+<!-- NEW ENTRY -->
+<datum style="margin-right:70px;">
+    <name class="nogrow"><code>struct S; </code></name>
+    <name class="hidden"><code>;</code></name>
+    <visual style="width: 15px;" class="zst">
+        <code></code>
+    </visual>
+    <description>Zero-Sized {{ below(target = "#sized-types") }} </description>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>struct S { a: A, b: B } </code></name>
+    <visual style="width: 166px;">
+       <framed class="any" style="width: 100px;"><code>A</code></framed>
+       <framed class="any" style="width: 50px;"><code>B</code></framed>
+    </visual>
+    <andor>or maybe</andor>
+    <visual>
+       <framed class="any" style="width: 50px;"><code>B</code></framed>
+       <pad><code style="">↦</code></pad>
+       <framed class="any" style="width: 100px;"><code>A</code></framed>
+    </visual>
+    <description>Unless a representation is forced <br>(e.g., via <code>#[repr(C)]</code>), struct layout<br> unspecified; may also contain padding.</description>
+</datum>
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>(A, B, C)</code></name>
+    <visual style="width: 182px;">
+       <framed class="any"><code>A</code></framed>
+       <framed class="any" style="width: 100px;"><code>B</code></framed>
+       <framed class="any" style="width: 50px;"><code>C</code></framed>
+    </visual>
+    <andor>or maybe</andor>
+    <visual style="width: 182px;">
+       <framed class="any" style="width: 100px;"><code>B</code></framed>
+       <framed class="any"><code>A</code></framed>
+       <framed class="any" style="width: 50px;"><code>C</code></framed>
+    </visual>
+    <andor>or maybe</andor>
+    <visual>
+       <framed class="any" style="width: 50px;"><code>C</code></framed>
+       <pad><code style="">↦</code></pad>
+       <framed class="any" style="width: 100px;"><code>B</code></framed>
+       <pad><code style="">↦</code></pad>
+       <framed class="any"><code>A</code></framed>
+    </visual>
+
+</datum>
+
+
+<blockquote>
+<footnotes>
+
+Also note, two types `A(X, Y)` and `B(X, Y)` with exactly the same fields can still have differing layout; unspecified layout for same type can change between versions, or for any number of reasons.
+
+</footnotes>
+</blockquote>
 
 
 
@@ -5855,14 +5883,6 @@ These **sum types** hold a value of one of their sub types:
     </description>
 </datum>
 
-
-<blockquote>
-<footnotes>
-
-<sup>1</sup> To be clear, the depiction of types here merely illustrates a _random_ representation. Unless a certain one is forced (e.g., via `#[repr(C)]`, Rust will, for example, be free to layout `A(u8, u16)` as `u8 u16` and `B(u8, u16)` as `u16 u8`, even inside the same application!
-
-</footnotes>
-</blockquote>
 
 
 ## References & Pointers {#references-pointers-ui}
