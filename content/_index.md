@@ -565,7 +565,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 |  {{ tab() }} `let (.., a, b) = (1, 2);` | Specific bindings take precedence over 'the rest', here `a` is `1`, `b` is `2`. |
 |  {{ tab() }} `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
 | `if let Some(x) = get() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
-| `while let Some(x) = get() {}`  | Loops if the pattern can be assigned (e.g., `enum` variant). |
+| `while let Some(x) = get() {}`  | Equiv.; here keep calling `get()`, run `{}` as long as pattern can be assigned. |
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`. {{ esoteric() }} |
 
 </fixed-2-column>
