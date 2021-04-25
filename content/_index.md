@@ -648,8 +648,8 @@ Generics combine with type constructors, traits and functions to give your users
 | `trait T<X> {}`  | A trait generic over `X`. Can have multiple `impl T for S` (one per `X`). |
 | `trait T { type X; }`  | Defines **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} `X`. Only one `impl T for S` possible. |
 | {{ tab() }} `type X = R;`  | Set associated type within `impl T for S { type X = R; }`. |
-| `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`.  |
-| `impl S<T> {}`  | Implement functionality for exactly `S<T>` (e.g., `S<u32>`).  |
+| `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`, here `T` type parameter. |
+| `impl S<T> {}`  | Implement functionality for exactly `S<T>`, here `T` specific type (e.g., `S<u32>`).  |
 | `fn f() -> impl T`  | **Existential types**, {{ book(page="ch10-02-traits.html#returning-types-that-implement-traits") }} returns an unknown-to-caller `S` that `impl T`. |
 | `fn f(x: &impl T)`  | Trait bound,"**impl traits**", {{ book(page="ch10-02-traits.html#trait-bound-syntax") }} somewhat similar to `fn f<S:T>(x: &S)`. |
 | `fn f(x: &dyn T)`  | Marker for **dynamic dispatch**, {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }} `f` will not be monomorphized. |
