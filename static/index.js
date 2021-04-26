@@ -28,7 +28,6 @@ const subtiles = [
     "Contains 140g of Rust per 100g of cheat sheet.",
     "Prints best on Dunder Mifflin premium copy paper.",
     "May contain R-rated content.",
-    "What if the Mayas meant 2021?",
     "Your mission, should you choose to accept it: Put Rust on a Mars rover.",
     ["This message will self-destruct in 5 seconds.", false],
     ["The self-destruct mechanism was written in JavaScript ...", false],
@@ -50,7 +49,7 @@ const subtiles = [
     "The R in ASMR stands for Rust.",
     "Chuck Norris doesn't fear concurrency. Concurrency fears Chuck Norris.",
     "Teaching endianness since 1820.",
-    "Whether this is a cheat sheet or book only depends on your font size.",
+    "Snugly fits two Bayeux tapestries.",
 ];
 
 
