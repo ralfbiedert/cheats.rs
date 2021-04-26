@@ -380,8 +380,8 @@ footnotes {
 
 .color-header.number {
     th {
-        background-color: rgb(99, 200, 177);
-        border-color: rgb(120, 190, 70);
+        background-color: rgb(239, 248, 171);
+        border-color: rgb(210, 220, 150);
     }
 }
 
@@ -480,6 +480,10 @@ table.sendsync {
 
 
 .day-mode {
+    blockquote.legend .expander {
+        opacity: 0.5;
+    }
+
     span.good {
         color: green;
     }
@@ -510,6 +514,10 @@ table.sendsync {
 }
 
 .night-mode {
+    blockquote.legend .expander {
+        opacity: 1.0;
+    }
+
     span.good {
         color: lightgreen;
     }

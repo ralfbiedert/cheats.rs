@@ -455,7 +455,7 @@ datum.spaced {
     }
 
     // This is a bit of an ugly hack ...
-    ptr, payload, sized, pad, framed, byte, memory {
+    ptr, payload, sized, pad, framed, byte, memory, .platformdefined {
         color: #333 !important;
 
         code {

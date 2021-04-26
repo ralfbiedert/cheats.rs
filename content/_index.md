@@ -78,8 +78,8 @@ Contains clickable links to
 </symbol-legend>
 
 <div style="text-align: right; height: 1px;">
-    <span style="font-size: 10px; position: relative; top: -20px; opacity: 0.5;">
-        <a href="javascript:toggle_legend();" style="">➕</a>
+    <span class="expander" style="font-size: 10px; position: relative; top: -20px;">
+        <a href="javascript:toggle_legend();">➕</a>
     </span>
 </div>
 
@@ -402,7 +402,7 @@ Define units of code and their abstractions.
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
 | {{ tab() }} `fn f(&self) {}`  | Define a **method**, {{ book(page="ch05-03-method-syntax.html") }}  {{ ex(page="fn/methods.html") }} e.g., within an `impl S {}`. |
 | `const fn f() {}`  | Constant `fn` usable at compile time, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
-| `async fn f() {}`  | **Async**  {{ ref(page="items/functions.html#async-functions") }} {{ edition(ed="'18") }} function transformation, makes `f` return an `impl` **`Future`**. {{ std(page="std/future/trait.Future.html") }} |
+| `async fn f() {}`  | **Async**  {{ ref(page="items/functions.html#async-functions") }} {{ edition(ed="'18") }} function transformation, {{ below(target="#async-await-101") }} makes `f` return an `impl` **`Future`**. {{ std(page="std/future/trait.Future.html") }} |
 | {{ tab() }} `async fn f() -> S {}`  | Same, but make `f` return an `impl Future<Output=S>`. |
 | {{ tab() }} `async { x }`  | Used within a function, make `{ x }` an `impl Future<Output=X>`. |
 | `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} memory holding address of a callable. |
@@ -413,8 +413,10 @@ Define units of code and their abstractions.
 | {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures. |
 | {{ tab() }} <code> return &vert;&vert; true </code> | Closures sometimes look like logical ORs (here: return a closure). |
 | `unsafe` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ below(target="#unsafe-unsound-undefined") }} {{ book(page="ch19-01-unsafe-rust.html#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
-| {{ tab() }} `unsafe f() {}` | Sort-of means "_can cause UB, {{ below(target="#unsafe-unsound-undefined") }} **YOU must check** requirements_". |
-| {{ tab() }} `unsafe {}` | Guarantees to compiler "_**I have checked** requirements, trust me_".  |
+| {{ tab() }} `unsafe f() {}` | Sort-of means "_calling can cause UB, {{ below(target="#unsafe-unsound-undefined") }} **YOU must check** requirements_". |
+| {{ tab() }} `unsafe trait T {}` | Sort-of means _careless impl. of `T` can cause UB_; **implementor must check**.  |
+| {{ tab() }} `unsafe { f(); }` | Guarantees (to compiler) "_**I have checked** requirements, trust me_".  |
+| {{ tab() }} `unsafe impl T for S {}` | Guarantees _`S` is well-behaved w.r.t `T`_; people may use `T` on `S` safely.  |
 
 </fixed-2-column>
 
@@ -531,7 +533,7 @@ Code generation constructs expanded before the actual compilation happens.
 
 | Inside Macros |  Explanation |
 |---------|---------|
-| `$x:ty`  | Macro capture (here a type). |
+| `$x:ty`  | Macro capture (here a type).<sup>1</sup> |
 | `$x` |  Macro substitution, e.g., use the captured `$x:ty` from above. |
 | `$(x),*` | Macro repetition "zero or more times" in macros by example. |
 | {{ tab() }} `$(x),?` | Same, but "zero or one time". |
@@ -540,7 +542,7 @@ Code generation constructs expanded before the actual compilation happens.
 
 <footnotes>
 
-See tooling directives {{ below(target="#tooling-directives") }} for details.
+<sup>1</sup> See tooling directives {{ below(target="#tooling-directives") }} for details.
 
 </footnotes>
 
@@ -6878,7 +6880,7 @@ Similarly, providing a `C::iter_mut(&mut self) -> IterMut` might be a good idea.
 
 **Making Loops Work**
 * **`impl IntoIterator for C {}`** &mdash; Now `for` loops work as `for x in c {}`.
-* **`impl IntoIterator for &C {}`** &mdash; For conveninece you might want to add these as well.
+* **`impl IntoIterator for &C {}`** &mdash; For convenience you might want to add these as well.
 * **`impl IntoIterator for &mut C {}`** &mdash; Same &hellip;
 
 
