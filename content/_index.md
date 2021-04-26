@@ -413,7 +413,7 @@ Define units of code and their abstractions.
 | {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures. |
 | {{ tab() }} <code> return &vert;&vert; true </code> | Closures sometimes look like logical ORs (here: return a closure). |
 | `unsafe` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ below(target="#unsafe-unsound-undefined") }} {{ book(page="ch19-01-unsafe-rust.html#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
-| {{ tab() }} `unsafe f() {}` | Sort-of means "_calling can cause UB, {{ below(target="#unsafe-unsound-undefined") }} **YOU must check** requirements_". |
+| {{ tab() }} `unsafe fn f() {}` | Sort-of means "_calling can cause UB, {{ below(target="#unsafe-unsound-undefined") }} **YOU must check** requirements_". |
 | {{ tab() }} `unsafe trait T {}` | Sort-of means _careless impl. of `T` can cause UB_; **implementor must check**.  |
 | {{ tab() }} `unsafe { f(); }` | Guarantees (to compiler) "_**I have checked** requirements, trust me_".  |
 | {{ tab() }} `unsafe impl T for S {}` | Guarantees _`S` is well-behaved w.r.t `T`_; people may use `T` on `S` safely.  |
