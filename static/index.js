@@ -50,6 +50,7 @@ const subtiles = [
     "Chuck Norris doesn't fear concurrency. Concurrency fears Chuck Norris.",
     "Teaching endianness since 1820.",
     "Snugly fits two Bayeux tapestries.",
+    "If a programming language and a crab love each other very much ...",
 ];
 
 

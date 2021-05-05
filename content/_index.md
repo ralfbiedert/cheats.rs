@@ -6952,7 +6952,7 @@ Some mathematical <b style="">pitfalls</b> when dealing with numbers.
 
 | Cast<sup>1</sup> | Gives | Note |
 | --- | --- | --- |
-| `3.9_f32 as u8` | `3` | Rounds towards zero, consider `x.round()` first. |
+| `3.9_f32 as u8` | `3` | Truncates, consider `x.round()` first. |
 | `314_f32 as u8` | `255` | Takes closest available number. |
 | `f32::INFINITY as u8` | `255` | Same, treats `INFINITY` as _really_ large number.|
 | `f32::NAN as u8` | `0` | - |
@@ -6977,6 +6977,7 @@ Some mathematical <b style="">pitfalls</b> when dealing with numbers.
 | `200_u8 + 200_u8` |  Compile error. | - |
 | `200_u8 + _200` <sup>d</sup> | Panic. | Consider `checked_`, `wrapping_`, ... instead. {{ std(page="std/primitive.isize.html#method.checked_add") }}|
 | `200_u8 + _200` <sup>r</sup> | `144` | In release mode this will overflow. |
+| `1_u8 / 2_u8` | `0` | Other integer division truncates. |
 | `0.8_f32 + 0.1_f32` | `0.90000004` | - |
 | `1.0_f32 / 0.0_f32` | `f32::INFINITY` | - |
 | `0.0_f32 / 0.0_f32` | `f32::NaN` | - |
