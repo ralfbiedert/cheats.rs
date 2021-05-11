@@ -282,12 +282,12 @@ Data types and memory locations defined via keywords.
 | {{ tab() }} `struct S { x: T }` | Define struct with named field `x` of type `T`. |
 | {{ tab() }} `struct S` &#8203;`(T);` | Define "tupled" struct with numbered field `.0` of type `T`. |
 | {{ tab() }} `struct S;` | Define **zero sized** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts")}} unit struct. Occupies no space, optimized away. |
-| `enum E {}` | Define an **enum** {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} , _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
+| `enum E {}` | Define an **enum**, {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
 | {{ tab() }}  `enum E { A, B`&#8203;`(), C {} }` | Define variants of enum; can be unit- `A`, tuple- `B` &#8203;`()` and struct-like `C{}`. |
 | {{ tab() }}  `enum E { A = 1 }` | If variants are only unit-like, allow discriminant values, e.g., for FFI. |
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. {{ esoteric() }} |
 | `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
-| `const X: T = T();`  | Defines **constant** {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }}. Copied into a temporary when used. |
+| `const X: T = T();`  | Defines **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} copied into a temporary when used. |
 | `let x: T;`  | Allocate `T` bytes on stack{{ note( note="1") }} bound as `x`. Assignable once, not mutable.  |
 | `let mut x: T;`  | Like `let`, but allow for **mutability** {{ book(page="ch03-01-variables-and-mutability.html") }} {{ ex(page="variable_bindings/mut.html") }} and mutable borrow.{{ note( note="2") }} |
 | {{ tab() }} `x = y;` | Moves `y` to `x`, invalidating `y` if `T` is not **`Copy`**, {{ std(page="std/marker/trait.Copy.html") }} and copying `y` otherwise. |
@@ -356,7 +356,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (space for holding _any_ `&s`). |
 | {{ tab() }} `&[S]` | Special slice reference that contains (`address`, `length`). |
 | {{ tab() }} `&str` | Special string slice reference that contains (`address`, `length`). |
-| {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, &hellip;) |
+| {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, &hellip;). |
 | {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains (`address`, `vtable`). |
 | `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., address, len, vtable, &hellip; of _this_ `s`, like `0x1234`). |
 | {{ tab() }} `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
@@ -364,7 +364,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `*mut S` | Mutable raw pointer type w/o memory safety. |
 | {{ tab() }} `&raw const s` | Create raw pointer w/o going through reference; _c_. `ptr:addr_of!()` {{ std(page="std/ptr/macro.addr_of.html") }} {{ experimental() }} {{ esoteric() }}  |
 | {{ tab() }} `&raw mut s` | Same, but mutable. {{ experimental() }} Raw ptrs. are needed for unaligned, packed fields. {{ esoteric() }} |
-| `ref s` | **Bind by reference**. {{ ex(page="scope/borrow/ref.html") }} {{ deprecated() }}|
+| `ref s` | **Bind by reference**, {{ ex(page="scope/borrow/ref.html") }} makes binding reference type. {{ deprecated() }}|
 | {{ tab() }} `let ref r = s;` | Equivalent to `let r = &s`. |
 | {{ tab() }} `let S { ref mut x } = s;` | Mutable ref binding (`let x = &mut s.x`), shorthand destructuring {{ below( target = "#pattern-matching") }} version. |
 | `*r` | **Dereference** {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} a reference `r` to access what it points to. |
@@ -407,10 +407,10 @@ Define units of code and their abstractions.
 | {{ tab() }} `async { x }`  | Used within a function, make `{ x }` an `impl Future<Output=X>`. |
 | `fn() -> S`  | **Function pointers**, {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} memory holding address of a callable. |
 | `Fn() -> S`  | **Callable Trait** {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), implemented by closures, fn's &hellip; |
-| <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its **captures**. {{ ref(page="types/closure.html#capture-modes") }} |
-| {{ tab() }} <code>&vert;x&vert; {}</code> | Closure with a bound parameter `x`. |
-| {{ tab() }} <code>&vert;x&vert; x + x</code> | Closure without block expression; may only consist of single expression.  |
-| {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures. |
+| <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its **captures**, {{ below(target="#closures-data") }} {{ ref(page="types/closure.html#capture-modes") }}  (e.g., a local variable). |
+| {{ tab() }} <code>&vert;x&vert; {}</code> | Closure accepting one argument named `x`, body is block expression. |
+| {{ tab() }} <code>&vert;x&vert; x + x</code> | Same, without block expression; may only consist of single expression.  |
+| {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures; i.e., `y` transferred to closure.  |
 | {{ tab() }} <code> return &vert;&vert; true </code> | Closures sometimes look like logical ORs (here: return a closure). |
 | `unsafe` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ below(target="#unsafe-unsound-undefined") }} {{ book(page="ch19-01-unsafe-rust.html#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 | {{ tab() }} `unsafe fn f() {}` | Sort-of means "_calling can cause UB, {{ below(target="#unsafe-unsound-undefined") }} **YOU must check** requirements_". |
@@ -429,8 +429,8 @@ Control execution within a function.
 
 | Example | Explanation |
 |---------|-------------|
-| `while x {}`  | **Loop** {{ ref(page="expressions/loop-expr.html#predicate-loops") }}, run while expression `x` is true. |
-| `loop {}`  | **Loop infinitely** {{ ref(page="expressions/loop-expr.html#infinite-loops") }} until `break`. Can yield value with `break x`. |
+| `while x {}`  | **Loop**, {{ ref(page="expressions/loop-expr.html#predicate-loops") }} run while expression `x` is true. |
+| `loop {}`  | **Loop indefinitely** {{ ref(page="expressions/loop-expr.html#infinite-loops") }} until `break`. Can yield value with `break x`. |
 | `for x in iter {}` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
 | `if x {} else {}`  | **Conditional branch** {{ ref(page="expressions/if-expr.html") }} if expression is true. |
 | `'label: loop {}` | **Loop label**, {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} useful for flow control in nested loops. |
@@ -476,19 +476,24 @@ Segment projects into smaller units and minimize dependencies.
 | `use a::{b, c};` | Same, but bring `b` and `c` into scope. |
 | `use a::b as x;`  | Bring `b` into scope but name `x`, like `use std::error::Error as E`. |
 | `use a::b as _;`  | Bring `b` anonymously into scope, useful for traits with conflicting names. |
-| `use a::*;`  | Bring everything from `a` into scope. |
+| `use a::*;`  | Bring everything from `a` in, only recommended if `a` is some **prelude**. {{ link(url="https://stackoverflow.com/questions/36384840/what-is-the-prelude" ) }} |
 | `pub use a::b;`  | Bring `a::b` into scope and reexport from here. |
-| `pub T`  | "Public if parent path is public" **visibility** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} for `T`. |
-| {{ tab() }} `pub(crate) T` | Visible at most in current crate. |
-| {{ tab() }} `pub(self) T`  | Visible at most in current module. |
-| {{ tab() }} `pub(super) T`  | Visible at most in parent. |
-| {{ tab() }} `pub(in a::b) T`  | Visible at most in `a::b`. |
-| `extern crate a;` | Declare dependency on external **crate** {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }} {{ deprecated() }} ; just `use a::b` in {{ edition(ed="'18") }}.  |
+| `pub T`  | "Public if parent path is public" **visibility** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} for `T`.  |
+| {{ tab() }} `pub(crate) T` | Visible at most<sup>1</sup> in current crate.  |
+| {{ tab() }} `pub(super) T`  | Visible at most<sup>1</sup> in parent.  |
+| {{ tab() }} `pub(self) T`  | Visible at most<sup>1</sup> in current module (default, same as no `pub`).  |
+| {{ tab() }} `pub(in a::b) T`  | Visible at most<sup>1</sup> in ancestor `a::b`.  |
+| `extern crate a;` | Declare dependency on external **crate**; {{ book(page="ch02-00-guessing-game-tutorial.html#using-a-crate-to-get-more-functionality") }} {{ ref(page="items/extern-crates.html#extern-crate-declarations") }} {{ deprecated() }} just `use a::b` in {{ edition(ed="'18") }}.  |
 | `extern "C" {}`  | _Declare_ external dependencies and ABI (e.g., `"C"`) from **FFI**. {{ book(page="ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code") }} {{ ex(page="std_misc/ffi.html#foreign-function-interface") }} {{ nom(page="ffi.html#calling-foreign-functions") }} {{ ref(page="items/external-blocks.html#external-blocks") }} |
 | `extern "C" fn f() {}`  | _Define_ function to be exported with ABI (e.g., `"C"`) to FFI. |
 
 </fixed-2-column>
 
+<footnotes>
+
+<sup>1</sup> Items in child modules always have access to any item, regardless if `pub` or not.
+
+</footnotes>
 
 
 ### Type Aliases and Casts
@@ -499,15 +504,15 @@ Short-hand names of types, and methods to convert one type to another.
 
 | Example | Explanation |
 |---------|-------------|
-| `type T = S;`  | Create a **type alias** {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} {{ ref(page="items/type-aliases.html#type-aliases") }}, i.e., another name for `S`. |
-| `Self`  | Type alias for **implementing type** {{ ref(page="types.html#self-types") }}, e.g. `fn new() -> Self`. |
+| `type T = S;`  | Create a **type alias**, {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} {{ ref(page="items/type-aliases.html#type-aliases") }} i.e., another name for `S`. |
+| `Self`  | Type alias for **implementing type**, {{ ref(page="types.html#self-types") }} e.g. `fn new() -> Self`. |
 | `self`  | Method subject in `fn f(self) {}`, same as `fn f(self: Self) {}`. |
 |  {{ tab() }}  `&self`  | Same, but refers to self as borrowed, same as `f(self: &Self)`|
 |  {{ tab() }}  `&mut self`  | Same, but mutably borrowed, same as `f(self: &mut Self)` |
 |  {{ tab() }}  `self: Box<Self>`  | [**Arbitrary self type**](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart pointers (`my_box.f_of_self()`). |
 | `S as T`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`, e.g., `<S as T>::f()`. |
 | `S as R`  | In `use` of symbol, import `S` as `R`, e.g., `use a::S as R`. |
-| `x as u32`  | Primitive **cast** {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }}, may truncate and be a bit surprising. {{ nom(page="casts.html") }} |
+| `x as u32`  | Primitive **cast**, {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }} may truncate and be a bit surprising. {{ nom(page="casts.html") }} |
 
 </fixed-2-column>
 
@@ -522,7 +527,7 @@ Code generation constructs expanded before the actual compilation happens.
 | Example |  Explanation |
 |---------|---------|
 | `m!()` |  **Macro** {{book(page="ch19-06-macros.html")}} {{std(page="std/index.html#macros")}} {{ref(page="macros.html")}} invocation, also `m!{}`, `m![]` (depending on macro). |
-| `#[attr]`  | Outer **attribute**. {{ex(page="attribute.html")}} {{ref(page="attributes.html")}}, annotating the following item. |
+| `#[attr]`  | Outer **attribute**, {{ex(page="attribute.html")}} {{ref(page="attributes.html")}} annotating the following item. |
 | `#![attr]` | Inner attribute, annotating the _upper_, surrounding item. |
 
 </fixed-2-column>
@@ -533,18 +538,13 @@ Code generation constructs expanded before the actual compilation happens.
 
 | Inside Macros |  Explanation |
 |---------|---------|
-| `$x:ty`  | Macro capture (here a type).<sup>1</sup> |
+| `$x:ty`  | Macro capture (here a type); see **tooling directives** {{ below(target="#tooling-directives") }} for details. |
 | `$x` |  Macro substitution, e.g., use the captured `$x:ty` from above. |
 | `$(x),*` | Macro repetition "zero or more times" in macros by example. |
 | {{ tab() }} `$(x),?` | Same, but "zero or one time". |
 | {{ tab() }} `$(x),+` | Same, but "one or more times". |
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
 
-<footnotes>
-
-<sup>1</sup> See tooling directives {{ below(target="#tooling-directives") }} for details.
-
-</footnotes>
 
 </fixed-2-column>
 
@@ -559,13 +559,13 @@ Constructs found in `match` or `let` expressions, or function parameters.
 
 | Example | Explanation |
 |---------|-------------|
-| `match m {}` | Initiate **pattern matching** {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }}, then use match arms, _c_. next table. |
+| `match m {}` | Initiate **pattern matching**, {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} then use match arms, _c_. next table. |
 | `let S(x) = get();`  | Notably, `let` also **destructures** {{ ex(page="flow_control/match/destructuring.html") }} similar to the table below. |
 |  {{ tab() }} `let S { x } = s;` | Only `x` will be bound to value `s.x`. |
 |  {{ tab() }} `let (_, b, _) = abc;` | Only `b` will be bound to value `abc.1`. |
 |  {{ tab() }} `let (a, ..) = abc;` | Ignoring 'the rest' also works. |
 |  {{ tab() }} `let (.., a, b) = (1, 2);` | Specific bindings take precedence over 'the rest', here `a` is `1`, `b` is `2`. |
-|  {{ tab() }} `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted** {{ ref(page="expressions/if-expr.html#if-let-expressions") }}, use `if let` instead. |
+|  {{ tab() }} `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted**, {{ ref(page="expressions/if-expr.html#if-let-expressions") }} use `if let` instead. |
 | `if let Some(x) = get() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
 | `while let Some(x) = get() {}`  | Equiv.; here keep calling `get()`, run `{}` as long as pattern can be assigned. |
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`. {{ esoteric() }} |
@@ -632,10 +632,10 @@ Generics combine with type constructors, traits and functions to give your users
 | `S<T: R>`  | Type short hand **trait bound** {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} specification  (`R` _must_ be actual trait). |
 | {{ tab() }} `T: R, P: S`  | **Independent trait bounds** (here one for `T` and one for `P`). |
 | {{ tab() }} `T: R, S`  | Compile error, {{ bad() }} you probably want compound bound `R + S` below. |
-| {{ tab() }} `T: R + S`  | **Compound trait bound** {{ book(page="ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax") }} {{ ex(page="generics/multi_bounds.html") }}, `T` must fulfill `R` and `S`. |
+| {{ tab() }} `T: R + S`  | **Compound trait bound**, {{ book(page="ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax") }} {{ ex(page="generics/multi_bounds.html") }} `T` must fulfill `R` and `S`. |
 | {{ tab() }} `T: R + 'a`  | Same, but w. lifetime. `T` must fulfill `R`, if `T` has lifetimes, must outlive `'a`. |
 | {{ tab() }} `T: ?Sized` | Opt out of a pre-defined trait bound, here `Sized`. {{ todo() }} |
-| {{ tab() }} `T: 'a` | Type **lifetime bound** {{ ex(page="scope/lifetime/lifetime_bounds.html") }}; if T has references, they must outlive `'a`.  |
+| {{ tab() }} `T: 'a` | Type **lifetime bound**; {{ ex(page="scope/lifetime/lifetime_bounds.html") }} if T has references, they must outlive `'a`.  |
 | {{ tab() }} `T: 'static` | Same; does esp. _not_ mean value `t` _will_ {{ bad() }} live `'static`, only that it could. |
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
 | `S<const N: usize>` | **Generic const bound**; {{ todo() }} user of type `S` can provide constant value `N`. {{ experimental() }} |
@@ -914,10 +914,6 @@ Why moves, references and lifetimes are how they are.
     - **heap** (large, flexible memory, but always handled via stack proxy like `Box<T>`),
     - **static** (most commonly used as resting place for `str` part of `&str`),
     - **code** (where bitcode of your functions reside).
-- Programming languages such as Rust give developers tools to:
-    - define what data goes into what segment,
-    - express a desire for bitcode with specific properties to be produced,
-    - protect themselves from errors while performing these operations.
 - Most tricky part is tied to **how stack evolves**, which is **our focus**.
 
 <footnotes>
@@ -1106,8 +1102,8 @@ let a = t;
             <byte></byte>
             <byte></byte>
             <byte></byte>
-            <byte class="t"></byte>
-            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
             <byte></byte>
             <byte></byte>
             <byte></byte>
@@ -1146,12 +1142,11 @@ let a = t;
             <byte></byte>
         </memory-backdrop>
         <values>
-            <value class="t byte2" style="left: 57px;">S(1)</value>
-            <failed style="left: 177.5px;"><value class="atomic byte4">M { ... }</value></failed>
-            <denied style="left: 108px;">⛔</denied>
+            <failed style="left: 231.5px;"><value class="atomic byte4">M { ... }</value></failed>
+            <denied style="left: 141px;">⛔</denied>
         </values>
         <labels>
-            <label class="byte2" style="left: 57px;"><code>a</code></label>
+            <label class="byte2" style="left: 57px;"><code></code></label>
             <label class="byte2" style="left: 170px;"><code>c</code></label>
         </labels>
         <subtext>Type Safety</subtext>
@@ -2584,7 +2579,7 @@ print_byte(r);
 ```
 
 - Once the address of a variable is taken via `&b` or `&mut b` the variable is marked as **borrowed**.
-- While borrowed, the content of the addess cannot be modified anymore via original binding `b`.
+- While borrowed, the content of the address cannot be modified anymore via original binding `b`.
 - Once address taken via `&b` or `&mut b` stops being used (in terms of LOC) original binding `b` works again.
 
 
@@ -4836,32 +4831,44 @@ impl B for X { type O = u32; }
 
 <mini-zoo class="zoo">
     <entry>
-        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo">
     <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
+        <code style="text-align:center; width: 100%;">vs.</code>
     </narrow-entry>
 </mini-zoo>
 
 <mini-zoo class="zoo">
     <entry>
-        <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
+        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">vs.</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
     <entry>
-        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
         <associated-type class=""><code>type O;</code></associated-type>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">vs.</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
     <entry>
-        <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
+        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
         <associated-type class=""><code>type O;</code></associated-type>
     </entry>
 </mini-zoo>
@@ -4870,27 +4877,28 @@ impl B for X { type O = u32; }
 
 {{ tablesep() }}
 
-Choice of parameters goes along with purpose trait has to fill:
+Choice of parameters goes along with purpose trait has to fill.
 
+<hr>
 
 
 **No Additional Parameters**
 
 ```
-trait Audio {
-    fn play(&self, volume: f32);
+trait Query {
+    fn search(&self, needle: &str);
 }
 
-impl Audio for MP3 { ... }
-impl Audio for Ogg { ... }
+impl Query for PostgreSQL { ... }
+impl Query for Sled { ... }
 
-mp3.play(0_f32);
+postgres.search("SELECT ...");
 ```
 
 <mini-zoo class="zoo">
     <person>👩‍🦰</person>
     <entry>
-        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
     </entry>
 </mini-zoo>
 
@@ -4903,15 +4911,15 @@ mp3.play(0_f32);
 <mini-zoo class="zoo">
     <person>🧔</person>
     <entry>
-        <type class="composed"><code>MP3</code></type>
-        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+        <type class="composed"><code>PostgreSQL</code></type>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo">
     <entry>
-        <type class="composed"><code>Ogg</code></type>
-        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+        <type class="composed"><code>Sled</code></type>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
     </entry>
 </mini-zoo>
 
@@ -4922,26 +4930,28 @@ Trait author assumes:
 
 {{ tablesep() }}
 
+<hr>
+
 **Input Parameters**
 
 ```
-trait Audio<I> {
-    fn play(&self, volume: I);
+trait Query<I> {
+    fn search(&self, needle: &I);
 }
 
-impl Audio<f32> for MP3 { ... }
-impl Audio<u8> for MP3 { ... }
-impl Audio<Mixer> for MP3 { ... }
-impl<T> Audio<T> for Ogg where T: HeadsetControl { ... }
+impl Query<str> for PostgreSQL { ... }
+impl Query<u8> for PostgreSQL { ... }
+impl<T> Query<T> for Sled where T: ToU8Slice { ... }
 
-mp3.play(0_f32);
-mp3.play(mixer);
+postgres.search("SELECT ...");
+postgres.search(&0);
+sled.search(file);
 ```
 
 <mini-zoo class="zoo">
     <person>👩‍🦰</person>
     <entry>
-        <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
+        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
     </entry>
 </mini-zoo>
 
@@ -4954,18 +4964,17 @@ mp3.play(mixer);
 <mini-zoo class="zoo">
     <person>🧔</person>
     <entry>
-        <type class="composed"><code>MP3</code></type>
-        <trait-impl class="">⌾ <code>Audio&lt;f32&gt;</code></trait-impl>
-        <trait-impl class="">⌾ <code>Audio&lt;u8&gt;</code></trait-impl>
-        <trait-impl class="">⌾ <code>Audio&lt;Mix&gt;</code></trait-impl>
+        <type class="composed"><code>PostgreSQL</code></type>
+        <trait-impl class="">⌾ <code>Query&lt;str&gt;</code></trait-impl>
+        <trait-impl class="">⌾ <code>Query&lt;u8&gt;</code></trait-impl>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo">
     <entry>
-        <type class="composed"><code>Ogg</code></type>
-        <trait-impl class="dotted">⌾ <code>Audio&lt;T&gt;</code></trait-impl>
-        <note>... where <code>T</code> is <code>HeadsetCtrl</code>.</note>
+        <type class="composed"><code>Sled</code></type>
+        <trait-impl class="dotted">⌾ <code>Query&lt;T&gt;</code></trait-impl>
+        <note>... where <code>T</code> is <code>ToU8Slice</code>.</note>
     </entry>
 </mini-zoo>
 
@@ -4973,30 +4982,34 @@ mp3.play(mixer);
 {{ tablesep() }}
 
 Trait author assumes:
-- developers would customize API in multiple ways for same `Self` type,
+- implementor would customize API in multiple ways for same `Self` type,
 - users (may want) ability to decide for which `I`-types ability should be possible.
 
 {{ tablesep() }}
 
+
+<hr>
+
+
 **Output Parameters**
 
 ```
-trait Audio {
+trait Query {
     type O;
-    fn play(&self, volume: Self::O);
+    fn search(&self, needle: &Self::O);
 }
 
-impl Audio for MP3 { type O = f32; }
-impl Audio for Ogg { type O = Mixer; }
+impl Query for PostgreSQL { type O = str; }
+impl Query for Sled { type O = [u8]; }
 
-mp3.play(0_f32);
-ogg.play(mixer);
+postgres.search("SELECT ...");
+sled.search(&[0, 1, 2, 4]);
 ```
 
 <mini-zoo class="zoo">
     <person>👩‍🦰</person>
     <entry>
-        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
         <associated-type class=""><code>type O;</code></associated-type>
     </entry>
 </mini-zoo>
@@ -5010,17 +5023,17 @@ ogg.play(mixer);
 <mini-zoo class="zoo">
     <person>🧔</person>
     <entry>
-        <type class="composed"><code>MP3</code></type>
-        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
-        <associated-type class=""><code>O = f32;</code></associated-type>
+        <type class="composed"><code>PostgreSQL</code></type>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
+        <associated-type class=""><code>O = str;</code></associated-type>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo">
     <entry>
-        <type class="composed"><code>Ogg</code></type>
-        <trait-impl class="">⌾ <code>Audio</code></trait-impl>
-        <associated-type class=""><code>O = Mixer;</code></associated-type>
+        <type class="composed"><code>Sled</code></type>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
+        <associated-type class=""><code>O = [u8];</code></associated-type>
     </entry>
 </mini-zoo>
 
@@ -5028,33 +5041,35 @@ ogg.play(mixer);
 {{ tablesep() }}
 
 Trait author assumes:
-- developers would customize API for `Self` type (but in only one way),
+- implementor would customize API for `Self` type (but in only one way),
 - users do not need, or should not have, ability to influence customization for specific `Self`.
 
 > As you can see here, the term **input** or **output** does **not** (necessarily) have anything to do with whether `I` or `O` are inputs or outputs to an actual function!
 
 {{ tablesep() }}
 
+<hr>
+
 **Multiple In- and Output Parameters**
 
 ```
-trait Audio<I> {
+trait Query<I> {
     type O;
-    fn play(&self, volume: I) -> Self::O;
+    fn search(&self, needle: &I) -> Self::O;
 }
 
-impl Audio<u8> for MP3 { type O = DigitalDevice; }
-impl Audio<f32> for MP3 { type O = AnalogDevice; }
-impl<T> Audio<T> for Ogg { type O = GenericDevice; }
+impl Query<str> for PostgreSQL { type O = String; }
+impl Query<u8> for PostgreSQL { type O = Vec<u8>; }
+impl<T> Query<T> for Sled { type O = &[u8]; }
 
-mp3.play(0_u8).flip_bits();
-mp3.play(0_f32).rewind_tape();
+postgres.search("SELECT ...").to_uppercase();
+sled.search(&[1, 2, 3, 4]).is_ascii();
 ```
 
 <mini-zoo class="zoo">
     <person>👩‍🦰</person>
     <entry>
-        <trait-impl class="dotted">⌾ <code>Audio&lt;I&gt;</code></trait-impl>
+        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
         <associated-type class=""><code>type O;</code></associated-type>
     </entry>
 </mini-zoo>
@@ -5068,19 +5083,19 @@ mp3.play(0_f32).rewind_tape();
 <mini-zoo class="zoo">
     <person>🧔</person>
     <entry>
-        <type class="composed"><code>MP3</code></type>
-        <trait-impl class="">⌾ <code>Audio&lt;u8&gt;</code></trait-impl>
-        <associated-type class=""><code>O = DD;</code></associated-type>
-        <trait-impl class="">⌾ <code>Audio&lt;f32&gt;</code></trait-impl>
-        <associated-type class=""><code>O = AD;</code></associated-type>
+        <type class="composed"><code>PostgreSQL</code></type>
+        <trait-impl class="">⌾ <code>Query&lt;str&gt;</code></trait-impl>
+        <associated-type class=""><code>O = String</code></associated-type>
+        <trait-impl class="">⌾ <code>Query&lt;u8&gt;</code></trait-impl>
+        <associated-type class=""><code>O = Vec&lt;u8&gt;</code></associated-type>
     </entry>
 </mini-zoo>
 
 <mini-zoo class="zoo">
     <entry>
-        <type class="composed"><code>Ogg</code></type>
-        <trait-impl class="dotted">⌾ <code>Audio&lt;T&gt;</code></trait-impl>
-        <associated-type class=""><code>O = GD;</code></associated-type>
+        <type class="composed"><code>Sled</code></type>
+        <trait-impl class="dotted">⌾ <code>Query&lt;T&gt;</code></trait-impl>
+        <associated-type class=""><code>O = &[u8]</code></associated-type>
     </entry>
 </mini-zoo>
 
@@ -5089,7 +5104,7 @@ mp3.play(0_f32).rewind_tape();
 
 Like examples above, in particular trait author assumes:
 - users may want ability to decide for which `I`-types ability should be possible,
-- for given inputs, developer should determine resulting output type.
+- for given inputs, implementor should determine resulting output type.
 
 
 </description>
@@ -5570,11 +5585,64 @@ Similarly, for <code>f64</code> types this would look like:
 
 </div></panel></tab>
 
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-numeric-4" name="tab-group-numeric">
+<label for="tab-numeric-4"><b>Casting Pitfalls</b> {{ bad() }}</label>
+<panel><div class="">
+
+
+| Cast<sup>1</sup> | Gives | Note |
+| --- | --- | --- |
+| `3.9_f32 as u8` | `3` | Truncates, consider `x.round()` first. |
+| `314_f32 as u8` | `255` | Takes closest available number. |
+| `f32::INFINITY as u8` | `255` | Same, treats `INFINITY` as _really_ large number.|
+| `f32::NAN as u8` | `0` | - |
+| `_314 as u8` | `58` | Truncates excess bits. |
+| `_200 as i8` | `56` | - |
+| `_257 as i8` | `-1` | - |
+
+</div></panel></tab>
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-numeric-5" name="tab-group-numeric">
+<label for="tab-numeric-5"><b>Arithmetical Pitfalls</b> {{ bad() }}</label>
+<panel><div class="">
+
+| Operation<sup>1</sup> | Gives | Note |
+| --- | --- | --- |
+| `200_u8 / 0_u8` | Compile error. | - |
+| `200_u8 / _0` <sup>d</sup> | Panic. | Regular math may panic; here: division by zero. |
+| `200_u8 / _0` <sup>r</sup> | Panic. | Same. |
+| `200_u8 + 200_u8` |  Compile error. | - |
+| `200_u8 + _200` <sup>d</sup> | Panic. | Consider `checked_`, `wrapping_`, ... instead. {{ std(page="std/primitive.isize.html#method.checked_add") }}|
+| `200_u8 + _200` <sup>r</sup> | `144` | In release mode this will overflow. |
+| `1_u8 / 2_u8` | `0` | Other integer division truncates. |
+| `0.8_f32 + 0.1_f32` | `0.90000004` | - |
+| `1.0_f32 / 0.0_f32` | `f32::INFINITY` | - |
+| `0.0_f32 / 0.0_f32` | `f32::NaN` | - |
+
+</div></panel></tab>
+
+
 <!-- End tabs -->
 </tabs>
 
 <!-- End overflow prevention -->
 </div></div>
+
+
+<footnotes>
+
+<sup>1</sup> Expression `_100` means anything that might contain the value `100`, e.g., `100_i32`, but is opaque to compiler.<br/>
+<sup>d</sup> Debug build.<br/>
+<sup>r</sup> Release build.<br/>
+
+</footnotes>
 
 
 {{ tablesep() }}
@@ -6938,66 +7006,6 @@ As-<b style="">correct</b>-as-it-currently-gets number conversions.
 <sup>3</sup> Might misrepresent number (`u64::MAX as f32`) or produce `Inf` (`u128::MAX as f32`).
 
 </footnotes>
-
-
-{{ tablesep() }}
-
-Some mathematical <b style="">pitfalls</b> when dealing with numbers.
-
-<tabs>
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-number-ops-2" name="tab-number-ops" checked>
-<label for="tab-number-ops-2"><b>Casting Pitfalls</b> {{ bad() }}</label>
-<panel><div class="">
-
-
-| Cast<sup>1</sup> | Gives | Note |
-| --- | --- | --- |
-| `3.9_f32 as u8` | `3` | Truncates, consider `x.round()` first. |
-| `314_f32 as u8` | `255` | Takes closest available number. |
-| `f32::INFINITY as u8` | `255` | Same, treats `INFINITY` as _really_ large number.|
-| `f32::NAN as u8` | `0` | - |
-| `_314 as u8` | `58` | Truncates excess bits. |
-| `_200 as i8` | `56` | - |
-| `_257 as i8` | `-1` | - |
-
-</div></panel></tab>
-
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-number-ops-3" name="tab-number-ops">
-<label for="tab-number-ops-3"><b>Arithmetical Pitfalls</b> {{ bad() }}</label>
-<panel><div class="">
-
-| Operation<sup>1</sup> | Gives | Note |
-| --- | --- | --- |
-| `200_u8 / 0_u8` | Compile error. | - |
-| `200_u8 / _0` <sup>d</sup> | Panic. | Regular math may panic; here: division by zero. |
-| `200_u8 / _0` <sup>r</sup> | Panic. | Same. |
-| `200_u8 + 200_u8` |  Compile error. | - |
-| `200_u8 + _200` <sup>d</sup> | Panic. | Consider `checked_`, `wrapping_`, ... instead. {{ std(page="std/primitive.isize.html#method.checked_add") }}|
-| `200_u8 + _200` <sup>r</sup> | `144` | In release mode this will overflow. |
-| `1_u8 / 2_u8` | `0` | Other integer division truncates. |
-| `0.8_f32 + 0.1_f32` | `0.90000004` | - |
-| `1.0_f32 / 0.0_f32` | `f32::INFINITY` | - |
-| `0.0_f32 / 0.0_f32` | `f32::NaN` | - |
-
-</div></panel></tab>
-
-</tabs>
-
-<footnotes>
-
-<sup>1</sup> Expression `_100` means anything that might contain the value `100`, e.g., `100_i32`, but is opaque to compiler.<br/>
-<sup>d</sup> Debug build.<br/>
-<sup>r</sup> Release build.<br/>
-
-</footnotes>
-
-> In short, while all math will fail at domain limit, **casts and floating point** math won't panic; **integer** math may.
 
 
 <!-- end overflow -->
