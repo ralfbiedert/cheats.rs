@@ -908,7 +908,7 @@ Why moves, references and lifetimes are how they are.
 </lifetime-example>
 <explanation>
 
-- Application memory in itself is just array of bytes.
+- Application memory is just array of bytes on low level.
 - Operating environment usually segments that, amongst others, into:
     - **stack** (small, low-overhead memory,<sup>1</sup> most _variables_ go here),
     - **heap** (large, flexible memory, but always handled via stack proxy like `Box<T>`),
@@ -918,7 +918,7 @@ Why moves, references and lifetimes are how they are.
 
 <footnotes>
 
-<sup>1</sup> While for each part of the heap someone (the allocator) needs to perform bookkeeping at runtime, the stack is trivially managable: _take a few bytes more while you need them, they will be discarded once you leave_. The (for performance reasons desired) simplicity of this appraoch, along with the fact that you can tell others about such _transient_ locations (which in turn might want to access them long after you left), form the very essence of why _lifetimes_ exist; and are the subject of the rest of this chapter.
+<sup>1</sup> For fixed-size values stack is trivially managable: _take a few bytes more while you need them, discarded once you leave_. However, giving out pointers to these _transient_ locations form the very essence of why _lifetimes_ exist; and are the subject of the rest of this chapter.
 
 </footnotes>
 
@@ -994,10 +994,10 @@ let t = S(1);
 
 - Reserves memory location with name `t` of type `S` and the value `S(1)` stored inside.
 - If declared with `let` that location lives on stack. <sup>1</sup>
-- Note that the term **_variable_** has some **linguistic ambiguity**,<sup>2</sup> it can mean:
-    1. the **name** of the location ("rename that variable"),
-    1. the **location** itself, `0x7` ("tell me the address of that variable"),
-    1. the **value** contained within, `S(1)` ("increment that variable").
+- Note the **linguistic ambiguity**,<sup>2</sup> in the term **_variable_**, it can mean the:
+    1. **name** of the location in the source file ("rename that variable"),
+    1. **location** in a compiled app, `0x7` ("tell me the address of that variable"),
+    1. **value** contained within, `S(1)` ("increment that variable").
 - Specifically towards the compiler `t` can mean **location of** `t`, here `0x7`, and **value within** `t`, here `S(1)`.
 
 <footnotes>
@@ -1005,10 +1005,6 @@ let t = S(1);
 <sup>1</sup> Compare above,{{ above(target="#data-structures" ) }} true for fully synchronous code, but `async` stack frame might placed it on heap via runtime.
 
 </footnotes>
-
-> <sup>2</sup> It is the **author's opinion** {{ opinionated() }} that this ambiguity related to _variables_ (and _lifetimes_ and _scope_ later)
-> are some of the biggest
-> contributors to the confusion around learning the basics of lifetimes. Whenever you hear one of these terms ask yourself "what _exactly_ is meant here?"
 
 
 </explanation>
@@ -1086,7 +1082,7 @@ let a = t;
     - If you still had access to `t` (via `unsafe`) they might still _look_ like valid `S`, but
     any attempt to use them as valid `S` is undefined behavior. {{ below(target="#unsafe-unsound-undefined") }}
 - We do not cover `Copy` types explicitly here. They change the rules a bit, but not much:
-    - They won't be dropped
+    - They won't be dropped.
     - They never leave behind an 'empty' variable location.
 
 </explanation>
@@ -1166,8 +1162,6 @@ let c: S = M::new();
     1. prevents random other values or bits from being written to that location.
 - Here assignment fails to compile since the bytes of `M::new()` cannot be converted to form of type `S`.
 - **Conversions between types will _always_ fail** in general, **unless explicit rule allows it** (coercion, cast, &hellip;).
-
-> As an excercise to the reader, any time you see a value of type A being assignable to a location of some type not-exactly-A you should ask yourself: _through what mechanism is this possible_?
 
 </explanation>
 </lifetime-section>
@@ -2011,7 +2005,7 @@ let p: *const S = questionable_origin();
 </lifetime-example>
 <explanation>
 
-- Every entity in a program has some _time it is alive_.
+- Every entity in a program has some (temporal / spatial) room where it is relevant, i.e., _alive_.
 - Loosely speaking, this _alive time_ can be<sup>1</sup>
     1. the **LOC** (lines of code) where an **item is available** (e.g., a module name).
     1. the **LOC** between when a _location_ is **initialized** with a value, and when the location is **abandoned**.
