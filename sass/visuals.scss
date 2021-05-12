@@ -1163,6 +1163,11 @@ mini-zoo {
     // }
 }
 
+// We have to make these wider because the types involved are too long :/
+#trait-authoring-examples entry {
+    width: 110px;
+}
+
 // In the table below the `zoo`, one section of text (containing a header and description).
 generics-section {
     display: block;

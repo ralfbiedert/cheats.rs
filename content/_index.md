@@ -4819,7 +4819,7 @@ impl B for X { type O = u32; }
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section id="trait-authoring-examples">
 <header>Trait Authoring Considerations (Example)</header>
 <description>
 
@@ -4930,15 +4930,15 @@ Trait author assumes:
 
 ```
 trait Query<I> {
-    fn search(&self, needle: &I);
+    fn search(&self, needle: I);
 }
 
-impl Query<str> for PostgreSQL { ... }
-impl Query<u8> for PostgreSQL { ... }
+impl Query<&str> for PostgreSQL { ... }
+impl Query<String> for PostgreSQL { ... }
 impl<T> Query<T> for Sled where T: ToU8Slice { ... }
 
 postgres.search("SELECT ...");
-postgres.search(&0);
+postgres.search(input.to_string());
 sled.search(file);
 ```
 
@@ -4959,8 +4959,8 @@ sled.search(file);
     <person>🧔</person>
     <entry>
         <type class="composed"><code>PostgreSQL</code></type>
-        <trait-impl class="">⌾ <code>Query&lt;str&gt;</code></trait-impl>
-        <trait-impl class="">⌾ <code>Query&lt;u8&gt;</code></trait-impl>
+        <trait-impl class="">⌾ <code>Query&lt;&str&gt;</code></trait-impl>
+        <trait-impl class="">⌾ <code>Query&lt;String&gt;</code></trait-impl>
     </entry>
 </mini-zoo>
 
@@ -4968,7 +4968,7 @@ sled.search(file);
     <entry>
         <type class="composed"><code>Sled</code></type>
         <trait-impl class="dotted">⌾ <code>Query&lt;T&gt;</code></trait-impl>
-        <note>... where <code>T</code> is <code>ToU8Slice</code>.</note>
+        <note><span style="margin-left: 10px; display: inline-block; transform: rotate(90deg); font-size: 100%">↲</span> where <code>T</code> is <code>ToU8Slice</code>.</note>
     </entry>
 </mini-zoo>
 
@@ -4977,7 +4977,7 @@ sled.search(file);
 
 Trait author assumes:
 - implementor would customize API in multiple ways for same `Self` type,
-- users (may want) ability to decide for which `I`-types ability should be possible.
+- users may want ability to decide for which `I`-types behavior should be possible.
 
 {{ tablesep() }}
 
@@ -4990,14 +4990,14 @@ Trait author assumes:
 ```
 trait Query {
     type O;
-    fn search(&self, needle: &Self::O);
+    fn search(&self, needle: Self::O);
 }
 
-impl Query for PostgreSQL { type O = str; }
-impl Query for Sled { type O = [u8]; }
+impl Query for PostgreSQL { type O = String; ...}
+impl Query for Sled { type O = Vec<u8>; ... }
 
-postgres.search("SELECT ...");
-sled.search(&[0, 1, 2, 4]);
+postgres.search("SELECT ...".to_string());
+sled.search(vec![0, 1, 2, 4]);
 ```
 
 <mini-zoo class="zoo">
@@ -5019,7 +5019,7 @@ sled.search(&[0, 1, 2, 4]);
     <entry>
         <type class="composed"><code>PostgreSQL</code></type>
         <trait-impl class="">⌾ <code>Query</code></trait-impl>
-        <associated-type class=""><code>O = str;</code></associated-type>
+        <associated-type class=""><code>O = String;</code></associated-type>
     </entry>
 </mini-zoo>
 
@@ -5027,7 +5027,7 @@ sled.search(&[0, 1, 2, 4]);
     <entry>
         <type class="composed"><code>Sled</code></type>
         <trait-impl class="">⌾ <code>Query</code></trait-impl>
-        <associated-type class=""><code>O = [u8];</code></associated-type>
+        <associated-type class=""><code>O = Vec&lt;u8&gt;;</code></associated-type>
     </entry>
 </mini-zoo>
 
@@ -5049,15 +5049,15 @@ Trait author assumes:
 ```
 trait Query<I> {
     type O;
-    fn search(&self, needle: &I) -> Self::O;
+    fn search(&self, needle: I) -> Self::O;
 }
 
-impl Query<str> for PostgreSQL { type O = String; }
-impl Query<u8> for PostgreSQL { type O = Vec<u8>; }
-impl<T> Query<T> for Sled { type O = &[u8]; }
+impl Query<&str> for PostgreSQL { type O = String; ... }
+impl Query<CString> for PostgreSQL { type O = CString; ... }
+impl<T> Query<T> for Sled where T: ToU8Slice { type O = Vec<u8>; ... }
 
 postgres.search("SELECT ...").to_uppercase();
-sled.search(&[1, 2, 3, 4]).is_ascii();
+sled.search(&[1, 2, 3, 4]).pop();
 ```
 
 <mini-zoo class="zoo">
@@ -5078,10 +5078,10 @@ sled.search(&[1, 2, 3, 4]).is_ascii();
     <person>🧔</person>
     <entry>
         <type class="composed"><code>PostgreSQL</code></type>
-        <trait-impl class="">⌾ <code>Query&lt;str&gt;</code></trait-impl>
-        <associated-type class=""><code>O = String</code></associated-type>
-        <trait-impl class="">⌾ <code>Query&lt;u8&gt;</code></trait-impl>
-        <associated-type class=""><code>O = Vec&lt;u8&gt;</code></associated-type>
+        <trait-impl class="">⌾ <code>Query&lt;&str&gt;</code></trait-impl>
+        <associated-type class=""><code>O = String;</code></associated-type>
+        <trait-impl class="">⌾ <code>Query&lt;CString&gt;</code></trait-impl>
+        <associated-type class=""><code>O = CString;</code></associated-type>
     </entry>
 </mini-zoo>
 
@@ -5089,7 +5089,8 @@ sled.search(&[1, 2, 3, 4]).is_ascii();
     <entry>
         <type class="composed"><code>Sled</code></type>
         <trait-impl class="dotted">⌾ <code>Query&lt;T&gt;</code></trait-impl>
-        <associated-type class=""><code>O = &[u8]</code></associated-type>
+        <associated-type class=""><code>O = Vec&lt;u8&gt;;</code></associated-type>
+        <note><span style="margin-left: 10px; display: inline-block; transform: rotate(90deg); font-size: 100%">↲</span> where <code>T</code> is <code>ToU8Slice</code>.</note>
     </entry>
 </mini-zoo>
 
