@@ -3372,6 +3372,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotate `f(x: &T)` to `f<'a>(x: &'a T)`.|
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Deref or borrow `x` until `x.f()` works. |
 | **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly dereference [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and add `ref` and `ref mut` to bindings. |
+| **Rvalue Static Promotion** {{ rfc(page="1414-rvalue_static_promotion.html") }} | References to constants are `'static`, e.g. `&42`, `&None`, `&mut []`. |
 
 
 </div>
