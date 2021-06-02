@@ -19,7 +19,7 @@ _NC='\033[0m' # No Color
 
 # Substituions in generated files
 NOW_SITEMAP=`date +"%Y-%m-%dT%H:%M:%S+02:00"`
-NOW_HUMAN=`date +"%d.%m.%Y"`
+NOW_HUMAN=`date +"%-d. %B %Y"`
 GITHASH=`git rev-parse --short HEAD`
 
 function abort() {
