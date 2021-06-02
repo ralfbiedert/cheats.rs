@@ -7,9 +7,7 @@ const SURVEY_KEY = "survey2020";
 
 let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
 let subtitle_index = 0;
-
 let all_tabs_expanded = false; // Set `true` by script if asked to expand tabs
-let print_mode = false; // If asked (via #xxx) to render for printing
 
 const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries
 
@@ -511,16 +509,16 @@ codes_rust.forEach(code => {
     code.className = "language-rust";
 });
 
-// Check if we have been asked to print
-if (window.location.hash == "#_print") {
-    print_mode = true;
-}
 
 try {
-    if (print_mode) {
+    // Check if we have been asked to print
+    if (window.location.hash == "#_print") {
         // In print mode, all we care for is to enable a few things
         toggle_ligatures();
         toggle_expand_all();
+
+        // Have to set this to make CSS work for book
+        set_body_night_mode("day");
     } else {
         // Executed on page load, this runs all toggles the user might have clicked
         // the last time based on localStorage.
