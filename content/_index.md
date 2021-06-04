@@ -478,7 +478,7 @@ Segment projects into smaller units and minimize dependencies.
 | `use a::b as _;`  | Bring `b` anonymously into scope, useful for traits with conflicting names. |
 | `use a::*;`  | Bring everything from `a` in, only recommended if `a` is some **prelude**. {{ link(url="https://stackoverflow.com/questions/36384840/what-is-the-prelude" ) }} |
 | `pub use a::b;`  | Bring `a::b` into scope and reexport from here. |
-| `pub T`  | "Public if parent path is public" **visibility** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} for `T`.  |
+| `pub T`  | "Public if parent path is public" **visibility** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ref(page="visibility-and-privacy.html")}} for `T`.  |
 | {{ tab() }} `pub(crate) T` | Visible at most<sup>1</sup> in current crate.  |
 | {{ tab() }} `pub(super) T`  | Visible at most<sup>1</sup> in parent.  |
 | {{ tab() }} `pub(self) T`  | Visible at most<sup>1</sup> in current module (default, same as no `pub`).  |
