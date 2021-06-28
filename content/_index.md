@@ -3920,7 +3920,7 @@ trait Copy { }
 impl ShowHex for Port { ... }
 ```
 - Traits are implemented for types 'at some point'.
-- Implementation `impl A for B` add type `B` to the trait memebership list:
+- Implementation `impl A for B` add type `B` to the trait membership list:
 
 <mini-table>
 
