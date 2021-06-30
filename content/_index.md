@@ -8289,7 +8289,7 @@ Environment variables and outputs related to the pre-build script.
 
 <fixed-2-column class="color-header special_example extra-wide">
 
-| Input Environment | Explanation {{ ref(page="environment-variables.html#environment-variables-cargo-sets-for-build-scripts") }} |
+| Input Environment | Explanation {{ link(url="https://doc.rust-lang.org/cargo/reference/environment-variables.html") }} |
 |-------|-------------|
 | `CARGO_FEATURE_X` |  Environment variable set for each feature `x` activated.  |
 | {{ tab() }} `CARGO_FEATURE_SERDE` |  If feature `serde` were enabled. |
@@ -8313,7 +8313,7 @@ Available in `build.rs` via `env!()`. List not exhaustive.
 
 {{ tablesep() }}
 
-| Output String | Explanation {{ ref(page="build-scripts.html#outputs-of-the-build-script") }} |
+| Output String | Explanation {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }} |
 |-------|-------------|
 | `cargo:rerun-if-changed=PATH` | (Only) run this `build.rs` again if `PATH` changed. |
 | `cargo:rerun-if-env-changed=VAR` | (Only) run this `build.rs` again if environment `VAR` changed. |
