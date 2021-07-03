@@ -34,7 +34,7 @@ Constructive feedback would be most actionable, but if you just want to vent you
 Big shout-out to [all the contributors](https://github.com/ralfbiedert/cheats.rs/graphs/contributors) and people filing [issues](https://github.com/ralfbiedert/cheats.rs/issues) and [pull requests](https://github.com/ralfbiedert/cheats.rs/pulls) for being awesome!
 
 
-Took additional inspiration from:
+Also:
 
 * The Bronshtein and Semendyayev _Handbook of Mathematics_, the mother of all cheat sheets
 * [The Book](https://doc.rust-lang.org/stable/book/) (some tables)
@@ -44,8 +44,7 @@ Took additional inspiration from:
 * That one IEEE 754-2008 Powerpoint deck I can't find anymore ...
 * [Da Button Factory](https://dabuttonfactory.com/) (Download / PDF buttons)
 * [String Conversions](https://docs.google.com/spreadsheets/d/19vSPL6z2d50JlyzwxariaYD6EU2QQUQqIDOGbiGQC7Y/pubhtml?gid=0&single=true)
-
-
+* steffahn from users.rust-lang.org; for outstanding explanations
 
 
 # Legal & License
