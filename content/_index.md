@@ -108,6 +108,7 @@ Contains clickable links to
 * [Macros & Attributes](#macros-attributes)
 * [Pattern Matching](#pattern-matching)
 * [Generics & Constraints](#generics-constraints)
+* [Higher-Ranked Items](#higher-ranked-items)
 * [Strings & Chars](#strings-chars)
 * [Documentation](#documentation)
 * [Miscellaneous](#miscellaneous)
@@ -659,11 +660,48 @@ Generics combine with type constructors, traits and functions to give your users
 | `fn f() where Self: R;`  | In `trait T {}`, make `f` accessible only on types known to also `impl R`.  |
 | {{ tab() }} `fn f() where Self: Sized;`  | Using `Sized` can opt `f` out of `dyn T` trait object vtable, enabling trait obj. |
 | {{ tab() }} `fn f() where Self: R {}`  | Other `R` useful w. dflt. methods (non dflt. would need be impl'ed anyway). |
-| `for<'a>` | **Higher-ranked trait bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} {{ esoteric() }} |
-| {{ tab() }} `trait T: for<'a> R<'a> {}` | Any `S` that `impl T` would also have to fulfill `R` for any lifetime. |
 
 </fixed-2-column>
 
+
+
+### Higher-Ranked Items {{ esoteric() }} {#higher-ranked-items}
+
+_Actual_ types and traits, abstract over something, usually lifetimes.
+
+<fixed-2-column>
+
+| Example | Explanation |
+|---------|-------------|
+| `for<'a>` | Marker for **higher-ranked bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} {{ esoteric() }} |
+| {{ tab() }} `trait T: for<'a> R<'a> {}` | Any `S` that `impl T` would also have to fulfill `R` for any lifetime. |
+| `fn(&'a u8)` | _Fn. ptr._ type holding fn callable with **specific** lifetime `'a`. |
+| `for<'a> fn(&'a u8)` | **Higher-ranked type**<sup>1</sup> {{ link(url="https://github.com/rust-lang/rust/issues/56105") }} holding fn callable with **any** _lt._; subtype of above. |
+| {{ tab() }} `fn(&'_ u8)` | Same; automatically expanded to type `for<'a> fn(&'a u8)`. |
+| {{ tab() }} `fn(&u8)` | Same; automatically expanded to type `for<'a> fn(&'a u8)`. |
+| `dyn for<'a> Fn(&'a u8)` | Higher-ranked (trait-object) type, works like `fn` above. |
+| {{ tab() }} `dyn Fn(&'_ u8)` | Same; automatically expanded to type `dyn for<'a> Fn(&'a u8)`. |
+| {{ tab() }} `dyn Fn(&u8)` | Same; automatically expanded to type `dyn for<'a> Fn(&'a u8)`. |
+
+<footnotes>
+
+ <sup>1</sup> Yes, the `for<>` is part of the type, which is why you write `impl T for for<'a> fn(&'a u8)` below.
+
+</footnotes>
+
+</fixed-2-column>
+
+
+<div class="color-header special_example">
+{{ tablesep() }}
+
+| Implementing Traits | Explanation |
+|---------|-------------|
+| `impl<'a> T for fn(&'a u8) {}` | For fn. pointer, where call accepts **specific** _lt._ `'a`, impl trait `T`.|
+| `impl T for for<'a> fn(&'a u8) {}` | For fn. pointer, where call accepts **any** _lt._, impl trait `T`. |
+| {{ tab() }} `impl T for fn(&u8) {}` | Same, short version. |
+
+</div>
 
 
 ### Strings & Chars
@@ -8667,8 +8705,9 @@ fn convert(x: A) -> B {
 | `Cell<u8>` | `Cell<u8>` | Valid, same thing. |
 | `Cell<&'a static>` | `Cell<&'a u8>` | {{ bad() }}<sup>⚡</sup> Invalid, cells are **never** something else; invariant. |
 | `fn(&'a u8)` | `fn(&'a u8)` | Valid, same thing. |
-| `fn(&'static u8)` | `fn(&'u8 u8)` | {{ bad() }}<sup>⚡</sup> If it needs forever it may choke on transients; **contrav.**|
+| `fn(&'static u8)` | `fn(&'u8 u8)` | {{ bad() }}<sup>⚡</sup> If `fn` needs forever it may choke on transients; **contrav.**|
 | `fn(&'a u8)` | `fn(&'static u8)` |  But sth. that eats transients **can be**(!) sth. that eats forevers. |
+| `for<'r> fn(&'r u8)` | `fn(&'a u8)` | Higher-ranked type `for<'r> fn(&'r u8)` is also `fn(&'a u8).` |
 
 </div>
 
