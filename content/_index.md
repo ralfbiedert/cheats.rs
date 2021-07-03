@@ -151,6 +151,7 @@ Contains clickable links to
 * [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
 * [Closures in APIs](#closures-in-apis)
+* [Variance](#variance)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
 * [API Stability](#api-stability)
 
@@ -8599,6 +8600,83 @@ That gives the following advantages and disadvantages:
 
 <!-- ## Macro Hygiene -->
 <!-- {{ tablesep() }} -->
+
+## Variance
+
+<div class="color-header variance">
+
+The **Nomicon** {{ nom(page="subtyping.html#variance") }} provides the following **variance table**:
+
+| Construct<sup>1</sup> | `'a` | `T` | `U` |
+|--------| -----------| -------| -------|
+| `&'a T` | covariant | covariant |  |
+| `&'a mut T` | covariant | invariant |  |
+| `Box<T>` |  | covariant |  |
+| `Cell<T>` |  | invariant |  |
+| `fn(T) -> U` |  | **contra**variant | covariant |
+| `*const T` |  | covariant |  |
+| `*mut T` |  | invariant |  |
+
+<footnotes>
+
+**Covariant** means if `A` is also<sup>2</sup> `B`, then `T[A]` is also `T[B]`. <br>
+**Contravariant** means if `A` is also `B`, then **`T[B]`** is also `T[A]`. <br>
+**Invariant** means even if `A` is also `B`, neither `T[A]` nor `T[B]` will be the other.<br>
+<!-- <br> -->
+
+
+<sup>1</sup> Compounds like `struct S<T> {}` obtain variance through their used fields, usally becoming invariant if multiple variances are mixed.<br>
+<sup>2</sup> In a _subtype_-, not _coercion_ meaning. A `&'static u8` is, in lack of a better term, _spiritually_ a `&'a u8`; but a `&mut u8` can only be _gently hammered_ (coerced) into a `&u8`.<br>
+
+</footnotes>
+
+{{ tablesep() }}
+
+Practically speaking, this is asking for which `A` and `B` is writing the following function<sup>1</sup> valid?
+
+```
+fn convert(x: A) -> B {
+    x
+}
+```
+
+<footnotes>
+<sup>1</sup> <code>A</code>, <code>B</code> are not generics here, just placeholders for table below; lifetimes omitted for visual clarity.
+</footnotes>
+
+{{ tablesep() }}
+
+
+| A | B | Comment |
+|--------| -----------| -----------|
+| `u8` | `u8` | Valid, same thing. |
+| `u16` | `u8` | {{ bad() }} _Obviously_ invalid; `u16` should never _be_ `u8`. |
+| `u8` | `u16` | {{ bad() }} Invalid _by design_; regular types never _just_ are the same. |
+| `&'a u8` | `&'a u8` | Valid, same thing. |
+| `&'static u8` | `&'a u8` | Valid, <i>forever-</i>pointer is also <i>transient-</i>pointer. |
+| `&'a u8` | `&'static u8` | {{ bad() }} Invalid, transient may not be forever. |
+| `&'a mut u8` | `&'a mut u8` | Valid, same thing. |
+| `&'a &'b u8` | `&'a &'b u8` | Valid, same thing. **But now things get interesting. Read on.** |
+| `&'a &'static u8` | `&'a &'b u8` | Valid, `&'static u8` is also `&'b u8`; **covariant** inside `&`.  |
+| `&'a mut &'static u8` | `&'a mut &'b u8` | {{ bad() }} <sup>⚡</sup> Invalid and surprising; **invariant** inside `&mut`. |
+| `&'a mut u8` | `&'a u8` | **Trojan horse**.<sup>⚡</sup>  Not variance; but coercion, see <sup>2</sup> above. |
+| `Box<u8>` | `Box<u8>` | Valid, same thing. |
+| `Box<&'a static>` | `Box<&'a u8>` | Valid, box with forever is also box with transient; covariant. |
+| `Box<&'a u8>` | `Box<&'static u8>` | {{ bad() }} Invalid, box with transient may not be with forever. |
+| `Box<&'a mut u8>` | `Box<&'a u8>` | {{ bad() }} <sup>⚡</sup> Invalid, see <sup>2</sup> above, `&mut u8` never _was a_ `&u8`. |
+| `Cell<u8>` | `Cell<u8>` | Valid, same thing. |
+| `Cell<&'a static>` | `Cell<&'a u8>` | {{ bad() }}<sup>⚡</sup> Invalid, cells are **never** something else; invariant. |
+| `fn(&'a u8)` | `fn(&'a u8)` | Valid, same thing. |
+| `fn(&'static u8)` | `fn(&'u8 u8)` | {{ bad() }}<sup>⚡</sup> If it needs forever it may choke on transients; **contrav.**|
+| `fn(&'a u8)` | `fn(&'static u8)` |  But sth. that eats transients **can be**(!) sth. that eats forevers. |
+
+</div>
+
+<footnotes>
+
+
+</footnotes>
+
 
 
 ## Unsafe, Unsound, Undefined
