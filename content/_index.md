@@ -8641,7 +8641,17 @@ That gives the following advantages and disadvantages:
 
 ## Variance
 
+Variance governs how derived types relate, depending on the relationship of their base types.
+
 <div class="color-header variance">
+
+<tabs>
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-variance-1" name="tab-variance" checked>
+<label for="tab-variance-1"><b>Rules</b></label>
+<panel><div>
 
 The **Nomicon** {{ nom(page="subtyping.html#variance") }} provides the following **variance table**:
 
@@ -8668,7 +8678,16 @@ The **Nomicon** {{ nom(page="subtyping.html#variance") }} provides the following
 
 </footnotes>
 
-{{ tablesep() }}
+
+</div></panel></tab>
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-variance-2" name="tab-variance">
+<label for="tab-variance-2"><b>Examples</b></label>
+<panel><div>
+
 
 Practically speaking, this is asking for which `A` and `B` is writing the following function<sup>1</sup> valid?
 
@@ -8679,7 +8698,9 @@ fn convert(x: A) -> B {
 ```
 
 <footnotes>
+
 <sup>1</sup> <code>A</code>, <code>B</code> are not generics here, just placeholders for table below; lifetimes omitted for visual clarity.
+
 </footnotes>
 
 {{ tablesep() }}
@@ -8711,10 +8732,15 @@ fn convert(x: A) -> B {
 
 </div>
 
-<footnotes>
+
+</div></panel></tab>
 
 
-</footnotes>
+</tabs>
+
+
+{{ tablesep() }}
+
 
 
 
