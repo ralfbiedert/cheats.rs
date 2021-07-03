@@ -8689,7 +8689,7 @@ The **Nomicon** {{ nom(page="subtyping.html#variance") }} provides the following
 <panel><div>
 
 
-Practically speaking, this is asking for which `A` and `B` is writing the following function<sup>1</sup> valid?
+Practically speaking, variance is partially<sup>1</sup> answering: _for which `A` and `B` is writing the following function<sup>2</sup> valid_?
 
 ```
 fn convert(x: A) -> B {
@@ -8699,7 +8699,8 @@ fn convert(x: A) -> B {
 
 <footnotes>
 
-<sup>1</sup> <code>A</code>, <code>B</code> are not generics here, just placeholders for table below; lifetimes omitted for visual clarity.
+<sup>1</sup> We say _partially_ because the function can be fulfulled by a) trivial identity, b) coercion rules or c) variance rules. <br>
+<sup>2</sup> <code>A</code>, <code>B</code> are not generics here, just placeholders for table below; lifetimes omitted for visual clarity.
 
 </footnotes>
 
@@ -8718,11 +8719,11 @@ fn convert(x: A) -> B {
 | `&'a &'b u8` | `&'a &'b u8` | Valid, same thing. **But now things get interesting. Read on.** |
 | `&'a &'static u8` | `&'a &'b u8` | Valid, `&'static u8` is also `&'b u8`; **covariant** inside `&`.  |
 | `&'a mut &'static u8` | `&'a mut &'b u8` | {{ bad() }} <sup>⚡</sup> Invalid and surprising; **invariant** inside `&mut`. |
-| `&'a mut u8` | `&'a u8` | **Trojan horse**.<sup>⚡</sup>  Not variance; but coercion, see <sup>2</sup> above. |
+| `&'a mut u8` | `&'a u8` | **Trojan horse**.<sup>⚡</sup>  Not variance; but coercion, see <sup>2</sup> in previous tab. |
 | `Box<u8>` | `Box<u8>` | Valid, same thing. |
 | `Box<&'a static>` | `Box<&'a u8>` | Valid, box with forever is also box with transient; covariant. |
 | `Box<&'a u8>` | `Box<&'static u8>` | {{ bad() }} Invalid, box with transient may not be with forever. |
-| `Box<&'a mut u8>` | `Box<&'a u8>` | {{ bad() }} <sup>⚡</sup> Invalid, see <sup>2</sup> above, `&mut u8` never _was a_ `&u8`. |
+| `Box<&'a mut u8>` | `Box<&'a u8>` | {{ bad() }} <sup>⚡</sup> Invalid, see <sup>2</sup> in previous tab, `&mut u8` never _was a_ `&u8`. |
 | `Cell<u8>` | `Cell<u8>` | Valid, same thing. |
 | `Cell<&'a static>` | `Cell<&'a u8>` | {{ bad() }}<sup>⚡</sup> Invalid, cells are **never** something else; invariant. |
 | `fn(&'a u8)` | `fn(&'a u8)` | Valid, same thing. |
