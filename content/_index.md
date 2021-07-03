@@ -8716,14 +8716,14 @@ fn convert(x: A) -> B {
 | `&'static u8` | `&'a u8` | Valid, <i>forever-</i>pointer is also <i>transient-</i>pointer. |
 | `&'a u8` | `&'static u8` | {{ bad() }} Invalid, transient may not be forever. |
 | `&'a mut u8` | `&'a mut u8` | Valid, same thing. |
+| `&'a mut u8` | `&'a u8` | **Trojan horse**.<sup>⚡</sup>  Not _is also_; but coercion, see <sup>2</sup> previous tab. |
 | `&'a &'b u8` | `&'a &'b u8` | Valid, same thing. **But now things get interesting. Read on.** |
 | `&'a &'static u8` | `&'a &'b u8` | Valid, `&'static u8` is also `&'b u8`; **covariant** inside `&`.  |
 | `&'a mut &'static u8` | `&'a mut &'b u8` | {{ bad() }} <sup>⚡</sup> Invalid and surprising; **invariant** inside `&mut`. |
-| `&'a mut u8` | `&'a u8` | **Trojan horse**.<sup>⚡</sup>  Not variance; but coercion, see <sup>2</sup> in previous tab. |
 | `Box<u8>` | `Box<u8>` | Valid, same thing. |
 | `Box<&'a static>` | `Box<&'a u8>` | Valid, box with forever is also box with transient; covariant. |
 | `Box<&'a u8>` | `Box<&'static u8>` | {{ bad() }} Invalid, box with transient may not be with forever. |
-| `Box<&'a mut u8>` | `Box<&'a u8>` | {{ bad() }} <sup>⚡</sup> Invalid, see <sup>2</sup> in previous tab, `&mut u8` never _was a_ `&u8`. |
+| `Box<&'a mut u8>` | `Box<&'a u8>` | {{ bad() }} <sup>⚡</sup> Invalid, see <sup>2</sup> previous tab, `&mut u8` never _was a_ `&u8`. |
 | `Cell<u8>` | `Cell<u8>` | Valid, same thing. |
 | `Cell<&'a static>` | `Cell<&'a u8>` | {{ bad() }}<sup>⚡</sup> Invalid, cells are **never** something else; invariant. |
 | `fn(&'a u8)` | `fn(&'a u8)` | Valid, same thing. |
