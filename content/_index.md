@@ -8342,7 +8342,7 @@ Environment variables and outputs related to the pre-build script.
 
 <footnotes>
 
-Available in `build.rs` via `env!()`. List not exhaustive.
+Available in `build.rs` via `env::var()?`. List not exhaustive.
 
 </footnotes>
 
