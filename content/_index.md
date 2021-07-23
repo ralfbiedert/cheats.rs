@@ -30,48 +30,28 @@ Contains clickable links to
 <column>
 
 **Clickable symbols** <br>
-<br> <legend-symbol> {{ book(page="") }} </legend-symbol> **The Book**
-<br> <legend-symbol> {{ ex(page="") }} </legend-symbol> **Rust by Example**
-<br> <legend-symbol> {{ std(page="std") }} </legend-symbol>  **Std Docs**
-<br> <legend-symbol> {{ nom(page="") }} </legend-symbol> **Nomicon**
-<br> <legend-symbol> {{ ref(page="") }} </legend-symbol> **Reference**
-<br> <legend-symbol> {{ rfc(page="") }} </legend-symbol> Official **RFC** documents
-<br> <legend-symbol> {{ link(url="https://cheats.rs") }} </legend-symbol> The **internet**
-<br> <legend-symbol> {{ above(target="#") }} </legend-symbol> On this page, **above**
-<br> <legend-symbol> {{ below(target="#") }} </legend-symbol> On this page, **below**
-
-
-<!-- - **Rust by Example** {{ ex(page="") }}
-- **Std Docs** {{ std(page="std") }}
-- **Nomicon** {{ nom(page="") }}
-- **Reference** {{ ref(page="") }}
-- Official **RFC** Documents {{ rfc(page="") }}
-- The **internet** {{ link(url="https://cheats.rs") }}
-- On this page, **above** {{ above(target="#") }}
-- On this page, **below** {{ below(target="#") }} -->
+<br> <legend-symbol> {{ book(page="") }} </legend-symbol> **The Book**.
+<br> <legend-symbol> {{ ex(page="") }} </legend-symbol> **Rust by Example**.
+<br> <legend-symbol> {{ std(page="std") }} </legend-symbol>  **Std Docs**.
+<br> <legend-symbol> {{ nom(page="") }} </legend-symbol> **Nomicon**.
+<br> <legend-symbol> {{ ref(page="") }} </legend-symbol> **Reference**.
+<br> <legend-symbol> {{ rfc(page="") }} </legend-symbol> Official **RFC** documents.
+<br> <legend-symbol> {{ link(url="https://cheats.rs") }} </legend-symbol> The **internet**.
+<br> <legend-symbol> {{ above(target="#") }} </legend-symbol> On this page, **above**.
+<br> <legend-symbol> {{ below(target="#") }} </legend-symbol> On this page, **below**.
 
 </column>
 <column>
 
-<!-- **Other**
-- Largely **deprecated** {{ deprecated() }}
-- Has **minimum edition** requirement {{ edition(ed="'18") }}
-- Requires **Rust nightly** (or is incomplete) {{ experimental() }}
-- Intentionally **wrong example** or **pitfall** {{ bad() }}
-- Slightly **esoteric**, rarely used or advanced. {{ esoteric() }}
-- Something with **outstanding utility** {{ hot() }}
-- Is **missing good link** or explanation {{ todo() }}
-- **Opinionated** {{ opinionated() }} -->
-
 **Other symbols** <br>
-<br> <legend-symbol> {{ deprecated() }}   </legend-symbol>Largely **deprecated**
-<br> <legend-symbol> {{ edition(ed="'18") }} </legend-symbol>Has **minimum edition** requirement
-<br> <legend-symbol> {{ experimental() }} </legend-symbol>Requires **Rust nightly** (or is incomplete)
-<br> <legend-symbol> {{ bad() }}   </legend-symbol>Intentionally **wrong example** or **pitfall**
-<br> <legend-symbol> {{ esoteric() }}   </legend-symbol>Slightly **esoteric**, rarely used or advanced
-<br> <legend-symbol> {{ hot() }}   </legend-symbol>Something with **outstanding utility**
-<br> <legend-symbol> {{ todo() }} </legend-symbol> Is **missing good link** or explanation
-<br> <legend-symbol> {{ opinionated() }} </legend-symbol> **Opinionated**
+<br> <legend-symbol> {{ deprecated() }}   </legend-symbol>Largely **deprecated**.
+<br> <legend-symbol> {{ edition(ed="'18") }} </legend-symbol>Has **minimum edition** requirement.
+<br> <legend-symbol> {{ experimental() }} </legend-symbol>Requires **Rust nightly** (or is incomplete).
+<br> <legend-symbol> {{ bad() }}   </legend-symbol>Intentionally **wrong example** or **pitfall**.
+<br> <legend-symbol> {{ esoteric() }}   </legend-symbol>Slightly **esoteric**, rarely used or advanced.
+<br> <legend-symbol> {{ hot() }}   </legend-symbol>Something with **outstanding utility**.
+<br> <legend-symbol> {{ todo() }} </legend-symbol> Is **missing good link** or explanation.
+<br> <legend-symbol> {{ opinionated() }} </legend-symbol> **Opinionated**.
 
 </column>
 </twocolumn>
@@ -115,9 +95,8 @@ Contains clickable links to
 
 **Behind the Scenes**
 * [The Abstract Machine](#the-abstract-machine)
-* [Memory & Lifetimes](#memory-lifetimes)
 * [Language Sugar](#language-sugar)
-* [Types, Traits, Generics](#types-traits-generics)
+* [Memory & Lifetimes](#memory-lifetimes)
 
 
 **Data Layout**
@@ -126,6 +105,10 @@ Contains clickable links to
 * [References & Pointers](#references-pointers-ui)
 * [Closures](#closures-data)
 * [Standard Library Types](#standard-library-types)
+
+**Misc**
+* [Links & Services](#links-services)
+* [Printing & PDF](#printing-pdf)
 
 </column>
 
@@ -148,17 +131,19 @@ Contains clickable links to
 * [Tooling Directives](#tooling-directives)
 
 
+**Working with Types**
+* [Types, Traits, Generics](#types-traits-generics)
+* [Type Zoo](#type-zoo)
+* [Type Conversions](#type-conversions)
+
+
 **Coding Guides**
 * [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
 * [Closures in APIs](#closures-in-apis)
-* [Type Conversions](#type-conversions)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
 * [API Stability](#api-stability)
 
-**Misc**
-* [Links & Services](#links-services)
-* [Printing & PDF](#printing-pdf)
 
 </column>
 </toc>
@@ -796,6 +781,16 @@ Arcane knowledge that may do terrible things to your mind, highly recommended.
 
 Like `C` and `C++`, Rust is based on an _abstract machine_.
 
+
+<tabs>
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-abstract-machine-1" name="tab-group-abstract-machine" checked>
+<label for="tab-abstract-machine-1"><b>Overview</b></label>
+<panel><div>
+
+
 <div style="text-align: center;">
 
 <mini-zoo class="zoo" style="text-align: center;">
@@ -839,11 +834,24 @@ The abstract machine
 - forms a contract between programmer and machine,
 - and **exploits all of the above for optimizations**.
 
-{{ tablesep() }}
+
+</div></panel></tab>
+
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-abstract-machine-2" name="tab-group-abstract-machine">
+<label for="tab-abstract-machine-2"><b>Misconceptions</b></label>
+<panel><div>
 
 <div class="color-header abstract-machine">
 
-| Without AM<sup>*</sup>  | With AM |
+Things people may incorrectly assume they _should get away with_ if Rust targeted CPU directly, and _more correct_ counterparts:
+
+{{ tablesep() }}
+
+| Without AM | With AM |
 |---------|-------------|
 | `0xffff_ffff` would make a valid `char`. {{ bad() }} | Memory more than just bits.  |
 | `0xff` and `0xff` are same pointer. {{ bad() }} | Pointers can come from different _domains_.  |
@@ -851,27 +859,45 @@ The abstract machine
 | Null reference is just `0x0` in some register. {{ bad() }} | Holding `0x0` in reference summons Cthulhu.  |
 
 </div>
+</div></panel></tab>
 
-<footnotes>
 
-<sup>*</sup> Things people may incorrectly assume they _should get away with_ if Rust targeted CPU directly, and _more correct_ counterparts.
+</tabs>
 
-</footnotes>
+<!--  -->
+<!-- > Practically this means: -->
+<!-- > - before assuming your **CPU** will do `A` when writing `B` you need positive proof **via documentation**(!), -->
+<!-- > - if you don't have that any physical behavior is _coincidental_, -->
+<!-- > - violate the abtract machine's contract and the optimizer makes your CPU do something **entirely else** &mdash; **undefined behavior**.{{ below(target="#unsafe-unsound-undefined")}} -->
+<!--  -->
 
+
+## Language Sugar
+
+If something works that "shouldn't work now that you think about it", it might be due to one of these.
+
+
+<div class="color-header language-sugar">
+
+
+| Name | Description |
+|--------| -----------|
+| **Coercions** {{ nom(page="coercions.html") }} | _Weakens_ types to match signature, e.g., `&mut T` to `&T`; _c_. _type conversions_. {{ below(target="#type-conversions") }}  |
+| **Deref** {{ nom(page="vec-deref.html#deref") }} {{ link(url="https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules") }} | [Derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
+| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic items, e.g., `Option`, `drop`, ...
+| **Reborrow** | Since `x: &mut T` can't be copied; moves new `&mut *x` instead. |
+| **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotates `f(x: &T)` to `f<'a>(x: &'a T)`.|
+| **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Derefs or borrow `x` until `x.f()` works. |
+| **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly dereferences [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and adds `ref` and `ref mut` to bindings. |
+| **Rvalue Static Promotion** {{ rfc(page="1414-rvalue_static_promotion.html") }} | Makes references to constants `'static`, e.g., `&42`, `&None`, `&mut []`. |
+
+
+</div>
 
 {{ tablesep() }}
 
+> **Opinion** {{ opinionated() }} &mdash; The features above will make your life easier, but might hinder your understanding. If any (type-related) operation ever feels _inconsistent_ it might be worth revisiting this list.
 
-
-> Practically this means:
-> - before assuming your **CPU** will do `A` when writing `B` you need positive proof **via documentation**(!),
-> - if you don't have that any physical behavior is _coincidental_,
-> - violate the abtract machine's contract and the optimizer makes your CPU do something **entirely else** &mdash; **undefined behavior**.{{ below(target="#unsafe-unsound-undefined")}}
-
-<!-- Legacy target some pages use to link here -->
-<a name="reading-lifetimes"></a>
-
-{{ tablesep() }}
 
 ## Memory & Lifetimes
 
@@ -3393,1949 +3419,7 @@ let a = c;          // <- But here, no more use of `r` or `s`.
 {{ tablesep() }}
 
 
-
-## Language Sugar
-
-If something works that "shouldn't work now that you think about it", it might be due to one of these.
-
-
-<div class="color-header language-sugar">
-
-
-| Name | Description |
-|--------| -----------|
-| **Coercions** {{ nom(page="coercions.html") }} | _Weakens_ types to match signature, e.g., `&mut T` to `&T`.  |
-| **Deref** {{ nom(page="vec-deref.html#deref") }} {{ link(url="https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules") }} | [Derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
-| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic items, e.g., `Option`, `drop`, ...
-| **Reborrow** | Since `x: &mut T` can't be copied; moves new `&mut *x` instead. |
-| **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotates `f(x: &T)` to `f<'a>(x: &'a T)`.|
-| **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Derefs or borrow `x` until `x.f()` works. |
-| **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly dereferences [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and adds `ref` and `ref mut` to bindings. |
-| **Rvalue Static Promotion** {{ rfc(page="1414-rvalue_static_promotion.html") }} | Makes references to constants `'static`, e.g., `&42`, `&None`, `&mut []`. |
-
-
-</div>
-
-{{ tablesep() }}
-
-> **Opinion** {{ opinionated() }} &mdash; The features above will make your life easier, but might hinder your understanding. If any (type-related) operation ever feels _inconsistent_ it might be worth revisiting this list.
-
-
 </magic>
-
-
-## Types, Traits, Generics
-
-The building blocks of compile-time safety.
-
-<!-- Create a horizontal scrollable area on small displays to preserve layout-->
-<div style="overflow:auto;">
-<div style="min-width: 100%; width: 750px;">
-
-
-<zoo class="zoo">
-
-<!-- REGION -->
-<region style="height: 310px;">
-<!-- Primitives -->
-<group style="left:6%; width: 200px;">
-    <entry style="left:100px; top: 10%;">
-        <type class="primitive"><code>u8</code></type>
-    </entry>
-    <entry style="left:20px; top: 32%;">
-        <type class="primitive"><code>u16</code></type>
-    </entry>
-    <entry style="left:30px; top: 20%;">
-        <type class="primitive"><code>f32</code></type>
-    </entry>
-    <entry style="left:0px; top: 7%;">
-        <type class="primitive"><code>bool</code></type>
-    </entry>
-    <entry style="left:120px; top: 32%;">
-        <type class="primitive"><code>char</code></type>
-    </entry>
-    <label style="left:8px; top: 43%;">Primitive Types</label>
-</group>
-<!-- Composed -->
-<group style="left:50%; width: 350px;">
-    <entry style="left:110px; top: 60px;">
-        <type class="composed"><code>File</code></type>
-    </entry>
-    <entry style="left:180px; top: 34%;">
-        <type class="composed"><code>String</code></type>
-    </entry>
-    <entry style="left:230px; top: 13%;">
-        <type class="composed"><code>Builder</code></type>
-    </entry>
-    <label style="left:150px; top: 43%;">Composite Types</label>
-</group>
-<!-- Type constructors -->
-<group style="left: 30px; top:53%; width: 200px;">
-    <!-- Group -->
-    <entry style="left:50px; top: 8%;">
-        <type class="composed"><code>Vec&lt;T&gt;</code></type>
-    </entry>
-    <entry style="left:45px; top: 9%;">
-        <type class="composed"><code>Vec&lt;T&gt;</code></type>
-    </entry>
-    <entry style="left:40px; top: 10%;">
-        <type class="generic dotted"><code>Vec&lt;T&gt;</code></type>
-    </entry>
-    <!-- Group -->
-    <entry style="left:170px; top: 2%;">
-        <type class="primitive"><code>&'a T</code></type>
-    </entry>
-    <entry style="left:165px; top: 3%;">
-        <type class="primitive"><code>&'a T</code></type>
-    </entry>
-    <entry style="left:160px; top: 4%;">
-        <type class="generic dotted"><code>&'a T</code></type>
-    </entry>
-    <!-- Group -->
-    <entry style="left:140px; top: 18%;">
-        <type class="primitive"><code>&mut 'a T</code></type>
-    </entry>
-    <entry style="left:135px; top: 19%;">
-        <type class="primitive"><code>&mut 'a T</code></type>
-    </entry>
-    <entry style="left:130px; top: 20%;">
-        <type class="generic dotted"><code>&mut 'a T</code></type>
-    </entry>
-    <!-- Group -->
-    <entry style="left:40px; top: 28%;">
-        <type class="primitive"><code>[T; n]</code></type>
-    </entry>
-    <entry style="left:35px; top: 29%;">
-        <type class="primitive"><code>[T; n]</code></type>
-    </entry>
-    <entry style="left:30px; top: 30%;">
-        <type class="generic dotted"><code>[T; n]</code></type>
-    </entry>
-    <label style="left:80px; top: 40%;">Type Constructors</label>
-</group>
-<!-- Functrions -->
-<group style="left: 50%; top:53%; width: 200px;">
-    <!-- Group -->
-    <entry style="left:10px; top: 8%;">
-        <function class=""><code>Vec&lt;T&gt;</code></function>
-    </entry>
-    <entry style="left:5px; top: 9%;">
-        <function class=""><code>Vec&lt;T&gt;</code></function>
-    </entry>
-    <entry style="left:0px; top: 10%;">
-        <function class="dotted"><code>f&lt;T&gt;() {}</code></function>
-    </entry>
-    <!-- Group -->
-    <entry style="left:20px; top: 24%;">
-        <function><code>drop() {}</code></function>
-    </entry>
-    <label style="left:10px; top: 40%;">Functions</label>
-</group>
-<!-- Unsized -->
-<!-- <group style="left: 50%; top:53%;">
-    <entry style="left:30%; top: 10%;">
-        <type class="unsized"><code>str</code></type>
-    </entry>
-    <entry style="left:35%; top: 20%;">
-        <type class="unsized"><code>[u8]</code></type>
-    </entry>
-    <entry style="left:28%; top: 30%;">
-        <type class="unsized"><code>dyn Trait</code></type>
-    </entry>
-    <label style="left:30%; top: 40%;">Unsized Types</label>
-</group> -->
-<!-- Macros -->
-<group class="grayed" style="left: 80%; top:53%; width: 140px;">
-    <entry style="left:5px; top: 15%;">
-        <macro><code>PI</code></macro>
-    </entry>
-    <entry style="left:0px; top: 28%;">
-        <macro><code>dbg!</code></macro>
-    </entry>
-    <label style="left:20px; top: 40%;">Other</label>
-</group>
-<!-- Traits -->
-<group style="left:36%; width: 30px;">
-    <entry style="left:20px; top: 20px;">
-        <trait-impl>⌾ <code>Copy</code></trait-impl>
-    </entry>
-    <entry style="left:60px; top: 90px;">
-        <trait-impl class="">⌾ <code>Deref</code></trait-impl>
-        <associated-type class=""><code>type Tgt;</code></associated-type>
-    </entry>
-    <entry style="left:90px; top: 50px;">
-        <trait-impl class="">⌾ <code>From&lt;T&gt;</code></trait-impl>
-    </entry>
-    <entry style="left:85px; top: 55px;">
-        <trait-impl class="">⌾ <code>From&lt;T&gt;</code></trait-impl>
-    </entry>
-    <entry style="left:80px; top: 60px;">
-        <trait-impl class="dotted">⌾ <code>From&lt;T&gt;</code></trait-impl>
-    </entry>
-    <label style="left:60px; top: 43%;">Traits</label>
-</group>
-</region>
-<region-label>Items defined in upstream crates.</region-label>
-
-<!-- REGION -->
-<region class="your-crate" style="height: 190px;">
-<!-- traits -->
-<group style="left:5px; width: 200px;">
-    <entry style="left:10px; top: 25px;">
-        <trait-impl class="">⌾ <code>Serialize</code></trait-impl>
-    </entry>
-    <entry style="left:30px; top: 65px;">
-        <trait-impl class="">⌾ <code>Transport</code></trait-impl>
-    </entry>
-    <entry style="left:15px; top: 105px;">
-        <trait-impl class="">⌾ <code>ShowHex</code></trait-impl>
-    </entry>
-    <!-- <label style="left:60px; top: 165px">Traits</label> -->
-</group>
-<!-- types -->
-<group style="left:150px; width: 200px;">
-    <entry style="left:0px; top: 25px;">
-        <type class="composed"><code>Device</code></type>
-        <trait-impl class="grayed">⌾ <code>From&lt;u8&gt;</code></trait-impl>
-        <!-- <trait-impl class="grayed">⌾ <code>Deref</code></trait-impl>
-        <associated-type class="grayed"><code>type Thing;</code></associated-type> -->
-        <note>Foreign trait impl. for local type.</note>
-    </entry>
-    <entry style="left:100px; top: 25px;">
-        <type class="grayed composed"><code>String</code></type>
-        <trait-impl class="">⌾ <code>Serialize</code></trait-impl>
-        <note>Local trait impl. for foreign type.</note>
-    </entry>
-    <entry style="left:200px; top: 25px;">
-        <type class="composed grayed"><code>String</code></type>
-        <trait-impl class="grayed">⌾ <code>From&lt;u8&gt;</code></trait-impl>
-        <note>{{ bad() }} Illegal, foreign trait for f. type.</note>
-    </entry>
-    <entry style="left:200px; top: 110px;">
-        <type class="composed grayed"><code>String</code></type>
-        <trait-impl class="grayed">⌾ <code>From&lt;Port&gt;</code></trait-impl>
-        <note>Exception: Legal if used type local.</note>
-    </entry>
-    <entry style="left:300px; top: 25px;">
-        <type class="composed"><code>Port</code></type>
-        <trait-impl class="">⌾ <code>From&lt;u8&gt;</code></trait-impl>
-        <trait-impl class="">⌾ <code>From&lt;u16&gt;</code></trait-impl>
-        <note>Mult. impl. of trait with differing <b>IN</b> params.</note>
-    </entry>
-    <entry style="left:400px; top: 25px;">
-        <type class="composed"><code>Container</code></type>
-        <trait-impl class="">⌾ <code>Deref</code></trait-impl>
-        <associated-type class="grayed"><code>Tgt = u8;</code></associated-type>
-        <trait-impl class="">⌾ <code>Deref</code></trait-impl>
-        <associated-type class="grayed"><code>Tgt = f32;</code></associated-type>
-        <note>{{ bad() }} Illegal impl. of trait with differing <b>OUT</b> params.</note>
-    </entry>
-    <entry style="left:510px; top: 15px;">
-        <type class="composed"><code>T</code></type>
-    </entry>
-    <entry style="left:505px; top: 20px;">
-        <type class="composed"><code>T</code></type>
-    </entry>
-    <entry style="left:500px; top: 25px;">
-        <type class="generic dotted"><code>T</code></type>
-        <trait-impl class="">⌾ <code>ShowHex</code></trait-impl>
-        <note>Blanket impl. of trait for any type.</note>
-    </entry>
-</group>
-</region>
-<region-label>Your crate.</region-label>
-
-<!-- REGION -->
-<!-- <region style="height: 90px;">
-<group style="left:324px; width: 200px;">
-    <entry style="left:20px; top: 30px;">
-        <code>ccc.f();</code>
-    </entry>
-</group>
-</region>
-<region-label>Downstream crates.</region-label> -->
-
-</zoo>
-
-<footnotes>
-
-A walk through the jungle of types, traits, and implementations that (might possibly) exist in your application.
-
-</footnotes>
-
-
-
-<!-- End scrollable overflow-->
-</div>
-</div>
-
-
-
-### Type Paraphernalia
-
-Allowing users to _bring their own types_ and avoid code duplication.
-
-<tabs>
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-types-1" name="tab-group-types" checked>
-<label for="tab-types-1"><b>Types & Traits</b></label>
-<panel><div>
-
-
-<!-- Section -->
-<generics-section id="ttg-types">
-<header>Types</header>
-<description>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="primitive"><code>u8</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>String</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>Device</code></type>
-    </entry>
-</mini-zoo>
-
-- Set of values with given semantics, layout, &hellip;
-
-<mini-table>
-
-| Type |   Values |
-| --- | --- |
-| `u8`  |  <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code> |
-| `char`  | `{ 'a', 'b', ... '🦀' }` |
-| `struct S(u8, char)`  | <code>{ (0<sub>u8</sub>, 'a'), ... (255<sub>u8</sub>, '🦀') }</code> |
-
-<subtitle>Sample types and sample values.</subtitle>
-
-</mini-table>
-
-</description>
-</generics-section>
-
-
-<!-- Section -->
-<generics-section id="ttg-equivalence">
-<header>Type Equivalence and Conversions</header>
-<description>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="primitive"><code>u8</code></type>
-    </entry>
-    <entry>
-        <type class="primitive"><code>&u8</code></type>
-    </entry>
-    <entry>
-        <type class="primitive"><code>&mut u8</code></type>
-    </entry>
-    <entry>
-        <type class="primitive"><code>[u8; 1]</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>String</code></type>
-    </entry>
-</mini-zoo>
-
-
-
-<!-- - Question: which of the types above is different from all others?
-    - Trick question: all of these types are totally different -->
-- May be obvious but &nbsp; `u8`, &nbsp;&nbsp; `&u8`, &nbsp;&nbsp; `&mut u8`, entirely different from each other
-- Any `t: T` only accepts values from exactly `T`, e.g.,
-    - `f(0_u8)` can't be called with `f(&0_u8)`,
-    - `f(&mut my_u8)` can't be called with `f(&my_u8)`,
-    - `f(0_u8)` can't be called with `f(0_i8)`.
-
->  Yes, `0 != 0` (in a mathematical sense) when it comes to types! In a language sense, the operation  <code>==(0<sub>u8</sub>, 0<sub>u16</sub>)</code> just isn't defined to prevent happy little accidents.
-
-<mini-table>
-
-| Type | Values |
-| --- | --- |
-| `u8`  | <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code> |
-| `u16`  | <code>{ 0<sub>u16</sub>, 1<sub>u16</sub>, ..., 65_535<sub>u16</sub> }</code> |
-| `&u8`  | <code>{ 0xffaa<sub>&u8</sub>, 0xffbb<sub>&u8</sub>, ... }</code> |
-| `&mut u8`  | <code>{ 0xffaa<sub>&mut u8</sub>, 0xffbb<sub>&mut u8</sub>, ... }</code> |
-
-<subtitle>How values differ between types.</subtitle>
-
-</mini-table>
-
-
-
-- However, Rust might sometimes help to **convert between types**<sup>1</sup>
-    - **casts** manually convert values of types, `0_i8 as u8`
-    - **coercions**  {{ above(target="#language-sugar") }} automatically convert types if safe<sup>2</sup>, `let x: &u8 = &mut 0_u8;`
-
-
-
-
-<footnotes>
-
-<sup>1</sup> Casts and coercions convert values from one set (e.g., `u8`) to another (e.g., `u16`), possibly adding CPU instructions to do so; and in such differ from **subtyping**, which would imply type and subtype are part of the same set (e.g., `u8` being subtype of `u16` and `0_u8` being the same as `0_u16`) where such a conversion would be purely a compile time check. Rust does not use subtyping for regular types (and `0_u8` _does_ differ from `0_u16`) but sort-of for lifetimes. {{ link(url = "https://featherweightmusings.blogspot.com/2014/03/subtyping-and-coercion-in-rust.html") }}
-
-<sup>2</sup> Safety here is not just physical concept (e.g., <code>&u8</code> can't be coerced to <code>&u128</code>), but also whether 'history has shown that such a conversion would lead to programming errors'.
-
-</footnotes>
-
-</description>
-</generics-section>
-
-
-
-<!-- Section -->
-<generics-section id="ttg-impl-s">
-<header>Implementations &mdash; <code>impl S { }</code></header>
-<description>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="primitive"><code>u8</code></type>
-        <impl><code>impl { ... }</code></impl>
-    </entry>
-    <entry>
-        <type class="composed"><code>String</code></type>
-        <impl><code>impl { ... }</code></impl>
-    </entry>
-    <entry>
-        <type class="composed"><code>Port</code></type>
-        <impl><code>impl { ... }</code></impl>
-    </entry>
-</mini-zoo>
-
-```
-impl Port {
-    fn f() { ... }
-}
-```
-
-- Types usually come with implementation, e.g., `impl Port {}`, behavior _related_ to type:
-    - **associated functions** `Port::new(80)`
-    - **methods** `port.close()`
-
-> What's considered _related_ is more philosophical than technical, nothing (except good taste) would prevent a `u8::play_sound()` from happening.
-
-
-</description>
-</generics-section>
-
-
-<!-- Section -->
-<generics-section id="ttg-traits">
-<header>Traits &mdash; <code>trait T { }</code></header>
-<description>
-
-<mini-zoo class="zoo">
-    <entry>
-        <trait-impl>⌾ <code>Copy</code></trait-impl>
-    </entry>
-    <entry>
-        <trait-impl>⌾ <code>Clone</code></trait-impl>
-    </entry>
-    <entry>
-        <trait-impl>⌾ <code>Sized</code></trait-impl>
-    </entry>
-    <entry>
-        <trait-impl>⌾ <code>ShowHex</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-- **Traits** ...
-    - are way to "abstract" behavior,
-    - trait author declares semantically _this trait means X_,
-    - other can implement ("subscribe to") that behavior for their type.
-- Think about trait as "membership list" for types:
-
-
-<mini-table>
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th>Copy Trait</th></tr>
-        <tr class="subheader"><th><code>Self</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>u8</code></td></tr>
-        <tr><td><code>u16</code></td></tr>
-        <tr><td><code>...</code></td></tr>
-    </tbody>
-</table>
-
-</mini-table>
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th>Clone Trait</th></tr>
-        <tr class="subheader"><th><code>Self</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>u8</code></td></tr>
-        <tr><td><code>String</code></td></tr>
-        <tr><td><code>...</code></td></tr>
-    </tbody>
-</table>
-
-</mini-table>
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th>Sized Trait</th></tr>
-        <tr class="subheader"><th><code>Self</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>char</code></td></tr>
-        <tr><td><code>Port</code></td></tr>
-        <tr><td><code>...</code></td></tr>
-    </tbody>
-</table>
-
-</mini-table>
-
-<subtitle>Traits as membership tables, <code>Self</code> refers to the type included.</subtitle>
-
-</mini-table>
-
-
-- **Whoever is part of that membership list will adhere to behavior of list.**
-- Traits can also include associated methods, functions, ...
-
-```
-trait ShowHex {
-    // Must be implemented according to documentation.
-    fn as_hex() -> String;
-
-    // Provided by trait author.
-    fn print_hex() {}
-}
-```
-
-<mini-zoo class="zoo">
-    <entry>
-        <trait-impl>⌾ <code>Copy</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-```
-trait Copy { }
-```
-
-- Traits without methods often called **marker traits**.
-- `Copy` is example marker trait, meaning _memory may be copied bitwise_.
-
-<mini-zoo class="zoo">
-    <entry>
-        <trait-impl>⌾ <code>Sized</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-
-- Some traits entirely outside explicit control
-- `Sized` provided by compiler for types with _known size_; either this is, or isn't
-
-
-</description>
-</generics-section>
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Implementing Traits for Types &mdash; <code>impl T for S { }</code></header>
-<description>
-
-
-```
-impl ShowHex for Port { ... }
-```
-- Traits are implemented for types 'at some point'.
-- Implementation `impl A for B` add type `B` to the trait membership list:
-
-<mini-table>
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th>ShowHex Trait</th></tr>
-        <tr class="subheader"><th><code>Self</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>Port</code></td></tr>
-    </tbody>
-</table>
-
-</mini-table>
-</mini-table>
-
-- Visually, you can think of the type getting a "badge" for its membership:
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="primitive"><code>u8</code></type>
-        <impl><code>impl { ... }</code></impl>
-        <trait-impl>⌾ <code>Sized</code></trait-impl>
-        <trait-impl>⌾ <code>Clone</code></trait-impl>
-        <trait-impl>⌾ <code>Copy</code></trait-impl>
-    </entry>
-    <entry>
-        <type class="composed"><code>Device</code></type>
-        <impl><code>impl { ... }</code></impl>
-        <trait-impl>⌾ <code>Transport</code></trait-impl>
-    </entry>
-    <entry>
-        <type class="composed"><code>Port</code></type>
-        <impl><code>impl { ... }</code></impl>
-        <trait-impl>⌾ <code>Sized</code></trait-impl>
-        <trait-impl>⌾ <code>Clone</code></trait-impl>
-        <trait-impl>⌾ <code>ShowHex</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-</description>
-</generics-section>
-
-
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Traits vs. Interfaces</header>
-<description>
-
-
-<mini-zoo class="zoo">
-    <person>👩‍🦰</person>
-    <entry>
-        <trait-impl>⌾ <code>Eat</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>🧔</person>
-    <entry>
-        <type class="composed"><code>Venison</code></type>
-        <trait-impl>⌾ <code>Eat</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-
-<mini-zoo class="zoo" style="margin-left: 10px; width: 130px;">
-    <person></person>
-    <entry>
-        <code style="text-align:center; width: 100%;"></code>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>🎅</person>
-    <entry>
-        <code>venison.eat()</code>
-    </entry>
-</mini-zoo>
-
-{{ tablesep() }}
-
-**Interfaces**
-
-- In **Java**, Alice creates interface `Eat`.
-- When Bob authors `Venison`, he must decide if `Venison` implements `Eat` or not.
-- In other words, all membership must be exhaustively declared during type definition.
-- When using `Venison`, Santa can make use of behavior provided by `Eat`:
-
-```
-// Santa imports `Venison` to create it, can `eat()` if he wants.
-import food.Venison;
-
-new Venison("rudolph").eat();
-```
-
-
-{{ tablesep() }}
-{{ tablesep() }}
-
-
-<mini-zoo class="zoo">
-    <person>👩‍🦰</person>
-    <entry>
-        <trait-impl>⌾ <code>Eat</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>🧔</person>
-    <entry>
-        <type class="composed"><code>Venison</code></type>
-    </entry>
-</mini-zoo>
-
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>👩‍🦰</person> / <person>🧔</person>
-    <entry>
-        <type class="composed"><code>Venison</code></type>
-        <code style="text-align:center; width: 100%;">+</code>
-        <trait-impl>⌾ <code>Eat</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>🎅</person>
-    <entry>
-        <code>venison.eat()</code>
-    </entry>
-</mini-zoo>
-
-{{ tablesep() }}
-
-**Traits**
-
-- In **Rust**, Alice creates trait `Eat`.
-- Bob creates type `Venison` and decides not to implement `Eat` (he might not even know about `Eat`).
-- Someone<sup>*</sup> later decides adding `Eat` to `Venison` would be a really good idea.
-- When using `Venison` Santa must import `Eat` separately:
-
-```
-// Santa needs to import `Venison` to create it, and import `Eat` for trait method.
-use food::Venison;
-use tasks::Eat;
-
-// Ho ho ho
-Venison::new("rudolph").eat();
-```
-
-<footnotes>
-
-<sup>*</sup> To prevent two persons from implementing `Eat` differently Rust limits that choice to either Alice or Bob; that is, an `impl Eat for Venison` may only happen in the crate of `Venison` or in the crate of `Eat`. For details see coherence. {{todo()}}
-
-</footnotes>
-
-
-</description>
-</generics-section>
-
-
-</div></panel></tab>
-
-
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-types-2" name="tab-group-types">
-<label for="tab-types-2"><b>Generics</b></label>
-<panel><div>
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Type Constructors &mdash; <code>Vec&lt;&gt;</code></header>
-<description>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="composed"><code>Vec&lt;u8&gt;</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>Vec&lt;char&gt;</code></type>
-    </entry>
-</mini-zoo>
-
-- `Vec<u8>` is type "vector of bytes"; `Vec<char>` is type "vector of chars", but what is `Vec<>`?
-
-<mini-table>
-
-| Construct |   Values |
-| --- | --- |
-| `Vec<u8>`  |  `{ [], [1], [1, 2, 3], ... }` |
-| `Vec<char>`  |  `{ [], ['a'], ['x', 'y', 'z'], ... }` |
-| `Vec<>`  |  - |
-
-<subtitle>Types vs type constructors.</subtitle>
-
-</mini-table>
-
-
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="generic dotted"><code>Vec&lt;&gt;</code></type>
-    </entry>
-</mini-zoo>
-
-- `Vec<>` is no type, does not occupy memory, can't even be translated to code.
-- `Vec<>` is **type constructor**, a "template" or "recipe to create types"
-    - allows 3<sup>rd</sup> party to construct concrete type via parameter,
-    - only then would this `Vec<UserType>` become real type itself.
-
-</description>
-</generics-section>
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Generic Parameters &mdash; <code>&lt;T&gt;</code></header>
-<description>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="generic dotted"><code>Vec&lt;T&gt;</code></type>
-    </entry>
-    <entry>
-        <type class="generic dotted"><code>[T; 128]</code></type>
-    </entry>
-    <entry>
-        <type class="generic dotted"><code>&T</code></type>
-    </entry>
-    <entry>
-        <type class="generic dotted"><code>&mut T</code></type>
-    </entry>
-    <entry>
-        <type class="generic dotted"><code>S&lt;T&gt;</code></type>
-    </entry>
-</mini-zoo>
-
-- Parameter for `Vec<>` often named `T` therefore `Vec<T>`.
-- `T` "variable name for type" for user to plug in something specfic, `Vec<f32>`, `S<u8>`, &hellip;
-
-
-<mini-table>
-
-| Type Constructor |  Produces Family |
-| --- | --- |
-| `struct Vec<T> {}`  |  `Vec<u8>`, `Vec<f32>`, `Vec<Vec<u8>>`, ... |
-| `[T; 128]`  |  `[u8; 128]`, `[char; 128]`, `[Port; 128]` ... |
-| `&T`  |  `&u8`, `&u16`, `&str`,  ... |
-
-<subtitle>Type vs type constructors.</subtitle>
-
-</mini-table>
-
-
-```
-// S<> is type constructor with parameter T; user can supply any concrete type for T.
-struct S<T> {
-    x: T
-}
-
-// Within 'concrete' code an existing type must be given for T.
-fn f() {
-    let x: S<f32> = S::new(0_f32);
-}
-
-```
-
-</description>
-</generics-section>
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Const Generics &mdash; <code>[T; N]</code> and <code>S&lt;const N: usize&gt;</code></header>
-<description>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="generic dotted"><code>[T; n]</code></type>
-    </entry>
-    <entry>
-        <type class="generic dotted"><code>S&lt;const N&gt;</code></type>
-    </entry>
-</mini-zoo>
-
-- Some type constructors not only accept specific type, but also **specific constant**.
-- `[T; n]` constructs array type holding `T` type `n` times.
-- For custom types declared as `MyArray<T, const N: usize>`.
-
-<mini-table>
-
-| Type Constructor |  Produces Family |
-| --- | --- |
-| `[u8; N]`  |  `[u8; 0]`, `[u8; 1]`, `[u8; 2]`, ... |
-| `struct S<const N: usize> {}`  |  `S<1>`, `S<6>`, `S<123>`,  ... |
-
-<subtitle>Type constructors based on constant.</subtitle>
-
-</mini-table>
-
-
-```
-let x: [u8; 4]; // "array of 4 bytes"
-let y: [f32; 16]; // "array of 16 floats"
-
-// `MyArray` is type constructor requiring concrete type `T` and
-// concrete usize `N` to construct specific type.
-struct MyArray<T, const N: usize> {
-    data: [T; N],
-}
-```
-
-</description>
-</generics-section>
-
-
-<!-- Section -->
-<!-- <generics-section id="xxx">
-<header>Generics in Types</header>
-<description>
-
-</description>
-</generics-section> -->
-
-
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Bounds (Simple) &mdash; <code>where T: X</code></header>
-<description>
-
-<mini-zoo class="zoo">
-    <person>🧔</person>
-    <entry>
-        <type class="generic dotted"><code>Num&lt;T&gt;</code></type>
-    </entry>
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
-    </narrow-entry>
-    <person>🎅</person>
-    <entry>
-        <type class="composed"><code>Num&lt;u8&gt;</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>Num&lt;f32&gt;</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>Num&lt;Cmplx&gt;</code></type>
-    </entry>
-    <narrow-entry>
-        <code style="text-align:center; width: 50px;">&nbsp;</code>
-    </narrow-entry>
-    <entry class="">
-        <type class="primitive"><code>u8</code></type>
-        <trait-impl>⌾ <code>Absolute</code></trait-impl>
-        <trait-impl>⌾ <code>Dim</code></trait-impl>
-        <trait-impl>⌾ <code>Mul</code></trait-impl>
-    </entry>
-    <entry class="grayed">
-        <type class="composed"><code>Port</code></type>
-        <trait-impl>⌾ <code>Clone</code></trait-impl>
-        <trait-impl>⌾ <code>ShowHex</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-- If `T` can be any type, how can we _reason_ about (write code) for such a `Num<T>`?
-- Parameter **bounds**:
-    - limit what types (**trait bound**) or values (**const bound** {{ todo() }}) allowed,
-    - we now can make use of these limits!
-- Trait bounds act as "membership check":
-
-<mini-table>
-
-<div style="display: inline-block;">
-
-```
-// Type can only be constructed for some `T` if that
-// T is part of `Absolute` membership list.
-struct Num<T> where T: Absolute {
-    ...
-}
-
-```
-
-</div>
-
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th>Absolute Trait</th></tr>
-        <tr class="subheader"><th><code>Self</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>u8</code></td></tr>
-        <tr><td><code>u16</code></td></tr>
-        <tr><td><code>...</code></td></tr>
-    </tbody>
-</table>
-
-</mini-table>
-</mini-table>
-
-
-<!--
-// Constant `N` must be `usize`
-struct Arrayf32<const N: usize> {
-    data: [f32; N],
-} -->
-
-<footnotes>
-
-We add bounds to the struct here. In practice it's nicer add bounds to the respective impl blocks instead, see later this section.
-
-</footnotes>
-
-<!-- > Note to self, is `const N: usize` a "const bound"? It seemingly acts as one, limiting the choice of values for N (albeit to specific types only). -->
-
-</description>
-</generics-section>
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Bounds (Compound) &mdash; <code>where T: X + Y</code></header>
-<description>
-
-<mini-zoo class="zoo">
-    <entry class="grayed">
-        <type class="primitive"><code>u8</code></type>
-        <trait-impl>⌾ <code>Absolute</code></trait-impl>
-        <trait-impl>⌾ <code>Dim</code></trait-impl>
-        <trait-impl>⌾ <code>Mul</code></trait-impl>
-    </entry>
-    <entry class="grayed">
-        <type class="primitive"><code>f32</code></type>
-        <trait-impl>⌾ <code>Absolute</code></trait-impl>
-        <trait-impl>⌾ <code>Mul</code></trait-impl>
-    </entry>
-    <entry class="grayed">
-        <type class="primitive"><code>char</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>Cmplx</code></type>
-        <trait-impl>⌾ <code>Absolute</code></trait-impl>
-        <trait-impl>⌾ <code>Dim</code></trait-impl>
-        <trait-impl>⌾ <code>Mul</code></trait-impl>
-        <trait-impl>⌾ <code>DirName</code></trait-impl>
-        <trait-impl>⌾ <code>TwoD</code></trait-impl>
-    </entry>
-    <entry class="grayed">
-        <type class="composed"><code>Car</code></type>
-        <trait-impl>⌾ <code>DirName</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-
-
-```
-struct S<T>
-where
-    T: Absolute + Dim + Mul + DirName + TwoD
-{ ... }
-```
-
-- Long trait bounds can look intimidating.
-- In practice, each `+ X` addition to a bound merely cuts down space of eligible types.
-
-</description>
-</generics-section>
-
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Implementing Families &mdash; <code>impl&lt;&gt;</code></header>
-<description>
-
-{{ tablesep() }}
-
-When we write:
-```
-impl<T> S<T> where T: Absolute + Dim + Mul {
-    fn f(&self, x: T) { ... };
-}
-```
-It can be read as:
-- here is an implementation recipe for any type `T` (the `impl <T>` part),
-- where<!--sup>*</sup--> that type must be member of the `Absolute + Dim + Mul` traits,
-- you may add an implementation block to `S<T>`,
-- containing the methods ...
-
-You can think of such `impl<T> ... {} ` code as **abstractly implementing a family of behaviors**. Most notably, they allow 3<sup>rd</sup> parties to transparently materialize implementations similarly to how type constructors materialize types:
-
-```
-// If compiler encounters this, it will
-// - check `0` and `x` fulfill the membership requirements of `T`
-// - create two new version of `f`, one for `char`, another one for `u32`.
-// - based on "family implementation" provided
-s.f(0_u32);
-s.f('x');
-```
-
-
-</description>
-</generics-section>
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Blanket Implementations &mdash; <code>impl&lt;T&gt X for T { ... }</code></header>
-<description>
-
-{{ tablesep() }}
-
-Can also write "family implementations" so they apply trait to many types:
-
-```
-// Also implements Serialize for any type if that type already implements ToHex
-impl<T> Serialize for T where T: ToHex { ... }
-```
-
-These are called **blanket implementations**.
-
-<mini-table>
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th>ToHex</th></tr>
-        <tr class="subheader"><th><code>Self</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>Port</code></td></tr>
-        <tr><td><code>Device</code></td></tr>
-        <tr><td><code>...</code></td></tr>
-    </tbody>
-</table>
-
-</mini-table>
-
-<div style="display: inline-block; width: 100px;">
-
-→  Whatever was in left table, may be added to right table, based on the following recipe (`impl`) →
-
-</div>
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th>Serialize Trait</th></tr>
-        <tr class="subheader"><th><code>Self</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>u8</code></td></tr>
-        <tr><td><code>Port</code></td></tr>
-        <tr><td><code>...</code></td></tr>
-    </tbody>
-</table>
-
-</mini-table>
-
-</mini-table>
-
-
-They can be neat way to give foreign types functionality in a modular way if they just implement another interface.
-
-</description>
-</generics-section>
-
-
-</div></panel></tab>
-
-
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-types-3" name="tab-group-types">
-<label for="tab-types-3"><b>Advanced Concepts</b>{{ esoteric() }}</label>
-<panel><div>
-
-
-<!-- Section -->
-<!-- <generics-section id="xxx">
-<header>Pseudo-Specialization</header>
-<description>
-
-</description>
-</generics-section> -->
-
-
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Trait Parameters &mdash; <code>Trait&lt;In&gt; { type Out; } </code></header>
-<description>
-
-{{ tablesep() }}
-
-Notice how some traits can be "attached" multiple times, but others just once?
-
-<mini-zoo class="zoo">
-    <entry style="left:300px; top: 25px;">
-        <type class="composed"><code>Port</code></type>
-        <trait-impl class="">⌾ <code>From&lt;u8&gt;</code></trait-impl>
-        <trait-impl class="">⌾ <code>From&lt;u16&gt;</code></trait-impl>
-    </entry>
-    <entry style="left:400px; top: 25px;">
-        <type class="composed"><code>Port</code></type>
-        <trait-impl class="">⌾ <code>Deref</code></trait-impl>
-        <associated-type class="grayed"><code>type u8;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-<!--
-<mini-zoo class="zoo">
-    <entry>
-        <trait-impl class="">⌾ <code>A&lt;T&gt;</code></trait-impl>
-    </entry>
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
-    </narrow-entry>
-    <entry>
-        <trait-impl class="">⌾ <code>A&lt;u8&gt;</code></trait-impl>
-    </entry>
-    <entry>
-        <trait-impl class="">⌾ <code>A&lt;f32&gt;</code></trait-impl>
-    </entry>
-    <entry>
-        <trait-impl class="">⌾ <code>A&lt;str&gt;</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<br>
-
-<mini-zoo class="zoo">
-    <entry>
-        <trait-impl class="">⌾ <code>B</code></trait-impl>
-        <associated-type class=""><code>type T;</code></associated-type>
-    </entry>
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
-    </narrow-entry>
-    <entry>
-        <trait-impl class="">⌾ <code>B</code></trait-impl>
-        <associated-type class=""><code>T = u8;</code></associated-type>
-    </entry>
-</mini-zoo> -->
-
-<br>
-
-{{ tablesep() }}
-
-Why is that?
-
-- Traits themselves can be generic over two **kinds of parameters**:
-    - `trait From<I> {}`
-    - `trait Deref { type O; }`
-- Remember we said traits are "membership lists" for types and called the list `Self`?
-- Turns out, parameters `I` (for **input**) and `O` (for **output**) are just more _columns_ to that trait's list:
-
-```
-impl From<u8> for u16 {}
-impl From<u16> for u32 {}
-impl Deref for Port { type O = u8; }
-impl Deref for String { type O = str; }
-```
-
-
-<mini-table>
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th colspan="2">From</th></tr>
-        <tr class="subheader"><th><code>Self</code></th><th><code>I</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>u16</code></td><td><code>u8</code></td></tr>
-        <tr><td><code>u32</code></td><td><code>u16</code></td></tr>
-        <tr><td colspan="2"><code>...</code></td></tr>
-    </tbody>
-</table>
-
-</mini-table>
-
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th colspan="2">Deref</th></tr>
-        <tr class="subheader"><th><code>Self</code></th><th><code>O</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>Port</code></td><td><code>u8</code></td></tr>
-        <tr><td><code>String</code></td><td><code>str</code></td></tr>
-        <tr><td colspan="2"><code>...</code></td></tr>
-    </tbody>
-</table>
-
-</mini-table>
-
-<subtitle>Input and output parameters.</subtitle>
-
-</mini-table>
-
-
-Now here's the twist,
-- **any output `O` parameters must be uniquely determined by input parameters `I`**,
-- (in the same way as a relation `X Y` would represent a function),
-- `Self` counts as an input.
-
-A more complex example:
-
-```
-trait Complex<I1, I2> {
-    type O1;
-    type O2;
-}
-```
-
-- this creates a relation relation of types named `Complex`,
-- with 3 inputs (`Self` is always one) and 2 outputs, and it holds `(Self, I1, I2) => (O1, O2)`
-
-<mini-table>
-
-<table>
-    <thead>
-        <tr style=""><th colspan="5">Complex</th></tr>
-        <tr class="subheader"><th><code>Self [I]</code></th><th><code>I1</code></th><th><code>I2</code></th><th><code>O1</code></th><th><code>O2</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>Player</code></td><td><code>u8</code></td><td><code>char</code></td><td><code>f32</code></td><td><code>f32</code></td></tr>
-        <tr><td><code>EvilMonster</code></td><td><code>u16</code></td><td><code>str</code></td><td><code>u8</code></td><td><code>u8</code></td></tr>
-        <tr><td><code>EvilMonster</code></td><td><code>u16</code></td><td><code>String</code></td><td><code>u8</code></td><td><code>u8</code></td></tr>
-        <tr><td><code>NiceMonster</code></td><td><code>u16</code></td><td><code>String</code></td><td><code>u8</code></td><td><code>u8</code></td></tr>
-        <tr><td><code>NiceMonster</code><sup>{{ bad() }}</sup></td><td><code>u16</code></td><td><code>String</code></td><td><code>u8</code></td><td><code>u16</code></td></tr>
-    </tbody>
-</table>
-
-<subtitle>Various trait implementations. The last one is not valid as `(NiceMonster, u16, String)` has <br> already uniquely determined the outputs.</subtitle>
-
-</mini-table>
-
-</description>
-</generics-section>
-
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Trait Authoring Considerations (Abstract)</header>
-<description>
-
-<mini-zoo class="zoo">
-    <person>👩‍🦰</person>
-    <entry>
-        <trait-impl class="dotted">⌾ <code>A&lt;I&gt;</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>🧔</person>
-    <entry>
-        <type class="composed"><code>Car</code></type>
-    </entry>
-</mini-zoo>
-
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>👩‍🦰</person> / <person>🧔</person>
-    <entry>
-        <type class="composed"><code>Car</code></type>
-        <trait-impl class="dotted">⌾ <code>A&lt;I&gt;</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>🎅</person>
-    <entry>
-        <code>car.a(0_u8)</code>
-        <code>car.a(0_f32)</code>
-    </entry>
-</mini-zoo>
-
-<br>
-
-<mini-zoo class="zoo">
-    <person>👩‍🦰</person>
-    <entry>
-        <trait-impl class="">⌾ <code>B</code></trait-impl>
-        <associated-type class=""><code>type O;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>🧔</person>
-    <entry>
-        <type class="composed"><code>Car</code></type>
-    </entry>
-</mini-zoo>
-
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>👩‍🦰</person> / <person>🧔</person>
-    <entry>
-        <type class="composed"><code>Car</code></type>
-        <trait-impl class="">⌾ <code>B</code></trait-impl>
-        <associated-type class=""><code>T = u8;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-left: 10px;">
-    <person>🎅</person>
-    <entry>
-        <code>car.b(0_u8)</code>
-        <code style="text-decoration: line-through;">car.b(0_f32)</code>
-    </entry>
-</mini-zoo>
-
-- Parameter choice (input vs. output) also determines who may be allowed to add members:
-    - `I` parameters allow "familes of implementations" be forwarded to user (Santa),
-    - `O` parameters must be determined by trait implementor (Alice or Bob).
-
-```
-trait A<I> { }
-trait B { type O; }
-
-// Implementor adds (X, u32) to A.
-impl A<u32> for X { }
-
-// Implementor adds family impl. (X, ...) to A, user can materialze.
-impl<T> A<T> for Y { }
-
-// Implementor must decide specific entry (X, O) added to B.
-impl B for X { type O = u32; }
-```
-
-
-
-<mini-table>
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th colspan="2">A</th></tr>
-        <tr class="subheader"><th><code>Self</code></th><th><code>I</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>X</code></td><td><code>u32</code></td></tr>
-        <tr><td><code>Y</code></td><td><code>...</code></td></tr>
-    </tbody>
-</table>
-
-<subtitle>Santa may add more members by providing his own type for <code>T</code>.</subtitle>
-
-</mini-table>
-
-
-<mini-table style="width: 200px; display:inline-block;">
-
-<table>
-    <thead>
-        <tr style=""><th colspan="2">B</th></tr>
-        <tr class="subheader"><th><code>Self</code></th><th><code>O</code></th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>Player</code></td><td><code>String</code></td></tr>
-        <tr><td><code>X</code></td><td><code>u32</code></td></tr>
-    </tbody>
-</table>
-
-<subtitle>For given set of inputs (here <code>Self</code>), implementor must pre-select <code>O</code>.</subtitle>
-
-</mini-table>
-
-</mini-table>
-
-
-</description>
-</generics-section>
-
-
-<!-- Section -->
-<generics-section id="trait-authoring-examples">
-<header>Trait Authoring Considerations (Example)</header>
-<description>
-
-<mini-zoo class="zoo">
-    <entry>
-        <trait-impl class="">⌾ <code>Query</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">vs.</code>
-    </narrow-entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <entry>
-        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">vs.</code>
-    </narrow-entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <entry>
-        <trait-impl class="">⌾ <code>Query</code></trait-impl>
-        <associated-type class=""><code>type O;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">vs.</code>
-    </narrow-entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <entry>
-        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
-        <associated-type class=""><code>type O;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-
-
-{{ tablesep() }}
-
-Choice of parameters goes along with purpose trait has to fill.
-
-<hr>
-
-
-**No Additional Parameters**
-
-```
-trait Query {
-    fn search(&self, needle: &str);
-}
-
-impl Query for PostgreSQL { ... }
-impl Query for Sled { ... }
-
-postgres.search("SELECT ...");
-```
-
-<mini-zoo class="zoo">
-    <person>👩‍🦰</person>
-    <entry>
-        <trait-impl class="">⌾ <code>Query</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
-    </narrow-entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <person>🧔</person>
-    <entry>
-        <type class="composed"><code>PostgreSQL</code></type>
-        <trait-impl class="">⌾ <code>Query</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="composed"><code>Sled</code></type>
-        <trait-impl class="">⌾ <code>Query</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-{{ tablesep() }}
-
-Trait author assumes:
-- neither implementor nor user need to customize API.
-
-{{ tablesep() }}
-
-<hr>
-
-**Input Parameters**
-
-```
-trait Query<I> {
-    fn search(&self, needle: I);
-}
-
-impl Query<&str> for PostgreSQL { ... }
-impl Query<String> for PostgreSQL { ... }
-impl<T> Query<T> for Sled where T: ToU8Slice { ... }
-
-postgres.search("SELECT ...");
-postgres.search(input.to_string());
-sled.search(file);
-```
-
-<mini-zoo class="zoo">
-    <person>👩‍🦰</person>
-    <entry>
-        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
-    </narrow-entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <person>🧔</person>
-    <entry>
-        <type class="composed"><code>PostgreSQL</code></type>
-        <trait-impl class="">⌾ <code>Query&lt;&str&gt;</code></trait-impl>
-        <trait-impl class="">⌾ <code>Query&lt;String&gt;</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="composed"><code>Sled</code></type>
-        <trait-impl class="dotted">⌾ <code>Query&lt;T&gt;</code></trait-impl>
-        <note><span style="margin-left: 10px; display: inline-block; transform: rotate(90deg); font-size: 100%">↲</span> where <code>T</code> is <code>ToU8Slice</code>.</note>
-    </entry>
-</mini-zoo>
-
-
-{{ tablesep() }}
-
-Trait author assumes:
-- implementor would customize API in multiple ways for same `Self` type,
-- users may want ability to decide for which `I`-types behavior should be possible.
-
-{{ tablesep() }}
-
-
-<hr>
-
-
-**Output Parameters**
-
-```
-trait Query {
-    type O;
-    fn search(&self, needle: Self::O);
-}
-
-impl Query for PostgreSQL { type O = String; ...}
-impl Query for Sled { type O = Vec<u8>; ... }
-
-postgres.search("SELECT ...".to_string());
-sled.search(vec![0, 1, 2, 4]);
-```
-
-<mini-zoo class="zoo">
-    <person>👩‍🦰</person>
-    <entry>
-        <trait-impl class="">⌾ <code>Query</code></trait-impl>
-        <associated-type class=""><code>type O;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
-    </narrow-entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <person>🧔</person>
-    <entry>
-        <type class="composed"><code>PostgreSQL</code></type>
-        <trait-impl class="">⌾ <code>Query</code></trait-impl>
-        <associated-type class=""><code>O = String;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="composed"><code>Sled</code></type>
-        <trait-impl class="">⌾ <code>Query</code></trait-impl>
-        <associated-type class=""><code>O = Vec&lt;u8&gt;;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-
-{{ tablesep() }}
-
-Trait author assumes:
-- implementor would customize API for `Self` type (but in only one way),
-- users do not need, or should not have, ability to influence customization for specific `Self`.
-
-> As you can see here, the term **input** or **output** does **not** (necessarily) have anything to do with whether `I` or `O` are inputs or outputs to an actual function!
-
-{{ tablesep() }}
-
-<hr>
-
-**Multiple In- and Output Parameters**
-
-```
-trait Query<I> {
-    type O;
-    fn search(&self, needle: I) -> Self::O;
-}
-
-impl Query<&str> for PostgreSQL { type O = String; ... }
-impl Query<CString> for PostgreSQL { type O = CString; ... }
-impl<T> Query<T> for Sled where T: ToU8Slice { type O = Vec<u8>; ... }
-
-postgres.search("SELECT ...").to_uppercase();
-sled.search(&[1, 2, 3, 4]).pop();
-```
-
-<mini-zoo class="zoo">
-    <person>👩‍🦰</person>
-    <entry>
-        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
-        <associated-type class=""><code>type O;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
-    </narrow-entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <person>🧔</person>
-    <entry>
-        <type class="composed"><code>PostgreSQL</code></type>
-        <trait-impl class="">⌾ <code>Query&lt;&str&gt;</code></trait-impl>
-        <associated-type class=""><code>O = String;</code></associated-type>
-        <trait-impl class="">⌾ <code>Query&lt;CString&gt;</code></trait-impl>
-        <associated-type class=""><code>O = CString;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="composed"><code>Sled</code></type>
-        <trait-impl class="dotted">⌾ <code>Query&lt;T&gt;</code></trait-impl>
-        <associated-type class=""><code>O = Vec&lt;u8&gt;;</code></associated-type>
-        <note><span style="margin-left: 10px; display: inline-block; transform: rotate(90deg); font-size: 100%">↲</span> where <code>T</code> is <code>ToU8Slice</code>.</note>
-    </entry>
-</mini-zoo>
-
-
-{{ tablesep() }}
-
-Like examples above, in particular trait author assumes:
-- users may want ability to decide for which `I`-types ability should be possible,
-- for given inputs, implementor should determine resulting output type.
-
-
-</description>
-</generics-section>
-
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header><code>?Sized</code></header>
-<description>
-
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="generic dotted"><code>S&lt;T&gt;</code></type>
-    </entry>
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
-    </narrow-entry>
-    <entry>
-        <type class="composed"><code>S&lt;u8&gt;</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>S&lt;char&gt;</code></type>
-    </entry>
-    <entry>
-        <type class="composed grayed"><code>S&lt;str&gt;</code></type>
-    </entry>
-</mini-zoo>
-
-```
-struct S<T> { ... }
-```
-
-- `T` can be any concrete type.
-- However, there exists invisible default bound `T: Sized`, so `S<str>` is not possible out of box.
-- Instead we have to add `T : ?Sized` to opt-out of that bound:
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="generic dotted"><code>S&lt;T&gt;</code></type>
-    </entry>
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
-    </narrow-entry>
-    <entry>
-        <type class="composed"><code>S&lt;u8&gt;</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>S&lt;char&gt;</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>S&lt;str&gt;</code></type>
-    </entry>
-</mini-zoo>
-
-```
-struct S<T> where T: ?Sized { ... }
-```
-
-
-
-</description>
-</generics-section>
-
-
-
-<!-- Section -->
-<generics-section id="xxx">
-<header>Generics and Lifetimes &mdash; <code>&lt;'a&gt;</code></header>
-<description>
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="generic dotted"><code>S&lt;'a&gt;</code></type>
-    </entry>
-    <entry>
-        <type class="generic dotted"><code>&'a f32</code></type>
-    </entry>
-    <entry>
-        <type class="generic dotted"><code>&'a mut u8</code></type>
-    </entry>
-</mini-zoo>
-
-- Lifetimes act<sup>*</sup> like type parameters:
-    - user must provide specific `'a` to instantiate type (compiler will help within methods),
-    - as `Vec<f32>` and `Vec<u8>` are different types, so are `S<'p>` and `S<'q>`,
-    - meaning you can't just assign value of type `S<'a>` to variable expecting `S<'b>` (exception: "subtype" relationship for lifetimes, e.g. `'a` outliving `'b`).
-
-
-<mini-zoo class="zoo">
-    <entry>
-        <type class="generic dotted"><code>S&lt;'a&gt;</code></type>
-    </entry>
-    <narrow-entry>
-        <code style="text-align:center; width: 100%;">→</code>
-    </narrow-entry>
-    <entry>
-        <type class="composed"><code>S&lt;'auto&gt;</code></type>
-    </entry>
-    <entry>
-        <type class="composed"><code>S&lt;'static&gt;</code></type>
-    </entry>
-</mini-zoo>
-
-
-- `'static` is only nameable instance of the _typespace_ lifetimes.
-
-```
-// `'a is free parameter here (user can pass any specific lifetime)
-struct S<'a> {
-    x: &'a u32
-}
-
-// In non-generic code, 'static is the only nameable lifetime we can explicitly put in here.
-let a: S<'static>;
-
-// Alternatively, in non-generic code we can (often must) omit 'a and have Rust determine
-// the right value for 'a automatically.
-let b: S;
-```
-
-<footnotes>
-
-<sup>*</sup> There are subtle differences, for example you can create an explicit instance `0` of a type `u32`, but with the exception of `'static` you can't really create a lifetime, e.g., "lines 80 - 100", the compiler will do that for you. {{ link(url="https://medium.com/nearprotocol/understanding-rust-lifetimes-e813bcd405fa" )}}
-
-</footnotes>
-
-
-> Note to self and TODO: that analogy seems somewhat flawed, as if `S<'a>` is to `S<'static>` like `S<T>` is to `S<u32>`, then `'static` would be a _type_; but then what's the value of that type?
-
-</description>
-</generics-section>
-
-
-<!-- Section -->
-<!-- <generics-section id="xxx">
-<header>Another <code>?X</code></header>
-<description>
-
-- `Sized` is trait, automatically implemented **and** automatically used as default bound
-- Could there (ever) be another trait `T` so that:
-    - `S<T>` means `S<T> where T: Sized + X` by default and
-    - you'd have to opt out with `S<T> where T: ?X` ?
-- Issue:
-    - Any `S<T>` written today does not know `X`, so can't opt into supporting it
-    - If `X` were introduced and not implemented for any existing type, `S<T>` would stop working on that type
-
-</description>
-</generics-section> -->
-
-
-<!-- Section -->
-<!-- <generics-section id="xxx">
-<header>GAT {{ experimental() }}</header>
-<description>
-
-
-</description>
-</generics-section> -->
-
-
-
-<!-- Section -->
-<!-- <generics-section id="xxx">
-<header>(Co-/Contra-) Variance </header>
-<description>
-
-
-</description>
-</generics-section>
- -->
-
-<!-- Section -->
-<!-- <generics-section id="zoo_todo">
-<header>Todo</header>
-<description>
-
-
-</description>
-</generics-section>
- -->
-
-
-</div></panel></tab>
-
-</tabs>
-
-<footnotes>
-
-Examples expand by clicking.
-
-</footnotes>
-
-
 
 
 ---
@@ -8393,251 +6477,1925 @@ For the _On_ column in attributes: <br>
 </footnotes>
 
 
-
-
-
 ---
 
-# Coding Guides
+# Working with Types
 
 
-## Idiomatic Rust
+## Types, Traits, Generics
 
-If you are used to programming Java or C, consider these.
+Allowing users to _bring their own types_ and avoid code duplication.
 
-<div class="color-header blue">
-
-| Idiom | Code |
-|--------| ---- |
-| **Think in Expressions** | `x = if x { a } else { b };` |
-|  | `x = loop { break 5 };`  |
-|  | `fn f() -> u32 { 0 }`  |
-| **Think in Iterators** | `(1..10).map(f).collect()` |
-|  | <code>names.iter().filter(&vert;x&vert; x.starts_with("A"))</code> |
-| **Handle Absence with `?`** | `x = try_something()?;` |
-|  | `get_option()?.run()?` |
-| **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
-|  | `enum E { Visible, Hidden }` over `visible: bool` |
-|  | `struct Charge(f32)` over `f32` |
-| **Provide Builders** | `Car::new("Model T").hp(20).build();` |
-| **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
-|   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
-| **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
-| **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
-| **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
-|  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
-|  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
-|  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
-| **Documentation** | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
-|  | Don't forget to include a **summary sentence** and the **Examples** heading. |
-|  | If applicable: **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
-
-</div>
-
-
-
-{{ tablesep() }}
-
-> 🔥 We **highly** recommend you also follow the
-> [**API Guidelines**](https://rust-lang.github.io/api-guidelines/) ([**Checklist**](https://rust-lang.github.io/api-guidelines/checklist.html))
-> for any shared project! 🔥
-
-
-{{ tablesep() }}
-
-
-
-## Async-Await 101
-
-If you are familiar with async / await in C# or TypeScript, here are some things to keep in mind:
-
-
-<tabs class="color-header orange">
+<tabs>
 
 <!-- NEW TAB -->
 <tab>
-<input type="radio" id="tab-async-1" name="tab-async" checked>
-<label for="tab-async-1"><b>Basics</b></label>
+<input type="radio" id="tab-types-1" name="tab-group-types" checked>
+<label for="tab-types-1"><b>Types & Traits</b></label>
 <panel><div>
 
 
+<!-- Section -->
+<generics-section id="ttg-types">
+<header>Types</header>
+<description>
 
-| Construct | Explanation |
-|---------|-------------|
-| `async`  | Anything declared `async` always returns an `impl Future<Output=_>`. {{ std(page="std/future/trait.Future.html") }} |
-| {{ tab() }} `async fn f() {}`  | Function `f` returns an `impl Future<Output=()>`. |
-| {{ tab() }} `async fn f() -> S {}`  | Function `f` returns an `impl Future<Output=S>`. |
-| {{ tab() }} `async { x }`  | Transforms `{ x }` into an `impl Future<Output=X>`. |
-| `let sm = f();   ` | Calling `f()` that is `async` will **not** execute `f`, but produce state machine `sm`. {{ note(note="1") }} {{ note(note="2") }} |
-| {{ tab() }} `sm = async { g() };`  | Likewise, does **not** execute the `{ g() }` block; produces state machine. |
-| `runtime.block_on(sm);`  | Outside an `async {}`, schedules `sm` to actually run. Would execute `g()`. {{ note(note="3") }} {{ note(note="4") }}|
-| `sm.await` | Inside an `async {}`, run `sm` until complete. Yield to runtime if `sm` not ready. |
+<mini-zoo class="zoo">
+    <entry>
+        <type class="primitive"><code>u8</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>String</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>Device</code></type>
+    </entry>
+</mini-zoo>
+
+- Set of values with given semantics, layout, &hellip;
+
+<mini-table>
+
+| Type |   Values |
+| --- | --- |
+| `u8`  |  <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code> |
+| `char`  | `{ 'a', 'b', ... '🦀' }` |
+| `struct S(u8, char)`  | <code>{ (0<sub>u8</sub>, 'a'), ... (255<sub>u8</sub>, '🦀') }</code> |
+
+<subtitle>Sample types and sample values.</subtitle>
+
+</mini-table>
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<generics-section id="ttg-equivalence">
+<header>Type Equivalence and Conversions</header>
+<description>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="primitive"><code>u8</code></type>
+    </entry>
+    <entry>
+        <type class="primitive"><code>&u8</code></type>
+    </entry>
+    <entry>
+        <type class="primitive"><code>&mut u8</code></type>
+    </entry>
+    <entry>
+        <type class="primitive"><code>[u8; 1]</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>String</code></type>
+    </entry>
+</mini-zoo>
+
+
+
+<!-- - Question: which of the types above is different from all others?
+    - Trick question: all of these types are totally different -->
+- May be obvious but &nbsp; `u8`, &nbsp;&nbsp; `&u8`, &nbsp;&nbsp; `&mut u8`, entirely different from each other
+- Any `t: T` only accepts values from exactly `T`, e.g.,
+    - `f(0_u8)` can't be called with `f(&0_u8)`,
+    - `f(&mut my_u8)` can't be called with `f(&my_u8)`,
+    - `f(0_u8)` can't be called with `f(0_i8)`.
+
+>  Yes, `0 != 0` (in a mathematical sense) when it comes to types! In a language sense, the operation  <code>==(0<sub>u8</sub>, 0<sub>u16</sub>)</code> just isn't defined to prevent happy little accidents.
+
+<mini-table>
+
+| Type | Values |
+| --- | --- |
+| `u8`  | <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code> |
+| `u16`  | <code>{ 0<sub>u16</sub>, 1<sub>u16</sub>, ..., 65_535<sub>u16</sub> }</code> |
+| `&u8`  | <code>{ 0xffaa<sub>&u8</sub>, 0xffbb<sub>&u8</sub>, ... }</code> |
+| `&mut u8`  | <code>{ 0xffaa<sub>&mut u8</sub>, 0xffbb<sub>&mut u8</sub>, ... }</code> |
+
+<subtitle>How values differ between types.</subtitle>
+
+</mini-table>
+
+
+
+- However, Rust might sometimes help to **convert between types**<sup>1</sup>
+    - **casts** manually convert values of types, `0_i8 as u8`
+    - **coercions**  {{ above(target="#language-sugar") }} automatically convert types if safe<sup>2</sup>, `let x: &u8 = &mut 0_u8;`
+
 
 
 
 <footnotes>
 
-<sup>1</sup> Technically `async` transforms following code into anonymous, compiler-generated state machine type; `f()` instantiates that machine. <br>
-<sup>2</sup> The state machine always `impl Future`, possibly `Send` & co, depending on types used inside `async`. <br>
-<sup>3</sup> State machine driven by worker thread invoking `Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
-<sup>4</sup> Rust doesn't come with runtime, need external crate instead, e.g., [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio). Also, more helpers in [futures crate](https://github.com/rust-lang-nursery/futures-rs).
+<sup>1</sup> Casts and coercions convert values from one set (e.g., `u8`) to another (e.g., `u16`), possibly adding CPU instructions to do so; and in such differ from **subtyping**, which would imply type and subtype are part of the same set (e.g., `u8` being subtype of `u16` and `0_u8` being the same as `0_u16`) where such a conversion would be purely a compile time check. Rust does not use subtyping for regular types (and `0_u8` _does_ differ from `0_u16`) but sort-of for lifetimes. {{ link(url = "https://featherweightmusings.blogspot.com/2014/03/subtyping-and-coercion-in-rust.html") }}
+
+<sup>2</sup> Safety here is not just physical concept (e.g., <code>&u8</code> can't be coerced to <code>&u128</code>), but also whether 'history has shown that such a conversion would lead to programming errors'.
 
 </footnotes>
 
+</description>
+</generics-section>
+
+
+
+<!-- Section -->
+<generics-section id="ttg-impl-s">
+<header>Implementations &mdash; <code>impl S { }</code></header>
+<description>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="primitive"><code>u8</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry>
+        <type class="composed"><code>String</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+    <entry>
+        <type class="composed"><code>Port</code></type>
+        <impl><code>impl { ... }</code></impl>
+    </entry>
+</mini-zoo>
+
+```
+impl Port {
+    fn f() { ... }
+}
+```
+
+- Types usually come with implementation, e.g., `impl Port {}`, behavior _related_ to type:
+    - **associated functions** `Port::new(80)`
+    - **methods** `port.close()`
+
+> What's considered _related_ is more philosophical than technical, nothing (except good taste) would prevent a `u8::play_sound()` from happening.
+
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<generics-section id="ttg-traits">
+<header>Traits &mdash; <code>trait T { }</code></header>
+<description>
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl>⌾ <code>Copy</code></trait-impl>
+    </entry>
+    <entry>
+        <trait-impl>⌾ <code>Clone</code></trait-impl>
+    </entry>
+    <entry>
+        <trait-impl>⌾ <code>Sized</code></trait-impl>
+    </entry>
+    <entry>
+        <trait-impl>⌾ <code>ShowHex</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+- **Traits** ...
+    - are way to "abstract" behavior,
+    - trait author declares semantically _this trait means X_,
+    - other can implement ("subscribe to") that behavior for their type.
+- Think about trait as "membership list" for types:
+
+
+<mini-table>
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th>Copy Trait</th></tr>
+        <tr class="subheader"><th><code>Self</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>u8</code></td></tr>
+        <tr><td><code>u16</code></td></tr>
+        <tr><td><code>...</code></td></tr>
+    </tbody>
+</table>
+
+</mini-table>
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th>Clone Trait</th></tr>
+        <tr class="subheader"><th><code>Self</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>u8</code></td></tr>
+        <tr><td><code>String</code></td></tr>
+        <tr><td><code>...</code></td></tr>
+    </tbody>
+</table>
+
+</mini-table>
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th>Sized Trait</th></tr>
+        <tr class="subheader"><th><code>Self</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>char</code></td></tr>
+        <tr><td><code>Port</code></td></tr>
+        <tr><td><code>...</code></td></tr>
+    </tbody>
+</table>
+
+</mini-table>
+
+<subtitle>Traits as membership tables, <code>Self</code> refers to the type included.</subtitle>
+
+</mini-table>
+
+
+- **Whoever is part of that membership list will adhere to behavior of list.**
+- Traits can also include associated methods, functions, ...
+
+```
+trait ShowHex {
+    // Must be implemented according to documentation.
+    fn as_hex() -> String;
+
+    // Provided by trait author.
+    fn print_hex() {}
+}
+```
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl>⌾ <code>Copy</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+```
+trait Copy { }
+```
+
+- Traits without methods often called **marker traits**.
+- `Copy` is example marker trait, meaning _memory may be copied bitwise_.
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl>⌾ <code>Sized</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+
+- Some traits entirely outside explicit control
+- `Sized` provided by compiler for types with _known size_; either this is, or isn't
+
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Implementing Traits for Types &mdash; <code>impl T for S { }</code></header>
+<description>
+
+
+```
+impl ShowHex for Port { ... }
+```
+- Traits are implemented for types 'at some point'.
+- Implementation `impl A for B` add type `B` to the trait membership list:
+
+<mini-table>
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th>ShowHex Trait</th></tr>
+        <tr class="subheader"><th><code>Self</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>Port</code></td></tr>
+    </tbody>
+</table>
+
+</mini-table>
+</mini-table>
+
+- Visually, you can think of the type getting a "badge" for its membership:
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="primitive"><code>u8</code></type>
+        <impl><code>impl { ... }</code></impl>
+        <trait-impl>⌾ <code>Sized</code></trait-impl>
+        <trait-impl>⌾ <code>Clone</code></trait-impl>
+        <trait-impl>⌾ <code>Copy</code></trait-impl>
+    </entry>
+    <entry>
+        <type class="composed"><code>Device</code></type>
+        <impl><code>impl { ... }</code></impl>
+        <trait-impl>⌾ <code>Transport</code></trait-impl>
+    </entry>
+    <entry>
+        <type class="composed"><code>Port</code></type>
+        <impl><code>impl { ... }</code></impl>
+        <trait-impl>⌾ <code>Sized</code></trait-impl>
+        <trait-impl>⌾ <code>Clone</code></trait-impl>
+        <trait-impl>⌾ <code>ShowHex</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+</description>
+</generics-section>
+
+
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Traits vs. Interfaces</header>
+<description>
+
+
+<mini-zoo class="zoo">
+    <person>👩‍🦰</person>
+    <entry>
+        <trait-impl>⌾ <code>Eat</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>🧔</person>
+    <entry>
+        <type class="composed"><code>Venison</code></type>
+        <trait-impl>⌾ <code>Eat</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+
+<mini-zoo class="zoo" style="margin-left: 10px; width: 130px;">
+    <person></person>
+    <entry>
+        <code style="text-align:center; width: 100%;"></code>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>🎅</person>
+    <entry>
+        <code>venison.eat()</code>
+    </entry>
+</mini-zoo>
+
+{{ tablesep() }}
+
+**Interfaces**
+
+- In **Java**, Alice creates interface `Eat`.
+- When Bob authors `Venison`, he must decide if `Venison` implements `Eat` or not.
+- In other words, all membership must be exhaustively declared during type definition.
+- When using `Venison`, Santa can make use of behavior provided by `Eat`:
+
+```
+// Santa imports `Venison` to create it, can `eat()` if he wants.
+import food.Venison;
+
+new Venison("rudolph").eat();
+```
+
+
+{{ tablesep() }}
+{{ tablesep() }}
+
+
+<mini-zoo class="zoo">
+    <person>👩‍🦰</person>
+    <entry>
+        <trait-impl>⌾ <code>Eat</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>🧔</person>
+    <entry>
+        <type class="composed"><code>Venison</code></type>
+    </entry>
+</mini-zoo>
+
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>👩‍🦰</person> / <person>🧔</person>
+    <entry>
+        <type class="composed"><code>Venison</code></type>
+        <code style="text-align:center; width: 100%;">+</code>
+        <trait-impl>⌾ <code>Eat</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>🎅</person>
+    <entry>
+        <code>venison.eat()</code>
+    </entry>
+</mini-zoo>
+
+{{ tablesep() }}
+
+**Traits**
+
+- In **Rust**, Alice creates trait `Eat`.
+- Bob creates type `Venison` and decides not to implement `Eat` (he might not even know about `Eat`).
+- Someone<sup>*</sup> later decides adding `Eat` to `Venison` would be a really good idea.
+- When using `Venison` Santa must import `Eat` separately:
+
+```
+// Santa needs to import `Venison` to create it, and import `Eat` for trait method.
+use food::Venison;
+use tasks::Eat;
+
+// Ho ho ho
+Venison::new("rudolph").eat();
+```
+
+<footnotes>
+
+<sup>*</sup> To prevent two persons from implementing `Eat` differently Rust limits that choice to either Alice or Bob; that is, an `impl Eat for Venison` may only happen in the crate of `Venison` or in the crate of `Eat`. For details see coherence. {{todo()}}
+
+</footnotes>
+
+
+</description>
+</generics-section>
 
 
 </div></panel></tab>
 
 
+
 <!-- NEW TAB -->
 <tab>
-<input type="radio" id="tab-async-2" name="tab-async">
-<label for="tab-async-2"><b>Execution Flow</b></label>
+<input type="radio" id="tab-types-2" name="tab-group-types">
+<label for="tab-types-2"><b>Generics</b></label>
 <panel><div>
 
 
-At each `x.await`, state machine passes control to subordinate state machine `x`. At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker
-thread returns all the way up to runtime so it can drive another Future. Some time later the runtime:
-- **might** resume execution. It usually does, unless `sm` / `Future` dropped.
-- **might** resume with the previous worker **or another** worker thread (depends on runtime).
+<!-- Section -->
+<generics-section id="xxx">
+<header>Type Constructors &mdash; <code>Vec&lt;&gt;</code></header>
+<description>
 
-Simplified diagram for code written inside an `async` block :
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>Vec&lt;u8&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>Vec&lt;char&gt;</code></type>
+    </entry>
+</mini-zoo>
 
+- `Vec<u8>` is type "vector of bytes"; `Vec<char>` is type "vector of chars", but what is `Vec<>`?
+
+<mini-table>
+
+| Construct |   Values |
+| --- | --- |
+| `Vec<u8>`  |  `{ [], [1], [1, 2, 3], ... }` |
+| `Vec<char>`  |  `{ [], ['a'], ['x', 'y', 'z'], ... }` |
+| `Vec<>`  |  - |
+
+<subtitle>Types vs type constructors.</subtitle>
+
+</mini-table>
+
+
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="generic dotted"><code>Vec&lt;&gt;</code></type>
+    </entry>
+</mini-zoo>
+
+- `Vec<>` is no type, does not occupy memory, can't even be translated to code.
+- `Vec<>` is **type constructor**, a "template" or "recipe to create types"
+    - allows 3<sup>rd</sup> party to construct concrete type via parameter,
+    - only then would this `Vec<UserType>` become real type itself.
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Generic Parameters &mdash; <code>&lt;T&gt;</code></header>
+<description>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="generic dotted"><code>Vec&lt;T&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="generic dotted"><code>[T; 128]</code></type>
+    </entry>
+    <entry>
+        <type class="generic dotted"><code>&T</code></type>
+    </entry>
+    <entry>
+        <type class="generic dotted"><code>&mut T</code></type>
+    </entry>
+    <entry>
+        <type class="generic dotted"><code>S&lt;T&gt;</code></type>
+    </entry>
+</mini-zoo>
+
+- Parameter for `Vec<>` often named `T` therefore `Vec<T>`.
+- `T` "variable name for type" for user to plug in something specfic, `Vec<f32>`, `S<u8>`, &hellip;
+
+
+<mini-table>
+
+| Type Constructor |  Produces Family |
+| --- | --- |
+| `struct Vec<T> {}`  |  `Vec<u8>`, `Vec<f32>`, `Vec<Vec<u8>>`, ... |
+| `[T; 128]`  |  `[u8; 128]`, `[char; 128]`, `[Port; 128]` ... |
+| `&T`  |  `&u8`, `&u16`, `&str`,  ... |
+
+<subtitle>Type vs type constructors.</subtitle>
+
+</mini-table>
+
+
+```
+// S<> is type constructor with parameter T; user can supply any concrete type for T.
+struct S<T> {
+    x: T
+}
+
+// Within 'concrete' code an existing type must be given for T.
+fn f() {
+    let x: S<f32> = S::new(0_f32);
+}
+
+```
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Const Generics &mdash; <code>[T; N]</code> and <code>S&lt;const N: usize&gt;</code></header>
+<description>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="generic dotted"><code>[T; n]</code></type>
+    </entry>
+    <entry>
+        <type class="generic dotted"><code>S&lt;const N&gt;</code></type>
+    </entry>
+</mini-zoo>
+
+- Some type constructors not only accept specific type, but also **specific constant**.
+- `[T; n]` constructs array type holding `T` type `n` times.
+- For custom types declared as `MyArray<T, const N: usize>`.
+
+<mini-table>
+
+| Type Constructor |  Produces Family |
+| --- | --- |
+| `[u8; N]`  |  `[u8; 0]`, `[u8; 1]`, `[u8; 2]`, ... |
+| `struct S<const N: usize> {}`  |  `S<1>`, `S<6>`, `S<123>`,  ... |
+
+<subtitle>Type constructors based on constant.</subtitle>
+
+</mini-table>
+
+
+```
+let x: [u8; 4]; // "array of 4 bytes"
+let y: [f32; 16]; // "array of 16 floats"
+
+// `MyArray` is type constructor requiring concrete type `T` and
+// concrete usize `N` to construct specific type.
+struct MyArray<T, const N: usize> {
+    data: [T; N],
+}
+```
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<!-- <generics-section id="xxx">
+<header>Generics in Types</header>
+<description>
+
+</description>
+</generics-section> -->
+
+
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Bounds (Simple) &mdash; <code>where T: X</code></header>
+<description>
+
+<mini-zoo class="zoo">
+    <person>🧔</person>
+    <entry>
+        <type class="generic dotted"><code>Num&lt;T&gt;</code></type>
+    </entry>
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+    <person>🎅</person>
+    <entry>
+        <type class="composed"><code>Num&lt;u8&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>Num&lt;f32&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>Num&lt;Cmplx&gt;</code></type>
+    </entry>
+    <narrow-entry>
+        <code style="text-align:center; width: 50px;">&nbsp;</code>
+    </narrow-entry>
+    <entry class="">
+        <type class="primitive"><code>u8</code></type>
+        <trait-impl>⌾ <code>Absolute</code></trait-impl>
+        <trait-impl>⌾ <code>Dim</code></trait-impl>
+        <trait-impl>⌾ <code>Mul</code></trait-impl>
+    </entry>
+    <entry class="grayed">
+        <type class="composed"><code>Port</code></type>
+        <trait-impl>⌾ <code>Clone</code></trait-impl>
+        <trait-impl>⌾ <code>ShowHex</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+- If `T` can be any type, how can we _reason_ about (write code) for such a `Num<T>`?
+- Parameter **bounds**:
+    - limit what types (**trait bound**) or values (**const bound** {{ todo() }}) allowed,
+    - we now can make use of these limits!
+- Trait bounds act as "membership check":
+
+<mini-table>
+
+<div style="display: inline-block;">
+
+```
+// Type can only be constructed for some `T` if that
+// T is part of `Absolute` membership list.
+struct Num<T> where T: Absolute {
+    ...
+}
+
+```
+
+</div>
+
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th>Absolute Trait</th></tr>
+        <tr class="subheader"><th><code>Self</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>u8</code></td></tr>
+        <tr><td><code>u16</code></td></tr>
+        <tr><td><code>...</code></td></tr>
+    </tbody>
+</table>
+
+</mini-table>
+</mini-table>
+
+
+<!--
+// Constant `N` must be `usize`
+struct Arrayf32<const N: usize> {
+    data: [f32; N],
+} -->
+
+<footnotes>
+
+We add bounds to the struct here. In practice it's nicer add bounds to the respective impl blocks instead, see later this section.
+
+</footnotes>
+
+<!-- > Note to self, is `const N: usize` a "const bound"? It seemingly acts as one, limiting the choice of values for N (albeit to specific types only). -->
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Bounds (Compound) &mdash; <code>where T: X + Y</code></header>
+<description>
+
+<mini-zoo class="zoo">
+    <entry class="grayed">
+        <type class="primitive"><code>u8</code></type>
+        <trait-impl>⌾ <code>Absolute</code></trait-impl>
+        <trait-impl>⌾ <code>Dim</code></trait-impl>
+        <trait-impl>⌾ <code>Mul</code></trait-impl>
+    </entry>
+    <entry class="grayed">
+        <type class="primitive"><code>f32</code></type>
+        <trait-impl>⌾ <code>Absolute</code></trait-impl>
+        <trait-impl>⌾ <code>Mul</code></trait-impl>
+    </entry>
+    <entry class="grayed">
+        <type class="primitive"><code>char</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>Cmplx</code></type>
+        <trait-impl>⌾ <code>Absolute</code></trait-impl>
+        <trait-impl>⌾ <code>Dim</code></trait-impl>
+        <trait-impl>⌾ <code>Mul</code></trait-impl>
+        <trait-impl>⌾ <code>DirName</code></trait-impl>
+        <trait-impl>⌾ <code>TwoD</code></trait-impl>
+    </entry>
+    <entry class="grayed">
+        <type class="composed"><code>Car</code></type>
+        <trait-impl>⌾ <code>DirName</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+
+
+```
+struct S<T>
+where
+    T: Absolute + Dim + Mul + DirName + TwoD
+{ ... }
+```
+
+- Long trait bounds can look intimidating.
+- In practice, each `+ X` addition to a bound merely cuts down space of eligible types.
+
+</description>
+</generics-section>
+
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Implementing Families &mdash; <code>impl&lt;&gt;</code></header>
+<description>
+
+{{ tablesep() }}
+
+When we write:
+```
+impl<T> S<T> where T: Absolute + Dim + Mul {
+    fn f(&self, x: T) { ... };
+}
+```
+It can be read as:
+- here is an implementation recipe for any type `T` (the `impl <T>` part),
+- where<!--sup>*</sup--> that type must be member of the `Absolute + Dim + Mul` traits,
+- you may add an implementation block to `S<T>`,
+- containing the methods ...
+
+You can think of such `impl<T> ... {} ` code as **abstractly implementing a family of behaviors**. Most notably, they allow 3<sup>rd</sup> parties to transparently materialize implementations similarly to how type constructors materialize types:
+
+```
+// If compiler encounters this, it will
+// - check `0` and `x` fulfill the membership requirements of `T`
+// - create two new version of `f`, one for `char`, another one for `u32`.
+// - based on "family implementation" provided
+s.f(0_u32);
+s.f('x');
+```
+
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Blanket Implementations &mdash; <code>impl&lt;T&gt X for T { ... }</code></header>
+<description>
+
+{{ tablesep() }}
+
+Can also write "family implementations" so they apply trait to many types:
+
+```
+// Also implements Serialize for any type if that type already implements ToHex
+impl<T> Serialize for T where T: ToHex { ... }
+```
+
+These are called **blanket implementations**.
+
+<mini-table>
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th>ToHex</th></tr>
+        <tr class="subheader"><th><code>Self</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>Port</code></td></tr>
+        <tr><td><code>Device</code></td></tr>
+        <tr><td><code>...</code></td></tr>
+    </tbody>
+</table>
+
+</mini-table>
+
+<div style="display: inline-block; width: 100px;">
+
+→  Whatever was in left table, may be added to right table, based on the following recipe (`impl`) →
+
+</div>
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th>Serialize Trait</th></tr>
+        <tr class="subheader"><th><code>Self</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>u8</code></td></tr>
+        <tr><td><code>Port</code></td></tr>
+        <tr><td><code>...</code></td></tr>
+    </tbody>
+</table>
+
+</mini-table>
+
+</mini-table>
+
+
+They can be neat way to give foreign types functionality in a modular way if they just implement another interface.
+
+</description>
+</generics-section>
+
+
+</div></panel></tab>
+
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-types-3" name="tab-group-types">
+<label for="tab-types-3"><b>Advanced Concepts</b>{{ esoteric() }}</label>
+<panel><div>
+
+
+<!-- Section -->
+<!-- <generics-section id="xxx">
+<header>Pseudo-Specialization</header>
+<description>
+
+</description>
+</generics-section> -->
+
+
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Trait Parameters &mdash; <code>Trait&lt;In&gt; { type Out; } </code></header>
+<description>
+
+{{ tablesep() }}
+
+Notice how some traits can be "attached" multiple times, but others just once?
+
+<mini-zoo class="zoo">
+    <entry style="left:300px; top: 25px;">
+        <type class="composed"><code>Port</code></type>
+        <trait-impl class="">⌾ <code>From&lt;u8&gt;</code></trait-impl>
+        <trait-impl class="">⌾ <code>From&lt;u16&gt;</code></trait-impl>
+    </entry>
+    <entry style="left:400px; top: 25px;">
+        <type class="composed"><code>Port</code></type>
+        <trait-impl class="">⌾ <code>Deref</code></trait-impl>
+        <associated-type class="grayed"><code>type u8;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<!--
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="">⌾ <code>A&lt;T&gt;</code></trait-impl>
+    </entry>
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+    <entry>
+        <trait-impl class="">⌾ <code>A&lt;u8&gt;</code></trait-impl>
+    </entry>
+    <entry>
+        <trait-impl class="">⌾ <code>A&lt;f32&gt;</code></trait-impl>
+    </entry>
+    <entry>
+        <trait-impl class="">⌾ <code>A&lt;str&gt;</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<br>
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="">⌾ <code>B</code></trait-impl>
+        <associated-type class=""><code>type T;</code></associated-type>
+    </entry>
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+    <entry>
+        <trait-impl class="">⌾ <code>B</code></trait-impl>
+        <associated-type class=""><code>T = u8;</code></associated-type>
+    </entry>
+</mini-zoo> -->
+
+<br>
+
+{{ tablesep() }}
+
+Why is that?
+
+- Traits themselves can be generic over two **kinds of parameters**:
+    - `trait From<I> {}`
+    - `trait Deref { type O; }`
+- Remember we said traits are "membership lists" for types and called the list `Self`?
+- Turns out, parameters `I` (for **input**) and `O` (for **output**) are just more _columns_ to that trait's list:
+
+```
+impl From<u8> for u16 {}
+impl From<u16> for u32 {}
+impl Deref for Port { type O = u8; }
+impl Deref for String { type O = str; }
+```
+
+
+<mini-table>
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th colspan="2">From</th></tr>
+        <tr class="subheader"><th><code>Self</code></th><th><code>I</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>u16</code></td><td><code>u8</code></td></tr>
+        <tr><td><code>u32</code></td><td><code>u16</code></td></tr>
+        <tr><td colspan="2"><code>...</code></td></tr>
+    </tbody>
+</table>
+
+</mini-table>
+
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th colspan="2">Deref</th></tr>
+        <tr class="subheader"><th><code>Self</code></th><th><code>O</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>Port</code></td><td><code>u8</code></td></tr>
+        <tr><td><code>String</code></td><td><code>str</code></td></tr>
+        <tr><td colspan="2"><code>...</code></td></tr>
+    </tbody>
+</table>
+
+</mini-table>
+
+<subtitle>Input and output parameters.</subtitle>
+
+</mini-table>
+
+
+Now here's the twist,
+- **any output `O` parameters must be uniquely determined by input parameters `I`**,
+- (in the same way as a relation `X Y` would represent a function),
+- `Self` counts as an input.
+
+A more complex example:
+
+```
+trait Complex<I1, I2> {
+    type O1;
+    type O2;
+}
+```
+
+- this creates a relation relation of types named `Complex`,
+- with 3 inputs (`Self` is always one) and 2 outputs, and it holds `(Self, I1, I2) => (O1, O2)`
+
+<mini-table>
+
+<table>
+    <thead>
+        <tr style=""><th colspan="5">Complex</th></tr>
+        <tr class="subheader"><th><code>Self [I]</code></th><th><code>I1</code></th><th><code>I2</code></th><th><code>O1</code></th><th><code>O2</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>Player</code></td><td><code>u8</code></td><td><code>char</code></td><td><code>f32</code></td><td><code>f32</code></td></tr>
+        <tr><td><code>EvilMonster</code></td><td><code>u16</code></td><td><code>str</code></td><td><code>u8</code></td><td><code>u8</code></td></tr>
+        <tr><td><code>EvilMonster</code></td><td><code>u16</code></td><td><code>String</code></td><td><code>u8</code></td><td><code>u8</code></td></tr>
+        <tr><td><code>NiceMonster</code></td><td><code>u16</code></td><td><code>String</code></td><td><code>u8</code></td><td><code>u8</code></td></tr>
+        <tr><td><code>NiceMonster</code><sup>{{ bad() }}</sup></td><td><code>u16</code></td><td><code>String</code></td><td><code>u8</code></td><td><code>u16</code></td></tr>
+    </tbody>
+</table>
+
+<subtitle>Various trait implementations. The last one is not valid as `(NiceMonster, u16, String)` has <br> already uniquely determined the outputs.</subtitle>
+
+</mini-table>
+
+</description>
+</generics-section>
+
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Trait Authoring Considerations (Abstract)</header>
+<description>
+
+<mini-zoo class="zoo">
+    <person>👩‍🦰</person>
+    <entry>
+        <trait-impl class="dotted">⌾ <code>A&lt;I&gt;</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>🧔</person>
+    <entry>
+        <type class="composed"><code>Car</code></type>
+    </entry>
+</mini-zoo>
+
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>👩‍🦰</person> / <person>🧔</person>
+    <entry>
+        <type class="composed"><code>Car</code></type>
+        <trait-impl class="dotted">⌾ <code>A&lt;I&gt;</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>🎅</person>
+    <entry>
+        <code>car.a(0_u8)</code>
+        <code>car.a(0_f32)</code>
+    </entry>
+</mini-zoo>
+
+<br>
+
+<mini-zoo class="zoo">
+    <person>👩‍🦰</person>
+    <entry>
+        <trait-impl class="">⌾ <code>B</code></trait-impl>
+        <associated-type class=""><code>type O;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>🧔</person>
+    <entry>
+        <type class="composed"><code>Car</code></type>
+    </entry>
+</mini-zoo>
+
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>👩‍🦰</person> / <person>🧔</person>
+    <entry>
+        <type class="composed"><code>Car</code></type>
+        <trait-impl class="">⌾ <code>B</code></trait-impl>
+        <associated-type class=""><code>T = u8;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="margin-left: 10px;">
+    <person>🎅</person>
+    <entry>
+        <code>car.b(0_u8)</code>
+        <code style="text-decoration: line-through;">car.b(0_f32)</code>
+    </entry>
+</mini-zoo>
+
+- Parameter choice (input vs. output) also determines who may be allowed to add members:
+    - `I` parameters allow "familes of implementations" be forwarded to user (Santa),
+    - `O` parameters must be determined by trait implementor (Alice or Bob).
+
+```
+trait A<I> { }
+trait B { type O; }
+
+// Implementor adds (X, u32) to A.
+impl A<u32> for X { }
+
+// Implementor adds family impl. (X, ...) to A, user can materialze.
+impl<T> A<T> for Y { }
+
+// Implementor must decide specific entry (X, O) added to B.
+impl B for X { type O = u32; }
+```
+
+
+
+<mini-table>
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th colspan="2">A</th></tr>
+        <tr class="subheader"><th><code>Self</code></th><th><code>I</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>X</code></td><td><code>u32</code></td></tr>
+        <tr><td><code>Y</code></td><td><code>...</code></td></tr>
+    </tbody>
+</table>
+
+<subtitle>Santa may add more members by providing his own type for <code>T</code>.</subtitle>
+
+</mini-table>
+
+
+<mini-table style="width: 200px; display:inline-block;">
+
+<table>
+    <thead>
+        <tr style=""><th colspan="2">B</th></tr>
+        <tr class="subheader"><th><code>Self</code></th><th><code>O</code></th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>Player</code></td><td><code>String</code></td></tr>
+        <tr><td><code>X</code></td><td><code>u32</code></td></tr>
+    </tbody>
+</table>
+
+<subtitle>For given set of inputs (here <code>Self</code>), implementor must pre-select <code>O</code>.</subtitle>
+
+</mini-table>
+
+</mini-table>
+
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<generics-section id="trait-authoring-examples">
+<header>Trait Authoring Considerations (Example)</header>
+<description>
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">vs.</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">vs.</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
+        <associated-type class=""><code>type O;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">vs.</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
+        <associated-type class=""><code>type O;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+
+
+{{ tablesep() }}
+
+Choice of parameters goes along with purpose trait has to fill.
+
+<hr>
+
+
+**No Additional Parameters**
+
+```
+trait Query {
+    fn search(&self, needle: &str);
+}
+
+impl Query for PostgreSQL { ... }
+impl Query for Sled { ... }
+
+postgres.search("SELECT ...");
+```
+
+<mini-zoo class="zoo">
+    <person>👩‍🦰</person>
+    <entry>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <person>🧔</person>
+    <entry>
+        <type class="composed"><code>PostgreSQL</code></type>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>Sled</code></type>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+{{ tablesep() }}
+
+Trait author assumes:
+- neither implementor nor user need to customize API.
+
+{{ tablesep() }}
+
+<hr>
+
+**Input Parameters**
+
+```
+trait Query<I> {
+    fn search(&self, needle: I);
+}
+
+impl Query<&str> for PostgreSQL { ... }
+impl Query<String> for PostgreSQL { ... }
+impl<T> Query<T> for Sled where T: ToU8Slice { ... }
+
+postgres.search("SELECT ...");
+postgres.search(input.to_string());
+sled.search(file);
+```
+
+<mini-zoo class="zoo">
+    <person>👩‍🦰</person>
+    <entry>
+        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <person>🧔</person>
+    <entry>
+        <type class="composed"><code>PostgreSQL</code></type>
+        <trait-impl class="">⌾ <code>Query&lt;&str&gt;</code></trait-impl>
+        <trait-impl class="">⌾ <code>Query&lt;String&gt;</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>Sled</code></type>
+        <trait-impl class="dotted">⌾ <code>Query&lt;T&gt;</code></trait-impl>
+        <note><span style="margin-left: 10px; display: inline-block; transform: rotate(90deg); font-size: 100%">↲</span> where <code>T</code> is <code>ToU8Slice</code>.</note>
+    </entry>
+</mini-zoo>
+
+
+{{ tablesep() }}
+
+Trait author assumes:
+- implementor would customize API in multiple ways for same `Self` type,
+- users may want ability to decide for which `I`-types behavior should be possible.
+
+{{ tablesep() }}
+
+
+<hr>
+
+
+**Output Parameters**
+
+```
+trait Query {
+    type O;
+    fn search(&self, needle: Self::O);
+}
+
+impl Query for PostgreSQL { type O = String; ...}
+impl Query for Sled { type O = Vec<u8>; ... }
+
+postgres.search("SELECT ...".to_string());
+sled.search(vec![0, 1, 2, 4]);
+```
+
+<mini-zoo class="zoo">
+    <person>👩‍🦰</person>
+    <entry>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
+        <associated-type class=""><code>type O;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <person>🧔</person>
+    <entry>
+        <type class="composed"><code>PostgreSQL</code></type>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
+        <associated-type class=""><code>O = String;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>Sled</code></type>
+        <trait-impl class="">⌾ <code>Query</code></trait-impl>
+        <associated-type class=""><code>O = Vec&lt;u8&gt;;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+
+{{ tablesep() }}
+
+Trait author assumes:
+- implementor would customize API for `Self` type (but in only one way),
+- users do not need, or should not have, ability to influence customization for specific `Self`.
+
+> As you can see here, the term **input** or **output** does **not** (necessarily) have anything to do with whether `I` or `O` are inputs or outputs to an actual function!
+
+{{ tablesep() }}
+
+<hr>
+
+**Multiple In- and Output Parameters**
+
+```
+trait Query<I> {
+    type O;
+    fn search(&self, needle: I) -> Self::O;
+}
+
+impl Query<&str> for PostgreSQL { type O = String; ... }
+impl Query<CString> for PostgreSQL { type O = CString; ... }
+impl<T> Query<T> for Sled where T: ToU8Slice { type O = Vec<u8>; ... }
+
+postgres.search("SELECT ...").to_uppercase();
+sled.search(&[1, 2, 3, 4]).pop();
+```
+
+<mini-zoo class="zoo">
+    <person>👩‍🦰</person>
+    <entry>
+        <trait-impl class="dotted">⌾ <code>Query&lt;I&gt;</code></trait-impl>
+        <associated-type class=""><code>type O;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <person>🧔</person>
+    <entry>
+        <type class="composed"><code>PostgreSQL</code></type>
+        <trait-impl class="">⌾ <code>Query&lt;&str&gt;</code></trait-impl>
+        <associated-type class=""><code>O = String;</code></associated-type>
+        <trait-impl class="">⌾ <code>Query&lt;CString&gt;</code></trait-impl>
+        <associated-type class=""><code>O = CString;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="composed"><code>Sled</code></type>
+        <trait-impl class="dotted">⌾ <code>Query&lt;T&gt;</code></trait-impl>
+        <associated-type class=""><code>O = Vec&lt;u8&gt;;</code></associated-type>
+        <note><span style="margin-left: 10px; display: inline-block; transform: rotate(90deg); font-size: 100%">↲</span> where <code>T</code> is <code>ToU8Slice</code>.</note>
+    </entry>
+</mini-zoo>
+
+
+{{ tablesep() }}
+
+Like examples above, in particular trait author assumes:
+- users may want ability to decide for which `I`-types ability should be possible,
+- for given inputs, implementor should determine resulting output type.
+
+
+</description>
+</generics-section>
+
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header><code>?Sized</code></header>
+<description>
+
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="generic dotted"><code>S&lt;T&gt;</code></type>
+    </entry>
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+    <entry>
+        <type class="composed"><code>S&lt;u8&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>S&lt;char&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="composed grayed"><code>S&lt;str&gt;</code></type>
+    </entry>
+</mini-zoo>
+
+```
+struct S<T> { ... }
+```
+
+- `T` can be any concrete type.
+- However, there exists invisible default bound `T: Sized`, so `S<str>` is not possible out of box.
+- Instead we have to add `T : ?Sized` to opt-out of that bound:
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="generic dotted"><code>S&lt;T&gt;</code></type>
+    </entry>
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+    <entry>
+        <type class="composed"><code>S&lt;u8&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>S&lt;char&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>S&lt;str&gt;</code></type>
+    </entry>
+</mini-zoo>
+
+```
+struct S<T> where T: ?Sized { ... }
+```
+
+
+
+</description>
+</generics-section>
+
+
+
+<!-- Section -->
+<generics-section id="xxx">
+<header>Generics and Lifetimes &mdash; <code>&lt;'a&gt;</code></header>
+<description>
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="generic dotted"><code>S&lt;'a&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="generic dotted"><code>&'a f32</code></type>
+    </entry>
+    <entry>
+        <type class="generic dotted"><code>&'a mut u8</code></type>
+    </entry>
+</mini-zoo>
+
+- Lifetimes act<sup>*</sup> like type parameters:
+    - user must provide specific `'a` to instantiate type (compiler will help within methods),
+    - as `Vec<f32>` and `Vec<u8>` are different types, so are `S<'p>` and `S<'q>`,
+    - meaning you can't just assign value of type `S<'a>` to variable expecting `S<'b>` (exception: "subtype" relationship for lifetimes, e.g. `'a` outliving `'b`).
+
+
+<mini-zoo class="zoo">
+    <entry>
+        <type class="generic dotted"><code>S&lt;'a&gt;</code></type>
+    </entry>
+    <narrow-entry>
+        <code style="text-align:center; width: 100%;">→</code>
+    </narrow-entry>
+    <entry>
+        <type class="composed"><code>S&lt;'auto&gt;</code></type>
+    </entry>
+    <entry>
+        <type class="composed"><code>S&lt;'static&gt;</code></type>
+    </entry>
+</mini-zoo>
+
+
+- `'static` is only nameable instance of the _typespace_ lifetimes.
+
+```
+// `'a is free parameter here (user can pass any specific lifetime)
+struct S<'a> {
+    x: &'a u32
+}
+
+// In non-generic code, 'static is the only nameable lifetime we can explicitly put in here.
+let a: S<'static>;
+
+// Alternatively, in non-generic code we can (often must) omit 'a and have Rust determine
+// the right value for 'a automatically.
+let b: S;
+```
+
+<footnotes>
+
+<sup>*</sup> There are subtle differences, for example you can create an explicit instance `0` of a type `u32`, but with the exception of `'static` you can't really create a lifetime, e.g., "lines 80 - 100", the compiler will do that for you. {{ link(url="https://medium.com/nearprotocol/understanding-rust-lifetimes-e813bcd405fa" )}}
+
+</footnotes>
+
+
+> Note to self and TODO: that analogy seems somewhat flawed, as if `S<'a>` is to `S<'static>` like `S<T>` is to `S<u32>`, then `'static` would be a _type_; but then what's the value of that type?
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<!-- <generics-section id="xxx">
+<header>Another <code>?X</code></header>
+<description>
+
+- `Sized` is trait, automatically implemented **and** automatically used as default bound
+- Could there (ever) be another trait `T` so that:
+    - `S<T>` means `S<T> where T: Sized + X` by default and
+    - you'd have to opt out with `S<T> where T: ?X` ?
+- Issue:
+    - Any `S<T>` written today does not know `X`, so can't opt into supporting it
+    - If `X` were introduced and not implemented for any existing type, `S<T>` would stop working on that type
+
+</description>
+</generics-section> -->
+
+
+<!-- Section -->
+<!-- <generics-section id="xxx">
+<header>GAT {{ experimental() }}</header>
+<description>
+
+
+</description>
+</generics-section> -->
+
+
+
+<!-- Section -->
+<!-- <generics-section id="xxx">
+<header>(Co-/Contra-) Variance </header>
+<description>
+
+
+</description>
+</generics-section>
+ -->
+
+<!-- Section -->
+<!-- <generics-section id="zoo_todo">
+<header>Todo</header>
+<description>
+
+
+</description>
+</generics-section>
+ -->
+
+
+</div></panel></tab>
+
+</tabs>
+
+<footnotes>
+
+Examples expand by clicking.
+
+</footnotes>
+
+
+
+
+## Type Zoo
+
+A visual overview of types and traits in crates.
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
-<div style="min-width: 100%; width: 650px;">
-
-```
-       consecutive_code();           consecutive_code();           consecutive_code();
-START --------------------> x.await --------------------> y.await --------------------> READY
-// ^                          ^     ^                               Future<Output=X> ready -^
-// Invoked via runtime        |     |
-// or an external .await      |     This might resume on another thread (next best available),
-//                            |     or NOT AT ALL if Future was dropped.
-//                            |
-//                            Execute `x`. If ready: just continue execution; if not, return
-//                            this thread to runtime.
-```
-
-</div>
-</div>
-
-</div></panel></tab>
+<div style="min-width: 100%; width: 750px;">
 
 
+<zoo class="zoo">
 
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-async-3" name="tab-async">
-<label for="tab-async-3"><b>Caveats</b></label>
-<panel><div>
+<!-- REGION -->
+<region style="height: 310px;">
+<!-- Primitives -->
+<group style="left:6%; width: 200px;">
+    <entry style="left:100px; top: 10%;">
+        <type class="primitive"><code>u8</code></type>
+    </entry>
+    <entry style="left:20px; top: 32%;">
+        <type class="primitive"><code>u16</code></type>
+    </entry>
+    <entry style="left:30px; top: 20%;">
+        <type class="primitive"><code>f32</code></type>
+    </entry>
+    <entry style="left:0px; top: 7%;">
+        <type class="primitive"><code>bool</code></type>
+    </entry>
+    <entry style="left:120px; top: 32%;">
+        <type class="primitive"><code>char</code></type>
+    </entry>
+    <label style="left:8px; top: 43%;">Primitive Types</label>
+</group>
+<!-- Composed -->
+<group style="left:50%; width: 350px;">
+    <entry style="left:110px; top: 60px;">
+        <type class="composed"><code>File</code></type>
+    </entry>
+    <entry style="left:180px; top: 34%;">
+        <type class="composed"><code>String</code></type>
+    </entry>
+    <entry style="left:230px; top: 13%;">
+        <type class="composed"><code>Builder</code></type>
+    </entry>
+    <label style="left:150px; top: 43%;">Composite Types</label>
+</group>
+<!-- Type constructors -->
+<group style="left: 30px; top:53%; width: 200px;">
+    <!-- Group -->
+    <entry style="left:50px; top: 8%;">
+        <type class="composed"><code>Vec&lt;T&gt;</code></type>
+    </entry>
+    <entry style="left:45px; top: 9%;">
+        <type class="composed"><code>Vec&lt;T&gt;</code></type>
+    </entry>
+    <entry style="left:40px; top: 10%;">
+        <type class="generic dotted"><code>Vec&lt;T&gt;</code></type>
+    </entry>
+    <!-- Group -->
+    <entry style="left:170px; top: 2%;">
+        <type class="primitive"><code>&'a T</code></type>
+    </entry>
+    <entry style="left:165px; top: 3%;">
+        <type class="primitive"><code>&'a T</code></type>
+    </entry>
+    <entry style="left:160px; top: 4%;">
+        <type class="generic dotted"><code>&'a T</code></type>
+    </entry>
+    <!-- Group -->
+    <entry style="left:140px; top: 18%;">
+        <type class="primitive"><code>&mut 'a T</code></type>
+    </entry>
+    <entry style="left:135px; top: 19%;">
+        <type class="primitive"><code>&mut 'a T</code></type>
+    </entry>
+    <entry style="left:130px; top: 20%;">
+        <type class="generic dotted"><code>&mut 'a T</code></type>
+    </entry>
+    <!-- Group -->
+    <entry style="left:40px; top: 28%;">
+        <type class="primitive"><code>[T; n]</code></type>
+    </entry>
+    <entry style="left:35px; top: 29%;">
+        <type class="primitive"><code>[T; n]</code></type>
+    </entry>
+    <entry style="left:30px; top: 30%;">
+        <type class="generic dotted"><code>[T; n]</code></type>
+    </entry>
+    <label style="left:80px; top: 40%;">Type Constructors</label>
+</group>
+<!-- Functrions -->
+<group style="left: 50%; top:53%; width: 200px;">
+    <!-- Group -->
+    <entry style="left:10px; top: 8%;">
+        <function class=""><code>Vec&lt;T&gt;</code></function>
+    </entry>
+    <entry style="left:5px; top: 9%;">
+        <function class=""><code>Vec&lt;T&gt;</code></function>
+    </entry>
+    <entry style="left:0px; top: 10%;">
+        <function class="dotted"><code>f&lt;T&gt;() {}</code></function>
+    </entry>
+    <!-- Group -->
+    <entry style="left:20px; top: 24%;">
+        <function><code>drop() {}</code></function>
+    </entry>
+    <label style="left:10px; top: 40%;">Functions</label>
+</group>
+<!-- Unsized -->
+<!-- <group style="left: 50%; top:53%;">
+    <entry style="left:30%; top: 10%;">
+        <type class="unsized"><code>str</code></type>
+    </entry>
+    <entry style="left:35%; top: 20%;">
+        <type class="unsized"><code>[u8]</code></type>
+    </entry>
+    <entry style="left:28%; top: 30%;">
+        <type class="unsized"><code>dyn Trait</code></type>
+    </entry>
+    <label style="left:30%; top: 40%;">Unsized Types</label>
+</group> -->
+<!-- Macros -->
+<group class="grayed" style="left: 80%; top:53%; width: 140px;">
+    <entry style="left:5px; top: 15%;">
+        <macro><code>PI</code></macro>
+    </entry>
+    <entry style="left:0px; top: 28%;">
+        <macro><code>dbg!</code></macro>
+    </entry>
+    <label style="left:20px; top: 40%;">Other</label>
+</group>
+<!-- Traits -->
+<group style="left:36%; width: 30px;">
+    <entry style="left:20px; top: 20px;">
+        <trait-impl>⌾ <code>Copy</code></trait-impl>
+    </entry>
+    <entry style="left:60px; top: 90px;">
+        <trait-impl class="">⌾ <code>Deref</code></trait-impl>
+        <associated-type class=""><code>type Tgt;</code></associated-type>
+    </entry>
+    <entry style="left:90px; top: 50px;">
+        <trait-impl class="">⌾ <code>From&lt;T&gt;</code></trait-impl>
+    </entry>
+    <entry style="left:85px; top: 55px;">
+        <trait-impl class="">⌾ <code>From&lt;T&gt;</code></trait-impl>
+    </entry>
+    <entry style="left:80px; top: 60px;">
+        <trait-impl class="dotted">⌾ <code>From&lt;T&gt;</code></trait-impl>
+    </entry>
+    <label style="left:60px; top: 43%;">Traits</label>
+</group>
+</region>
+<region-label>Items defined in upstream crates.</region-label>
 
+<!-- REGION -->
+<region class="your-crate" style="height: 190px;">
+<!-- traits -->
+<group style="left:5px; width: 200px;">
+    <entry style="left:10px; top: 25px;">
+        <trait-impl class="">⌾ <code>Serialize</code></trait-impl>
+    </entry>
+    <entry style="left:30px; top: 65px;">
+        <trait-impl class="">⌾ <code>Transport</code></trait-impl>
+    </entry>
+    <entry style="left:15px; top: 105px;">
+        <trait-impl class="">⌾ <code>ShowHex</code></trait-impl>
+    </entry>
+    <!-- <label style="left:60px; top: 165px">Traits</label> -->
+</group>
+<!-- types -->
+<group style="left:150px; width: 200px;">
+    <entry style="left:0px; top: 25px;">
+        <type class="composed"><code>Device</code></type>
+        <trait-impl class="grayed">⌾ <code>From&lt;u8&gt;</code></trait-impl>
+        <!-- <trait-impl class="grayed">⌾ <code>Deref</code></trait-impl>
+        <associated-type class="grayed"><code>type Thing;</code></associated-type> -->
+        <note>Foreign trait impl. for local type.</note>
+    </entry>
+    <entry style="left:100px; top: 25px;">
+        <type class="grayed composed"><code>String</code></type>
+        <trait-impl class="">⌾ <code>Serialize</code></trait-impl>
+        <note>Local trait impl. for foreign type.</note>
+    </entry>
+    <entry style="left:200px; top: 25px;">
+        <type class="composed grayed"><code>String</code></type>
+        <trait-impl class="grayed">⌾ <code>From&lt;u8&gt;</code></trait-impl>
+        <note>{{ bad() }} Illegal, foreign trait for f. type.</note>
+    </entry>
+    <entry style="left:200px; top: 110px;">
+        <type class="composed grayed"><code>String</code></type>
+        <trait-impl class="grayed">⌾ <code>From&lt;Port&gt;</code></trait-impl>
+        <note>Exception: Legal if used type local.</note>
+    </entry>
+    <entry style="left:300px; top: 25px;">
+        <type class="composed"><code>Port</code></type>
+        <trait-impl class="">⌾ <code>From&lt;u8&gt;</code></trait-impl>
+        <trait-impl class="">⌾ <code>From&lt;u16&gt;</code></trait-impl>
+        <note>Mult. impl. of trait with differing <b>IN</b> params.</note>
+    </entry>
+    <entry style="left:400px; top: 25px;">
+        <type class="composed"><code>Container</code></type>
+        <trait-impl class="">⌾ <code>Deref</code></trait-impl>
+        <associated-type class="grayed"><code>Tgt = u8;</code></associated-type>
+        <trait-impl class="">⌾ <code>Deref</code></trait-impl>
+        <associated-type class="grayed"><code>Tgt = f32;</code></associated-type>
+        <note>{{ bad() }} Illegal impl. of trait with differing <b>OUT</b> params.</note>
+    </entry>
+    <entry style="left:510px; top: 15px;">
+        <type class="composed"><code>T</code></type>
+    </entry>
+    <entry style="left:505px; top: 20px;">
+        <type class="composed"><code>T</code></type>
+    </entry>
+    <entry style="left:500px; top: 25px;">
+        <type class="generic dotted"><code>T</code></type>
+        <trait-impl class="">⌾ <code>ShowHex</code></trait-impl>
+        <note>Blanket impl. of trait for any type.</note>
+    </entry>
+</group>
+</region>
+<region-label>Your crate.</region-label>
 
-With the execution flow in mind, some considerations when writing code inside an `async` construct:
+<!-- REGION -->
+<!-- <region style="height: 90px;">
+<group style="left:324px; width: 200px;">
+    <entry style="left:20px; top: 30px;">
+        <code>ccc.f();</code>
+    </entry>
+</group>
+</region>
+<region-label>Downstream crates.</region-label> -->
 
-<div class="color-header orange">
-
-
-| Constructs {{ note(note="1") }} | Explanation |
-|---------|-------------|
-| `sleep_or_block();` | Definitely bad {{ bad() }}, never halt current thread, clogs executor. |
-| `set_TL(a); x.await; TL();` | Definitely bad {{ bad() }}, `await` may return from other thread, [thread local](https://doc.rust-lang.org/std/macro.thread_local.html) invalid. |
-| `s.no(); x.await; s.go();` | Maybe bad {{ bad() }}, `await` will [not return](http://www.randomhacks.net/2019/03/09/in-nightly-rust-await-may-never-return/) if `Future` dropped while waiting. {{ note(note="2") }} |
-| `Rc::new(); x.await; rc();` | Non-`Send` types prevent `impl Future` from being `Send`; less compatible. |
-
-</div>
+</zoo>
 
 <footnotes>
 
-<sup>1</sup> Here we assume `s` is any non-local that could temporarily be put into an invalid state;
-`TL` is any thread local storage, and that the `async {}` containing the code is written
-without assuming executor specifics. <br/>
-<sup>2</sup> Since [Drop](https://doc.rust-lang.org/std/ops/trait.Drop.html) is run in any case when `Future` is dropped, consider using drop guard that cleans up / fixes application state if it has to be left in bad condition across `.await` points.
-
-</footnotes>
-
-</div></panel></tab>
-
-<!-- end tabs -->
-</tabs>
-
-
-{{ tablesep() }}
-
-
-## Closures in APIs
-
-There is a subtrait relationship `Fn` : `FnMut` : `FnOnce`. That means a closure that
-implements `Fn` {{ std(page="std/ops/trait.Fn.html") }} also implements `FnMut` and `FnOnce`. Likewise a closure
-that implements `FnMut` {{ std(page="std/ops/trait.FnMut.html") }} also implements `FnOnce`. {{ std(page="std/ops/trait.FnOnce.html") }}
-
-From a call site perspective that means:
-
-<div class="color-header green">
-
-| Signature | Function `g` can call &hellip; |  Function `g` accepts &hellip; |
-|--------| -----------| -----------|
-| `g<F: FnOnce()>(f: F)`  | &hellip; `f()` once. |  `Fn`, `FnMut`, `FnOnce`  |
-| `g<F: FnMut()>(mut f: F)`  | &hellip; `f()` multiple times. | `Fn`, `FnMut` |
-| `g<F: Fn()>(f: F)`  | &hellip; `f()` multiple times.  | `Fn` |
-
-</div>
-
-<footnotes>
-
-Notice how **asking** for a `Fn` closure as a function is
-most restrictive for the caller; but **having** a `Fn`
-closure as a caller is most compatible with any function.
+A walk through the jungle of types, traits, and implementations that (might possibly) exist in your application.
 
 </footnotes>
 
 
 
-{{ tablesep() }}
-
-From the perspective of someone defining a closure:
-
-<div class="color-header green">
-
-| Closure | Implements<sup>*</sup> | Comment |
-|--------| -----------| --- |
-| <code> &vert;&vert; { moved_s; } </code> | `FnOnce` | Caller must give up ownership of `moved_s`. |
-| <code> &vert;&vert; { &mut s; } </code> | `FnOnce`, `FnMut` | Allows `g()` to change caller's local state `s`. |
-| <code> &vert;&vert; { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; but can share and reuse `s`. |
-
+<!-- End scrollable overflow-->
 </div>
-
-<div class="footnotes">
-
-<sup>*</sup> Rust [prefers capturing](https://doc.rust-lang.org/stable/reference/expressions/closure-expr.html) by reference
-(resulting in the most "compatible" `Fn` closures from a caller perspective), but can be
-forced to capture its environment by copy or move via the
-`move || {}` syntax.
-
-</div>
-
-{{ tablesep() }}
-
-That gives the following advantages and disadvantages:
-
-<div class="color-header green">
-
-| Requiring | Advantage | Disadvantage |
-|--------| -----------| -----------|
-| `F: FnOnce`  | <span class="good">Easy to satisfy as caller.</span> | <span class="bad">Single use only, `g()` may call `f()` just once.</span> |
-| `F: FnMut`  | <span class="good">Allows `g()` to change caller state.</span> | <span class="bad">Caller may not reuse captures during `g()`.</span> |
-| `F: Fn`  | <span class="good">Many can exist at same time.</span> | <span class="bad">Hardest to produce for caller.</span> |
-
 </div>
 
 
-{{ tablesep() }}
 
-
-
-<!-- ## Macro Hygiene -->
-<!-- {{ tablesep() }} -->
 
 ## Type Conversions
 
@@ -8646,7 +8404,6 @@ How to get `B` when you have `A`?
 <div class="color-header variance">
 
 <tabs>
-
 
 <!-- NEW TAB -->
 <tab>
@@ -8901,6 +8658,253 @@ Examples on previous tab produced via **variance rules**, {{ nom(page="subtyping
 
 
 {{ tablesep() }}
+
+
+
+
+---
+
+# Coding Guides
+
+
+## Idiomatic Rust
+
+If you are used to programming Java or C, consider these.
+
+<div class="color-header blue">
+
+| Idiom | Code |
+|--------| ---- |
+| **Think in Expressions** | `x = if x { a } else { b };` |
+|  | `x = loop { break 5 };`  |
+|  | `fn f() -> u32 { 0 }`  |
+| **Think in Iterators** | `(1..10).map(f).collect()` |
+|  | <code>names.iter().filter(&vert;x&vert; x.starts_with("A"))</code> |
+| **Handle Absence with `?`** | `x = try_something()?;` |
+|  | `get_option()?.run()?` |
+| **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
+|  | `enum E { Visible, Hidden }` over `visible: bool` |
+|  | `struct Charge(f32)` over `f32` |
+| **Provide Builders** | `Car::new("Model T").hp(20).build();` |
+| **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
+|   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
+| **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
+| **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
+| **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
+|  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
+|  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
+|  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
+| **Documentation** | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
+|  | Don't forget to include a **summary sentence** and the **Examples** heading. |
+|  | If applicable: **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
+
+</div>
+
+
+
+{{ tablesep() }}
+
+> 🔥 We **highly** recommend you also follow the
+> [**API Guidelines**](https://rust-lang.github.io/api-guidelines/) ([**Checklist**](https://rust-lang.github.io/api-guidelines/checklist.html))
+> for any shared project! 🔥
+
+
+{{ tablesep() }}
+
+
+
+## Async-Await 101
+
+If you are familiar with async / await in C# or TypeScript, here are some things to keep in mind:
+
+
+<tabs class="color-header orange">
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-async-1" name="tab-async" checked>
+<label for="tab-async-1"><b>Basics</b></label>
+<panel><div>
+
+
+
+| Construct | Explanation |
+|---------|-------------|
+| `async`  | Anything declared `async` always returns an `impl Future<Output=_>`. {{ std(page="std/future/trait.Future.html") }} |
+| {{ tab() }} `async fn f() {}`  | Function `f` returns an `impl Future<Output=()>`. |
+| {{ tab() }} `async fn f() -> S {}`  | Function `f` returns an `impl Future<Output=S>`. |
+| {{ tab() }} `async { x }`  | Transforms `{ x }` into an `impl Future<Output=X>`. |
+| `let sm = f();   ` | Calling `f()` that is `async` will **not** execute `f`, but produce state machine `sm`. {{ note(note="1") }} {{ note(note="2") }} |
+| {{ tab() }} `sm = async { g() };`  | Likewise, does **not** execute the `{ g() }` block; produces state machine. |
+| `runtime.block_on(sm);`  | Outside an `async {}`, schedules `sm` to actually run. Would execute `g()`. {{ note(note="3") }} {{ note(note="4") }}|
+| `sm.await` | Inside an `async {}`, run `sm` until complete. Yield to runtime if `sm` not ready. |
+
+
+
+<footnotes>
+
+<sup>1</sup> Technically `async` transforms following code into anonymous, compiler-generated state machine type; `f()` instantiates that machine. <br>
+<sup>2</sup> The state machine always `impl Future`, possibly `Send` & co, depending on types used inside `async`. <br>
+<sup>3</sup> State machine driven by worker thread invoking `Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
+<sup>4</sup> Rust doesn't come with runtime, need external crate instead, e.g., [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio). Also, more helpers in [futures crate](https://github.com/rust-lang-nursery/futures-rs).
+
+</footnotes>
+
+
+
+</div></panel></tab>
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-async-2" name="tab-async">
+<label for="tab-async-2"><b>Execution Flow</b></label>
+<panel><div>
+
+
+At each `x.await`, state machine passes control to subordinate state machine `x`. At some point a low-level state machine invoked via `.await` might not be ready. In that the case worker
+thread returns all the way up to runtime so it can drive another Future. Some time later the runtime:
+- **might** resume execution. It usually does, unless `sm` / `Future` dropped.
+- **might** resume with the previous worker **or another** worker thread (depends on runtime).
+
+Simplified diagram for code written inside an `async` block :
+
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```
+       consecutive_code();           consecutive_code();           consecutive_code();
+START --------------------> x.await --------------------> y.await --------------------> READY
+// ^                          ^     ^                               Future<Output=X> ready -^
+// Invoked via runtime        |     |
+// or an external .await      |     This might resume on another thread (next best available),
+//                            |     or NOT AT ALL if Future was dropped.
+//                            |
+//                            Execute `x`. If ready: just continue execution; if not, return
+//                            this thread to runtime.
+```
+
+</div>
+</div>
+
+</div></panel></tab>
+
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-async-3" name="tab-async">
+<label for="tab-async-3"><b>Caveats</b></label>
+<panel><div>
+
+
+With the execution flow in mind, some considerations when writing code inside an `async` construct:
+
+<div class="color-header orange">
+
+
+| Constructs {{ note(note="1") }} | Explanation |
+|---------|-------------|
+| `sleep_or_block();` | Definitely bad {{ bad() }}, never halt current thread, clogs executor. |
+| `set_TL(a); x.await; TL();` | Definitely bad {{ bad() }}, `await` may return from other thread, [thread local](https://doc.rust-lang.org/std/macro.thread_local.html) invalid. |
+| `s.no(); x.await; s.go();` | Maybe bad {{ bad() }}, `await` will [not return](http://www.randomhacks.net/2019/03/09/in-nightly-rust-await-may-never-return/) if `Future` dropped while waiting. {{ note(note="2") }} |
+| `Rc::new(); x.await; rc();` | Non-`Send` types prevent `impl Future` from being `Send`; less compatible. |
+
+</div>
+
+<footnotes>
+
+<sup>1</sup> Here we assume `s` is any non-local that could temporarily be put into an invalid state;
+`TL` is any thread local storage, and that the `async {}` containing the code is written
+without assuming executor specifics. <br/>
+<sup>2</sup> Since [Drop](https://doc.rust-lang.org/std/ops/trait.Drop.html) is run in any case when `Future` is dropped, consider using drop guard that cleans up / fixes application state if it has to be left in bad condition across `.await` points.
+
+</footnotes>
+
+</div></panel></tab>
+
+<!-- end tabs -->
+</tabs>
+
+
+{{ tablesep() }}
+
+
+## Closures in APIs
+
+There is a subtrait relationship `Fn` : `FnMut` : `FnOnce`. That means a closure that
+implements `Fn` {{ std(page="std/ops/trait.Fn.html") }} also implements `FnMut` and `FnOnce`. Likewise a closure
+that implements `FnMut` {{ std(page="std/ops/trait.FnMut.html") }} also implements `FnOnce`. {{ std(page="std/ops/trait.FnOnce.html") }}
+
+From a call site perspective that means:
+
+<div class="color-header green">
+
+| Signature | Function `g` can call &hellip; |  Function `g` accepts &hellip; |
+|--------| -----------| -----------|
+| `g<F: FnOnce()>(f: F)`  | &hellip; `f()` once. |  `Fn`, `FnMut`, `FnOnce`  |
+| `g<F: FnMut()>(mut f: F)`  | &hellip; `f()` multiple times. | `Fn`, `FnMut` |
+| `g<F: Fn()>(f: F)`  | &hellip; `f()` multiple times.  | `Fn` |
+
+</div>
+
+<footnotes>
+
+Notice how **asking** for a `Fn` closure as a function is
+most restrictive for the caller; but **having** a `Fn`
+closure as a caller is most compatible with any function.
+
+</footnotes>
+
+
+
+{{ tablesep() }}
+
+From the perspective of someone defining a closure:
+
+<div class="color-header green">
+
+| Closure | Implements<sup>*</sup> | Comment |
+|--------| -----------| --- |
+| <code> &vert;&vert; { moved_s; } </code> | `FnOnce` | Caller must give up ownership of `moved_s`. |
+| <code> &vert;&vert; { &mut s; } </code> | `FnOnce`, `FnMut` | Allows `g()` to change caller's local state `s`. |
+| <code> &vert;&vert; { &s; } </code> | `FnOnce`, `FnMut`, `Fn` | May not mutate state; but can share and reuse `s`. |
+
+</div>
+
+<div class="footnotes">
+
+<sup>*</sup> Rust [prefers capturing](https://doc.rust-lang.org/stable/reference/expressions/closure-expr.html) by reference
+(resulting in the most "compatible" `Fn` closures from a caller perspective), but can be
+forced to capture its environment by copy or move via the
+`move || {}` syntax.
+
+</div>
+
+{{ tablesep() }}
+
+That gives the following advantages and disadvantages:
+
+<div class="color-header green">
+
+| Requiring | Advantage | Disadvantage |
+|--------| -----------| -----------|
+| `F: FnOnce`  | <span class="good">Easy to satisfy as caller.</span> | <span class="bad">Single use only, `g()` may call `f()` just once.</span> |
+| `F: FnMut`  | <span class="good">Allows `g()` to change caller state.</span> | <span class="bad">Caller may not reuse captures during `g()`.</span> |
+| `F: Fn`  | <span class="good">Many can exist at same time.</span> | <span class="bad">Hardest to produce for caller.</span> |
+
+</div>
+
+
+{{ tablesep() }}
+
+
+
+<!-- ## Macro Hygiene -->
+<!-- {{ tablesep() }} -->
+
 
 
 
