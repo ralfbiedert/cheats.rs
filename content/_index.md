@@ -8895,8 +8895,9 @@ Examples on previous tab produced via **variance rules**, {{ nom(page="subtyping
 
 </div></panel></tab>
 
-
 </tabs>
+
+</div>
 
 
 {{ tablesep() }}
