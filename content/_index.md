@@ -882,7 +882,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | Name | Description |
 |--------| -----------|
 | **Coercions** {{ nom(page="coercions.html") }} | _Weakens_ types to match signature, e.g., `&mut T` to `&T`; _c_. _type conversions_. {{ below(target="#type-conversions") }}  |
-| **Deref** {{ nom(page="vec-deref.html#deref") }} {{ link(url="https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules") }} | [Derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
+| **Deref** {{ nom(page="vec-deref.html") }} {{ link(url="https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules") }} | [Derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
 | **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic items, e.g., `Option`, `drop`, ...
 | **Reborrow** | Since `x: &mut T` can't be copied; moves new `&mut *x` instead. |
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotates `f(x: &T)` to `f<'a>(x: &'a T)`.|
