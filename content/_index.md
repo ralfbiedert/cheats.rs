@@ -8507,9 +8507,7 @@ fn f(x: A) -> B {
 }
 ```
 
-Automatically converts `A` to `B` for types **only differing in lifetimes**: {{ nom(page="subtyping.html") }}
-
-> We start with examples first. Once you've seen a few, go to **Variance** to see how they are made.
+Automatically converts `A` to `B` for types **only differing in lifetimes** {{ nom(page="subtyping.html") }} - subtyping **examples**:
 
 
 | A<sup>(subtype)</sup>  | B<sup>(supertype)</sup> | Explanation |
@@ -8549,7 +8547,13 @@ In contrast, these are **not**{{ bad() }} examples of subtyping:
 <label for="tab-variance-8"><b>Variance</b></label>
 <panel><div>
 
-Examples on previous tab produced via **variance rules**, {{ nom(page="subtyping.html#variance") }} which approximately are:
+```
+fn f(x: A) -> B {
+    x
+}
+```
+
+Automatically converts `A` to `B` for types **only differing in lifetimes** {{ nom(page="subtyping.html") }} -  subtyping **variance rules**:
 
 - A longer lifetime `'a` that outlives a shorter `'b` is a subtype of `'b`.
 - Implies `'static` is subtype of all other lifetimes `'a`.
