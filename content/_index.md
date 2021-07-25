@@ -117,7 +117,6 @@ Contains clickable links to
 **Standard Library**
 * [One-Liners](#one-liners)
 * [Thread Safety](#thread-safety)
-* [Dynamically / Zero Sized Types](#sized-types)
 * [Iterators](#iterators)
 * [Number Conversions](#number-conversions)
 * [String Conversions](#string-conversions)
@@ -384,7 +383,7 @@ Define units of code and their abstractions.
 | `trait T : R {}` | `T` is subtrait of **supertrait** {{ ref(page="items/traits.html#supertraits") }} `R`. Any `S` must `impl R` before it can `impl T`. |
 | `impl S {}`  | **Implementation** {{ ref(page="items/implementations.html") }} of functionality for a type `S`, e.g., methods. |
 | `impl T for S {}`  | Implement trait `T` for type `S`. |
-| `impl !T for S {}` | Disable an automatically derived **auto trait**. {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }} |
+| `impl !T for S {}` | Disable an automatically derived **auto trait**. {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }} {{ experimental() }} {{ esoteric() }} |
 | `fn f() {}`  | Definition of a **function**; {{ book(page="ch03-03-how-functions-work.html") }}  {{ ex(page="fn.html") }} {{ ref(page="items/functions.html") }} or associated function if inside `impl`. |
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
 | {{ tab() }} `fn f(&self) {}`  | Define a **method**, {{ book(page="ch05-03-method-syntax.html") }}  {{ ex(page="fn/methods.html") }} e.g., within an `impl S {}`. |
@@ -400,9 +399,9 @@ Define units of code and their abstractions.
 | {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures; i.e., `y` transferred to closure.  |
 | {{ tab() }} <code> return &vert;&vert; true </code> | Closures sometimes look like logical ORs (here: return a closure). |
 | `unsafe` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ below(target="#unsafe-unsound-undefined") }} {{ book(page="ch19-01-unsafe-rust.html#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
-| {{ tab() }} `unsafe fn f() {}` | Sort-of means "_calling can cause UB, {{ below(target="#unsafe-unsound-undefined") }} **YOU must check** requirements_". |
-| {{ tab() }} `unsafe trait T {}` | Sort-of means _careless impl. of `T` can cause UB_; **implementor must check**.  |
-| {{ tab() }} `unsafe { f(); }` | Guarantees (to compiler) "_**I have checked** requirements, trust me_".  |
+| {{ tab() }} `unsafe fn f() {}` | Means "_calling can cause UB, {{ below(target="#unsafe-unsound-undefined") }} **YOU must check** requirements_". |
+| {{ tab() }} `unsafe trait T {}` | Means "_careless impl. of `T` can cause UB_; **implementor must check**".  |
+| {{ tab() }} `unsafe { f(); }` | Guarantees to compiler "_**I have checked** requirements, trust me_".  |
 | {{ tab() }} `unsafe impl T for S {}` | Guarantees _`S` is well-behaved w.r.t `T`_; people may use `T` on `S` safely.  |
 
 </fixed-2-column>
@@ -625,7 +624,7 @@ Generics combine with type constructors, traits and functions to give your users
 | {{ tab() }} `T: 'a` | Type **lifetime bound**; {{ ex(page="scope/lifetime/lifetime_bounds.html") }} if T has references, they must outlive `'a`.  |
 | {{ tab() }} `T: 'static` | Same; does esp. _not_ mean value `t` _will_ {{ bad() }} live `'static`, only that it could. |
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
-| `S<const N: usize>` | **Generic const bound**; {{ todo() }} user of type `S` can provide constant value `N`. {{ experimental() }} |
+| `S<const N: usize>` | **Generic const bound**; {{ todo() }} user of type `S` can provide constant value `N`. |
 | {{ tab() }} `S<10>` | Where used, const bounds can be provided as primitive values. |
 | {{ tab() }} `S<{5+5}>` | Expressions must be put in curly brackets. |
 | `S<T> where T: R`  | Almost same as `S<T: R>` but more pleasant to read for longer bounds. |
@@ -756,7 +755,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | `1_234_567` | Numeric separator for visual clarity. |
 | `1_u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, &hellip;). |
 | `0xBEEF`, `0o777`, `0b1001`  | Hexadecimal (`0x`), octal (`0o`) and binary (`0b`) integer literals. |
-| `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html#raw-identifiers") }} for edition compatibility. |
+| `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html#raw-identifiers") }} for edition compatibility. {{ esoteric() }} |
 | `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
 
 </fixed-2-column>
@@ -4772,25 +4771,6 @@ PRs for this section are very welcome. Idea is:
 </div></div>
 
 
-<!-- {{ tablesep() }}
-
-
-## Attributes
-
-| xxx | Target | yyy |
-|---------|-----|--------|
-| `#[derive(A, B, C)]` | Types | asds |
-| {{ tab() }} `#[derive(A, B, C)]` | | asds |
-| `#[must_use]`  | | asds |
-| `#[repr(C)]` | |  asds |
-| `#[test]` | |  asds |
-| `#[bench]` | |  asds |
-| `#[macro_export]` | |  asds |
-| `#[cfg]` | |  asds |
-| `#[bench]` | |  asds | -->
-
-
-
 
 ## Thread Safety {#thread-safety}
 
@@ -4815,192 +4795,9 @@ PRs for this section are very welcome. Idea is:
 
 </footnotes>
 
-{{ tablesep() }}
 
-
-## (Dynamically / Zero) Sized Types {#sized-types}
-
-<mini-zoo class="zoo" style="">
-    <entry>
-        <type class="composed"><code>MostTypes</code></type>
-        <trait-impl>⌾ <code>Sized</code></trait-impl>
-        <note>Normal types.</note>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo">
-    <narrow-entry style="width: 60px;">
-        <code style="text-align:center; width: 100%;">vs.</code>
-    </narrow-entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="">
-    <entry>
-        <type class="zero"><code>Z</code></type>
-        <trait-impl>⌾ <code>Sized</code></trait-impl>
-        <note>Zero sized.</note>
-    </entry>
-</mini-zoo>
-
-
-<mini-zoo class="zoo">
-    <narrow-entry style="width: 60px;">
-        <code style="text-align:center; width: 100%;">vs.</code>
-    </narrow-entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="">
-    <entry>
-        <type class="primitive"><code>str</code></type>
-        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
-        <note>Dynamically sized.</note>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="">
-    <entry>
-        <type class="primitive"><code>[u8]</code></type>
-        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="">
-    <entry>
-        <type class="primitive"><code>dyn Trait</code></type>
-        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="">
-    <entry>
-        <type class="primitive"><code>...</code></type>
-        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
-    </entry>
-</mini-zoo>
-
-
-{{ tablesep() }}
-
-<tabs>
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-sized-1" name="tab-group-sized" checked>
-<label for="tab-sized-1"><b>Overview</b></label>
-<panel><div>
-
-
-
-
-- A type `T` is **`Sized`** {{ std(page="std/marker/trait.Sized.html") }} if at compile time it is known how many bytes it occupies, `u8` and `&[u8]` are, `[u8]` isn't.
-- Being `Sized` means `impl Sized for T {}` holds. Happens automatically and cannot be user impl'ed.
-- Types not `Sized` are called **dynamically sized types** {{ book(page="ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait") }} {{ nom(page="exotic-sizes.html#dynamically-sized-types-dsts") }}  {{ ref(page="dynamically-sized-types.html#dynamically-sized-types") }} (DSTs), sometimes **unsized**.
-- Types without data are called **zero sized types** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts") }} (ZSTs), do not occupy space.
-
-</div></panel></tab>
-
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-sized-2" name="tab-group-sized">
-<label for="tab-sized-2"><b>Sized in Bounds</b></label>
-<panel><div>
-
-
-
-<div class="color-header sized cheats">
-
-| Example | Explanation |
-|---------|-------------|
-| `struct A { x: u8 }` | Type `A` is sized, i.e., `impl Sized for A` holds, this is a 'regular' type. |
-| `struct B { x: [u8] }` | Since `[u8]` is a DST, `B` in turn becomes DST, i.e., does not `impl Sized`. |
-| `struct C<T> { x: T }` | Type params **have** implicit `T: Sized` bound, e.g., `C<A>` is valid, `C<B>` is not. |
-| `struct D<T: ?Sized> { x: T }` | Using **`?Sized`** {{ ref(page="trait-bounds.html#sized") }} allows opt-out of that bound, i.e., `D<B>` is also valid. |
-| `struct E;` | Type `E` is zero-sized (and also sized) and will not consume memory. |
-| `trait F { fn f(&self); }` | Traits **do not have** an implicit `Sized` bound, i.e., `impl F for B {}` is valid.  |
-| {{ tab() }} `trait F: Sized {}` | Traits can however opt into `Sized` via supertraits.{{ above(target="#functions-behavior") }} |
-| `trait G { fn g(self); }` | For `Self`-like params DST `impl` may still fail as params can't go on stack.  |
-
-</div>
-
-
-</div></panel></tab>
-
-</tabs>
-
-
-
-{{ tablesep() }}
 
 ## Iterators {#iterators}
-
-
-<!-- <mini-zoo class="zoo" style="margin-right: 20px;">
-    <entry class="wide">
-        <type class="composed"><code>SomeItem</code></type>
-    </entry>
-</mini-zoo> -->
-
-<mini-zoo class="zoo" style="">
-    <entry class="wide">
-        <type class="generic dotted"><code>Collection&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">IntoIter</code></trait-impl>
-        <associated-type class="grayed"><code>Item = T;</code></associated-type>
-        <associated-type class="grayed"><code>To = IntoIter&lt;T&gt;</code></associated-type>
-        <note>Iterate over <code>T</code>.</note>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-right: 20px;">
-    <entry class="wide">
-        <type class="generic dotted"><code>IntoIter&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
-        <associated-type class="grayed"><code>Item = T;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="">
-    <entry class="wide">
-        <type class="generic dotted grayed"><code>&Collection&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">IntoIter</code></trait-impl>
-        <associated-type class="grayed"><code>Item = &T;</code></associated-type>
-        <associated-type class="grayed"><code>To = Iter&lt;T&gt;</code></associated-type>
-        <note>Iterate over <code>&T</code>.</note>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-right: 20px;">
-    <entry class="wide">
-        <type class="generic dotted"><code>Iter&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
-        <associated-type class="grayed"><code>Item = &T;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="">
-    <entry class="wide">
-        <type class="generic dotted grayed"><code>&mut Collectn&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">IntoIter</code></trait-impl>
-        <associated-type class="grayed"><code>Item = &mut T;</code></associated-type>
-        <associated-type class="grayed"><code>To = IterMut&lt;T&gt;</code></associated-type>
-        <note>Iterate over <code>&mut T</code>.</note>
-    </entry>
-</mini-zoo>
-
-<mini-zoo class="zoo" style="margin-right: 20px;">
-    <entry class="wide">
-        <type class="generic dotted"><code>IterMut&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
-        <associated-type class="grayed"><code>Item = &mut T;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-
-
-
-
-{{ tablesep() }}
-
 
 <tabs class="color-header std-green">
 
@@ -5032,8 +4829,6 @@ Once you have an `i`:
 
 * **`for x in c {}`** &mdash; Syntactic sugar, calls `c.into_iter()` and loops `i` until `None`.
 
-
-
 <footnotes>
 
 <sup>*</sup> If it looks as if it doesn't consume `c` that's because type was `Copy`. For example, if you call `(&c).into_iter()` it will invoke `.into_iter()` on `&c` (which will consume the reference and turn it into an Iterator), but `c` remains untouched.
@@ -5049,55 +4844,105 @@ Once you have an `i`:
 <label for="tab-trait-iter-2"><b>Implementing Iterators</b></label>
 <panel><div>
 
-
 **Basics**
 
-Let's assume you have a `struct C {}` that is your collection.
+Let's assume you have a `struct Collection<T> {}`.
 
 
-* **`struct IntoIter {}`** &mdash; Create a struct to hold your iteration status (e.g., an index) for value iteration.
-* **`impl Iterator for IntoIter {}`** &mdash; Provide an implementation of `Iterator::next()` so it can produce elements.
+* **`struct IntoIter<T> {}`** &mdash; Create a struct to hold your iteration status (e.g., an index) for value iteration.
+* **`impl Iterator for IntoIter {}`** &mdash; Implement `Iterator::next()` so it can produce elements.
 
-In addition, you might want to add a convenience `C::iter(&self) -> IntoIter`.
+<mini-zoo class="zoo" style="">
+    <entry class="wide">
+        <type class="generic dotted"><code>Collection&lt;T&gt;</code></type>
+    </entry>
+</mini-zoo>
 
-**Mutable Iterators**
+<mini-zoo class="zoo" style="margin-right: 20px;">
+    <entry class="wide">
+        <type class="generic dotted"><code>IntoIter&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
+        <associated-type class="grayed"><code>Item = T;</code></associated-type>
+    </entry>
+</mini-zoo>
 
-* **`struct IterMut {}`** &mdash; To provide mutable iterators create another struct that can hold `C` as `&mut`.
-* **`impl Iterator for IterMut {}`** &mdash; In that case `Iterator::Item` is probably a `&mut item`
 
-Similarly, providing a `C::iter_mut(&mut self) -> IterMut` might be a good idea.
+---
 
+
+**Shared & Mutable Iterators**
+
+* **`struct Iter<T> {}`** &mdash; Create struct holding `&Collection<T>` for shared iteration.
+* **`struct IterMut<T> {}`** &mdash; Similar, but holding `&mut Collection<T>` for mutable iteration.
+* **`impl Iterator for Iter<T> {}`** &mdash; Implement shared iteration.
+* **`impl Iterator for IterMut<T> {}`** &mdash; Implement mutable iteration.
+
+In addition, you might want to add convenience methods:
+
+- `Collection::iter(&self) -> Iter`,
+- `Collection::iter_mut(&mut self) -> IterMut`.
+
+
+
+<mini-zoo class="zoo" style="margin-right: 20px;">
+    <entry class="wide">
+        <type class="generic dotted"><code>Iter&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
+        <associated-type class="grayed"><code>Item = &T;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+
+<mini-zoo class="zoo" style="margin-right: 20px;">
+    <entry class="wide">
+        <type class="generic dotted"><code>IterMut&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
+        <associated-type class="grayed"><code>Item = &mut T;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+---
 
 **Making Loops Work**
-* **`impl IntoIterator for C {}`** &mdash; Now `for` loops work as `for x in c {}`.
-* **`impl IntoIterator for &C {}`** &mdash; For convenience you might want to add these as well.
-* **`impl IntoIterator for &mut C {}`** &mdash; Same &hellip;
+* **`impl IntoIterator for Collection {}`** &mdash; Now `for x in c {}` works.
+* **`impl IntoIterator for &Collection {}`** &mdash; Now `for x in &c {}` works.
+* **`impl IntoIterator for &mut Collection {}`** &mdash; Now `for x in &mut c {}` works.
 
+<mini-zoo class="zoo" style="">
+    <entry class="wide">
+        <type class="generic dotted"><code>Collection&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">IntoIterator</code></trait-impl>
+        <associated-type class="grayed"><code>Item = T;</code></associated-type>
+        <associated-type class="grayed"><code>To = IntoIter&lt;T&gt;</code></associated-type>
+        <note>Iterate over <code>T</code>.</note>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry class="wide">
+        <type class="generic dotted grayed"><code>&Collection&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">IntoIterator</code></trait-impl>
+        <associated-type class="grayed"><code>Item = &T;</code></associated-type>
+        <associated-type class="grayed"><code>To = Iter&lt;T&gt;</code></associated-type>
+        <note>Iterate over <code>&T</code>.</note>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry class="wide">
+        <type class="generic dotted grayed"><code>&mut Collectn&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">IntoIterator</code></trait-impl>
+        <associated-type class="grayed"><code>Item = &mut T;</code></associated-type>
+        <associated-type class="grayed"><code>To = IterMut&lt;T&gt;</code></associated-type>
+        <note>Iterate over <code>&mut T</code>.</note>
+    </entry>
+</mini-zoo>
 
 </div></panel></tab>
 
 
 </tabs>
 
-{{ tablesep() }}
-
-<!--
-#### 📦 Type Conversions
-
-
-Conversions XXX
-
-<div class="color-header std-yellow">
-
-| Trait ... | Implementing ... for `S` means | Requiring `<A: ...>` means |
-|---------|-------------|----|
-| `Borrow<T>` | `S` can produce `&T`, must match `Eq`, ... | Caller can pass `t`, `&t`, `box_t` , ...|
-| `BorrowMut<T>` | `S` can produce `&mut T`, rest same. | Similar, `t`, `&mut t`, ...   |
-| `AsRef<T>` | `S` can produce `&T`. | Caller can pass `Box<T>` or XXX. |
-| `AsMut<T>` | `S` can produce `&mut T`. | Similar, but XXX  |
-
-
-{{ tablesep() }} -->
 
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
@@ -5401,8 +5246,6 @@ CString::new(bytes)?
 <sup>5</sup> Must ensure vector actually ends with `0x0`.
 
 </footnotes>
-
-{{ tablesep() }}
 
 
 ## String Output
@@ -6180,7 +6023,7 @@ Attributes primarily governing emitted code:
 |-------|---|-------------|
 | `#[inline]` | `F` | Nicely suggest compiler should inline function at call sites. {{ ref(page="attributes/codegen.html#the-inline-attribute") }}|
 | `#[inline(always)]` | `F` | Emphatically threaten compiler to inline call, or else. {{ ref(page="attributes/codegen.html#the-inline-attribute") }}|
-| `#[inline(never)]` | `F` | Instruct compiler to feel disappointed if it still inlines the function. {{ ref(page="attributes/codegen.html#the-inline-attribute") }}|
+| `#[inline(never)]` | `F` | Instruct compiler to feel disappointed if it still inlines the function. {{ ref(page="attributes/codegen.html#the-inline-attribute") }} |
 | `#[cold]` | `F` | Hint that function probably isn't going to be called. {{ ref(page="codegen.html#the-cold-attribute") }}|
 | `#[target_feature(enable="x")]` | `F` | Enable CPU feature (e.g., `avx2`) for code of `unsafe fn`. {{ ref(page="attributes/codegen.html#the-target_feature-attribute") }}|
 | `#[track_caller]` | `F` | Allows `fn` to find **`caller`**{{ std(page="core/panic/struct.Location.html#method.caller") }} for better panic messages. {{ ref(page="attributes/codegen.html#the-track_caller-attribute") }}|
@@ -7960,6 +7803,95 @@ Like examples above, in particular trait author assumes:
 
 <!-- Section -->
 <generics-section id="xxx">
+<header>Dynamic / Zero Sized Types</header>
+<description>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="composed"><code>MostTypes</code></type>
+        <trait-impl>⌾ <code>Sized</code></trait-impl>
+        <note>Normal types.</note>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <narrow-entry style="width: 60px;">
+        <code style="text-align:center; width: 100%;">vs.</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="zero"><code>Z</code></type>
+        <trait-impl>⌾ <code>Sized</code></trait-impl>
+        <note>Zero sized.</note>
+    </entry>
+</mini-zoo>
+
+
+<mini-zoo class="zoo">
+    <narrow-entry style="width: 60px;">
+        <code style="text-align:center; width: 100%;">vs.</code>
+    </narrow-entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="primitive"><code>str</code></type>
+        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
+        <note>Dynamically sized.</note>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="primitive"><code>[u8]</code></type>
+        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="primitive"><code>dyn Trait</code></type>
+        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo" style="">
+    <entry>
+        <type class="primitive"><code>...</code></type>
+        <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
+    </entry>
+</mini-zoo>
+
+
+- A type `T` is **`Sized`** {{ std(page="std/marker/trait.Sized.html") }} if at compile time it is known how many bytes it occupies, `u8` and `&[u8]` are, `[u8]` isn't.
+- Being `Sized` means `impl Sized for T {}` holds. Happens automatically and cannot be user impl'ed.
+- Types not `Sized` are called **dynamically sized types** {{ book(page="ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait") }} {{ nom(page="exotic-sizes.html#dynamically-sized-types-dsts") }}  {{ ref(page="dynamically-sized-types.html#dynamically-sized-types") }} (DSTs), sometimes **unsized**.
+- Types without data are called **zero sized types** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts") }} (ZSTs), do not occupy space.
+
+<div class="color-header sized cheats">
+
+| Example | Explanation |
+|---------|-------------|
+| `struct A { x: u8 }` | Type `A` is sized, i.e., `impl Sized for A` holds, this is a 'regular' type. |
+| `struct B { x: [u8] }` | Since `[u8]` is a DST, `B` in turn becomes DST, i.e., does not `impl Sized`. |
+| `struct C<T> { x: T }` | Type params **have** implicit `T: Sized` bound, e.g., `C<A>` is valid, `C<B>` is not. |
+| `struct D<T: ?Sized> { x: T }` | Using **`?Sized`** {{ ref(page="trait-bounds.html#sized") }} allows opt-out of that bound, i.e., `D<B>` is also valid. |
+| `struct E;` | Type `E` is zero-sized (and also sized) and will not consume memory. |
+| `trait F { fn f(&self); }` | Traits **do not have** an implicit `Sized` bound, i.e., `impl F for B {}` is valid.  |
+| {{ tab() }} `trait F: Sized {}` | Traits can however opt into `Sized` via supertraits.{{ above(target="#functions-behavior") }} |
+| `trait G { fn g(self); }` | For `Self`-like params DST `impl` may still fail as params can't go on stack.  |
+
+</div>
+
+
+</description>
+</generics-section>
+
+
+<!-- Section -->
+<generics-section id="xxx">
 <header><code>?Sized</code></header>
 <description>
 
@@ -8016,7 +7948,6 @@ struct S<T> where T: ?Sized { ... }
 
 </description>
 </generics-section>
-
 
 
 <!-- Section -->
