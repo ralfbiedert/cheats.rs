@@ -11,7 +11,7 @@ let all_tabs_expanded = false; // Set `true` by script if asked to expand tabs
 
 const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries
 
-const subtiles = [
+const subtitles = [
     "_NOW_HUMAN_",
     "_GITHASH_",
     "Same low price, 20% more content.",
@@ -283,12 +283,12 @@ function advance_subtitle(to_index) {
     if (!!to_index) {
         // If called with specific index use that and stop thinking
         // about it.
-        subtitle_entry = subtiles[to_index];
+        subtitle_entry = subtitles[to_index];
         subtitle_index = to_index;
     } else {
         // If not called with specific index (normal onclick behavior),
         // increase number.
-        let next_possible_index = (subtitle_index + 1) % subtiles.length;
+        let next_possible_index = (subtitle_index + 1) % subtitles.length;
 
         // Is this now a follow-up entry?
         //
@@ -297,7 +297,7 @@ function advance_subtitle(to_index) {
         //
         // To figure out if follow-up entry, check if ("xxx", false) pair.
 
-        subtitle_entry = subtiles[next_possible_index];
+        subtitle_entry = subtitles[next_possible_index];
 
         if (subtitle_entry[1] === false) {
             // If that was a ("xxx", false) follow-up pair, get actual content and show.
@@ -307,7 +307,7 @@ function advance_subtitle(to_index) {
             // If was not a follow-up, rotate between first keys only.
             next_possible_index = next_possible_index % SKIP_FIRST_N_SUBTITLES;
             subtitle_index = next_possible_index;
-            subtitle_entry = subtiles[next_possible_index];
+            subtitle_entry = subtitles[next_possible_index];
         }
     }
 
@@ -322,10 +322,10 @@ function random_quote() {
     while (index === false) {
         let rand = Math.random();
 
-        index = SKIP_FIRST_N_SUBTITLES + Math.floor((subtiles.length - SKIP_FIRST_N_SUBTITLES) * rand);
+        index = SKIP_FIRST_N_SUBTITLES + Math.floor((subtitles.length - SKIP_FIRST_N_SUBTITLES) * rand);
 
         // If 2nd index was false we should ignore entry since it's follow up.
-        if (subtiles[index][1] === false) {
+        if (subtitles[index][1] === false) {
             index = false;
         }
     }
