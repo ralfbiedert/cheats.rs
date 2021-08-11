@@ -80,7 +80,7 @@ function show_playground(state) {
 
 // Called on page load, get the user's preference on night mode, either from storage or system settings.
 function get_browser_night_mode() {
-    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         return "night";
     } else {
         return "day";
@@ -103,7 +103,7 @@ function set_body_night_mode(night_mode) {
 function toggle_night_mode() {
     let night_mode = storage_get("night-mode") || get_browser_night_mode();
 
-    if(night_mode === "night") {
+    if (night_mode === "night") {
         night_mode = "day";
     } else {
         night_mode = "night";
