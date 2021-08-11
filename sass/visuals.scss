@@ -32,7 +32,7 @@ datum {
         visibility: hidden;
     }
 
-    // The bread-and-butter elemetn, contains most actual visual representation.
+    // The bread-and-butter element, contains most actual visual representation.
     // Some elements (like enums) might contain multiple of these
     visual {
         text-align: center;
@@ -294,7 +294,7 @@ datum {
         bottom: -4px;
     }
 
-    // Pointers and referenfces
+    // Pointers and references
     ptr {
         display: inline-block;
         width: 80px;
@@ -520,7 +520,7 @@ lifetime-example {
         // background-color: rgb(228, 207, 231);
     }
 
-    // We we use arrows below we need more space
+    // We use arrows below we need more space
     section-header.arrowed {
         margin-bottom: 15px;
     }
