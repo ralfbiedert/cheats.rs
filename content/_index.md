@@ -245,7 +245,7 @@ fn main() {
 - [**Tour of Rust**](https://tourofrust.com/TOC_en.html) - Live code and explanations, side by side.
 - [**Rust in Easy English**](https://dhghomon.github.io/easy_rust/Chapter_3.html) - 60+ concepts, simple English, example-driven.
 
-In addition, have a look at the ususal suspects. {{ book(page="") }} {{ ex(page="") }} {{ std(page="std") }}
+In addition, have a look at the usual suspects. {{ book(page="") }} {{ ex(page="") }} {{ std(page="std") }}
 
 
 > **Opinion** {{ opinionated() }} &mdash; If you have never seen or used any Rust it might be good to visit one of the links above before continuing; the next chapter might feel a bit terse otherwise.
@@ -4521,7 +4521,7 @@ Rust's standard library combines the above primitive types into useful types wit
             </div>
         </memory>
     </memory-entry>
-    <description>Nul-terminated but w/o nul in middle.</description>
+    <description>Null-terminated but w/o null in middle.</description>
 </datum>
 
 
@@ -8437,7 +8437,7 @@ Convert types **with keyword `as`** if conversion _relatively obvious_ but **mig
 
 <footnote>
 
-Where `Ptr`, `Interger`, `Number` are just used for brevity and actually mean:
+Where `Ptr`, `Integer`, `Number` are just used for brevity and actually mean:
 - `Ptr` any `*const T` or `*mut T`;
 - `Integer` any countable `u8` ... `i128`;
 - `Number` any `Integer`, `f32`, `f64`.
