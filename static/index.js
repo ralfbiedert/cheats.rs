@@ -383,17 +383,17 @@ function feedback_send_mood(mood, feedback_id) {
     let feedback_node = document.getElementById(feedback_id);
     let element_id = feedback_node.getAttribute("element-id");
 
-    let animiation = feedback_node.querySelectorAll(`feedback-button.${mood} feedback-feedback`)[0];
-    animiation.style.visibility = "inherit";
-    animiation.style.top = "-3em";
-    animiation.style.opacity = "0.0";
+    let animation = feedback_node.querySelectorAll(`feedback-button.${mood} feedback-feedback`)[0];
+    animation.style.visibility = "inherit";
+    animation.style.top = "-3em";
+    animation.style.opacity = "0.0";
 
     feedback_post("/feedback/mood", { mood: mood, section: element_id });
 
     setTimeout(() => {
-        animiation.style.visibility = "hidden";
-        animiation.style.top = "-0.5em";
-        animiation.style.opacity = "0.5";
+        animation.style.visibility = "hidden";
+        animation.style.top = "-0.5em";
+        animation.style.opacity = "0.5";
     }, 300);
 }
 
