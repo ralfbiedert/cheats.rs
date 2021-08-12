@@ -4521,7 +4521,7 @@ Rust's standard library combines the above primitive types into useful types wit
             </div>
         </memory>
     </memory-entry>
-    <description>Null-terminated but w/o null in middle.</description>
+    <description>NUL-terminated but w/o NUL in middle.</description>
 </datum>
 
 
