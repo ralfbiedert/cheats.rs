@@ -6400,7 +6400,7 @@ Allowing users to _bring their own types_ and avoid code duplication.
 
 <!-- - Question: which of the types above is different from all others?
     - Trick question: all of these types are totally different -->
-- May be obvious but &nbsp; `u8`, &nbsp;&nbsp; `&u8`, &nbsp;&nbsp; `&mut u8`, entirely different from each other
+- It may be obvious but &nbsp; `u8`, &nbsp;&nbsp; `&u8`, &nbsp;&nbsp; `&mut u8`, are entirely different from each other
 - Any `t: T` only accepts values from exactly `T`, e.g.,
     - `f(0_u8)` can't be called with `f(&0_u8)`,
     - `f(&mut my_u8)` can't be called with `f(&my_u8)`,
