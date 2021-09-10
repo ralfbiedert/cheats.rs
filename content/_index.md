@@ -5755,11 +5755,11 @@ Commands and tools that are good to know.
 | <code>cargo <span class="cargo-prefix">b</span>uild</code> | Build the project in debug mode (`--release` for all optimization). |
 | <code>cargo <span class="cargo-prefix">c</span>heck</code> | Check if project would compile (much faster). |
 | <code>cargo <span class="cargo-prefix">t</span>est</code> | Run tests for the project. |
+| <code>cargo <span class="cargo-prefix">d</span>oc --open</code> | Locally generate documentation for your code and dependencies. |
 | <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
 | {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies features with other dependents (can be confusing). |
 | {{ tab() }} `cargo run -p w` | Run main of sub-workspace `w`. Treats features more as you would expect. |
 | `cargo tree` | Show dependency graph. |
-| <code>cargo doc --open</code> | Locally generate documentation for your code and dependencies. |
 | <code>cargo +{nightly, stable} ...</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
 | `cargo +nightly ...` | Some nightly-only commands (substitute `...` with command below) |
 | {{ tab() }}  <code>build -Z timings</code> | Show what crates caused your build to take so long, highly useful. {{ experimental() }} {{ hot() }} |
@@ -6267,6 +6267,7 @@ Environment variables and outputs related to the pre-build script.
 | `OUT_DIR` |  Where output should be placed. |
 | `TARGET` |  Target triple being compiled for. |
 | `HOST` |  Host triple (running this build script). |
+| `PROFILE` |  Can be `debug` or `release`. |
 
 <footnotes>
 

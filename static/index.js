@@ -50,6 +50,7 @@ const subtitles = [
     "Snugly fits two Bayeux tapestries.",
     "If a programming language and a crab love each other very much ...",
     "I, for one, welcome our new AI overlords.",
+    "As seen on interdimensional cable.",
 ];
 
 
