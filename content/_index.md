@@ -4764,6 +4764,7 @@ PRs for this section are very welcome. Idea is:
 | Cleaner closure captures | <code>wants_closure({ let c = outer.clone(); move &vert;&vert; use_clone(c) })</code> |
 | Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
 | Iterate _and_ edit `&mut [T]` if `T` Copy. | `Cell::from_mut(mut_slice).as_slice_of_cells()` |
+| Get subslice with length. | `&original_slice[offset..][..length]` |
 | Canary to ensure trait `T` is object safe. | `const _: Option<&dyn T> = None;` |
 
 
