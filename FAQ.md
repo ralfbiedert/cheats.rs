@@ -24,3 +24,15 @@ zola build --base-url="$PWD/public/index.html" --output-dir="$PWD/public"
 
 - https://ezgif.com/image-to-datauri
 - Add to `postprocess.js`
+
+
+### Why the pentagram?
+
+The pentagram has a few desirable properties:
+
+- easier and safer to execute compared to heptagrams and tridecagrams,
+- faster to draw,
+- has excellent documentation spanning several centuries,
+- and, most importantly, it requires less blood and is therefore more ergonomic.
+
+In other words, the pentagram is the Rust of summoning circles.
