@@ -9141,6 +9141,7 @@ All major Rust books developed by the community.
 | {{ tab() }} [Performance Book](https://nnethercote.github.io/perf-book/) | Techniques to improve the speed and memory usage. |
 | {{ tab() }} [Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/) | Collection of simple examples that demonstrate good practices. |
 | {{ tab() }} [Rust in Easy English](https://dhghomon.github.io/easy_rust/Chapter_3.html) | Explains concepts in simplified English, **good alternative start**. |
+| {{ tab() }} [Rust for the Polyglot Programmer](https://www.chiark.greenend.org.uk/~ianmdlvl/rust-polyglot/index.html) | A guide for the experienced programmer. |
 | {{ tab() }} [Rustdoc Book](https://doc.rust-lang.org/stable/rustdoc/) | Tips how to customize `cargo doc` and `rustdoc`. |
 | {{ tab() }} [Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
 | {{ tab() }} [Unsafe Code Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/)  {{ experimental() }} | Concise information about writing `unsafe` code. |
