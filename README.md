@@ -1,10 +1,14 @@
+
+
 # ![Logo](/static/logo.png) Rust Language Cheat Sheet
 
 [![Read Online](/gfx/button_read-online.png)](https://cheats.rs)
 [![Cached PDF](/gfx/button_cached-pdf.png)](https://cheats.rs/rust_cheat_sheet.pdf)
 
-
 **A single-page Rust resource for people who like high information density.**
+
+> **2021-10-01** ⚠️ We are evaluating Cloudflare this weekend. Should you run into any issues please [file a Github ticket](https://github.com/ralfbiedert/cheats.rs/issues) or [send a mail](mailto:webmaster@cheats.rs).
+
 
 Use cases, in order of priority:
 * **identification & lookup guide** for constructs encountered in code,
