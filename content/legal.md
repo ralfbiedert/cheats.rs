@@ -20,33 +20,24 @@ Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a hr
 <!-- END NOTICE -->
 
 
-### Privacy, GDPR, Terms of Service
+### Privacy, GDPR
 
-- This site is **hosted on Amazon Web Services** and dispatched via various edge locations (Cloudfront) around the globe. We enable "all" edge locations to minimize hops and latency, and because you are worth it :)
-- **Access logs** in AWS are disabled, and we are **not aware of any user tracking**. Only aggregate statistics are provided, most notably, aggregated referrer domains, and aggregated visitor origins, such as:
-
-    ```
-    cheats.rs               75.55%
-    Not Specified           19.12%
-    news.ycombinator.com    2.41%
-    www.google.com          0.55%
-    ```
-
-    ```
-    United States           30.53%
-    Germany                 9.38%
-    United Kingdom          6.24%
-    ```
-
-- We use Google Fonts for now (**help with fixing that would be greatly appreciated!**). No cookies are retained to our knowledge. See: [What does using the Google Fonts API mean for the privacy of my users?](https://developers.google.com/fonts/faq)
+- This site is **dispatched via Cloudflare's CDN** and most users should only interact with their edge servers. If you provide _Feedback_ (see below) you may additionally connect to AWS.
+- In addition we use Google Fonts for now (**help with fixing that would be greatly appreciated!**). No cookies are retained to our knowledge. See: [What does using the Google Fonts API mean for the privacy of my users?](https://developers.google.com/fonts/faq#what_does_using_the_google_fonts_api_mean_for_the_privacy_of_my_users)
 - The **Edit & Run** feature of the "Hello, Rust" section embeds the [Rust Playground](https://play.rust-lang.org/). All code entered there is sent to and processed on their servers.
+- We are generally **not aware of any user tracking** and only aggregate statistics (e.g., users by country) are retained by our hosting provider. **Access logs** are usually disabled, but might be enabled along with other measures to diagnose and mitigate hosting issues.
 - The browser's **local storage** may be necessary to store settings between sessions (e.g., dark mode, ligatures, banner visibility), if you requested such a setting to take effect. This information never leaves your machine.
 - Supporting developer assets and metadata are usually **hosted on Github** so their privacy and tracking legalese applies.
+
+
+### Terms of Service
+
+- **Humans** (you!) may, with the help of a browser or similar, freely access any information on this site in accordance with the rest of these rules. You are in particular free to submit _organic feedback_ (i.e., ad-hoc, human-created) in whatever language, or with whatever words you desire, and any such feedback is fair use.
+
+- **Bots** and other animated rocks may read data for reasonable purposes occasionally. Bots are _never_ allowed to post or invoke APIs, and any such use is considered abuse.
+
 - The **Feedback Buttons** allow you to send _sentiments_ and text.
 
-    You are free to submit _organic feedback_ (i.e., ad-hoc, human-created) in whatever language, or with whatever words you desire, and any such feedback is fair use.
-
-    The usage of bots or scripts, however, is not allowed and considered abuse.
 
     We will store your submission, including context (e.g., section headers or user agents for site debugging). No identifiable information is preserved.
 

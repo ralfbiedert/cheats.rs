@@ -11,8 +11,6 @@ insert_anchor_links = "right"
 <subtitle><span id="subtitle" onclick="advance_subtitle()">{{ date() }}</span></subtitle>
 
 
-> **2021-10-01** ⚠️ We are evaluating Cloudflare this weekend. Should you run into any issues please [file a Github ticket](https://github.com/ralfbiedert/cheats.rs/issues) or [send a mail](mailto:webmaster@cheats.rs).
-
 <blockquote class="legend">
 
 <symbol-legend class="short">
