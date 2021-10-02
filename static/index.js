@@ -505,42 +505,44 @@ function generics_section_expand_on_click() {
 }
 
 
-
 // Use proper syntax since we don't want to write ````rust ...``` all the time.
 codes_rust.forEach(code => {
     code.className = "language-rust";
 });
 
+// Run this after page had time to do first layout since these might take 1-2s, otherwise
+// blocking page first render.
+window.onload = () => {
+    try {
+        // Check if we have been asked to print
+        if (window.location.hash == "#_print") {
+            // In print mode, all we care for is to enable a few things
+            toggle_ligatures();
+            toggle_expand_all();
 
-try {
-    // Check if we have been asked to print
-    if (window.location.hash == "#_print") {
-        // In print mode, all we care for is to enable a few things
-        toggle_ligatures();
-        toggle_expand_all();
+            // Have to set this to make CSS work for book
+            set_body_night_mode("day");
+        } else {
+            // Executed on page load, this runs all toggles the user might have clicked
+            // the last time based on localStorage.
+            let ligatures = storage_get("ligatures");
+            let expand_everything = storage_get("expand_everything");
+            let night_mode = storage_get("night-mode") || get_browser_night_mode();
 
-        // Have to set this to make CSS work for book
-        set_body_night_mode("day");
-    } else {
-        // Executed on page load, this runs all toggles the user might have clicked
-        // the last time based on localStorage.
-        let ligatures = storage_get("ligatures");
-        let expand_everything = storage_get("expand_everything");
-        let night_mode = storage_get("night-mode") || get_browser_night_mode();
+            // Don't attach feedback to h1, looks ugly and doesn't help.
+            feedback_attach_buttons(["h2", "h3", "h4"]);
 
-        // Don't attach feedback to h1, looks ugly and doesn't help.
-        feedback_attach_buttons(["h2", "h3", "h4"]);
+            if (Math.random() < 0.15) { random_quote(); }
+            if (ligatures === "ligatures") { toggle_ligatures(); }
+            if (expand_everything === "true") { toggle_expand_all(); }
 
-        if (Math.random() < 0.15) { random_quote(); }
-        if (ligatures === "ligatures") { toggle_ligatures(); }
-        if (expand_everything === "true") { toggle_expand_all(); }
+            set_body_night_mode(night_mode);
 
-        set_body_night_mode(night_mode);
-
-        // Make sure all interactive content works
-        memory_bars_expand_on_click();
-        generics_section_expand_on_click();
+            // Make sure all interactive content works
+            memory_bars_expand_on_click();
+            generics_section_expand_on_click();
+        }
+    } catch (e) {
+        console.log(e);
     }
-} catch (e) {
-    console.log(e);
-}
+};
