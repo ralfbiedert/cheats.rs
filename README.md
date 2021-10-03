@@ -7,9 +7,6 @@
 
 **A single-page Rust resource for people who like high information density.**
 
-> **2021-10-01** ⚠️ We are evaluating Cloudflare this weekend. Should you run into any issues please [file a Github ticket](https://github.com/ralfbiedert/cheats.rs/issues) or [send a mail](mailto:webmaster@cheats.rs).
-
-
 Use cases, in order of priority:
 * **identification & lookup guide** for constructs encountered in code,
 * **discover** parts of the language you might not know,
