@@ -23,7 +23,6 @@ Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a hr
 ### Privacy, GDPR
 
 - This site is **dispatched via Cloudflare's CDN** and most users should only interact with their edge servers. If you provide _Feedback_ (see below) you may additionally connect to AWS.
-- In addition we use Google Fonts for now (**help with fixing that would be greatly appreciated!**). No cookies are retained to our knowledge. See: [What does using the Google Fonts API mean for the privacy of my users?](https://developers.google.com/fonts/faq#what_does_using_the_google_fonts_api_mean_for_the_privacy_of_my_users)
 - The **Edit & Run** feature of the "Hello, Rust" section embeds the [Rust Playground](https://play.rust-lang.org/). All code entered there is sent to and processed on their servers.
 - We are generally **not aware of any user tracking** and only aggregate statistics (e.g., users by country) are retained by our hosting provider. **Access logs** are usually disabled, but might be enabled along with other measures to diagnose and mitigate hosting issues.
 - The browser's **local storage** may be necessary to store settings between sessions (e.g., dark mode, ligatures, banner visibility), if you requested such a setting to take effect. This information never leaves your machine.
@@ -68,7 +67,8 @@ This work is CC-BY with the following exceptions:
 These assets are shipped with the site.
 
 - [normalize.css](https://github.com/necolas/normalize.css), Nicolas Gallagher and Jonathan Neal, MIT licensed
-- [Fira Code](https://github.com/tonsky/FiraCode), Nikita Prokopov, OFL-1.1
+- [JetBrains Mono](https://www.jetbrains.com/lp/mono/), JetBrains Mono Project Authors, OFL-1.1
+- [OpenSans](https://fonts.google.com/specimen/Open+Sans#about), Steve Matteson, Apache License 2.0
 - [Zola Book theme](https://github.com/getzola/zola), Vincent Prouillet, MIT licensed
 - [prism.js](https://prismjs.com/), Lea Verou, MIT licensed
 - Tabbed CSS Panels, Vesa Piittinen, MIT licensed

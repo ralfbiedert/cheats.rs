@@ -69,7 +69,7 @@ Contains clickable links to
 <noprint>
 <page-controls>
     <!-- <a id="" href="" style="float: left; margin-left:5px;">X-Ray Mode 👓</a> -->
-    <a id="toggle_ligatures" href="javascript:toggle_ligatures()">Fira Code Ligatures (<code>..=, =></code>)</a>
+    <a id="toggle_ligatures" href="javascript:toggle_ligatures()">Font Ligatures (<code>..=, =></code>)</a>
     <a id="expand_everything" class="hide_on_small" href="javascript:toggle_expand_all()">Expand all the things?</a>
     <a href="javascript:toggle_night_mode()">Night Mode &#x1f4a1;</a>
 </page-controls>
@@ -169,6 +169,7 @@ fn main() {
     println!("Hello, world!");
 }
 ```
+
 
 </div>
 <div id="helloplay"></div>

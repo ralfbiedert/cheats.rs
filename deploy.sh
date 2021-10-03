@@ -9,7 +9,7 @@ FOLDER_PREP=public       # Zola output folder
 FOLDER_DIST=public.clean # Our own publish folder after asset inlining
 
 # Only these files are allowed to move from $FOLDER_PREP to $FOLDER_DIST (and end up on S3)
-FOLDER_DIST_WHITELIST=("index.html" "404.html" "legal" "sitemap.xml" "robots.txt")
+FOLDER_DIST_WHITELIST=("index.html" "404.html" "legal" "sitemap.xml" "robots.txt" "fonts/")
 
 # To color our `echo` output
 _YELLOW='\033[1;33m'
@@ -31,7 +31,7 @@ function abort() {
 rm -rf "$FOLDER_PREP"; mkdir "$FOLDER_PREP";
 rm -rf "$FOLDER_DIST"; mkdir "$FOLDER_DIST";
 
-zola -c "$TOML_BASE" check || abort
+# zola -c "$TOML_BASE" check || abort
 zola -c "$TOML_BASE" build || abort
 npm run posthtml_1 || abort  # This is absolutely terrible but apparently the asset inliner we use
 npm run posthtml_2 || abort  # is unable to handle multiple files with different paths gracefully ...
@@ -65,8 +65,8 @@ if [[ $1 == "--live" ]]; then
     fi
 
     # Publish
-    aws s3 cp $FOLDER_DIST s3://cheats.rs/ --recursive
-    aws cloudfront create-invalidation --distribution-id E3P5E5G4A4QPL8 --paths "/*"
+    # aws s3 cp $FOLDER_DIST s3://cheats.rs/ --recursive
+    # aws cloudfront create-invalidation --distribution-id E3P5E5G4A4QPL8 --paths "/*"
 fi
 
 if [[ $1 == "--staging" ]]; then
