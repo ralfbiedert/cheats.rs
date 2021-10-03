@@ -5,6 +5,7 @@
   src: url('/fonts/JetBrainsMono-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -12,6 +13,7 @@
   src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -19,6 +21,7 @@
   src: url('/fonts/JetBrainsMono-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -26,6 +29,7 @@
   src: url('/fonts/JetBrainsMono-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -33,4 +37,5 @@
   src: url('/fonts/JetBrainsMono-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
