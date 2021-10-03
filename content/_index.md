@@ -3213,7 +3213,7 @@ let a = b;
 print_byte(r);
 ```
 
-- Liftime parameters in signatures, like `'c` above, solve that problem.
+- Lifetime parameters in signatures, like `'c` above, solve that problem.
 - Their primary purpose is:
     - **outside the function**, to explain based on which input address an output address could be generated,
     - **within the function**, to guarantee only addresses that live at least `'c` are assigned.
