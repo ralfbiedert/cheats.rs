@@ -68,7 +68,7 @@ These assets are shipped with the site.
 
 - [normalize.css](https://github.com/necolas/normalize.css), Nicolas Gallagher and Jonathan Neal, MIT licensed
 - [JetBrains Mono](https://www.jetbrains.com/lp/mono/), JetBrains Mono Project Authors, OFL-1.1
-- [OpenSans](https://fonts.google.com/specimen/Open+Sans#about), Steve Matteson, Apache License 2.0
+- [OpenSans](https://fonts.google.com/specimen/Open+Sans), Steve Matteson, Apache License 2.0
 - [Zola Book theme](https://github.com/getzola/zola), Vincent Prouillet, MIT licensed
 - [prism.js](https://prismjs.com/), Lea Verou, MIT licensed
 - Tabbed CSS Panels, Vesa Piittinen, MIT licensed

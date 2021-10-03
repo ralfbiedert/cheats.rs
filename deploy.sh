@@ -31,7 +31,7 @@ function abort() {
 rm -rf "$FOLDER_PREP"; mkdir "$FOLDER_PREP";
 rm -rf "$FOLDER_DIST"; mkdir "$FOLDER_DIST";
 
-# zola -c "$TOML_BASE" check || abort
+zola -c "$TOML_BASE" check || abort
 zola -c "$TOML_BASE" build || abort
 npm run posthtml_1 || abort  # This is absolutely terrible but apparently the asset inliner we use
 npm run posthtml_2 || abort  # is unable to handle multiple files with different paths gracefully ...
@@ -65,8 +65,8 @@ if [[ $1 == "--live" ]]; then
     fi
 
     # Publish
-    # aws s3 cp $FOLDER_DIST s3://cheats.rs/ --recursive
-    # aws cloudfront create-invalidation --distribution-id E3P5E5G4A4QPL8 --paths "/*"
+    aws s3 cp $FOLDER_DIST s3://cheats.rs/ --recursive
+    aws cloudfront create-invalidation --distribution-id E3P5E5G4A4QPL8 --paths "/*"
 fi
 
 if [[ $1 == "--staging" ]]; then
