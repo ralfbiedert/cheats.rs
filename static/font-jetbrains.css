@@ -30,7 +30,7 @@
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/jetbrains/JetBrainsMono-Bold.woff2') format('woff2');
+  src: url('/fonts/JetBrainsMono-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
 }
