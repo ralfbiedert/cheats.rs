@@ -3750,7 +3750,10 @@ Similarly, for <code>f64</code> types this would look like:
 | `1_u8 / 2_u8` | `0` | Other integer division truncates. |
 | `0.8_f32 + 0.1_f32` | `0.90000004` | - |
 | `1.0_f32 / 0.0_f32` | `f32::INFINITY` | - |
-| `0.0_f32 / 0.0_f32` | `f32::NaN` | - |
+| `0.0_f32 / 0.0_f32` | `f32::NAN` | - |
+| `x < f32::NAN` | `false` | `NAN` comparisons always return false. |
+| `x > f32::NAN` | `false` | - |
+| `f32::NAN == f32::NAN` | `false` | - |
 
 </div></panel></tab>
 
