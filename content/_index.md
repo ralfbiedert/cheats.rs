@@ -8590,7 +8590,7 @@ Automatically converts `A` to `B` for types **only differing in lifetimes** {{ n
 **Invariant** means even if `A` is subtype of `B`, neither `T[A]` nor `T[B]` will be subtype of the other.<br>
 <!-- <br> -->
 
-<sup>1</sup> Compounds like `struct S<T> {}` obtain variance through their used fields, usally becoming invariant if multiple variances are mixed.<br>
+<sup>1</sup> Compounds like `struct S<T> {}` obtain variance through their used fields, usually becoming invariant if multiple variances are mixed.<br>
 
 </footnotes>
 
