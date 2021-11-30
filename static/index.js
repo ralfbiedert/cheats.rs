@@ -52,6 +52,7 @@ const subtitles = [
     "I, for one, welcome our new AI overlords.",
     "As seen on interdimensional cable.",
     "The catnip of cheat sheets.",
+    "I'm sure there's an X-File on the never type.",
 ];
 
 

@@ -223,7 +223,7 @@ fn main() {
 
 
 **IDEs**
-- [IntelliJ](https://www.jetbrains.com/idea/) (free) or [CLion](https://www.jetbrains.com/clion/) (paid) with [**IntelliJ Rust**](https://intellij-rust.github.io/) {{ hot() }}
+- [IntelliJ](https://www.jetbrains.com/idea/) (free) or [CLion](https://www.jetbrains.com/clion/) (paid) with [**IntelliJ Rust**](https://intellij-rust.github.io/)
 - [Visual Studio Code](https://code.visualstudio.com/) with [**rust-analyzer**](https://rust-analyzer.github.io/)
 
 
@@ -553,7 +553,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 |  {{ tab() }} `let (a, ..) = abc;` | Ignoring 'the rest' also works. |
 |  {{ tab() }} `let (.., a, b) = (1, 2);` | Specific bindings take precedence over 'the rest', here `a` is `1`, `b` is `2`. |
 |  {{ tab() }} `let s @ S { x } = get();`  | Bind `s` to `S` while `x` is bound to `s.x`, **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} _c_. below {{ esoteric() }} |
-|  {{ tab() }} `let w @ t @ f = get();`  | Stores 3 copies of `get()` result in each `w`, `t`, `f`. Please don't do this. {{ esoteric() }} |
+|  {{ tab() }} `let w @ t @ f = get();`  | Stores 3 copies of `get()` result in each `w`, `t`, `f`. {{ esoteric() }} |
 |  {{ tab() }} `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted**, {{ ref(page="expressions/if-expr.html#if-let-expressions") }} use `if let` instead. |
 | `if let Some(x) = get() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
 | `while let Some(x) = get() {}`  | Equiv.; here keep calling `get()`, run `{}` as long as pattern can be assigned. |
@@ -652,7 +652,6 @@ Generics combine with type constructors, traits and functions to give your users
 | `fn f() where Self: R;`  | In `trait T {}`, make `f` accessible only on types known to also `impl R`.  |
 | {{ tab() }} `fn f() where Self: Sized;`  | Using `Sized` can opt `f` out of `dyn T` trait object vtable, enabling trait obj. |
 | {{ tab() }} `fn f() where Self: R {}`  | Other `R` useful w. dflt. methods (non dflt. would need be impl'ed anyway). |
-
 </fixed-2-column>
 
 
