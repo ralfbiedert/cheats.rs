@@ -65,8 +65,7 @@ if [[ $1 == "--live" ]]; then
     fi
 
     # Publish
-    aws s3 cp $FOLDER_DIST s3://cheats.rs/ --recursive
-    aws cloudfront create-invalidation --distribution-id E3P5E5G4A4QPL8 --paths "/*"
+    scp -r public.clean/* rb@192.168.0.1:/data/sites/cheats.rs
 fi
 
 if [[ $1 == "--staging" ]]; then
@@ -76,5 +75,5 @@ if [[ $1 == "--staging" ]]; then
     echo -e "Sending to ${_YELLOW}STAGING${_NC} environment."
 
     # Staging
-    aws s3 cp $FOLDER_DIST s3://cheats.rs-staging/ --recursive
+    scp -r public.clean/* rb@192.168.0.1:/data/sites/cheats.rs
 fi
