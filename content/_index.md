@@ -9215,7 +9215,7 @@ Online services which provide information or tooling.
 
 ## Printing & PDF
 
-> Want this Rust cheat sheet as a PDF? Download the <a href="https://cheats.rs/rust_cheat_sheet.pdf"><b>latest PDF here</b></a>. Alternatively, generate it yourself via <i>File > Print</i> and then "Save as PDF" (works great in Chrome, has some issues in Firefox).
+> Want this Rust cheat sheet as a PDF? Download the <a href="https://s3.eu-central-1.amazonaws.com/cheats.rs/rust_cheat_sheet.pdf"><b>latest PDF here</b></a>. Alternatively, generate it yourself via <i>File > Print</i> and then "Save as PDF" (works great in Chrome, has some issues in Firefox).
 
 </noprint>
 
