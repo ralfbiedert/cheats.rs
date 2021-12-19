@@ -436,7 +436,7 @@ function feedback_attach_buttons(list_of_header_tags) {
                     <feedback-button onmouseover="feedback_detail_visibility('${feedback_id}', 'inherit')"><the-button>✏️</the-button></feedback-button>
                 </button-row>
                 <feedback-form>
-                    <textarea maxlength="2048" onkeydown="javascript:feedback_quick_submit('${feedback_id}', e);" placeholder="Tell us more!"></textarea>
+                    <textarea maxlength="2048" onkeydown="javascript:feedback_quick_submit('${feedback_id}', this);" placeholder="Tell us more!"></textarea>
                     <hint>See <a href="/legal">privacy policy</a>; also <b>CTRL-ENTER</b> submits. </hint>
                     <controls>
                         <result></result>
