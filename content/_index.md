@@ -716,7 +716,7 @@ Rust has several ways to create textual values.
 
 <footnotes>
 
-<sup>1</sup> Supports multiple lines out of the box. Just keep in mind `Debug`{{ below(target="#string-output") }} (e.g., `dbg!(x)` and `println!("{:?}", x)`) might render them as `\n`, while `Display`{{ below(target="#string-output") }} (e.g., `println!("{}", x)`) renders them _proper_.
+<sup>1</sup> Supports multiple lines out of the box. Just keep in mind `Debug`{{ below(target="#string-output") }} (e.g., `dbg!(x)` and `println!("{x:?}")`) might render them as `\n`, while `Display`{{ below(target="#string-output") }} (e.g., `println!("{x}")`) renders them _proper_.
 
 </footnotes>
 
@@ -4702,7 +4702,7 @@ PRs for this section are very welcome. Idea is:
 
 | Intent | Snippet |
 |---------|-------------|
-| Concatenate strings (any `Display`{{ below(target="#string-output") }} that is). <sup>1</sup> | `format!("{}{}", x, y)` |
+| Concatenate strings (any `Display`{{ below(target="#string-output") }} that is). <sup>1</sup>  {{ edition(ed="'21") }} | `format!("{x}{y}")` |
 | Split by separator pattern. {{ std(page="std/str/pattern/trait.Pattern.html") }} {{ link(url="https://stackoverflow.com/a/38138985") }} | `s.split(pattern)` |
 | {{ tab() }} ... with `&str` | `s.split("abc")` |
 | {{ tab() }} ... with `char` | `s.split('/')` |
@@ -5370,6 +5370,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 | Format Example | Explanation |
 |---------|-------------|
 | `{}` | Print the next argument using `Display`.{{ std(page="std/fmt/trait.Display.html") }} |
+| `{x}` | Same, but use variable `x` from local scope. {{ edition(ed="'21") }} |
 | `{:?}` | Print the next argument using `Debug`.{{ std(page="std/fmt/trait.Debug.html") }} |
 | `{2:#?}` | Pretty-print the 3<sup>rd</sup> argument with `Debug`{{ std(page="std/fmt/trait.Debug.html") }} formatting. |
 | `{val:^2$}` | Center the `val` named argument, width specified by the 3<sup>rd</sup> argument. |
@@ -5385,8 +5386,9 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 
 | Full Example | Explanation |
 |---------|-------------|
-| `println!("{}", x)` | Print `x` using `Display`{{ std(page="std/fmt/trait.Display.html") }} on std. out and append new line. |
-| `format!("{a:.3} {b:?}", a = PI, b = 2)` | Convert `PI` with 3 digits, add space, b with `Debug` {{ std(page="std/fmt/trait.Debug.html") }}, return `String`. |
+| `println!("{}", x)` | Print `x` using `Display`{{ std(page="std/fmt/trait.Display.html") }} on std. out and append new line. {{ edition(ed="'15") }} |
+| `println!("{x}")` | Same, but use variable `x` from local scope. {{ edition(ed="'21") }}  |
+| `format!("{a:.3} {b:?}")` | Convert `PI` with 3 digits, add space, b with `Debug` {{ std(page="std/fmt/trait.Debug.html") }}, return `String`.  {{ edition(ed="'21") }} |
 
 </div>
 
