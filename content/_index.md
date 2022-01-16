@@ -5349,7 +5349,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 
 | Element |  Meaning |
 |---------| ---------|
-| `argument` |  Number (`0`, `1`, ...) or argument name, e.g., `print!("{x}", x = 3)`. |
+| `argument` |  Number (`0`, `1`, ...), argument {{ edition(ed="'21") }} or name,{{ edition(ed="'18") }} e.g., `print!("{x}")`. |
 | `fill` | The character to fill empty spaces with (e.g., `0`), if `width` is specified. |
 | `align` | Left (`<`), center (`^`), or right (`>`), if width is specified. |
 | `sign` | Can be `+` for sign to always be printed. |
@@ -5370,7 +5370,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 | Format Example | Explanation |
 |---------|-------------|
 | `{}` | Print the next argument using `Display`.{{ std(page="std/fmt/trait.Display.html") }} |
-| `{x}` | Same, but use variable `x` from local scope. {{ edition(ed="'21") }} |
+| `{x}` | Same, but use variable `x` from scope. {{ edition(ed="'21") }} |
 | `{:?}` | Print the next argument using `Debug`.{{ std(page="std/fmt/trait.Debug.html") }} |
 | `{2:#?}` | Pretty-print the 3<sup>rd</sup> argument with `Debug`{{ std(page="std/fmt/trait.Debug.html") }} formatting. |
 | `{val:^2$}` | Center the `val` named argument, width specified by the 3<sup>rd</sup> argument. |
@@ -5387,7 +5387,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 | Full Example | Explanation |
 |---------|-------------|
 | `println!("{}", x)` | Print `x` using `Display`{{ std(page="std/fmt/trait.Display.html") }} on std. out and append new line. {{ edition(ed="'15") }} |
-| `println!("{x}")` | Same, but use variable `x` from local scope. {{ edition(ed="'21") }}  |
+| `println!("{x}")` | Same, but use variable `x` from scope. {{ edition(ed="'21") }}  |
 | `format!("{a:.3} {b:?}")` | Convert `PI` with 3 digits, add space, b with `Debug` {{ std(page="std/fmt/trait.Debug.html") }}, return `String`.  {{ edition(ed="'21") }} |
 
 </div>
