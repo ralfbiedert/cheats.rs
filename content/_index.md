@@ -643,7 +643,9 @@ Generics combine with type constructors, traits and functions to give your users
 | {{ tab() }} `S<{5+5}>` | Expressions must be put in curly brackets. |
 | `S<T> where T: R`  | Almost same as `S<T: R>` but more pleasant to read for longer bounds. |
 | {{ tab() }} `S<T> where u8: R<T>`  | Also allows you to make conditional statements involving _other_ types. |
-| `S<T = R>` | **Default type parameter** {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} for associated type.|
+| `S<T = R>` | **Default parameters**; {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} bit easier to use, but still flexible. |
+| {{ tab() }} `S<const N: u8 = 0>` | Default parameter for constants; e.g., in `f(x: S) {}` param `N` is `0`. |
+| {{ tab() }} `S<T = u8>` | Default parameter for types, e.g., in `f(x: S) {}` param `T` is `u8`. |
 | `S<'_>` | Inferred **anonymous lifetime**; asks compiler to _'figure it out'_ if obvious.  |
 | `S<_>` | Inferred **anonymous type**, e.g., as `let x: Vec<_> = iter.collect()`  |
 | `S::<T>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation, e.g. `f::<u32>()`. |
@@ -5774,7 +5776,7 @@ Commands and tools that are good to know.
 | Command | Description |
 |--------| ---- |
 | `cargo init` | Create a new project for the latest edition. |
-| <code>cargo <span class="cargo-prefix">b</span>uild</code> | Build the project in debug mode (`--release` for all optimization). |
+| <code>cargo <span class="cargo-prefix">b</span>uild</code> | Build the project in debug mode (<code>--<span class="cargo-prefix">r</span>elease</code> for all optimization). |
 | <code>cargo <span class="cargo-prefix">c</span>heck</code> | Check if project would compile (much faster). |
 | <code>cargo <span class="cargo-prefix">t</span>est</code> | Run tests for the project. |
 | <code>cargo <span class="cargo-prefix">d</span>oc --open</code> | Locally generate documentation for your code and dependencies. |
@@ -5792,7 +5794,7 @@ Commands and tools that are good to know.
 
 <footnotes>
 
-A command like <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type `cargo build` or just `cargo b`.
+Here <code>cargo <span class="cargo-prefix">b</span>uild</code> means you can either type `cargo build` or just `cargo b`; and <code>--<span class="cargo-prefix">r</span>elease</code> means it can be replaced with `-r`.
 
 </footnotes>
 
