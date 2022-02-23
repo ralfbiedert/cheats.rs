@@ -499,9 +499,15 @@ Short-hand names of types, and methods to convert one type to another.
 |  {{ tab() }}  `self: Box<Self>`  | [**Arbitrary self type**](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart pointers (`my_box.f_of_self()`). |
 | `S as T`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`, e.g., `<S as T>::f()`. |
 | `S as R`  | In `use` of symbol, import `S` as `R`, e.g., `use a::S as R`. |
-| `x as u32`  | Primitive **cast**, {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }} may truncate and be a bit surprising. {{ nom(page="casts.html") }} |
+| `x as u32`  | Primitive **cast**, {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }} may truncate and be a bit surprising. <sup>1</sup> {{ nom(page="casts.html") }} |
 
 </fixed-2-column>
+
+<footnotes>
+
+<sup>1</sup> See [Type Conversions](#type-conversions) below for all the ways to convert between types.
+
+</footnotes>
 
 
 
@@ -5423,12 +5429,15 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | 📁 `src/` | Actual source code for your project. |
 | {{ tab() }} `main.rs` | Default entry point for applications, this is what **`cargo run`** uses. |
 | {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f()` starts. |
+| 📁 `src/bin/` | Place for additional binaries, even in library projects. |
+| {{ tab() }} `x.rs` | Additional binary, run with `cargo run --bin x`. |
 | 📁 `tests/` | Integration tests go here, invoked via **`cargo test`**. Unit tests often stay in `src/` file. |
 | `.rustfmt.toml` | In case you want to [**customize**](https://rust-lang.github.io/rustfmt/) how **`cargo fmt`** works. |
 | `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`**  {{ esoteric() }} |
 | `build.rs` |  **Pre-build script**, {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }} useful when compiling C / FFI, ... |
 | <code class="ignore-auto language-bash">Cargo.toml</code> | Main **project manifest**, {{ link(url="https://doc.rust-lang.org/cargo/reference/manifest.html") }} Defines dependencies, artifacts ... |
-| <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds, recommended to `git` for apps, not for libs. |
+| <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds; add to `git` for apps, not for libs. |
+| `rust-toolchain.toml` |  Define **toolchain override**{{ link(url="https://rust-lang.github.io/rustup/overrides.html" )}} (channel, components, targets) for this project. |
 </div>
 
 <footnotes>
