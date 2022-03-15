@@ -537,6 +537,7 @@ Code generation constructs expanded before the actual compilation happens.
 | {{ tab() }} `$(x),?` | Same, but "zero or one time". |
 | {{ tab() }} `$(x),+` | Same, but "one or more times". |
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
+| {{ tab() }} `$(x,)+` | Separator trailing after repetition. |
 
 
 </fixed-2-column>
