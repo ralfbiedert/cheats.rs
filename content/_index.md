@@ -4088,7 +4088,7 @@ These **sum types** hold a value of one of their sub types:
 
 ## References & Pointers {#references-pointers-ui}
 
-References give safe access to the referent, raw pointers `unsafe` access.
+References give safe access to 3<sup>rd</sup> party memory, raw pointers `unsafe` access.
 The corresponding `mut` types have an identical data layout to their immutable counterparts.
 
 
