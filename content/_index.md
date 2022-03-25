@@ -3797,7 +3797,7 @@ Similarly, for <code>f64</code> types this would look like:
         <byte><code></code></byte>
         <byte><code></code></byte>
     </visual>
-    <description>Any UTF-8 scalar.</description>
+    <description>Any Unicode scalar.</description>
 </datum>
 
 
