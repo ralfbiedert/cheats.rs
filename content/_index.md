@@ -274,7 +274,7 @@ Data types and memory locations defined via keywords.
 | {{ tab() }}  `enum E { A = 1 }` | If variants are only unit-like, allow discriminant values, e.g., for FFI. |
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. {{ esoteric() }} |
 | `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
-| `const X: T = T();`  | Defines **constant**, {{ book(page="ch03-01-variables-and-mutability.html#differences-between-variables-and-constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} copied into a temporary when used. |
+| `const X: T = T();`  | Defines **constant**, {{ book(page="ch03-01-variables-and-mutability.html#constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} copied into a temporary when used. |
 | `let x: T;`  | Allocate `T` bytes on stack{{ note( note="1") }} bound as `x`. Assignable once, not mutable.  |
 | `let mut x: T;`  | Like `let`, but allow for **mutability** {{ book(page="ch03-01-variables-and-mutability.html") }} {{ ex(page="variable_bindings/mut.html") }} and mutable borrow.{{ note( note="2") }} |
 | {{ tab() }} `x = y;` | Moves `y` to `x`, invalidating `y` if `T` is not **`Copy`**, {{ std(page="std/marker/trait.Copy.html") }} and copying `y` otherwise. |
@@ -5247,7 +5247,7 @@ If you **want** a string of type &hellip;
 <sup>i</sup> Short form `x.into()` possible if type can be inferred. <br>
 <sup>r</sup> Short form `x.as_ref()` possible if type can be inferred.
 
-<sup>1</sup> You should, or must if call is `unsafe`, ensure raw data comes with a valid representation for the string type (e.g., UTF-8 data for a `String`). {{ link(url="https://people.gnome.org/~federico/blog/correctness-in-rust-reading-strings.html") }}
+<sup>1</sup> You should, or must if call is `unsafe`, ensure raw data comes with a valid representation for the string type (e.g., UTF-8 data for a `String`).
 
 
 <sup>2</sup> Only on some platforms `std::os::<your_os>::ffi::OsStrExt` exists with helper methods to get a raw `&[u8]` representation of the underlying `OsStr`. Use the rest of the table to go from there, e.g.:
