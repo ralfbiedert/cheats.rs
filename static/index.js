@@ -43,7 +43,6 @@ const subtitles = [
     "Night mode is dark and full of errors.",
     "^Z^Z^Z^Z^X^quit:help! ... how do I exit this thing?.",
     "If it smells like rust and tastes like rust, it's probably not Rust.",
-    "In memoriam of the 1 Github star we lost April 1st, 2021. You will be missed.",
     "The R in ASMR stands for Rust.",
     "Chuck Norris doesn't fear concurrency. Concurrency fears Chuck Norris.",
     "Teaching endianness since 1820.",
@@ -51,9 +50,12 @@ const subtitles = [
     "If a programming language and a crab love each other very much ...",
     "I, for one, welcome our new AI overlords.",
     "As seen on interdimensional cable.",
-    "The catnip of cheat sheets.",
+    "Catnip for crustaceans.",
     "I'm sure there's an X-File on the never type.",
     "${jndi:ldap://rustup.rs}",
+    "An amorphous guide to fractal complexity.",
+    "Whenever I tell my octopus about Rust he gets all excited.",
+    "Roses had rust 30M years before it was cool. Be like roses.",
 ];
 
 
