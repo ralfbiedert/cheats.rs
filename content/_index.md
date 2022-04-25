@@ -905,7 +905,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Derefs or borrow `x` until `x.f()` works. |
 | **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly dereferences [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and adds `ref` and `ref mut` to bindings. |
 | **Rvalue Static Promotion** {{ rfc(page="1414-rvalue_static_promotion.html") }} | Makes references to constants `'static`, e.g., `&42`, `&None`, `&mut []`. |
-| **Dual Declarations** {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} | Defining one thing (e.g., `struct S(u8)`) implicitly def. another (e.g., `fn S`). |
+| **Dual Definitions** {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} | Defining one thing (e.g., `struct S(u8)`) implicitly def. another (e.g., `fn S`). |
 
 
 </div>
