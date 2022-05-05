@@ -141,6 +141,7 @@ Contains clickable links to
 * [Async-Await 101](#async-await-101)
 * [Closures in APIs](#closures-in-apis)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
+* [Adversarial Code](#adversarial-code)
 * [API Stability](#api-stability)
 
 
@@ -675,8 +676,8 @@ _Actual_ types and traits, abstract over something, usually lifetimes.
 |---------|-------------|
 | `for<'a>` | Marker for **higher-ranked bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} {{ esoteric() }} |
 | {{ tab() }} `trait T: for<'a> R<'a> {}` | Any `S` that `impl T` would also have to fulfill `R` for any lifetime. |
-| `fn(&'a u8)` | _Fn. ptr._ type holding fn callable with **specific** lifetime `'a`. |
-| `for<'a> fn(&'a u8)` | **Higher-ranked type**<sup>1</sup> {{ link(url="https://github.com/rust-lang/rust/issues/56105") }} holding fn callable with **any** _lt._; subtype of above. |
+| `fn(&'a u8)` | Function pointer type holding fn callable with **specific** lifetime `'a`. |
+| `for<'a> fn(&'a u8)` | **Higher-ranked type**<sup>1</sup> {{ link(url="https://github.com/rust-lang/rust/issues/56105") }} holding fn callable with **any** _lt._; subtype{{ below(target="#type-conversions") }} of above. |
 | {{ tab() }} `fn(&'_ u8)` | Same; automatically expanded to type `for<'a> fn(&'a u8)`. |
 | {{ tab() }} `fn(&u8)` | Same; automatically expanded to type `for<'a> fn(&'a u8)`. |
 | `dyn for<'a> Fn(&'a u8)` | Higher-ranked (trait-object) type, works like `fn` above. |
@@ -739,18 +740,20 @@ Debuggers hate him. Avoid bugs with this one weird trick.
 
 | Example | Explanation |
 |--------|-------------|
-| `///` | Outer line **doc comment**, {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types, traits, functions, &hellip; |
+| `///` | Outer line **doc comment**,<sup>1</sup> {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types, traits, functions, &hellip; |
 | `//!` | Inner line doc comment, mostly used at start of file to document module. |
 | `//` | Line comment, use these to document code flow or _internals_. |
-| `/*...*/` | Block comment. |
-| `/**...*/` | Outer block doc comment. |
-| `/*!...*/` | Inner block doc comment. |
+| `/*...*/` | Block comment. <sup>2</sup> {{ deprecated() }} |
+| `/**...*/` | Outer block doc comment. <sup>2</sup> {{ deprecated() }} |
+| `/*!...*/` | Inner block doc comment. <sup>2</sup> {{ deprecated() }} |
 
 </fixed-2-column>
 
 <footnotes>
 
-Tooling directives {{ below(target="#tooling-directives") }} outlines what you can do inside doc comments.
+<sup>1</sup> Tooling directives {{ below(target="#tooling-directives") }} outline what you can do inside doc comments.
+
+<sup>2</sup> Generally discouraged due to bad UX. If possible use equivalent line comment instead with IDE support.
 
 </footnotes>
 
@@ -817,7 +820,7 @@ Like `C` and `C++`, Rust is based on an _abstract machine_.
         <machine class="bad">CPU</machine>
     </entry>
     <br/>
-    <note>{{bad()}} Less correctish.</note>
+    <note>{{bad()}} Misleading.</note>
 </mini-zoo>
 
 <mini-zoo class="zoo" style="text-align: center; margin-left: 80px;">
@@ -833,16 +836,20 @@ Like `C` and `C++`, Rust is based on an _abstract machine_.
         <machine class="good">CPU</machine>
     </entry>
     <br/>
-    <note>More correctish.</note>
+    <note>Correct.</note>
 </mini-zoo>
 
 </div>
+
+{{ tablesep() }}
+
+With rare exceptions you are never 'allowed to reason' about the actual CPU. You write code for an _abstracted_ CPU. Rust then (sort of) understands what you want, and translates that into actual RISC-V / x86 / ... machine code.
 
 
 {{ tablesep() }}
 
 
-The abstract machine
+This _abstract machine_
 - is not a runtime, and does not have any runtime overhead, but is a _computing model abstraction_,
 - contains concepts such as memory regions (_stack_, ...), execution semantics, ...
 - _knows_ and _sees_ things your CPU might not care about,
@@ -3751,8 +3758,7 @@ Similarly, for <code>f64</code> types this would look like:
 | Operation<sup>1</sup> | Gives | Note |
 | --- | --- | --- |
 | `200_u8 / 0_u8` | Compile error. | - |
-| `200_u8 / _0` <sup>d</sup> | Panic. | Regular math may panic; here: division by zero. |
-| `200_u8 / _0` <sup>r</sup> | Panic. | Same. |
+| `200_u8 / _0` <sup>d, r</sup> | Panic. | Regular math may panic; here: division by zero. |
 | `200_u8 + 200_u8` |  Compile error. | - |
 | `200_u8 + _200` <sup>d</sup> | Panic. | Consider `checked_`, `wrapping_`, ... instead. {{ std(page="std/primitive.isize.html#method.checked_add") }}|
 | `200_u8 + _200` <sup>r</sup> | `144` | In release mode this will overflow. |
@@ -5434,7 +5440,7 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | {{ tab() }} `main.rs` | Default entry point for applications, this is what **`cargo run`** uses. |
 | {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f()` starts. |
 | 📁 `src/bin/` | Place for additional binaries, even in library projects. |
-| {{ tab() }} `x.rs` | Additional binary, run with `cargo run --bin x`. |
+| {{ tab() }} `extra.rs` | Additional binary, run with `cargo run --bin extra`. |
 | 📁 `tests/` | Integration tests go here, invoked via **`cargo test`**. Unit tests often stay in `src/` file. |
 | `.rustfmt.toml` | In case you want to [**customize**](https://rust-lang.github.io/rustfmt/) how **`cargo fmt`** works. |
 | `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`**  {{ esoteric() }} |
@@ -5734,11 +5740,11 @@ Rust has three kinds of **namespaces**:
             <td><code></code></td>
         </tr>
         <tr>
-            <td colspan="2" style="text-align: center;"><code>struct X;</code><sup>1</sup></td>
+            <td colspan="2" style="text-align: center; padding-right: 50px;"> <span style="opacity: 50%">←</span> <code>struct X;</code><sup>1</sup> <span style="opacity: 50%">→</span> </td>
             <td></td>
         </tr>
         <tr>
-            <td colspan="2" style="text-align: center;"><code>struct X();</code><sup>1</sup></td>
+            <td colspan="2" style="text-align: center; padding-right: 50px;"> <span style="opacity: 50%">←</span> <code>struct X();</code><sup>2</sup> <span style="opacity: 50%">→</span> </td>
             <td></td>
         </tr>
     </tbody>
@@ -5746,7 +5752,8 @@ Rust has three kinds of **namespaces**:
 
 <footnotes>
 
-<sup>1</sup> Counts in <i>Types</i> and in <i>Functions</i>.
+<sup>1</sup> Counts in <i>Types</i> and in <i>Functions</i>, defines type `X` _and_ constant `X`. <br>
+<sup>2</sup> Counts in <i>Types</i> and in <i>Functions</i>, defines type `X` _and_ function `X`.
 
 </footnotes>
 
@@ -8974,6 +8981,38 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 
 {{ tablesep() }}
 
+
+
+## Adversarial Code
+
+_Adversarial_ code is _safe_ code that compiles but does not follow API _expectations_, and might interfere with your own (safety) guarantees.
+
+
+<div class="color-header redred">
+
+
+| You author ... | User code could ... |
+|---------|---------|
+| `fn g<F: Fn()>(f: F) { ... }` | Unexpectedly panic. |
+| `struct S<X: T> { ... }` | Implement `T` badly, e.g., misuse `Deref`, ... |
+| `macro_rules! m { ... }` | Do all of the above; call site can have _weird_ scope. |
+
+{{ tablesep() }}
+
+| Risk | Description |
+|---------|---------|
+| `#[repr(packed)]` |  Packed alignment can make `&s.x` invalid. |
+| `impl std::... for S {}`  | Any trait `impl`, esp. `std::ops` may be broken. In particular ... |
+| {{ tab() }} `impl Deref for S {}` | Wrapper may randomly `Deref`, e.g., `s.x != s.x`, or panic.  |
+| {{ tab() }} `impl PartialEq for S {}` | May violate equality rules; panic.  |
+| {{ tab() }} `impl Eq for S {}`  | May cause `s != s`; panic; must not use `s` in `HashMap` & co. |
+| {{ tab() }} `impl Hash for S {}`  | May violate hashing rules; panic; must not use `s` in `HashMap` & co. |
+| {{ tab() }} `impl Index for S {}` | May randomly index, e.g. `s[x] != s[x]`, or panic. |
+| {{ tab() }} `impl Drop for S {}` | May run code or panic end of scope `{}`, during assignment `s = new_s`. |
+| `panic!()` | User code can panic _any_ time, doing abort, or unwind. |
+| <code>catch_unwind(&vert;&vert; s.f(panicky))</code> |  Also, caller might force observation of broken state in `s`.  |
+
+</div>
 
 
 ## API Stability
