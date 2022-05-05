@@ -8545,11 +8545,11 @@ Automatically converts `A` to `B` for types **only differing in lifetimes** {{ n
 | `&'a &'b u8` | `&'a &'b u8` | Valid, same thing. **But now things get interesting. Read on.** |
 | `&'a &'static u8` | `&'a &'b u8` | Valid, `&'static u8` is also `&'b u8`; **covariant** inside `&`.  |
 | `&'a mut &'static u8` | `&'a mut &'b u8` | {{ bad() }} Invalid and surprising; **invariant** inside `&mut`. |
-| `Box<&'a static>` | `Box<&'a u8>` | Valid, box with forever is also box with transient; covariant. |
-| `Box<&'a u8>` | `Box<&'static u8>` | {{ bad() }} Invalid, box with transient may not be with forever. |
+| `Box<&'static u8>` | `Box<&'a u8>` | Valid, `Box` with forever is also box with transient; covariant. |
+| `Box<&'a u8>` | `Box<&'static u8>` | {{ bad() }} Invalid, `Box` with transient may not be with forever. |
 | `Box<&'a mut u8>` | `Box<&'a u8>` | {{ bad() }} <sup>⚡</sup> Invalid, see table below, `&mut u8` never _was a_ `&u8`. |
-| `Cell<&'a static>` | `Cell<&'a u8>` | {{ bad() }} Invalid, cells are **never** something else; invariant. |
-| `fn(&'static u8)` | `fn(&'u8 u8)` | {{ bad() }} If `fn` needs forever it may choke on transients; **contravar.**|
+| `Cell<&'static u8>` | `Cell<&'a u8>` | {{ bad() }} Invalid, `Cell` are **never** something else; invariant. |
+| `fn(&'static u8)` | `fn(&'a u8)` | {{ bad() }} If `fn` needs forever it may choke on transients; **contravar.**|
 | `fn(&'a u8)` | `fn(&'static u8)` |  But sth. that eats transients **can be**(!) sth. that eats forevers. |
 | `for<'r> fn(&'r u8)` | `fn(&'a u8)` | Higher-ranked type `for<'r> fn(&'r u8)` is also `fn(&'a u8).` |
 
