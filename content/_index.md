@@ -70,7 +70,7 @@ Contains clickable links to
 <page-controls>
     <!-- <a id="" href="" style="float: left; margin-left:5px;">X-Ray Mode 👓</a> -->
     <a id="toggle_ligatures" href="javascript:toggle_ligatures()">Font Ligatures (<code>..=, =></code>)</a>
-    <a id="expand_everything" class="hide_on_small" href="javascript:toggle_expand_all()">Expand all the things?</a>
+    <!-- <a id="expand_everything" class="hide_on_small" href="javascript:toggle_expand_all()">Expand all the things?</a> -->
     <a href="javascript:toggle_night_mode()">Night Mode &#x1f4a1;</a>
 </page-controls>
 </noprint>
@@ -141,7 +141,7 @@ Contains clickable links to
 * [Async-Await 101](#async-await-101)
 * [Closures in APIs](#closures-in-apis)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
-* [Adversarial Code](#adversarial-code)
+* [Adversarial Code](#adversarial-code){{ esoteric() }}
 * [API Stability](#api-stability)
 
 
@@ -5792,10 +5792,10 @@ Commands and tools that are good to know.
 | <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
 | {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies features with other dependents (can be confusing). |
 | {{ tab() }} `cargo run -p w` | Run main of sub-workspace `w`. Treats features more as you would expect. |
+| <code>cargo ... --timings</code> | Show what crates caused your build to take so long, highly useful. {{ hot() }} |
 | `cargo tree` | Show dependency graph. |
 | <code>cargo +{nightly, stable} ...</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
 | `cargo +nightly ...` | Some nightly-only commands (substitute `...` with command below) |
-| {{ tab() }}  <code>build -Z timings</code> | Show what crates caused your build to take so long, highly useful. {{ experimental() }} {{ hot() }} |
 | {{ tab() }} `rustc -- -Zunpretty=expanded` |  Show expanded macros. {{ experimental() }} |
 | `rustup doc` | Open offline Rust documentation (incl. the books), good on a plane! |
 
@@ -6268,6 +6268,7 @@ Attributes governing conditional compilation:
 | `#[cfg(target_pointer_width = "64")]` | `*` | How many bits pointers, `usize` and CPU words have. {{ ref(page="conditional-compilation.html#target_pointer_width") }}|
 | `#[cfg(target_vendor = "apple")]` | `*` |  Manufacturer of target. {{ ref(page="conditional-compilation.html#target_vendor") }}|
 | `#[cfg(debug_assertions)]` | `*` | Whether `debug_assert!()` and friends would panic. {{ ref(page="conditional-compilation.html#debug_assertions") }}|
+| `#[cfg(panic = "unwind")]` | `*` | Whether `unwind` or `abort` will happen on panic. {{ todo() }}|
 | `#[cfg(proc_macro)]` | `*` | Wheter crate compiled as proc macro. {{ ref(page="conditional-compilation.html#proc_macro") }}|
 | `#[cfg(test)]` | `*` | Whether compiled with `cargo test`. {{ hot() }} {{ ref(page="conditional-compilation.html#test") }}|
 | `#[cfg(feature = "serde")]` | `*` | When your crate was compiled with feature `serde`. {{ hot() }} {{ ref(page="conditional-compilation.html#conditional-compilation") }}|
@@ -8533,7 +8534,7 @@ Automatically **weaken** type `A` to `B`; types can be _substantially_<sup>1</su
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-variance-5" name="tab-variance">
-<label for="tab-variance-5"><b>Subtyping</b></label>
+<label for="tab-variance-5"><b>Subtyping</b>{{ esoteric() }}</label>
 <panel><div>
 
 ```
@@ -8579,7 +8580,7 @@ In contrast, these are **not**{{ bad() }} examples of subtyping:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-variance-8" name="tab-variance">
-<label for="tab-variance-8"><b>Variance</b></label>
+<label for="tab-variance-8"><b>Variance</b>{{ esoteric() }}</label>
 <panel><div>
 
 ```
@@ -8639,18 +8640,18 @@ Automatically converts `A` to `B` for types **only differing in lifetimes** {{ n
 
 ## Idiomatic Rust
 
-If you are used to programming Java or C, consider these.
+If you are used to Java or C, consider these.
 
 <div class="color-header blue">
 
 | Idiom | Code |
 |--------| ---- |
-| **Think in Expressions** | `x = if x { a } else { b };` |
-|  | `x = loop { break 5 };`  |
+| **Think in Expressions** | `y = if x { a } else { b };` |
+|  | `y = loop { break 5 };`  |
 |  | `fn f() -> u32 { 0 }`  |
 | **Think in Iterators** | `(1..10).map(f).collect()` |
 |  | <code>names.iter().filter(&vert;x&vert; x.starts_with("A"))</code> |
-| **Handle Absence with `?`** | `x = try_something()?;` |
+| **Handle Absence with `?`** | `y = try_something()?;` |
 |  | `get_option()?.run()?` |
 | **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
@@ -8766,7 +8767,7 @@ START --------------------> x.await --------------------> y.await --------------
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-async-3" name="tab-async">
-<label for="tab-async-3"><b>Caveats</b></label>
+<label for="tab-async-3"><b>Caveats</b> {{ bad() }} </label>
 <panel><div>
 
 
@@ -8983,7 +8984,7 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 
 
 
-## Adversarial Code
+## Adversarial Code {{ esoteric() }}
 
 _Adversarial_ code is _safe_ code that compiles but does not follow API _expectations_, and might interfere with your own (safety) guarantees.
 
@@ -9001,18 +9002,32 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 
 | Risk | Description |
 |---------|---------|
-| `#[repr(packed)]` |  Packed alignment can make `&s.x` invalid. |
+| `#[repr(packed)]` |  Packed alignment can make reference `&s.x` invalid. |
 | `impl std::... for S {}`  | Any trait `impl`, esp. `std::ops` may be broken. In particular ... |
 | {{ tab() }} `impl Deref for S {}` | Wrapper may randomly `Deref`, e.g., `s.x != s.x`, or panic.  |
 | {{ tab() }} `impl PartialEq for S {}` | May violate equality rules; panic.  |
 | {{ tab() }} `impl Eq for S {}`  | May cause `s != s`; panic; must not use `s` in `HashMap` & co. |
 | {{ tab() }} `impl Hash for S {}`  | May violate hashing rules; panic; must not use `s` in `HashMap` & co. |
+| {{ tab() }} `impl Ord for S {}`  | May violate ordering rules; panic; must not use `s` in `BTreeMap` & co. |
 | {{ tab() }} `impl Index for S {}` | May randomly index, e.g. `s[x] != s[x]`, or panic. |
 | {{ tab() }} `impl Drop for S {}` | May run code or panic end of scope `{}`, during assignment `s = new_s`. |
 | `panic!()` | User code can panic _any_ time, doing abort, or unwind. |
 | <code>catch_unwind(&vert;&vert; s.f(panicky))</code> |  Also, caller might force observation of broken state in `s`.  |
 
 </div>
+
+{{ tablesep() }}
+
+
+>
+> **Implications**
+>
+> - Generic code **cannot be safe if safety depends on type cooperation** w.r.t. most (`std::`) traits.
+> - If type cooperation is needed you must use `unsafe` traits (prob. implement your own).
+> - You must consider random code execution at unexpected places (e.g., re-assignments, scope end).
+> - You may still be observable after a worst-case panic.
+>
+> As a corollary, _safe_-but-deadly code (e.g., `set_airplane_speed()`) should probably also follow these guides.
 
 
 ## API Stability
