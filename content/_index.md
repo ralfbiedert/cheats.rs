@@ -8657,10 +8657,12 @@ If you are used to Java or C, consider these.
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
 |  | `struct Charge(f32)` over `f32` |
 | **Provide Builders** | `Car::new("Model T").hp(20).build();` |
+| **Don't Panic** | Panics are _not_ exceptions, they may `abort()` entire process! |
+|  | Only raise `panic!` if impossible to handle error, better return `Option` or `Result`. |
 | **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
 |   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
 | **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
-| **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed.|
+| **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed. |
 | **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
 |  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
 |  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
@@ -8992,7 +8994,7 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 <div class="color-header redred">
 
 
-| You author ... | User code could ... |
+| You author | User code may possibly ... |
 |---------|---------|
 | `fn g<F: Fn()>(f: F) { ... }` | Unexpectedly panic. |
 | `struct S<X: T> { ... }` | Implement `T` badly, e.g., misuse `Deref`, ... |
@@ -9000,7 +9002,7 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 
 {{ tablesep() }}
 
-| Risk | Description |
+| Risk Pattern | Description |
 |---------|---------|
 | `#[repr(packed)]` |  Packed alignment can make reference `&s.x` invalid. |
 | `impl std::... for S {}`  | Any trait `impl`, esp. `std::ops` may be broken. In particular ... |
@@ -9013,6 +9015,15 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 | {{ tab() }} `impl Drop for S {}` | May run code or panic end of scope `{}`, during assignment `s = new_s`. |
 | `panic!()` | User code can panic _any_ time, doing abort, or unwind. |
 | <code>catch_unwind(&vert;&vert; s.f(panicky))</code> |  Also, caller might force observation of broken state in `s`.  |
+| `let ... = f();` | Variable name `...` affects order of `Drop` execution! <sup>1</sup> {{ bad() }}  |
+
+<footnotes>
+<sup>1</sup> Notably, when you rename a variable from, say, <code>_x</code> to <code>_</code> you will also change the Drop behavior of whatever was assigned to that variable. A variable named <code>_x</code> will have <code>Drop::drop()</code> executed at the end of scope, a variable named <code>_</code> will have it executed immediately on assignment!
+</footnotes>
+
+{{ tablesep() }}
+
+
 
 </div>
 
