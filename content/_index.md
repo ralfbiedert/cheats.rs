@@ -598,9 +598,9 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 |  `D => {}` | Match anything, bind `D`; possibly false friend {{ bad() }} of `E::D` if `D` not in `use`. |
 |  `_ => {}` | Proper wildcard that matches anything / "all the rest". |
 | <code>0 &vert; 1 => {}</code> | Pattern alternatives, **or-patterns**. {{ rfc( page ="2535-or-patterns.html") }}|
-| {{ tab() }}  <code>E::A &vert; E::Z </code> | Same, but on enum variants. |
-| {{ tab() }}  <code>E::C {x} &vert; E::D {x}</code> | Same, but bind `x` if all variants have it. |
-| {{ tab() }}  <code>Some(A &vert; B)</code> | Same, can also match alternatives deeply nested. |
+| {{ tab() }}  <code>E::A &vert; E::Z => {}</code> | Same, but on enum variants. |
+| {{ tab() }}  <code>E::C {x} &vert; E::D {x} => {}</code> | Same, but bind `x` if all variants have it. |
+| {{ tab() }}  <code>Some(A &vert; B) => {}</code> | Same, can also match alternatives deeply nested. |
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
 |  `[a, 0] => {}` | **Slice pattern**, {{ ref(page="patterns.html#slice-patterns") }} {{ link(url="https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html") }} match array with any value for `a` and `0` for second. |
 |  {{ tab() }} `[1, ..] => {}` | Match array starting with `1`, any value for rest; **subslice pattern**.  {{ todo() }} |
