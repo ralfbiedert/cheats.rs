@@ -3979,8 +3979,8 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
 </datum>
 
 <!-- NEW ENTRY -->
-<datum style="margin-right:70px;">
-    <name class="nogrow"><code>struct S; </code></name>
+<datum style="margin-right:70px; position: relative; width: 70px;">
+    <name class="nogrow"><code>struct S;</code></name>
     <name class="hidden"><code>;</code></name>
     <visual style="width: 15px;" class="zst">
         <code></code>
@@ -4240,7 +4240,7 @@ It can be the element- or byte-length of the target, or a pointer to a <i>vtable
 <br>
 
 <!-- NEW ENTRY -->
-<datum class="spaced" style="padding-bottom: 165px;">
+<datum class="spaced" style="padding-bottom: 165px; position: relative;">
     <name><code>&'a dyn Trait</code></name>
     <visual>
         <ptr>
@@ -8891,10 +8891,40 @@ Unsafe leads to unsound. Unsound leads to undefined. Undefined leads to the dark
 
 <tabs>
 
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-unsafe-0" name="tab-unsafe" checked>
+<label for="tab-unsafe-0"><b>Safe Code</b></label>
+<panel><div>
+
+
+**Safe Code**
+
+- _Safe_ has narrow meaning in Rust, vaguely 'the _intrinsic_ prevention of undefined behavior (UB)'.
+- Intrinsic means the language won't allow you to use _itself_ to cause UB.
+- Making an airplane crash or delete your database is still 'safe' from Rust's perspective.
+- Writing to `/proc/[pid]/mem` to self-modify your code causing UB is also 'safe'; resulting chaos not _intrinsinc_.
+
+<!-- In other words, _safe_ only means the language will produce binary code that, when reasonably invoked, executes in a manner consistent with what was written in source code. -->
+
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
+
+```rust
+let y = x + x;  // Safe Rust only guarantees the execution of this code is consistent with
+print(y);       // 'specification' (long story ...). It does not guarantee that y is 2x
+                // (`+` might be implemented badly) nor that y is printed (`+` may panic).
+```
+</div></div>
+
+
+</div></panel></tab>
+
+
 
 <!-- NEW TAB -->
 <tab>
-<input type="radio" id="tab-unsafe-1" name="tab-unsafe" checked>
+<input type="radio" id="tab-unsafe-1" name="tab-unsafe">
 <label for="tab-unsafe-1"><b>Unsafe Code</b></label>
 <panel><div>
 
@@ -9039,7 +9069,7 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 > - You must consider random code execution at unexpected places (e.g., re-assignments, scope end).
 > - You may still be observable after a worst-case panic.
 >
-> As a corollary, _safe_-but-deadly code (e.g., `set_airplane_speed()`) should probably also follow these guides.
+> As a corollary, _safe_-but-deadly code (e.g., `airplane_speed<T>()`) should probably also follow these guides.
 
 
 ## API Stability
