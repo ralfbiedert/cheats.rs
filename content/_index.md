@@ -317,8 +317,9 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | {{ tab() }} `x[..]` | Same, via range (here _full range_), also `x[a..b]`, `x[a..=b]`, ... _c_. below.  |
 | `a..b` | **Right-exclusive range** {{ std(page="std/ops/struct.Range.html") }} {{ ref(page="expressions/range-expr.html") }} creation, e.g., `1..3` means `1, 2`.  |
 | `..b` | Right-exclusive **range to** {{ std(page="std/ops/struct.RangeTo.html") }} without starting point.  |
+| `..=b` | **Inclusive range to** {{ std(page="std/ops/struct.RangeToInclusive.html") }} without starting point.  |
 | `a..=b` | **Inclusive range**, {{ std(page="std/ops/struct.RangeInclusive.html") }} `1..=3` means `1, 2, 3`. |
-| `..=b` | Inclusive **range from** {{ std(page="std/ops/struct.RangeFrom.html") }} without starting point.  |
+| `a..` | **Range from** {{ std(page="std/ops/struct.RangeFrom.html") }} without ending point.  |
 | `..` | **Full range**, {{ std(page="std/ops/struct.RangeFull.html") }} usually means _the whole collection_.   |
 | `s.x` | Named **field access**, {{ ref(page="expressions/field-expr.html") }} might try to [Deref](https://doc.rust-lang.org/std/ops/trait.Deref.html) if `x` not part of type `S`. |
 | `s.0` | Numbered field access, used for tuple types `S` &#8203;`(T)`. |
