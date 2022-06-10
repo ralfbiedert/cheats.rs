@@ -458,11 +458,11 @@ Segment projects into smaller units and minimize dependencies.
 | `mod m {}`  | Define a **module**, {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} get definition from inside `{}`. {{ below(target="#project-anatomy") }} |
 | `mod m;`  | Define a module, get definition from `m.rs` or `m/mod.rs`. {{ below(target="#project-anatomy") }}|
 | `a::b` | Namespace **path** {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, &hellip;). |
-| {{ tab() }} `::b` | Search `b` in **crates**. {{ edition(ed="'18") }} (Before: Search `b` relative to crate root. {{ deprecated() }}) |
-| {{ tab() }} `crate::b` | Search `b` relative to crate root. {{ edition(ed="'18") }} |
-| {{ tab() }} `self::b`  | Search `b` relative to current module. |
-| {{ tab() }} `super::b`  | Search `b` relative to parent module. |
-| `use a::b;`  | **Use** {{ ex(page="mod/use.html#the-use-declaration") }} {{ ref(page="items/use-declarations.html") }}  `b` directly in this scope without requiring `a` anymore. |
+| {{ tab() }} `::b` | Search `b` in **crate root** {{ edition(ed="'15") }} {{ ref(page="glossary.html#crate")}} or **external prelude** {{ edition(ed="'18") }} {{ ref(page="preludes.html#extern-prelude")}}; **global path**. {{ ref(page="paths.html#path-qualifiers")}} {{ deprecated() }}  |
+| {{ tab() }} `crate::b` | Search `b` in crate root. {{ edition(ed="'18") }} |
+| {{ tab() }} `self::b`  | Search `b` in current module. |
+| {{ tab() }} `super::b`  | Search `b` in parent module. |
+| `use a::b;`  | **Use** {{ ex(page="mod/use.html#the-use-declaration") }} {{ ref(page="items/use-declarations.html") }} `b` directly in this scope without requiring `a` anymore. |
 | `use a::{b, c};` | Same, but bring `b` and `c` into scope. |
 | `use a::b as x;`  | Bring `b` into scope but name `x`, like `use std::error::Error as E`. |
 | `use a::b as _;`  | Bring `b` anonymously into scope, useful for traits with conflicting names. |
