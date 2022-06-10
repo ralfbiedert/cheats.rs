@@ -8967,7 +8967,7 @@ unsafe fn unsafe_f(x: *mut u8) {
 
 ```rust
 if should_be_true() {
-   let r: &u8 = unsafe { &*ptr::null() };    // Once this runs, ENTIRE app is undefined. Even if
+    let r: &u8 = unsafe { &*ptr::null() };   // Once this runs, ENTIRE app is undefined. Even if
 } else {                                     // line seemingly didn't do anything, app might now run
     println!("the spanish inquisition");     // both paths, corrupt database, or anything else.
 }
