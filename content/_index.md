@@ -458,7 +458,7 @@ Segment projects into smaller units and minimize dependencies.
 | `mod m {}`  | Define a **module**, {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} get definition from inside `{}`. {{ below(target="#project-anatomy") }} |
 | `mod m;`  | Define a module, get definition from `m.rs` or `m/mod.rs`. {{ below(target="#project-anatomy") }}|
 | `a::b` | Namespace **path** {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, &hellip;). |
-| {{ tab() }} `::b` | Search `b` relative to crate root. {{ deprecated() }} |
+| {{ tab() }} `::b` | Search `b` in **crates**. {{ edition(ed="'18") }} (Before: Search `b` relative to crate root. {{ deprecated() }}) |
 | {{ tab() }} `crate::b` | Search `b` relative to crate root. {{ edition(ed="'18") }} |
 | {{ tab() }} `self::b`  | Search `b` relative to current module. |
 | {{ tab() }} `super::b`  | Search `b` relative to parent module. |
