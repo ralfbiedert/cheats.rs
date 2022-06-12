@@ -5366,7 +5366,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 
 | Element |  Meaning |
 |---------| ---------|
-| `argument` |  Number (`0`, `1`, ...), argument {{ edition(ed="'21") }} or name,{{ edition(ed="'18") }} e.g., `print!("{x}")`. |
+| `argument` |  Number (`0`, `1`, ...), variable {{ edition(ed="'21") }} or name,{{ edition(ed="'18") }} e.g., `print!("{x}")`. |
 | `fill` | The character to fill empty spaces with (e.g., `0`), if `width` is specified. |
 | `align` | Left (`<`), center (`^`), or right (`>`), if width is specified. |
 | `sign` | Can be `+` for sign to always be printed. |
@@ -5403,7 +5403,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 
 | Full Example | Explanation |
 |---------|-------------|
-| `println!("{}", x)` | Print `x` using `Display`{{ std(page="std/fmt/trait.Display.html") }} on std. out and append new line. {{ edition(ed="'15") }} |
+| `println!("{}", x)` | Print `x` using `Display`{{ std(page="std/fmt/trait.Display.html") }} on std. out and append new line. {{ edition(ed="'15") }} {{ deprecated() }} |
 | `println!("{x}")` | Same, but use variable `x` from scope. {{ edition(ed="'21") }}  |
 | `format!("{a:.3} {b:?}")` | Convert `PI` with 3 digits, add space, b with `Debug` {{ std(page="std/fmt/trait.Debug.html") }}, return `String`.  {{ edition(ed="'21") }} |
 
@@ -8720,7 +8720,7 @@ If you are familiar with async / await in C# or TypeScript, here are some things
 <sup>1</sup> Technically `async` transforms following code into anonymous, compiler-generated state machine type; `f()` instantiates that machine. <br>
 <sup>2</sup> The state machine always `impl Future`, possibly `Send` & co, depending on types used inside `async`. <br>
 <sup>3</sup> State machine driven by worker thread invoking `Future::poll()` via runtime directly, or parent `.await` indirectly. <br>
-<sup>4</sup> Rust doesn't come with runtime, need external crate instead, e.g., [async-std](https://github.com/async-rs/async-std) or [tokio 0.2+](https://crates.io/crates/tokio). Also, more helpers in [futures crate](https://github.com/rust-lang-nursery/futures-rs).
+<sup>4</sup> Rust doesn't come with runtime, need external crate instead, e.g., [tokio](https://crates.io/crates/tokio). Also, more helpers in [futures crate](https://github.com/rust-lang-nursery/futures-rs).
 
 </footnotes>
 
@@ -8902,8 +8902,8 @@ Unsafe leads to unsound. Unsound leads to undefined. Undefined leads to the dark
 
 - _Safe_ has narrow meaning in Rust, vaguely 'the _intrinsic_ prevention of undefined behavior (UB)'.
 - Intrinsic means the language won't allow you to use _itself_ to cause UB.
-- Making an airplane crash or delete your database is still 'safe' from Rust's perspective.
-- Writing to `/proc/[pid]/mem` to self-modify your code causing UB is also 'safe'; resulting chaos not _intrinsinc_.
+- Making an airplane crash or deleting your database is not UB, therefore 'safe' from Rust's perspective.
+- Writing to `/proc/[pid]/mem` to self-modify your code is also 'safe', resulting UB not caused _intrinsincally_.
 
 <!-- In other words, _safe_ only means the language will produce binary code that, when reasonably invoked, executes in a manner consistent with what was written in source code. -->
 
@@ -8913,7 +8913,7 @@ Unsafe leads to unsound. Unsound leads to undefined. Undefined leads to the dark
 ```rust
 let y = x + x;  // Safe Rust only guarantees the execution of this code is consistent with
 print(y);       // 'specification' (long story ...). It does not guarantee that y is 2x
-                // (`+` might be implemented badly) nor that y is printed (`+` may panic).
+                // (X::add might be implemented badly) nor that y is printed (Y::fmt may panic).
 ```
 </div></div>
 
@@ -8966,7 +8966,7 @@ unsafe fn unsafe_f(x: *mut u8) {
 
 
 ```rust
-if should_be_true() {
+if maybe_true() {
     let r: &u8 = unsafe { &*ptr::null() };   // Once this runs, ENTIRE app is undefined. Even if
 } else {                                     // line seemingly didn't do anything, app might now run
     println!("the spanish inquisition");     // both paths, corrupt database, or anything else.
@@ -9037,7 +9037,7 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 |---------|---------|
 | `#[repr(packed)]` |  Packed alignment can make reference `&s.x` invalid. |
 | `impl std::... for S {}`  | Any trait `impl`, esp. `std::ops` may be broken. In particular ... |
-| {{ tab() }} `impl Deref for S {}` | Wrapper may randomly `Deref`, e.g., `s.x != s.x`, or panic.  |
+| {{ tab() }} `impl Deref for S {}` | May randomly `Deref`, e.g., `s.x != s.x`, or panic.  |
 | {{ tab() }} `impl PartialEq for S {}` | May violate equality rules; panic.  |
 | {{ tab() }} `impl Eq for S {}`  | May cause `s != s`; panic; must not use `s` in `HashMap` & co. |
 | {{ tab() }} `impl Hash for S {}`  | May violate hashing rules; panic; must not use `s` in `HashMap` & co. |
@@ -9046,10 +9046,10 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 | {{ tab() }} `impl Drop for S {}` | May run code or panic end of scope `{}`, during assignment `s = new_s`. |
 | `panic!()` | User code can panic _any_ time, doing abort, or unwind. |
 | <code>catch_unwind(&vert;&vert; s.f(panicky))</code> |  Also, caller might force observation of broken state in `s`.  |
-| `let ... = f();` | Variable name `...` affects order of `Drop` execution! <sup>1</sup> {{ bad() }}  |
+| `let ... = f();` | Variable name affects order of `Drop` execution. <sup>1</sup> {{ bad() }}  |
 
 <footnotes>
-<sup>1</sup> Notably, when you rename a variable from, say, <code>_x</code> to <code>_</code> you will also change the Drop behavior of whatever was assigned to that variable. A variable named <code>_x</code> will have <code>Drop::drop()</code> executed at the end of scope, a variable named <code>_</code> will have it executed immediately on assignment!
+<sup>1</sup> Notably, when you rename a variable from <code>_x</code> to <code>_</code> you will also change the Drop behavior of whatever was assigned to that variable. A variable named <code>_x</code> will have <code>Drop::drop()</code> executed at the end of scope, a variable named <code>_</code> will have it executed immediately on assignment!
 </footnotes>
 
 {{ tablesep() }}

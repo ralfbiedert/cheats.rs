@@ -54,6 +54,7 @@ const subtitles = [
     "An amorphous guide to fractal complexity.",
     "Whenever I tell my octopus about Rust he gets all excited.",
     "Roses did rust 30M years before it was cool.",
+    "Blazingly fa... 🤚😣",
 ];
 
 
