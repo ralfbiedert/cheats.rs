@@ -99,7 +99,7 @@ Contains clickable links to
 * [Memory & Lifetimes](#memory-lifetimes)
 
 
-**Data Layout**
+**Memory Layout**
 * [Basic Types](#basic-types)
 * [Custom Types](#custom-types)
 * [References & Pointers](#references-pointers-ui)
@@ -3449,9 +3449,9 @@ let a = c;          // <- But here, no more use of `r` or `s`.
 ---
 
 
-# Data Layout
+# Memory Layout
 
-Memory representations of common data types.
+Byte representations of common types.
 
 
 ## Basic Types
@@ -4428,8 +4428,7 @@ Rust's standard library combines the above primitive types into useful types wit
 {{ tablesep() }}
 
 
-#### General Purpose Heap Storage
-
+#### Common Containers
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -4450,6 +4449,9 @@ Rust's standard library combines the above primitive types into useful types wit
     </memory-entry>
     <description>For some <code>T</code> stack proxy may carry <br>meta{{ above (target="#custom-types") }} (e.g., <code>Box<[T]></code>).</description>
 </datum>
+
+
+
 
 <spacer>
 </spacer>
@@ -4480,10 +4482,193 @@ Rust's standard library combines the above primitive types into useful types wit
             <capacity>← <note>capacity</note> →</capacity>
         </memory>
     </memory-entry>
+    <description>Regular <i>growable array</i> vector of single type.</description>
+</datum>
+
+<spacer>
+</spacer>
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>VecDeque&lt;T&gt;</code></name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual>
+        <sized>
+            <code>tail</code><sub>2/4/8</sub>
+        </sized>
+        <sized>
+            <code>head</code><sub>2/4/8</sub>
+        </sized>
+        <ptr>
+           <code>ptr</code><sub>2/4/8</sub>
+        </ptr>
+        <sized>
+            <code>capacity</code><sub>2/4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry></memory-entry>
+    <memory-entry></memory-entry>
+    <memory-entry class="double">
+        <memory-link style="left:25%;">|</memory-link>
+        <memory class="heap capacity">
+            <div>
+                <!-- <framed class="any t"><code>T<sub>x</sub></code></framed> -->
+                <framed class="any t"><code>T<sup>T</sup></code></framed>
+                <!-- <framed class="any t"><code>T</code></framed> -->
+                <note>... empty ...</note>
+                <framed class="any t"><code>T<sup>H</sup></code></framed>
+            </div>
+            <capacity>← <note>capacity</note> →</capacity>
+        </memory>
+    </memory-entry>
+    <description>Index <code>tail</code> and <code>head</code> select in array-as-ringbuffer. This means content<br>may be non-contiguous and empty in the middle, as exemplified above.</description>
+</datum>
+
+
+
+#### Maps & Sets
+
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>HashMap&lt;K, V&gt;</code></name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual>
+        <sized>
+            <code>bmask</code><sub>2/4/8</sub>
+        </sized>
+        <ptr>
+           <code>ctrl</code><sub>2/4/8</sub>
+        </ptr>
+        <sized>
+            <code>left</code><sub>2/4/8</sub>
+        </sized>
+        <sized>
+            <code>len</code><sub>2/4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry></memory-entry>
+    <memory-entry style="width: 265px; left:-5%">
+        <memory-link style="left:25%;">|</memory-link>
+        <memory class="heap oversimplified">
+            <framed class="any t"><code>KV</code></framed>
+            <framed class="any t"><code>KV</code></framed>
+            ...
+            <framed class="any t"><code>KV</code></framed>
+            ...
+            <framed class="any t"><code>KV</code></framed>
+            <capacity><note style="font-weight: bolder;">Oversimplified!</note></capacity>
+        </memory>
+    </memory-entry>
+    <description>Stores keys and values on heap according to hash value, <a href="https://www.youtube.com/watch?v=ncHmEUmJZf4">SwissTable</a> <br> implementation via <a href="https://github.com/rust-lang/hashbrown">hashbrown</a>. Heap view grossly oversimplified. {{bad()}} </description>
+</datum>
+
+
+<spacer>
+</spacer>
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>HashSet&lt;K&gt;</code></name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual>
+        <sized>
+            <code>bmask</code><sub>2/4/8</sub>
+        </sized>
+        <ptr>
+           <code>ctrl</code><sub>2/4/8</sub>
+        </ptr>
+        <sized>
+            <code>left</code><sub>2/4/8</sub>
+        </sized>
+        <sized>
+            <code>len</code><sub>2/4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry></memory-entry>
+    <memory-entry style="width: 265px; left:-5%">
+        <memory-link style="left:25%;">|</memory-link>
+        <memory class="heap oversimplified">
+            <framed class="any t"><code>K</code></framed>
+            <framed class="any t"><code>K</code></framed>
+            ...
+            <framed class="any t"><code>K</code></framed>
+            ...
+            <framed class="any t"><code>K</code></framed>
+            <capacity><note style="font-weight: bolder;">Oversimplified!</note></capacity>
+        </memory>
+    </memory-entry>
+    <description><code>HashSet</code> identical to <code>HashMap</code>, just type <code>V</code> disappears.</description>
 </datum>
 
 
 {{ tablesep() }}
+
+#### Misc
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>BinaryHeap&lt;T&gt;</code></name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>2/4/8</sub>
+        </ptr>
+        <sized>
+            <code>capacity</code><sub>2/4/8</sub>
+        </sized>
+        <sized>
+            <code>len</code><sub>2/4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry class="double">
+        <memory-link style="left:25%;">|</memory-link>
+        <memory class="heap capacity">
+            <div>
+                <framed class="any t"><code>T<sup style="color:black; font-weight: bolder;">+</sup></code></framed>
+                <framed class="any t"><code>T</code></framed>
+                <note>... len</note>
+            </div>
+            <capacity>← <note>capacity</note> →</capacity>
+        </memory>
+    </memory-entry>
+    <description>Keeps max element in front.</description>
+</datum>
+
+<spacer>
+</spacer>
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>LinkedList&lt;T&gt;</code></name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual>
+        <ptr>
+           <code>head</code><sub>2/4/8</sub>
+        </ptr>
+        <ptr>
+           <code>tail</code><sub>2/4/8</sub>
+        </ptr>
+        <sized>
+            <code>len</code><sub>2/4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry style="width: 265px; left:0%; display: block;">
+        <memory-link style="left:25%;">|</memory-link>
+        <memory-link style="left:50%;">|</memory-link>
+        <memory class="heap capacity">
+            <ptr>
+            <code>next</code><sub>2/4/8</sub>
+            </ptr>
+            <ptr>
+            <code>prev</code><sub>2/4/8</sub>
+            </ptr>
+            <framed class="any t"><code>T</code></framed>
+        </memory>
+    </memory-entry>
+    <description>Elements <code>head</code> and <code>tail</code> both <code>null</code> or point to nodes on<br> the heap. Each node can point to its <code>prev</code> and <code>next</code> node.</description>
+</datum>
 
 
 #### Owned Strings

@@ -180,6 +180,10 @@ datum {
             background-color: #c6dbe7;
         }
 
+        memory.oversimplified {
+            background-color: #fcc397;
+        }
+
         memory.anymem {
             background-color: rgb(253, 236, 220);
         }
@@ -247,7 +251,7 @@ datum {
         // left:-40px;
     }
 
-    memory-entry.quad {
+     memory-entry.quad {
         width: 300px;
         left:0px;
     }
@@ -471,6 +475,7 @@ datum.spaced {
     note {
         color: black;
     }
+
 
     zoom {
         background-color: #222;
@@ -1095,6 +1100,7 @@ mini-zoo {
         display: inline-block;
         margin-top: 2px;
     }
+
 
     narrow-entry {
         display: inline-block;
