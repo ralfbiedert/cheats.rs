@@ -389,7 +389,7 @@ Define units of code and their abstractions.
 | `impl !T for S {}` | Disable an automatically derived **auto trait**. {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }} {{ experimental() }} {{ esoteric() }} |
 | `fn f() {}`  | Definition of a **function**; {{ book(page="ch03-03-how-functions-work.html") }}  {{ ex(page="fn.html") }} {{ ref(page="items/functions.html") }} or associated function if inside `impl`. |
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
-| {{ tab() }} `fn f(&self) {}`  | Define a **method**, {{ book(page="ch05-03-method-syntax.html") }}  {{ ex(page="fn/methods.html") }} e.g., within an `impl S {}`. |
+| {{ tab() }} `fn f(&self) {}`  | Define a **method**, {{ book(page="ch05-03-method-syntax.html") }}  {{ ex(page="fn/methods.html") }}  {{ ref(page="items/associated-items.html#methods") }}  e.g., within an `impl S {}`. |
 | `struct S` &#8203;`(T);` | More arcanely, _also_{{ above(target="#data-structures") }} defines `fn S(x: T) -> S` **constructor function**.  {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} {{ esoteric() }} |
 | `const fn f() {}`  | Constant `fn` usable at compile time, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
 | `async fn f() {}`  | **Async**  {{ ref(page="items/functions.html#async-functions") }} {{ edition(ed="'18") }} function transformation, {{ below(target="#async-await-101") }} makes `f` return an `impl` **`Future`**. {{ std(page="std/future/trait.Future.html") }} |
@@ -534,15 +534,20 @@ Code generation constructs expanded before the actual compilation happens.
 
 | Inside Macros |  Explanation |
 |---------|---------|
-| `$x:ty`  | Macro capture (here a type); see **tooling directives** {{ below(target="#tooling-directives") }} for details. |
+| `$x:ty`  | Macro capture, the `:...` **fragment** {{ ref(page="macros-by-example.html#metavariables") }} declares what is allowed for `$x`. <sup>1</sup> |
 | `$x` |  Macro substitution, e.g., use the captured `$x:ty` from above. |
-| `$(x),*` | Macro repetition "zero or more times" in macros by example. |
-| {{ tab() }} `$(x),?` | Same, but "zero or one time". |
-| {{ tab() }} `$(x),+` | Same, but "one or more times". |
+| `$(x),*` | Macro **repetition** {{ ref(page="macros-by-example.html#repetitions") }} _zero or more times_ in macros by example. |
+| {{ tab() }} `$(x),?` | Same, but _zero or one time_. |
+| {{ tab() }} `$(x),+` | Same, but _one or more times_. |
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
 
-
 </fixed-2-column>
+
+<footnotes>
+
+<sup>1</sup> See [Tooling Directives](#tooling-directives) below for all captures.
+
+</footnotes>
 
 
 
@@ -4428,7 +4433,7 @@ Rust's standard library combines the above primitive types into useful types wit
 {{ tablesep() }}
 
 
-#### Common Containers
+#### Order-Preserving Collections
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -4449,9 +4454,6 @@ Rust's standard library combines the above primitive types into useful types wit
     </memory-entry>
     <description>For some <code>T</code> stack proxy may carry <br>meta{{ above (target="#custom-types") }} (e.g., <code>Box<[T]></code>).</description>
 </datum>
-
-
-
 
 <spacer>
 </spacer>
@@ -4488,160 +4490,10 @@ Rust's standard library combines the above primitive types into useful types wit
 <spacer>
 </spacer>
 
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>VecDeque&lt;T&gt;</code></name>
-    <!-- For some reason we need the width for mobile not to line break -->
-    <visual>
-        <sized>
-            <code>tail</code><sub>2/4/8</sub>
-        </sized>
-        <sized>
-            <code>head</code><sub>2/4/8</sub>
-        </sized>
-        <ptr>
-           <code>ptr</code><sub>2/4/8</sub>
-        </ptr>
-        <sized>
-            <code>capacity</code><sub>2/4/8</sub>
-        </sized>
-    </visual>
-    <memory-entry></memory-entry>
-    <memory-entry></memory-entry>
-    <memory-entry class="double">
-        <memory-link style="left:25%;">|</memory-link>
-        <memory class="heap capacity">
-            <div>
-                <!-- <framed class="any t"><code>T<sub>x</sub></code></framed> -->
-                <framed class="any t"><code>T<sup>T</sup></code></framed>
-                <!-- <framed class="any t"><code>T</code></framed> -->
-                <note>... empty ...</note>
-                <framed class="any t"><code>T<sup>H</sup></code></framed>
-            </div>
-            <capacity>← <note>capacity</note> →</capacity>
-        </memory>
-    </memory-entry>
-    <description>Index <code>tail</code> and <code>head</code> select in array-as-ringbuffer. This means content<br>may be non-contiguous and empty in the middle, as exemplified above.</description>
-</datum>
-
-
-
-#### Maps & Sets
-
-
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>HashMap&lt;K, V&gt;</code></name>
-    <!-- For some reason we need the width for mobile not to line break -->
-    <visual>
-        <sized>
-            <code>bmask</code><sub>2/4/8</sub>
-        </sized>
-        <ptr>
-           <code>ctrl</code><sub>2/4/8</sub>
-        </ptr>
-        <sized>
-            <code>left</code><sub>2/4/8</sub>
-        </sized>
-        <sized>
-            <code>len</code><sub>2/4/8</sub>
-        </sized>
-    </visual>
-    <memory-entry></memory-entry>
-    <memory-entry style="width: 265px; left:-5%">
-        <memory-link style="left:25%;">|</memory-link>
-        <memory class="heap oversimplified">
-            <framed class="any t"><code>KV</code></framed>
-            <framed class="any t"><code>KV</code></framed>
-            ...
-            <framed class="any t"><code>KV</code></framed>
-            ...
-            <framed class="any t"><code>KV</code></framed>
-            <capacity><note style="font-weight: bolder;">Oversimplified!</note></capacity>
-        </memory>
-    </memory-entry>
-    <description>Stores keys and values on heap according to hash value, <a href="https://www.youtube.com/watch?v=ncHmEUmJZf4">SwissTable</a> <br> implementation via <a href="https://github.com/rust-lang/hashbrown">hashbrown</a>. Heap view grossly oversimplified. {{bad()}} </description>
-</datum>
-
-
-<spacer>
-</spacer>
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>HashSet&lt;K&gt;</code></name>
-    <!-- For some reason we need the width for mobile not to line break -->
-    <visual>
-        <sized>
-            <code>bmask</code><sub>2/4/8</sub>
-        </sized>
-        <ptr>
-           <code>ctrl</code><sub>2/4/8</sub>
-        </ptr>
-        <sized>
-            <code>left</code><sub>2/4/8</sub>
-        </sized>
-        <sized>
-            <code>len</code><sub>2/4/8</sub>
-        </sized>
-    </visual>
-    <memory-entry></memory-entry>
-    <memory-entry style="width: 265px; left:-5%">
-        <memory-link style="left:25%;">|</memory-link>
-        <memory class="heap oversimplified">
-            <framed class="any t"><code>K</code></framed>
-            <framed class="any t"><code>K</code></framed>
-            ...
-            <framed class="any t"><code>K</code></framed>
-            ...
-            <framed class="any t"><code>K</code></framed>
-            <capacity><note style="font-weight: bolder;">Oversimplified!</note></capacity>
-        </memory>
-    </memory-entry>
-    <description><code>HashSet</code> identical to <code>HashMap</code>, just type <code>V</code> disappears.</description>
-</datum>
-
-
-{{ tablesep() }}
-
-#### Misc
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>BinaryHeap&lt;T&gt;</code></name>
-    <!-- For some reason we need the width for mobile not to line break -->
-    <visual>
-        <ptr>
-           <code>ptr</code><sub>2/4/8</sub>
-        </ptr>
-        <sized>
-            <code>capacity</code><sub>2/4/8</sub>
-        </sized>
-        <sized>
-            <code>len</code><sub>2/4/8</sub>
-        </sized>
-    </visual>
-    <memory-entry class="double">
-        <memory-link style="left:25%;">|</memory-link>
-        <memory class="heap capacity">
-            <div>
-                <framed class="any t"><code>T<sup style="color:black; font-weight: bolder;">+</sup></code></framed>
-                <framed class="any t"><code>T</code></framed>
-                <note>... len</note>
-            </div>
-            <capacity>← <note>capacity</note> →</capacity>
-        </memory>
-    </memory-entry>
-    <description>Keeps max element in front.</description>
-</datum>
-
-<spacer>
-</spacer>
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>LinkedList&lt;T&gt;</code></name>
+    <name><code>LinkedList&lt;T&gt;</code> {{ esoteric() }} </name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <ptr>
@@ -4667,8 +4519,131 @@ Rust's standard library combines the above primitive types into useful types wit
             <framed class="any t"><code>T</code></framed>
         </memory>
     </memory-entry>
-    <description>Elements <code>head</code> and <code>tail</code> both <code>null</code> or point to nodes on<br> the heap. Each node can point to its <code>prev</code> and <code>next</code> node.</description>
+    <description>Elements <code>head</code> and <code>tail</code> both <code>null</code> or point to nodes on<br> the heap. Each node can point to its <code>prev</code> and <code>next</code> node.<br>Eats your cache like no tomorrow (just look at the thing!);<br>don't use unless you evidently must. {{ bad() }} </description>
 </datum>
+
+
+
+<spacer>
+</spacer>
+
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>VecDeque&lt;T&gt;</code></name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual>
+        <sized>
+            <code>tail</code><sub>2/4/8</sub>
+        </sized>
+        <sized>
+            <code>head</code><sub>2/4/8</sub>
+        </sized>
+        <ptr>
+           <code>ptr</code><sub>2/4/8</sub>
+        </ptr>
+        <sized>
+            <code>capacity</code><sub>2/4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry></memory-entry>
+    <memory-entry></memory-entry>
+    <memory-entry class="double">
+        <memory-link style="left:25%;">|</memory-link>
+        <memory class="heap capacity">
+            <div>
+                <!-- <framed class="any t"><code>T<sub>x</sub></code></framed> -->
+                <framed class="any t"><code>T&#x2063;<sup>T</sup></code></framed>
+                <!-- <framed class="any t"><code>T</code></framed> -->
+                <note>... empty ...</note>
+                <framed class="any t"><code>T&#x2063;<sup>H</sup></code></framed>
+            </div>
+            <capacity>← <note>capacity</note> →</capacity>
+        </memory>
+    </memory-entry>
+    <description>Index <code>tail</code> and <code>head</code> select in array-as-ringbuffer. This means content<br>may be non-contiguous and empty in the middle, as exemplified above.</description>
+</datum>
+
+
+
+{{ tablesep() }}
+
+#### Other Collections
+
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>HashMap&lt;K, V&gt;</code></name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual>
+        <sized>
+            <code>bmask</code><sub>2/4/8</sub>
+        </sized>
+        <ptr>
+           <code>ctrl</code><sub>2/4/8</sub>
+        </ptr>
+        <sized>
+            <code>left</code><sub>2/4/8</sub>
+        </sized>
+        <sized>
+            <code>len</code><sub>2/4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry></memory-entry>
+    <memory-entry style="width: 265px; left:-5%">
+        <memory-link style="left:25%;">|</memory-link>
+        <memory class="heap oversimplified">
+            <framed class="any t"><code>K:V</code></framed>
+            <framed class="any t"><code>K:V</code></framed>
+            ...
+            <framed class="any t"><code>K:V</code></framed>
+            ...
+            <framed class="any t"><code>K:V</code></framed>
+            <capacity><note style="font-weight: bolder;">Oversimplified!</note></capacity>
+        </memory>
+    </memory-entry>
+    <description>Stores keys and values on heap according to hash value, <a href="https://www.youtube.com/watch?v=ncHmEUmJZf4">SwissTable</a> <br> implementation via <a href="https://github.com/rust-lang/hashbrown">hashbrown</a>. <code>HashSet</code> identical to <code>HashMap</code>, <br>just type <code>V</code> disappears. Heap view grossly oversimplified. {{bad()}} </description>
+</datum>
+
+
+<spacer>
+</spacer>
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>BinaryHeap&lt;T&gt;</code></name>
+    <!-- For some reason we need the width for mobile not to line break -->
+    <visual>
+        <ptr>
+           <code>ptr</code><sub>2/4/8</sub>
+        </ptr>
+        <sized>
+            <code>capacity</code><sub>2/4/8</sub>
+        </sized>
+        <sized>
+            <code>len</code><sub>2/4/8</sub>
+        </sized>
+    </visual>
+    <memory-entry style="width: 265px">
+        <memory-link style="left:20%;">|</memory-link>
+        <memory class="heap capacity">
+            <div>
+                <framed class="any t"><code>T&#x2063;<sup style="color:black; font-weight: bolder;">0</sup></code></framed>
+                <framed class="any t" style="background-color: #f9b172;"><code>T&#x2063;<sup style="color:black; font-weight: bolder;">1</sup></code></framed>
+                <framed class="any t" style="background-color: #f9b172;"><code>T&#x2063;<sup style="color:black; font-weight: bolder;">1</sup></code></framed>
+                <framed class="any t" style="background-color: #f9d372;"><code>T&#x2063;<sup style="color:black; font-weight: bolder;">2</sup></code></framed>
+                <framed class="any t" style="background-color: #f9d372;"><code>T&#x2063;<sup style="color:black; font-weight: bolder;">2</sup></code></framed>
+                <note>... len</note>
+            </div>
+            <capacity>← <note>capacity</note> →</capacity>
+        </memory>
+    </memory-entry>
+    <description>Heap stored as array with <code>2<sup>N</sup></code> elements per layer. Each <code>T</code> <br>
+    can have 2 children in layer below. Each <code>T</code> larger than its<br>
+    children.</description>
+</datum>
+
 
 
 #### Owned Strings
