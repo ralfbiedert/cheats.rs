@@ -29,14 +29,7 @@ const subtitles = [
     "May contain R-rated content.",
     "Turned out the Señor Developer job wasn't much of a pay bump.",
     "Testing Bekenstein's limit one entry a time.",
-    "The 7 naughty words you're not allowed to say on television:",
-    ["Undefined.", false],
-    ["Runtime.", false],
-    ["Inheritance.", false],
-    ["Globals.", false],
-    ["Unwrap.", false],
-    ["Allocation.", false],
-    ["RIIR ... (JK, we all just pretend we don't like that one.)", false],
+    "Seven new dirty words: Undefined, runtime, inheritance, globals, unwrap, allocation, RIIR (jk on that one).",
     "After Rust, learning German will be <i>so</i> much easier.",
     "Night mode is dark and full of errors.",
     "^Z^Z^Z^Z^X^quit:help! ... how do I exit this thing?.",
@@ -55,6 +48,8 @@ const subtitles = [
     "Whenever I tell my octopus about Rust he gets all excited.",
     "Roses did rust 30M years before it was cool.",
     "Blazingly fa... 🤚😣",
+    "'This sheet really ties the room together' &mdash; J. Lebowski",
+    "Programming Rust be like <i>'Computer says no ...'</i>",
 ];
 
 
