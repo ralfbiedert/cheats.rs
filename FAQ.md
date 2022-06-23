@@ -40,7 +40,7 @@ In other words, the pentagram is the Rust of summoning circles.
 
 ### Why no visualizations for HashMap, BinaryHeap, ...?
 
-They are messy to compose and their internals are unspecified. In contrast, `Box` and `Vec` are relatively well defined or at least simple. I might accept PRs, but there is a good chance for that PR to be complex and outdated soon.
+~~They are messy to compose and their internals are unspecified. In contrast, `Box` and `Vec` are relatively well defined or at least simple. I might accept PRs, but there is a good chance for that PR to be complex and outdated soon.~~ (This has been done in d653f0f)
 
 
 ### I sent a message earlier, why didn't you fix ... ?
