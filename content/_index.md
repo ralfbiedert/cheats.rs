@@ -4880,6 +4880,7 @@ PRs for this section are very welcome. Idea is:
 | Intent | Snippet |
 |---------|-------------|
 | Concatenate strings (any `Display`{{ below(target="#string-output") }} that is). <sup>1</sup>  {{ edition(ed="'21") }} | `format!("{x}{y}")` |
+| {{ tab() }} ... if `x` impls `fmt::Write` or `io::Write` | `write!(x, "{y}")` |
 | Split by separator pattern. {{ std(page="std/str/pattern/trait.Pattern.html") }} {{ link(url="https://stackoverflow.com/a/38138985") }} | `s.split(pattern)` |
 | {{ tab() }} ... with `&str` | `s.split("abc")` |
 | {{ tab() }} ... with `char` | `s.split('/')` |
@@ -4890,7 +4891,7 @@ PRs for this section are very welcome. Idea is:
 
 <footnotes>
 
-<sup>1</sup> Allocates; might not be fastest solution if `x` is `String` already.<br>
+<sup>1</sup> Allocates; if `x` implements `Write` then use the `write!` macro.<br>
 <sup>2</sup> Requires [regex](https://crates.io/crates/regex) crate.
 
 </footnotes>
