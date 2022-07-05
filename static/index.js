@@ -50,6 +50,7 @@ const subtitles = [
     "Blazingly fa... 🤚😣",
     "'This sheet really ties the room together' &mdash; J. Lebowski",
     "Programming Rust be like <i>'Computer says no ...'</i>",
+    "Did you know, the Eiffel Tower is slowly rewritten in rust?",
 ];
 
 

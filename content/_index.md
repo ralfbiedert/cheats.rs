@@ -4880,7 +4880,7 @@ PRs for this section are very welcome. Idea is:
 | Intent | Snippet |
 |---------|-------------|
 | Concatenate strings (any `Display`{{ below(target="#string-output") }} that is). <sup>1</sup>  {{ edition(ed="'21") }} | `format!("{x}{y}")` |
-| Append any `Display` to any `fmt::Write` or `io::Write`.  {{ edition(ed="'21") }} | `write!(x, "{y}")` |
+| Append string (any `Display` to any `Write`).  {{ edition(ed="'21") }} | `write!(x, "{y}")` |
 | Split by separator pattern. {{ std(page="std/str/pattern/trait.Pattern.html") }} {{ link(url="https://stackoverflow.com/a/38138985") }} | `s.split(pattern)` |
 | {{ tab() }} ... with `&str` | `s.split("abc")` |
 | {{ tab() }} ... with `char` | `s.split('/')` |
