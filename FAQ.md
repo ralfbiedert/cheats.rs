@@ -9,6 +9,19 @@ zola build --base-url="$PWD/public/index.html" --output-dir="$PWD/public"
 ```
 
 
+### I just formatted my drive, how do I run `deploy.sh`?
+
+On Windows:
+- Install Git, add all Unix tools (esp. `bash`) to PATH
+- In 'Environment Variables', bump Git PATH above Windows `C:\windows\system32` PATH
+- Install Node
+- `npm install -g posthtml-cli`
+- `npm install -g posthtml-img-autosize`
+- `npm install -g posthtml-inline-assets`
+- `npm install -g htmlnano`
+
+
+
 ### How do I upgrade Prism?
 
 - Visit https://prismjs.com/download.html
