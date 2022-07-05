@@ -191,7 +191,7 @@ fn main() {
 - Can [avoid 70% of all safety issues](https://www.chromium.org/Home/chromium-security/memory-safety) present in C / C++, and most memory issues.
 - Strong type system prevents [data races](https://doc.rust-lang.org/nomicon/races.html), brings ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others).
 - Seamless C interop, and [dozens of supported platforms](https://doc.rust-lang.org/rustc/platform-support.html) (based on LLVM).
-- ["Most loved language"](https://survey.stackoverflow.co/2022/#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages=) for <strike>4</strike> <strike>5</strike> <strike>6</strike> 7 years in a row. 🤷‍♀️
+- ["Most loved language"](https://survey.stackoverflow.co/2022/#section-most-loved-dreaded-and-wanted-programming-scripting-and-markup-languages) for <strike>4</strike> <strike>5</strike> <strike>6</strike> 7 years in a row. 🤷‍♀️
 - Modern tooling: `cargo` (builds _just work_), `clippy` (550+ code quality lints), `rustup` (easy toolchain mgmt).
 
 </div></panel></tab>
