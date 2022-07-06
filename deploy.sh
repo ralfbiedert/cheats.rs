@@ -33,8 +33,7 @@ rm -rf "$FOLDER_DIST"; mkdir "$FOLDER_DIST";
 
 zola -c "$TOML_BASE" check || abort
 zola -c "$TOML_BASE" build || abort
-npm run posthtml_1 || abort  # This is absolutely terrible but apparently the asset inliner we use
-npm run posthtml_2 || abort  # is unable to handle multiple files with different paths gracefully ...
+npm run posthtml || abort  # Cleanup and minify output
 
 # Update deployment date in sitemap.xml
 sed -i -e "s/_NOW_SITEMAP_/$NOW_SITEMAP/g" "$FOLDER_PREP/sitemap.xml"
