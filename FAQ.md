@@ -14,11 +14,9 @@ zola build --base-url="$PWD/public/index.html" --output-dir="$PWD/public"
 On Windows:
 - Install Git, add all Unix tools (esp. `bash`) to PATH
 - In 'Environment Variables', bump Git PATH above Windows `C:\windows\system32` PATH
+- Install Zola
 - Install Node
-- `npm install -g posthtml-cli`
-- `npm install -g posthtml-img-autosize`
-- `npm install -g posthtml-inline-assets`
-- `npm install -g htmlnano`
+- `npm install`
 
 
 
