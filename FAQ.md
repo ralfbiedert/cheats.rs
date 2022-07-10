@@ -83,3 +83,19 @@ Maybe. The current policy is not set in stone but is vaguely:
 
 - To add items to an existing list the entry should be high quality and the list shouldn't grow too long.
 - To add a specific link somewhere else it should be _the best of its kind_ for that purpose.
+
+
+
+### Am I allowed to translate the page? 
+
+Yes, just go ahead. You do not need to ask for extra permission and there are no _special_ requirements. However, I would kindly ask you to [respect what is written here](cheats.rs/legal). The easiest way of doing that is 
+
+- Change the page footer to something like:
+    ```
+    Translated and hosted by XXX
+    
+    based on cheats.rs - Ralf Biedert, 20xx
+    ```
+- If you keep the "Legal & Privacy" page remove my name from the "Operator" section and adjust the "Hosting" section. If you don't keep the page you should find another way to display the copyright, and give credit to the used 3rd party assets. 
+
+Of course, many other ways are possible. If anything is unclear just get in touch. 
