@@ -1,7 +1,7 @@
 {
   "name": "cheats.rs",
   "scripts": {
-    "posthtml": "cd public && posthtml '**/*.html' -c ../.posthtmlrc && node ../util/postprocess.js"
+    "posthtml": "cd public && posthtml -c ../.posthtmlrc && node ../util/postprocess.js"
   },
   "private": true,
   "dependencies": {
