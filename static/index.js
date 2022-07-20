@@ -198,7 +198,11 @@ function toggle_expand_all() {
         }
 
         storage_set("expand_everything", "true");
-        toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";
+
+        if (toggle_button != null) {
+            toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";            
+        }
+
         all_tabs_expanded = true;
     } else {
         //
@@ -246,7 +250,11 @@ function toggle_expand_all() {
         }
 
         storage_set("expand_everything", "false");
-        toggle_button.innerHTML = "Expand all the things?";
+
+        if (toggle_button != null) {
+            toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";            
+        }
+        
         all_tabs_expanded = false;
     }
 
