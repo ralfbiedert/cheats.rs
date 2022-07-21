@@ -15,7 +15,7 @@ Use cases, in order of priority:
 
 # Building
 
-Built with [Zola](https://www.getzola.org/), the static site generator written in Rust. To develop locally install Zola, then run:
+Built with [Zola](https://www.getzola.org/), the static site generator written in Rust. See [`.zolaversion`](.zolaversion) for the exact version the official site was deployed with. To develop locally download the indicated version, then run:
 
 ```
 zola serve
@@ -47,6 +47,11 @@ Also:
 * steffahn from users.rust-lang.org (for outstanding explanations)
 
 
+# FAQ
+
+Answers to frequently asked questions can [be found here](FAQ.md).
+
+
 # Legal & License
 
-Please see [here](content/legal.md) for details.
+Please [see here](content/legal.md) for details.

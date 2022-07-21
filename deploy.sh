@@ -3,6 +3,7 @@
 # Poor man's deploy script in lack of better infrastructure.
 #
 
+ZOLA=zola_14
 TOML_BASE=config.toml
 
 FOLDER_PREP=public       # Zola output folder
@@ -31,9 +32,12 @@ function abort() {
 rm -rf "$FOLDER_PREP"; mkdir "$FOLDER_PREP";
 rm -rf "$FOLDER_DIST"; mkdir "$FOLDER_DIST";
 
-zola -c "$TOML_BASE" check || abort
-zola -c "$TOML_BASE" build || abort
+$ZOLA -c "$TOML_BASE" check || abort
+$ZOLA -c "$TOML_BASE" build || abort
 npm run posthtml || abort  # Cleanup and minify output
+
+# Write used zola version to help others reproduce builds
+$ZOLA --version >.zolaversion
 
 # Update deployment date in sitemap.xml
 sed -i -e "s/_NOW_SITEMAP_/$NOW_SITEMAP/g" "$FOLDER_PREP/sitemap.xml"
