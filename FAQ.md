@@ -103,7 +103,7 @@ Maybe. The current policy is not set in stone but is vaguely:
 
 ### Am I allowed to translate the page? 
 
-Yes, just go ahead. You do not need to ask for extra permission and there are no _special_ requirements. However, I would kindly ask you to [respect what is written here](cheats.rs/legal). The easiest way of doing that is 
+Yes, just go ahead. You do not need to ask for extra permission and there are no _special_ requirements. However, I would kindly ask you to [respect what is written here](https://cheats.rs/legal). The easiest way of doing that is 
 
 - Change the page footer to something like:
     ```
