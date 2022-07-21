@@ -9,6 +9,21 @@ zola build --base-url="$PWD/public/index.html" --output-dir="$PWD/public"
 ```
 
 
+### How can I see what the deployed version is?
+
+Click the date / subtitle line, it will give you the Git hash of the currently deployed version. 
+
+![build hash](/gfx/faq_build_hash.png)
+
+
+### What do all the symbols mean?
+
+There is a small `+` in the blue box, clicking that should give a more comprehensive legend. 
+
+![legend](/gfx/faq_legend.png)
+
+
+
 ### I just formatted my drive, how do I run `deploy.sh`?
 
 On Windows:
