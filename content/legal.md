@@ -15,7 +15,7 @@ This _Hosting_ section **only** applies to the site [**cheats.rs**](https://chea
 
 <!-- NOTICE - THIS SECTION IS NOT COVERED BY CC- OR ANY OTHER LICENSE -->
 
-Ralf Biedert <sup><a href="mailto:webmaster@cheats.rs">📧</a></sup> <sup><a href="https://xr.io">🔗</a></sup>
+Ralf Biedert (<a href="mailto:webmaster@cheats.rs">mail</a>, <a href="https://xr.io">web</a>)
 
 <!-- END NOTICE -->
 
@@ -90,7 +90,7 @@ Feel free to use [**this issue tracker**](https://github.com/ralfbiedert/cheats.
 
 ## Trademark Information
 
-This work refers to trademarked products. In particular the "Rust" and "Cargo" names and logos are trademarks of the [**Mozilla Foundation**](https://foundation.mozilla.org/) and may only be used according to their trademark policy.
+This work refers to trademarked products. In particular the "Rust" and "Cargo" names and logos are trademarks of the [**Rust Foundation**](https://foundation.rust-lang.org/policies/logo-policy-and-media-guide/) and may only be used according to their trademark policy.
 
 
 
