@@ -3562,7 +3562,7 @@ let rval = f3lr(&mut &*ra);
 //  rval = f3lm(&mut &*ra);   //                    "
 //  rval = f4lm(&mut ra);     // Same as above, fails for aliasing reasons.
 
-// Some fictions place where we use `ra` and `rval`, both alive.
+// Some fictitious place where we use `ra` and `rval`, both alive.
 compute(ra, rval);
 ```
 
