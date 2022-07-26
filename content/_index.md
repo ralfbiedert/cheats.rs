@@ -3434,6 +3434,157 @@ let a = c;          // <- But here, no more use of `r` or `s`.
 </lifetime-section>
 
 </div></panel></tab>
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-lt-12" name="tab-lt">
+<label for="tab-lt-12"><b>Advanced {{ esoteric() }}</b></label>
+<panel>
+<div>
+
+
+<lifetime-section>
+<lifetime-example>
+    <memory-row>
+        <arrows>
+            <arrow style="left: 53px; width: 92px;">&nbsp;<tip>▼</tip></arrow>
+            <arrow style="left: 57px; width: 104px;">&nbsp;<tip>▼</tip></arrow>
+            <arrow style="left: -155px; width: 320px; top: -5px; border-style: dashed;">&nbsp;</arrow>
+        </arrows>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte class="ptr"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <value class="t byte2" style="left: 38px;">S(1)</value>
+            <value class="ptr byte4" style="left: 80px;">0x2</value>
+            <value class="ptr byte4" style="left: 120px;">0x6</value>
+            <value class="ptr byte4" style="left: 162px;">0x2</value>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 37px;"><code>a</code></label>
+            <label class="byte4" style="left: 79px;"><code>ra</code></label>
+            <label class="byte2" style="left: 139px;"><code>rb</code></label>
+            <label class="byte2" style="left: 216px;"><code>rval</code></label>
+        </labels>
+        <subtext>References to References</subtext>
+        <!-- <subtext><code>f(x: &'x S, y: &'y S) -> &'y u8</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+// Return short ('b) reference
+fn f1sr<'b, 'a>(rb: &'b     &'a     S) -> &'b     S { *rb }
+fn f2sr<'b, 'a>(rb: &'b     &'a mut S) -> &'b     S { *rb }
+fn f3sr<'b, 'a>(rb: &'b mut &'a     S) -> &'b     S { *rb }
+fn f4sr<'b, 'a>(rb: &'b mut &'a mut S) -> &'b     S { *rb }
+
+// Return short ('b) mutable reference.
+// f1sm<'b, 'a>(rb: &'b     &'a     S) -> &'b mut S { *rb } // M
+// f2sm<'b, 'a>(rb: &'b     &'a mut S) -> &'b mut S { *rb } // M
+// f3sm<'b, 'a>(rb: &'b mut &'a     S) -> &'b mut S { *rb } // M
+fn f4sm<'b, 'a>(rb: &'b mut &'a mut S) -> &'b mut S { *rb }
+
+// Return long ('a) reference.
+fn f1lr<'b, 'a>(rb: &'b     &'a     S) -> &'a     S { *rb }
+// f2lr<'b, 'a>(rb: &'b     &'a mut S) -> &'a     S { *rb } // L
+fn f3lr<'b, 'a>(rb: &'b mut &'a     S) -> &'a     S { *rb }
+// f4lr<'b, 'a>(rb: &'b mut &'a mut S) -> &'a     S { *rb } // L
+
+// Return long ('a) mutable reference.
+// f1lm<'b, 'a>(rb: &'b     &'a     S) -> &'a mut S { *rb } // M
+// f2lm<'b, 'a>(rb: &'b     &'a mut S) -> &'a mut S { *rb } // M
+// f3lm<'b, 'a>(rb: &'b mut &'a     S) -> &'a mut S { *rb } // M
+// f4lm<'b, 'a>(rb: &'b mut &'a mut S) -> &'a mut S { *rb } // L
+
+// Now assume we have a `ra` somewhere
+let mut ra: &'a mut S = ...;
+
+let rval = f1sr(&&*ra);       // OK
+let rval = f2sr(&&mut *ra);
+let rval = f3sr(&mut &*ra);
+let rval = f4sr(&mut ra);
+
+//  rval = f1sm(&&*ra);       // Would be bad, since rval would be mutable 
+//  rval = f2sm(&&mut *ra);   // reference obtained from broken mutability
+//  rval = f3sm(&mut &*ra);   // chain.
+let rval = f4sm(&mut ra);
+
+let rval = f1lr(&&*ra);
+//  rval = f2lr(&&mut *ra);   // If this worked we'd have `rval` and `ra` ...
+let rval = f3lr(&mut &*ra);
+//  rval = f4lr(&mut ra);     // ... now (mut) aliasing `S` in compute below.
+
+//  rval = f1lm(&&*ra);       // Same as above, fails for mut-chain reasons.
+//  rval = f2lm(&&mut *ra);   //                    "
+//  rval = f3lm(&mut &*ra);   //                    "
+//  rval = f4lm(&mut ra);     // Same as above, fails for aliasing reasons.
+
+// Some fictions place where we use `ra` and `rval`, both alive.
+compute(ra, rval);
+```
+
+<footnotes>
+
+Here (`M`) means compilation fails because mutability error, (`L`) lifetime error.
+Also, dereference `*rb` not strictly necessary, just added for clarity.
+
+</footnotes>
+
+- `f_sr` cases always work, short reference (only living `'b`) can always be produced
+- `f_sm` cases usually fail simply because _mutable chain_ to `S` needed to return `&mut S`
+- `f_lr` cases can fail because returning `&'a S` from `&'a mut S` to caller means there would now exist two references (one mutable) to same `S` which is illegal.
+- `f_lm` cases always fail for combination of reasons above. 
+
+
+</explanation>
+</lifetime-section>
+
+
+
+</div></panel></tab>
 </tabs>
 
 
@@ -4519,7 +4670,7 @@ Rust's standard library combines the above primitive types into useful types wit
             <framed class="any t"><code>T</code></framed>
         </memory>
     </memory-entry>
-    <description>Elements <code>head</code> and <code>tail</code> both <code>null</code> or point to nodes on<br> the heap. Each node can point to its <code>prev</code> and <code>next</code> node.<br>Eats your cache like no tomorrow (just look at the thing!);<br>don't use unless you evidently must. {{ bad() }} </description>
+    <description>Elements <code>head</code> and <code>tail</code> both <code>null</code> or point to nodes on<br> the heap. Each node can point to its <code>prev</code> and <code>next</code> node.<br>Eats your cache (just look at the thing!); don't use unless<br> you evidently must. {{ bad() }} </description>
 </datum>
 
 

@@ -46,11 +46,13 @@ const subtitles = [
     "${jndi:ldap://rustup.rs}",
     "An amorphous guide to fractal complexity.",
     "Whenever I tell my octopus about Rust he gets all excited.",
-    "Roses did rust 30M years before it was cool.",
+    "Roses did rust before it was cool.",
     "Blazingly fa... 🤚😣",
     "'This sheet really ties the room together' &mdash; J. Lebowski",
     "Programming Rust be like <i>'Computer says no ...'</i>",
     "Did you know, the Eiffel Tower is slowly rewritten in rust?",
+    "Last time I wrote C feels like a lifetime ago ...",
+    "Can we borrow a minute of your time?",
 ];
 
 
