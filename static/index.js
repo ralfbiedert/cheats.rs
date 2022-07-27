@@ -1,9 +1,7 @@
 "use strict"
 
-// const API_ENDPOINT = "https://api.cheats.rs"; // Flaky AF, need to investigate.
-const API_ENDPOINT = "https://m1zur8nbrg.execute-api.eu-north-1.amazonaws.com";
+const API_ENDPOINT = "https://api.cheats.rs"; 
 const SURVEY_KEY = "survey2020";
-
 
 let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
 let subtitle_index = 0;
