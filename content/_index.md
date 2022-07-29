@@ -4989,8 +4989,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
             <code>lock</code>
         </memory>
     </memory-entry>
-    <description>Needs to be held in <code>Arc</code> to be shared between<br> threads,
-    always <code>Send</code> and <code>Sync</code>. Consider using <br> <a href="https://crates.io/crates/parking_lot">parking_lot</a> instead (faster, no heap usage).
+    <description>Needs to be held in <code>Arc</code> to be shared between<br> threads. Consider using  <a href="https://crates.io/crates/parking_lot">parking_lot</a> instead<br>  (faster, no heap usage).
     </description>
 </datum>
 
@@ -9361,7 +9360,7 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 | `let ... = f();` | Variable name affects order of `Drop` execution. <sup>1</sup> {{ bad() }}  |
 
 <footnotes>
-<sup>1</sup> Notably, when you rename a variable from <code>_x</code> to <code>_</code> you will also change the Drop behavior of whatever was assigned to that variable. A variable named <code>_x</code> will have <code>Drop::drop()</code> executed at the end of scope, a variable named <code>_</code> will have it executed immediately on assignment!
+<sup>1</sup> Notably, when you rename a variable from <code>_x</code> to <code>_</code> you will also change the Drop behavior of whatever was assigned to that variable. A variable named <code>_x</code> will have <code>Drop::drop()</code> executed at the end of scope, a variable named <code>_</code> will have it executed immediately on 'apparent' assignment ('apparent' because variables named <code>_</code> don't really exist and assignment to them is no-op)!
 </footnotes>
 
 {{ tablesep() }}

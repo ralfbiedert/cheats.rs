@@ -51,6 +51,10 @@ const subtitles = [
     "Did you know, the Eiffel Tower is slowly rewritten in rust?",
     "Last time I wrote C feels like a lifetime ago ...",
     "Can we borrow a minute of your time?",
+    "Even for the Internet it's ... pretty shocking.",
+    "According to Einstein, humans use only 10% of their programming languages.",
+    "Fun fact, Rust appeared July 7, 2010, giving it the zodiac of the Crab ♋︎.",
+    "Rumor has it, there are languages which don't have a concept of time.",
 ];
 
 
