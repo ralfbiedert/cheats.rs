@@ -45,6 +45,7 @@ Also:
 * That one IEEE 754-2008 Powerpoint deck I can't find anymore ...
 * [String Conversions](https://docs.google.com/spreadsheets/d/19vSPL6z2d50JlyzwxariaYD6EU2QQUQqIDOGbiGQC7Y/pubhtml?gid=0&single=true)
 * steffahn from users.rust-lang.org (for outstanding explanations)
+* eddyb for feedback and explanations 
 
 
 # FAQ

@@ -3444,6 +3444,8 @@ let a = c;          // <- But here, no more use of `r` or `s`.
 <div>
 
 
+
+
 <lifetime-section>
 <lifetime-example>
     <memory-row>
@@ -3573,10 +3575,98 @@ Also, dereference `*rb` not strictly necessary, just added for clarity.
 
 </footnotes>
 
-- `f_sr` cases always work, short reference (only living `'b`) can always be produced
-- `f_sm` cases usually fail simply because _mutable chain_ to `S` needed to return `&mut S`
+- `f_sr` cases always work, short reference (only living `'b`) can always be produced.
+- `f_sm` cases usually fail simply because _mutable chain_ to `S` needed to return `&mut S`.
 - `f_lr` cases can fail because returning `&'a S` from `&'a mut S` to caller means there would now exist two references (one mutable) to same `S` which is illegal.
 - `f_lm` cases always fail for combination of reasons above. 
+
+
+</explanation>
+</lifetime-section>
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row>
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t"></byte>
+            <byte class="t"></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+        </memory-backdrop>
+        <values>
+            <drop><value class="t byte2" style="left: 38px;">S(1)</value><droparrow style="left:17px;">▼</droparrow></drop>
+        </values>
+        <labels>
+            <label class="byte2" style="left: 37px;"><code>_</code></label>
+            <!-- <label class="byte2" style="left: 136.5px;"><code>c</code></label> -->
+        </labels>
+        <subtext>Drop and <code>_</code></subtext>
+        <!-- <subtext><code>{ let a = ...; }</code></subtext> -->
+    </memory-row>
+</lifetime-example>
+<explanation>
+
+```
+{    
+    let f = |x, y| (S(x), S(y)); // Function returning two 'Droppables'. 
+
+    let (    x1, y) = f(1, 4);  // S(1) - EoS   S(4) - EoS
+    let (    x2, _) = f(2, 5);  // S(2) - EoS   S(5) - dropped immediately 
+    let (ref x3, _) = f(3, 6);  // S(3) - EoS   S(6) - EoS 
+
+    println!("...");
+}
+```
+
+<footnotes>
+
+Here `EoS` means contained value lives until end of scope, i.e., past the `println!()`.
+
+</footnotes>
+
+- Functions or expressions producing movable values must be handled by callee.
+- Values stores in 'normal' bindings are kept until end of scope, then dropped.
+- Values stored in `_` bindings are usually dropped right away.
+- However, somtimes references (e.g., `ref x3`) can keep value (e.g., the tuple `(S(3), S(6))`) around for longer, so `S(6)`, being part of that tuple can only be dropped once reference to its `S(3)` sibling disappears).
+
 
 
 </explanation>
@@ -4979,17 +5069,11 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 <datum>
     <name><code>Mutex&lt;T&gt;</code> / <code>RwLock&lt;T&gt;</code></name>
     <visual style="width: 230px;">
-        <ptr><code>ptr</code><sub>2/4/8</sub></ptr>
+        <payload><code>Platform</code></payload>
         <sized class="atomicx"><code>poison</code><sub>2/4/8</sub></sized>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
-    <memory-entry>
-        <memory-link style="left:45%;">|</memory-link>
-        <memory class="heap">
-            <code>lock</code>
-        </memory>
-    </memory-entry>
-    <description>Needs to be held in <code>Arc</code> to be shared between<br> threads. Consider using  <a href="https://crates.io/crates/parking_lot">parking_lot</a> instead<br>  (faster, no heap usage).
+    <description>Needs to be held in <code>Arc</code> to be shared between<br> threads. Exact fields depend on platform.
     </description>
 </datum>
 
@@ -9357,10 +9441,10 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 | {{ tab() }} `impl Drop for S {}` | May run code or panic end of scope `{}`, during assignment `s = new_s`. |
 | `panic!()` | User code can panic _any_ time, doing abort, or unwind. |
 | <code>catch_unwind(&vert;&vert; s.f(panicky))</code> |  Also, caller might force observation of broken state in `s`.  |
-| `let ... = f();` | Variable name affects order of `Drop` execution. <sup>1</sup> {{ bad() }}  |
+| `let ... = f();` | Variable name can affect order of `Drop` execution. <sup>1</sup> {{ bad() }}  |
 
 <footnotes>
-<sup>1</sup> Notably, when you rename a variable from <code>_x</code> to <code>_</code> you will also change the Drop behavior of whatever was assigned to that variable. A variable named <code>_x</code> will have <code>Drop::drop()</code> executed at the end of scope, a variable named <code>_</code> will have it executed immediately on 'apparent' assignment ('apparent' because variables named <code>_</code> don't really exist and assignment to them is no-op)!
+<sup>1</sup> Notably, when you rename a variable from <code>_x</code> to <code>_</code> you will also change Drop behavior since you change semantics. A variable named <code>_x</code> will have <code>Drop::drop()</code> executed at the end of its scope, a variable named <code>_</code> can have it executed immediately on 'apparent' assignment ('apparent' because a binding named <code>_</code> means 'discard this', which will happen as soon as feasible, often right away)!
 </footnotes>
 
 {{ tablesep() }}
@@ -9381,6 +9465,8 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 > - You may still be observable after a worst-case panic.
 >
 > As a corollary, _safe_-but-deadly code (e.g., `airplane_speed<T>()`) should probably also follow these guides.
+
+
 
 
 ## API Stability

@@ -55,6 +55,7 @@ const subtitles = [
     "According to Einstein, humans use only 10% of their programming languages.",
     "Fun fact, Rust appeared July 7, 2010, giving it the zodiac of the Crab ♋︎.",
     "Rumor has it, there are languages which don't have a concept of time.",
+    " nhy7uyyu8yuyu - remember to unplug your keyboard before cleaning it",
 ];
 
 
