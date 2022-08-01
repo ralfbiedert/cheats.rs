@@ -593,8 +593,8 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 | Within Match Arm | Explanation |
 |---------|-------------|
 |  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
-|  `E::B ( .. ) => {}` | Match enum tuple variant `B`, wildcard any index. |
-|  `E::C { .. } => {}` | Match enum struct variant `C`, wildcard any field. |
+|  `E::B ( .. ) => {}` | Match enum tuple variant `B`, ignoring any index. |
+|  `E::C { .. } => {}` | Match enum struct variant `C`, ignoring any field. |
 |  `S { x: 0, y: 1 } => {}` | Match struct with specific values (only accepts `s` with `s.x` of `0` and `s.y` of `1`). |
 |  `S { x: a, y: b } => {}` | Match struct with _any_(!) values and bind `s.x` to `a` and `s.y` to `b`. |
 |  {{ tab() }} `S { x, y } => {}` | Same, but shorthand with `s.x` and `s.y` bound as `x` and `y` respectively. |
@@ -774,7 +774,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | Example | Explanation |
 |---------|-------------|
 | `!` | Always empty **never type**. {{ experimental() }} {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html#never-type") }} |
-| `_` | Unnamed variable binding, e.g., <code>&vert;x, _&vert; {}</code>.|
+| `_` | Unnamed **wildcard** {{ ref(page="patterns.html#wildcard-pattern")}} variable binding, e.g., <code>&vert;x, _&vert; {}</code>.|
 | {{ tab() }} `let _ = x;`  | Unnamed assignment is no-op, does **not** {{ bad() }} move out `x` or preserve scope! |
 | `_x` | Variable binding explicitly marked as unused. |
 | `1_234_567` | Numeric separator for visual clarity. |
@@ -5069,11 +5069,12 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 <datum>
     <name><code>Mutex&lt;T&gt;</code> / <code>RwLock&lt;T&gt;</code></name>
     <visual style="width: 230px;">
-        <payload><code>Platform</code></payload>
+        <payload><code>inner</code></payload>
         <sized class="atomicx"><code>poison</code><sub>2/4/8</sub></sized>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
-    <description>Needs to be held in <code>Arc</code> to be shared between<br> threads. Exact fields depend on platform.
+    <description>Inner fields depend on platform. Needs to be <br>held in <code>Arc</code> to be shared between decoupled<br>threads, or
+    via <code>scope()</code> for scoped threads.
     </description>
 </datum>
 
@@ -9414,7 +9415,7 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 
 ## Adversarial Code {{ esoteric() }}
 
-_Adversarial_ code is _safe_ code that compiles but does not follow API _expectations_, and might interfere with your own (safety) guarantees.
+_Adversarial_ code is _safe_ 3<sup>rd</sup> party code that compiles but does not follow API _expectations_, and might interfere with your own (safety) guarantees.
 
 
 <div class="color-header redred">
@@ -9437,26 +9438,23 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 | {{ tab() }} `impl Eq for S {}`  | May cause `s != s`; panic; must not use `s` in `HashMap` & co. |
 | {{ tab() }} `impl Hash for S {}`  | May violate hashing rules; panic; must not use `s` in `HashMap` & co. |
 | {{ tab() }} `impl Ord for S {}`  | May violate ordering rules; panic; must not use `s` in `BTreeMap` & co. |
-| {{ tab() }} `impl Index for S {}` | May randomly index, e.g. `s[x] != s[x]`, or panic. |
+| {{ tab() }} `impl Index for S {}` | May randomly index, e.g. `s[x] != s[x]`; panic. |
 | {{ tab() }} `impl Drop for S {}` | May run code or panic end of scope `{}`, during assignment `s = new_s`. |
-| `panic!()` | User code can panic _any_ time, doing abort, or unwind. |
+| `panic!()` | User code can panic _any_ time, resulting in abort or unwind. |
 | <code>catch_unwind(&vert;&vert; s.f(panicky))</code> |  Also, caller might force observation of broken state in `s`.  |
 | `let ... = f();` | Variable name can affect order of `Drop` execution. <sup>1</sup> {{ bad() }}  |
 
 <footnotes>
-<sup>1</sup> Notably, when you rename a variable from <code>_x</code> to <code>_</code> you will also change Drop behavior since you change semantics. A variable named <code>_x</code> will have <code>Drop::drop()</code> executed at the end of its scope, a variable named <code>_</code> can have it executed immediately on 'apparent' assignment ('apparent' because a binding named <code>_</code> means 'discard this', which will happen as soon as feasible, often right away)!
+
+<sup>1</sup> Notably, when you rename a variable from <code>_x</code> to <code>&lowbar;</code> you will also change Drop behavior since you change semantics. A variable named <code>_x</code> will have <code>Drop::drop()</code> executed at the end of its scope, a variable named <code>&lowbar;</code> can have it executed immediately on 'apparent' assignment ('apparent' because a binding named <code>&lowbar;</code> means **wildcard** {{ ref(page="patterns.html#wildcard-pattern") }} _discard this_, which will happen as soon as feasible, often right away)!
+
 </footnotes>
 
 {{ tablesep() }}
 
-
-
 </div>
 
-{{ tablesep() }}
 
-
->
 > **Implications**
 >
 > - Generic code **cannot be safe if safety depends on type cooperation** w.r.t. most (`std::`) traits.
@@ -9467,6 +9465,7 @@ _Adversarial_ code is _safe_ code that compiles but does not follow API _expecta
 > As a corollary, _safe_-but-deadly code (e.g., `airplane_speed<T>()`) should probably also follow these guides.
 
 
+{{ tablesep() }}
 
 
 ## API Stability
