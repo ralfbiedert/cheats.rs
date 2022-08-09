@@ -246,6 +246,7 @@ fn main() {
 **Modular Beginner Resources**
 - [**Tour of Rust**](https://tourofrust.com/TOC_en.html) - Live code and explanations, side by side.
 - [**Rust in Easy English**](https://dhghomon.github.io/easy_rust/Chapter_3.html) - 60+ concepts, simple English, example-driven.
+- [**Get fluent at Rust**](https://exercism.org/tracks/rust) - 103 exercices grouped in 13 concepts
 
 In addition, have a look at the usual suspects. {{ book(page="") }} {{ ex(page="") }} {{ std(page="std") }}
 
