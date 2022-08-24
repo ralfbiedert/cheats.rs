@@ -22,7 +22,7 @@ Ralf Biedert (<a href="mailto:webmaster@cheats.rs">mail</a>, <a href="https://xr
 
 ### Privacy, GDPR
 
-- This site is **dispatched via Cloudflare's CDN** and most users should only interact with their edge servers. If you provide _Feedback_ (see below) you may additionally connect to AWS.
+- The site itself is **dispatched via Cloudflare's CDN**. 
 - The **Edit & Run** feature of the "Hello, Rust" section embeds the [Rust Playground](https://play.rust-lang.org/). All code entered there is sent to and processed on their servers.
 - We are generally **not aware of any user tracking** and only aggregate statistics (e.g., users by country) are retained by our hosting provider. **Access logs** are usually disabled, but might be enabled along with other measures to diagnose and mitigate hosting issues.
 - The browser's **local storage** may be necessary to store settings between sessions (e.g., dark mode, ligatures, banner visibility), if you requested such a setting to take effect. This information never leaves your machine.
@@ -31,9 +31,9 @@ Ralf Biedert (<a href="mailto:webmaster@cheats.rs">mail</a>, <a href="https://xr
 
 ### Terms of Service
 
-- **Humans** (you!) may, with the help of a browser or similar, freely access any information on this site in accordance with the rest of these rules. You are in particular free to submit _organic feedback_ (i.e., ad-hoc, human-created) in whatever language, or with whatever words you desire, and any such feedback is fair use.
+- **Humans** (you!) may, with the immediate help of a browser or similar, freely access any information on this site in accordance with the rest of these rules. You are in particular free to submit _organic feedback_ (i.e., ad-hoc, human-created) in whatever language, or with whatever words you desire, and any such feedback is fair use.
 
-- **Bots** and other animated rocks may read data for reasonable purposes occasionally. Bots are _never_ allowed to post or invoke APIs, and any such use is considered abuse.
+- **Bots**, scripts, animated rocks, or anything most people wouldn't call a _normal, well behaved browser_ may read data for reasonable purposes occasionally (e.g., crawl the site every few days). Bots are _never_ allowed to `POST` or invoke API endpoints (e.g., `api.cheats.rs`), and any such use is considered abuse.
 
 - The **Feedback Buttons** allow you to send _sentiments_ and text.
 
