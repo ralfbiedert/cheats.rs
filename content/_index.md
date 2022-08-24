@@ -4975,7 +4975,7 @@ Rust's standard library combines the above primitive types into useful types wit
             </div>
         </memory>
     </memory-entry>
-    <description>Encapsulates how operating system<br> represents strings (e.g., UTF-16 on <br>Windows).</description>
+    <description>Encapsulates how operating system<br> represents strings (e.g., <a href="https://simonsapin.github.io/wtf-8/">WTF-8</a> on <br>Windows).</description>
 </datum>
 
 <spacer>
