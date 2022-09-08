@@ -3,7 +3,7 @@
 # Poor man's deploy script in lack of better infrastructure.
 #
 
-ZOLA=zola_14
+ZOLA=zola
 TOML_BASE=config.toml
 
 FOLDER_PREP=public       # Zola output folder
