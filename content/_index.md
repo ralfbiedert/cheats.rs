@@ -432,7 +432,10 @@ Control execution within a function.
 | `continue 'label`  | Same but instead of this loop, enclosing loop marked with 'label. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 | `x.await` | Only works inside `async`. Yield flow until **`Future`** {{ std(page="std/future/trait.Future.html") }} or Stream `x` ready. {{ ref(page="expressions/await-expr.html#await-expressions") }} {{ edition(ed="'18") }} |
-| `return x`  | Early return from function. More idiomatic way is to end with expression. |
+| `return x`  | **Early return** {{ ref(page="expressions/return-expr.html" ) }} from function. More idiomatic is to end with expression. |
+| {{ tab() }} `{ return }`  | Inside normal `{}`-blocks `return` exits surrounding function. |
+| {{ tab() }} <code>&vert;&vert; { return }</code>  | Within closures `return` exits that closure only, i.e., closure is _s._ function. |
+| {{ tab() }} `async { return }`  | Inside `async` a `return` **only** {{ ref(page="expressions/block-expr.html#control-flow-operators") }} {{ bad() }} exists that `{}` block, i.e., `async {}` is _s.f._! |
 | `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, &hellip;). |
 | `x.f()` | Call member function, requires `f` takes `self`, `&self`, &hellip; as first argument. |
 | {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |

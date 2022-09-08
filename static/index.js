@@ -54,8 +54,8 @@ const subtitles = [
     "Even for the Internet it's ... pretty shocking.",
     "According to Einstein, humans use only 10% of their programming languages.",
     "Fun fact, Rust appeared July 7, 2010, giving it the zodiac of the Crab ♋︎.",
-    "Rumor has it, there are languages which don't have a concept of time.",
-    " nhy7uyyu8yuyu - remember to unplug your keyboard before cleaning it",
+    "Rumor has it there are languages without a concept of time.",
+    "Tired of C++? Call (505) 142-4205 and request new dust filters for your Hoover Max Pressure Pro Model 60.",
 ];
 
 
