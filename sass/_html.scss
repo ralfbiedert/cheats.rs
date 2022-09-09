@@ -76,11 +76,19 @@ strike {
         color: #222;
         cursor: help;
     }
+
+    a.tooltip:hover {
+        text-decoration: none;
+    }
 } 
 
 .night-mode {
     a.tooltip {
-       color: white;
+        color: white;
         cursor: help;
+    }
+
+    a.tooltip:hover {
+        text-decoration: none;
     }
 }
