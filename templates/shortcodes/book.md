@@ -1,1 +1,0 @@
-[<sup class="entry">BK</sup>](https://doc.rust-lang.org/book/{{page}})

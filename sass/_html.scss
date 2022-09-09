@@ -42,7 +42,6 @@ body.night-mode {
     color: white;
 }
 
-
 h1,
 h2 {
     margin-bottom: 10px;
@@ -69,4 +68,19 @@ footer::after {
 
 strike {
     color: gray;
+}
+
+
+.day-mode {
+    a.tooltip {
+        color: #222;
+        cursor: help;
+    }
+} 
+
+.night-mode {
+    a.tooltip {
+       color: white;
+        cursor: help;
+    }
 }

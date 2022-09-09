@@ -1,1 +1,0 @@
-[<sup class="expert">NOM</sup>](https://doc.rust-lang.org/nightly/nomicon/{{page}})

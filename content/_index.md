@@ -220,7 +220,7 @@ fn main() {
 <panel><div>
 
 **Download**
-- Get installer from [**rustup.rs**](https://rustup.rs/) (highly recommended for any platform)
+- Get installer from [**rustup.rs**](https://rustup.rs/) (highly recommended){{ hot() }}
 
 
 **IDEs**
@@ -360,7 +360,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `*r = s;` | If `r` is a mutable reference, move or copy `s` to target memory. |
 | {{ tab() }} `s = *r;` | Make `s` a copy of whatever `r` references, if that is `Copy`. |
 | {{ tab() }} `s = *r;` | Won't work {{ bad() }} if `*r` is not `Copy`, as that would move and leave empty place. |
-| {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://www.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8") }} for `Box` that can also move out Box'ed content if it isn't `Copy`. |
+| {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://old.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8") }} for `Box` that can also move out Box'ed content if it isn't `Copy`. |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} duration of a flow in static analysis. |
 | {{ tab() }}  `&'a S`  | Only accepts an address holding an `s`; addr. existing `'a` or longer. |
 | {{ tab() }}  `&'a mut S`  | Same, but allow content of address to be changed. |
@@ -4961,7 +4961,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>OsString</code> {{ todo() }}</name>
+    <name><code>OsString</code></name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual class="platformdefined">
         Platform Defined
@@ -4986,7 +4986,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>PathBuf</code> {{ todo() }}</name>
+    <name><code>PathBuf</code></name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual class="platformdefined">
         <payload>
@@ -6192,7 +6192,7 @@ Commands and tools that are good to know.
 | <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
 | {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies features with other dependents (can be confusing). |
 | {{ tab() }} `cargo run -p w` | Run main of sub-workspace `w`. Treats features more as you would expect. |
-| <code>cargo ... --timings</code> | Show what crates caused your build to take so long, highly useful. {{ hot() }} |
+| <code>cargo ... --timings</code> | Show what crates caused your build to take so long. {{ hot() }} |
 | `cargo tree` | Show dependency graph. |
 | <code>cargo +{nightly, stable} ...</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
 | `cargo +nightly ...` | Some nightly-only commands (substitute `...` with command below) |

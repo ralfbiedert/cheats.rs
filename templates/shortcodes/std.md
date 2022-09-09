@@ -1,1 +1,0 @@
-[<sup class="mid">STD</sup>](https://doc.rust-lang.org/{{page}})
