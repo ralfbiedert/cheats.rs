@@ -132,7 +132,7 @@ Contains clickable links to
 
 **Working with Types**
 * [Types, Traits, Generics](#types-traits-generics)
-* [Type Zoo](#type-zoo)
+* [Foreign Types and Traits](#foreign-types-and-traits)
 * [Type Conversions](#type-conversions)
 
 
@@ -342,7 +342,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 
 | Example | Explanation |
 |---------|-------------|
-| `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (space for holding _any_ `&s`). |
+| `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (type; space for holding _any_ `&s`). |
 | {{ tab() }} `&[S]` | Special slice reference that contains (`address`, `length`). |
 | {{ tab() }} `&str` | Special string slice reference that contains (`address`, `length`). |
 | {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, &hellip;). |
@@ -362,11 +362,11 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `s = *r;` | Won't work {{ bad() }} if `*r` is not `Copy`, as that would move and leave empty place. |
 | {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://old.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8") }} for `Box` that can also move out Box'ed content if it isn't `Copy`. |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} duration of a flow in static analysis. |
-| {{ tab() }}  `&'a S`  | Only accepts an address holding an `s`; addr. existing `'a` or longer. |
+| {{ tab() }}  `&'a S`  | Only accepts an address holding some `s`; addr. existing `'a` or longer. |
 | {{ tab() }}  `&'a mut S`  | Same, but allow content of address to be changed. |
-| {{ tab() }}  `struct S<'a> {}`  | Signals `S` will contain address with lifetime `'a`. Creator of `S` decides `'a`. |
-| {{ tab() }} `trait T<'a> {}` | Signals a `S` which `impl T for S` might contain address. |
-| {{ tab() }}  `fn f<'a>(t: &'a T)`  | Same, for function. Caller decides `'a`. |
+| {{ tab() }}  `struct S<'a> {}`  | Signals this `S` will contain address with lifetime `'a`. Creator of `S` decides `'a`. |
+| {{ tab() }} `trait T<'a> {}` | Signals any `S`, which `impl T for S`, might contain address. |
+| {{ tab() }}  `fn f<'a>(t: &'a T)`  | Signals this function handles some address. Caller decides `'a`. |
 | `'static`  | Special lifetime lasting the entire program execution. |
 
 </fixed-2-column>
@@ -382,10 +382,10 @@ Define units of code and their abstractions.
 
 | Example | Explanation |
 |---------|-------------|
-| `trait T {}`  | Define a **trait**; {{ book(page="ch10-02-traits.html") }} {{ ex(page="trait.html") }} {{ ref(page="items/traits.html") }} common behavior others can implement. |
+| `trait T {}`  | Define a **trait**; {{ book(page="ch10-02-traits.html") }} {{ ex(page="trait.html") }} {{ ref(page="items/traits.html") }} common behavior types can adhere to. |
 | `trait T : R {}` | `T` is subtrait of **supertrait** {{ book(page="ch19-03-advanced-traits.html#using-supertraits-to-require-one-traits-functionality-within-another-trait") }} {{ ex(page="trait/supertraits.html") }} {{ ref(page="items/traits.html#supertraits") }} `R`. Any `S` must `impl R` before it can `impl T`. |
 | `impl S {}`  | **Implementation** {{ ref(page="items/implementations.html") }} of functionality for a type `S`, e.g., methods. |
-| `impl T for S {}`  | Implement trait `T` for type `S`. |
+| `impl T for S {}`  | Implement trait `T` for type `S`; specifies _how exactly_ `S` acts like `T`. |
 | `impl !T for S {}` | Disable an automatically derived **auto trait**. {{ nom(page="send-and-sync.html") }} {{ ref(page="special-types-and-traits.html#auto-traits") }} {{ experimental() }} {{ esoteric() }} |
 | `fn f() {}`  | Definition of a **function**; {{ book(page="ch03-03-how-functions-work.html") }}  {{ ex(page="fn.html") }} {{ ref(page="items/functions.html") }} or associated function if inside `impl`. |
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
@@ -435,7 +435,7 @@ Control execution within a function.
 | `return x`  | **Early return** {{ ref(page="expressions/return-expr.html" ) }} from function. More idiomatic is to end with expression. |
 | {{ tab() }} `{ return }`  | Inside normal `{}`-blocks `return` exits surrounding function. |
 | {{ tab() }} <code>&vert;&vert; { return }</code>  | Within closures `return` exits that closure only, i.e., closure is _s._ function. |
-| {{ tab() }} `async { return }`  | Inside `async` a `return` **only** {{ ref(page="expressions/block-expr.html#control-flow-operators") }} {{ bad() }} exists that `{}` block, i.e., `async {}` is _s.f._! |
+| {{ tab() }} `async { return }`  | Inside `async` a `return` **only** {{ ref(page="expressions/block-expr.html#control-flow-operators") }} {{ bad() }} exits that `{}` block, i.e., `async {}` is _s.f._! |
 | `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, &hellip;). |
 | `x.f()` | Call member function, requires `f` takes `self`, `&self`, &hellip; as first argument. |
 | {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
@@ -934,7 +934,7 @@ If something works that "shouldn't work now that you think about it", it might b
 ## Memory & Lifetimes
 
 
-Why moves, references and lifetimes are how they are.
+An illustrated guide to moves, references and lifetimes.
 
 
 <tabs class="lifetimes">
@@ -5694,7 +5694,7 @@ Rust has, among others, these APIs to convert types to stringified output, colle
 |`format!(fmt)` | `String` | Bread-and-butter "to `String`" converter. |
 |`print!(fmt)`| Console | Writes to standard output. |
 |`println!(fmt)`| Console | Writes to standard output. |
-|`eprint!(fmt)`| Console | Writes to standard error. |
+| `eprint!(fmt)`| Console | Writes to standard error. |
 |`eprintln!(fmt)`| Console | Writes to standard error. |
 |`write!(dst, fmt)` | Buffer | Don't forget to also `use std::io::Write;` |
 |`writeln!(dst, fmt)` | Buffer | Don't forget to also `use std::io::Write;` |
@@ -5962,7 +5962,7 @@ fn my_sample() {
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-anatomy-5" name="tab-group-anatomy" >
-<label for="tab-anatomy-5"><b>Benchmarks</b></label>
+<label for="tab-anatomy-5"><b>Benchmarks</b>{{ experimental() }}</label>
 <panel><div>
 
 
@@ -8516,9 +8516,9 @@ Examples expand by clicking.
 
 
 
-## Type Zoo
+## Foreign Types and Traits
 
-A visual overview of types and traits in crates.
+A visual overview of types and traits in your crate and upstream.
 
 <!-- Create a horizontal scrollable area on small displays to preserve layout-->
 <div style="overflow:auto;">
@@ -8751,7 +8751,7 @@ A visual overview of types and traits in crates.
 
 <footnotes>
 
-A walk through the jungle of types, traits, and implementations that (might possibly) exist in your application.
+Examples of traits and types, and which traits you can implement for which type.
 
 </footnotes>
 
