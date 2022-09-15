@@ -35,7 +35,7 @@ const subtitles = [
     "The R in ASMR stands for Rust.",
     "Chuck Norris doesn't fear concurrency. Concurrency fears Chuck Norris.",
     "Teaching endianness since 1820.",
-    "Snugly fits two Bayeux tapestries.",
+    "Snugly fits the Bayeux tapestry.",
     "If a language and a crab love each other very much ...",
     "I, for one, welcome our new AI overlords.",
     "As seen on interdimensional cable.",
@@ -46,7 +46,7 @@ const subtitles = [
     "Whenever I tell my octopus about Rust he gets all excited.",
     "Roses did rust before it was cool.",
     "Blazingly fa... 🤚😣",
-    "'This sheet really ties the room together' &mdash; J. Lebowski",
+    "'This sheet really ties the room together'",
     "Programming Rust be like <i>'Computer says no ...'</i>",
     "Did you know, the Eiffel Tower is slowly rewritten in rust?",
     "Last time I wrote C feels like a lifetime ago ...",
@@ -56,6 +56,7 @@ const subtitles = [
     "Fun fact, Rust appeared July 7, 2010, giving it the zodiac of the Crab ♋︎.",
     "Rumor has it there are languages without a concept of time.",
     "Tired of C++? Call (505) 142-4205 and request new dust filters for your Hoover Max Pressure Pro Model 60.",
+    "Got crabs? Visit std.rs!",    
 ];
 
 

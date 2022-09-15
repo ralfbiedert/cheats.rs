@@ -32,7 +32,7 @@ Contains clickable links to
 **Clickable symbols** <br>
 <br> <legend-symbol> {{ book(page="") }} </legend-symbol> **The Book**.
 <br> <legend-symbol> {{ ex(page="") }} </legend-symbol> **Rust by Example**.
-<br> <legend-symbol> {{ std(page="std") }} </legend-symbol>  **Std Docs**.
+<br> <legend-symbol> {{ std(page="std") }} </legend-symbol>  **Standard Library (API)**.
 <br> <legend-symbol> {{ nom(page="") }} </legend-symbol> **Nomicon**.
 <br> <legend-symbol> {{ ref(page="") }} </legend-symbol> **Reference**.
 <br> <legend-symbol> {{ rfc(page="") }} </legend-symbol> Official **RFC** documents.
@@ -309,9 +309,9 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `(x)` | Parenthesized expression. |
 | `(x,)` | Single-element **tuple** expression. {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
 | `(S,)` | Single-element tuple type. |
-| `[S]` | Array type of unspecified length, i.e., **slice**. {{ ex(page="primitives/array.html") }} {{ std(page="std/primitive.slice.html") }}   {{ ref(page="types.html#array-and-slice-types") }} Can't live on stack. {{ note( note="*") }} |
-| `[S; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} of fixed length `n` holding elements of type `S`. |
-| `[x; n]` | Array instance with `n` copies of `x`. {{ ref(page="expressions/array-expr.html") }} |
+| `[S]` | Array type of unspecified length, i.e., **slice**. {{ ex(page="primitives/array.html") }} {{ std(page="std/primitive.slice.html") }} {{ ref(page="types/slice.html") }} Can't live on stack. {{ note( note="*") }} |
+| `[S; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} {{ ref(page="types/array.html") }}  of fixed length `n` holding elements of type `S`. |
+| `[x; n]` | **Array instance**  {{ ref(page="expressions/array-expr.html") }} (expression) with `n` copies of `x`. |
 | `[x, y]` | Array instance with given elements `x` and `y`. |
 | `x[0]` | Collection indexing, here w. `usize`. Implementable with [**Index**](https://doc.rust-lang.org/std/ops/trait.Index.html), [**IndexMut**](https://doc.rust-lang.org/std/ops/trait.IndexMut.html). |
 | {{ tab() }} `x[..]` | Same, via range (here _full range_), also `x[a..b]`, `x[a..=b]`, ... _c_. below.  |
@@ -649,7 +649,7 @@ Generics combine with type constructors, traits and functions to give your users
 | {{ tab() }} `T: 'a` | Type **lifetime bound**; {{ ex(page="scope/lifetime/lifetime_bounds.html") }} if T has references, they must outlive `'a`.  |
 | {{ tab() }} `T: 'static` | Same; does esp. _not_ mean value `t` _will_ {{ bad() }} live `'static`, only that it could. |
 | {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
-| `S<const N: usize>` | **Generic const bound**; {{ todo() }} user of type `S` can provide constant value `N`. |
+| `S<const N: usize>` | **Generic const bound**; {{ ref(page="items/generics.html#const-generics") }} user of type `S` can provide constant value `N`. |
 | {{ tab() }} `S<10>` | Where used, const bounds can be provided as primitive values. |
 | {{ tab() }} `S<{5+5}>` | Expressions must be put in curly brackets. |
 | `S<T> where T: R`  | Almost same as `S<T: R>` but more pleasant to read for longer bounds. |
@@ -760,7 +760,7 @@ Debuggers hate him. Avoid bugs with this one weird trick.
 
 <footnotes>
 
-<sup>1</sup> Tooling directives {{ below(target="#tooling-directives") }} outline what you can do inside doc comments.
+<sup>1</sup> [Tooling Directives](#tooling-directives) outline what you can do inside doc comments.
 
 <sup>2</sup> Generally discouraged due to bad UX. If possible use equivalent line comment instead with IDE support.
 
@@ -4277,7 +4277,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
 <blockquote>
 <footnotes>
 
-Also note, two types `A(X, Y)` and `B(X, Y)` with exactly the same fields can still have differing layout; never `transmute()` without representation guarantees.
+Also note, two types `A(X, Y)` and `B(X, Y)` with exactly the same fields can still have differing layout; never `transmute()` {{ std(page="std/mem/fn.transmute.html") }} without representation guarantees.
 
 </footnotes>
 </blockquote>
