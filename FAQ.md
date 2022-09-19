@@ -16,13 +16,6 @@ Click the date / subtitle line, it will give you the Git hash of the currently d
 ![build hash](/gfx/faq_build_hash.png)
 
 
-### What do all the symbols mean?
-
-There is a small `+` in the blue box, clicking that should give a more comprehensive legend. 
-
-![legend](/gfx/faq_legend.png)
-
-
 
 ### I just formatted my drive, how do I run `deploy.sh`?
 
@@ -63,10 +56,6 @@ The pentagram has a few desirable properties:
 
 In other words, the pentagram is the Rust of summoning circles.
 
-
-### Why no visualizations for HashMap, BinaryHeap, ...?
-
-~~They are messy to compose and their internals are unspecified. In contrast, `Box` and `Vec` are relatively well defined or at least simple. I might accept PRs, but there is a good chance for that PR to be complex and outdated soon.~~ (This has been done in d653f0f)
 
 
 ### I sent a message earlier, why didn't you fix ... ?
