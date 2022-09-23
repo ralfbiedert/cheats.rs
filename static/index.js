@@ -57,6 +57,7 @@ const subtitles = [
     "Rumor has it there are languages without a concept of time.",
     "Tired of C++? Call (505) 142-4205 and request new dust filters for your Hoover Max Pressure Pro Model 60.",
     "Got crabs? Visit std.rs!",    
+    "World's worst cheat sheet, with the exception of all others.",
 ];
 
 

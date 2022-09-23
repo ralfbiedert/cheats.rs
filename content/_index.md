@@ -421,7 +421,9 @@ Control execution within a function.
 |---------|-------------|
 | `while x {}`  | **Loop**, {{ ref(page="expressions/loop-expr.html#predicate-loops") }} run while expression `x` is true. |
 | `loop {}`  | **Loop indefinitely** {{ ref(page="expressions/loop-expr.html#infinite-loops") }} until `break`. Can yield value with `break x`. |
-| `for x in iter {}` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
+| `for x in collection {}` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
+| {{ tab()}} `collection.into_iter()` | Effectively converts any  **`IntoIterator`** {{ std(page="std/iter/trait.IntoIterator.html") }} type into proper iterator first. |
+| {{ tab() }} `iterator.next()` | On proper **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} then `x = next()` until exhausted (first `None`). |
 | `if x {} else {}`  | **Conditional branch** {{ ref(page="expressions/if-expr.html") }} if expression is true. |
 | `'label: loop {}` | **Loop label**, {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} useful for flow control in nested loops. |
 | `break`  | **Break expression** {{ ref(page="expressions/loop-expr.html#break-expressions") }} to exit a loop. |
@@ -431,7 +433,9 @@ Control execution within a function.
 | `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
 | `continue 'label`  | Same but instead of this loop, enclosing loop marked with 'label. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
-| `x.await` | Only works inside `async`. Yield flow until **`Future`** {{ std(page="std/future/trait.Future.html") }} or Stream `x` ready. {{ ref(page="expressions/await-expr.html#await-expressions") }} {{ edition(ed="'18") }} |
+| `x.await` | Syntactic sugar to **get future, poll, yield**.  {{ ref(page="expressions/await-expr.html#await-expressions") }}  {{ edition(ed="'18") }} Only works inside `async`.  |
+| {{ tab()}} `x.into_future()` | Effectively converts any  **`IntoFuture`** {{ std(page="std/future/trait.IntoFuture.html") }} type into proper future first. |
+| {{ tab() }} `future.await` | On proper **`Future`** {{ std(page="std/future/trait.Future.html") }} then `poll()`, yields flow if **`Poll::Pending`**. {{ std(page="std/task/enum.Poll.html") }} |
 | `return x`  | **Early return** {{ ref(page="expressions/return-expr.html" ) }} from function. More idiomatic is to end with expression. |
 | {{ tab() }} `{ return }`  | Inside normal `{}`-blocks `return` exits surrounding function. |
 | {{ tab() }} <code>&vert;&vert; { return }</code>  | Within closures `return` exits that closure only, i.e., closure is _s._ function. |
@@ -779,6 +783,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | `!` | Always empty **never type**. {{ experimental() }} {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html#never-type") }} |
 | `_` | Unnamed **wildcard** {{ ref(page="patterns.html#wildcard-pattern")}} variable binding, e.g., <code>&vert;x, _&vert; {}</code>.|
 | {{ tab() }} `let _ = x;`  | Unnamed assignment is no-op, does **not** {{ bad() }} move out `x` or preserve scope! |
+| {{ tab() }} `_ = x;`  | You can assign _anything_ to `_` without `let`, i.e.,  `_ = ignore_error();` {{ edition(ed="1.59+")}} {{ hot() }} |
 | `_x` | Variable binding explicitly marked as unused. |
 | `1_234_567` | Numeric separator for visual clarity. |
 | `1_u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, &hellip;). |
@@ -920,15 +925,15 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotates `f(x: &T)` to `f<'a>(x: &'a T)`.|
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Derefs or borrow `x` until `x.f()` works. |
 | **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly dereferences [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and adds `ref` and `ref mut` to bindings. |
-| **Rvalue Static Promotion** {{ rfc(page="1414-rvalue_static_promotion.html") }} | Makes references to constants `'static`, e.g., `&42`, `&None`, `&mut []`. |
-| **Dual Definitions** {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} | Defining one thing (e.g., `struct S(u8)`) implicitly def. another (e.g., `fn S`). |
+| **Rvalue Static Promotion** {{ rfc(page="1414-rvalue_static_promotion.html") }}  {{ esoteric() }} | Makes references to constants `'static`, e.g., `&42`, `&None`, `&mut []`. |
+| **Dual Definitions** {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} {{ esoteric() }} | Defining one thing (e.g., `struct S(u8)`) implicitly def. another (e.g., `fn S`).  |
 
 
 </div>
 
 {{ tablesep() }}
 
-> **Opinion** {{ opinionated() }} &mdash; The features above will make your life easier, but might hinder your understanding. If any (type-related) operation ever feels _inconsistent_ it might be worth revisiting this list.
+> **Opinion** {{ opinionated() }} &mdash; These features make your life easier _using_ Rust, but stand in the way of _learning_ it. If you want to develop a _genuine understanding_, spend some extra time exploring them.
 
 
 ## Memory & Lifetimes
@@ -5975,7 +5980,7 @@ fn my_sample() {
 
 #![feature(test)]   // #[bench] is still experimental
 
-extern crate test;  // Even in '18 this is needed ... for reasons.
+extern crate test;  // Even in '18 this is needed for ... reasons.
                     // Normally you don't need this in '18 code.
 
 use test::{black_box, Bencher};
@@ -6029,7 +6034,7 @@ extern crate proc_macro;  // Apparently needed to be imported like this.
 
 use proc_macro::TokenStream;
 
-#[proc_macro_attribute]   // Can now be used as `#[my_attribute]`
+#[proc_macro_attribute]   // Crates can now use `#[my_attribute]`
 pub fn my_attribute(_attr: TokenStream, item: TokenStream) -> TokenStream {
     item
 }
