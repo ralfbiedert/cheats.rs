@@ -867,7 +867,7 @@ This _abstract machine_
 - is not a runtime, and does not have any runtime overhead, but is a _computing model abstraction_,
 - contains concepts such as memory regions (_stack_, ...), execution semantics, ...
 - _knows_ and _sees_ things your CPU might not care about,
-- forms a contract between programmer and machine,
+- is de-facto a contract between you and the compiler,
 - and **exploits all of the above for optimizations**.
 
 
@@ -889,9 +889,9 @@ Things people may incorrectly assume they _should get away with_ if Rust targete
 
 | Without AM | With AM |
 |---------|-------------|
-| `0xffff_ffff` would make a valid `char`. {{ bad() }} | Memory more than just bits.  |
-| `0xff` and `0xff` are same pointer. {{ bad() }} | Pointers can come from different _domains_.  |
-| Any r/w pointer on `0xff` always fine. {{ bad() }} | Read and write reference may not exist same time.  |
+| `0xffff_ffff` would make a valid `char`. {{ bad() }} | AM may exploit _'invalid'_ bit patterns to pack data.  |
+| `0xff` and `0xff` are same pointer. {{ bad() }} | AM pointers can have _'domain'_ attached for optimization.  |
+| Any r/w pointer on `0xff` always fine. {{ bad() }} | AM may issue cache-friendly ops trusting _'no read can happen'_.  |
 | Null reference is just `0x0` in some register. {{ bad() }} | Holding `0x0` in reference summons Cthulhu.  |
 
 </div>
