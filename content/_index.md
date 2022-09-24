@@ -9061,9 +9061,13 @@ If you are used to Java or C, consider these.
 | **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
 |  | `struct Charge(f32)` over `f32` |
+| **Prevent Illegal State** | `my_lock.write()?.guaranteed_to_be_locked = 10;`|
 | **Provide Builders** | `Car::new("Model T").hp(20).build();` |
 | **Don't Panic** | Panics are _not_ exceptions, they may `abort()` entire process! |
 |  | Only raise `panic!` if impossible to handle error, better return `Option` or `Result`. |
+| **Use Generics like Salt** | Single, _simple_ `<T: Bound>` can make your APIs nicer to use.  |
+| | Too many, or complex `where`, make your APIs almost impossible to follow.  |
+| | If in doubt, 1) don't use generics, 2) don't be creative with generics.  |
 | **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
 |   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
 | **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
