@@ -362,8 +362,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `s = *r;` | Won't work {{ bad() }} if `*r` is not `Copy`, as that would move and leave empty place. |
 | {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://old.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8") }} for `Box` that can also move out Box'ed content if it isn't `Copy`. |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} duration of a flow in static analysis. |
-| {{ tab() }}  `&'a S`  | Only accepts an address holding some `s`; addr. existing `'a` or longer. |
-| {{ tab() }}  `&'a mut S`  | Same, but allow content of address to be changed. |
+| {{ tab() }}  `&'a S`  | Only accepts address of some `s`; address existing `'a` or longer. |
+| {{ tab() }}  `&'a mut S`  | Same, but allow address content to be changed. |
 | {{ tab() }}  `struct S<'a> {}`  | Signals this `S` will contain address with lifetime `'a`. Creator of `S` decides `'a`. |
 | {{ tab() }} `trait T<'a> {}` | Signals any `S`, which `impl T for S`, might contain address. |
 | {{ tab() }}  `fn f<'a>(t: &'a T)`  | Signals this function handles some address. Caller decides `'a`. |
@@ -9062,12 +9062,13 @@ If you are used to Java or C, consider these.
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
 |  | `struct Charge(f32)` over `f32` |
 | **Prevent Illegal State** | `my_lock.write()?.guaranteed_to_be_locked = 10;`|
+|  | <code>thread::scope(&vert;s&vert; { /* Threads can't exist longer than scope() */ });</code> |
 | **Provide Builders** | `Car::new("Model T").hp(20).build();` |
 | **Don't Panic** | Panics are _not_ exceptions, they may `abort()` entire process! |
 |  | Only raise `panic!` if impossible to handle error, better return `Option` or `Result`. |
-| **Use Generics like Salt** | Single, _simple_ `<T: Bound>` can make your APIs nicer to use.  |
-| | Too many, or complex `where`, make your APIs almost impossible to follow.  |
-| | If in doubt, 1) don't use generics, 2) don't be creative with generics.  |
+| **Use Generics like Salt** | A simple `<T: Bound>` can make your APIs nicer to use.  |
+| | Complex (esp. `where`) bounds make your APIs almost impossible to follow.  |
+| | If in doubt don't be creative with generics.  |
 | **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
 |   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
 | **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
@@ -9415,7 +9416,7 @@ fn unsound_ref<T>(x: &T) -> &u128 {      // Signature looks safe to users. Happe
 > **Responsible use of Unsafe** {{ opinionated() }}
 >
 > - Do not use `unsafe` unless you absolutely have to.
-> - Follow the [Nomicon](https://doc.rust-lang.org/nightly/nomicon/), [Unsafe Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/), **always** uphold **all** safety invariants, and **never** invoke [UB](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html).
+> - Follow the [Nomicon](https://doc.rust-lang.org/nightly/nomicon/), [Unsafe Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/), **always** follow **all** safety rules, and **never** invoke [UB](https://doc.rust-lang.org/stable/reference/behavior-considered-undefined.html).
 > - Minimize the use of `unsafe` and encapsulate it in small, sound modules that are easy to review.
 > - Never create unsound abstractions; if you can't encapsulate `unsafe` properly, don't do it.
 > - Each `unsafe` unit should be accompanied by plain-text reasoning outlining its safety.
