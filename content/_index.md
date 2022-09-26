@@ -272,7 +272,8 @@ Data types and memory locations defined via keywords.
 | {{ tab() }} `struct S;` | Define **zero sized** {{ nom(page="exotic-sizes.html#zero-sized-types-zsts")}} unit struct. Occupies no space, optimized away. |
 | `enum E {}` | Define an **enum**, {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
 | {{ tab() }}  `enum E { A, B`&#8203;`(), C {} }` | Define variants of enum; can be unit- `A`, tuple- `B` &#8203;`()` and struct-like `C{}`. |
-| {{ tab() }}  `enum E { A = 1 }` | If variants are only unit-like, allow discriminant values, e.g., for FFI. |
+| {{ tab() }}  `enum E { A = 1 }` | If variants are only unit-like, allow **discriminant values**, {{ ref(page="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations") }} e.g., for FFI. |
+| {{ tab() }}  `enum E {}` | Enum w/o variants is **uninhabited**, {{ ref(page="glossary.html#uninhabited") }} can't be instantiated, _c._ 'never' {{ below(target="#miscellaneous") }} {{ esoteric() }} |
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. {{ esoteric() }} |
 | `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
 | `const X: T = T();`  | Defines **constant**, {{ book(page="ch03-01-variables-and-mutability.html#constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} copied into a temporary when used. |
@@ -314,7 +315,7 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `[x; n]` | **Array instance**  {{ ref(page="expressions/array-expr.html") }} (expression) with `n` copies of `x`. |
 | `[x, y]` | Array instance with given elements `x` and `y`. |
 | `x[0]` | Collection indexing, here w. `usize`. Implementable with [**Index**](https://doc.rust-lang.org/std/ops/trait.Index.html), [**IndexMut**](https://doc.rust-lang.org/std/ops/trait.IndexMut.html). |
-| {{ tab() }} `x[..]` | Same, via range (here _full range_), also `x[a..b]`, `x[a..=b]`, ... _c_. below.  |
+| {{ tab() }} `x[..]` | Same, via range (here _full range_), also `x[a..b]`, `x[a..=b]`, … _c_. below.  |
 | `a..b` | **Right-exclusive range** {{ std(page="std/ops/struct.Range.html") }} {{ ref(page="expressions/range-expr.html") }} creation, e.g., `1..3` means `1, 2`.  |
 | `..b` | Right-exclusive **range to** {{ std(page="std/ops/struct.RangeTo.html") }} without starting point.  |
 | `..=b` | **Inclusive range to** {{ std(page="std/ops/struct.RangeToInclusive.html") }} without starting point.  |
@@ -360,7 +361,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `*r = s;` | If `r` is a mutable reference, move or copy `s` to target memory. |
 | {{ tab() }} `s = *r;` | Make `s` a copy of whatever `r` references, if that is `Copy`. |
 | {{ tab() }} `s = *r;` | Won't work {{ bad() }} if `*r` is not `Copy`, as that would move and leave empty place. |
-| {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://old.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8") }} for `Box` that can also move out Box'ed content if it isn't `Copy`. |
+| {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://old.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8") }} for **`Box`**{{ std(page="std/boxed/index.html") }} that can also move out b'ed content that isn't `Copy`. |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} duration of a flow in static analysis. |
 | {{ tab() }}  `&'a S`  | Only accepts address of some `s`; address existing `'a` or longer. |
 | {{ tab() }}  `&'a mut S`  | Same, but allow address content to be changed. |
@@ -400,7 +401,7 @@ Define units of code and their abstractions.
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its **captures**, {{ below(target="#closures-data") }} {{ ref(page="types/closure.html#capture-modes") }}  (e.g., a local variable). |
 | {{ tab() }} <code>&vert;x&vert; {}</code> | Closure accepting one argument named `x`, body is block expression. |
 | {{ tab() }} <code>&vert;x&vert; x + x</code> | Same, without block expression; may only consist of single expression.  |
-| {{ tab() }} <code>move &vert;x&vert; x + y </code> | Closure taking ownership of its captures; i.e., `y` transferred to closure.  |
+| {{ tab() }} <code>move &vert;x&vert; x + y </code> | **Move closure** {{ ref(page="types/closure.html#capture-modes")}} taking ownership; i.e., `y` transferred into closure.  |
 | {{ tab() }} <code> return &vert;&vert; true </code> | Closures sometimes look like logical ORs (here: return a closure). |
 | `unsafe` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ below(target="#unsafe-unsound-undefined") }} {{ book(page="ch19-01-unsafe-rust.html#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 | {{ tab() }} `unsafe fn f() {}` | Means "_calling can cause UB, {{ below(target="#unsafe-unsound-undefined") }} **YOU must check** requirements_". |
@@ -435,7 +436,7 @@ Control execution within a function.
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 | `x.await` | Syntactic sugar to **get future, poll, yield**.  {{ ref(page="expressions/await-expr.html#await-expressions") }}  {{ edition(ed="'18") }} Only works inside `async`.  |
 | {{ tab()}} `x.into_future()` | Effectively converts any  **`IntoFuture`** {{ std(page="std/future/trait.IntoFuture.html") }} type into proper future first. |
-| {{ tab() }} `future.poll()` | On proper **`Future`** {{ std(page="std/future/trait.Future.html") }} then `poll()`, yield flow if **`Poll::Pending`**. {{ std(page="std/task/enum.Poll.html") }} |
+| {{ tab() }} `future.poll()` | On proper **`Future`** {{ std(page="std/future/trait.Future.html") }} then `poll()` and yield flow if **`Poll::Pending`**. {{ std(page="std/task/enum.Poll.html") }} |
 | `return x`  | **Early return** {{ ref(page="expressions/return-expr.html" ) }} from function. More idiomatic is to end with expression. |
 | {{ tab() }} `{ return }`  | Inside normal `{}`-blocks `return` exits surrounding function. |
 | {{ tab() }} <code>&vert;&vert; { return }</code>  | Within closures `return` exits that closure only, i.e., closure is _s._ function. |
@@ -541,7 +542,7 @@ Code generation constructs expanded before the actual compilation happens.
 
 | Inside Macros |  Explanation |
 |---------|---------|
-| `$x:ty`  | Macro capture, the `:...` **fragment** {{ ref(page="macros-by-example.html#metavariables") }} declares what is allowed for `$x`. <sup>1</sup> |
+| `$x:ty`  | Macro capture, the `:…` **fragment** {{ ref(page="macros-by-example.html#metavariables") }} declares what is allowed for `$x`. <sup>1</sup> |
 | `$x` |  Macro substitution, e.g., use the captured `$x:ty` from above. |
 | `$(x),*` | Macro **repetition** {{ ref(page="macros-by-example.html#repetitions") }} _zero or more times_ in macros by example. |
 | {{ tab() }} `$(x),?` | Same, but _zero or one time_. |
@@ -630,7 +631,7 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 
 
 
-<!-- This is more relevant for let D = ... cases, https://www.reddit.com/r/rust/comments/a1846o/rust_quiz_26_medium_to_hard_rust_questions_with/eaop291/ -->
+<!-- This is more relevant for let D = … cases, https://www.reddit.com/r/rust/comments/a1846o/rust_quiz_26_medium_to_hard_rust_questions_with/eaop291/ -->
 <!-- |  `D => {}` | Match struct if `D` unit `struct D;`| -->
 
 
@@ -756,9 +757,9 @@ Debuggers hate him. Avoid bugs with this one weird trick.
 | `///` | Outer line **doc comment**,<sup>1</sup> {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types, traits, functions, &hellip; |
 | `//!` | Inner line doc comment, mostly used at start of file to document module. |
 | `//` | Line comment, use these to document code flow or _internals_. |
-| `/*...*/` | Block comment. <sup>2</sup> {{ deprecated() }} |
-| `/**...*/` | Outer block doc comment. <sup>2</sup> {{ deprecated() }} |
-| `/*!...*/` | Inner block doc comment. <sup>2</sup> {{ deprecated() }} |
+| `/* … */` | Block comment. <sup>2</sup> {{ deprecated() }} |
+| `/** … */` | Outer block doc comment. <sup>2</sup> {{ deprecated() }} |
+| `/*! … */` | Inner block doc comment. <sup>2</sup> {{ deprecated() }} |
 
 </fixed-2-column>
 
@@ -780,7 +781,10 @@ These sigils did not fit any other category but are good to know nonetheless.
 
 | Example | Explanation |
 |---------|-------------|
-| `!` | Always empty **never type**. {{ experimental() }} {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html#never-type") }} |
+| `!` | Always empty **never type**. {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html#never-type") }} |
+| {{ tab() }} `fn f() -> ! {}` | Function that never returns; compat. with any type e.g., `let x: u8 = f();` |
+| {{ tab() }} `fn f() -> Result<(), !> {}` | Function that must return `Result` but signals it can never `Err`. {{ experimental() }} |
+| {{ tab() }} `fn f(x: !) {}` | Function that exists, but can never be called. Not very useful. {{ esoteric() }} {{ experimental() }} |
 | `_` | Unnamed **wildcard** {{ ref(page="patterns.html#wildcard-pattern")}} variable binding, e.g., <code>&vert;x, _&vert; {}</code>.|
 | {{ tab() }} `let _ = x;`  | Unnamed assignment is no-op, does **not** {{ bad() }} move out `x` or preserve scope! |
 | {{ tab() }} `_ = x;`  | You can assign _anything_ to `_` without `let`, i.e.,  `_ = ignore_error();` {{ edition(ed="1.59+")}} {{ hot() }} |
@@ -857,7 +861,7 @@ Like `C` and `C++`, Rust is based on an _abstract machine_.
 
 {{ tablesep() }}
 
-With rare exceptions you are never 'allowed to reason' about the actual CPU. You write code for an _abstracted_ CPU. Rust then (sort of) understands what you want, and translates that into actual RISC-V / x86 / ... machine code.
+With rare exceptions you are never 'allowed to reason' about the actual CPU. You write code for an _abstracted_ CPU. Rust then (sort of) understands what you want, and translates that into actual RISC-V / x86 / … machine code.
 
 
 {{ tablesep() }}
@@ -865,7 +869,7 @@ With rare exceptions you are never 'allowed to reason' about the actual CPU. You
 
 This _abstract machine_
 - is not a runtime, and does not have any runtime overhead, but is a _computing model abstraction_,
-- contains concepts such as memory regions (_stack_, ...), execution semantics, ...
+- contains concepts such as memory regions (_stack_, …), execution semantics, …
 - _knows_ and _sees_ things your CPU might not care about,
 - is de-facto a contract between you and the compiler,
 - and **exploits all of the above for optimizations**.
@@ -920,7 +924,7 @@ If something works that "shouldn't work now that you think about it", it might b
 |--------| -----------|
 | **Coercions** {{ nom(page="coercions.html") }} | _Weakens_ types to match signature, e.g., `&mut T` to `&T`; _c_. _type conversions_. {{ below(target="#type-conversions") }}  |
 | **Deref** {{ nom(page="vec-deref.html") }} {{ link(url="https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules") }} | [Derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
-| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic items, e.g., `Option`, `drop`, ...
+| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic items, e.g., `Option`, `drop`, …
 | **Reborrow** | Since `x: &mut T` can't be copied; moves new `&mut *x` instead. |
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotates `f(x: &T)` to `f<'a>(x: &'a T)`.|
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Derefs or borrow `x` until `x.f()` works. |
@@ -1240,7 +1244,7 @@ let a = t;
             <byte></byte>
         </memory-backdrop>
         <values>
-            <failed style="left: 231.5px;"><value class="atomic byte4">M { ... }</value></failed>
+            <failed style="left: 231.5px;"><value class="atomic byte4">M { … }</value></failed>
             <denied style="left: 141px;">⛔</denied>
         </values>
         <labels>
@@ -1425,7 +1429,7 @@ let c: S = M::new();
 <explanation>
 
 ```
-fn f(x: S) { ... }
+fn f(x: S) { … }
 
 let a = S(1); // <- We are here
 f(a);
@@ -1772,7 +1776,7 @@ let d = r.clone();  // Valid to clone (or copy) from r-target.
 - The *dereference* `*r` means to neither use the _location of_ or _value within_ `r`, but the **location `r` points to**.
 - In example above, clone `d` is created from `*r`, and `S(2)` written to `*r`.
     - Method `Clone::clone(&T)` expects a reference itself, which is why we can use `r`, not `*r`.
-    - On assignment `*r = ...` old value in location also dropped (not shown above).
+    - On assignment `*r = …` old value in location also dropped (not shown above).
 
 </explanation>
 </lifetime-section>
@@ -1846,7 +1850,7 @@ let d = r.clone();  // Valid to clone (or copy) from r-target.
 <explanation>
 
 ```
-let mut a = ...;
+let mut a = …;
 let r = &mut a;
 let d = *r;       // Invalid to move out value, `a` would be empty.
 *r = M::new();    // invalid to store non S value, doesn't make sense.
@@ -2126,7 +2130,7 @@ let p: *const S = questionable_origin();
 > <sup>1</sup> There is sometimes ambiguity in the docs differentiating the various _scopes_ and _lifetimes_.
 > We try to be pragmatic here, but suggestions are welcome.
 >
-> <sup>2</sup> _Live lines_ might have been a more appropriate term ...
+> <sup>2</sup> _Live lines_ might have been a more appropriate term …
 
 </explanation>
 </lifetime-section>
@@ -2858,7 +2862,7 @@ print_byte(r);
 <explanation>
 
 ```
-fn f(x: &S, y:&S) -> &u8 { ... }
+fn f(x: &S, y:&S) -> &u8 { … }
 
 let b = S(1);
 let c = S(2);
@@ -3232,7 +3236,7 @@ print_byte(r);
 <explanation>
 
 ```
-fn f<'b, 'c>(x: &'b S, y: &'c S) -> &'c u8 { ... }
+fn f<'b, 'c>(x: &'b S, y: &'c S) -> &'c u8 { … }
 
 let b = S(1);
 let c = S(2);
@@ -3550,7 +3554,7 @@ fn f3lr<'b, 'a>(rb: &'b mut &'a     S) -> &'a     S { *rb }
 // f4lm<'b, 'a>(rb: &'b mut &'a mut S) -> &'a mut S { *rb } // L
 
 // Now assume we have a `ra` somewhere
-let mut ra: &'a mut S = ...;
+let mut ra: &'a mut S = …;
 
 let rval = f1sr(&&*ra);       // OK
 let rval = f2sr(&&mut *ra);
@@ -3563,9 +3567,9 @@ let rval = f4sr(&mut ra);
 let rval = f4sm(&mut ra);
 
 let rval = f1lr(&&*ra);
-//  rval = f2lr(&&mut *ra);   // If this worked we'd have `rval` and `ra` ...
+//  rval = f2lr(&&mut *ra);   // If this worked we'd have `rval` and `ra` …
 let rval = f3lr(&mut &*ra);
-//  rval = f4lr(&mut ra);     // ... now (mut) aliasing `S` in compute below.
+//  rval = f4lr(&mut ra);     // … now (mut) aliasing `S` in compute below.
 
 //  rval = f1lm(&&*ra);       // Same as above, fails for mut-chain reasons.
 //  rval = f2lm(&&mut *ra);   //                    "
@@ -3660,7 +3664,7 @@ Also, dereference `*rb` not strictly necessary, just added for clarity.
     let (    x2, _) = f(2, 5);  // S(2) - EoS   S(5) - dropped immediately 
     let (ref x3, _) = f(3, 6);  // S(3) - EoS   S(6) - EoS 
 
-    println!("...");
+    println!("…");
 }
 ```
 
@@ -4015,7 +4019,7 @@ Similarly, for <code>f64</code> types this would look like:
 | `200_u8 / 0_u8` | Compile error. | - |
 | `200_u8 / _0` <sup>d, r</sup> | Panic. | Regular math may panic; here: division by zero. |
 | `200_u8 + 200_u8` |  Compile error. | - |
-| `200_u8 + _200` <sup>d</sup> | Panic. | Consider `checked_`, `wrapping_`, ... instead. {{ std(page="std/primitive.isize.html#method.checked_add") }}|
+| `200_u8 + _200` <sup>d</sup> | Panic. | Consider `checked_`, `wrapping_`, … instead. {{ std(page="std/primitive.isize.html#method.checked_add") }}|
 | `200_u8 + _200` <sup>r</sup> | `144` | In release mode this will overflow. |
 | `1_u8 / 2_u8` | `0` | Other integer division truncates. |
 | `0.8_f32 + 0.1_f32` | `0.90000004` | - |
@@ -4069,13 +4073,13 @@ Similarly, for <code>f64</code> types this would look like:
 <datum class="spaced">
     <name><code>str</code></name>
     <visual>
-        <note>...</note>
+        <note>…</note>
         <byte class="bytes"><code>U</code></byte>
         <byte class="bytes"><code>T</code></byte>
         <byte class="bytes"><code>F</code></byte>
         <byte class="bytes"><code>-</code></byte>
         <byte class="bytes"><code>8</code></byte>
-        <note>... unspecified times</note>
+        <note>… unspecified times</note>
     </visual>
     <description>Rarely seen alone, but as <code>&str</code> instead.</description>
 </datum>
@@ -4213,7 +4217,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
        <framed class="any t"><code>T</code></framed>
        <framed class="any t"><code>T</code></framed>
        <framed class="any t"><code>T</code></framed>
-       <note>... n times</note>
+       <note>… n times</note>
     </visual>
     <description>Fixed array of <code>n</code> elements.</description>
 </datum>
@@ -4223,11 +4227,11 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
 <datum class="spaced">
     <name><code>[T]</code></name>
     <visual>
-       <note>...</note>
+       <note>…</note>
        <framed class="any t"><code>T</code></framed>
        <framed class="any t"><code>T</code></framed>
        <framed class="any t"><code>T</code></framed>
-       <note>... unspecified times</note>
+       <note>… unspecified times</note>
     </visual>
     <description><b>Slice type</b> of unknown-many elements. Neither <br> <code>Sized</code> (nor carries <code>len</code> information), and most<br> often lives behind reference as <code>&[T]</code>. {{ below(target="#references-pointers-ui") }}</description>
 </datum>
@@ -4324,7 +4328,7 @@ These **sum types** hold a value of one of their sub types:
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>union { ... }</code></name>
+    <name><code>union { … }</code></name>
     <visual style="text-align: left;">
         <framed class="any">
             <code>A</code>
@@ -4455,10 +4459,10 @@ It can be the element- or byte-length of the target, or a pointer to a <i>vtable
     <memory-entry class="double">
         <memory-link style="left:24%;">|</memory-link>
         <memory class="anymem">
-            ...
+            …
             <framed class="any" style="width: 30px;"><code>T</code></framed>
             <framed class="any" style="width: 30px;"><code>T</code></framed>
-            ...
+            …
         </memory>
     </memory-entry>
     <description>Regular <b>slice reference</b> (i.e., the <br>reference type of a slice type <code>[T]</code>) {{ above (target="#custom-types") }} <br>often seen as <code>&[T]</code> if <code>'a</code> elided.</description>
@@ -4479,13 +4483,13 @@ It can be the element- or byte-length of the target, or a pointer to a <i>vtable
     <memory-entry class="double">
         <memory-link style="left:24%;">|</memory-link>
         <memory class="anymem">
-            ...
+            …
             <byte class="bytes"><code>U</code></byte>
             <byte class="bytes"><code>T</code></byte>
             <byte class="bytes"><code>F</code></byte>
             <byte class="bytes"><code>-</code></byte>
             <byte class="bytes"><code>8</code></byte>
-            ...
+            …
         </memory>
     </memory-entry>
     <description><b>String slice reference</b> (i.e., the <br>reference type of string type <code>str</code>),<br> with meta <code>len</code> being byte length.</description>
@@ -4517,11 +4521,11 @@ It can be the element- or byte-length of the target, or a pointer to a <i>vtable
                 <tr class="vtable"><td><code>*Drop::drop(&mut T)</code></td></tr>
                 <tr class="vtable"><td><code>size</code></td></tr>
                 <tr class="vtable"><td><code>align</code></td></tr>
-                <tr class="vtable"><td><code>*Trait::f(&T, ...)</code></td></tr>
-                <tr class="vtable"><td><code>*Trait::g(&T, ...)</code></td></tr>
+                <tr class="vtable"><td><code>*Trait::f(&T, …)</code></td></tr>
+                <tr class="vtable"><td><code>*Trait::g(&T, …)</code></td></tr>
             </table>
         </memory>
-        <description>Meta points to vtable, where <code>*Drop::drop()</code>, <code>*Trait::f()</code>, ... are pointers to their respective <code>impl</code> for <code>T</code>.</description>
+        <description>Meta points to vtable, where <code>*Drop::drop()</code>, <code>*Trait::f()</code>, … are pointers to their respective <code>impl</code> for <code>T</code>.</description>
     </memory-entry>
 
 </datum>
@@ -4728,7 +4732,7 @@ Rust's standard library combines the above primitive types into useful types wit
             <div>
                 <framed class="any t"><code>T</code></framed>
                 <framed class="any t"><code>T</code></framed>
-                <note>... len</note>
+                <note>… len</note>
             </div>
             <capacity>← <note>capacity</note> →</capacity>
         </memory>
@@ -4805,7 +4809,7 @@ Rust's standard library combines the above primitive types into useful types wit
                 <!-- <framed class="any t"><code>T<sub>x</sub></code></framed> -->
                 <framed class="any t"><code>T&#x2063;<sup>T</sup></code></framed>
                 <!-- <framed class="any t"><code>T</code></framed> -->
-                <note>... empty ...</note>
+                <note>… empty …</note>
                 <framed class="any t"><code>T&#x2063;<sup>H</sup></code></framed>
             </div>
             <capacity>← <note>capacity</note> →</capacity>
@@ -4845,9 +4849,9 @@ Rust's standard library combines the above primitive types into useful types wit
         <memory class="heap oversimplified">
             <framed class="any t"><code>K:V</code></framed>
             <framed class="any t"><code>K:V</code></framed>
-            ...
+            …
             <framed class="any t"><code>K:V</code></framed>
-            ...
+            …
             <framed class="any t"><code>K:V</code></framed>
             <capacity><note style="font-weight: bolder;">Oversimplified!</note></capacity>
         </memory>
@@ -4883,7 +4887,7 @@ Rust's standard library combines the above primitive types into useful types wit
                 <framed class="any t" style="background-color: #f9b172;"><code>T&#x2063;<sup style="color:black; font-weight: bolder;">1</sup></code></framed>
                 <framed class="any t" style="background-color: #f9d372;"><code>T&#x2063;<sup style="color:black; font-weight: bolder;">2</sup></code></framed>
                 <framed class="any t" style="background-color: #f9d372;"><code>T&#x2063;<sup style="color:black; font-weight: bolder;">2</sup></code></framed>
-                <note>... len</note>
+                <note>… len</note>
             </div>
             <capacity>← <note>capacity</note> →</capacity>
         </memory>
@@ -4922,7 +4926,7 @@ Rust's standard library combines the above primitive types into useful types wit
                 <byte class="bytes"><code>F</code></byte>
                 <byte class="bytes"><code>-</code></byte>
                 <byte class="bytes"><code>8</code></byte>
-                <note>... len</note>
+                <note>… len</note>
             </div>
             <capacity>← <note>capacity</note> →</capacity>
         </memory>
@@ -4952,7 +4956,7 @@ Rust's standard library combines the above primitive types into useful types wit
                 <byte class="bytes"><code>A</code></byte>
                 <byte class="bytes"><code>B</code></byte>
                 <byte class="bytes"><code>C</code></byte>
-                <note>... len ...</note>
+                <note>… len …</note>
                 <byte class="bytes"><code>␀</code></byte>
             </div>
         </memory>
@@ -5125,9 +5129,9 @@ PRs for this section are very welcome. Idea is:
 | Concatenate strings (any `Display`{{ below(target="#string-output") }} that is). <sup>1</sup>  {{ edition(ed="'21") }} | `format!("{x}{y}")` |
 | Append string (any `Display` to any `Write`).  {{ edition(ed="'21") }} | `write!(x, "{y}")` |
 | Split by separator pattern. {{ std(page="std/str/pattern/trait.Pattern.html") }} {{ link(url="https://stackoverflow.com/a/38138985") }} | `s.split(pattern)` |
-| {{ tab() }} ... with `&str` | `s.split("abc")` |
-| {{ tab() }} ... with `char` | `s.split('/')` |
-| {{ tab() }} ... with closure | `s.split(char::is_numeric)`|
+| {{ tab() }} … with `&str` | `s.split("abc")` |
+| {{ tab() }} … with `char` | `s.split('/')` |
+| {{ tab() }} … with closure | `s.split(char::is_numeric)`|
 | Split by whitespace. | `s.split_whitespace()` |
 | Split by newlines. | `s.lines()` |
 | Split by regular expression.<sup>2</sup> | ` Regex::new(r"\s")?.split("one two three")` |
@@ -5213,7 +5217,7 @@ PRs for this section are very welcome. Idea is:
         <tr><th>Examples</th><th><code>Send</code><sup>*</sup></th><th><code>!Send</code></th></tr>
     </thead>
     <tbody>
-        <tr><td><code>Sync</code><sup>*</sup></td><td><i>Most types</i> ... <code>Arc&lt;T&gt;</code><sup>1,2</sup>, <code>Mutex&lt;T&gt;</code><sup>2</sup></td><td><code>MutexGuard&lt;T&gt;</code><sup>1</sup>, <code>RwLockReadGuard&lt;T&gt;</code><sup>1</sup></td></tr>
+        <tr><td><code>Sync</code><sup>*</sup></td><td><i>Most types</i> … <code>Arc&lt;T&gt;</code><sup>1,2</sup>, <code>Mutex&lt;T&gt;</code><sup>2</sup></td><td><code>MutexGuard&lt;T&gt;</code><sup>1</sup>, <code>RwLockReadGuard&lt;T&gt;</code><sup>1</sup></td></tr>
         <tr><td><code>!Sync</code></td><td><code>Cell&lt;T&gt;</code><sup>2</sup>, <code>RefCell&lt;T&gt;</code><sup>2</sup></td><td><code>Rc&lt;T&gt;</code>, <code>&dyn Trait</code>, <code>*const T</code><sup>3</sup>, <code>*mut T</code><sup>3</sup></td></tr>
     </tbody>
 </table>
@@ -5770,7 +5774,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 
 | Element |  Meaning |
 |---------| ---------|
-| `argument` |  Number (`0`, `1`, ...), variable {{ edition(ed="'21") }} or name,{{ edition(ed="'18") }} e.g., `print!("{x}")`. |
+| `argument` |  Number (`0`, `1`, …), variable {{ edition(ed="'21") }} or name,{{ edition(ed="'18") }} e.g., `print!("{x}")`. |
 | `fill` | The character to fill empty spaces with (e.g., `0`), if `width` is specified. |
 | `align` | Left (`<`), center (`^`), or right (`>`), if width is specified. |
 | `sign` | Can be `+` for sign to always be printed. |
@@ -5778,7 +5782,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 | `width` | Minimum width (&geq; 0), padding with `fill` (default to space). If starts with `0`, zero-padded. |
 | `precision` | Decimal digits (&geq; 0) for numerics, or max width for non-numerics. |
 | `$` | Interpret `width` or `precision` as argument identifier instead to allow for dynamic formatting. |
-| **`type`** | `Debug`{{ std(page="std/fmt/trait.Debug.html") }} (`?`) formatting, hex (`x`), binary (`b`), octal (`o`), pointer (`p`), exp (`e`) ... [see more](https://doc.rust-lang.org/std/fmt/index.html#traits). |
+| **`type`** | `Debug`{{ std(page="std/fmt/trait.Debug.html") }} (`?`) formatting, hex (`x`), binary (`b`), octal (`o`), pointer (`p`), exp (`e`) … [see more](https://doc.rust-lang.org/std/fmt/index.html#traits). |
 
 </div>
 
@@ -5849,8 +5853,8 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | 📁 `tests/` | Integration tests go here, invoked via **`cargo test`**. Unit tests often stay in `src/` file. |
 | `.rustfmt.toml` | In case you want to [**customize**](https://rust-lang.github.io/rustfmt/) how **`cargo fmt`** works. |
 | `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`**  {{ esoteric() }} |
-| `build.rs` |  **Pre-build script**, {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }} useful when compiling C / FFI, ... |
-| <code class="ignore-auto language-bash">Cargo.toml</code> | Main **project manifest**, {{ link(url="https://doc.rust-lang.org/cargo/reference/manifest.html") }} Defines dependencies, artifacts ... |
+| `build.rs` |  **Pre-build script**, {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }} useful when compiling C / FFI, … |
+| <code class="ignore-auto language-bash">Cargo.toml</code> | Main **project manifest**, {{ link(url="https://doc.rust-lang.org/cargo/reference/manifest.html") }} Defines dependencies, artifacts … |
 | <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds; add to `git` for apps, not for libs. |
 | `rust-toolchain.toml` |  Define **toolchain override**{{ link(url="https://rust-lang.github.io/rustup/overrides.html" )}} (channel, components, targets) for this project. |
 </div>
@@ -5980,7 +5984,7 @@ fn my_sample() {
 
 #![feature(test)]   // #[bench] is still experimental
 
-extern crate test;  // Even in '18 this is needed for ... reasons.
+extern crate test;  // Even in '18 this is needed for … reasons.
                     // Normally you don't need this in '18 code.
 
 use test::{black_box, Bencher};
@@ -6006,7 +6010,7 @@ fn my_algo(b: &mut Bencher) {
 // build.rs (sample pre-build script)
 
 fn main() {
-    // You need to rely on env. vars for target; `#[cfg(...)]` are for host.
+    // You need to rely on env. vars for target; `#[cfg(…)]` are for host.
     let target_os = env::var("CARGO_CFG_TARGET_OS");
 }
 ```
@@ -6117,7 +6121,7 @@ Rust has three kinds of **namespaces**:
         <tr>
             <td><code>mod X {}</code></td>
             <td><code>fn X() {}</code></td>
-            <td><code>macro_rules! X { ... }</code></td>
+            <td><code>macro_rules! X { … }</code></td>
         </tr>
         <tr>
             <td><code>X</code> (crate)</td>
@@ -6197,10 +6201,10 @@ Commands and tools that are good to know.
 | <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
 | {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies features with other dependents (can be confusing). |
 | {{ tab() }} `cargo run -p w` | Run main of sub-workspace `w`. Treats features more as you would expect. |
-| <code>cargo ... --timings</code> | Show what crates caused your build to take so long. {{ hot() }} |
+| <code>cargo … --timings</code> | Show what crates caused your build to take so long. {{ hot() }} |
 | `cargo tree` | Show dependency graph. |
-| <code>cargo +{nightly, stable} ...</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
-| `cargo +nightly ...` | Some nightly-only commands (substitute `...` with command below) |
+| <code>cargo +{nightly, stable} …</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
+| `cargo +nightly …` | Some nightly-only commands (substitute `…` with command below) |
 | {{ tab() }} `rustc -- -Zunpretty=expanded` |  Show expanded macros. {{ experimental() }} |
 | `rustup doc` | Open offline Rust documentation (incl. the books), good on a plane! |
 
@@ -6275,7 +6279,7 @@ linker = "C:/[PATH_TO_TOOLCHAIN]/prebuilt/windows-x86_64/bin/aarch64-linux-andro
 set CC=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
 set CXX=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang.cmd
 set AR=C:\[PATH_TO_TOOLCHAIN]\prebuilt\windows-x86_64\bin\aarch64-linux-android-ar.exe
-...
+…
 ```
 
 Whether you set them depends on how compiler complains, not necessarily all are needed.
@@ -6336,7 +6340,7 @@ Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-wi
 | {{ tab() }} `$x:path`    | A path (e.g. `foo`, `::std::mem::replace`, `transmute::<_, int>`). |
 | {{ tab() }} `$x:literal` | A literal (e.g. `3`, `"foo"`, `b"bar"`, etc.). |
 | {{ tab() }} `$x:lifetime` | A lifetime (e.g. `'a`, `'static`, etc.). |
-| {{ tab() }} `$x:meta`    | A meta item; the things that go inside `#[...]` and `#![...]` attributes. |
+| {{ tab() }} `$x:meta`    | A meta item; the things that go inside `#[…]` and `#![…]` attributes. |
 | {{ tab() }} `$x:vis`    | A visibility modifier;  `pub`, `pub(crate)`, etc. |
 | {{ tab() }} `$x:tt`      | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more details. |
 | `$crate` | Special hygiene variable, crate where macros is defined. {{ todo() }} |
@@ -6366,8 +6370,8 @@ Inside a **doc comment** {{ book(page="ch14-02-publishing-to-crates-io.html#maki
 
 | Within Doc Comments | Explanation |
 |--------|-------------|
-| ` ```...``` ` | Include a [**doc test**](https://doc.rust-lang.org/rustdoc/documentation-tests.html) (doc code running on `cargo test`). |
-| ` ```X,Y ...``` ` | Same, and include optional configurations; with `X`, `Y` being ... |
+| ` ```…``` ` | Include a [**doc test**](https://doc.rust-lang.org/rustdoc/documentation-tests.html) (doc code running on `cargo test`). |
+| ` ```X,Y …``` ` | Same, and include optional configurations; with `X`, `Y` being … |
 | {{ tab() }} <code style="color: gray;">rust</code> | Make it explicit test is written in Rust; implied by Rust tooling. |
 | {{ tab() }} <code style="color: gray; opacity: 0.3;">-</code> | Compile test. Run test. Fail if panic. **Default behavior**. |
 | {{ tab() }} <code style="color: gray;">should_panic</code> | Compile test. Run test. Execution should panic. If not, fail test. |
@@ -6405,7 +6409,7 @@ Attributes affecting the whole crate or app:
 | Opt-Out's   | On | Explanation |
 |--------|---| ----------|
 | `#![no_std]` | `C` | Don't (automatically) import **`std`**{{ std(page="std/") }} ; use **`core`**{{ std(page="core/") }} instead. {{ ref(page="names/preludes.html#the-no_std-attribute") }} |
-| `#![no_implicit_prelude]` | `CM` | Don't add **`prelude`**{{ std(page="std/prelude/index.html") }}, need to manually import `None`, `Vec`, ... {{ ref(page="names/preludes.html#the-no_implicit_prelude-attribute") }} |
+| `#![no_implicit_prelude]` | `CM` | Don't add **`prelude`**{{ std(page="std/prelude/index.html") }}, need to manually import `None`, `Vec`, … {{ ref(page="names/preludes.html#the-no_implicit_prelude-attribute") }} |
 | `#![no_main]` |  `C` | Don't emit `main()` in apps if you do that yourself. {{ ref(page="crates-and-source-files.html#the-no_main-attribute") }}|
 
 <!-- | `#![no_builtins]` | `C` | Does ... something ... probably important. {{ todo() }} {{ ref(page="attributes/codegen.html#the-no_builtins-attribute") }}| -->
@@ -6422,8 +6426,8 @@ Attributes affecting the whole crate or app:
 |--------|---| ----------|
 | `#![windows_subsystem = "x"]` | `C` | On Windows, make a `console` or `windows` app. {{ ref(page="runtime.html#the-windows_subsystem-attribute") }} {{ esoteric() }} |
 | `#![crate_name = "x"]` | `C`  | Specifiy current crate name, e.g., when not using `cargo`. {{ todo() }} {{ ref(page="crates-and-source-files.html#the-crate_name-attribute") }} {{ esoteric() }} |
-| `#![crate_type = "bin"]` | `C`  | Specifiy current crate type (`bin`, `lib`, `dylib`, `cdylib`, ...). {{ ref(page="linkage.html") }} {{ esoteric() }} |
-| `#![recursion_limit = "123"]` | `C` | Set _compile-time_ recursion limit for deref, macros, ... {{ ref(page="attributes/limits.html#the-recursion_limit-attribute") }} {{ esoteric() }} |
+| `#![crate_type = "bin"]` | `C`  | Specifiy current crate type (`bin`, `lib`, `dylib`, `cdylib`, …). {{ ref(page="linkage.html") }} {{ esoteric() }} |
+| `#![recursion_limit = "123"]` | `C` | Set _compile-time_ recursion limit for deref, macros, … {{ ref(page="attributes/limits.html#the-recursion_limit-attribute") }} {{ esoteric() }} |
 | `#![type_length_limit = "456"]` | `C` | Limits maximum number of type substitutions. {{ ref(page="attributes/limits.html#the-type_length_limit-attribute") }} {{ esoteric() }} |
 
 
@@ -6523,10 +6527,10 @@ Attributes used by Rust tools to improve code quality:
 
 | Code Patterns | On | Explanation |
 |-------|---|-------------|
-| `#[allow(X)]` | `*` | Instruct `rustc` / `clippy` to ... ignore class `X` of possible issues. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
-| `#[warn(X)]` <sup>1</sup> | `*` |  ... emit a warning, mixes well with `clippy` lints. {{ hot() }} {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
-| `#[deny(X)]` <sup>1</sup> | `*` |  ... fail compilation. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
-| `#[forbid(X)]` <sup>1</sup> | `*` | ... fail compilation and prevent subsequent `allow` overrides. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
+| `#[allow(X)]` | `*` | Instruct `rustc` / `clippy` to … ignore class `X` of possible issues. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
+| `#[warn(X)]` <sup>1</sup> | `*` |  … emit a warning, mixes well with `clippy` lints. {{ hot() }} {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
+| `#[deny(X)]` <sup>1</sup> | `*` |  … fail compilation. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
+| `#[forbid(X)]` <sup>1</sup> | `*` | … fail compilation and prevent subsequent `allow` overrides. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
 | `#[deprecated = "msg"]` | `*` | Let your users know you made a design mistake. {{ ref(page="diagnostics.html#the-deprecated-attribute") }}|
 | `#[must_use = "msg"]` | `FTX` |  Makes compiler check return value is _processed_ by caller. {{ hot() }} {{ ref(page="attributes/diagnostics.html#the-must_use-attribute") }}|
 
@@ -6555,8 +6559,8 @@ Attributes used by Rust tools to improve code quality:
 | Formatting | On | Explanation |
 |-------|---|-------------|
 | `#[rustfmt::skip]` |  `*` | Prevent `cargo fmt` from cleaning up item. {{ link(url="https://github.com/rust-lang/rustfmt") }}|
-| `#![rustfmt::skip::macros(x)]` |  `CM` | ... from cleaning up macro `x`. {{ link(url="https://github.com/rust-lang/rustfmt") }}|
-| `#![rustfmt::skip::attributes(x)]` |  `CM` | ... from cleaning up attribute `x`. {{ link(url="https://github.com/rust-lang/rustfmt") }}|
+| `#![rustfmt::skip::macros(x)]` |  `CM` | … from cleaning up macro `x`. {{ link(url="https://github.com/rust-lang/rustfmt") }}|
+| `#![rustfmt::skip::attributes(x)]` |  `CM` | … from cleaning up attribute `x`. {{ link(url="https://github.com/rust-lang/rustfmt") }}|
 
 </fixed-3-column>
 
@@ -6802,9 +6806,9 @@ Allowing users to _bring their own types_ and avoid code duplication.
 
 | Type |   Values |
 | --- | --- |
-| `u8`  |  <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code> |
-| `char`  | `{ 'a', 'b', ... '🦀' }` |
-| `struct S(u8, char)`  | <code>{ (0<sub>u8</sub>, 'a'), ... (255<sub>u8</sub>, '🦀') }</code> |
+| `u8`  |  <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, …, 255<sub>u8</sub> }</code> |
+| `char`  | `{ 'a', 'b', … '🦀' }` |
+| `struct S(u8, char)`  | <code>{ (0<sub>u8</sub>, 'a'), … (255<sub>u8</sub>, '🦀') }</code> |
 
 <subtitle>Sample types and sample values.</subtitle>
 
@@ -6853,10 +6857,10 @@ Allowing users to _bring their own types_ and avoid code duplication.
 
 | Type | Values |
 | --- | --- |
-| `u8`  | <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, ..., 255<sub>u8</sub> }</code> |
-| `u16`  | <code>{ 0<sub>u16</sub>, 1<sub>u16</sub>, ..., 65_535<sub>u16</sub> }</code> |
-| `&u8`  | <code>{ 0xffaa<sub>&u8</sub>, 0xffbb<sub>&u8</sub>, ... }</code> |
-| `&mut u8`  | <code>{ 0xffaa<sub>&mut u8</sub>, 0xffbb<sub>&mut u8</sub>, ... }</code> |
+| `u8`  | <code>{ 0<sub>u8</sub>, 1<sub>u8</sub>, …, 255<sub>u8</sub> }</code> |
+| `u16`  | <code>{ 0<sub>u16</sub>, 1<sub>u16</sub>, …, 65_535<sub>u16</sub> }</code> |
+| `&u8`  | <code>{ 0xffaa<sub>&u8</sub>, 0xffbb<sub>&u8</sub>, … }</code> |
+| `&mut u8`  | <code>{ 0xffaa<sub>&mut u8</sub>, 0xffbb<sub>&mut u8</sub>, … }</code> |
 
 <subtitle>How values differ between types.</subtitle>
 
@@ -6892,21 +6896,21 @@ Allowing users to _bring their own types_ and avoid code duplication.
 <mini-zoo class="zoo">
     <entry>
         <type class="primitive"><code>u8</code></type>
-        <impl><code>impl { ... }</code></impl>
+        <impl><code>impl { … }</code></impl>
     </entry>
     <entry>
         <type class="composed"><code>String</code></type>
-        <impl><code>impl { ... }</code></impl>
+        <impl><code>impl { … }</code></impl>
     </entry>
     <entry>
         <type class="composed"><code>Port</code></type>
-        <impl><code>impl { ... }</code></impl>
+        <impl><code>impl { … }</code></impl>
     </entry>
 </mini-zoo>
 
 ```
 impl Port {
-    fn f() { ... }
+    fn f() { … }
 }
 ```
 
@@ -6941,7 +6945,7 @@ impl Port {
     </entry>
 </mini-zoo>
 
-- **Traits** ...
+- **Traits** …
     - are way to "abstract" behavior,
     - trait author declares semantically _this trait means X_,
     - other can implement ("subscribe to") that behavior for their type.
@@ -6960,7 +6964,7 @@ impl Port {
     <tbody>
         <tr><td><code>u8</code></td></tr>
         <tr><td><code>u16</code></td></tr>
-        <tr><td><code>...</code></td></tr>
+        <tr><td><code>…</code></td></tr>
     </tbody>
 </table>
 
@@ -6976,7 +6980,7 @@ impl Port {
     <tbody>
         <tr><td><code>u8</code></td></tr>
         <tr><td><code>String</code></td></tr>
-        <tr><td><code>...</code></td></tr>
+        <tr><td><code>…</code></td></tr>
     </tbody>
 </table>
 
@@ -6992,7 +6996,7 @@ impl Port {
     <tbody>
         <tr><td><code>char</code></td></tr>
         <tr><td><code>Port</code></td></tr>
-        <tr><td><code>...</code></td></tr>
+        <tr><td><code>…</code></td></tr>
     </tbody>
 </table>
 
@@ -7004,7 +7008,7 @@ impl Port {
 
 
 - **Whoever is part of that membership list will adhere to behavior of list.**
-- Traits can also include associated methods, functions, ...
+- Traits can also include associated methods, functions, …
 
 ```
 trait ShowHex {
@@ -7051,7 +7055,7 @@ trait Copy { }
 
 
 ```
-impl ShowHex for Port { ... }
+impl ShowHex for Port { … }
 ```
 - Traits are implemented for types 'at some point'.
 - Implementation `impl A for B` add type `B` to the trait membership list:
@@ -7062,7 +7066,7 @@ impl ShowHex for Port { ... }
 
 <table>
     <thead>
-        <tr style=""><th>ShowHex Trait</th></tr>
+        <tr><th>ShowHex Trait</th></tr>
         <tr class="subheader"><th><code>Self</code></th></tr>
     </thead>
     <tbody>
@@ -7078,19 +7082,19 @@ impl ShowHex for Port { ... }
 <mini-zoo class="zoo">
     <entry>
         <type class="primitive"><code>u8</code></type>
-        <impl><code>impl { ... }</code></impl>
+        <impl><code>impl { … }</code></impl>
         <trait-impl>⌾ <code>Sized</code></trait-impl>
         <trait-impl>⌾ <code>Clone</code></trait-impl>
         <trait-impl>⌾ <code>Copy</code></trait-impl>
     </entry>
     <entry>
         <type class="composed"><code>Device</code></type>
-        <impl><code>impl { ... }</code></impl>
+        <impl><code>impl { … }</code></impl>
         <trait-impl>⌾ <code>Transport</code></trait-impl>
     </entry>
     <entry>
         <type class="composed"><code>Port</code></type>
-        <impl><code>impl { ... }</code></impl>
+        <impl><code>impl { … }</code></impl>
         <trait-impl>⌾ <code>Sized</code></trait-impl>
         <trait-impl>⌾ <code>Clone</code></trait-impl>
         <trait-impl>⌾ <code>ShowHex</code></trait-impl>
@@ -7251,8 +7255,8 @@ Venison::new("rudolph").eat();
 
 | Construct |   Values |
 | --- | --- |
-| `Vec<u8>`  |  `{ [], [1], [1, 2, 3], ... }` |
-| `Vec<char>`  |  `{ [], ['a'], ['x', 'y', 'z'], ... }` |
+| `Vec<u8>`  |  `{ [], [1], [1, 2, 3], … }` |
+| `Vec<char>`  |  `{ [], ['a'], ['x', 'y', 'z'], … }` |
 | `Vec<>`  |  - |
 
 <subtitle>Types vs type constructors.</subtitle>
@@ -7307,9 +7311,9 @@ Venison::new("rudolph").eat();
 
 | Type Constructor |  Produces Family |
 | --- | --- |
-| `struct Vec<T> {}`  |  `Vec<u8>`, `Vec<f32>`, `Vec<Vec<u8>>`, ... |
-| `[T; 128]`  |  `[u8; 128]`, `[char; 128]`, `[Port; 128]` ... |
-| `&T`  |  `&u8`, `&u16`, `&str`,  ... |
+| `struct Vec<T> {}`  |  `Vec<u8>`, `Vec<f32>`, `Vec<Vec<u8>>`, … |
+| `[T; 128]`  |  `[u8; 128]`, `[char; 128]`, `[Port; 128]` … |
+| `&T`  |  `&u8`, `&u16`, `&str`,  … |
 
 <subtitle>Type vs type constructors.</subtitle>
 
@@ -7355,8 +7359,8 @@ fn f() {
 
 | Type Constructor |  Produces Family |
 | --- | --- |
-| `[u8; N]`  |  `[u8; 0]`, `[u8; 1]`, `[u8; 2]`, ... |
-| `struct S<const N: usize> {}`  |  `S<1>`, `S<6>`, `S<123>`,  ... |
+| `[u8; N]`  |  `[u8; 0]`, `[u8; 1]`, `[u8; 2]`, … |
+| `struct S<const N: usize> {}`  |  `S<1>`, `S<6>`, `S<123>`,  … |
 
 <subtitle>Type constructors based on constant.</subtitle>
 
@@ -7442,7 +7446,7 @@ struct MyArray<T, const N: usize> {
 // Type can only be constructed for some `T` if that
 // T is part of `Absolute` membership list.
 struct Num<T> where T: Absolute {
-    ...
+    …
 }
 
 ```
@@ -7460,7 +7464,7 @@ struct Num<T> where T: Absolute {
     <tbody>
         <tr><td><code>u8</code></td></tr>
         <tr><td><code>u16</code></td></tr>
-        <tr><td><code>...</code></td></tr>
+        <tr><td><code>…</code></td></tr>
     </tbody>
 </table>
 
@@ -7526,7 +7530,7 @@ We add bounds to the struct here. In practice it's nicer add bounds to the respe
 struct S<T>
 where
     T: Absolute + Dim + Mul + DirName + TwoD
-{ ... }
+{ … }
 ```
 
 - Long trait bounds can look intimidating.
@@ -7547,16 +7551,16 @@ where
 When we write:
 ```
 impl<T> S<T> where T: Absolute + Dim + Mul {
-    fn f(&self, x: T) { ... };
+    fn f(&self, x: T) { … };
 }
 ```
 It can be read as:
 - here is an implementation recipe for any type `T` (the `impl <T>` part),
 - where<!--sup>*</sup--> that type must be member of the `Absolute + Dim + Mul` traits,
 - you may add an implementation block to `S<T>`,
-- containing the methods ...
+- containing the methods …
 
-You can think of such `impl<T> ... {} ` code as **abstractly implementing a family of behaviors**. Most notably, they allow 3<sup>rd</sup> parties to transparently materialize implementations similarly to how type constructors materialize types:
+You can think of such `impl<T> … {} ` code as **abstractly implementing a family of behaviors**. Most notably, they allow 3<sup>rd</sup> parties to transparently materialize implementations similarly to how type constructors materialize types:
 
 ```
 // If compiler encounters this, it will
@@ -7574,7 +7578,7 @@ s.f('x');
 
 <!-- Section -->
 <generics-section id="xxx">
-<header>Blanket Implementations &mdash; <code>impl&lt;T&gt X for T { ... }</code></header>
+<header>Blanket Implementations &mdash; <code>impl&lt;T&gt X for T { … }</code></header>
 <description>
 
 {{ tablesep() }}
@@ -7583,7 +7587,7 @@ Can also write "family implementations" so they apply trait to many types:
 
 ```
 // Also implements Serialize for any type if that type already implements ToHex
-impl<T> Serialize for T where T: ToHex { ... }
+impl<T> Serialize for T where T: ToHex { … }
 ```
 
 These are called **blanket implementations**.
@@ -7600,7 +7604,7 @@ These are called **blanket implementations**.
     <tbody>
         <tr><td><code>Port</code></td></tr>
         <tr><td><code>Device</code></td></tr>
-        <tr><td><code>...</code></td></tr>
+        <tr><td><code>…</code></td></tr>
     </tbody>
 </table>
 
@@ -7622,7 +7626,7 @@ These are called **blanket implementations**.
     <tbody>
         <tr><td><code>u8</code></td></tr>
         <tr><td><code>Port</code></td></tr>
-        <tr><td><code>...</code></td></tr>
+        <tr><td><code>…</code></td></tr>
     </tbody>
 </table>
 
@@ -7748,7 +7752,7 @@ impl Deref for String { type O = str; }
     <tbody>
         <tr><td><code>u16</code></td><td><code>u8</code></td></tr>
         <tr><td><code>u32</code></td><td><code>u16</code></td></tr>
-        <tr><td colspan="2"><code>...</code></td></tr>
+        <tr><td colspan="2"><code>…</code></td></tr>
     </tbody>
 </table>
 
@@ -7765,7 +7769,7 @@ impl Deref for String { type O = str; }
     <tbody>
         <tr><td><code>Port</code></td><td><code>u8</code></td></tr>
         <tr><td><code>String</code></td><td><code>str</code></td></tr>
-        <tr><td colspan="2"><code>...</code></td></tr>
+        <tr><td colspan="2"><code>…</code></td></tr>
     </tbody>
 </table>
 
@@ -7900,7 +7904,7 @@ trait B { type O; }
 // Implementor adds (X, u32) to A.
 impl A<u32> for X { }
 
-// Implementor adds family impl. (X, ...) to A, user can materialze.
+// Implementor adds family impl. (X, …) to A, user can materialze.
 impl<T> A<T> for Y { }
 
 // Implementor must decide specific entry (X, O) added to B.
@@ -7920,7 +7924,7 @@ impl B for X { type O = u32; }
     </thead>
     <tbody>
         <tr><td><code>X</code></td><td><code>u32</code></td></tr>
-        <tr><td><code>Y</code></td><td><code>...</code></td></tr>
+        <tr><td><code>Y</code></td><td><code>…</code></td></tr>
     </tbody>
 </table>
 
@@ -8018,10 +8022,10 @@ trait Query {
     fn search(&self, needle: &str);
 }
 
-impl Query for PostgreSQL { ... }
-impl Query for Sled { ... }
+impl Query for PostgreSQL { … }
+impl Query for Sled { … }
 
-postgres.search("SELECT ...");
+postgres.search("SELECT …");
 ```
 
 <mini-zoo class="zoo">
@@ -8068,11 +8072,11 @@ trait Query<I> {
     fn search(&self, needle: I);
 }
 
-impl Query<&str> for PostgreSQL { ... }
-impl Query<String> for PostgreSQL { ... }
-impl<T> Query<T> for Sled where T: ToU8Slice { ... }
+impl Query<&str> for PostgreSQL { … }
+impl Query<String> for PostgreSQL { … }
+impl<T> Query<T> for Sled where T: ToU8Slice { … }
 
-postgres.search("SELECT ...");
+postgres.search("SELECT …");
 postgres.search(input.to_string());
 sled.search(file);
 ```
@@ -8128,10 +8132,10 @@ trait Query {
     fn search(&self, needle: Self::O);
 }
 
-impl Query for PostgreSQL { type O = String; ...}
-impl Query for Sled { type O = Vec<u8>; ... }
+impl Query for PostgreSQL { type O = String; …}
+impl Query for Sled { type O = Vec<u8>; … }
 
-postgres.search("SELECT ...".to_string());
+postgres.search("SELECT …".to_string());
 sled.search(vec![0, 1, 2, 4]);
 ```
 
@@ -8187,11 +8191,11 @@ trait Query<I> {
     fn search(&self, needle: I) -> Self::O;
 }
 
-impl Query<&str> for PostgreSQL { type O = String; ... }
-impl Query<CString> for PostgreSQL { type O = CString; ... }
-impl<T> Query<T> for Sled where T: ToU8Slice { type O = Vec<u8>; ... }
+impl Query<&str> for PostgreSQL { type O = String; … }
+impl Query<CString> for PostgreSQL { type O = CString; … }
+impl<T> Query<T> for Sled where T: ToU8Slice { type O = Vec<u8>; … }
 
-postgres.search("SELECT ...").to_uppercase();
+postgres.search("SELECT …").to_uppercase();
 sled.search(&[1, 2, 3, 4]).pop();
 ```
 
@@ -8300,7 +8304,7 @@ Like examples above, in particular trait author assumes:
 
 <mini-zoo class="zoo" style="">
     <entry>
-        <type class="primitive"><code>...</code></type>
+        <type class="primitive"><code>…</code></type>
         <trait-impl class="grayed">⌾ <code style="text-decoration: line-through">Sized</code></trait-impl>
     </entry>
 </mini-zoo>
@@ -8356,7 +8360,7 @@ Like examples above, in particular trait author assumes:
 </mini-zoo>
 
 ```
-struct S<T> { ... }
+struct S<T> { … }
 ```
 
 - `T` can be any concrete type.
@@ -8382,7 +8386,7 @@ struct S<T> { ... }
 </mini-zoo>
 
 ```
-struct S<T> where T: ?Sized { ... }
+struct S<T> where T: ?Sized { … }
 ```
 
 
@@ -8823,15 +8827,15 @@ fn f(x: A) -> B {
 
 _Bread and butter_ way to get `B` from `A`. Some traits provide canonical, user-computable type relations:
 
-| Trait | Example | Trait implies ... |
+| Trait | Example | Trait implies … |
 |--------| -----------|-----------|
 | `impl From<A> for B {}` | `a.into()` | _Obvious_, always-valid relation. |
 | `impl TryFrom<A> for B {}` | `a.try_into()?` | _Obvious_, sometimes-valid relation. |
 | `impl Deref for A {}` | `*a` | `A` is smart pointer carrying `B`; also enables coercions.  |
 | `impl AsRef<B> for A {}` | `a.as_ref()` | `A` can be _viewed_ as `B`. |
 | `impl AsMut<B> for A {}` | `a.as_mut()` | `A` can be mutably viewed as `B`. |
-| `impl Borrow<B> for A {}` | `a.borrow()` | `A` has borrowed _analog_ `B` (behaving same under `Eq`, ...). |
-| `impl ToOwned for A { ... }` | `a.to_owned()` | `A` has owned analog `B`. |
+| `impl Borrow<B> for A {}` | `a.borrow()` | `A` has borrowed _analog_ `B` (behaving same under `Eq`, …). |
+| `impl ToOwned for A { … }` | `a.to_owned()` | `A` has owned analog `B`. |
 
 
 <!--
@@ -8871,8 +8875,8 @@ Convert types **with keyword `as`** if conversion _relatively obvious_ but **mig
 | `bool` | `Integer` | `true as u8` |  |
 | `char` | `Integer` | `'A' as u8` |  |
 | `&[T; N]` | `*const T` | `my_ref as *const u8` |  |
-| `fn(...)` | `Ptr` | `f as *const u8` | If `Ptr` is `Sized`.  |
-| `fn(...)` | `Integer` | `f as usize` |  |
+| `fn(…)` | `Ptr` | `f as *const u8` | If `Ptr` is `Sized`.  |
+| `fn(…)` | `Integer` | `f as usize` |  |
 
 {{ tablesep() }}
 
@@ -8880,7 +8884,7 @@ Convert types **with keyword `as`** if conversion _relatively obvious_ but **mig
 
 Where `Ptr`, `Integer`, `Number` are just used for brevity and actually mean:
 - `Ptr` any `*const T` or `*mut T`;
-- `Integer` any countable `u8` ... `i128`;
+- `Integer` any countable `u8` … `i128`;
 - `Number` any `Integer`, `f32`, `f64`.
 
 </footnote>
@@ -8927,7 +8931,7 @@ Automatically **weaken** type `A` to `B`; types can be _substantially_<sup>1</su
 <sup>2</sup> Does not quite work in example above as unsized can't be on stack; imagine `f(x: &A) -> &B` instead. Unsizing works by default for:
 - `[T; n]` to `[T]`
 - `T` to `dyn Trait` if `impl Trait for T {}`.
-- `Foo<..., T, ...>` to `Foo<..., U, ...>` under arcane {{ link(url="https://doc.rust-lang.org/nomicon/coercions.html") }} circumstances.
+- `Foo<…, T, …>` to `Foo<…, U, …>` under arcane {{ link(url="https://doc.rust-lang.org/nomicon/coercions.html") }} circumstances.
 
 </footnote>
 
@@ -9058,7 +9062,7 @@ If you are used to Java or C, consider these.
 |  | <code>names.iter().filter(&vert;x&vert; x.starts_with("A"))</code> |
 | **Handle Absence with `?`** | `y = try_something()?;` |
 |  | `get_option()?.run()?` |
-| **Use Strong Types** | `enum E { Invalid, Valid { ... } }` over `ERROR_INVALID = -1` |
+| **Use Strong Types** | `enum E { Invalid, Valid { … } }` over `ERROR_INVALID = -1` |
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
 |  | `struct Charge(f32)` over `f32` |
 | **Prevent Illegal State** | `my_lock.write()?.guaranteed_to_be_locked = 10;`|
@@ -9072,7 +9076,7 @@ If you are used to Java or C, consider these.
 | **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
 |   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
 | **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
-| **Implement Traits** | `#[derive(Debug, Copy, ...)]` and custom `impl` where needed. |
+| **Implement Traits** | `#[derive(Debug, Copy, …)]` and custom `impl` where needed. |
 | **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
 |  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
 |  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
@@ -9321,7 +9325,7 @@ Unsafe leads to unsound. Unsound leads to undefined. Undefined leads to the dark
 
 ```rust
 let y = x + x;  // Safe Rust only guarantees the execution of this code is consistent with
-print(y);       // 'specification' (long story ...). It does not guarantee that y is 2x
+print(y);       // 'specification' (long story …). It does not guarantee that y is 2x
                 // (X::add might be implemented badly) nor that y is printed (Y::fmt may panic).
 ```
 </div></div>
@@ -9434,18 +9438,18 @@ _Adversarial_ code is _safe_ 3<sup>rd</sup> party code that compiles but does no
 <div class="color-header redred">
 
 
-| You author | User code may possibly ... |
+| You author | User code may possibly … |
 |---------|---------|
-| `fn g<F: Fn()>(f: F) { ... }` | Unexpectedly panic. |
-| `struct S<X: T> { ... }` | Implement `T` badly, e.g., misuse `Deref`, ... |
-| `macro_rules! m { ... }` | Do all of the above; call site can have _weird_ scope. |
+| `fn g<F: Fn()>(f: F) { … }` | Unexpectedly panic. |
+| `struct S<X: T> { … }` | Implement `T` badly, e.g., misuse `Deref`, … |
+| `macro_rules! m { … }` | Do all of the above; call site can have _weird_ scope. |
 
 {{ tablesep() }}
 
 | Risk Pattern | Description |
 |---------|---------|
 | `#[repr(packed)]` |  Packed alignment can make reference `&s.x` invalid. |
-| `impl std::... for S {}`  | Any trait `impl`, esp. `std::ops` may be broken. In particular ... |
+| `impl std::… for S {}`  | Any trait `impl`, esp. `std::ops` may be broken. In particular … |
 | {{ tab() }} `impl Deref for S {}` | May randomly `Deref`, e.g., `s.x != s.x`, or panic.  |
 | {{ tab() }} `impl PartialEq for S {}` | May violate equality rules; panic.  |
 | {{ tab() }} `impl Eq for S {}`  | May cause `s != s`; panic; must not use `s` in `HashMap` & co. |
@@ -9455,7 +9459,7 @@ _Adversarial_ code is _safe_ 3<sup>rd</sup> party code that compiles but does no
 | {{ tab() }} `impl Drop for S {}` | May run code or panic end of scope `{}`, during assignment `s = new_s`. |
 | `panic!()` | User code can panic _any_ time, resulting in abort or unwind. |
 | <code>catch_unwind(&vert;&vert; s.f(panicky))</code> |  Also, caller might force observation of broken state in `s`.  |
-| `let ... = f();` | Variable name can affect order of `Drop` execution. <sup>1</sup> {{ bad() }}  |
+| `let … = f();` | Variable name can affect order of `Drop` execution. <sup>1</sup> {{ bad() }}  |
 
 <footnotes>
 
@@ -9601,7 +9605,7 @@ When updating an API, these changes can break client code.{{ rfc(page="1105-api-
 
 | What | Why |
 |--------| ---- |
-| ☐ Feature **prominent** API example, screenshot ... | asds |
+| ☐ Feature **prominent** API example, screenshot … | asds |
 | ☐ Have permissive license for libs. | asds |
 
 </div>
@@ -9650,13 +9654,13 @@ All major Rust books developed by the community.
 
 <div class="color-header lavender">
 
-<!-- Official Rust online "books" about Rust itself or major components (e.g., WebAssembly, Embedded, ...). Good test
-    for inclusion can be official community involvement, +1k Github stars, ... -->
+<!-- Official Rust online "books" about Rust itself or major components (e.g., WebAssembly, Embedded, …). Good test
+    for inclusion can be official community involvement, +1k Github stars, … -->
 | Books&nbsp;️📚  | Description |
 |--------| -----------|
 | [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) | Standard introduction to Rust, **start here if you are new**. |
 | {{ tab() }} [API Guidelines](https://rust-lang.github.io/api-guidelines/) | How to write idiomatic and re-usable Rust. |
-| {{ tab() }} [Asynchronous Programming](https://rust-lang.github.io/async-book/)  {{ experimental() }} | Explains `async` code, `Futures`, ... |
+| {{ tab() }} [Asynchronous Programming](https://rust-lang.github.io/async-book/)  {{ experimental() }} | Explains `async` code, `Futures`, … |
 | {{ tab() }} [Design Patterns](https://rust-unofficial.github.io/patterns//) | Idioms, Patterns, Anti-Patterns. |
 | {{ tab() }} [Edition Guide](https://doc.rust-lang.org/nightly/edition-guide/) | Working with Rust 2015, Rust 2018, and beyond.  |
 | {{ tab() }} [Guide to Rustc Development](https://rustc-dev-guide.rust-lang.org/index.html) | Explains how the compiler works internally. |
@@ -9670,7 +9674,7 @@ All major Rust books developed by the community.
 | {{ tab() }} [Rustdoc Book](https://doc.rust-lang.org/stable/rustdoc/) | Tips how to customize `cargo doc` and `rustdoc`. |
 | {{ tab() }} [Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
 | {{ tab() }} [Unsafe Code Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/)  {{ experimental() }} | Concise information about writing `unsafe` code. |
-| {{ tab() }} [Unstable Book](https://doc.rust-lang.org/unstable-book/index.html) | Information about unstable items, e.g, `#![feature(...)]`.  |
+| {{ tab() }} [Unstable Book](https://doc.rust-lang.org/unstable-book/index.html) | Information about unstable items, e.g, `#![feature(…)]`.  |
 | [The Cargo Book](https://doc.rust-lang.org/cargo/) | How to use `cargo` and write `Cargo.toml`. |
 | [The CLI Book](https://rust-lang-nursery.github.io/cli-wg/) | Information about creating CLI tools. |
 | [The Embedded Book](https://docs.rust-embedded.org/book/intro/index.html) | Working with embedded and `#![no_std]` devices. |
