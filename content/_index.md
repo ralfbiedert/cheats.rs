@@ -644,21 +644,23 @@ Generics combine with type constructors, traits and functions to give your users
 
 | Example | Explanation |
 |---------|-------------|
-| `S<T>`  | A **generic** {{ book(page="ch10-01-syntax.html") }} {{ ex(page="generics.html") }} type with a type parameter (`T` is placeholder name here). |
-| `S<T: R>`  | Type short hand **trait bound** {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} specification  (`R` _must_ be actual trait). |
-| {{ tab() }} `T: R, P: S`  | **Independent trait bounds** (here one for `T` and one for `P`). |
-| {{ tab() }} `T: R, S`  | Compile error, {{ bad() }} you probably want compound bound `R + S` below. |
-| {{ tab() }} `T: R + S`  | **Compound trait bound**, {{ book(page="ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax") }} {{ ex(page="generics/multi_bounds.html") }} `T` must fulfill `R` and `S`. |
-| {{ tab() }} `T: R + 'a`  | Same, but w. lifetime. `T` must fulfill `R`, if `T` has lifetimes, must outlive `'a`. |
-| {{ tab() }} `T: ?Sized` | Opt out of a pre-defined trait bound, here `Sized`. {{ todo() }} |
-| {{ tab() }} `T: 'a` | Type **lifetime bound**; {{ ex(page="scope/lifetime/lifetime_bounds.html") }} if T has references, they must outlive `'a`.  |
-| {{ tab() }} `T: 'static` | Same; does esp. _not_ mean value `t` _will_ {{ bad() }} live `'static`, only that it could. |
-| {{ tab() }} `'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
+| `struct S<T> …`  | A **generic** {{ book(page="ch10-01-syntax.html") }} {{ ex(page="generics.html") }} type with a type parameter (`T` is placeholder name here). |
+| {{ tab() }} `fn f<T> …`  | Generics also work with functions (see this table below) … |
+| {{ tab() }} `trait R<T> …`  | … and traits (ditto), but to simplify things we'll just use `S<T>` next. |
+| `S<T> where T: R`  | **Trait bound**, {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} {{ ref(page="trait-bounds.html#trait-and-lifetime-bounds" ) }} limits allowed `T`, guarantees `T` has `R`; `R` must be trait. |
+| {{ tab() }} `where T: R, P: S`  | **Independent trait bounds**, here one for `T` and one for (not shown) `P`.|
+| {{ tab() }} `where T: R, S`  | Compile error, {{ bad() }} you probably want compound bound `R + S` below. |
+| {{ tab() }} `where T: R + S`  | **Compound trait bound**, {{ book(page="ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax") }} {{ ex(page="generics/multi_bounds.html") }} `T` must fulfill `R` and `S`. |
+| {{ tab() }} `where T: R + 'a`  | Same, but w. lifetime. `T` must fulfill `R`, if `T` has lifetimes, must outlive `'a`. |
+| {{ tab() }} `where T: ?Sized` | Opt out of a pre-defined trait bound, here `Sized`. {{ todo() }} |
+| {{ tab() }} `where T: 'a` | Type **lifetime bound**; {{ ex(page="scope/lifetime/lifetime_bounds.html") }} if T has references, they must outlive `'a`.  |
+| {{ tab() }} `where T: 'static` | Same; does esp. _not_ mean value `t` _will_ {{ bad() }} live `'static`, only that it could. |
+| {{ tab() }} `where 'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
+| {{ tab() }} `where u8: R<T>`  | Also allows you to make conditional statements involving _other_ types. {{ esoteric() }} |
+| `S<T: R>`  | Short hand bound, almost same as above, shorter to write. |
 | `S<const N: usize>` | **Generic const bound**; {{ ref(page="items/generics.html#const-generics") }} user of type `S` can provide constant value `N`. |
 | {{ tab() }} `S<10>` | Where used, const bounds can be provided as primitive values. |
 | {{ tab() }} `S<{5+5}>` | Expressions must be put in curly brackets. |
-| `S<T> where T: R`  | Almost same as `S<T: R>` but more pleasant to read for longer bounds. |
-| {{ tab() }} `S<T> where u8: R<T>`  | Also allows you to make conditional statements involving _other_ types. |
 | `S<T = R>` | **Default parameters**; {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} bit easier to use, but still flexible. |
 | {{ tab() }} `S<const N: u8 = 0>` | Default parameter for constants; e.g., in `f(x: S) {}` param `N` is `0`. |
 | {{ tab() }} `S<T = u8>` | Default parameter for types, e.g., in `f(x: S) {}` param `T` is `u8`. |
@@ -671,6 +673,7 @@ Generics combine with type constructors, traits and functions to give your users
 | `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`, here `T` type parameter. |
 | `impl S<T> {}`  | Implement functionality for exactly `S<T>`, here `T` specific type (e.g., `S<u32>`).  |
 | `fn f() -> impl T`  | **Existential types**, {{ book(page="ch10-02-traits.html#returning-types-that-implement-traits") }} returns an unknown-to-caller `S` that `impl T`. |
+| `fn f<T>(x: T) where T …`  | Function generic over a parameter, works same as `S<T>` above. |
 | `fn f(x: &impl T)`  | Trait bound,"**impl traits**", {{ book(page="ch10-02-traits.html#trait-bound-syntax") }} somewhat similar to `fn f<S:T>(x: &S)`. |
 | `fn f(x: &dyn T)`  | Marker for **dynamic dispatch**, {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }} `f` will not be monomorphized. |
 | `fn f() where Self: R;`  | In `trait T {}`, make `f` accessible only on types known to also `impl R`.  |
