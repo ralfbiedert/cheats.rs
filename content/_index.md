@@ -344,8 +344,8 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | Example | Explanation |
 |---------|-------------|
 | `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (type; space for holding _any_ `&s`). |
-| {{ tab() }} `&[S]` | Special slice reference that contains (`address`, `length`). |
-| {{ tab() }} `&str` | Special string slice reference that contains (`address`, `length`). |
+| {{ tab() }} `&[S]` | Special slice reference that contains (`address`, `count`). |
+| {{ tab() }} `&str` | Special string slice reference that contains (`address`, `byte_length`). |
 | {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, &hellip;). |
 | {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains (`address`, `vtable`). |
 | `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., address, len, vtable, &hellip; of _this_ `s`, like `0x1234`). |
@@ -504,9 +504,9 @@ Short-hand names of types, and methods to convert one type to another.
 |---------|-------------|
 | `type T = S;`  | Create a **type alias**, {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} {{ ref(page="items/type-aliases.html#type-aliases") }} i.e., another name for `S`. |
 | `Self`  | Type alias for **implementing type**, {{ ref(page="types.html#self-types") }} e.g. `fn new() -> Self`. |
-| `self`  | Method subject in `fn f(self) {}`, same as `fn f(self: Self) {}`. |
-|  {{ tab() }}  `&self`  | Same, but refers to self as borrowed, same as `f(self: &Self)`|
-|  {{ tab() }}  `&mut self`  | Same, but mutably borrowed, same as `f(self: &mut Self)` |
+| `self`  | Method subject in `fn f(self) {}`, e.g., akin to `fn f(self: Self) {}`. |
+|  {{ tab() }}  `&self`  | Same, but refers to self as borrowed, would equal `f(self: &Self)`|
+|  {{ tab() }}  `&mut self`  | Same, but mutably borrowed, would equal `f(self: &mut Self)` |
 |  {{ tab() }}  `self: Box<Self>`  | [**Arbitrary self type**](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart pointers (`my_box.f_of_self()`). |
 | `<S as T>`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`, e.g., `<S as T>::f()`. |
 | `a::b as c`  | In `use` of symbol, import `S` as `R`, e.g., `use a::S as R`. |
@@ -516,7 +516,7 @@ Short-hand names of types, and methods to convert one type to another.
 
 <footnotes>
 
-<sup>1</sup> See [Type Conversions](#type-conversions) below for all the ways to convert between types.
+<sup>1</sup> See [**Type Conversions**](#type-conversions) below for all the ways to convert between types.
 
 </footnotes>
 
@@ -553,7 +553,7 @@ Code generation constructs expanded before the actual compilation happens.
 
 <footnotes>
 
-<sup>1</sup> See [Tooling Directives](#tooling-directives) below for all captures.
+<sup>1</sup> See [**Tooling Directives**](#tooling-directives) below for all captures.
 
 </footnotes>
 
@@ -645,8 +645,6 @@ Generics combine with type constructors, traits and functions to give your users
 | Example | Explanation |
 |---------|-------------|
 | `struct S<T> …`  | A **generic** {{ book(page="ch10-01-syntax.html") }} {{ ex(page="generics.html") }} type with a type parameter (`T` is placeholder name here). |
-| {{ tab() }} `fn f<T> …`  | Generics also work with functions (see this table below) … |
-| {{ tab() }} `trait R<T> …`  | … and traits (ditto), but to simplify things we'll just use `S<T>` next. |
 | `S<T> where T: R`  | **Trait bound**, {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} {{ ref(page="trait-bounds.html#trait-and-lifetime-bounds" ) }} limits allowed `T`, guarantees `T` has `R`; `R` must be trait. |
 | {{ tab() }} `where T: R, P: S`  | **Independent trait bounds**, here one for `T` and one for (not shown) `P`.|
 | {{ tab() }} `where T: R, S`  | Compile error, {{ bad() }} you probably want compound bound `R + S` below. |
@@ -661,7 +659,7 @@ Generics combine with type constructors, traits and functions to give your users
 | `S<const N: usize>` | **Generic const bound**; {{ ref(page="items/generics.html#const-generics") }} user of type `S` can provide constant value `N`. |
 | {{ tab() }} `S<10>` | Where used, const bounds can be provided as primitive values. |
 | {{ tab() }} `S<{5+5}>` | Expressions must be put in curly brackets. |
-| `S<T = R>` | **Default parameters**; {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} bit easier to use, but still flexible. |
+| `S<T = R>` | **Default parameters**; {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} makes `S` a bit easier to use, but keeps it flexible. |
 | {{ tab() }} `S<const N: u8 = 0>` | Default parameter for constants; e.g., in `f(x: S) {}` param `N` is `0`. |
 | {{ tab() }} `S<T = u8>` | Default parameter for types, e.g., in `f(x: S) {}` param `T` is `u8`. |
 | `S<'_>` | Inferred **anonymous lifetime**; asks compiler to _'figure it out'_ if obvious.  |
@@ -673,9 +671,9 @@ Generics combine with type constructors, traits and functions to give your users
 | `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`, here `T` type parameter. |
 | `impl S<T> {}`  | Implement functionality for exactly `S<T>`, here `T` specific type (e.g., `S<u32>`).  |
 | `fn f() -> impl T`  | **Existential types**, {{ book(page="ch10-02-traits.html#returning-types-that-implement-traits") }} returns an unknown-to-caller `S` that `impl T`. |
-| `fn f<T>(x: T) where T …`  | Function generic over a parameter, works same as `S<T>` above. |
-| `fn f(x: &impl T)`  | Trait bound,"**impl traits**", {{ book(page="ch10-02-traits.html#trait-bound-syntax") }} somewhat similar to `fn f<S:T>(x: &S)`. |
-| `fn f(x: &dyn T)`  | Marker for **dynamic dispatch**, {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }} `f` will not be monomorphized. |
+| `fn f(x: &impl T)`  | Trait bound via "**impl traits**", {{ book(page="ch10-02-traits.html#trait-bound-syntax") }} somewhat like `fn f<S: T>(x: &S)` below. |
+| `fn f(x: &dyn T)`  | Invoke `f` via **dynamic dispatch**, {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }} `f` will not be instantiated for `x`. |
+| `fn f<X: T>(x: X)`  | Function generic over `X`, `f` will be instantiated ('[monomorphized](https://en.wikipedia.org/wiki/Monomorphization)') per `X`. |
 | `fn f() where Self: R;`  | In `trait T {}`, make `f` accessible only on types known to also `impl R`.  |
 | {{ tab() }} `fn f() where Self: Sized;`  | Using `Sized` can opt `f` out of `dyn T` trait object vtable, enabling trait obj. |
 | {{ tab() }} `fn f() where Self: R {}`  | Other `R` useful w. dflt. methods (non dflt. would need be impl'ed anyway). |
@@ -737,7 +735,7 @@ Rust has several ways to create textual values.
 | `b"..."` | **Byte string literal**; {{ ref(page="tokens.html#byte-and-byte-string-literals")}}<sup>, 1</sup> constructs ASCII `[u8]`, not a string. |
 | `br"..."`, `br#"..."#` | Raw byte string literal, ASCII `[u8]`, combination of the above.|
 | `'🦀'` | **Character literal**, {{ ref(page="tokens.html#character-and-string-literals")}} fixed 4 byte unicode '**char**'. {{ std(page="std/primitive.char.html") }} |
-| `b'x'` | ASCII **byte literal**. {{ ref(page="tokens.html#byte-literals")}} |
+| `b'x'` | ASCII **byte literal**, {{ ref(page="tokens.html#byte-literals")}} a single `u8` byte.  |
 
 </fixed-2-column>
 
@@ -3564,7 +3562,7 @@ let rval = f2sr(&&mut *ra);
 let rval = f3sr(&mut &*ra);
 let rval = f4sr(&mut ra);
 
-//  rval = f1sm(&&*ra);       // Would be bad, since rval would be mutable 
+//  rval = f1sm(&&*ra);       // Would be bad, since rval would be mutable
 //  rval = f2sm(&&mut *ra);   // reference obtained from broken mutability
 //  rval = f3sm(&mut &*ra);   // chain.
 let rval = f4sm(&mut ra);
@@ -3593,7 +3591,7 @@ Also, dereference `*rb` not strictly necessary, just added for clarity.
 - `f_sr` cases always work, short reference (only living `'b`) can always be produced.
 - `f_sm` cases usually fail simply because _mutable chain_ to `S` needed to return `&mut S`.
 - `f_lr` cases can fail because returning `&'a S` from `&'a mut S` to caller means there would now exist two references (one mutable) to same `S` which is illegal.
-- `f_lm` cases always fail for combination of reasons above. 
+- `f_lm` cases always fail for combination of reasons above.
 
 
 </explanation>
@@ -3660,12 +3658,12 @@ Also, dereference `*rb` not strictly necessary, just added for clarity.
 <explanation>
 
 ```
-{    
-    let f = |x, y| (S(x), S(y)); // Function returning two 'Droppables'. 
+{
+    let f = |x, y| (S(x), S(y)); // Function returning two 'Droppables'.
 
     let (    x1, y) = f(1, 4);  // S(1) - EoS   S(4) - EoS
-    let (    x2, _) = f(2, 5);  // S(2) - EoS   S(5) - dropped immediately 
-    let (ref x3, _) = f(3, 6);  // S(3) - EoS   S(6) - EoS 
+    let (    x2, _) = f(2, 5);  // S(2) - EoS   S(5) - dropped immediately
+    let (ref x3, _) = f(3, 6);  // S(3) - EoS   S(6) - EoS
 
     println!("…");
 }
@@ -4443,7 +4441,7 @@ It can be the element- or byte-length of the target, or a pointer to a <i>vtable
         </memory>
     </memory-entry>
     <description>If <code>T</code> is a DST <code>struct</code> such as<br> <code>S { x: [u8] }</code>
-    meta field <code>len</code> is <br>length of dyn. sized content.</description>
+    meta field <code>len</code> is <br>count of dyn. sized content.</description>
 </datum>
 
 
@@ -4639,6 +4637,15 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
+    <name><code>ManuallyDrop&lt;T&gt;</code></name>
+    <visual>
+           <framed class="any unsized"  style="width: 100px;"><code>T</code></framed>
+    </visual>
+    <description>Prevents <code>T::drop()</code> from<br>being called.</description>
+</datum>
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
     <name><code>AtomicUsize</code></name>
     <visual class="atomic">
         <ptr class="atomic">
@@ -4646,25 +4653,6 @@ Rust's standard library combines the above primitive types into useful types wit
         </ptr>
     </visual>
     <description>Other atomic similarly.</description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum>
-    <name><code>Result&lt;T, E&gt;</code></name>
-    <visual class="enum" style="text-align: left;">
-        <pad><code>Tag</code></pad>
-        <framed class="any" style="width: 50px;">
-            <code>E</code>
-        </framed>
-    </visual>
-    <andor>or</andor>
-    <visual class="enum" style="text-align: left;">
-        <pad><code>Tag</code></pad>
-        <framed class="any" style="width: 100px;">
-            <code>T</code>
-        </framed>
-    </visual>
 </datum>
 
 
@@ -4684,6 +4672,43 @@ Rust's standard library combines the above primitive types into useful types wit
     <description>Tag may be omitted for <br> certain T, e.g., <code>NonNull</code>.</description>
 </datum>
 
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>Result&lt;T, E&gt;</code></name>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 50px;">
+            <code>E</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 100px;">
+            <code>T</code>
+        </framed>
+    </visual>
+    <description>Either some error <code>E</code> or value<br>of <code>T</code>.</description>
+</datum>
+
+<!-- NEW ENTRY -->
+<datum>
+    <name><code>MaybeUninit&lt;T&gt;</code><span style="position: absolute;"> {{ std(page="std/mem/union.MaybeUninit.html") }}</span></name>
+    <visual class="enum">
+        <framed class="uninit" style="width: 100px;">
+            <code>∅</code>
+        </framed>
+    </visual>
+    <andor>unsafe or</andor>
+    <visual class="enum">
+        <framed class="any" style="width: 100px;">
+            <code>T</code>
+        </framed>
+    </visual>
+    <description>Uninitialized memory or<br>some <code>T</code>. Only legal way<br>to work with uninit data.</description>
+</datum>
 
 
 {{ tablesep() }}
@@ -6539,7 +6564,7 @@ Attributes used by Rust tools to improve code quality:
 
 <footnotes>
 
-<sup>1</sup> There is some debate which one is the _best_ to ensure high quality crates. Actively maintained multi-dev crates probably benefit from more aggressive `deny` or `forbid` lints; less-regularly updated ones probably more from conservative use of `warn` (as future compiler or `clippy` updates may suddenly break otherwise working code with minor issues).
+<sup>1</sup> {{ opinionated() }} There is some debate which one is the _best_ to ensure high quality crates. Actively maintained multi-dev crates probably benefit from more aggressive `deny` or `forbid` lints; less-regularly updated ones probably more from conservative use of `warn` (as future compiler or `clippy` updates may suddenly break otherwise working code with minor issues).
 
 </footnotes>
 
@@ -9068,17 +9093,17 @@ If you are used to Java or C, consider these.
 | **Use Strong Types** | `enum E { Invalid, Valid { … } }` over `ERROR_INVALID = -1` |
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
 |  | `struct Charge(f32)` over `f32` |
-| **Prevent Illegal State** | `my_lock.write()?.guaranteed_to_be_locked = 10;`|
+| **Illegal State: Impossible** | `my_lock.write()?.guaranteed_at_compile_time_to_be_locked = 10;`|
 |  | <code>thread::scope(&vert;s&vert; { /* Threads can't exist longer than scope() */ });</code> |
 | **Provide Builders** | `Car::new("Model T").hp(20).build();` |
 | **Don't Panic** | Panics are _not_ exceptions, they may `abort()` entire process! |
-|  | Only raise `panic!` if impossible to handle error, better return `Option` or `Result`. |
-| **Use Generics like Salt** | A simple `<T: Bound>` can make your APIs nicer to use.  |
-| | Complex (esp. `where`) bounds make your APIs almost impossible to follow.  |
-| | If in doubt don't be creative with generics.  |
+|  | Only panic on programming error; use `Option` or `Result` if failure possible. |
+|  | If clearly user requested, e.g., calling `obtain()` vs. `try_obtain()`, panic ok too. |
+| **Generics in Moderation** | A simple `<T: Bound>` (e.g., `AsRef<Path>`) can make your APIs nicer to use.  |
+| | Complex bounds make it impossible to follow. If in doubt don't be creative with _g_.  |
 | **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
 |   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
-| **Unsafe** | Avoid `unsafe {}`, often safer, faster solution without it. Exception: FFI. |
+| **Unsafe** | Avoid `unsafe {}`,{{ below(target="#unsafe-unsound-undefined") }} often safer, faster solution without it. |
 | **Implement Traits** | `#[derive(Debug, Copy, …)]` and custom `impl` where needed. |
 | **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
 |  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
