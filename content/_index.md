@@ -426,7 +426,7 @@ Control execution within a function.
 | {{ tab()}} `collection.into_iter()` | Effectively converts any  **`IntoIterator`** {{ std(page="std/iter/trait.IntoIterator.html") }} type into proper iterator first. |
 | {{ tab() }} `iterator.next()` | On proper **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} then `x = next()` until exhausted (first `None`). |
 | `if x {} else {}`  | **Conditional branch** {{ ref(page="expressions/if-expr.html") }} if expression is true. |
-| `'label: {}` | **Block label**, {{ todo() }} can be used with `break` to exit out of this block. |
+| `'label: {}` | **Block label**, {{ todo() }} can be used with `break` to exit out of this block. {{ edition(ed="1.65+")}} |
 | `'label: loop {}` | Similar **loop label**, {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} useful for flow control in nested loops. |
 | `break`  | **Break expression** {{ ref(page="expressions/loop-expr.html#break-expressions") }} to exit a labelled block or loop. |
 | {{ tab() }} `break 'label x`  |  Break out of block or loop named `'label` and make `x` its value.  |
@@ -578,7 +578,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 |  {{ tab() }} `let s @ S { x } = get();`  | Bind `s` to `S` while `x` is bound to `s.x`, **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} _c_. below {{ esoteric() }} |
 |  {{ tab() }} `let w @ t @ f = get();`  | Stores 3 copies of `get()` result in each `w`, `t`, `f`. {{ esoteric() }} |
 | `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted**, {{ ref(page="expressions/if-expr.html#if-let-expressions") }} use `let else` or `if let` instead. |
-| `let Some(x) = get() else {};`  | Assign if possible,{{ todo() }} if not run `else {}` which must `return` or `panic!` {{ hot() }} |
+| `let Some(x) = get() else {};`  | Assign if possible,{{ todo() }} if not run `else {}` which must `return` or `panic!` {{ edition(ed="1.65+")}} {{ hot() }} |
 | `if let Some(x) = get() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
 | `while let Some(x) = get() {}`  | Equiv.; here keep calling `get()`, run `{}` as long as pattern can be assigned. |
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`. {{ esoteric() }} |
@@ -669,7 +669,7 @@ Generics combine with type constructors, traits and functions to give your users
 | `S::<T>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation, e.g. `f::<u32>()`. |
 | `trait T<X> {}`  | A trait generic over `X`. Can have multiple `impl T for S` (one per `X`). |
 | `trait T { type X; }`  | Defines **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} {{ rfc(page="0195-associated-items.html") }} `X`. Only one `impl T for S` possible. |
-| `trait T { type X<G>; }`  | Defines **generic associated type** (GAT), {{ todo() }} e.g., `X` can be generic `Vec<>`. |
+| `trait T { type X<G>; }`  | Defines **generic associated type** (GAT), {{ todo() }} e.g., `X` can be generic `Vec<>`. {{ edition(ed="1.65+")}} |
 | {{ tab() }} `type X = R;`  | Set associated type within `impl T for S { type X = R; }`. |
 | {{ tab() }} `type X<G> = R<G>;`  | Same for GAT, e.g., `impl T for S { type X<G> = Vec<G>; }`. |
 | `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`, here `T` type parameter. |
