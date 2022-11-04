@@ -578,7 +578,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 |  {{ tab() }} `let s @ S { x } = get();`  | Bind `s` to `S` while `x` is bound to `s.x`, **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} _c_. below {{ esoteric() }} |
 |  {{ tab() }} `let w @ t @ f = get();`  | Stores 3 copies of `get()` result in each `w`, `t`, `f`. {{ esoteric() }} |
 | `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted**, {{ ref(page="expressions/if-expr.html#if-let-expressions") }} use `let else` or `if let` instead. |
-| `let Some(x) = get() else {};`  | Assign if possible,{{ todo() }} if not run `else {}` which must `return` or `panic!` {{ edition(ed="1.65+")}} {{ hot() }} |
+| `let Some(x) = get() else {};`  | Assign if possible,{{ todo() }} if not `else {}` w. must `break`, `return`, `panic!`, … {{ edition(ed="1.65+")}} {{ hot() }} |
 | `if let Some(x) = get() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
 | `while let Some(x) = get() {}`  | Equiv.; here keep calling `get()`, run `{}` as long as pattern can be assigned. |
 | `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`. {{ esoteric() }} |
@@ -670,6 +670,7 @@ Generics combine with type constructors, traits and functions to give your users
 | `trait T<X> {}`  | A trait generic over `X`. Can have multiple `impl T for S` (one per `X`). |
 | `trait T { type X; }`  | Defines **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} {{ rfc(page="0195-associated-items.html") }} `X`. Only one `impl T for S` possible. |
 | `trait T { type X<G>; }`  | Defines **generic associated type** (GAT), {{ todo() }} e.g., `X` can be generic `Vec<>`. {{ edition(ed="1.65+")}} |
+| `trait T { type X<'a>; }`  | Defines a GAT generic over a lifetime. |
 | {{ tab() }} `type X = R;`  | Set associated type within `impl T for S { type X = R; }`. |
 | {{ tab() }} `type X<G> = R<G>;`  | Same for GAT, e.g., `impl T for S { type X<G> = Vec<G>; }`. |
 | `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`, here `T` type parameter. |
