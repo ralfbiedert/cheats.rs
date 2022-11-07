@@ -895,16 +895,22 @@ This _abstract machine_
 
 <div class="color-header abstract-machine">
 
-Things people may incorrectly assume they _should get away with_ if Rust targeted CPU directly, and _more correct_ counterparts:
+On the left things people may incorrectly assume they _should get away with_ if Rust targeted CPU directly. On the right things you'd interfere with if in reality if you violate AM contract.
 
 {{ tablesep() }}
 
 | Without AM | With AM |
 |---------|-------------|
-| `0xffff_ffff` would make a valid `char`. {{ bad() }} | AM may exploit _'invalid'_ bit patterns to pack data.  |
+| `0xffff_ffff` would make a valid `char`. {{ bad() }} | AM may exploit _'invalid'_ bit patterns to pack unrelated data.  |
 | `0xff` and `0xff` are same pointer. {{ bad() }} | AM pointers can have _'domain'_ attached for optimization.  |
 | Any r/w pointer on `0xff` always fine. {{ bad() }} | AM may issue cache-friendly ops trusting _'no read can happen'_.  |
+| Reading un-init just gives random value. {{ bad() }} | AM _'knows'_ read impossible, may remove all related bitcode.  |
+| Data race just gives random value. {{ bad() }} | AM may split R/W, produce _impossible_ value, see above.  |
 | Null reference is just `0x0` in some register. {{ bad() }} | Holding `0x0` in reference summons Cthulhu.  |
+
+{{ tablesep() }}
+
+> This table is only to outline what the AM does. Unlike C or C++, Rust never lets you do the wrong thing unless you force it with `unsafe`. {{ below(target="#unsafe-unsound-undefined") }}
 
 </div>
 </div></panel></tab>
@@ -932,9 +938,9 @@ If something works that "shouldn't work now that you think about it", it might b
 |--------| -----------|
 | **Coercions** {{ nom(page="coercions.html") }} | _Weakens_ types to match signature, e.g., `&mut T` to `&T`; _c_. _type conversions_. {{ below(target="#type-conversions") }}  |
 | **Deref** {{ nom(page="vec-deref.html") }} {{ link(url="https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules") }} | [Derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
-| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic items, e.g., `Option`, `drop`, …
+| **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic items, e.g., `Option`, `drop()`, …
 | **Reborrow** | Since `x: &mut T` can't be copied; moves new `&mut *x` instead. |
-| **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Automatically annotates `f(x: &T)` to `f<'a>(x: &'a T)`.|
+| **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Allows you to write `f(x: &T)`, instead of `f<'a>(x: &'a T)`, for brevity. |
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Derefs or borrow `x` until `x.f()` works. |
 | **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly dereferences [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and adds `ref` and `ref mut` to bindings. |
 | **Rvalue Static Promotion** {{ rfc(page="1414-rvalue_static_promotion.html") }}  {{ esoteric() }} | Makes references to constants `'static`, e.g., `&42`, `&None`, `&mut []`. |
@@ -4705,7 +4711,7 @@ Rust's standard library combines the above primitive types into useful types wit
     <name><code>MaybeUninit&lt;T&gt;</code><span style="position: absolute;"> {{ std(page="std/mem/union.MaybeUninit.html") }}</span></name>
     <visual class="enum">
         <framed class="uninit" style="width: 100px;">
-            <code>T̢̛͖̣̖̀̌͗h̼̯̝͒̆̃è̲̖̺͓̲͆̇̿̓ ̮̰̻͋͋͂A̗̤̦̅̓̌̂͛͢͟b̡̻͓̭̖̍͌́̄͝y͎͍̻̯̐̇̏͋͐͜s̮̻̻̽̽͠s͙̙͔̐͒̕</code>
+            <code>U̼̟̔͛n̥͕͐͞d̛̲͔̦̳̑̓̐e̱͎͒̌fị̱͕̈̉͋ne̻̅ḓ̓</code>
         </framed>
     </visual>
     <andor>unsafe or</andor>
@@ -9108,8 +9114,9 @@ If you are used to Java or C, consider these.
 |  | If clearly user requested, e.g., calling `obtain()` vs. `try_obtain()`, panic ok too. |
 | **Generics in Moderation** | A simple `<T: Bound>` (e.g., `AsRef<Path>`) can make your APIs nicer to use.  |
 | | Complex bounds make it impossible to follow. If in doubt don't be creative with _g_.  |
-| **Split Implementations** | Generic types `S<T>` can have a separate `impl` per `T`. |
-|   | Rust doesn't have OO, but with separate `impl` you can get specialization. |
+| **Split Implementations** | Generics like `Point<T>` can have separate `impl` per `T` for some specialization. |
+|   | `impl<T> Point<T> { /* Add common methods here */ }` |
+|   | `impl Point<f32> { /* Add methods only relevant for Point<f32> */ }` |
 | **Unsafe** | Avoid `unsafe {}`,{{ below(target="#unsafe-unsound-undefined") }} often safer, faster solution without it. |
 | **Implement Traits** | `#[derive(Debug, Copy, …)]` and custom `impl` where needed. |
 | **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
