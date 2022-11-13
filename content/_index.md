@@ -139,6 +139,7 @@ Contains clickable links to
 **Coding Guides**
 * [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
+* [Error Handling](#error-handling)
 * [Closures in APIs](#closures-in-apis)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
 * [Adversarial Code](#adversarial-code){{ esoteric() }}
@@ -9261,6 +9262,35 @@ without assuming executor specifics. <br/>
 {{ tablesep() }}
 
 
+## Error Handling
+
+How to deal with abnormal situations, also see **Error Handling in Rust** {{ link(url="https://nrc.github.io/error-docs/intro.html") }}
+
+<div class="color-header error-handling">
+
+| Error Construct  |  Implied Behavior |
+|--------| -----------|
+| `fn f() -> T` | Signals `f()` does not intend<sup>1</sup> to fail. |
+| {{ tab() }} `fn f() -> f32` | Sometimes common types have established in-band errors though, e.g., `NaN`. |
+| {{ tab() }} `fn f() -> i8` | However, unless doing FFI, you should **not**{{ bad() }} do in-band errors yourself. |
+| `fn g() -> Option<T>` | Signals `g()` might not provide a value due to _regular absence_. |
+| `fn g() -> Result<T, E>` | Signals `g()` might not provide a value for (often _physical_) reasons `E`. |
+| `panic!()` <sup>2</sup> | Means _'from here on, no logic can exist to deal with this'_; might crash app. |
+| `g()?` | Means _'if `g()` fails someone else should take care of this'_. Idiomatic bailout. |
+| `static LAST_ERROR` …  | Absolutely unidiomatic, do **not** {{ bad() }} use globals for error handling. |
+
+</div>
+
+<footnotes>
+
+<sup>1</sup> Unfortunately Rust does not have a mechanism to actually promise the absence of `panic!()`.<br/>
+<sup>2</sup> That also implies functions that `panic!()`, e.g., `.unwrap()`.<br/>
+
+</footnotes>
+
+{{ tablesep() }}
+
+
 ## Closures in APIs
 
 There is a subtrait relationship `Fn` : `FnMut` : `FnOnce`. That means a closure that
@@ -9705,6 +9735,7 @@ All major Rust books developed by the community.
 | {{ tab() }} [Asynchronous Programming](https://rust-lang.github.io/async-book/)  {{ experimental() }} | Explains `async` code, `Futures`, … |
 | {{ tab() }} [Design Patterns](https://rust-unofficial.github.io/patterns//) | Idioms, Patterns, Anti-Patterns. |
 | {{ tab() }} [Edition Guide](https://doc.rust-lang.org/nightly/edition-guide/) | Working with Rust 2015, Rust 2018, and beyond.  |
+| {{ tab() }} [Error Handling](https://nrc.github.io/error-docs/intro.html) | Language features, libraries, and writing good error code.  |
 | {{ tab() }} [Guide to Rustc Development](https://rustc-dev-guide.rust-lang.org/index.html) | Explains how the compiler works internally. |
 | {{ tab() }} [Little Book of Rust Macros](https://veykril.github.io/tlborm/introduction.html) | Community's collective knowledge of Rust macros. |
 | {{ tab() }} [Reference](https://doc.rust-lang.org/stable/reference/) {{ experimental() }}  | Reference of the Rust language.  |
