@@ -441,7 +441,7 @@ Control execution within a function.
 | `return x`  | **Early return** {{ ref(page="expressions/return-expr.html" ) }} from function. More idiomatic is to end with expression. |
 | {{ tab() }} `{ return }`  | Inside normal `{}`-blocks `return` exits surrounding function. |
 | {{ tab() }} <code>&vert;&vert; { return }</code>  | Within closures `return` exits that closure only, i.e., closure is _s._ function. |
-| {{ tab() }} `async { return }`  | Inside `async` a `return` **only** {{ ref(page="expressions/block-expr.html#control-flow-operators") }} {{ bad() }} exits that `{}` block, i.e., `async {}` is _s.f._! |
+| {{ tab() }} `async { return }`  | Inside `async` a `return` **only** {{ ref(page="expressions/block-expr.html#control-flow-operators") }} {{ bad() }} exits that `{}`, i.e., `async {}` is _s._ function. |
 | `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, &hellip;). |
 | `x.f()` | Call member function, requires `f` takes `self`, `&self`, &hellip; as first argument. |
 | {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
