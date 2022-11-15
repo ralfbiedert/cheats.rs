@@ -896,7 +896,7 @@ This _abstract machine_
 
 <div class="color-header abstract-machine">
 
-On the left things people may incorrectly assume they _should get away with_ if Rust targeted CPU directly. On the right things you'd interfere with if in reality if you violate AM contract.
+On the left things people may incorrectly assume they _should get away with_ if Rust targeted CPU directly. On the right things you'd interfere with if in reality if you violate the AM contract.
 
 {{ tablesep() }}
 
@@ -9266,27 +9266,49 @@ without assuming executor specifics. <br/>
 
 How to deal with abnormal situations, also see **Error Handling in Rust** {{ link(url="https://nrc.github.io/error-docs/intro.html") }}
 
-<div class="color-header error-handling">
+<fixed-2-column class="color-header error-handling">
 
-| Error Construct  |  Implied Behavior |
+| Signature  |  Description |
 |--------| -----------|
 | `fn f() -> T` | Signals `f()` does not intend<sup>1</sup> to fail. |
-| {{ tab() }} `fn f() -> f32` | Sometimes common types have established in-band errors though, e.g., `NaN`. |
-| {{ tab() }} `fn f() -> i8` | However, unless doing FFI, you should **not**{{ bad() }} do in-band errors yourself. |
-| `fn g() -> Option<T>` | Signals `g()` might not provide a value due to _regular absence_. |
-| `fn g() -> Result<T, E>` | Signals `g()` might not provide a value for (often _physical_) reasons `E`. |
-| `panic!()` <sup>2</sup> | Means _'from here on, no logic can exist to deal with this'_; might crash app. |
-| `g()?` | Means _'if `g()` fails someone else should take care of this'_. Idiomatic bailout. |
+| {{ tab() }} `fn f() -> f32` | Some established types have in-band errors though, e.g., `NaN`. |
+| {{ tab() }} `fn f() -> i8` | However, unless FFI, do **not**{{ bad() }} do in-band errors (e.g., `-1` is fail) yourself. |
+| `fn f() -> Option<T>` {{ std(page="std/option/enum.Option.html") }} | Signals `f()` might not provide a value due to _absence_. |
+| `fn f() -> Result<T, E>` {{ std(page="std/result/enum.Result.html") }} | Signals `f()` might not provide a value for (often _physical_) reasons `E`. |
 | `static LAST_ERROR` …  | Absolutely unidiomatic, do **not** {{ bad() }} use globals for error handling. |
-
-</div>
 
 <footnotes>
 
-<sup>1</sup> Unfortunately Rust does not have a mechanism to actually promise the absence of `panic!()`.<br/>
-<sup>2</sup> That also implies functions that `panic!()`, e.g., `.unwrap()`.<br/>
+<sup>1</sup> Unfortunately Rust does not have a mechanism to locally guarantee the absence of a `panic!()`.<br/>
 
 </footnotes>
+
+{{ tablesep() }}
+
+| Inside Functions  |  Description |
+|--------| -----------|
+| `panic!()` {{ std(page="std/macro.panic.html") }} | Recommend program termination.<sup>1</sup> Mostly when detecting bad logic. |
+| `f()?` | Upstream caller should take care of error. Idiomatic bailout. {{ hot() }} |
+| `f().unwrap()` {{ std(page="std/result/enum.Result.html#method.unwrap") }} | Screams _'I didn't have time'_. Totally ok for hacking, not production. |
+| `f().expect("…")` {{ std(page="std/result/enum.Result.html#method.expect") }}  | If you really must `.unwrap()` in production prefer this and add explanation. |
+
+<footnotes>
+
+<sup>1</sup> The same is true for all functions that `panic!()` internally, e.g., `.unwrap()`.<br/>
+
+</footnotes>
+
+
+</fixed-2-column>
+
+{{ tablesep() }}
+
+> **MVP Error Handling** {{ opinionated() }}
+>
+> - Application authors, use and follow the instructions in [**anyhow**](https://crates.io/crates/anyhow).
+> - Library authors, use and follow the instructions in [**thiserror**](https://crates.io/crates/thiserror).
+>
+> Both crates might notably increase your compile time. If you can, define [**your own error type**](https://nrc.github.io/error-docs/error-design/error-type-design.html) instead. With the advent of `std::backtrace` {{ std(page="std/backtrace/index.html") }} {{ hot() }} {{ edition(ed="1.65+") }} you should also attempt to capture one to simplify debugging later.
 
 {{ tablesep() }}
 
