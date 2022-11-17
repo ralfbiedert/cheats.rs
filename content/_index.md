@@ -737,21 +737,26 @@ Rust has several ways to create textual values.
 
 | Example | Explanation |
 |--------|-------------|
-| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}}<sup>, 1</sup> UTF-8, will interpret `\n` as _line break_ `0xA`, &hellip;  |
-| `r"..."` | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}}<sup>, 1</sup> UTF-8, won't interpret `\n`, &hellip; |
+| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}}<sup>, 1</sup> UTF-8, will interpret the following escapes, &hellip;  |
+| {{ tab() }} `"\n\r\t\0\\"` | **Common escapes** {{ ref(page="tokens.html#ascii-escapes") }}, e.g. `"\n"` becomes _new line_. |
+| {{ tab() }} `"\x36"` | **ASCII _e._** {{ ref(page="tokens.html#ascii-escapes") }} up to `7f`, e.g., `"\x36"` would become `6`. |
+| {{ tab() }} `"\u{7fff}"` | **Unicode _e._** {{ ref(page="tokens.html#unicode-escapes") }} up to 6 digits, e.g., `"\u{7fff}"` becomes `翿`. |
+| `r"..."` | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}}<sup>, 1</sup>UTF-8, but won't interpret any escape above. |
 | `r#"..."#` | Raw string literal, UTF-8, but can also contain `"`. Number of `#` can vary.|
 | `b"..."` | **Byte string literal**; {{ ref(page="tokens.html#byte-and-byte-string-literals")}}<sup>, 1</sup> constructs ASCII `[u8]`, not a string. |
 | `br"..."`, `br#"..."#` | Raw byte string literal, ASCII `[u8]`, combination of the above.|
 | `'🦀'` | **Character literal**, {{ ref(page="tokens.html#character-and-string-literals")}} fixed 4 byte unicode '**char**'. {{ std(page="std/primitive.char.html") }} |
 | `b'x'` | ASCII **byte literal**, {{ ref(page="tokens.html#byte-literals")}} a single `u8` byte.  |
 
-</fixed-2-column>
-
 <footnotes>
 
 <sup>1</sup> Supports multiple lines out of the box. Just keep in mind `Debug`{{ below(target="#string-output") }} (e.g., `dbg!(x)` and `println!("{x:?}")`) might render them as `\n`, while `Display`{{ below(target="#string-output") }} (e.g., `println!("{x}")`) renders them _proper_.
 
 </footnotes>
+
+
+</fixed-2-column>
+
 
 
 ### Documentation
@@ -774,8 +779,7 @@ Debuggers hate him. Avoid bugs with this one weird trick.
 
 <footnotes>
 
-<sup>1</sup> [Tooling Directives](#tooling-directives) outline what you can do inside doc comments.
-
+<sup>1</sup> [Tooling Directives](#tooling-directives) outline what you can do inside doc comments. <br>
 <sup>2</sup> Generally discouraged due to bad UX. If possible use equivalent line comment instead with IDE support.
 
 </footnotes>
