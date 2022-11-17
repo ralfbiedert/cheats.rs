@@ -7836,7 +7836,7 @@ trait Complex<I1, I2> {
 }
 ```
 
-- this creates a relation relation of types named `Complex`,
+- this creates a relation of types named `Complex`,
 - with 3 inputs (`Self` is always one) and 2 outputs, and it holds `(Self, I1, I2) => (O1, O2)`
 
 <mini-table>
