@@ -7599,7 +7599,7 @@ impl<T> S<T> where T: Absolute + Dim + Mul {
 It can be read as:
 - here is an implementation recipe for any type `T` (the `impl <T>` part),
 - where<!--sup>*</sup--> that type must be member of the `Absolute + Dim + Mul` traits,
-- you may add an implementation block to `S<T>`,
+- you may add an implementation block to the type family `S<>`,
 - containing the methods …
 
 You can think of such `impl<T> … {} ` code as **abstractly implementing a family of behaviors**. Most notably, they allow 3<sup>rd</sup> parties to transparently materialize implementations similarly to how type constructors materialize types:
