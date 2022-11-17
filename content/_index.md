@@ -676,8 +676,8 @@ Generics combine with type constructors, traits and functions to give your users
 | `trait T { type X<'a>; }`  | Defines a GAT generic over a lifetime. |
 | {{ tab() }} `type X = R;`  | Set associated type within `impl T for S { type X = R; }`. |
 | {{ tab() }} `type X<G> = R<G>;`  | Same for GAT, e.g., `impl T for S { type X<G> = Vec<G>; }`. |
-| `impl<T> S<T> {}`  | Implement functionality for any `T` in `S<T>`, here `T` type parameter. |
-| `impl S<T> {}`  | Implement functionality for exactly `S<T>`, here `T` specific type (e.g., `S<u32>`).  |
+| `impl<T> S<T> {}`  | Implement `fn`'s for any `T` in `S<T>` **_generically_**, {{ ref(page="items/implementations.html#generic-implementations") }} here `T` type parameter. |
+| `impl S<T> {}`  | Implement `fn`'s for exactly `S<T>` **_inherently_**, {{ ref(page="items/implementations.html#inherent-implementations") }} here `T` specific type, e.g., `u8`.  |
 | `fn f() -> impl T`  | **Existential types**, {{ book(page="ch10-02-traits.html#returning-types-that-implement-traits") }} returns an unknown-to-caller `S` that `impl T`. |
 | `fn f(x: &impl T)`  | Trait bound via "**impl traits**", {{ book(page="ch10-02-traits.html#trait-bound-syntax") }} somewhat like `fn f<S: T>(x: &S)` below. |
 | `fn f(x: &dyn T)`  | Invoke `f` via **dynamic dispatch**, {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }} `f` will not be instantiated for `x`. |
@@ -6956,7 +6956,7 @@ impl Port {
 }
 ```
 
-- Types usually come with implementation, e.g., `impl Port {}`, behavior _related_ to type:
+- Types usually come with **inherent implementations**, {{ ref(page="items/implementations.html#inherent-implementations") }} e.g., `impl Port {}`, behavior _related_ to type:
     - **associated functions** `Port::new(80)`
     - **methods** `port.close()`
 
@@ -7602,7 +7602,7 @@ It can be read as:
 - you may add an implementation block to the type family `S<>`,
 - containing the methods …
 
-You can think of such `impl<T> … {} ` code as **abstractly implementing a family of behaviors**. Most notably, they allow 3<sup>rd</sup> parties to transparently materialize implementations similarly to how type constructors materialize types:
+You can think of such `impl<T> … {} ` code as **abstractly implementing a family of behaviors**. {{ ref(page="items/implementations.html#generic-implementations") }} Most notably, they allow 3<sup>rd</sup> parties to transparently materialize implementations similarly to how type constructors materialize types:
 
 ```
 // If compiler encounters this, it will
