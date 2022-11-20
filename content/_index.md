@@ -738,7 +738,7 @@ Rust has several ways to create textual values.
 | Example | Explanation |
 |--------|-------------|
 | `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}}<sup>, 1</sup> UTF-8, will interpret the following escapes, &hellip;  |
-| {{ tab() }} `"\n\r\t\0\\"` | **Common escapes** {{ ref(page="tokens.html#ascii-escapes") }}, e.g. `"\n"` becomes _new line_. |
+| {{ tab() }} `"\n\r\t\0\\"` | **Common escapes** {{ ref(page="tokens.html#ascii-escapes") }}, e.g., `"\n"` becomes _new line_. |
 | {{ tab() }} `"\x36"` | **ASCII _e._** {{ ref(page="tokens.html#ascii-escapes") }} up to `7f`, e.g., `"\x36"` would become `6`. |
 | {{ tab() }} `"\u{7fff}"` | **Unicode _e._** {{ ref(page="tokens.html#unicode-escapes") }} up to 6 digits, e.g., `"\u{7fff}"` becomes `翿`. |
 | `r"..."` | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}}<sup>, 1</sup>UTF-8, but won't interpret any escape above. |
@@ -9293,7 +9293,7 @@ How to deal with abnormal situations, also see **Error Handling in Rust** {{ lin
 |--------| -----------|
 | `panic!()` {{ std(page="std/macro.panic.html") }} | Recommend program termination.<sup>1</sup> Mostly when detecting bad logic. |
 | `f()?` | Upstream caller should take care of error. Idiomatic bailout. {{ hot() }} |
-| `f().unwrap()` {{ std(page="std/result/enum.Result.html#method.unwrap") }} | Screams _'I didn't have time'_. Totally ok for hacking, not production. |
+| `f().unwrap()` {{ std(page="std/result/enum.Result.html#method.unwrap") }} | Screams _'I didn't have time'_. Ok for hacking, rarely for production. |
 | `f().expect("…")` {{ std(page="std/result/enum.Result.html#method.expect") }}  | If you really must `.unwrap()` in production prefer this and add explanation. |
 
 <footnotes>
