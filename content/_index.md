@@ -9124,8 +9124,8 @@ If you are used to Java or C, consider these.
 |   | `impl Point<f32> { /* Add methods only relevant for Point<f32> */ }` |
 | **Unsafe** | Avoid `unsafe {}`,{{ below(target="#unsafe-unsound-undefined") }} often safer, faster solution without it. |
 | **Implement Traits** | `#[derive(Debug, Copy, …)]` and custom `impl` where needed. |
-| **Tooling** | With [**clippy**](https://github.com/rust-lang/rust-clippy) you can improve your code quality. |
-|  | Formatting with [**rustfmt**](https://github.com/rust-lang/rustfmt) helps others to read your code. |
+| **Tooling** | Run [**clippy**](https://github.com/rust-lang/rust-clippy) regularly to significantly improve your code quality. {{ hot() }} |
+|  | Format your code with [**rustfmt**](https://github.com/rust-lang/rustfmt) for consistency. {{ hot() }} |
 |  | Add **unit tests** {{ book(page="ch11-01-writing-tests.html") }} (`#[test]`) to ensure your code works. |
 |  | Add **doc tests** {{ book(page="ch14-02-publishing-to-crates-io.html") }} (` ``` my_api::f() ``` `) to ensure docs match code. |
 | **Documentation** | Annotate your APIs with doc comments that can show up on [**docs.rs**](https://docs.rs). |
