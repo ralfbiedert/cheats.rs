@@ -139,7 +139,6 @@ Contains clickable links to
 **Coding Guides**
 * [Idiomatic Rust](#idiomatic-rust)
 * [Async-Await 101](#async-await-101)
-* [Error Handling](#error-handling)
 * [Closures in APIs](#closures-in-apis)
 * [Unsafe, Unsound, Undefined](#unsafe-unsound-undefined)
 * [Adversarial Code](#adversarial-code){{ esoteric() }}
@@ -9114,8 +9113,8 @@ If you are used to Java or C, consider these.
 | **Illegal State: Impossible** | `my_lock.write()?.guaranteed_at_compile_time_to_be_locked = 10;`|
 |  | <code>thread::scope(&vert;s&vert; { /* Threads can't exist longer than scope() */ });</code> |
 | **Provide Builders** | `Car::new("Model T").hp(20).build();` |
-| **Don't Panic** | Panics are _not_ exceptions, they may `abort()` entire process! |
-|  | Only panic on programming error; use `Option` or `Result` if failure possible. |
+| **Don't Panic** | Panics are _not_ exceptions, they suggest process abortion! |
+|  | Only panic on programming error; use `Option<T>`{{ std(page="std/option/enum.Option.html") }} or `Result<T,E>`{{ std(page="std/result/enum.Result.html") }} otherwise. |
 |  | If clearly user requested, e.g., calling `obtain()` vs. `try_obtain()`, panic ok too. |
 | **Generics in Moderation** | A simple `<T: Bound>` (e.g., `AsRef<Path>`) can make your APIs nicer to use.  |
 | | Complex bounds make it impossible to follow. If in doubt don't be creative with _g_.  |
@@ -9133,8 +9132,6 @@ If you are used to Java or C, consider these.
 |  | If applicable: **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
 
 </div>
-
-
 
 {{ tablesep() }}
 
@@ -9265,56 +9262,6 @@ without assuming executor specifics. <br/>
 
 {{ tablesep() }}
 
-
-## Error Handling
-
-How to deal with abnormal situations, also see **Error Handling in Rust** {{ link(url="https://nrc.github.io/error-docs/intro.html") }}
-
-<fixed-2-column class="color-header error-handling">
-
-| Signature  |  Description |
-|--------| -----------|
-| `fn f() -> T` | Signals `f()` does not intend<sup>1</sup> to fail. |
-| {{ tab() }} `fn f() -> f32` | Some established types have in-band errors though, e.g., `NaN`. |
-| {{ tab() }} `fn f() -> i8` | However, unless FFI, do **not**{{ bad() }} do in-band errors (e.g., `-1` is fail) yourself. |
-| `fn f() -> Option<T>` {{ std(page="std/option/enum.Option.html") }} | Signals `f()` might not provide a value due to _absence_. |
-| `fn f() -> Result<T, E>` {{ std(page="std/result/enum.Result.html") }} | Signals `f()` might not provide a value for (often _physical_) reasons `E`. |
-| `static LAST_ERROR` …  | Absolutely unidiomatic, do **not** {{ bad() }} use globals for error handling. |
-
-<footnotes>
-
-<sup>1</sup> Unfortunately Rust does not have a mechanism to locally guarantee the absence of a `panic!()`.<br/>
-
-</footnotes>
-
-{{ tablesep() }}
-
-| Inside Functions  |  Description |
-|--------| -----------|
-| `panic!()` {{ std(page="std/macro.panic.html") }} | Recommend program termination.<sup>1</sup> Mostly when detecting bad logic. |
-| `f()?` | Upstream caller should take care of error. Idiomatic bailout. {{ hot() }} |
-| `f().unwrap()` {{ std(page="std/result/enum.Result.html#method.unwrap") }} | Screams _'I didn't have time'_. Ok for hacking, rarely for production. |
-| `f().expect("…")` {{ std(page="std/result/enum.Result.html#method.expect") }}  | If you really must `.unwrap()` in production prefer this and add explanation. |
-
-<footnotes>
-
-<sup>1</sup> The same is true for all functions that `panic!()` internally, e.g., `.unwrap()`.<br/>
-
-</footnotes>
-
-
-</fixed-2-column>
-
-{{ tablesep() }}
-
-> **MVP Error Handling** {{ opinionated() }}
->
-> - Application authors, use and follow the instructions in [**anyhow**](https://crates.io/crates/anyhow).
-> - Library authors, use and follow the instructions in [**thiserror**](https://crates.io/crates/thiserror).
->
-> Both crates might notably increase your compile time. If you can, define [**your own error type**](https://nrc.github.io/error-docs/error-design/error-type-design.html) instead. With the advent of `std::backtrace` {{ std(page="std/backtrace/index.html") }} {{ hot() }} {{ edition(ed="1.65+") }} you should also attempt to capture one to simplify debugging later.
-
-{{ tablesep() }}
 
 
 ## Closures in APIs
