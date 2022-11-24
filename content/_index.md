@@ -9113,7 +9113,7 @@ If you are used to Java or C, consider these.
 | **Illegal State: Impossible** | `my_lock.write()?.guaranteed_at_compile_time_to_be_locked = 10;`|
 |  | <code>thread::scope(&vert;s&vert; { /* Threads can't exist longer than scope() */ });</code> |
 | **Provide Builders** | `Car::new("Model T").hp(20).build();` |
-| **Don't Panic** | Panics are _not_ exceptions, they suggest process abortion! |
+| **Don't Panic** | Panics are _not_ exceptions, they suggest immediate process abortion! |
 |  | Only panic on programming error; use `Option<T>`{{ std(page="std/option/enum.Option.html") }} or `Result<T,E>`{{ std(page="std/result/enum.Result.html") }} otherwise. |
 |  | If clearly user requested, e.g., calling `obtain()` vs. `try_obtain()`, panic ok too. |
 | **Generics in Moderation** | A simple `<T: Bound>` (e.g., `AsRef<Path>`) can make your APIs nicer to use.  |
