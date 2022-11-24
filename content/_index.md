@@ -4029,7 +4029,7 @@ Similarly, for <code>f64</code> types this would look like:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-numeric-5" name="tab-group-numeric">
-<label for="tab-numeric-5"><b>Arithmetical Pitfalls</b> {{ bad() }}</label>
+<label for="tab-numeric-5"><b>Arithmetic Pitfalls</b> {{ bad() }}</label>
 <panel><div class="">
 
 | Operation<sup>1</sup> | Gives | Note |
@@ -5451,6 +5451,10 @@ As-<b style="">correct</b>-as-it-currently-gets number conversions.
 <sup>3</sup> Might misrepresent number (`u64::MAX as f32`) or produce `Inf` (`u128::MAX as f32`).
 
 </footnotes>
+
+{{ tablesep() }}
+
+> Also see **Casting-** and **Arithmetic Pitfalls** {{ above(target="#numeric-types") }} for more things that can go wrong working with numbers.
 
 
 <!-- end overflow -->
