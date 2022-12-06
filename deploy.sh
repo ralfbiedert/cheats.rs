@@ -69,6 +69,9 @@ if [[ $1 == "--live" ]]; then
 
     # Publish
     scp -r public.clean/* rb@192.168.0.1:/data/sites/cheats.rs
+
+    # TODO: Make this work
+    # curl -X POST "https://api.cloudflare.com/client/v4/zones/:identifier/purge_cache" -H "X-Auth-Email: XXX" -H "X-Auth-Key: XXX" -H "Content-Type: application/json" -d '[]'
 fi
 
 if [[ $1 == "--staging" ]]; then
