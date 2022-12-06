@@ -607,7 +607,7 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 |  `E::B ( .. ) => {}` | Match enum tuple variant `B`, ignoring any index. |
 |  `E::C { .. } => {}` | Match enum struct variant `C`, ignoring any field. |
 |  `S { x: 0, y: 1 } => {}` | Match struct with specific values (only accepts `s` with `s.x` of `0` and `s.y` of `1`). |
-|  `S { x: a, y: b } => {}` | Match struct with _any_(!) values and bind `s.x` to `a` and `s.y` to `b`. |
+|  `S { x: a, y: b } => {}` | Match struct with _any_ {{ bad() }} values and bind `s.x` to `a` and `s.y` to `b`. |
 |  {{ tab() }} `S { x, y } => {}` | Same, but shorthand with `s.x` and `s.y` bound as `x` and `y` respectively. |
 |  `S { .. } => {}` | Match struct with any values. |
 |  `D => {}` | Match enum variant `E::D` if `D` in `use`. |
@@ -4339,7 +4339,7 @@ These **sum types** hold a value of one of their sub types:
         </framed>
     </visual>
     <description>
-        Safely holds A or B or C, also <br> called 'tagged union', though <br> compiler may omit tag.
+        Safely holds A or B or C, also <br> called 'tagged union', though <br> compiler may squeeze tag<br>into 'unused' bits.
     </description>
 </datum>
 
@@ -5312,7 +5312,7 @@ Once you have an `i`:
 
 <footnotes>
 
-<sup>*</sup> If it looks as if it doesn't consume `c` that's because type was `Copy`. For example, if you call `(&c).into_iter()` it will invoke `.into_iter()` on `&c` (which will consume the reference and turn it into an Iterator), but `c` remains untouched.
+<sup>*</sup> If it looks as if it doesn't consume `c` that's because type was `Copy`. For example, if you call `(&c).into_iter()` it will invoke `.into_iter()` on `&c` (which will consume a _copy_ of the reference and turn it into an Iterator), but the original `c` remains untouched.
 
 </footnotes>
 
@@ -5893,12 +5893,12 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | 📁 `.cargo/` | **Project-local cargo configuration**, may contain **`config.toml`**. {{ link( url="https://doc.rust-lang.org/cargo/reference/config.html") }} {{ esoteric() }} |
 | 📁 `benches/` | Benchmarks for your crate, run via **`cargo bench`**, requires nightly by default. <sup>*</sup> {{ experimental() }} |
 | 📁 `examples/` | Examples how to use your crate, they see your crate like external user would.  |
-| {{ tab() }} `my_example.rs` | Individual examples are run like **`cargo run --example my_example`**. |
+| {{ tab() }} {{ tab() }} `my_example.rs` | Individual examples are run like **`cargo run --example my_example`**. |
 | 📁 `src/` | Actual source code for your project. |
-| {{ tab() }} `main.rs` | Default entry point for applications, this is what **`cargo run`** uses. |
-| {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f()` starts. |
+| {{ tab() }} {{ tab() }} `main.rs` | Default entry point for applications, this is what **`cargo run`** uses. |
+| {{ tab() }} {{ tab() }} `lib.rs` | Default entry point for libraries. This is where lookup for `my_crate::f()` starts. |
 | 📁 `src/bin/` | Place for additional binaries, even in library projects. |
-| {{ tab() }} `extra.rs` | Additional binary, run with `cargo run --bin extra`. |
+| {{ tab() }} {{ tab() }} `extra.rs` | Additional binary, run with `cargo run --bin extra`. |
 | 📁 `tests/` | Integration tests go here, invoked via **`cargo test`**. Unit tests often stay in `src/` file. |
 | `.rustfmt.toml` | In case you want to [**customize**](https://rust-lang.github.io/rustfmt/) how **`cargo fmt`** works. |
 | `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`**  {{ esoteric() }} |
