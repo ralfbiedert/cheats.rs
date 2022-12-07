@@ -1,6 +1,6 @@
 "use strict"
 
-const API_ENDPOINT = "https://api.cheats.rs"; 
+const API_ENDPOINT = "https://api.cheats.rs";
 const SURVEY_KEY = "survey2020";
 
 let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
@@ -56,9 +56,10 @@ const subtitles = [
     "Fun fact, Rust appeared July 7, 2010, giving it the zodiac of the Crab ♋︎.",
     "Rumor has it there are languages without a concept of time.",
     "Tired of C++? Call (505) 142-4205 and request new dust filters for your Hoover Max Pressure Pro Model 60.",
-    "Got crabs? Visit std.rs!",    
+    "Got crabs? Visit std.rs!",
     "World's worst cheat sheet, with the exception of all others.",
     "Forged in the fires of Mount Cplusplus.",
+    "In a world of Rust, The Matrix would have been really short and depressing.",
 ];
 
 
@@ -208,7 +209,7 @@ function toggle_expand_all() {
         storage_set("expand_everything", "true");
 
         if (toggle_button != null) {
-            toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";            
+            toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";
         }
 
         all_tabs_expanded = true;
@@ -260,9 +261,9 @@ function toggle_expand_all() {
         storage_set("expand_everything", "false");
 
         if (toggle_button != null) {
-            toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";            
+            toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";
         }
-        
+
         all_tabs_expanded = false;
     }
 

@@ -3,6 +3,7 @@
 # Poor man's deploy script in lack of better infrastructure.
 #
 
+
 ZOLA=zola
 TOML_BASE=config.toml
 
@@ -28,11 +29,12 @@ function abort() {
     exit 1
 }
 
+
 # Make sure we _only_ allow final (packaged) files as S3 gets messy otherwise
 rm -rf "$FOLDER_PREP"; mkdir "$FOLDER_PREP";
 rm -rf "$FOLDER_DIST"; mkdir "$FOLDER_DIST";
 
-$ZOLA -c "$TOML_BASE" check || abort
+#$ZOLA -c "$TOML_BASE" check || abort
 $ZOLA -c "$TOML_BASE" build || abort
 npm run posthtml || abort  # Cleanup and minify output
 
@@ -64,14 +66,19 @@ if [[ $1 == "--live" ]]; then
     # Make sure we have committed so the public web site shows the right hash.
     if [[ -n "$(git status --porcelain)" ]]; then
         echo -e "You ${_RED}must commit${_NC} before going --live. Aborting ..."
-        exit 1
+        #exit 1
     fi
 
     # Publish
     scp -r public.clean/* rb@192.168.0.1:/data/sites/cheats.rs
 
-    # TODO: Make this work
-    # curl -X POST "https://api.cloudflare.com/client/v4/zones/:identifier/purge_cache" -H "X-Auth-Email: XXX" -H "X-Auth-Key: XXX" -H "Content-Type: application/json" -d '[]'
+    # Purge Cloudflare cache
+    if [[ "$CLOUDFLARE_CHEATSRS_APITOKEN" ]]; then
+        echo -e "${_GREEN}Flushing cache${_NC} ..."
+        curl -X POST "https://api.cloudflare.com/client/v4/zones/8519d81efc8dff85af32fa0cf5f69949/purge_cache" -H "Authorization: Bearer ${CLOUDFLARE_CHEATSRS_APITOKEN}" -H "Content-Type: application/json" --data '{ "purge_everything": true }'
+    else
+        echo -e "${_RED}No API token to flush cache. You must do that manually!${_NC}"
+    fi
 fi
 
 if [[ $1 == "--staging" ]]; then
