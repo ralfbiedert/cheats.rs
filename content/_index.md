@@ -5434,6 +5434,18 @@ In addition, you might want to add convenience methods:
     </entry>
 </mini-zoo>
 
+---
+
+**Making `Iterator::collect` Work**
+* **`impl FromIterator for Collection<T> {}`** &mdash; Now `values.into_iter().collect::<Collection<_>>()` works.
+
+<mini-zoo class="zoo" style="">
+    <entry class="wide">
+        <type class="generic dotted"><code>Collection&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">FromIterator</code></trait-impl>
+    </entry>
+</mini-zoo>
+
 </div></panel></tab>
 
 
