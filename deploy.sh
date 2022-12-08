@@ -34,7 +34,7 @@ function abort() {
 rm -rf "$FOLDER_PREP"; mkdir "$FOLDER_PREP";
 rm -rf "$FOLDER_DIST"; mkdir "$FOLDER_DIST";
 
-#$ZOLA -c "$TOML_BASE" check || abort
+$ZOLA -c "$TOML_BASE" check || abort
 $ZOLA -c "$TOML_BASE" build || abort
 npm run posthtml || abort  # Cleanup and minify output
 
@@ -64,7 +64,7 @@ echo -e "Sending to ${_GREEN}LIVE${_NC} environment."
 # Make sure we have committed so the public web site shows the right hash.
 if [[ -n "$(git status --porcelain)" ]]; then
     echo -e "You ${_RED}must commit${_NC} before going --live. Aborting ..."
-    #exit 1
+    exit 1
 fi
 
 # Publish
