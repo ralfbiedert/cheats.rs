@@ -4551,11 +4551,21 @@ It can be the element- or byte-length of the target, or a pointer to a <i>vtable
 
 ## Closures {#closures-data}
 
-Ad-hoc functions with an automatically managed data block **capturing** {{ ref(page="types/closure.html#capture-modes") }}
-environment where closure was defined. For example:
+Ad-hoc functions with an automatically managed data block **capturing** {{ ref(page="types/closure.html#capture-modes") }}<sup>, 1</sup>
+environment where closure was defined. For example, if you had:
+
+```rust
+let y = ...;
+let z = ...;
+
+with_closure(move |x| x + y.f() + z); // y and z are moved into closure instance (of type C1)
+with_closure(     |x| x + y.f() + z); // y and z are pointed at from closure instance (of type C2)
+```
+
+Then the generated, anonymous closures types `C1` and `C2` passed to `with_closure()` would look like:
 
 <!-- NEW ENTRY -->
-<datum class="spaced">
+<datum class="doublespaced">
     <name><code>move |x| x + y.f() + z</code></name>
     <visual>
        <framed class="any" style="width: 100px;"><code>Y</code></framed>
@@ -4566,9 +4576,8 @@ environment where closure was defined. For example:
 </datum>
 
 
-
 <!-- NEW ENTRY -->
-<datum class="spaced">
+<datum class="">
     <name><code>|x| x + y.f() + z</code></name>
     <visual>
         <ptr>
@@ -4607,11 +4616,17 @@ environment where closure was defined. For example:
 <blockquote>
 <footnotes>
 
-Also produces anonymous <code>fn</code> such as <code>f<sub>c1</sub>(C1, X)</code> or <code>f<sub>c2</sub>(&C2, X)</code>. Details depend which <code>FnOnce</code>, <code>FnMut</code>, <code>Fn</code> ... is supported, based on properties of captured types.
+Also produces anonymous <code>fn</code> such as <code>f<sub>c1</sub>(C1, X)</code> or <code>f<sub>c2</sub>(&C2, X)</code>. Details depend on which <code>FnOnce</code>, <code>FnMut</code>, <code>Fn</code> ... is supported, based on properties of captured types.
 
 </footnotes>
 </blockquote>
 
+
+<footnotes>
+
+<sup>1</sup> A bit oversimplified a closure is a convenient-to-write 'mini function' that accepts parameters _but also_ needs some local variables to do its job. It is therefore a type (containing the needed locals) and a function. _'Capturing the environment'_ is a fancy way of saying that and how the closure type holds on to these locals, either _by moved value_, or _by pointer_. See **Closures in APIs** {{ below(target="#closures-in-apis") }} for various implications.
+
+</footnotes>
 
 
 ## Standard Library Types

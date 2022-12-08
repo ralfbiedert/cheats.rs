@@ -435,6 +435,11 @@ datum.spaced {
     margin-right: 30px;
 }
 
+// Small datums need a bit of extra spacing or they look ugly
+datum.doublespaced {
+    margin-right: 60px;
+}
+
 // In some places we don't want our Rust-like color scheme b/c we have conflicting
 // background colors.
 .day-mode datum {
