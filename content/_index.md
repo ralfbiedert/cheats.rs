@@ -5300,7 +5300,7 @@ PRs for this section are very welcome. Idea is:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-trait-iter-1" name="tab-group-trait-iter" checked>
-<label for="tab-trait-iter-1"><b>Obtaining Iterators</b></label>
+<label for="tab-trait-iter-1"><b>Usage</b></label>
 <panel><div>
 
 
@@ -5337,10 +5337,10 @@ Once you have an `i`:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-trait-iter-2" name="tab-group-trait-iter">
-<label for="tab-trait-iter-2"><b>Implementing Iterators</b></label>
+<label for="tab-trait-iter-2"><b>Implementing</b></label>
 <panel><div>
 
-**Basics**
+**Absolute MVP**
 
 Let's assume you have a `struct Collection<T> {}`.
 
@@ -5367,6 +5367,8 @@ Let's assume you have a `struct Collection<T> {}`.
 
 
 **Shared & Mutable Iterators**
+
+These are essential if you want your collection to be useful when borrowed.
 
 * **`struct Iter<T> {}`** &mdash; Create struct holding `&Collection<T>` for shared iteration.
 * **`struct IterMut<T> {}`** &mdash; Similar, but holding `&mut Collection<T>` for mutable iteration.
@@ -5397,9 +5399,20 @@ In addition, you might want to add convenience methods:
     </entry>
 </mini-zoo>
 
----
+
+
+</div></panel></tab>
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-trait-iter-3" name="tab-group-trait-iter">
+<label for="tab-trait-iter-3"><b>Sugar</b></label>
+<panel><div>
 
 **Making Loops Work**
+
+Many users would expect your collection to _just work_ in `for` loops:
+
 * **`impl IntoIterator for Collection {}`** &mdash; Now `for x in c {}` works.
 * **`impl IntoIterator for &Collection {}`** &mdash; Now `for x in &c {}` works.
 * **`impl IntoIterator for &mut Collection {}`** &mdash; Now `for x in &mut c {}` works.
@@ -5436,8 +5449,11 @@ In addition, you might want to add convenience methods:
 
 ---
 
-**Making `Iterator::collect` Work**
-* **`impl FromIterator for Collection<T> {}`** &mdash; Now `values.into_iter().collect::<Collection<_>>()` works.
+**Making `Iterator::collect()` Work**
+
+Allow _other_ iterators to 'collect into' your collection.
+
+* **`impl FromIterator for Collection<T> {}`** &mdash; Now `some_iter.collect::<Collection<_>>()` works.
 
 <mini-zoo class="zoo" style="">
     <entry class="wide">
@@ -5447,6 +5463,7 @@ In addition, you might want to add convenience methods:
 </mini-zoo>
 
 </div></panel></tab>
+
 
 
 </tabs>
