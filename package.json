@@ -5,13 +5,13 @@
   },
   "private": true,
   "dependencies": {
-    "cssnano": "^5.1.12",
+    "cssnano": "^5.1.14",
     "htmlnano": "^0.2.5",
-    "postcss": "^8.4.14",
-    "posthtml-cli": "^0.5.3",
+    "postcss": "^8.4.19",
+    "posthtml-cli": "^0.10.0",
     "posthtml-img-autosize": "^0.1.4",
     "posthtml-inline-assets": "^3.0.0",
-    "svgo": "^2.8.0",
+    "svgo": "^3.0.2",
     "terser": "^5.14.1"
   }
 }
