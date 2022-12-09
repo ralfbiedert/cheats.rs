@@ -5325,6 +5325,12 @@ Once you have an `i`:
 
 * **`for x in c {}`** &mdash; Syntactic sugar, calls `c.into_iter()` and loops `i` until `None`.
 
+
+**Iterator Compatiblity**
+
+* **`let c = other_iter.collect::<C<_>>()`** &mdash; Collect foreign(!) iterable into your `C`.
+
+
 <footnotes>
 
 <sup>*</sup> If it looks as if it doesn't consume `c` that's because type was `Copy`. For example, if you call `(&c).into_iter()` it will invoke `.into_iter()` on `&c` (which will consume a _copy_ of the reference and turn it into an Iterator), but the original `c` remains untouched.
@@ -5337,16 +5343,16 @@ Once you have an `i`:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-trait-iter-2" name="tab-group-trait-iter">
-<label for="tab-trait-iter-2"><b>Implementing</b></label>
+<label for="tab-trait-iter-2"><b>Creating Iterators</b></label>
 <panel><div>
 
-**Absolute MVP**
+**Essentials**
 
 Let's assume you have a `struct Collection<T> {}`.
 
 
 * **`struct IntoIter<T> {}`** &mdash; Create a struct to hold your iteration status (e.g., an index) for value iteration.
-* **`impl Iterator for IntoIter {}`** &mdash; Implement `Iterator::next()` so it can produce elements.
+* **`impl Iterator for IntoIter<T> {}`** &mdash; Implement `Iterator::next()` so it can produce elements.
 
 <mini-zoo class="zoo" style="">
     <entry class="wide">
@@ -5362,6 +5368,9 @@ Let's assume you have a `struct Collection<T> {}`.
     </entry>
 </mini-zoo>
 
+{{ tablesep() }}
+
+> At this point you have something that can behave as an **Iterator**, {{ std(page="std/iter/trait.Iterator.html") }} but no way of actually obtaining it. See the next tab for how that usually works.
 
 ---
 
@@ -5400,22 +5409,21 @@ In addition, you might want to add convenience methods:
 </mini-zoo>
 
 
-
 </div></panel></tab>
 
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-trait-iter-3" name="tab-group-trait-iter">
-<label for="tab-trait-iter-3"><b>Sugar</b></label>
+<label for="tab-trait-iter-3"><b>Providing Iterators</b></label>
 <panel><div>
 
-**Making Loops Work**
+**Native Loop Support**
 
 Many users would expect your collection to _just work_ in `for` loops:
 
-* **`impl IntoIterator for Collection {}`** &mdash; Now `for x in c {}` works.
-* **`impl IntoIterator for &Collection {}`** &mdash; Now `for x in &c {}` works.
-* **`impl IntoIterator for &mut Collection {}`** &mdash; Now `for x in &mut c {}` works.
+* **`impl IntoIterator for Collection<T> {}`** &mdash; Now `for x in c {}` works.
+* **`impl IntoIterator for &Collection<T> {}`** &mdash; Now `for x in &c {}` works.
+* **`impl IntoIterator for &mut Collection<T> {}`** &mdash; Now `for x in &mut c {}` works.
 
 <mini-zoo class="zoo" style="">
     <entry class="wide">
@@ -5447,11 +5455,15 @@ Many users would expect your collection to _just work_ in `for` loops:
     </entry>
 </mini-zoo>
 
+{{ tablesep() }}
+
+> As you can see, the **IntoIterator** {{ std(page="std/iter/trait.IntoIterator.html") }} trait is what actually connects your collection with the **IntoIter** trait you created in the previous tab.
+
 ---
 
-**Making `Iterator::collect()` Work**
+**Foreign Iterator Compatibility**
 
-Allow _other_ iterators to 'collect into' your collection.
+Allow 3<sup>rd</sup> party iterators to 'collect into' your collection.
 
 * **`impl FromIterator for Collection<T> {}`** &mdash; Now `some_iter.collect::<Collection<_>>()` works.
 
