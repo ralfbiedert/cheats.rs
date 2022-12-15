@@ -4633,7 +4633,6 @@ Also produces anonymous <code>fn</code> such as <code>f<sub>c1</sub>(C1, X)</cod
 
 Rust's standard library combines the above primitive types into useful types with special semantics, e.g.:
 
-
 <!-- NEW ENTRY -->
 <datum class="spaced">
     <name><code>UnsafeCell&lt;T&gt;</code></name>
@@ -4848,10 +4847,10 @@ Rust's standard library combines the above primitive types into useful types wit
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <sized>
-            <code>tail</code><sub>2/4/8</sub>
+            <code>head</code><sub>2/4/8</sub>
         </sized>
         <sized>
-            <code>head</code><sub>2/4/8</sub>
+            <code>len</code><sub>2/4/8</sub>
         </sized>
         <ptr>
            <code>ptr</code><sub>2/4/8</sub>
@@ -4867,7 +4866,7 @@ Rust's standard library combines the above primitive types into useful types wit
         <memory class="heap capacity">
             <div>
                 <!-- <framed class="any t"><code>T<sub>x</sub></code></framed> -->
-                <framed class="any t"><code>T&#x2063;<sup>T</sup></code></framed>
+                <framed class="any t"><code>T</code></framed>
                 <!-- <framed class="any t"><code>T</code></framed> -->
                 <note>… empty …</note>
                 <framed class="any t"><code>T&#x2063;<sup>H</sup></code></framed>
@@ -4875,7 +4874,7 @@ Rust's standard library combines the above primitive types into useful types wit
             <capacity>← <note>capacity</note> →</capacity>
         </memory>
     </memory-entry>
-    <description>Index <code>tail</code> and <code>head</code> select in array-as-ringbuffer. This means content<br>may be non-contiguous and empty in the middle, as exemplified above.</description>
+    <description>Index <code>head</code> selects in array-as-ringbuffer. This means content may be<br> non-contiguous and empty in the middle, as exemplified above.</description>
 </datum>
 
 
