@@ -5016,7 +5016,7 @@ Rust's standard library combines the above primitive types into useful types wit
                 <byte class="bytes"><code>B</code></byte>
                 <byte class="bytes"><code>C</code></byte>
                 <note>… len …</note>
-                <byte class="bytes"><code>␀</code></byte>
+                <byte class="bytes"><code>∅</code></byte>
             </div>
         </memory>
     </memory-entry>
@@ -5038,11 +5038,11 @@ Rust's standard library combines the above primitive types into useful types wit
         <memory-link style="left:25%;">|</memory-link>
         <memory class="heap">
             <div>
-                <byte class="bytes"><code>?</code></byte>
-                <byte class="bytes"><code>?</code></byte>
+                <byte class="bytes"><code> </code></byte>
+                <byte class="bytes"><code> </code></byte>
                 /
-                <word class="bytes"><code>?</code></word>
-                <word class="bytes"><code>?</code></word>
+                <word class="bytes"><code> </code></word>
+                <word class="bytes"><code> </code></word>
             </div>
         </memory>
     </memory-entry>
@@ -5065,11 +5065,11 @@ Rust's standard library combines the above primitive types into useful types wit
         <memory-link style="left:40%;">|</memory-link>
         <memory class="heap">
             <div>
-                <byte class="bytes"><code>?</code></byte>
-                <byte class="bytes"><code>?</code></byte>
+                <byte class="bytes"><code> </code></byte>
+                <byte class="bytes"><code> </code></byte>
                 /
-                <word class="bytes"><code>?</code></word>
-                <word class="bytes"><code>?</code></word>
+                <word class="bytes"><code> </code></word>
+                <word class="bytes"><code> </code></word>
             </div>
         </memory>
     </memory-entry>
