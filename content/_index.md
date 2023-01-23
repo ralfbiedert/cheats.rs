@@ -9169,7 +9169,7 @@ If you are used to Java or C, consider these.
 | **Use Strong Types** | `enum E { Invalid, Valid { … } }` over `ERROR_INVALID = -1` |
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
 |  | `struct Charge(f32)` over `f32` |
-| **Illegal State: Impossible** | `my_lock.write()?.guaranteed_at_compile_time_to_be_locked = 10;`|
+| **Illegal State: Impossible** | `my_lock.write().unwrap().guaranteed_at_compile_time_to_be_locked = 10;` <sup>1</sup>|
 |  | <code>thread::scope(&vert;s&vert; { /* Threads can't exist longer than scope() */ });</code> |
 | **Provide Builders** | `Car::new("Model T").hp(20).build();` |
 | **Don't Panic** | Panics are _not_ exceptions, they suggest immediate process abortion! |
@@ -9191,6 +9191,13 @@ If you are used to Java or C, consider these.
 |  | If applicable: **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
 
 </div>
+
+<footnotes>
+
+<sup>1</sup> In most cases you should prefer `?` over `.unwrap()`. In the case of locks however the returned [**`PoisonError`**](https://doc.rust-lang.org/stable/std/sync/struct.PoisonError.html) signifies a panic in another thread, so unwrapping it (thus propagating the panic) is often the better idea.
+
+
+</footnotes>
 
 {{ tablesep() }}
 
