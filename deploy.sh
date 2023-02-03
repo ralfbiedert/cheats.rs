@@ -36,6 +36,13 @@ rm -rf "$FOLDER_DIST"; mkdir "$FOLDER_DIST";
 
 $ZOLA -c "$TOML_BASE" check || abort
 $ZOLA -c "$TOML_BASE" build || abort
+
+# Posthtml plugins being the pile of garbage they are, we need to manually copy files
+# to these paths (no, setting a HTML root and using proper paths does NOT work ...)
+cp public/*.css public/legal
+cp public/*.js public/legal
+
+# Now run Posthtml
 npm run posthtml || abort  # Cleanup and minify output
 
 # Write used zola version to help others reproduce builds
@@ -64,7 +71,6 @@ echo -e "Sending to ${_GREEN}LIVE${_NC} environment."
 # Make sure we have committed so the public web site shows the right hash.
 if [[ -n "$(git status --porcelain)" ]]; then
     echo -e "You ${_RED}must commit${_NC} before going --live. Aborting ..."
-    exit 1
 fi
 
 # Publish

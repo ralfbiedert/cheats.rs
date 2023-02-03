@@ -22,7 +22,7 @@ Ralf Biedert (<a href="mailto:webmaster@cheats.rs">mail</a>, <a href="https://xr
 
 ### Privacy, GDPR
 
-- The site itself is **dispatched via Cloudflare's CDN**. 
+- The site itself is **dispatched via Cloudflare's CDN**.
 - The **Edit & Run** feature of the "Hello, Rust" section embeds the [Rust Playground](https://play.rust-lang.org/). All code entered there is sent to and processed on their servers.
 - We are generally **not aware of any user tracking** and only aggregate statistics (e.g., users by country) are retained by our hosting provider. **Access logs** are usually disabled, but might be enabled along with other measures to diagnose and mitigate hosting issues.
 - The browser's **local storage** may be necessary to store settings between sessions (e.g., dark mode, ligatures, banner visibility), if you requested such a setting to take effect. This information never leaves your machine.

@@ -12,12 +12,19 @@ const REPLACEMENTS = {
     "href=\"favicon32.png\"": "href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEVklEQVR4AWJwL/AZUDzqgFEHAKgrxwB3ni2I1s+2bdu2bdu2bdu2bds21rY9THLf3EzWu+9vfThJptNddcb/PQGagTRhG1CIf4tb0VXejArm3xtQfDM2J/nLBNRNaMXFXKpshYewAT2kTXAVN+FyxAaM57GILcgvrEUdlvpTBJwnIYVWUsp6KJKJ6/GOC4V1+GnYCJLWxkdchRfqGggRK7CajxQflT8kIC5HRmkVXDlYCw1RV4MYYbmFJbExLNMRFsLJsBhfhUW4+XsE9OLFmCLNxyBhMYJMkWULYhMxLw6zdaS5IFoIEmfjjTwLfTnnNwnwodcWudMiDozDLAsz4jAtBlN1RA3S1oiTcfpXC8gz0MMwF7OEGXDSfscLFabEYGIcJlgYb2EcyKCNS2PxwDAFs5QxqPHLAlOwXLdOODCKMQkwMj7icE1iFIhGg9SRaJKoAF/p4aNQSRmJuXJigcxQkDyEAzmcty0MBBkt/wmDLQxk9DFxAALUfuil9kHhBAX4tpFG4gUHR4Uyg2MHmqblp5cLutC66kkopC9IGsDhSchrTVfa3DwPuXXTx4S+sZF6g6i/JtMHaxI9BWbDQXqg2b5fbMQeoC8rBtAnO1cTkqehvTX00Hut0tJ3G0dT3ZYdaGpRTbKPPpeRuuso/Lsb/EM7o2CCAnxo1J74yIvZVuwZGw4j7XtYuUxUtGwFAkCLSulj+6qCchUqRizVKx+I+Ch0ttBJR+kAMnSE0dAJ16R2KBlLQO6GclzOYb7tQeGdLSFdYmAZ+9QE1DSTzrulw8lh32LyaJmEeuUCddD41DiJuUxsHw1vB7UGebUAkSajdoCn1B4DowSkjpjH4WonfDtfAQcuV4KXW3NY8eTwdogKfN8IdL0a6H7tpOSzZ7bJ1TOUPAIlo/WeJfSufhIz1k2i1/i10tfJ7RF4pzq2HS+Lp6HtcI9zYwnwg0ez2s6HKKgNOh8ujf1aURNjBzxh84c14fSwDhTb+iDXvkVNX66cJhuPCPppF0AOrsEUJBnpy/Ft5Ncxg3kveS6vYRm5A0StsPOxMkkmnquEnlrHd618f4K3IUtofHlQA+V4AV8w2p68D2sL16AWkHw3jydHe0+Tlateztg4BpC7dyhFGIkcnt5R/bpmNXo3hxzQGu6c5d8KbTYWRJ4jZTBUE2nLYxGdkSXBu4Df5yxBHbHuYEmU2l0UWXlyRDusDmqJEO+xtcnmxmXTD8dgipRwcA0lJx/ZfCoCT6wKcG2anFggsBXmRBZFZmnZp5ROaPCL7wK+JpSOaBhzjPfEsR6CucB2YityPLnNaG3va7T6bOXnfnEfOUxqQXyKrOrD07oxesXNVDqjpsaYX/Uy4tMR81aJ5H0t1PpUB1c/N0zl6nB0o+QbrJDjT9vvH9vlW/6lMnZ9qYv/rfSsJYM8NjPf+TDIgQo7qrQJLy2bIP789eczD5+9u3H22n1LUNSNtorJxaMOGHUAAL89B017ixdoAAAAAElFTkSuQmCC\""
 }
 
-let content = fs.readFileSync("index.html").toString("utf8");
+const FILES = [
+    "index.html",
+    "legal/index.html"
+];
 
-for (let key in REPLACEMENTS) {
-    let value = REPLACEMENTS[key];
+FILES.forEach(file => {
+    let content = fs.readFileSync(file).toString("utf8");
 
-    content = content.replace(key, value);
-}
+    for (let key in REPLACEMENTS) {
+        let value = REPLACEMENTS[key];
 
-fs.writeFileSync("index.html", content)
+        content = content.replace(key, value);
+    }
+
+    fs.writeFileSync(file, content)
+});

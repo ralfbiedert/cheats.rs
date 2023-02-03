@@ -7153,7 +7153,7 @@ trait Copy { }
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Implementing Traits for Types &mdash; <code>impl T for S { }</code></header>
 <description>
 
@@ -7212,7 +7212,7 @@ impl ShowHex for Port { … }
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Traits vs. Interfaces</header>
 <description>
 
@@ -7340,7 +7340,7 @@ Venison::new("rudolph").eat();
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Type Constructors &mdash; <code>Vec&lt;&gt;</code></header>
 <description>
 
@@ -7385,7 +7385,7 @@ Venison::new("rudolph").eat();
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Generic Parameters &mdash; <code>&lt;T&gt;</code></header>
 <description>
 
@@ -7442,7 +7442,7 @@ fn f() {
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section >
 <header>Const Generics &mdash; <code>[T; N]</code> and <code>S&lt;const N: usize&gt;</code></header>
 <description>
 
@@ -7487,7 +7487,7 @@ struct MyArray<T, const N: usize> {
 
 
 <!-- Section -->
-<!-- <generics-section id="xxx">
+<!-- <generics-section >
 <header>Generics in Types</header>
 <description>
 
@@ -7498,7 +7498,7 @@ struct MyArray<T, const N: usize> {
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section >
 <header>Bounds (Simple) &mdash; <code>where T: X</code></header>
 <description>
 
@@ -7595,7 +7595,7 @@ We add bounds to the struct here. In practice it's nicer add bounds to the respe
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Bounds (Compound) &mdash; <code>where T: X + Y</code></header>
 <description>
 
@@ -7646,7 +7646,7 @@ where
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Implementing Families &mdash; <code>impl&lt;&gt;</code></header>
 <description>
 
@@ -7681,7 +7681,7 @@ s.f('x');
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Blanket Implementations &mdash; <code>impl&lt;T&gt X for T { … }</code></header>
 <description>
 
@@ -7757,7 +7757,7 @@ They can be neat way to give foreign types functionality in a modular way if the
 
 
 <!-- Section -->
-<!-- <generics-section id="xxx">
+<!-- <generics-section >
 <header>Pseudo-Specialization</header>
 <description>
 
@@ -7768,7 +7768,7 @@ They can be neat way to give foreign types functionality in a modular way if the
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Trait Parameters &mdash; <code>Trait&lt;In&gt; { type Out; } </code></header>
 <description>
 
@@ -7927,7 +7927,7 @@ trait Complex<I1, I2> {
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Trait Authoring Considerations (Abstract)</header>
 <description>
 
@@ -8351,7 +8351,7 @@ Like examples above, in particular trait author assumes:
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Dynamic / Zero Sized Types</header>
 <description>
 
@@ -8440,7 +8440,7 @@ Like examples above, in particular trait author assumes:
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header><code>?Sized</code></header>
 <description>
 
@@ -8500,7 +8500,7 @@ struct S<T> where T: ?Sized { … }
 
 
 <!-- Section -->
-<generics-section id="xxx">
+<generics-section>
 <header>Generics and Lifetimes &mdash; <code>&lt;'a&gt;</code></header>
 <description>
 
@@ -8568,7 +8568,7 @@ let b: S;
 
 
 <!-- Section -->
-<!-- <generics-section id="xxx">
+<!-- <generics-section >
 <header>Another <code>?X</code></header>
 <description>
 
@@ -8585,7 +8585,7 @@ let b: S;
 
 
 <!-- Section -->
-<!-- <generics-section id="xxx">
+<!-- <generics-section >
 <header>GAT {{ experimental() }}</header>
 <description>
 
@@ -8596,7 +8596,7 @@ let b: S;
 
 
 <!-- Section -->
-<!-- <generics-section id="xxx">
+<!-- <generics-section >
 <header>(Co-/Contra-) Variance </header>
 <description>
 
