@@ -214,11 +214,21 @@ $largescreen-width: 1050px;
         font-size: 9px;
     }
 
+    // .book-content {
+    //     // background-color: red;
+    //     transition: 0s;
+    //     transform: scale(1.05);
+    //     transform-origin: top left;
+    // }
+
     .book-content {
-        // background-color: red;
         transition: 0s;
-        transform: scale(1.05);
         transform-origin: top left;
+
+
+        // https://github.com/ralfbiedert/cheats.rs/issues/180
+        -moz-transform: scale(1.05); // Firefox
+        zoom: 105%; // others browsers
     }
 
     fixed-2-column > table tr td:nth-child(1) {
