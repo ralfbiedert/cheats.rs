@@ -6355,7 +6355,7 @@ A large number of additional cargo plugins [**can be found here**](https://crate
 
 🔘 Check [target is supported](https://doc.rust-lang.org/rustc/platform-support.html).
 
-🔘 Install target via **`rustup target install X`**.
+🔘 Install target via **`rustup target install aarch64-linux-android`** (for example).
 
 🔘 Install native toolchain (required to _link_, depends on target).
 
@@ -6391,7 +6391,7 @@ Whether you set them depends on how compiler complains, not necessarily all are 
 > Some platforms / configurations can be **extremely sensitive** how paths are specified (e.g., `\` vs `/`) and quoted.
 
 
-✔️ Compile with **`cargo build --target=X`**
+✔️ Compile with **`cargo build --target=aarch64-linux-android`**
 
 
 <!-- End overflow area -->
