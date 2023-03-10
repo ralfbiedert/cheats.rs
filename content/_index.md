@@ -5294,12 +5294,35 @@ PRs for this section are very welcome. Idea is:
 
 ## Iterators {#iterators}
 
-<tabs class="color-header std-green">
+<tabs class="color-header iterators">
+
+
 
 <!-- NEW TAB -->
 <tab>
-<input type="radio" id="tab-trait-iter-1" name="tab-group-trait-iter" checked>
-<label for="tab-trait-iter-1"><b>Usage</b></label>
+<input type="radio" id="tab-trait-iter-p0" name="tab-group-trait-iter" checked>
+<label for="tab-trait-iter-p0"><b>Basics</b></label>
+<panel><div>
+
+
+There are, broadly speaking, 4 ways to process (_iterate_) elements in a collection:
+
+| xxx | xxx |
+| --- | --- |
+| `for x in c { ... }` | Explicit??? form, good if you may need to break out of control flow early.  |
+| `c.iter().map().filter() ...` | Implicit form???, often easier to read as it's clearer what result it. |
+| `c_iter.next()` | _Low-level_ iterator invocation. |
+| `c.get(n)` | _Manual_ element access.  |
+
+
+</div></panel></tab>
+
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-trait-iter-1" name="tab-group-trait-iter">
+<label for="tab-trait-iter-1"><b>Obtaining</b></label>
 <panel><div>
 
 
@@ -5325,10 +5348,6 @@ Once you have an `i`:
 * **`for x in c {}`** &mdash; Syntactic sugar, calls `c.into_iter()` and loops `i` until `None`.
 
 
-**Iterator Compatiblity**
-
-* **`let c = other_iter.collect::<C<_>>()`** &mdash; Collect foreign(!) iterable into your `C`.
-
 
 <footnotes>
 
@@ -5342,7 +5361,7 @@ Once you have an `i`:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-trait-iter-2" name="tab-group-trait-iter">
-<label for="tab-trait-iter-2"><b>Creating Iterators</b></label>
+<label for="tab-trait-iter-2"><b>Creating</b></label>
 <panel><div>
 
 **Essentials**
@@ -5371,7 +5390,17 @@ Let's assume you have a `struct Collection<T> {}`.
 
 > At this point you have something that can behave as an **Iterator**, {{ std(page="std/iter/trait.Iterator.html") }} but no way of actually obtaining it. See the next tab for how that usually works.
 
----
+
+</div></panel></tab>
+
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-trait-iter-2b" name="tab-group-trait-iter">
+<label for="tab-trait-iter-2b"><b>Borrowing</b></label>
+<panel><div>
+
 
 
 **Shared & Mutable Iterators**
@@ -5413,7 +5442,7 @@ In addition, you might want to add convenience methods:
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-trait-iter-3" name="tab-group-trait-iter">
-<label for="tab-trait-iter-3"><b>Providing Iterators</b></label>
+<label for="tab-trait-iter-3"><b>For Loops</b></label>
 <panel><div>
 
 **Native Loop Support**
@@ -5458,13 +5487,24 @@ Many users would expect your collection to _just work_ in `for` loops:
 
 > As you can see, the **IntoIterator** {{ std(page="std/iter/trait.IntoIterator.html") }} trait is what actually connects your collection with the **IntoIter** trait you created in the previous tab.
 
----
 
-**Foreign Iterator Compatibility**
+</div></panel></tab>
+
+
+
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-trait-iter-4" name="tab-group-trait-iter">
+<label for="tab-trait-iter-4"><b>Interoperability</b></label>
+<panel><div>
+
+
+**Iterator Interoperability**
 
 Allow 3<sup>rd</sup> party iterators to 'collect into' your collection.
 
 * **`impl FromIterator for Collection<T> {}`** &mdash; Now `some_iter.collect::<Collection<_>>()` works.
+* **`let c = other_iter.collect::<C<_>>()`** &mdash; Collect foreign(!) iterable into your `C`.
 
 <mini-zoo class="zoo" style="">
     <entry class="wide">
@@ -5473,9 +5513,9 @@ Allow 3<sup>rd</sup> party iterators to 'collect into' your collection.
     </entry>
 </mini-zoo>
 
+
+
 </div></panel></tab>
-
-
 
 </tabs>
 
