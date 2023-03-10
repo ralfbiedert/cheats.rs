@@ -160,113 +160,48 @@ function toggle_legend() {
 
 
 // Called by toggle button, setting in localStorage.
-function toggle_expand_all() {
-    let toggle_button = document.getElementById("expand_everything");
-
-    if (!all_tabs_expanded) {
-        //
-        // Expand all the tabs
-        //
-        let tabs = document.querySelectorAll("tab");
-        for (let tab of tabs) {
-            tab.style.display = "block";
-        }
-
-        let panels = document.querySelectorAll("tab > panel");
-        for (let panel of panels) {
-            panel.style.display = "initial";
-        }
-
-        let labels = document.querySelectorAll("tab > label");
-        for (let label of labels) {
-            label.style.display = "inline-block";
-            // label.style.width = "100%";
-            label.style.cursor = "initial";
-            label.style.marginTop = "10px";
-        }
-
-        let inputs = document.querySelectorAll("tab > input");
-        for (let input of inputs) {
-            input.checked = false;
-        }
-
-        //
-        // Expand all lifetime sections
-        //
-        let lifetime_explanations = document.querySelectorAll("lifetime-section > explanation");
-        for (let le of lifetime_explanations) {
-            le.style.display = "inherit";
-        }
-
-        //
-        // Expand all types sections
-        //
-        let types_explanations = document.querySelectorAll("generics-section > description");
-        for (let te of types_explanations) {
-            te.style.display = "inherit";
-        }
-
-        storage_set("expand_everything", "true");
-
-        if (toggle_button != null) {
-            toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";
-        }
-
-        all_tabs_expanded = true;
-    } else {
-        //
-        // Expand all the tabs
-        //
-        let tabs = document.querySelectorAll("tab");
-        for (let tab of tabs) {
-            tab.style.display = "";
-        }
-
-        let panels = document.querySelectorAll("tab > panel");
-        for (let panel of panels) {
-            panel.style.display = "";
-        }
-
-        let labels = document.querySelectorAll("tab > label");
-        for (let label of labels) {
-            label.style.display = "";
-            // label.style.width = "";
-            label.style.cursor = "";
-            label.style.marginTop = "";
-        }
-
-        // TODO: This makes the _last_ tab activate, which is wrong. Instead we'd want
-        // the first tab to activate ... (but this code here is just so much easier).
-        let inputs = document.querySelectorAll("tab > input");
-        for (let input of inputs) {
-            input.checked = true;
-        }
-
-        //
-        // Collapse all lifetime sections
-        //
-        let lifetime_explanations = document.querySelectorAll("lifetime-section > explanation");
-        for (let le of lifetime_explanations) {
-            le.style.display = "none";
-        }
-
-        //
-        // Collapse all types sections
-        //
-        let types_explanations = document.querySelectorAll("generics-section > description");
-        for (let te of types_explanations) {
-            te.style.display = "none";
-        }
-
-        storage_set("expand_everything", "false");
-
-        if (toggle_button != null) {
-            toggle_button.innerHTML = "Expanded ALL the things! <flip>🧹</flip>";
-        }
-
-        all_tabs_expanded = false;
+function expand_all() {
+    //
+    // Expand all the tabs
+    //
+    let tabs = document.querySelectorAll("tab");
+    for (let tab of tabs) {
+        tab.style.display = "block";
     }
 
+    let panels = document.querySelectorAll("tab > panel");
+    for (let panel of panels) {
+        panel.style.display = "initial";
+    }
+
+    let labels = document.querySelectorAll("tab > label");
+    for (let label of labels) {
+        label.style.display = "inline-block";
+        // label.style.width = "100%";
+        label.style.cursor = "initial";
+        label.style.marginTop = "10px";
+    }
+
+    let inputs = document.querySelectorAll("tab > input");
+    for (let input of inputs) {
+        input.checked = false;
+    }
+
+    //
+    // Expand all lifetime sections
+    //
+    let lifetime_explanations = document.querySelectorAll("lifetime-section > explanation");
+    for (let le of lifetime_explanations) {
+        le.style.display = "inherit";
+    }
+
+    //
+    // Expand all types sections
+    //
+    let types_explanations = document.querySelectorAll("generics-section > description");
+    for (let te of types_explanations) {
+        te.style.display = "inherit";
+    }
 }
 
 
@@ -535,7 +470,7 @@ window.onload = () => {
         if (window.location.hash == "#_print") {
             // In print mode, all we care for is to enable a few things
             toggle_ligatures();
-            toggle_expand_all();
+            expand_all();
 
             // Have to set this to make CSS work for book
             set_body_night_mode("day");
@@ -543,7 +478,6 @@ window.onload = () => {
             // Executed on page load, this runs all toggles the user might have clicked
             // the last time based on localStorage.
             let ligatures = storage_get("ligatures");
-            let expand_everything = storage_get("expand_everything");
             let night_mode = storage_get("night-mode") || get_browser_night_mode();
 
             // Don't attach feedback to h1, looks ugly and doesn't help.
@@ -551,7 +485,6 @@ window.onload = () => {
 
             if (Math.random() < 0.15) { random_quote(); }
             if (ligatures === "ligatures") { toggle_ligatures(); }
-            if (expand_everything === "true") { toggle_expand_all(); }
 
             set_body_night_mode(night_mode);
 
