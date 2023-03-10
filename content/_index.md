@@ -6539,7 +6539,8 @@ Attributes affecting the whole crate or app:
 
 | Handlers | On | Explanation |
 |--------|---|----------|
-| `#[panic_handler]` | `F` | Make some `fn f(&PanicInfo) -> !` app's **panic handler**. {{ ref(page="runtime.html#the-panic_handler-attribute") }} |
+| `#[panic_handler]` | `F` | Make some `fn(&PanicInfo) -> !` app's **panic handler**. {{ ref(page="runtime.html#the-panic_handler-attribute") }} |
+| `#[alloc_error_handler]` | `F` | Make some `fn(Layout) -> !` the **allocation failure handler**. {{ link(url="https://github.com/rust-lang/rust/issues/51540") }} {{ experimental() }} |
 | `#[global_allocator]` | `S` | Make static item impl. `GlobalAlloc` {{ std(page="alloc/alloc/trait.GlobalAlloc.html") }} **global allocator**. {{ ref(page="runtime.html#the-global_allocator-attribute") }}|
 
 
