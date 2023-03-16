@@ -1230,6 +1230,110 @@ mini-table {
 }
 
 
+threading-section {
+    display: inline-block;
+    // height: 60px;
+    width: 99%;
+    margin-bottom: 0px;
+
+
+    // Holds the memory row, which is byts, labels, values, ...
+    thread-row {
+        width: 100%;
+        position: relative;
+
+        // Contains bytes in particular in a visually distinct shape
+        thread-backdrop {
+            width: 100%;
+            overflow-x: hidden;
+            white-space: nowrap;
+            display: block;
+            user-select: none;  // otherwise toggling description causes empty space to highlight
+            color: red;
+            height: 20px;
+        }
+
+
+        // Contains value boxes that visually sit on top of bytes
+        values {
+            position: relative;
+            display: block;
+            height: 0px;
+            top: -26px;
+
+            value {
+                display: inline-block;
+                position: relative;
+                color: black !important;
+
+                background-color: gray;
+
+                text-align: center;
+                font-size: 0.8em;
+                font-family: "Fira Code", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace;
+                line-height: 22px;
+
+                padding-left: 10px;
+                padding-right: 10px;
+
+
+                border-width: 1px;
+                border-style: solid;
+                border-spacing: inherit;
+                box-sizing: border-box;
+                border-radius: 5px;
+
+                thread-link {
+                    position: absolute;
+                    top: 25px;
+                    left: 40%;
+                    font-size: 30px;
+                    opacity: 0.4;
+                    color: gray;
+                    z-index: -10;
+                }
+            }
+
+            .both { background-color: #b4e9a9; }
+            .one { background-color: #fbf7bd; }
+            .none { background-color: #f37142; }
+            .disabled { border-style: dashed; background-color: lightgray; }
+        }
+
+        subtext {
+            position: relative;
+            display: block;
+            width: 100%;
+            text-align: right;
+            top: -25px;
+            font-weight: bold;
+
+            blank-background {
+                color: gray;
+                background-color: white;
+            }
+        }
+    }
+
+    thread-link-row {
+        position: relative;
+
+        // The small, black line connecting threads
+        thread-link {
+            display: block;
+            // position: absolute;
+            opacity: 0.5;
+            color: gray;
+            top: -20px;
+            height: 15px;
+            font-size: 25px;
+            z-index: -50;
+        }
+
+    }
+}
+
+
 .day-mode {
     zoo {
         background-color: #f4f4f4;

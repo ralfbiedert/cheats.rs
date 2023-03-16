@@ -907,7 +907,7 @@ On the left things people may incorrectly assume they _should get away with_ if 
 |---------|-------------|
 | `0xffff_ffff` would make a valid `char`. {{ bad() }} | AM may exploit _'invalid'_ bit patterns to pack unrelated data.  |
 | `0xff` and `0xff` are same pointer. {{ bad() }} | AM pointers can have _'domain'_ attached for optimization.  |
-| Any r/w pointer on `0xff` always fine. {{ bad() }} | AM may issue cache-friendly ops trusting _'no read can happen'_.  |
+| Any r/w on pointer `0xff` always fine. {{ bad() }} | AM may issue cache-friendly ops trusting _'no read can happen'_.  |
 | Reading un-init just gives random value. {{ bad() }} | AM _'knows'_ read impossible, may remove all related bitcode.  |
 | Data race just gives random value. {{ bad() }} | AM may split R/W, produce _impossible_ value, see above.  |
 | Null reference is just `0x0` in some register. {{ bad() }} | Holding `0x0` in reference summons Cthulhu.  |
@@ -3678,9 +3678,9 @@ Also, dereference `*rb` not strictly necessary, just added for clarity.
 {
     let f = |x, y| (S(x), S(y)); // Function returning two 'Droppables'.
 
-    let (    x1, y) = f(1, 4);  // S(1) - EoS   S(4) - EoS
-    let (    x2, _) = f(2, 5);  // S(2) - EoS   S(5) - dropped immediately
-    let (ref x3, _) = f(3, 6);  // S(3) - EoS   S(6) - EoS
+    let (    x1, y) = f(1, 4);  // S(1) - Scope   S(4) - Scope
+    let (    x2, _) = f(2, 5);  // S(2) - Scope   S(5) - Immediately
+    let (ref x3, _) = f(3, 6);  // S(3) - Scope   S(6) - Scope
 
     println!("…");
 }
@@ -3688,7 +3688,7 @@ Also, dereference `*rb` not strictly necessary, just added for clarity.
 
 <footnotes>
 
-Here `EoS` means contained value lives until end of scope, i.e., past the `println!()`.
+Here `Scope` means contained value lives until end of scope, i.e., past the `println!()`.
 
 </footnotes>
 
@@ -5241,6 +5241,28 @@ PRs for this section are very welcome. Idea is:
 </div></panel></tab>
 
 
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-api-5" name="tab-api-sized">
+<label for="tab-api-5"><b>Transforms {{ hot() }}</b></label>
+<panel><div class="color-header one-liners cheats">
+
+| Starting Type | Resource |
+|---------|-------------|
+| `Option<T> -> …` | See the [Type-Based Cheat Sheet](https://upsuper.github.io/rust-cheatsheet/) |
+| `Result<T, R> -> …` | See the [Type-Based Cheat Sheet](https://upsuper.github.io/rust-cheatsheet/) |
+| `Iterator<Item=T> -> …` | See the [Type-Based Cheat Sheet](https://upsuper.github.io/rust-cheatsheet/) |
+| `&[T] -> …` | See the [Type-Based Cheat Sheet](https://upsuper.github.io/rust-cheatsheet/) |
+| `Future<T> -> …` | See the [Futures Cheat Sheet](https://rufflewind.com/img/rust-futures-cheatsheet.html) |
+
+<!-- <footnotes>
+
+<sup>*</sup> We're a bit short on space here, <code>t</code> means true.
+
+</footnotes> -->
+
+</div></panel></tab>
+
 
 <!-- NEW TAB -->
 <tab>
@@ -5269,21 +5291,82 @@ PRs for this section are very welcome. Idea is:
 
 ## Thread Safety {#thread-safety}
 
+Assume you hold some variables in Thread 1, and would either like to **move** them to Thread 2, or pass their **references** to Thread 3.
+Whether this is allowed is governed by the traits **`Send`**{{ std(page="std/marker/trait.Send.html") }} and **`Sync`**{{ std(page="std/marker/trait.Sync.html") }} respectively:
+
+{{ tablesep() }}
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto; padding-top: 10px;">
+<div style="min-width: 100%; width: 650px; ">
+<div class="color-header number">
+
+
+<threading-section>
+    <thread-row>
+        <thread-backdrop><hr></thread-backdrop>
+        <values>
+            <value class="both" style="left: 57px;"><thread-link>|<br>|<br>|</thread-link>&nbsp;Mutex&lt;u32&gt;</value>
+            <value class="one" style="left: 97.5px;"><thread-link>|<br>|<br>|</thread-link>&nbsp;Cell&lt;u32&gt;</value>
+            <value class="one" style="left: 137.5px;"><thread-link>|<br>|<br>|</thread-link>&nbsp;MutexGuard&lt;u32&gt;</value>
+            <value class="none" style="left: 177.5px;"><thread-link>|<br>|<br>|</thread-link>&nbsp;Rc&lt;u32&gt;</value>
+        </values>
+        <subtext><blank-background>Thread 1</blank-background></subtext>
+    </thread-row>
+    <thread-row>
+        <thread-backdrop><hr></thread-backdrop>
+        <values>
+            <value class="both" style="left: 77px;">&nbsp;Mutex&lt;u32&gt;</value>
+            <value class="one" style="left: 117.5px;">&nbsp;Cell&lt;u32&gt;</value>
+            <value class="disabled" style="left: 157.5px;">&nbsp;MutexGuard&lt;u32&gt;</value>
+            <value class="disabled" style="left: 197.5px;">&nbsp;Rc&lt;u32&gt;</value>
+        </values>
+        <subtext><blank-background>Thread 2</blank-background></subtext>
+    </thread-row>
+    <thread-row>
+        <thread-backdrop><hr></thread-backdrop>
+        <values>
+            <value class="both" style="left: 77px;"><b>&</b>Mutex&lt;u32&gt;</value>
+            <value class="disabled" style="left: 117.5px;"><b>&</b>Cell&lt;u32&gt;</value>
+            <value class="one" style="left: 157.5px;"><b>&</b>MutexGuard&lt;u32&gt;</value>
+            <value class="disabled" style="left: 197.5px;"><b>&</b>Rc&lt;u32&gt;</value>
+        </values>
+        <subtext><blank-background>Thread 3</blank-background></subtext>
+    </thread-row>
+</threading-section>
+
+</div>
+</div>
+</div>
+
+{{ tablesep() }}
+
+<div class="color-header sendsync">
+
+| Example | Explanation |
+| --- | --- |
+| **`Mutex<u32>`** | Both `Send` and `Sync`. You can safely pass or lend it to another thread. |
+| **`Cell<u32>`** | `Send`, not `Sync`. Movable, but its reference would allow concurrent non-atomic writes. |
+| **`MutexGuard<u32>`** | `Sync`, but not `Send`. Lock tied to thread, but reference alone would not allow data race. |
+| **`Rc<u32>`** | Neither since it is easily clonable heap-proxy with non-atomic counters. |
+
+</div>
+
+{{ tablesep() }}
 
 <!-- Shamelessly stolen from https://www.reddit.com/r/rust/comments/ctdkyr/understanding_sendsync/exk8grg/ -->
 <table class="sendsync">
     <thead>
-        <tr><th>Examples</th><th><code>Send</code><sup>*</sup></th><th><code>!Send</code></th></tr>
+        <tr><th>Trait</th><th><code>Send</code></th><th><code>!Send</code></th></tr>
     </thead>
     <tbody>
-        <tr><td><code>Sync</code><sup>*</sup></td><td><i>Most types</i> … <code>Arc&lt;T&gt;</code><sup>1,2</sup>, <code>Mutex&lt;T&gt;</code><sup>2</sup></td><td><code>MutexGuard&lt;T&gt;</code><sup>1</sup>, <code>RwLockReadGuard&lt;T&gt;</code><sup>1</sup></td></tr>
+        <tr><td><code>Sync</code></td><td><i>Most types</i> … <code>Arc&lt;T&gt;</code><sup>1,2</sup>, <code>Mutex&lt;T&gt;</code><sup>2</sup></td><td><code>MutexGuard&lt;T&gt;</code><sup>1</sup>, <code>RwLockReadGuard&lt;T&gt;</code><sup>1</sup></td></tr>
         <tr><td><code>!Sync</code></td><td><code>Cell&lt;T&gt;</code><sup>2</sup>, <code>RefCell&lt;T&gt;</code><sup>2</sup></td><td><code>Rc&lt;T&gt;</code>, <code>&dyn Trait</code>, <code>*const T</code><sup>3</sup>, <code>*mut T</code><sup>3</sup></td></tr>
     </tbody>
 </table>
 
 <footnotes>
 
-<sup>*</sup> An instance `t` where **`T: Send`** can be moved to another thread, a **`T: Sync`** means `&t` can be moved to another thread.<br>
 <sup>1</sup> If `T` is `Sync`. <br>
 <sup>2</sup> If `T` is `Send`. <br>
 <sup>3</sup> If you need to send a raw pointer, create newtype `struct Ptr(*const u8)` and `unsafe impl Send for Ptr {}`. Just ensure you _may_ send it.
@@ -5294,9 +5377,9 @@ PRs for this section are very welcome. Idea is:
 
 ## Iterators {#iterators}
 
+Processing elements in a collection.
+
 <tabs class="color-header iterators">
-
-
 
 <!-- NEW TAB -->
 <tab>
@@ -5305,14 +5388,18 @@ PRs for this section are very welcome. Idea is:
 <panel><div>
 
 
-There are, broadly speaking, 4 ways to process (_iterate_) elements in a collection:
+There are, broadly speaking, 4 _styles_ of collection iteration:
 
-| xxx | xxx |
+| Style | Description |
 | --- | --- |
-| `for x in c { ... }` | Explicit??? form, good if you may need to break out of control flow early.  |
-| `c.iter().map().filter() ...` | Implicit form???, often easier to read as it's clearer what result it. |
-| `c_iter.next()` | _Low-level_ iterator invocation. |
-| `c.get(n)` | _Manual_ element access.  |
+| `for x in c { ... }` | _Imperative_, useful w. side effects, interdepend., or need to break flow early.  |
+| `c.iter().map().filter() ...` | _Functional_, often much cleaner when only results of interest. |
+| `c_iter.next()` | _Low-level_, via explicit `Iterator::next()` {{ std(page="std/iter/trait.Iterator.html#tymethod.next") }} invocation. {{ esoteric() }} |
+| `c.get(n)` | _Manual_, bypassing official iteration machinery. |
+
+{{ tablesep() }}
+
+> **Opinion** {{ opinionated() }} &mdash; Functional style is often easiest to follow, but don't hesitate to use  `for` if your `.iter()` chain turns messy. When implementing containers iterator support would be ideal, but when in a hurry it can sometimes be more practical to just implement `.len()` and `.get()` and move on with your life.
 
 
 </div></panel></tab>
@@ -5329,9 +5416,9 @@ There are, broadly speaking, 4 ways to process (_iterate_) elements in a collect
 
 **Basics**
 
-Assume you have a collection `c` of type `C`:
+Assume you have a collection `c` of type `C` you want to use:
 
-* **`c.into_iter()`** &mdash; Turns collection `c` into an **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} `i` and **consumes**<sup>*</sup> `c`. Requires **`IntoIterator`** {{ std(page="std/iter/trait.IntoIterator.html") }} for `C` to be implemented. Type of item depends on what `C` was. 'Standardized' way to get Iterators.
+* **`c.into_iter()`**<sup>1</sup>  &mdash; Turns collection `c` into an **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} `i` and **consumes**<sup>2</sup> `c`. _Standard_ way to get iterator.
 * **`c.iter()`** &mdash; Courtesy method **some** collections provide, returns **borrowing** Iterator, doesn't consume `c`.
 * **`c.iter_mut()`** &mdash; Same, but **mutably borrowing** Iterator that allow collection to be changed.
 
@@ -5351,7 +5438,9 @@ Once you have an `i`:
 
 <footnotes>
 
-<sup>*</sup> If it looks as if it doesn't consume `c` that's because type was `Copy`. For example, if you call `(&c).into_iter()` it will invoke `.into_iter()` on `&c` (which will consume a _copy_ of the reference and turn it into an Iterator), but the original `c` remains untouched.
+<sup>1</sup> Requires **`IntoIterator`** {{ std(page="std/iter/trait.IntoIterator.html") }} for `C` to be implemented. Type of item depends on what `C` was.
+
+<sup>2</sup> If it looks as if it doesn't consume `c` that's because type was `Copy`. For example, if you call `(&c).into_iter()` it will invoke `.into_iter()` on `&c` (which will consume a _copy_ of the reference and turn it into an Iterator), but the original `c` remains untouched.
 
 </footnotes>
 
@@ -5366,7 +5455,7 @@ Once you have an `i`:
 
 **Essentials**
 
-Let's assume you have a `struct Collection<T> {}`.
+Let's assume you have a `struct Collection<T> {}` you authored. You should also implement:
 
 
 * **`struct IntoIter<T> {}`** &mdash; Create a struct to hold your iteration status (e.g., an index) for value iteration.
@@ -5393,52 +5482,6 @@ Let's assume you have a `struct Collection<T> {}`.
 
 </div></panel></tab>
 
-
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-trait-iter-2b" name="tab-group-trait-iter">
-<label for="tab-trait-iter-2b"><b>Borrowing</b></label>
-<panel><div>
-
-
-
-**Shared & Mutable Iterators**
-
-These are essential if you want your collection to be useful when borrowed.
-
-* **`struct Iter<T> {}`** &mdash; Create struct holding `&Collection<T>` for shared iteration.
-* **`struct IterMut<T> {}`** &mdash; Similar, but holding `&mut Collection<T>` for mutable iteration.
-* **`impl Iterator for Iter<T> {}`** &mdash; Implement shared iteration.
-* **`impl Iterator for IterMut<T> {}`** &mdash; Implement mutable iteration.
-
-In addition, you might want to add convenience methods:
-
-- `Collection::iter(&self) -> Iter`,
-- `Collection::iter_mut(&mut self) -> IterMut`.
-
-
-
-<mini-zoo class="zoo" style="margin-right: 20px;">
-    <entry class="wide">
-        <type class="generic dotted"><code>Iter&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
-        <associated-type class="grayed"><code>Item = &T;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-
-<mini-zoo class="zoo" style="margin-right: 20px;">
-    <entry class="wide">
-        <type class="generic dotted"><code>IterMut&lt;T&gt;</code></type>
-        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
-        <associated-type class="grayed"><code>Item = &mut T;</code></associated-type>
-    </entry>
-</mini-zoo>
-
-
-</div></panel></tab>
-
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-trait-iter-3" name="tab-group-trait-iter">
@@ -5447,7 +5490,7 @@ In addition, you might want to add convenience methods:
 
 **Native Loop Support**
 
-Many users would expect your collection to _just work_ in `for` loops:
+Many users would expect your collection to _just work_ in `for` loops. You need to implement:
 
 * **`impl IntoIterator for Collection<T> {}`** &mdash; Now `for x in c {}` works.
 * **`impl IntoIterator for &Collection<T> {}`** &mdash; Now `for x in &c {}` works.
@@ -5491,6 +5534,52 @@ Many users would expect your collection to _just work_ in `for` loops:
 </div></panel></tab>
 
 
+<!-- NEW TAB -->
+<tab>
+<input type="radio" id="tab-trait-iter-2b" name="tab-group-trait-iter">
+<label for="tab-trait-iter-2b"><b>Borrowing</b></label>
+<panel><div>
+
+
+
+**Shared & Mutable Iterators**
+
+In addition, if you want your collection to be useful when borrowed you should implement:
+
+* **`struct Iter<T> {}`** &mdash; Create struct holding `&Collection<T>` for shared iteration.
+* **`struct IterMut<T> {}`** &mdash; Similar, but holding `&mut Collection<T>` for mutable iteration.
+* **`impl Iterator for Iter<T> {}`** &mdash; Implement shared iteration.
+* **`impl Iterator for IterMut<T> {}`** &mdash; Implement mutable iteration.
+
+Also you might want to add convenience methods:
+
+- `Collection::iter(&self) -> Iter`,
+- `Collection::iter_mut(&mut self) -> IterMut`.
+
+
+
+<mini-zoo class="zoo" style="margin-right: 20px;">
+    <entry class="wide">
+        <type class="generic dotted"><code>Iter&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
+        <associated-type class="grayed"><code>Item = &T;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+
+<mini-zoo class="zoo" style="margin-right: 20px;">
+    <entry class="wide">
+        <type class="generic dotted"><code>IterMut&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">Iterator</code></trait-impl>
+        <associated-type class="grayed"><code>Item = &mut T;</code></associated-type>
+    </entry>
+</mini-zoo>
+
+
+</div></panel></tab>
+
+
+
 
 <!-- NEW TAB -->
 <tab>
@@ -5501,18 +5590,54 @@ Many users would expect your collection to _just work_ in `for` loops:
 
 **Iterator Interoperability**
 
-Allow 3<sup>rd</sup> party iterators to 'collect into' your collection.
+To allow **3<sup>rd</sup> party iterators** to 'collect into' your collection implement:
 
 * **`impl FromIterator for Collection<T> {}`** &mdash; Now `some_iter.collect::<Collection<_>>()` works.
-* **`let c = other_iter.collect::<C<_>>()`** &mdash; Collect foreign(!) iterable into your `C`.
+* **`impl Extend for Collection<T> {}`** &mdash; Now `c.extend(other)` works.
 
-<mini-zoo class="zoo" style="">
+In addition, also consider adding the extra traits from **`std::iter`** {{ std(page="std/iter/index.html#") }} to your iterators:
+
+<mini-zoo class="zoo" style="margin-right: 20px;">
     <entry class="wide">
         <type class="generic dotted"><code>Collection&lt;T&gt;</code></type>
         <trait-impl class="">⌾ <code style="">FromIterator</code></trait-impl>
+        <trait-impl class="">⌾ <code style="">Extend</code></trait-impl>
     </entry>
 </mini-zoo>
 
+<mini-zoo class="zoo">
+    <entry class="wide">
+        <type class="generic dotted"><code>IntoIter&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">DoubleEndedIt… </code></trait-impl>
+        <trait-impl class="">⌾ <code style="">ExactSizeIt… </code></trait-impl>
+        <trait-impl class="">⌾ <code style="">FusedIterator </code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry class="wide">
+        <type class="generic dotted"><code>Iter&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">DoubleEndedIt… </code></trait-impl>
+        <trait-impl class="">⌾ <code style="">ExactSizeIt… </code></trait-impl>
+        <trait-impl class="">⌾ <code style="">FusedIterator </code></trait-impl>
+    </entry>
+</mini-zoo>
+
+<mini-zoo class="zoo">
+    <entry class="wide">
+        <type class="generic dotted"><code>IterMut&lt;T&gt;</code></type>
+        <trait-impl class="">⌾ <code style="">DoubleEndedIt… </code></trait-impl>
+        <trait-impl class="">⌾ <code style="">ExactSizeIt… </code></trait-impl>
+        <trait-impl class="">⌾ <code style="">FusedIterator </code></trait-impl>
+    </entry>
+</mini-zoo>
+
+
+
+{{ tablesep() }}
+
+> Writing collections can be work. The good news is, if you followed all
+> steps in this section your collection will feel like a _first class citizen_.
 
 
 </div></panel></tab>
@@ -9196,6 +9321,10 @@ Automatically converts `A` to `B` for types **only differing in lifetimes** {{ n
 
 If you are used to Java or C, consider these.
 
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px; ">
+<div class="color-header number">
+
 <div class="color-header blue">
 
 | Idiom | Code |
@@ -9231,6 +9360,10 @@ If you are used to Java or C, consider these.
 |  | Don't forget to include a **summary sentence** and the **Examples** heading. |
 |  | If applicable: **Panics**, **Errors**, **Safety**, **Abort** and **Undefined Behavior**. |
 
+</div>
+
+</div>
+</div>
 </div>
 
 <footnotes>
@@ -9790,9 +9923,7 @@ These are other great guides and tables.
 |--------| -----------|
 | [Rust Learning⭐](https://github.com/ctjhoa/rust-learning) | Probably the best collection of links about learning Rust.  |
 | [Functional Jargon in Rust](https://github.com/JasonShin/functional-programming-jargon.rs) | A collection of functional programming jargon explained in Rust.  |
-| [Futures](https://rufflewind.com/img/rust-futures-cheatsheet.html) | How to construct and work with futures. |
 | [Rust Iterator Cheat Sheet](https://danielkeep.github.io/itercheat_baked.html) | Summary of iterator-related methods from `std::iter` and `itertools`. |
-| [Type-Based Rust Cheat Sheet](https://upsuper.github.io/rust-cheatsheet/) | Lists common types and how they convert. |
 
 </div>
 
