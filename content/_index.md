@@ -5291,8 +5291,8 @@ PRs for this section are very welcome. Idea is:
 
 ## Thread Safety {#thread-safety}
 
-Assume you hold some variables in Thread 1, and would either like to **move** them to Thread 2, or pass their **references** to Thread 3.
-Whether this is allowed is governed by the traits **`Send`**{{ std(page="std/marker/trait.Send.html") }} and **`Sync`**{{ std(page="std/marker/trait.Sync.html") }} respectively:
+Assume you hold some variables in Thread 1, and want to either **move** them to Thread 2, or pass their **references** to Thread 3.
+Whether this is allowed is governed by **`Send`**{{ std(page="std/marker/trait.Send.html") }} and **`Sync`**{{ std(page="std/marker/trait.Sync.html") }} respectively:
 
 {{ tablesep() }}
 
@@ -5347,7 +5347,7 @@ Whether this is allowed is governed by the traits **`Send`**{{ std(page="std/mar
 | --- | --- |
 | **`Mutex<u32>`** | Both `Send` and `Sync`. You can safely pass or lend it to another thread. |
 | **`Cell<u32>`** | `Send`, not `Sync`. Movable, but its reference would allow concurrent non-atomic writes. |
-| **`MutexGuard<u32>`** | `Sync`, but not `Send`. Lock tied to thread, but reference alone would not allow data race. |
+| **`MutexGuard<u32>`** | `Sync`, but not `Send`. Lock tied to thread, but reference use could not allow data race. |
 | **`Rc<u32>`** | Neither since it is easily clonable heap-proxy with non-atomic counters. |
 
 </div>
@@ -5388,7 +5388,7 @@ Processing elements in a collection.
 <panel><div>
 
 
-There are, broadly speaking, 4 _styles_ of collection iteration:
+There are, broadly speaking, four _styles_ of collection iteration:
 
 | Style | Description |
 | --- | --- |

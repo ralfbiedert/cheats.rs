@@ -1307,11 +1307,6 @@ threading-section {
             text-align: right;
             top: -25px;
             font-weight: bold;
-
-            blank-background {
-                color: gray;
-                background-color: white;
-            }
         }
     }
 
@@ -1358,6 +1353,16 @@ threading-section {
         }
     }
 
+    threading-section {
+        thread-row {
+            subtext {
+                blank-background {
+                    color: gray;
+                    background-color: white;
+                }
+            }
+        }
+    }
 }
 
 .night-mode {
@@ -1380,6 +1385,17 @@ threading-section {
         table {
             tr.subheader {
                 background-color: rgb(88, 76, 76);
+            }
+        }
+    }
+
+    threading-section {
+        thread-row {
+            subtext {
+                blank-background {
+                    color: gray;
+                    background-color: #222;
+                }
             }
         }
     }
