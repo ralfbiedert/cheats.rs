@@ -60,6 +60,7 @@ const subtitles = [
     "World's worst cheat sheet, with the exception of all others.",
     "Forged in the fires of Mount Cplusplus.",
     "In a world of Rust, The Matrix would have been really short and depressing.",
+    "Florida man transmutes lifetime, crashes app.",
 ];
 
 
