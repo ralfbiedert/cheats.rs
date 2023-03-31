@@ -2,12 +2,11 @@ name: Gitea Actions Demo
 run-name: ${{ github.actor }} is testing out Gitea Actions 🚀
 on: [push]
 jobs:
-  Explore-Gitea-Actions:
+  Deploy Site:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: zbrox/zola-deploy-action
-        uses: zbrox/zola-deploy-action@master
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
+      - name: Build Docker image.
+        run: |
+          docker/build.sh cheats-box
