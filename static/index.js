@@ -21,14 +21,14 @@ const subtitles = [
     "A cargo-cult documentary.",
     "Will the last person switch on night mode?",
     "A collaboration between Zoo Berlin and Olympia Typewriters.",
-    "Contains 140g of Rust per 100g of cheat sheet.",
+    "Contains 2lbs of Rust per 1lbs of cheat sheet.",
     "Prints best on Dunder Mifflin 24lbs cream letter stock.",
     "QA'ed with weekly 4h quality spot checks from Creed B.",
     "May contain R-rated content.",
     "Turned out the Señor Developer job wasn't much of a pay bump.",
     "Testing Bekenstein's limit one entry a time.",
-    "Seven new dirty words: Undefined, runtime, inheritance, globals, unwrap, allocation, RIIR (jk on that one).",
-    "After Rust, learning German will be <i>so</i> much easier.",
+    "Seven new dirty words: Undefined, runtime, inheritance, globals, unwrap, allocation, RIIR. JK on the last one.",
+    "After Rust, learning German will be so much easier.",
     "Night mode is dark and full of errors.",
     "^Z^Z^Z^Z^X^quit:help! ... how do I exit this thing?.",
     "If it smells like rust and tastes like rust, it's probably not Rust.",
@@ -39,26 +39,24 @@ const subtitles = [
     "If a language and a crab love each other very much ...",
     "I, for one, welcome our new AI overlords.",
     "As seen on interdimensional cable.",
-    "Catnip for crustaceans.",
     "I'm sure there's an X-File on the never type.",
     "${jndi:ldap://rustup.rs}",
     "An amorphous guide to fractal complexity.",
-    "Whenever I tell my octopus about Rust he gets all excited.",
+    "Whenever I tell my octopus about Rust it gets all excited.",
     "Roses did rust before it was cool.",
     "Blazingly fa... 🤚😣",
     "'This sheet really ties the room together'",
-    "Programming Rust be like <i>'Computer says no ...'</i>",
+    "Programming Rust be like 'Computer says no ...'",
     "Did you know, the Eiffel Tower is slowly rewritten in rust?",
     "Last time I wrote C feels like a lifetime ago ...",
     "Can we borrow a minute of your time?",
     "Even for the Internet it's ... pretty shocking.",
     "According to Einstein, humans use only 10% of their programming languages.",
     "Fun fact, Rust appeared July 7, 2010, giving it the zodiac of the Crab ♋︎.",
-    "Rumor has it there are languages without a concept of time.",
+    "Rumor has it there are languages with no concept of time.",
     "Tired of C++? Call (505) 142-4205 and request new dust filters for your Hoover Max Pressure Pro Model 60.",
     "Got crabs? Visit std.rs!",
     "World's worst cheat sheet, with the exception of all others.",
-    "Forged in the fires of Mount Cplusplus.",
     "In a world of Rust, The Matrix would have been really short and depressing.",
     "Florida man transmutes lifetime, crashes app.",
 ];
@@ -265,7 +263,20 @@ function advance_subtitle(to_index) {
         }
     }
 
-    subtitle.innerHTML = subtitle_entry;
+    // All this is just to get a nice, fancy effect for typing out the subtitle
+    let i = 0;
+    let speed = 50;
+    subtitle.innerHTML = "&nbsp;";
+
+    let type_out = () => {
+        if (i < subtitle_entry.length) {
+            subtitle.innerHTML += subtitle_entry.charAt(i++);
+            setTimeout(type_out, 30 + Math.random() * speed);}
+    }
+
+    setTimeout(type_out, speed);
+
+    // subtitle.innerHTML = subtitle_entry;
 }
 
 /// Shows a random quote
