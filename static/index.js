@@ -30,7 +30,7 @@ const subtitles = [
     "Seven new dirty words: Undefined, runtime, inheritance, globals, unwrap, allocation, RIIR. JK on the last one.",
     "After Rust, learning German will be so much easier.",
     "Night mode is dark and full of errors.",
-    "^Z^Z^Z^Z^X^quit:help! ... how do I exit this thing?.",
+    "^Z^Z^Z^Z^X^quit:help! ... how do I exit this thing?",
     "If it smells like rust and tastes like rust, it's probably not Rust.",
     "The R in ASMR stands for Rust.",
     "Chuck Norris doesn't fear concurrency. Concurrency fears Chuck Norris.",
@@ -42,16 +42,15 @@ const subtitles = [
     "I'm sure there's an X-File on the never type.",
     "${jndi:ldap://rustup.rs}",
     "An amorphous guide to fractal complexity.",
-    "Whenever I tell my octopus about Rust it gets all excited.",
     "Roses did rust before it was cool.",
     "Blazingly fa... 🤚😣",
-    "'This sheet really ties the room together'",
+    "The sheet that really ties the room together.",
     "Programming Rust be like 'Computer says no ...'",
     "Did you know, the Eiffel Tower is slowly rewritten in rust?",
     "Last time I wrote C feels like a lifetime ago ...",
     "Can we borrow a minute of your time?",
     "Even for the Internet it's ... pretty shocking.",
-    "According to Einstein, humans use only 10% of their programming languages.",
+    "According to Einstein, humans use only 10% of their programming language.",
     "Fun fact, Rust appeared July 7, 2010, giving it the zodiac of the Crab ♋︎.",
     "Rumor has it there are languages with no concept of time.",
     "Tired of C++? Call (505) 142-4205 and request new dust filters for your Hoover Max Pressure Pro Model 60.",
@@ -59,6 +58,8 @@ const subtitles = [
     "World's worst cheat sheet, with the exception of all others.",
     "In a world of Rust, The Matrix would have been really short and depressing.",
     "Florida man transmutes lifetime, crashes app.",
+    "It's pronounced Cheat She<span style='font-size:95%'>e</span><span style='font-size:90%'>e</span><span style='font-size:85%'>e</span><span style='font-size:80%'>e</span><span style='font-size:75%'>e</span><span style='font-size:70%'>t</span><span style='font-size:70%'>.</span>",
+    "Arrival plot twist: the Heptapods needed help with Rust.",
 ];
 
 
@@ -263,20 +264,7 @@ function advance_subtitle(to_index) {
         }
     }
 
-    // All this is just to get a nice, fancy effect for typing out the subtitle
-    let i = 0;
-    let speed = 50;
-    subtitle.innerHTML = "&nbsp;";
-
-    let type_out = () => {
-        if (i < subtitle_entry.length) {
-            subtitle.innerHTML += subtitle_entry.charAt(i++);
-            setTimeout(type_out, 30 + Math.random() * speed);}
-    }
-
-    setTimeout(type_out, speed);
-
-    // subtitle.innerHTML = subtitle_entry;
+    subtitle.innerHTML = subtitle_entry;
 }
 
 /// Shows a random quote
