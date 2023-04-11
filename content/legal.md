@@ -33,7 +33,7 @@ Ralf Biedert (<a href="mailto:webmaster@cheats.rs">mail</a>, <a href="https://xr
 
 - **Humans** (you!) may, with the immediate help of a browser or similar, freely access any information on this site in accordance with the rest of these rules. You are in particular free to submit _organic feedback_ (i.e., ad-hoc, human-created) in whatever language, or with whatever words you desire, and any such feedback is fair use.
 
-- **Bots**, scripts, animated rocks, or anything most people wouldn't call a _normal, well behaved browser_ may read data for reasonable purposes occasionally (e.g., crawl the site every few days). Bots are _never_ allowed to `POST` or invoke API endpoints (e.g., `api.cheats.rs`), and any such use is considered abuse.
+- **Bots**, scripts, or anything most people wouldn't call a _normal, well behaved browser_ may read data for reasonable purposes occasionally (e.g., crawl the site every few days). Bots are _never_ allowed to `POST` or invoke API endpoints (e.g., `api.cheats.rs`), and any such use is considered abuse.
 
 - The **Feedback Buttons** allow you to send _sentiments_ and text.
 
@@ -61,6 +61,8 @@ This work is CC-BY with the following exceptions:
 - Rust source snippets are CC-0.
 - Metadata (any data not directly needed to reproduce this work) and author names are not licensed.
 - While giving credit is appreciated, reproductions **must change the _Operator_ section** above, and must not appear to be controlled or endorsed by the author in any way.
+- This work is provided on a reciprocity basis. Parties may use it as outlined above, provided they refrain from interfering with its operations, content, design, or other aspects. Interference, defined as any action that reasonably compels change to the work, will result in immediate termination of all granted licenses for the party and its current and future affiliates (e.g., Staff, Board of Directors, Advisors; both in their official and private capacity).
+
 
 ### Third Party Assets
 
