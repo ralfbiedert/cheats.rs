@@ -22,33 +22,19 @@ Ralf Biedert (<a href="mailto:webmaster@cheats.rs">mail</a>, <a href="https://xr
 
 ### Privacy, GDPR
 
-- The site itself is **dispatched via Cloudflare's CDN**.
-- The **Edit & Run** feature of the "Hello, Rust" section embeds the [Rust Playground](https://play.rust-lang.org/). All code entered there is sent to and processed on their servers.
-- We are generally **not aware of any user tracking** and only aggregate statistics (e.g., users by country) are retained by our hosting provider. **Access logs** are usually disabled, but might be enabled along with other measures to diagnose and mitigate hosting issues.
-- The browser's **local storage** may be necessary to store settings between sessions (e.g., dark mode, ligatures, banner visibility), if you requested such a setting to take effect. This information never leaves your machine.
-- Supporting developer assets and metadata are usually **hosted on Github** so their privacy and tracking legalese applies.
+- This site utilizes **Cloudflare's CDN** and the [Rust Playground](https://play.rust-lang.org/) for the **Edit & Run** feature.
+- We do not track users, and our hosting provider retains, to our knowledge, only aggregate statistics.
+- Browser local storage is used for settings retention upon request, without data leaving your device.
+- Developer assets and meta data are hosted on GitHub, subject to their privacy policies.
+
 
 
 ### Terms of Service
 
-- **Humans** (you!) may, with the immediate help of a browser or similar, freely access any information on this site in accordance with the rest of these rules. You are in particular free to submit _organic feedback_ (i.e., ad-hoc, human-created) in whatever language, or with whatever words you desire, and any such feedback is fair use.
-
-- **Bots**, scripts, or anything most people wouldn't call a _normal, well behaved browser_ may read data for reasonable purposes occasionally (e.g., crawl the site every few days). Bots are _never_ allowed to `POST` or invoke API endpoints (e.g., `api.cheats.rs`), and any such use is considered abuse.
-
-- The **Feedback Buttons** allow you to send _sentiments_ and text.
-
-
-    We will store your submission, including context (e.g., section headers or user agents for site debugging). No identifiable information is preserved.
-
-    Should we find identifiable information was submitted by you by accident then we will attempt to remove it on a best-effort basis. However, no guarantees are given such monitoring will take place, or is successful.
-
-    Storage happens in the European Union.
-
-    You agree to give us the right to use your feedback for improvements to this site, process it with 3rd party services (e.g., Google Translate), and to share and publish it (e.g., in Github tickets).
-
-    Access to raw data is generally available to the operators of this site and their designated persons (and theoretically our hosting provider, and 3rd parties that enforce access via legal means, e.g., the police).
-
-
+- **You**, with the help of a browser, can freely access this site if in _good standing_, see below.
+- **Bots** can read data occasionally (e.g., once every few days), but cannot POST or use API endpoints.
+- **Feedback buttons** allow sentiment and text submissions, which we store in the European Union. Feedback, when organically submitted, can be in any words or language, all of which are considered fair use. By submitting feedback, you grant us rights to use, process, share, and publish it.
+- **Good Standing** - This work is provided on a reciprocity basis. Parties may use it as outlined, provided they refrain from interfering with its operations, content, design, or other aspects. Interference, defined as any action that reasonably compels change to the work, will result in immediate termination of all granted rights and licenses ('loss of good standing') for the party and its current and future affiliates, e.g., Staff, Board of Directors, Advisors; both in their official and private capacity.
 
 
 
@@ -56,12 +42,11 @@ Ralf Biedert (<a href="mailto:webmaster@cheats.rs">mail</a>, <a href="https://xr
 
 ## Copyright Information
 
-This work is CC-BY with the following exceptions:
+This work is licensed to parties in _good standing_ as CC-BY with the following exceptions:
 
 - Rust source snippets are CC-0.
 - Metadata (any data not directly needed to reproduce this work) and author names are not licensed.
 - While giving credit is appreciated, reproductions **must change the _Operator_ section** above, and must not appear to be controlled or endorsed by the author in any way.
-- This work is provided on a reciprocity basis. Parties may use it as outlined above, provided they refrain from interfering with its operations, content, design, or other aspects. Interference, defined as any action that reasonably compels change to the work, will result in immediate termination of all granted licenses for the party and its current and future affiliates (e.g., Staff, Board of Directors, Advisors; both in their official and private capacity).
 
 
 ### Third Party Assets
