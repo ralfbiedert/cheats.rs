@@ -9142,29 +9142,29 @@ Convert types **with keyword `as`** if conversion _relatively obvious_ but **mig
 
 |  A | B | Example | Explanation |
 |----|----| ----| -----------|
-| `Ptr` | `Ptr` | `device_ptr as *const u8` | If `*A`, `*B` are `Sized`. |
-| `Ptr` | `Integer` | `device_ptr as usize` |  |
-| `Integer` | `Ptr` | `my_usize as *const Device` |  |
+| `Pointer` | `Pointer` | `device_ptr as *const u8` | If `*A`, `*B` are `Sized`. |
+| `Pointer` | `Integer` | `device_ptr as usize` |  |
+| `Integer` | `Pointer` | `my_usize as *const Device` |  |
 | `Number` | `Number` | `my_u8 as u16` | Often surprising behavior. {{ above(target="#numeric-types-ref") }} |
 | `enum` w/o fields | `Integer` | `E::A as u8` |  |
 | `bool` | `Integer` | `true as u8` |  |
 | `char` | `Integer` | `'A' as u8` |  |
 | `&[T; N]` | `*const T` | `my_ref as *const u8` |  |
-| `fn(…)` | `Ptr` | `f as *const u8` | If `Ptr` is `Sized`.  |
+| `fn(…)` | `Pointer` | `f as *const u8` | If `Pointer` is `Sized`.  |
 | `fn(…)` | `Integer` | `f as usize` |  |
 
 {{ tablesep() }}
 
 <footnote>
 
-Where `Ptr`, `Integer`, `Number` are just used for brevity and actually mean:
-- `Ptr` any `*const T` or `*mut T`;
+Where `Pointer`, `Integer`, `Number` are just used for brevity and actually mean:
+- `Pointer` any `*const T` or `*mut T`;
 - `Integer` any countable `u8` … `i128`;
 - `Number` any `Integer`, `f32`, `f64`.
 
 </footnote>
 
-> **Opinion** {{ opinionated() }} &mdash; Casts, esp. `Number` - `Number`, can easily go wrong.
+> **Opinion** {{ opinionated() }} &mdash; Casts, esp. `Number - Number`, can easily go wrong.
 > If you are concerned with correctness, consider more explicit methods instead.
 
 </div></panel></tab>
