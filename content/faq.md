@@ -106,7 +106,7 @@ Yes, just go ahead. You do not need to ask for extra permission and there are no
 
 - Change the page footer to something like:
     ```
-    Translated and hosted by [YOU], based on cheats.rs
+    Translated and hosted by [YOU], based on cheats.rs (Ralf Biedert)
     ```
 - Remove my name from the "Operator" section.
 
