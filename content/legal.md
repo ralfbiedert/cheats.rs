@@ -9,7 +9,7 @@ weight = 100
 
 ## Hosting
 
-This _Hosting_ section **only** applies to the site [**cheats.rs**](https://cheats.rs), not if you reached this work by other means.
+The _Operator_ and _Privacy_ sections only apply to the site [**cheats.rs**](https://cheats.rs), not if you reached this work by other means.
 
 ### Operator
 
@@ -29,23 +29,21 @@ Ralf Biedert (<a href="mailto:webmaster@cheats.rs">mail</a>, <a href="https://xr
 
 
 
-### Terms of Service
+## Terms of Service
 
-- **You**, with the help of a browser, can freely access this site if in _good standing_, see below.
+- **You**, with the help of a browser, may freely access this site if in good standing, see below.
 - **Bots** can read data occasionally (e.g., once every few days), but cannot POST or use API endpoints.
 - **Feedback buttons** allow sentiment and text submissions, which we store in the European Union. Feedback, when organically submitted, can be in any words or language, all of which are considered fair use. By submitting feedback, you grant us rights to use, process, share, and publish it.
-- **Good Standing** - This work is provided on a reciprocity basis. Parties may use it as outlined, provided they refrain from interfering with its operations, content, design, or other aspects. Interference, defined as any action that reasonably compels change to the work, will result in immediate termination of all granted rights and licenses ('loss of good standing') for the party and its current and future affiliates, e.g., Staff, Board of Directors, Advisors; both in their official and private capacity.
-
-
+- **Good Standing** - This work is provided on a reciprocity basis. Parties may use it as outlined if they refrain from interfering with its operations, content, design, or other aspects. Interference, defined as any action that reasonably compels undesired change to the work, will result in immediate termination of all granted rights and licenses ('loss of good standing') for the party and its current and future affiliates, e.g., Staff, Board of Directors, Advisors; both in their official and private capacity. For more details [see the FAQ](/faq#legal).
 
 
 
 ## Copyright Information
 
-This work is licensed to parties in _good standing_ as CC-BY with the following exceptions:
+This work is licensed to parties in good standing as CC-BY with the following exceptions:
 
-- Rust source snippets are CC-0.
-- Metadata (any data not directly needed to reproduce this work) and author names are not licensed.
+- Rust source snippets are always CC-0.
+- Metadata (any data not directly needed to reproduce this work) and author names are never licensed.
 - While giving credit is appreciated, reproductions **must change the _Operator_ section** above, and must not appear to be controlled or endorsed by the author in any way.
 
 

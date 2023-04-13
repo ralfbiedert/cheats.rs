@@ -128,6 +128,8 @@ function toggle_ligatures() {
     let body = document.getElementsByTagName("body")[0];
     let set = undefined;
 
+    if (!codes_rust || codes_rust.length == 0) return;
+
     if (codes_rust[0].style.fontVariantLigatures === "common-ligatures") {
         set = "none";
         storage_set("ligatures", "no-ligatures");

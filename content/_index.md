@@ -10034,11 +10034,11 @@ Online services which provide information or tooling.
 
 <footer>
 
-[Ralf Biedert](https://xr.io), {{ year() }} – [cheats.rs](https://cheats.rs)
+[Ralf Biedert](https://xr.io), {{ year() }} &mdash; [cheats.rs](https://cheats.rs)
 
 <noprint>
 
-[Legal & Privacy](legal)
+[Legal & Privacy](legal) - [FAQ](faq)
 
 </noprint>
 
