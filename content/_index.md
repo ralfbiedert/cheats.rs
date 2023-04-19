@@ -209,11 +209,12 @@ fn main() {
 - Longer compile times than "similar" code in other languages.<sup>1</sup>
 - Careless (use of `unsafe` in) libraries can secretly break safety guarantees.
 - No formal language specification, can prevent legal use in some domains (aviation, medical, &hellip;).
-- Rust governance may offensively use their IP rights in the future to affect your project (legal or policy wise). {{ link(url="https://old.reddit.com/r/rust/comments/12e7tdb/rust_trademark_policy_feedback_form/")}}<sup>2</sup>
+- Rust Foundation may offensively use their IP to affect _'Rust'_ projects (e.g, forbid names, impose policies). {{ link(url="https://devclass.com/2023/04/11/dont-call-it-rust-community-complains-about-draft-trademark-policy-restricting-use-of-word-marks/") }}{{ link(url="https://old.reddit.com/r/rust/comments/12e7tdb/rust_trademark_policy_feedback_form/") }}<sup>2</sup>
 
 
 <sup>1</sup> Compare [Rust Survey](https://blog.rust-lang.org/2020/04/17/Rust-survey-2019.html#why-not-use-rust). <br>
-<sup>2</sup> It is probably advisable to avoid using their text and image marks prominently in your project.
+<sup>2</sup> Avoiding their marks (e.g, in your name, URL, logo, dress) is probably sufficient.
+
 </div></panel></tab>
 
 <!-- NEW TAB -->
