@@ -3744,7 +3744,17 @@ Byte representations of common types.
 Essential types built into the core of the language.
 
 
-#### Numeric Types {{ ref(page="types/numeric.html") }}
+
+#### Boolean {{ ref(page="types/boolean.html") }} and Numeric Types {{ ref(page="types/numeric.html") }}
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>bool</code></name>
+    <visual class="bool">
+        <byte><code></code></byte>
+    </visual>
+</datum>
+
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
