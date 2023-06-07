@@ -62,6 +62,7 @@ const subtitles = [
     "Arrival plot twist: the Heptapods needed help with Rust.",
     "The language with more drama than your prom.",
     "Also known as the Rust™️<sup>©️®️,not officially affiliated</sup> Language Cheat Sheet",
+    "This is not the greatest cheat sheet in the world, no. This is just a tribute.",
 ];
 
 

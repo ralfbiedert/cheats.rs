@@ -11,7 +11,7 @@ FOLDER_PREP=public       # Zola output folder
 FOLDER_DIST=public.clean # Our own publish folder after asset inlining
 
 # Only these files are allowed to move from $FOLDER_PREP to $FOLDER_DIST (and end up on S3)
-FOLDER_DIST_WHITELIST=("index.html" "404.html" "legal" "faq" "sitemap.xml" "robots.txt" "fonts/")
+FOLDER_DIST_WHITELIST=("index.html" "favicon.ico" "404.html" "legal" "faq" "sitemap.xml" "robots.txt" "fonts/")
 
 # To color our `echo` output
 _YELLOW='\033[1;33m'
