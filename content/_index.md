@@ -8703,8 +8703,8 @@ struct S<T> where T: ?Sized { … }
 
 - Lifetimes act<sup>*</sup> like type parameters:
     - user must provide specific `'a` to instantiate type (compiler will help within methods),
-    - as `Vec<f32>` and `Vec<u8>` are different types, so are `S<'p>` and `S<'q>`,
-    - meaning you can't just assign value of type `S<'a>` to variable expecting `S<'b>` (exception: "subtype" relationship for lifetimes, e.g., `'a` outliving `'b`).
+    - `S<'p>` and `S<'q>` are different types, just like `Vec<f32>` and `Vec<u8>` are
+    - meaning you can't just assign value of type `S<'a>` to variable expecting `S<'b>` (exception: subtype relationship for lifetimes, i.e., `'a` outlives `'b`).
 
 
 <mini-zoo class="zoo">
@@ -8723,7 +8723,7 @@ struct S<T> where T: ?Sized { … }
 </mini-zoo>
 
 
-- `'static` is only nameable instance of the _typespace_ lifetimes.
+- `'static` is only nameable type of the lifetimes kind.
 
 ```
 // `'a is free parameter here (user can pass any specific lifetime)
