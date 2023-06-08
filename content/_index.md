@@ -9535,7 +9535,7 @@ From a call site perspective that means:
 
 | Signature | Function `g` can call &hellip; |  Function `g` accepts &hellip; |
 |--------| -----------| -----------|
-| `g<F: FnOnce()>(f: F)`  | &hellip; `f()` once. |  `Fn`, `FnMut`, `FnOnce`  |
+| `g<F: FnOnce()>(f: F)`  | &hellip; `f()` only once. |  `Fn`, `FnMut`, `FnOnce`  |
 | `g<F: FnMut()>(mut f: F)`  | &hellip; `f()` multiple times. | `Fn`, `FnMut` |
 | `g<F: Fn()>(f: F)`  | &hellip; `f()` multiple times.  | `Fn` |
 
