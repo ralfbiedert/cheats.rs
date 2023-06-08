@@ -8723,7 +8723,7 @@ struct S<T> where T: ?Sized { … }
 </mini-zoo>
 
 
-- `'static` is only nameable type of the lifetimes kind.
+- `'static` is only globally available type of the lifetimes kind.
 
 ```
 // `'a is free parameter here (user can pass any specific lifetime)
@@ -8745,8 +8745,47 @@ let b: S;
 
 </footnotes>
 
+</description>
+</generics-section>
 
-> Note to self and TODO: that analogy seems somewhat flawed, as if `S<'a>` is to `S<'static>` like `S<T>` is to `S<u32>`, then `'static` would be a _type_; but then what's the value of that type?
+
+<!-- Section -->
+<generics-section>
+<header>Types of types: kinds</header>
+<description>
+
+Rust does not support higher-kinded types or even mention kinds, but knowing a
+bit of theory can shed some light on how generics work. Note that the following
+uses Rust-like syntax for explanations, but is not actually valid Rust.
+
+- Values have types, e.g. `true` has type `bool`, written `true: bool`.
+- Types have _kinds_, e.g. `bool` has kind `*`, also written `bool: *`. (`*` is
+  pronounced _star_ or, sometimes a bit confusingly, _type_.)
+- (Kinds have _sorts_, which is beyond scope here. Type theorits ran out of
+  English synonyms for _type_ afterwards, but luckily value/type/kind is enough
+  for most type systems anyway.)
+
+Rust conceptually uses three kinds: `*`, `kind1 -> kind2` (type constructors),
+and `lifetime`.
+
+- All values have a type of kind `*`.
+- The opposite is not true: there are types of kind `*` that have no values,
+  e.g. `!` (the empty type).
+- Type constructors such as `Vec` take a type of kind `*`, e.g. `bool`, to a
+  new type of kind `*`, in this case `Vec<bool>`. We can say `Vec: * -> *`.
+- `lifetime` is the kind of lifetimes, e.g. `'static: lifetime`. Since
+  `lifetime` is not `*`, types of kind `lifetime` cannot have values. They can
+  however be used as parameters to create types. For example in
+
+  ```rust
+  struct S<'a> {
+      x: &'a u32
+  }
+  ```
+
+  the kind of `S` is `lifetime -> *`.
+- Note that `Vec<'static>` is a kind error, because `Vec: * -> *`, not
+  `lifetime -> *`.
 
 </description>
 </generics-section>
