@@ -550,11 +550,11 @@ Code generation constructs expanded before the actual compilation happens.
 
 <fixed-2-column class="color-header special_example">
 
-| Inside Macros |  Explanation |
+| Inside Macros <sup>1</sup> |  Explanation |
 |---------|---------|
-| `$x:ty`  | Macro capture, the `:…` **fragment** {{ ref(page="macros-by-example.html#metavariables") }} declares what is allowed for `$x`. <sup>1</sup> |
+| `$x:ty`  | Macro capture, the `:…` **fragment** {{ ref(page="macros-by-example.html#metavariables") }} declares what is allowed for `$x`. <sup>2</sup> |
 | `$x` |  Macro substitution, e.g., use the captured `$x:ty` from above. |
-| `$(x),*` | Macro **repetition** {{ ref(page="macros-by-example.html#repetitions") }} _zero or more times_ in macros. |
+| `$(x),*` | Macro **repetition** {{ ref(page="macros-by-example.html#repetitions") }} _zero or more times_.|
 | {{ tab() }} `$(x),?` | Same, but _zero or one time_. |
 | {{ tab() }} `$(x),+` | Same, but _one or more times_. |
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
@@ -563,7 +563,8 @@ Code generation constructs expanded before the actual compilation happens.
 
 <footnotes>
 
-<sup>1</sup> See [**Tooling Directives**](#tooling-directives) below for all captures.
+<sup>1</sup> Applies to **'macros by example'**. {{ ref(page="macros-by-example.html") }} <br>
+<sup>2</sup> See [**Tooling Directives**](#tooling-directives) below for all captures.
 
 </footnotes>
 
@@ -809,7 +810,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | `_` | Unnamed **wildcard** {{ ref(page="patterns.html#wildcard-pattern")}} variable binding, e.g., <code>&vert;x, _&vert; {}</code>.|
 | {{ tab() }} `let _ = x;`  | Unnamed assignment is no-op, does **not** {{ bad() }} move out `x` or preserve scope! |
 | {{ tab() }} `_ = x;`  | You can assign _anything_ to `_` without `let`, i.e.,  `_ = ignore_error();` {{ edition(ed="1.59+")}} {{ hot() }} |
-| `_x` | Will not issue _unused variable_ warnings. Variable _can_ be used though (antipattern!). |
+| `_x` | Variable binding that won't emit _unused variable_ warnings. |
 | `1_234_567` | Numeric separator for visual clarity. |
 | `1_u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, &hellip;). |
 | `0xBEEF`, `0o777`, `0b1001`  | Hexadecimal (`0x`), octal (`0o`) and binary (`0b`) integer literals. |
@@ -8701,7 +8702,7 @@ struct S<T> where T: ?Sized { … }
     </entry>
 </mini-zoo>
 
-- Lifetimes act<sup>*</sup> like type parameters:
+- Lifetimes act<sup>*</sup> as type parameters:
     - user must provide specific `'a` to instantiate type (compiler will help within methods),
     - `S<'p>` and `S<'q>` are different types, just like `Vec<f32>` and `Vec<u8>` are
     - meaning you can't just assign value of type `S<'a>` to variable expecting `S<'b>` (exception: subtype relationship for lifetimes, i.e., `'a` outlives `'b`).
@@ -8723,7 +8724,7 @@ struct S<T> where T: ?Sized { … }
 </mini-zoo>
 
 
-- `'static` is only globally available type of the lifetimes kind.
+- `'static` is only globally available type of the lifetimes _kind_.
 
 ```
 // `'a is free parameter here (user can pass any specific lifetime)
@@ -8750,7 +8751,7 @@ let b: S;
 
 
 <!-- Section -->
-<generics-section>
+<!-- <generics-section>
 <header>Types of types: kinds</header>
 <description>
 
@@ -8788,7 +8789,7 @@ and `lifetime`.
   `lifetime -> *`.
 
 </description>
-</generics-section>
+</generics-section> -->
 
 
 <!-- Section -->
@@ -9574,7 +9575,7 @@ From a call site perspective that means:
 
 | Signature | Function `g` can call &hellip; |  Function `g` accepts &hellip; |
 |--------| -----------| -----------|
-| `g<F: FnOnce()>(f: F)`  | &hellip; `f()` only once. |  `Fn`, `FnMut`, `FnOnce`  |
+| `g<F: FnOnce()>(f: F)`  | &hellip; `f()` at most once. |  `Fn`, `FnMut`, `FnOnce`  |
 | `g<F: FnMut()>(mut f: F)`  | &hellip; `f()` multiple times. | `Fn`, `FnMut` |
 | `g<F: Fn()>(f: F)`  | &hellip; `f()` multiple times.  | `Fn` |
 
