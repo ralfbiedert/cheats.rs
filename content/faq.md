@@ -52,6 +52,13 @@ In other words, the pentagram is the Rust of summoning circles.
 
 
 
+### Are you a Satanist?
+
+All inquiries in this matter should be directed to your bathroom mirror on a moonless night.
+
+
+
+
 ## Operations
 
 ### How can I build an offline copy?

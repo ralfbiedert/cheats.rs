@@ -192,7 +192,7 @@ fn main() {
 - Strong type system prevents [data races](https://doc.rust-lang.org/nomicon/races.html), brings ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others).
 - Seamless C interop, and [dozens of supported platforms](https://doc.rust-lang.org/rustc/platform-support.html) (based on LLVM).
 - ["Most loved or admired language"](https://survey.stackoverflow.co/2023/#section-admired-and-desired-programming-scripting-and-markup-languages) for <strike>4</strike> <strike>5</strike> <strike>6</strike> <strike>7</strike> 8 years in a row. 🤷‍♀️
-- Modern tooling: `cargo` (builds _just work_), `clippy` (550+ code quality lints), `rustup` (easy toolchain mgmt).
+- Modern tooling: `cargo` (builds _just work_), `clippy` (600+ code quality lints), `rustup` (easy toolchain mgmt).
 
 </div></panel></tab>
 
@@ -4040,8 +4040,8 @@ Similarly, for <code>f64</code> types this would look like:
 | `f32::INFINITY as u8` | `255` | Same, treats `INFINITY` as _really_ large number.|
 | `f32::NAN as u8` | `0` | - |
 | `_314 as u8` | `58` | Truncates excess bits. |
-| `_200 as i8` | `56` | - |
-| `_257 as i8` | `-1` | - |
+| `_257 as i8` | `1` | Truncates excess bits. |
+| `_200 as i8` | `-56` | Truncates excess bits, MSB might then also signal negative. |
 
 </div></panel></tab>
 
@@ -4064,8 +4064,8 @@ Similarly, for <code>f64</code> types this would look like:
 | `1.0_f32 / 0.0_f32` | `f32::INFINITY` | - |
 | `0.0_f32 / 0.0_f32` | `f32::NAN` | - |
 | `x < f32::NAN` | `false` | `NAN` comparisons always return false. |
-| `x > f32::NAN` | `false` | - |
-| `f32::NAN == f32::NAN` | `false` | - |
+| `x > f32::NAN` | `false` | `NAN` comparisons always return false. |
+| `f32::NAN == f32::NAN` | `false` | Use `f32::is_nan()` {{ std(page="std/primitive.f32.html#method.is_nan") }} instead. |
 
 </div></panel></tab>
 
