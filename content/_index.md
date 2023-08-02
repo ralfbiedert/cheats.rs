@@ -50,7 +50,7 @@ Contains clickable links to
 <br> <legend-symbol> {{ bad() }}   </legend-symbol>Intentionally **wrong example** or **pitfall**.
 <br> <legend-symbol> {{ esoteric() }}   </legend-symbol>Slightly **esoteric**, rarely used or advanced.
 <br> <legend-symbol> {{ hot() }}   </legend-symbol>Something with **outstanding utility**.
-<br> <legend-symbol> {{ expands_to() }} </legend-symbol>The aforementioned item **expands to** &hellip;
+<br> <legend-symbol> {{ expands_to() }} </legend-symbol>The parent item **expands to** &hellip;
 <br> <legend-symbol> {{ opinionated() }} </legend-symbol>**Opinionated**.
 <br> <legend-symbol> {{ todo() }} </legend-symbol>Is **missing good link** or explanation.
 
