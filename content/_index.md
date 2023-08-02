@@ -50,8 +50,9 @@ Contains clickable links to
 <br> <legend-symbol> {{ bad() }}   </legend-symbol>Intentionally **wrong example** or **pitfall**.
 <br> <legend-symbol> {{ esoteric() }}   </legend-symbol>Slightly **esoteric**, rarely used or advanced.
 <br> <legend-symbol> {{ hot() }}   </legend-symbol>Something with **outstanding utility**.
-<br> <legend-symbol> {{ todo() }} </legend-symbol> Is **missing good link** or explanation.
-<br> <legend-symbol> {{ opinionated() }} </legend-symbol> **Opinionated**.
+<br> <legend-symbol> {{ expands_to() }} </legend-symbol>The aforementioned item **expands to** &hellip;
+<br> <legend-symbol> {{ opinionated() }} </legend-symbol>**Opinionated**.
+<br> <legend-symbol> {{ todo() }} </legend-symbol>Is **missing good link** or explanation.
 
 </column>
 </twocolumn>
@@ -432,8 +433,8 @@ Control execution within a function.
 | `while x {}`  | **Loop**, {{ ref(page="expressions/loop-expr.html#predicate-loops") }} run while expression `x` is true. |
 | `loop {}`  | **Loop indefinitely** {{ ref(page="expressions/loop-expr.html#infinite-loops") }} until `break`. Can yield value with `break x`. |
 | `for x in collection {}` | Syntactic sugar to loop over **iterators**. {{ book(page="ch13-02-iterators.html") }} {{ std(page="std/iter/index.html") }} {{ ref(page="expressions/loop-expr.html#iterator-loops") }} |
-| <less-important> {{ tab()}} `collection.into_iter()` </less-important> | <less-important>Effectively converts any  **`IntoIterator`** {{ std(page="std/iter/trait.IntoIterator.html") }} type into proper iterator first. </less-important> |
-| <less-important> {{ tab() }} `iterator.next()` </less-important> | <less-important>On proper **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} then `x = next()` until exhausted (first `None`). </less-important>  |
+| <less-important> {{ tab() }} {{ expands_to()}}  `collection.into_iter()` </less-important> | <less-important>Effectively converts any  **`IntoIterator`** {{ std(page="std/iter/trait.IntoIterator.html") }} type into proper iterator first. </less-important> |
+| <less-important> {{ tab() }} {{ expands_to()}}  `iterator.next()` </less-important> | <less-important>On proper **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} then `x = next()` until exhausted (first `None`). </less-important>  |
 | `if x {} else {}`  | **Conditional branch** {{ ref(page="expressions/if-expr.html") }} if expression is true. |
 | `'label: {}` | **Block label**, {{ rfc(page="2046-label-break-value.html" )}}  can be used with `break` to exit out of this block. {{ edition(ed="1.65+")}} |
 | `'label: loop {}` | Similar **loop label**, {{ ex(page="flow_control/loop/nested.html") }} {{ ref(page="expressions/loop-expr.html#loop-labels")}} useful for flow control in nested loops. |
@@ -445,8 +446,8 @@ Control execution within a function.
 | `continue 'label`  | Same but instead of this loop, enclosing loop marked with 'label. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
 | `x.await` | Syntactic sugar to **get future, poll, yield**.  {{ ref(page="expressions/await-expr.html#await-expressions") }}  {{ edition(ed="'18") }} Only works inside `async`.  |
-| <less-important> {{ tab()}} `x.into_future()` </less-important>  | <less-important> Effectively converts any  **`IntoFuture`** {{ std(page="std/future/trait.IntoFuture.html") }} type into proper future first. </less-important> |
-| <less-important> {{ tab() }} `future.poll()` </less-important> | <less-important> On proper **`Future`** {{ std(page="std/future/trait.Future.html") }} then `poll()` and yield flow if **`Poll::Pending`**. {{ std(page="std/task/enum.Poll.html") }} </less-important> |
+| <less-important> {{ tab() }} {{ expands_to()}} `x.into_future()` </less-important>  | <less-important> Effectively converts any  **`IntoFuture`** {{ std(page="std/future/trait.IntoFuture.html") }} type into proper future first. </less-important> |
+| <less-important> {{ tab() }} {{ expands_to()}} `future.poll()` </less-important> | <less-important> On proper **`Future`** {{ std(page="std/future/trait.Future.html") }} then `poll()` and yield flow if **`Poll::Pending`**. {{ std(page="std/task/enum.Poll.html") }} </less-important> |
 | `return x`  | **Early return** {{ ref(page="expressions/return-expr.html" ) }} from function. More idiomatic is to end with expression. |
 | {{ tab() }} `{ return }`  | Inside normal `{}`-blocks `return` exits surrounding function. |
 | {{ tab() }} <code>&vert;&vert; { return }</code>  | Within closures `return` exits that closure only, i.e., closure is _s._ function. |
