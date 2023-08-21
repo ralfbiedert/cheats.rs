@@ -6971,7 +6971,7 @@ Attributes governing conditional compilation:
 | `#[cfg(panic = "unwind")]` | `*` | Whether `unwind` or `abort` will happen on panic. {{ todo() }}|
 | `#[cfg(proc_macro)]` | `*` | Wheter crate compiled as proc macro. {{ ref(page="conditional-compilation.html#proc_macro") }}|
 | `#[cfg(test)]` | `*` | Whether compiled with `cargo test`. {{ hot() }} {{ ref(page="conditional-compilation.html#test") }}|
-| `#[cfg(feature = "serde")]` | `*` | When your crate was compiled with feature `serde`. {{ hot() }} {{ ref(page="conditional-compilation.html#conditional-compilation") }}|
+| `#[cfg(feature = "something")]` | `*` | When your crate was compiled with feature `something`. {{ hot() }} {{ ref(page="conditional-compilation.html#conditional-compilation") }}|
 
 </fixed-3-column>
 
@@ -6993,7 +6993,7 @@ Environment variables and outputs related to the pre-build script.
 | Input Environment | Explanation {{ link(url="https://doc.rust-lang.org/cargo/reference/environment-variables.html") }} |
 |-------|-------------|
 | `CARGO_FEATURE_X` |  Environment variable set for each feature `x` activated.  |
-| {{ tab() }} `CARGO_FEATURE_SERDE` |  If feature `serde` were enabled. |
+| {{ tab() }} `CARGO_FEATURE_SOMETHING` |  If feature `something` were enabled. |
 | {{ tab() }} `CARGO_FEATURE_SOME_FEATURE` | If feature `some-feature` were enabled; dash `-` converted to `_`. |
 | `CARGO_CFG_X` | Exposes cfg's; joins mult. opts. by `,` and converts `-` to `_`.|
 | {{ tab() }} `CARGO_CFG_TARGET_OS=macos` |  If `target_os` were set to `macos`. |
@@ -10073,7 +10073,6 @@ Online services which provide information or tooling.
 | [caniuse.rs](https://caniuse.rs/) | Check which Rust version introduced or stabilized a feature. |
 | [releases.rs](https://releases.rs/) | Release notes for previous and upcoming versions. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
-| [Rust Search Extension](https://rust.extension.sh/) | Browser extension to search docs, crates, attributes, books, &hellip;|
 
 </div>
 

@@ -63,6 +63,7 @@ const subtitles = [
     "The language with more drama than your prom.",
     "Also known as the Rust™️<sup>©️®️,not officially affiliated</sup> Language Cheat Sheet",
     "This is not the greatest cheat sheet in the world, no. This is just a tribute.",
+    "To improve CI times this site will only ship as a precompiled binary starting next week.",
 ];
 
 
