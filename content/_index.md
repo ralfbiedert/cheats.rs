@@ -1129,7 +1129,7 @@ let t = S(1);
 
 - Reserves memory location with name `t` of type `S` and the value `S(1)` stored inside.
 - If declared with `let` that location lives on stack. <sup>1</sup>
-- Note the **linguistic ambiguity**,<sup>2</sup> in the term **_variable_**, it can mean the:
+- Note the **linguistic ambiguity**, in the term **_variable_**, it can mean the:
     1. **name** of the location in the source file ("rename that variable"),
     1. **location** in a compiled app, `0x7` ("tell me the address of that variable"),
     1. **value** contained within, `S(1)` ("increment that variable").
@@ -4060,6 +4060,9 @@ Similarly, for <code>f64</code> types this would look like:
 | `200_u8 + 200_u8` |  Compile error. | - |
 | `200_u8 + _200` <sup>d</sup> | Panic. | Consider `checked_`, `wrapping_`, … instead. {{ std(page="std/primitive.isize.html#method.checked_add") }}|
 | `200_u8 + _200` <sup>r</sup> | `144` | In release mode this will overflow. |
+| `-128_i8 * -1` | Compile error. | Would overflow (`128_i8` doesn't exist). |
+| `-128_i8 * _1neg` <sup>d</sup> | Panic. | - |
+| `-128_i8 * _1neg` <sup>r</sup> | `-128` | Overflows back to `-128` in release mode. |
 | `1_u8 / 2_u8` | `0` | Other integer division truncates. |
 | `0.8_f32 + 0.1_f32` | `0.90000004` | - |
 | `1.0_f32 / 0.0_f32` | `f32::INFINITY` | - |
