@@ -556,8 +556,8 @@ Code generation constructs expanded before the actual compilation happens.
 | `$x:ty`  | Macro capture, the `:…` **fragment** {{ ref(page="macros-by-example.html#metavariables") }} declares what is allowed for `$x`. <sup>2</sup> |
 | `$x` |  Macro substitution, e.g., use the captured `$x:ty` from above. |
 | `$(x),*` | Macro **repetition** {{ ref(page="macros-by-example.html#repetitions") }} _zero or more times_.|
-| {{ tab() }} `$(x),?` | Same, but _zero or one time_. |
 | {{ tab() }} `$(x),+` | Same, but _one or more times_. |
+| {{ tab() }} `$(x)?` | Same, but _zero or one time_ (separator doesn't apply). |
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
 
 </fixed-2-column>
