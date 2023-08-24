@@ -6106,7 +6106,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 |---------|-------------|
 | `println!("{}", x)` | Print `x` using `Display`{{ std(page="std/fmt/trait.Display.html") }} on std. out and append new line. {{ edition(ed="'15") }} {{ deprecated() }} |
 | `println!("{x}")` | Same, but use variable `x` from scope. {{ edition(ed="'21") }}  |
-| `format!("{a:.3} {b:?}")` | Convert `a` with 3 digits, add space, b with `Debug` {{ std(page="std/fmt/trait.Debug.html") }}, return `String`.  {{ edition(ed="'21") }} |
+| `format!("{a:.3} {b:?}")` | Convert `a` with 3 digits, add space, `b` with `Debug` {{ std(page="std/fmt/trait.Debug.html") }}, return `String`.  {{ edition(ed="'21") }} |
 
 </div>
 
