@@ -5552,7 +5552,7 @@ Many users would expect your collection to _just work_ in `for` loops. You need 
 
 {{ tablesep() }}
 
-> As you can see, the **IntoIterator** {{ std(page="std/iter/trait.IntoIterator.html") }} trait is what actually connects your collection with the **IntoIter** trait you created in the previous tab.
+> As you can see, the **IntoIterator** {{ std(page="std/iter/trait.IntoIterator.html") }} trait is what actually connects your collection with the **IntoIter** struct you created in the previous tab.
 
 
 </div></panel></tab>
@@ -6106,7 +6106,7 @@ Each argument designator in format macro is either empty `{}`, `{argument}`, or 
 |---------|-------------|
 | `println!("{}", x)` | Print `x` using `Display`{{ std(page="std/fmt/trait.Display.html") }} on std. out and append new line. {{ edition(ed="'15") }} {{ deprecated() }} |
 | `println!("{x}")` | Same, but use variable `x` from scope. {{ edition(ed="'21") }}  |
-| `format!("{a:.3} {b:?}")` | Convert `PI` with 3 digits, add space, b with `Debug` {{ std(page="std/fmt/trait.Debug.html") }}, return `String`.  {{ edition(ed="'21") }} |
+| `format!("{a:.3} {b:?}")` | Convert `a` with 3 digits, add space, b with `Debug` {{ std(page="std/fmt/trait.Debug.html") }}, return `String`.  {{ edition(ed="'21") }} |
 
 </div>
 
