@@ -89,7 +89,7 @@ Contains clickable links to
 * [Macros & Attributes](#macros-attributes)
 * [Pattern Matching](#pattern-matching)
 * [Generics & Constraints](#generics-constraints)
-* [Higher-Ranked Items](#higher-ranked-items)
+* [Higher-Ranked Items](#higher-ranked-items){{ esoteric() }}
 * [Strings & Chars](#strings-chars)
 * [Documentation](#documentation)
 * [Miscellaneous](#miscellaneous)
@@ -6148,7 +6148,7 @@ Basic project layout, and common files and folders, as used by `cargo`. {{ below
 | `.clippy.toml` | Special configuration for certain [**clippy lints**](https://rust-lang.github.io/rust-clippy/master/index.html), utilized via **`cargo clippy`**  {{ esoteric() }} |
 | `build.rs` |  **Pre-build script**, {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }} useful when compiling C / FFI, … |
 | <code class="ignore-auto language-bash">Cargo.toml</code> | Main **project manifest**, {{ link(url="https://doc.rust-lang.org/cargo/reference/manifest.html") }} Defines dependencies, artifacts … |
-| <code class="ignore-auto language-bash">Cargo.lock</code> | Dependency details for reproducible builds; add to `git` for apps, not for libs. |
+| <code class="ignore-auto language-bash">Cargo.lock</code> | For reproducible builds. Add to git for apps, consider not for libs. {{ opinionated() }} {{ link(url="https://blog.rust-lang.org/2023/08/29/committing-lockfiles.html" )}} {{ link(url="https://old.reddit.com/r/rust/comments/164qfjm/change_in_guidance_on_committing_lockfiles_rust/jya8ouf/" )}} |
 | `rust-toolchain.toml` |  Define **toolchain override**{{ link(url="https://rust-lang.github.io/rustup/overrides.html" )}} (channel, components, targets) for this project. |
 </div>
 
@@ -6974,7 +6974,7 @@ Attributes governing conditional compilation:
 | `#[cfg(panic = "unwind")]` | `*` | Whether `unwind` or `abort` will happen on panic. {{ todo() }}|
 | `#[cfg(proc_macro)]` | `*` | Wheter crate compiled as proc macro. {{ ref(page="conditional-compilation.html#proc_macro") }}|
 | `#[cfg(test)]` | `*` | Whether compiled with `cargo test`. {{ hot() }} {{ ref(page="conditional-compilation.html#test") }}|
-| `#[cfg(feature = "something")]` | `*` | When your crate was compiled with feature `something`. {{ hot() }} {{ ref(page="conditional-compilation.html#conditional-compilation") }}|
+| `#[cfg(feature = "foo")]` | `*` | When your crate was compiled with feature `foo`. {{ hot() }} {{ ref(page="conditional-compilation.html#conditional-compilation") }}|
 
 </fixed-3-column>
 
