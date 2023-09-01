@@ -65,6 +65,7 @@ const subtitles = [
     "This is not the greatest cheat sheet in the world, no. This is just a tribute.",
     "To improve CI times this site will only ship as a precompiled binary starting next week.",
     "Aquaaaa<sup>riiiiiii<sup style='font-size:85%;'>uuuuuuuuuuus</sup></sup>",
+    "Rust is fast, somewhere between a snake and a mongoose.",
 ];
 
 

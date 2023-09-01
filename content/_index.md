@@ -5957,7 +5957,7 @@ If you **want** a string of type &hellip;
 <sup>i</sup> Short form `x.into()` possible if type can be inferred. <br>
 <sup>r</sup> Short form `x.as_ref()` possible if type can be inferred.
 
-<sup>1</sup> You should, or must if call is `unsafe`, ensure raw data comes with a valid representation for the string type (e.g., UTF-8 data for a `String`).
+<sup>1</sup> You must ensure raw data comes with a valid representation for the string type (e.g., UTF-8 data for a `String`).
 
 
 <sup>2</sup> Only on some platforms `std::os::<your_os>::ffi::OsStrExt` exists with helper methods to get a raw `&[u8]` representation of the underlying `OsStr`. Use the rest of the table to go from there, e.g.:
