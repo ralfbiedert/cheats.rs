@@ -229,8 +229,8 @@ fn main() {
 
 
 **IDEs**
-- [IntelliJ](https://www.jetbrains.com/idea/) (free) or [CLion](https://www.jetbrains.com/clion/) (paid) with [**IntelliJ Rust**](https://intellij-rust.github.io/)
-- [Visual Studio Code](https://code.visualstudio.com/) with [**rust-analyzer**](https://rust-analyzer.github.io/)
+- [Rust Rover](https://www.jetbrains.com/rust/) (paid)
+- [Visual Studio Code](https://code.visualstudio.com/) with [**rust-analyzer**](https://rust-analyzer.github.io/) (free)
 
 
 </div></panel></tab>
