@@ -4659,7 +4659,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>UnsafeCell&lt;T&gt;</code></name>
+    <name><code>UnsafeCell&lt;T&gt;</code> {{ std(page="std/cell/struct.UnsafeCell.html") }}</name>
     <visual class="cell">
            <framed class="any unsized"><code>T</code></framed>
     </visual>
@@ -4669,7 +4669,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>Cell&lt;T&gt;</code></name>
+    <name><code>Cell&lt;T&gt;</code> {{ std(page="std/cell/struct.Cell.html") }}</name>
     <visual>
            <framed class="any unsized celled"><code>T</code></framed>
     </visual>
@@ -4679,7 +4679,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>RefCell&lt;T&gt;</code></name>
+    <name><code>RefCell&lt;T&gt;</code> {{ std(page="std/cell/struct.RefCell.html") }}</name>
     <visual>
         <sized class="celled"><code>borrowed</code></sized>
         <framed class="any unsized celled"><code>T</code></framed>
@@ -4692,7 +4692,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>ManuallyDrop&lt;T&gt;</code></name>
+    <name><code>ManuallyDrop&lt;T&gt;</code> {{ std(page="std/mem/struct.ManuallyDrop.html") }}</name>
     <visual>
            <framed class="any unsized"  style="width: 100px;"><code>T</code></framed>
     </visual>
@@ -4701,7 +4701,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>AtomicUsize</code></name>
+    <name><code>AtomicUsize</code> {{ std(page="std/sync/atomic/index.html") }}</name>
     <visual class="atomic">
         <ptr class="atomic">
             <code>usize</code><sub>2/4/8</sub>
@@ -4713,7 +4713,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>Option&lt;T&gt;</code></name>
+    <name><code>Option&lt;T&gt;</code> {{ std(page="std/option/enum.Option.html") }}</name>
     <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
     </visual>
@@ -4724,14 +4724,14 @@ Rust's standard library combines the above primitive types into useful types wit
             <code>T</code>
         </framed>
     </visual>
-    <description>Tag may be omitted for <br> certain T, e.g., <code>NonNull</code>.</description>
+    <description>Tag may be omitted for <br> certain T, e.g., <code>NonNull</code>.{{ std(page="std/ptr/struct.NonNull.html") }}</description>
 </datum>
 
 
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>Result&lt;T, E&gt;</code></name>
+    <name><code>Result&lt;T, E&gt;</code> {{ std(page="std/result/enum.Result.html") }}</name>
     <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
         <framed class="any" style="width: 50px;">
@@ -4773,7 +4773,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>Box&lt;T&gt;</code></name>
+    <name><code>Box&lt;T&gt;</code> {{ std(page="std/boxed/struct.Box.html") }}</name>
     <visual>
         <ptr>
            <code>ptr</code><sub>2/4/8</sub>
@@ -4796,7 +4796,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>Vec&lt;T&gt;</code></name>
+    <name><code>Vec&lt;T&gt;</code> {{ std(page="std/vec/struct.Vec.html") }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <ptr>
@@ -4829,7 +4829,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>LinkedList&lt;T&gt;</code> {{ esoteric() }} </name>
+    <name><code>LinkedList&lt;T&gt;</code> {{ std(page="std/collections/struct.LinkedList.html") }}{{ esoteric() }} </name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <ptr>
@@ -4867,7 +4867,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>VecDeque&lt;T&gt;</code></name>
+    <name><code>VecDeque&lt;T&gt;</code> {{ std(page="std/collections/struct.VecDeque.html") }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <sized>
@@ -4910,7 +4910,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>HashMap&lt;K, V&gt;</code></name>
+    <name><code>HashMap&lt;K, V&gt;</code> {{ std(page="std/collections/struct.HashMap.html") }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <sized>
@@ -4939,7 +4939,7 @@ Rust's standard library combines the above primitive types into useful types wit
             <capacity><note style="font-weight: bolder;">Oversimplified!</note></capacity>
         </memory>
     </memory-entry>
-    <description>Stores keys and values on heap according to hash value, <a href="https://www.youtube.com/watch?v=ncHmEUmJZf4">SwissTable</a> <br> implementation via <a href="https://github.com/rust-lang/hashbrown">hashbrown</a>. <code>HashSet</code> identical to <code>HashMap</code>, <br>just type <code>V</code> disappears. Heap view grossly oversimplified. {{bad()}} </description>
+    <description>Stores keys and values on heap according to hash value, <a href="https://www.youtube.com/watch?v=ncHmEUmJZf4">SwissTable</a> <br> implementation via <a href="https://github.com/rust-lang/hashbrown">hashbrown</a>. <code>HashSet</code> {{ std(page="std/collections/struct.HashSet.html") }} identical to <code>HashMap</code>, <br>just type <code>V</code> disappears. Heap view grossly oversimplified. {{bad()}} </description>
 </datum>
 
 
@@ -4948,7 +4948,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>BinaryHeap&lt;T&gt;</code></name>
+    <name><code>BinaryHeap&lt;T&gt;</code> {{ std(page="std/collections/struct.BinaryHeap.html") }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <ptr>
@@ -4987,7 +4987,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>String</code></name>
+    <name><code>String</code> {{ std(page="std/string/struct.String.html") }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <ptr>
@@ -5022,7 +5022,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>CString</code></name>
+    <name><code>CString</code> {{ std(page="std/ffi/struct.CString.html") }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <ptr>
@@ -5053,7 +5053,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>OsString</code></name>
+    <name><code>OsString</code> {{ std(page="std/ffi/struct.OsString.html") }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual class="platformdefined">
         Platform Defined
@@ -5078,7 +5078,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>PathBuf</code></name>
+    <name><code>PathBuf</code> {{ std(page="std/path/struct.PathBuf.html") }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual class="platformdefined">
         <payload>
@@ -5109,7 +5109,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>Rc&lt;T&gt;</code></name>
+    <name><code>Rc&lt;T&gt;</code> {{ std(page="std/rc/struct.Rc.html") }}</name>
     <visual style="width: 180px;">
         <ptr>
            <code>ptr</code><sub>2/4/8</sub>
@@ -5135,7 +5135,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>Arc&lt;T&gt;</code></name>
+    <name><code>Arc&lt;T&gt;</code> {{ std(page="std/sync/struct.Arc.html") }}</name>
     <visual style="width: 180px;">
         <ptr>
            <code>ptr</code><sub>2/4/8</sub>
@@ -5162,14 +5162,14 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>Mutex&lt;T&gt;</code> / <code>RwLock&lt;T&gt;</code></name>
+    <name><code>Mutex&lt;T&gt;</code> {{ std(page="std/sync/struct.Mutex.html") }} / <code>RwLock&lt;T&gt;</code> {{ std(page="std/sync/struct.RwLock.html") }}</name>
     <visual style="width: 230px;">
         <payload><code>inner</code></payload>
         <sized class="atomicx"><code>poison</code><sub>2/4/8</sub></sized>
         <framed class="any unsized celled"><code>T</code></framed>
     </visual>
     <description>Inner fields depend on platform. Needs to be <br>held in <code>Arc</code> to be shared between decoupled<br>threads, or
-    via <code>scope()</code> for scoped threads.
+    via <code>scope()</code> {{ std(page="std/thread/fn.scope.html") }} for scoped threads.
     </description>
 </datum>
 
@@ -5180,11 +5180,11 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>Cow&lt;'a, T&gt;</code></name>
+    <name><code>Cow&lt;'a, T&gt;</code> {{ std(page="std/borrow/enum.Cow.html") }}</name>
     <visual class="enum" style="text-align: left;">
         <pad><code>Tag</code></pad>
         <framed class="any unsized" style="width: 100px; text-align: center;">
-            <code>T</code>
+            <code>T::Owned</code>
         </framed>
     </visual>
     <andor>or</andor>
@@ -5203,7 +5203,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
             </memory>
         </memory-entry>
     </div>
-    <description>Holds read-only reference to<br>some <code>T</code>, or owns it entirely.</description>
+    <description>Holds read-only reference to<br>some <code>T</code>, or owns it's <code>ToOwned</code> {{ std( page = "std/borrow/trait.ToOwned.html") }} <br>analog.</description>
 </datum>
 
 
