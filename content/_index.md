@@ -5173,6 +5173,40 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
     </description>
 </datum>
 
+<spacer>
+</spacer>
+<spacer>
+</spacer>
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>Cow&lt;'a, T&gt;</code></name>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="any unsized" style="width: 100px; text-align: center;">
+            <code>T</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+        <framed class="ptr" style="width: 50px;">
+           <code>ptr</code><sub>2/4/8</sub>
+        </framed>
+    </visual>
+    <div>
+        <memory-entry style="width: 40px;"></memory-entry>
+        <memory-entry>
+            <memory-link style="left:15%;">|</memory-link>
+            <memory class="anymem">
+                <framed class="any unsized"><code>T</code></framed>
+            </memory>
+        </memory-entry>
+    </div>
+    <description>Holds read-only reference to<br>some <code>T</code>, or owns it entirely.</description>
+</datum>
+
+
 
 
 ---
