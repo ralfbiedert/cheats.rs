@@ -954,7 +954,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Coercions** {{ nom(page="coercions.html") }} | _Weakens_ types to match signature, e.g., `&mut T` to `&T`; _c_. _type conversions_. {{ below(target="#type-conversions") }}  |
 | **Deref** {{ nom(page="vec-deref.html") }} {{ link(url="https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules") }} | [Derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
 | **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic items, e.g., `Option`, `drop()`, …
-| **Reborrow** | Since `x: &mut T` can't be copied; moves new `&mut *x` instead. |
+| **Reborrow** {{ link(url="https://quinedot.github.io/rust-learning/st-reborrow.html") }} | Since `x: &mut T` can't be copied; moves new `&mut *x` instead. |
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Allows you to write `f(x: &T)`, instead of `f<'a>(x: &'a T)`, for brevity. |
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Derefs or borrow `x` until `x.f()` works. |
 | **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly dereferences [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and adds `ref` and `ref mut` to bindings. |
