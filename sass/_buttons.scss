@@ -1,0 +1,38 @@
+$color_1: #fff;
+$background-color_1: #bababa;
+$background-color_2: #646161;
+$background-color_3: #666;
+
+#top-button {
+	display: inline-block;
+	background-color: $background-color_1;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	border-radius: 4px;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	transition: background-color .3s, opacity .5s, visibility .5s;
+	opacity: 0;
+	visibility: hidden;
+	z-index: 1000;
+	&::after {
+		/// source: https://iconduck.com/icons/21778/chevron-up
+		/// license: https://iconduck.com/licenses/cc-by-4.0
+		/// changes: add 'width="25" height="50"'
+		content: url('data:image/svg+xml;utf8,<svg width="25" height="50" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="m240.971 130.524 194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04l-154.746-154.02-154.745 154.021c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941l194.343-194.343c9.372-9.373 24.568-9.373 33.941-.001z"/></svg>');
+		color: $color_1;
+	}
+	&:hover {
+		cursor: pointer;
+		background-color: $background-color_2;
+	}
+	&:active {
+		background-color: $background-color_3;
+	}
+}
+#top-button.show {
+	opacity: 1;
+	visibility: visible;
+}

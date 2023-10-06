@@ -504,3 +504,22 @@ window.onload = () => {
         console.log(e);
     }
 };
+
+// back-to-top button
+const top_button_scroll_threshold = 1000;
+const top_btn = document.getElementById('top-button');
+window.addEventListener("scroll", () => {
+    let scroll_top = window.scrollY || document.documentElement.scrollTop;
+    if (scroll_top > top_button_scroll_threshold) {
+        top_btn.classList.add('show');
+    } else {
+        top_btn.classList.remove('show');
+    }
+});
+top_btn.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "instant"
+    });
+});
+
