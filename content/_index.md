@@ -279,13 +279,13 @@ Data types and memory locations defined via keywords.
 | `enum E {}` | Define an **enum**, {{ book(page="ch06-01-defining-an-enum.html") }} {{ ex(page="custom_types/enum.html#enums") }} {{ ref(page="items/enumerations.html") }} _c_. [algebraic data types](https://en.wikipedia.org/wiki/Algebraic_data_type), [tagged unions](https://en.wikipedia.org/wiki/Tagged_union). |
 | {{ tab() }}  `enum E { A, B`&#8203;`(), C {} }` | Define variants of enum; can be unit- `A`, tuple- `B` &#8203;`()` and struct-like `C{}`. |
 | {{ tab() }}  `enum E { A = 1 }` | If variants are only unit-like, allow **discriminant values**, {{ ref(page="items/enumerations.html#custom-discriminant-values-for-fieldless-enumerations") }} e.g., for FFI. |
-| {{ tab() }}  `enum E {}` | Enum w/o variants is **uninhabited**, {{ ref(page="glossary.html#uninhabited") }} can't be instantiated, _c._ 'never' {{ below(target="#miscellaneous") }} {{ esoteric() }} |
+| {{ tab() }}  `enum E {}` | Enum w/o variants is **uninhabited**, {{ ref(page="glossary.html#uninhabited") }} can't be created, _c._ 'never' {{ below(target="#miscellaneous") }} {{ esoteric() }} |
 | `union U {}` | Unsafe C-like **union**  {{ ref(page="items/unions.html") }} for FFI compatibility. {{ esoteric() }} |
 | `static X: T = T();`  | **Global variable** {{ book(page="ch19-01-unsafe-rust.html#accessing-or-modifying-a-mutable-static-variable") }} {{ ex(page="custom_types/constants.html#constants") }} {{ ref(page="items/static-items.html#static-items") }}  with `'static` lifetime, single memory location. |
 | `const X: T = T();`  | Defines **constant**, {{ book(page="ch03-01-variables-and-mutability.html#constants") }} {{ ex(page="custom_types/constants.html") }} {{ ref(page="items/constant-items.html") }} copied into a temporary when used. |
 | `let x: T;`  | Allocate `T` bytes on stack{{ note( note="1") }} bound as `x`. Assignable once, not mutable.  |
 | `let mut x: T;`  | Like `let`, but allow for **mutability** {{ book(page="ch03-01-variables-and-mutability.html") }} {{ ex(page="variable_bindings/mut.html") }} and mutable borrow.{{ note( note="2") }} |
-| {{ tab() }} `x = y;` | Moves `y` to `x`, invalidating `y` if `T` is not **`Copy`**, {{ std(page="std/marker/trait.Copy.html") }} and copying `y` otherwise. |
+| {{ tab() }} `x = y;` | Moves `y` to `x`, inval. `y` if `T` is not **`Copy`**, {{ std(page="std/marker/trait.Copy.html") }} and copying `y` otherwise. |
 
 </fixed-2-column>
 
@@ -316,11 +316,11 @@ Creating and accessing data structures; and some more _sigilic_ types.
 | `(x)` | Parenthesized expression. |
 | `(x,)` | Single-element **tuple** expression. {{ ex(page="primitives/tuples.html") }} {{ std(page="std/primitive.tuple.html") }} {{ ref(page="expressions/tuple-expr.html") }} |
 | `(S,)` | Single-element tuple type. |
-| `[S]` | Array type of unspecified length, i.e., **slice**. {{ ex(page="primitives/array.html") }} {{ std(page="std/primitive.slice.html") }} {{ ref(page="types/slice.html") }} Can't live on stack. {{ note( note="*") }} |
+| `[S]` | Array type of unspec. length, i.e., **slice**. {{ ex(page="primitives/array.html") }} {{ std(page="std/primitive.slice.html") }} {{ ref(page="types/slice.html") }} Can't live on stack. {{ note( note="*") }} |
 | `[S; n]` | **Array type** {{ ex(page="primitives/array.html") }}  {{ std(page="std/primitive.array.html") }} {{ ref(page="types/array.html") }}  of fixed length `n` holding elements of type `S`. |
 | `[x; n]` | **Array instance**  {{ ref(page="expressions/array-expr.html") }} (expression) with `n` copies of `x`. |
 | `[x, y]` | Array instance with given elements `x` and `y`. |
-| `x[0]` | Collection indexing, here w. `usize`. Implementable with [**Index**](https://doc.rust-lang.org/std/ops/trait.Index.html), [**IndexMut**](https://doc.rust-lang.org/std/ops/trait.IndexMut.html). |
+| `x[0]` | Collection indexing, here w. `usize`. Impl. via [**Index**](https://doc.rust-lang.org/std/ops/trait.Index.html), [**IndexMut**](https://doc.rust-lang.org/std/ops/trait.IndexMut.html). |
 | {{ tab() }} `x[..]` | Same, via range (here _full range_), also `x[a..b]`, `x[a..=b]`, … _c_. below.  |
 | `a..b` | **Right-exclusive range** {{ std(page="std/ops/struct.Range.html") }} {{ ref(page="expressions/range-expr.html") }} creation, e.g., `1..3` means `1, 2`.  |
 | `..b` | Right-exclusive **range to** {{ std(page="std/ops/struct.RangeTo.html") }} without starting point.  |
@@ -354,24 +354,24 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `&str` | Special string slice reference that contains (`address`, `byte_length`). |
 | {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, &hellip;). |
 | {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains (`address`, `vtable`). |
-| `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., address, len, vtable, &hellip; of _this_ `s`, like `0x1234`). |
+| `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., addr., len, vtable, &hellip; of _this_ `s`, like `0x1234`). |
 | {{ tab() }} `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }} w/o memory safety. |
 | {{ tab() }} `*mut S` | Mutable raw pointer type w/o memory safety. |
-| {{ tab() }} `&raw const s` | Create raw pointer w/o going through reference; _c_. `ptr:addr_of!()` {{ std(page="std/ptr/macro.addr_of.html") }} {{ experimental() }} {{ esoteric() }}  |
-| {{ tab() }} `&raw mut s` | Same, but mutable. {{ experimental() }} Raw ptrs. are needed for unaligned, packed fields. {{ esoteric() }} |
+| {{ tab() }} `&raw const s` | Create raw pointer w/o going through ref.; _c_. `ptr:addr_of!()` {{ std(page="std/ptr/macro.addr_of.html") }} {{ experimental() }} {{ esoteric() }}  |
+| {{ tab() }} `&raw mut s` | Same, but mutable. {{ experimental() }} Needed for unaligned, packed fields. {{ esoteric() }} |
 | `ref s` | **Bind by reference**, {{ ex(page="scope/borrow/ref.html") }} makes binding reference type. {{ deprecated() }}|
 | {{ tab() }} `let ref r = s;` | Equivalent to `let r = &s`. |
-| {{ tab() }} `let S { ref mut x } = s;` | Mutable ref binding (`let x = &mut s.x`), shorthand destructuring {{ below( target = "#pattern-matching") }} version. |
+| {{ tab() }} `let S { ref mut x } = s;` | Mut. ref binding (`let x = &mut s.x`), shorthand destructuring {{ below( target = "#pattern-matching") }} version. |
 | `*r` | **Dereference** {{ book(page="ch15-02-deref.html") }} {{ std(page="std/ops/trait.Deref.html") }} {{ nom(page="vec-deref.html") }} a reference `r` to access what it points to. |
 | {{ tab() }} `*r = s;` | If `r` is a mutable reference, move or copy `s` to target memory. |
 | {{ tab() }} `s = *r;` | Make `s` a copy of whatever `r` references, if that is `Copy`. |
-| {{ tab() }} `s = *r;` | Won't work {{ bad() }} if `*r` is not `Copy`, as that would move and leave empty place. |
-| {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://old.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8") }} for **`Box`**{{ std(page="std/boxed/index.html") }} that can also move out b'ed content that isn't `Copy`. |
+| {{ tab() }} `s = *r;` | Won't work {{ bad() }} if `*r` is not `Copy`, as that would move and leave empty. |
+| {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://old.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8") }} for **`Box`**{{ std(page="std/boxed/index.html") }} that can move out b'ed content not `Copy`. |
 | `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} duration of a flow in static analysis. |
 | {{ tab() }}  `&'a S`  | Only accepts address of some `s`; address existing `'a` or longer. |
 | {{ tab() }}  `&'a mut S`  | Same, but allow address content to be changed. |
-| {{ tab() }}  `struct S<'a> {}`  | Signals this `S` will contain address with lifetime `'a`. Creator of `S` decides `'a`. |
+| {{ tab() }}  `struct S<'a> {}`  | Signals this `S` will contain address with lt. `'a`. Creator of `S` decides `'a`. |
 | {{ tab() }} `trait T<'a> {}` | Signals any `S`, which `impl T for S`, might contain address. |
 | {{ tab() }}  `fn f<'a>(t: &'a T)`  | Signals this function handles some address. Caller decides `'a`. |
 | `'static`  | Special lifetime lasting the entire program execution. |
@@ -397,19 +397,19 @@ Define units of code and their abstractions.
 | `fn f() {}`  | Definition of a **function**; {{ book(page="ch03-03-how-functions-work.html") }}  {{ ex(page="fn.html") }} {{ ref(page="items/functions.html") }} or associated function if inside `impl`. |
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
 | {{ tab() }} `fn f(&self) {}`  | Define a **method**, {{ book(page="ch05-03-method-syntax.html") }}  {{ ex(page="fn/methods.html") }}  {{ ref(page="items/associated-items.html#methods") }}  e.g., within an `impl S {}`. |
-| `struct S` &#8203;`(T);` | More arcanely, _also_{{ above(target="#data-structures") }} defines `fn S(x: T) -> S` **constructor function**.  {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} {{ esoteric() }} |
+| `struct S` &#8203;`(T);` | More arcanely, _also_{{ above(target="#data-structures") }} defines `fn S(x: T) -> S` **constructor fn**.  {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} {{ esoteric() }} |
 | `const fn f() {}`  | Constant `fn` usable at compile time, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
-| `async fn f() {}`  | **Async**  {{ ref(page="items/functions.html#async-functions") }} {{ edition(ed="'18") }} function transformation, {{ below(target="#async-await-101") }} makes `f` return an `impl` **`Future`**. {{ std(page="std/future/trait.Future.html") }} |
+| `async fn f() {}`  | **Async**  {{ ref(page="items/functions.html#async-functions") }} {{ edition(ed="'18") }} function transform, {{ below(target="#async-await-101") }} makes `f` return an `impl` **`Future`**. {{ std(page="std/future/trait.Future.html") }} |
 | {{ tab() }} `async fn f() -> S {}`  | Same, but make `f` return an `impl Future<Output=S>`. |
 | {{ tab() }} `async { x }`  | Used within a function, make `{ x }` an `impl Future<Output=X>`. |
 | `fn() -> S`  | **Function references**, <sup>1</sup> {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} memory holding address of a callable. |
-| `Fn() -> S`  | **Callable Trait** {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), implemented by closures, fn's &hellip; |
+| `Fn() -> S`  | **Callable Trait** {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), impl. by closures, fn's &hellip; |
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its **captures**, {{ below(target="#closures-data") }} {{ ref(page="types/closure.html#capture-modes") }}  (e.g., a local variable). |
 | {{ tab() }} <code>&vert;x&vert; {}</code> | Closure accepting one argument named `x`, body is block expression. |
 | {{ tab() }} <code>&vert;x&vert; x + x</code> | Same, without block expression; may only consist of single expression.  |
 | {{ tab() }} <code>move &vert;x&vert; x + y </code> | **Move closure** {{ ref(page="types/closure.html#capture-modes")}} taking ownership; i.e., `y` transferred into closure.  |
 | {{ tab() }} <code> return &vert;&vert; true </code> | Closures sometimes look like logical ORs (here: return a closure). |
-| `unsafe` | If you enjoy debugging segfaults Friday night; **unsafe code**. {{ below(target="#unsafe-unsound-undefined") }} {{ book(page="ch19-01-unsafe-rust.html#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
+| `unsafe` | If you enjoy debugging segfaults; **unsafe code**. {{ below(target="#unsafe-unsound-undefined") }} {{ book(page="ch19-01-unsafe-rust.html#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 | {{ tab() }} `unsafe fn f() {}` | Means "_calling can cause UB, {{ below(target="#unsafe-unsound-undefined") }} **YOU must check** requirements_". |
 | {{ tab() }} `unsafe trait T {}` | Means "_careless impl. of `T` can cause UB_; **implementor must check**".  |
 | {{ tab() }} `unsafe { f(); }` | Guarantees to compiler "_**I have checked** requirements, trust me_".  |
@@ -446,15 +446,15 @@ Control execution within a function.
 | `continue `  | **Continue expression** {{ ref(page="expressions/loop-expr.html#continue-expressions") }} to the next loop iteration of this loop. |
 | `continue 'label`  | Same but instead of this loop, enclosing loop marked with 'label. |
 | `x?` | If `x` is [Err](https://doc.rust-lang.org/std/result/enum.Result.html#variant.Err) or [None](https://doc.rust-lang.org/std/option/enum.Option.html#variant.None), **return and propagate**. {{ book(page="ch09-02-recoverable-errors-with-result.html#propagating-errors") }} {{ ex(page="error/result/enter_question_mark.html") }} {{ std(page="std/result/index.html#the-question-mark-operator-") }} {{ ref(page="expressions/operator-expr.html#the-question-mark-operator")}} |
-| `x.await` | Syntactic sugar to **get future, poll, yield**.  {{ ref(page="expressions/await-expr.html#await-expressions") }}  {{ edition(ed="'18") }} Only works inside `async`.  |
+| `x.await` | Syntactic sugar to **get future, poll, yield**.  {{ ref(page="expressions/await-expr.html#await-expressions") }}  {{ edition(ed="'18") }} Only inside `async`.  |
 | <less-important> {{ tab() }} {{ expands_to()}} `x.into_future()` </less-important>  | <less-important> Effectively converts any  **`IntoFuture`** {{ std(page="std/future/trait.IntoFuture.html") }} type into proper future first. </less-important> |
 | <less-important> {{ tab() }} {{ expands_to()}} `future.poll()` </less-important> | <less-important> On proper **`Future`** {{ std(page="std/future/trait.Future.html") }} then `poll()` and yield flow if **`Poll::Pending`**. {{ std(page="std/task/enum.Poll.html") }} </less-important> |
-| `return x`  | **Early return** {{ ref(page="expressions/return-expr.html" ) }} from function. More idiomatic is to end with expression. |
+| `return x`  | **Early return** {{ ref(page="expressions/return-expr.html" ) }} from fn. More idiomatic is to end with expression. |
 | {{ tab() }} `{ return }`  | Inside normal `{}`-blocks `return` exits surrounding function. |
-| {{ tab() }} <code>&vert;&vert; { return }</code>  | Within closures `return` exits that closure only, i.e., closure is _s._ function. |
-| {{ tab() }} `async { return }`  | Inside `async` a `return` **only** {{ ref(page="expressions/block-expr.html#control-flow-operators") }} {{ bad() }} exits that `{}`, i.e., `async {}` is _s._ function. |
+| {{ tab() }} <code>&vert;&vert; { return }</code>  | Within closures `return` exits that _c._ only, i.e., closure is _s. fn._ |
+| {{ tab() }} `async { return }`  | Inside `async` a `return` **only** {{ ref(page="expressions/block-expr.html#control-flow-operators") }} {{ bad() }} exits that `{}`, i.e., `async {}` is _s. fn._ |
 | `f()` | Invoke callable `f` (e.g., a function, closure, function pointer, `Fn`, &hellip;). |
-| `x.f()` | Call member function, requires `f` takes `self`, `&self`, &hellip; as first argument. |
+| `x.f()` | Call member fn, requires `f` takes `self`, `&self`, &hellip; as first argument. |
 | {{ tab() }} `X::f(x)` | Same as `x.f()`. Unless `impl Copy for X {}`, `f` can only be called once. |
 | {{ tab() }} `X::f(&x)` | Same as `x.f()`. |
 | {{ tab() }} `X::f(&mut x)` | Same as `x.f()`. |
@@ -478,15 +478,15 @@ Segment projects into smaller units and minimize dependencies.
 | `mod m {}`  | Define a **module**, {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ex(page="mod.html#modules") }} {{ ref(page="items/modules.html#modules") }} get definition from inside `{}`. {{ below(target="#project-anatomy") }} |
 | `mod m;`  | Define a module, get definition from `m.rs` or `m/mod.rs`. {{ below(target="#project-anatomy") }}|
 | `a::b` | Namespace **path** {{ ex(page="mod/use.html") }} {{ ref(page="paths.html")}} to element `b` within `a` (`mod`, `enum`, &hellip;). |
-| {{ tab() }} `::b` | Search `b` in **crate root** {{ edition(ed="'15") }} {{ ref(page="glossary.html#crate")}} or **external prelude**; {{ edition(ed="'18") }} {{ ref(page="names/preludes.html#extern-prelude")}} **global path**. {{ ref(page="paths.html#path-qualifiers")}} {{ deprecated() }}  |
+| {{ tab() }} `::b` | Search `b` in **crate root** {{ edition(ed="'15") }} {{ ref(page="glossary.html#crate")}} or **ext. prelude**; {{ edition(ed="'18") }} {{ ref(page="names/preludes.html#extern-prelude")}} **global path**. {{ ref(page="paths.html#path-qualifiers")}} {{ deprecated() }}  |
 | {{ tab() }} `crate::b` | Search `b` in crate root. {{ edition(ed="'18") }} |
 | {{ tab() }} `self::b`  | Search `b` in current module. |
 | {{ tab() }} `super::b`  | Search `b` in parent module. |
 | `use a::b;`  | **Use** {{ ex(page="mod/use.html#the-use-declaration") }} {{ ref(page="items/use-declarations.html") }} `b` directly in this scope without requiring `a` anymore. |
 | `use a::{b, c};` | Same, but bring `b` and `c` into scope. |
 | `use a::b as x;`  | Bring `b` into scope but name `x`, like `use std::error::Error as E`. |
-| `use a::b as _;`  | Bring `b` anonymously into scope, useful for traits with conflicting names. |
-| `use a::*;`  | Bring everything from `a` in, only recommended if `a` is some **prelude**. {{ std(page="std/prelude/index.html#other-preludes")}}  {{ link(url="https://stackoverflow.com/questions/36384840/what-is-the-prelude" ) }} |
+| `use a::b as _;`  | Bring `b` anon. into scope, useful for traits with conflicting names. |
+| `use a::*;`  | Bring everything from `a` in, only recomm. if `a` is some **prelude**. {{ std(page="std/prelude/index.html#other-preludes")}}  {{ link(url="https://stackoverflow.com/questions/36384840/what-is-the-prelude" ) }} |
 | `pub use a::b;`  | Bring `a::b` into scope and reexport from here. |
 | `pub T`  | "Public if parent path is public" **visibility** {{ book(page="ch07-02-defining-modules-to-control-scope-and-privacy.html") }} {{ ref(page="visibility-and-privacy.html")}} for `T`.  |
 | {{ tab() }} `pub(crate) T` | Visible at most<sup>1</sup> in current crate.  |
@@ -519,7 +519,7 @@ Short-hand names of types, and methods to convert one type to another.
 | `self`  | Method subject in `fn f(self) {}`, e.g., akin to `fn f(self: Self) {}`. |
 |  {{ tab() }}  `&self`  | Same, but refers to self as borrowed, would equal `f(self: &Self)`|
 |  {{ tab() }}  `&mut self`  | Same, but mutably borrowed, would equal `f(self: &mut Self)` |
-|  {{ tab() }}  `self: Box<Self>`  | [**Arbitrary self type**](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart pointers (`my_box.f_of_self()`). |
+|  {{ tab() }}  `self: Box<Self>`  | [**Arbitrary self type**](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart ptrs (`my_box.f_of_self()`). |
 | `<S as T>`  | **Disambiguate** {{ book(page="ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name") }} {{ ref(page="expressions/call-expr.html#disambiguating-function-calls") }} type `S` as trait `T`, e.g., `<S as T>::f()`. |
 | `a::b as c`  | In `use` of symbol, import `S` as `R`, e.g., `use a::S as R`. |
 | `x as u32`  | Primitive **cast**, {{ ex(page="types/cast.html#casting") }} {{ ref(page="expressions/operator-expr.html#type-cast-expressions") }} may truncate and be a bit surprising. <sup>1</sup> {{ nom(page="casts.html") }} |
@@ -587,14 +587,14 @@ Constructs found in `match` or `let` expressions, or function parameters.
 |  {{ tab() }} `let (_, b, _) = abc;` | Only `b` will be bound to value `abc.1`. |
 |  {{ tab() }} `let (a, ..) = abc;` | Ignoring 'the rest' also works. |
 |  {{ tab() }} `let (.., a, b) = (1, 2);` | Specific bindings take precedence over 'the rest', here `a` is `1`, `b` is `2`. |
-|  {{ tab() }} `let s @ S { x } = get();`  | Bind `s` to `S` while `x` is bound to `s.x`, **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} _c_. below {{ esoteric() }} |
+|  {{ tab() }} `let s @ S { x } = get();`  | Bind `s` to `S` while `x` is bnd. to `s.x`, **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} _c_. below {{ esoteric() }} |
 |  {{ tab() }} `let w @ t @ f = get();`  | Stores 3 copies of `get()` result in each `w`, `t`, `f`. {{ esoteric() }} |
 |  {{ tab() }} <code>let (&vert;x&vert; x) = get();</code> | Pathological or-pattern,{{ below(target="#pattern-matching")}} **not** closure.{{ bad() }} Same as `let x = get();` {{ esoteric() }}  |
-| `let Some(x) = get();` | **Won't** work {{ bad() }} if pattern can be **refuted**, {{ ref(page="expressions/if-expr.html#if-let-expressions") }} use `let else` or `if let` instead. |
-| `let Some(x) = get() else {};`  | Assign if possible,{{ rfc(page="3137-let-else.html") }} if not `else {}` w. must `break`, `return`, `panic!`, … {{ edition(ed="1.65+")}} {{ hot() }} |
+| `let Some(x) = get();` | **Won't** work {{ bad() }} if p. can be **refuted**, {{ ref(page="expressions/if-expr.html#if-let-expressions") }} use `let else` or `if let` instead. |
+| `let Some(x) = get() else {};`  | Try to assign {{ rfc(page="3137-let-else.html") }} if not `else {}` w. must `break`, `return`, `panic!`, … {{ edition(ed="1.65+")}} {{ hot() }} |
 | `if let Some(x) = get() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
-| `while let Some(x) = get() {}`  | Equiv.; here keep calling `get()`, run `{}` as long as pattern can be assigned. |
-| `fn f(S { x }: S)`  | Function parameters also work like `let`, here `x` bound to `s.x` of `f(s)`. {{ esoteric() }} |
+| `while let Some(x) = get() {}`  | Equiv.; here keep calling `get()`, run `{}` as long as _p._ can be assigned. |
+| `fn f(S { x }: S)`  | Function param. also work like `let`, here `x` bound to `s.x` of `f(s)`. {{ esoteric() }} |
 
 </fixed-2-column>
 
@@ -618,8 +618,8 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 |  `E::A => {}` | Match enum variant `A`, _c_. **pattern matching**. {{ book(page="ch06-02-match.html") }} {{ ex(page="flow_control/match.html") }} {{ ref(page="expressions/match-expr.html") }} |
 |  `E::B ( .. ) => {}` | Match enum tuple variant `B`, ignoring any index. |
 |  `E::C { .. } => {}` | Match enum struct variant `C`, ignoring any field. |
-|  `S { x: 0, y: 1 } => {}` | Match struct with specific values (only accepts `s` with `s.x` of `0` and `s.y` of `1`). |
-|  `S { x: a, y: b } => {}` | Match struct with _any_ {{ bad() }} values and bind `s.x` to `a` and `s.y` to `b`. |
+|  `S { x: 0, y: 1 } => {}` | Match _s._ with specific values (only `s` with `s.x` of `0` and `s.y` of `1`). |
+|  `S { x: a, y: b } => {}` | Match _s._ with _any_ {{ bad() }} values and bind `s.x` to `a` and `s.y` to `b`. |
 |  {{ tab() }} `S { x, y } => {}` | Same, but shorthand with `s.x` and `s.y` bound as `x` and `y` respectively. |
 |  `S { .. } => {}` | Match struct with any values. |
 |  `D => {}` | Match enum variant `E::D` if `D` in `use`. |
@@ -629,7 +629,7 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 | {{ tab() }}  <code>E::A &vert; E::Z => {}</code> | Same, but on enum variants. |
 | {{ tab() }}  <code>E::C {x} &vert; E::D {x} => {}</code> | Same, but bind `x` if all variants have it. |
 | {{ tab() }}  <code>Some(A &vert; B) => {}</code> | Same, can also match alternatives deeply nested. |
-| {{ tab() }}  <code>&vert;x&vert; x => {}</code> | **Pathological or-pattern**,{{ above(target="#pattern-matching")}}{{bad()}} leading <code>&vert;</code> ignored, is just <code>x &vert; x</code>, therefore <code>x</code>. {{esoteric()}}
+| {{ tab() }}  <code>&vert;x&vert; x => {}</code> | **Pathological or-pattern**,{{ above(target="#pattern-matching")}}{{bad()}} leading <code>&vert;</code> ignored, is just <code>x &vert; x</code>, thus <code>x</code>. {{esoteric()}}
 |  `(a, 0) => {}` | Match tuple with any value for `a` and `0` for second. |
 |  `[a, 0] => {}` | **Slice pattern**, {{ ref(page="patterns.html#slice-patterns") }} {{ link(url="https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html") }} match array with any value for `a` and `0` for second. |
 |  {{ tab() }} `[1, ..] => {}` | Match array starting with `1`, any value for rest; **subslice pattern**.  {{ ref(page="patterns.html#rest-patterns") }} {{ rfc(page="2359-subslice-pattern-syntax.html") }} |
@@ -639,7 +639,7 @@ Pattern matching arms in `match` expressions. Left side of these arms can also b
 |  `1 .. 3 => {}` | **Range pattern**, {{ book(page="ch18-03-pattern-syntax.html#matching-ranges-of-values-with-") }} {{ ref(page="patterns.html#range-patterns") }} here matches `1` and `2`; partially unstable. {{ experimental() }} |
 |  {{ tab() }} `1 ..= 3 => {}` | Inclusive range pattern, matches `1`, `2` and `3`. |
 |  {{ tab() }} `1 .. => {}` | Open range pattern, matches `1` and any larger number.  |
-| `x @ 1..=5 => {}` | Bind matched to `x`; **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} here `x` would be `1`, `2`, &hellip; or `5`.  |
+| `x @ 1..=5 => {}` | Bind matched to `x`; **pattern binding**, {{ book(page="ch18-03-pattern-syntax.html#-bindings") }} {{ ex(page="flow_control/match/binding.html#binding") }} {{ ref(page="patterns.html#identifier-patterns") }} here `x` would be `1` &hellip; `5`.  |
 | {{ tab() }} `Err(x @ Error {..}) => {}` | Also works nested, here `x` binds to `Error`, esp. useful with `if` below. |
 | `S { x } if x > 10 => {}`  | Pattern **match guards**, {{ book(page="ch18-03-pattern-syntax.html#extra-conditionals-with-match-guards")}} {{ ex(page="flow_control/match/guard.html#guards")}} {{ ref(page="expressions/match-expr.html#match-guards") }} condition must be true as well to match. |
 
@@ -660,42 +660,42 @@ Generics combine with type constructors, traits and functions to give your users
 
 | Example | Explanation |
 |---------|-------------|
-| `struct S<T> …`  | A **generic** {{ book(page="ch10-01-syntax.html") }} {{ ex(page="generics.html") }} type with a type parameter (`T` is placeholder name here). |
-| `S<T> where T: R`  | **Trait bound**, {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} {{ ref(page="trait-bounds.html#trait-and-lifetime-bounds" ) }} limits allowed `T`, guarantees `T` has `R`; `R` must be trait. |
+| `struct S<T> …`  | A **generic** {{ book(page="ch10-01-syntax.html") }} {{ ex(page="generics.html") }} type with a type parameter (`T` is placeholder here). |
+| `S<T> where T: R`  | **Trait bound**, {{ book(page="ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods") }} {{ ex(page="generics/bounds.html") }} {{ ref(page="trait-bounds.html#trait-and-lifetime-bounds" ) }} limits allowed `T`, guarantees `T` has trait `R`. |
 | {{ tab() }} `where T: R, P: S`  | **Independent trait bounds**, here one for `T` and one for (not shown) `P`.|
 | {{ tab() }} `where T: R, S`  | Compile error, {{ bad() }} you probably want compound bound `R + S` below. |
 | {{ tab() }} `where T: R + S`  | **Compound trait bound**, {{ book(page="ch10-02-traits.html#specifying-multiple-trait-bounds-with-the--syntax") }} {{ ex(page="generics/multi_bounds.html") }} `T` must fulfill `R` and `S`. |
-| {{ tab() }} `where T: R + 'a`  | Same, but w. lifetime. `T` must fulfill `R`, if `T` has lifetimes, must outlive `'a`. |
+| {{ tab() }} `where T: R + 'a`  | Same, but w. lifetime. `T` must fulfill `R`, if `T` has _lt._, must outlive `'a`. |
 | {{ tab() }} `where T: ?Sized` | Opt out of a pre-defined trait bound, here `Sized`. {{ todo() }} |
 | {{ tab() }} `where T: 'a` | Type **lifetime bound**; {{ ex(page="scope/lifetime/lifetime_bounds.html") }} if T has references, they must outlive `'a`.  |
-| {{ tab() }} `where T: 'static` | Same; does esp. _not_ mean value `t` _will_ {{ bad() }} live `'static`, only that it could. |
+| {{ tab() }} `where T: 'static` | Same; does _not_ mean value `t` _will_ {{ bad() }} live `'static`, only that it could. |
 | {{ tab() }} `where 'b: 'a` | Lifetime `'b` must live at least as long as (i.e., _outlive_) `'a` bound. |
-| {{ tab() }} `where u8: R<T>`  | Also allows you to make conditional statements involving _other_ types. {{ esoteric() }} |
+| {{ tab() }} `where u8: R<T>`  | Can also make conditional statements involving _other_ types. {{ esoteric() }} |
 | `S<T: R>`  | Short hand bound, almost same as above, shorter to write. |
 | `S<const N: usize>` | **Generic const bound**; {{ ref(page="items/generics.html#const-generics") }} user of type `S` can provide constant value `N`. |
 | {{ tab() }} `S<10>` | Where used, const bounds can be provided as primitive values. |
 | {{ tab() }} `S<{5+5}>` | Expressions must be put in curly brackets. |
-| `S<T = R>` | **Default parameters**; {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} makes `S` a bit easier to use, but keeps it flexible. |
+| `S<T = R>` | **Default parameters**; {{ book(page="ch19-03-advanced-traits.html#default-generic-type-parameters-and-operator-overloading") }} makes `S` a bit easier to use, but keeps flexible. |
 | {{ tab() }} `S<const N: u8 = 0>` | Default parameter for constants; e.g., in `f(x: S) {}` param `N` is `0`. |
 | {{ tab() }} `S<T = u8>` | Default parameter for types, e.g., in `f(x: S) {}` param `T` is `u8`. |
-| `S<'_>` | Inferred **anonymous lifetime**; asks compiler to _'figure it out'_ if obvious.  |
+| `S<'_>` | Inferred **anonymous lt.**; asks compiler to _'figure it out'_ if obvious.  |
 | `S<_>` | Inferred **anonymous type**, e.g., as `let x: Vec<_> = iter.collect()`  |
 | `S::<T>` | **Turbofish** {{ std(page="std/iter/trait.Iterator.html#method.collect")}} call site type disambiguation, e.g., `f::<u32>()`. |
 | `trait T<X> {}`  | A trait generic over `X`. Can have multiple `impl T for S` (one per `X`). |
 | `trait T { type X; }`  | Defines **associated type** {{ book(page="ch19-03-advanced-traits.html#specifying-placeholder-types-in-trait-definitions-with-associated-types") }} {{ ref(page="items/associated-items.html#associated-types") }} {{ rfc(page="0195-associated-items.html") }} `X`. Only one `impl T for S` possible. |
-| `trait T { type X<G>; }`  | Defines **generic associated type** (GAT), {{ rfc(page="1598-generic_associated_types.html") }} e.g., `X` can be generic `Vec<>`. {{ edition(ed="1.65+")}} |
+| `trait T { type X<G>; }`  | Defines **generic associated type** (GAT), {{ rfc(page="1598-generic_associated_types.html") }} `X` can be generic `Vec<>`. |
 | `trait T { type X<'a>; }`  | Defines a GAT generic over a lifetime. |
 | {{ tab() }} `type X = R;`  | Set associated type within `impl T for S { type X = R; }`. |
 | {{ tab() }} `type X<G> = R<G>;`  | Same for GAT, e.g., `impl T for S { type X<G> = Vec<G>; }`. |
-| `impl<T> S<T> {}`  | Implement `fn`'s for any `T` in `S<T>` **_generically_**, {{ ref(page="items/implementations.html#generic-implementations") }} here `T` type parameter. |
-| `impl S<T> {}`  | Implement `fn`'s for exactly `S<T>` **_inherently_**, {{ ref(page="items/implementations.html#inherent-implementations") }} here `T` specific type, e.g., `u8`.  |
+| `impl<T> S<T> {}`  | Impl. `fn`'s for any `T` in `S<T>` **_generically_**, {{ ref(page="items/implementations.html#generic-implementations") }} here `T` ty. parameter. |
+| `impl S<T> {}`  | Impl. `fn`'s for exactly `S<T>` **_inherently_**, {{ ref(page="items/implementations.html#inherent-implementations") }} here `T` specific type, e.g., `u8`.  |
 | `fn f() -> impl T`  | **Existential types**, {{ book(page="ch10-02-traits.html#returning-types-that-implement-traits") }} returns an unknown-to-caller `S` that `impl T`. |
-| `fn f(x: &impl T)`  | Trait bound via "**impl traits**", {{ book(page="ch10-02-traits.html#trait-bound-syntax") }} somewhat like `fn f<S: T>(x: &S)` below. |
+| `fn f(x: &impl T)`  | Trait bound via "**impl traits**", {{ book(page="ch10-02-traits.html#trait-bound-syntax") }} similar to `fn f<S: T>(x: &S)` below. |
 | `fn f(x: &dyn T)`  | Invoke `f` via **dynamic dispatch**, {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types.html#trait-objects") }} `f` will not be instantiated for `x`. |
-| `fn f<X: T>(x: X)`  | Function generic over `X`, `f` will be instantiated ('[monomorphized](https://en.wikipedia.org/wiki/Monomorphization)') per `X`. |
+| `fn f<X: T>(x: X)`  | Fn. generic over `X`, `f` will be instantiated ('[monomorphized](https://en.wikipedia.org/wiki/Monomorphization)') per `X`. |
 | `fn f() where Self: R;`  | In `trait T {}`, make `f` accessible only on types known to also `impl R`.  |
-| {{ tab() }} `fn f() where Self: Sized;`  | Using `Sized` can opt `f` out of `dyn T` trait object vtable, enabling trait obj. |
-| {{ tab() }} `fn f() where Self: R {}`  | Other `R` useful w. dflt. methods (non dflt. would need be impl'ed anyway). |
+| {{ tab() }} `fn f() where Self: Sized;`  | Using `Sized` can opt `f` out of trait object vtable, enabling `dyn T`. |
+| {{ tab() }} `fn f() where Self: R {}`  | Other `R` useful w. dflt. fn. (non dflt. would need be impl'ed anyway). |
 </fixed-2-column>
 
 
@@ -711,7 +711,7 @@ _Actual_ types and traits, abstract over something, usually lifetimes.
 | `for<'a>` | Marker for **higher-ranked bounds.** {{ nom(page="hrtb.html")}} {{ ref(page="trait-bounds.html#higher-ranked-trait-bounds")}} {{ esoteric() }} |
 | {{ tab() }} `trait T: for<'a> R<'a> {}` | Any `S` that `impl T` would also have to fulfill `R` for any lifetime. |
 | `fn(&'a u8)` | Function pointer type holding fn callable with **specific** lifetime `'a`. |
-| `for<'a> fn(&'a u8)` | **Higher-ranked type**<sup>1</sup> {{ link(url="https://github.com/rust-lang/rust/issues/56105") }} holding fn callable with **any** _lt._; subtype{{ below(target="#type-conversions") }} of above. |
+| `for<'a> fn(&'a u8)` | **Higher-ranked type**<sup>1</sup> {{ link(url="https://github.com/rust-lang/rust/issues/56105") }} holding fn call. with **any** _lt._; subtype{{ below(target="#type-conversions") }} of above. |
 | {{ tab() }} `fn(&'_ u8)` | Same; automatically expanded to type `for<'a> fn(&'a u8)`. |
 | {{ tab() }} `fn(&u8)` | Same; automatically expanded to type `for<'a> fn(&'a u8)`. |
 | `dyn for<'a> Fn(&'a u8)` | Higher-ranked (trait-object) type, works like `fn` above. |
@@ -779,8 +779,8 @@ Debuggers hate him. Avoid bugs with this one weird trick.
 
 | Example | Explanation |
 |--------|-------------|
-| `///` | Outer line **doc comment**,<sup>1</sup> {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on types, traits, functions, &hellip; |
-| `//!` | Inner line doc comment, mostly used at start of file to document module. |
+| `///` | Outer line **doc comment**,<sup>1</sup> {{ book(page="ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments") }} {{ ex(page="meta/doc.html#documentation") }} {{ ref(page="comments.html#doc-comments")}} use these on ty., traits, fn's, &hellip; |
+| `//!` | Inner line doc comment, mostly used at top of file. |
 | `//` | Line comment, use these to document code flow or _internals_. |
 | `/* … */` | Block comment. <sup>2</sup> {{ deprecated() }} |
 | `/** … */` | Outer block doc comment. <sup>2</sup> {{ deprecated() }} |
@@ -806,12 +806,12 @@ These sigils did not fit any other category but are good to know nonetheless.
 | Example | Explanation |
 |---------|-------------|
 | `!` | Always empty **never type**. {{ book(page="ch19-04-advanced-types.html#the-never-type-that-never-returns") }} {{ ex(page="fn/diverging.html#diverging-functions") }} {{ std(page="std/primitive.never.html") }} {{ ref(page="types.html#never-type") }} |
-| {{ tab() }} `fn f() -> ! {}` | Function that never returns; compat. with any type e.g., `let x: u8 = f();` |
+| {{ tab() }} `fn f() -> ! {}` | Function that never ret.; compat. with any _ty._ e.g., `let x: u8 = f();` |
 | {{ tab() }} `fn f() -> Result<(), !> {}` | Function that must return `Result` but signals it can never `Err`. {{ experimental() }} |
 | {{ tab() }} `fn f(x: !) {}` | Function that exists, but can never be called. Not very useful. {{ esoteric() }} {{ experimental() }} |
 | `_` | Unnamed **wildcard** {{ ref(page="patterns.html#wildcard-pattern")}} variable binding, e.g., <code>&vert;x, _&vert; {}</code>.|
-| {{ tab() }} `let _ = x;`  | Unnamed assignment is no-op, does **not** {{ bad() }} move out `x` or preserve scope! |
-| {{ tab() }} `_ = x;`  | You can assign _anything_ to `_` without `let`, i.e.,  `_ = ignore_error();` {{ edition(ed="1.59+")}} {{ hot() }} |
+| {{ tab() }} `let _ = x;`  | Unnamed assign. is no-op, does **not** {{ bad() }} move out `x` or preserve scope! |
+| {{ tab() }} `_ = x;`  | You can assign _anything_ to `_` without `let`, i.e.,  `_ = ignore_rval();` {{ hot() }} |
 | `_x` | Variable binding that won't emit _unused variable_ warnings. |
 | `1_234_567` | Numeric separator for visual clarity. |
 | `1_u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, &hellip;). |
@@ -919,10 +919,10 @@ On the left things people may incorrectly assume they _should get away with_ if 
 |---------|-------------|
 | `0xffff_ffff` would make a valid `char`. {{ bad() }} | AM may exploit _'invalid'_ bit patterns to pack unrelated data.  |
 | `0xff` and `0xff` are same pointer. {{ bad() }} | AM pointers can have _'domain'_ attached for optimization.  |
-| Any r/w on pointer `0xff` always fine. {{ bad() }} | AM may issue cache-friendly ops trusting _'no read can happen'_.  |
-| Reading un-init just gives random value. {{ bad() }} | AM _'knows'_ read impossible, may remove all related bitcode.  |
+| Any r/w on pointer `0xff` always fine. {{ bad() }} | AM may issue cache-friendly ops since _'no read possible'_.  |
+| Reading un-init just gives random value. {{ bad() }} | AM _'knows'_ read impossible, may remove all related code.  |
 | Data race just gives random value. {{ bad() }} | AM may split R/W, produce _impossible_ value, see above.  |
-| Null reference is just `0x0` in some register. {{ bad() }} | Holding `0x0` in reference summons Cthulhu.  |
+| Null ref. is just `0x0` in some register. {{ bad() }} | Holding `0x0` in reference summons Cthulhu.  |
 
 {{ tablesep() }}
 
@@ -952,15 +952,15 @@ If something works that "shouldn't work now that you think about it", it might b
 
 | Name | Description |
 |--------| -----------|
-| **Coercions** {{ nom(page="coercions.html") }} | _Weakens_ types to match signature, e.g., `&mut T` to `&T`; _c_. _type conversions_. {{ below(target="#type-conversions") }}  |
+| **Coercions** {{ nom(page="coercions.html") }} | _Weakens_ types to match signature, e.g., `&mut T` to `&T`; _c_. _type conv._ {{ below(target="#type-conversions") }}  |
 | **Deref** {{ nom(page="vec-deref.html") }} {{ link(url="https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules") }} | [Derefs](https://doc.rust-lang.org/std/ops/trait.Deref.html) `x: T` until `*x`, `**x`, &hellip; compatible with some target `S`. |
 | **Prelude** {{ std(page="std/prelude/index.html") }} | Automatic import of basic items, e.g., `Option`, `drop()`, …
 | **Reborrow** {{ link(url="https://quinedot.github.io/rust-learning/st-reborrow.html") }} | Since `x: &mut T` can't be copied; moves new `&mut *x` instead. |
 | **Lifetime Elision** {{ book(page="ch10-03-lifetime-syntax.html#lifetime-elision") }} {{ nom(page="lifetime-elision.html#lifetime-elision") }} {{ ref(page="lifetime-elision.html#lifetime-elision") }} | Allows you to write `f(x: &T)`, instead of `f<'a>(x: &'a T)`, for brevity. |
 | **Method Resolution** {{ ref(page="expressions/method-call-expr.html") }} | Derefs or borrow `x` until `x.f()` works. |
-| **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly dereferences [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and adds `ref` and `ref mut` to bindings. |
-| **Rvalue Static Promotion** {{ rfc(page="1414-rvalue_static_promotion.html") }}  {{ esoteric() }} | Makes references to constants `'static`, e.g., `&42`, `&None`, `&mut []`. |
-| **Dual Definitions** {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} {{ esoteric() }} | Defining one thing (e.g., `struct S(u8)`) implicitly def. another (e.g., `fn S`).  |
+| **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly deref. [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and adds `ref` and `ref mut` to bindings. |
+| **Rvalue Static Promotion** {{ rfc(page="1414-rvalue_static_promotion.html") }}  {{ esoteric() }} | Makes refs. to constants `'static`, e.g., `&42`, `&None`, `&mut []`. |
+| **Dual Definitions** {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} {{ esoteric() }} | Defining one (e.g., `struct S(u8)`) implicitly def. another (e.g., `fn S`).  |
 
 
 </div>
@@ -5335,7 +5335,7 @@ PRs for this section are very welcome. Idea is:
 | Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
 | Iterate _and_ edit `&mut [T]` if `T` Copy. | `Cell::from_mut(mut_slice).as_slice_of_cells()` |
 | Get subslice with length. | `&original_slice[offset..][..length]` |
-| Canary to ensure trait `T` is object safe. | `const _: Option<&dyn T> = None;` |
+| Canary so trait `T` is object safe. | `const _: Option<&dyn T> = None;` |
 
 
 </div></panel></tab>
@@ -5420,7 +5420,7 @@ Whether this is allowed is governed by **`Send`**{{ std(page="std/marker/trait.S
     </thead>
     <tbody>
         <tr><td><code>Sync</code></td><td><i>Most types</i> … <code>Arc&lt;T&gt;</code><sup>1,2</sup>, <code>Mutex&lt;T&gt;</code><sup>2</sup></td><td><code>MutexGuard&lt;T&gt;</code><sup>1</sup>, <code>RwLockReadGuard&lt;T&gt;</code><sup>1</sup></td></tr>
-        <tr><td><code>!Sync</code></td><td><code>Cell&lt;T&gt;</code><sup>2</sup>, <code>RefCell&lt;T&gt;</code><sup>2</sup></td><td><code>Rc&lt;T&gt;</code>, <code>&dyn Trait</code>, <code>*const T</code><sup>3</sup>, <code>*mut T</code><sup>3</sup></td></tr>
+        <tr><td><code>!Sync</code></td><td><code>Cell&lt;T&gt;</code><sup>2</sup>, <code>RefCell&lt;T&gt;</code><sup>2</sup></td><td><code>Rc&lt;T&gt;</code>, <code>&dyn Trait</code>, <code>*const T</code><sup>3</sup></td></tr>
     </tbody>
 </table>
 
@@ -5452,7 +5452,7 @@ There are, broadly speaking, four _styles_ of collection iteration:
 | Style | Description |
 | --- | --- |
 | `for x in c { ... }` | _Imperative_, useful w. side effects, interdepend., or need to break flow early.  |
-| `c.iter().map().filter() ...` | _Functional_, often much cleaner when only results of interest. |
+| `c.iter().map().filter()` | _Functional_, often much cleaner when only results of interest. |
 | `c_iter.next()` | _Low-level_, via explicit `Iterator::next()` {{ std(page="std/iter/trait.Iterator.html#tymethod.next") }} invocation. {{ esoteric() }} |
 | `c.get(n)` | _Manual_, bypassing official iteration machinery. |
 
@@ -5477,7 +5477,7 @@ There are, broadly speaking, four _styles_ of collection iteration:
 
 Assume you have a collection `c` of type `C` you want to use:
 
-* **`c.into_iter()`**<sup>1</sup>  &mdash; Turns collection `c` into an **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} `i` and **consumes**<sup>2</sup> `c`. _Standard_ way to get iterator.
+* **`c.into_iter()`**<sup>1</sup>  &mdash; Turns collection `c` into an **`Iterator`** {{ std(page="std/iter/trait.Iterator.html") }} `i` and **consumes**<sup>2</sup> `c`. _Std._ way to get iterator.
 * **`c.iter()`** &mdash; Courtesy method **some** collections provide, returns **borrowing** Iterator, doesn't consume `c`.
 * **`c.iter_mut()`** &mdash; Same, but **mutably borrowing** Iterator that allow collection to be changed.
 
@@ -6527,8 +6527,8 @@ Commands and tools that are good to know.
 | <code>cargo <span class="cargo-prefix">t</span>est</code> | Run tests for the project. |
 | <code>cargo <span class="cargo-prefix">d</span>oc --open</code> | Locally generate documentation for your code and dependencies. |
 | <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
-| {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies features with other dependents (can be confusing). |
-| {{ tab() }} `cargo run -p w` | Run main of sub-workspace `w`. Treats features more as you would expect. |
+| {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies feat. with other dependents (can be confusing). |
+| {{ tab() }} `cargo run -p w` | Run main of sub-worksp. `w`. Treats features more sanely. |
 | <code>cargo … --timings</code> | Show what crates caused your build to take so long. {{ hot() }} |
 | `cargo tree` | Show dependency graph. |
 | <code>cargo +{nightly, stable} …</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
@@ -6746,7 +6746,7 @@ Attributes affecting the whole crate or app:
 
 | Opt-In's   | On | Explanation |
 |--------|---| ----------|
-| `#![feature(a, b, c)]` | `C` | Rely on features that may never get stabilized, _c._ [**Unstable Book**](https://doc.rust-lang.org/unstable-book/the-unstable-book.html). {{ experimental() }} |
+| `#![feature(a, b, c)]` | `C` | Rely on f. that may not get stabilized, _c._ [**Unstable Book**](https://doc.rust-lang.org/unstable-book/the-unstable-book.html). {{ experimental() }} |
 
 {{ tablesep() }}
 
@@ -6764,7 +6764,7 @@ Attributes affecting the whole crate or app:
 | Handlers | On | Explanation |
 |--------|---|----------|
 | `#[panic_handler]` | `F` | Make some `fn(&PanicInfo) -> !` app's **panic handler**. {{ ref(page="runtime.html#the-panic_handler-attribute") }} |
-| `#[alloc_error_handler]` | `F` | Make some `fn(Layout) -> !` the **allocation failure handler**. {{ link(url="https://github.com/rust-lang/rust/issues/51540") }} {{ experimental() }} |
+| `#[alloc_error_handler]` | `F` | Make some `fn(Layout) -> !` the **allocation fail. handler**. {{ link(url="https://github.com/rust-lang/rust/issues/51540") }} {{ experimental() }} |
 | `#[global_allocator]` | `S` | Make static item impl. `GlobalAlloc` {{ std(page="alloc/alloc/trait.GlobalAlloc.html") }} **global allocator**. {{ ref(page="runtime.html#the-global_allocator-attribute") }}|
 
 
@@ -6795,7 +6795,7 @@ Attributes primarily governing emitted code:
 |-------|---|-------------|
 | `#[inline]` | `F` | Nicely suggest compiler should inline function at call sites. {{ ref(page="attributes/codegen.html#the-inline-attribute") }}|
 | `#[inline(always)]` | `F` | Emphatically threaten compiler to inline call, or else. {{ ref(page="attributes/codegen.html#the-inline-attribute") }}|
-| `#[inline(never)]` | `F` | Instruct compiler to feel disappointed if it still inlines the function. {{ ref(page="attributes/codegen.html#the-inline-attribute") }} |
+| `#[inline(never)]` | `F` | Instruct compiler to feel sad if it still inlines the function. {{ ref(page="attributes/codegen.html#the-inline-attribute") }} |
 | `#[cold]` | `F` | Hint that function probably isn't going to be called. {{ ref(page="codegen.html#the-cold-attribute") }}|
 | `#[target_feature(enable="x")]` | `F` | Enable CPU feature (e.g., `avx2`) for code of `unsafe fn`. {{ ref(page="attributes/codegen.html#the-target_feature-attribute") }}|
 | `#[track_caller]` | `F` | Allows `fn` to find **`caller`**{{ std(page="core/panic/struct.Location.html#method.caller") }} for better panic messages. {{ ref(page="attributes/codegen.html#the-track_caller-attribute") }}|
@@ -6803,7 +6803,7 @@ Attributes primarily governing emitted code:
 | {{ tab() }} `#[repr(C)]` | `T`  | Use a C-compatible (f. FFI), predictable (f. `transmute`) layout. {{ ref(page="type-layout.html#the-c-representation") }}|
 | {{ tab() }} `#[repr(C, u8)]` | `enum`  | Give `enum` discriminant the specified type. {{ ref(page="type-layout.html#the-c-representation") }}|
 | {{ tab() }} `#[repr(transparent)]` | `T`  | Give single-element type same layout as contained field. {{ ref(page="type-layout.html#the-transparent-representation") }}|
-| {{ tab() }} `#[repr(packed(1))]` | `T`  | Lower alignment of struct and contained fields, mildly UB prone. {{ ref(page="type-layout.html#the-alignment-modifiers") }}|
+| {{ tab() }} `#[repr(packed(1))]` | `T`  | Lower align. of struct and contained fields, mildly UB prone. {{ ref(page="type-layout.html#the-alignment-modifiers") }}|
 | {{ tab() }} `#[repr(align(8))]` | `T`  | Raise alignment of struct to given value, e.g., for SIMD types. {{ ref(page="type-layout.html#the-alignment-modifiers") }}|
 
 <!-- {{ tablesep() }}
@@ -6856,7 +6856,7 @@ Attributes used by Rust tools to improve code quality:
 
 | Code Patterns | On | Explanation |
 |-------|---|-------------|
-| `#[allow(X)]` | `*` | Instruct `rustc` / `clippy` to … ignore class `X` of possible issues. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
+| `#[allow(X)]` | `*` | Instruct `rustc` / `clippy` to ign. class `X` of possible issues. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
 | `#[warn(X)]` <sup>1</sup> | `*` |  … emit a warning, mixes well with `clippy` lints. {{ hot() }} {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
 | `#[deny(X)]` <sup>1</sup> | `*` |  … fail compilation. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
 | `#[forbid(X)]` <sup>1</sup> | `*` | … fail compilation and prevent subsequent `allow` overrides. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
@@ -6901,7 +6901,7 @@ Attributes used by Rust tools to improve code quality:
 | Documentation | On | Explanation |
 |-------|---|-------------|
 | `#[doc = "Explanation"]` | `*` | Same as adding a `///` doc comment. {{ link(url="https://doc.rust-lang.org/rustdoc/the-doc-attribute.html") }} |
-| `#[doc(alias = "other")]` | `*` | Provide another name users can search for in the docs. {{ link(url="https://github.com/rust-lang/rust/issues/50146") }} |
+| `#[doc(alias = "other")]` | `*` | Provide other name for search in docs. {{ link(url="https://github.com/rust-lang/rust/issues/50146") }} |
 | `#[doc(hidden)]` | `*` | Prevent item from showing up in docs. {{ link(url="https://doc.rust-lang.org/rustdoc/write-documentation/the-doc-attribute.html#hidden") }} |
 | `#![doc(html_favicon_url = "")]` | `C` | Sets the `favicon` for the docs. {{ link(url="https://doc.rust-lang.org/rustdoc/write-documentation/the-doc-attribute.html#html_favicon_url") }}|
 | `#![doc(html_logo_url  = "")]` | `C` | The logo used in the docs. {{ link(url="https://doc.rust-lang.org/rustdoc/write-documentation/the-doc-attribute.html#html_logo_url") }}|
@@ -6934,15 +6934,15 @@ Attributes related to the creation and use of macros:
 | Macros By Example | On | Explanation |
 |-------|---|-------------|
 | `#[macro_export]` |  `!` | Export `macro_rules!` as `pub` on crate level {{ ref(page="macros-by-example.html#path-based-scope") }}|
-| `#[macro_use]` | `MX` | Let macros persist past modules; or import from `extern crate`. {{ ref(page="macros-by-example.html#the-macro_use-attribute") }}|
+| `#[macro_use]` | `MX` | Let macros persist past mod.; or import from `extern crate`. {{ ref(page="macros-by-example.html#the-macro_use-attribute") }}|
 
 {{ tablesep() }}
 
 | Proc Macros | On | Explanation |
 |-------|---|-------------|
-| `#[proc_macro]` | `F`  | Mark `fn` as **function-like** procedural macro callable as `m!()`. {{ ref(page="procedural-macros.html#function-like-procedural-macros") }}|
+| `#[proc_macro]` | `F`  | Mark `fn` as **function-like** procedural _m._ callable as `m!()`. {{ ref(page="procedural-macros.html#function-like-procedural-macros") }}|
 | `#[proc_macro_derive(Foo)]` | `F`  | Mark `fn` as **derive macro** which can `#[derive(Foo)]`. {{ ref(page="procedural-macros.html#derive-macros") }}|
-| `#[proc_macro_attribute]` | `F`  | Mark `fn` as **attribute macro** which can understand new `#[x]`. {{ ref(page="procedural-macros.html#attribute-macros") }}|
+| `#[proc_macro_attribute]` | `F`  | Mark `fn` as **attribute macro** for new `#[x]`. {{ ref(page="procedural-macros.html#attribute-macros") }}|
 
 {{ tablesep() }}
 
@@ -6998,18 +6998,18 @@ Attributes governing conditional compilation:
 | Known Options | On | Explanation |
 |-------|---|-------------|
 | `#[cfg(target_arch = "x86_64")]` | `*` | The CPU architecture crate is compiled for. {{ ref(page="conditional-compilation.html#target_arch") }}|
-| `#[cfg(target_feature = "avx")]` | `*` | Whether a particular class of instructions is available. {{ ref(page="conditional-compilation.html#target_feature") }}|
+| `#[cfg(target_feature = "avx")]` | `*` | Whether a particular class of instructions is avail. {{ ref(page="conditional-compilation.html#target_feature") }}|
 | `#[cfg(target_os = "macos")]` | `*` | Operating system your code will run on. {{ ref(page="conditional-compilation.html#target_os") }}|
 | `#[cfg(target_family = "unix")]` | `*` | Family operating system belongs to. {{ ref(page="conditional-compilation.html#target_family") }}|
-| `#[cfg(target_env = "msvc")]` | `*` | How DLLs and functions are interfaced with on OS. {{ ref(page="conditional-compilation.html#target_env") }}|
-| `#[cfg(target_endian = "little")]` | `*` | Main reason your cool new zero-cost protocol fails. {{ ref(page="conditional-compilation.html#target_endian") }}|
-| `#[cfg(target_pointer_width = "64")]` | `*` | How many bits pointers, `usize` and CPU words have. {{ ref(page="conditional-compilation.html#target_pointer_width") }}|
+| `#[cfg(target_env = "msvc")]` | `*` | How DLLs and functions are interf. with on OS. {{ ref(page="conditional-compilation.html#target_env") }}|
+| `#[cfg(target_endian = "little")]` | `*` | Main reason your new zero-cost prot. fails. {{ ref(page="conditional-compilation.html#target_endian") }}|
+| `#[cfg(target_pointer_width = "64")]` | `*` | How many bits ptrs, `usize` and words have. {{ ref(page="conditional-compilation.html#target_pointer_width") }}|
 | `#[cfg(target_vendor = "apple")]` | `*` |  Manufacturer of target. {{ ref(page="conditional-compilation.html#target_vendor") }}|
-| `#[cfg(debug_assertions)]` | `*` | Whether `debug_assert!()` and friends would panic. {{ ref(page="conditional-compilation.html#debug_assertions") }}|
+| `#[cfg(debug_assertions)]` | `*` | Whether `debug_assert!()` & co. would panic. {{ ref(page="conditional-compilation.html#debug_assertions") }}|
 | `#[cfg(panic = "unwind")]` | `*` | Whether `unwind` or `abort` will happen on panic. {{ todo() }}|
 | `#[cfg(proc_macro)]` | `*` | Wheter crate compiled as proc macro. {{ ref(page="conditional-compilation.html#proc_macro") }}|
 | `#[cfg(test)]` | `*` | Whether compiled with `cargo test`. {{ hot() }} {{ ref(page="conditional-compilation.html#test") }}|
-| `#[cfg(feature = "foo")]` | `*` | When your crate was compiled with feature `foo`. {{ hot() }} {{ ref(page="conditional-compilation.html#conditional-compilation") }}|
+| `#[cfg(feature = "foo")]` | `*` | When your crate was compiled with _f._ `foo`. {{ hot() }} {{ ref(page="conditional-compilation.html#conditional-compilation") }}|
 
 </fixed-3-column>
 
@@ -7032,7 +7032,7 @@ Environment variables and outputs related to the pre-build script.
 |-------|-------------|
 | `CARGO_FEATURE_X` |  Environment variable set for each feature `x` activated.  |
 | {{ tab() }} `CARGO_FEATURE_SOMETHING` |  If feature `something` were enabled. |
-| {{ tab() }} `CARGO_FEATURE_SOME_FEATURE` | If feature `some-feature` were enabled; dash `-` converted to `_`. |
+| {{ tab() }} `CARGO_FEATURE_SOME_FEATURE` | If _f._ `some-feature` were enabled; dash `-` converted to `_`. |
 | `CARGO_CFG_X` | Exposes cfg's; joins mult. opts. by `,` and converts `-` to `_`.|
 | {{ tab() }} `CARGO_CFG_TARGET_OS=macos` |  If `target_os` were set to `macos`. |
 | {{ tab() }} `CARGO_CFG_TARGET_FEATURE=avx,avx2` |  If `target_feature` were set to `avx` and `avx2`. |
@@ -9431,7 +9431,7 @@ If you are used to Java or C, consider these.
 |  | `fn f() -> u32 { 0 }`  |
 | **Think in Iterators** | `(1..10).map(f).collect()` |
 |  | <code>names.iter().filter(&vert;x&vert; x.starts_with("A"))</code> |
-| **Handle Absence with `?`** | `y = try_something()?;` |
+| **Test Absence with `?`** | `y = try_something()?;` |
 |  | `get_option()?.run()?` |
 | **Use Strong Types** | `enum E { Invalid, Valid { … } }` over `ERROR_INVALID = -1` |
 |  | `enum E { Visible, Hidden }` over `visible: bool` |

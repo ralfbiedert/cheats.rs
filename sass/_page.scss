@@ -228,7 +228,7 @@ $largescreen-width: 1050px;
 
         // https://github.com/ralfbiedert/cheats.rs/issues/180
         -moz-transform: scale(1.05); // Firefox
-        zoom: 105%; // others browsers
+        // zoom: 100%; // others browsers // Messes up Chrome & co rendering.
     }
 
     fixed-2-column > table tr td:nth-child(1) {
