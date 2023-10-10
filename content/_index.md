@@ -9488,134 +9488,33 @@ If you are used to Java or C, consider these.
 
 | Rating | Name | Description |
 | --- | --- |--- |
-| {{ rocket3() }} | **Release Mode** {{ book(page="ch01-03-hello-cargo.html") }} {{ hot() }} |  Always do `cargo build --release` for massive speed boost. |
+| 🚀🍼⚠️ | **Release Mode** {{ book(page="ch01-03-hello-cargo.html") }} {{ hot() }} |  Always do `cargo build --release` for massive speed boost. |
 | {{ rocket1() }} | **Target Native CPU** {{ link(url="https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu") }} | Add `rustflags = ["-Ctarget-cpu=native"]` to `config.toml`. {{ above(target = "#project-anatomy") }} |
 | {{ rocket1() }} | **Codegen Units** {{ link(url="https://doc.rust-lang.org/rustc/codegen-options/index.html#codegen-units") }} | Codegen units `1` may yield faster code, slower compile. |
-| {{ rocket3() }} | **Reserving Capacity** | If you can guess element count pre-allocation improves performance. |
-|  | ... **Strings** | `String::with_capacity()` {{ std(page="std/string/struct.String.html#method.with_capacity") }} can prevent re-allocation, copies. |
-|  | ... **Vec** | `Vec::with_capacity()` {{ std(page="std/vec/struct.Vec.html#method.with_capacity") }} can prevent re-allocation, copies.  |
-| {{ rocket2() }} | **Clear Collections** {{ std(page="std/index.html?search=clear") }} | Calling `x.clear()` and reusing `x` prevents allocations. |
-| {{ rocket2() }} | **Write to Strings** {{ std(page="std/macro.write.html") }} | Using `write!(&mut s, "{}")` can prevent extra allocation. |
+| {{ rocket3() }} | **Reserve Capacity** {{ std(page="std/?search=with_capacity") }}  | If you can guess element count pre-allocation improves performance. |
+| {{ rocket2() }} | **Recycle Collections** {{ std(page="std/index.html?search=clear") }} | Calling `x.clear()` and reusing `x` prevents allocations. |
+| {{ rocket2() }} | **Append to Strings** {{ std(page="std/macro.write.html") }} | Using `write!(&mut s, "{}")` can prevent extra allocation. |
 | {{ rocket1() }} | **Bump Allocations** {{ link(url="https://docs.rs/bumpalo/latest/bumpalo/") }} | Cheaply gets _temporary_, dynamic memory, esp. in hot loops. |
-| {{ rocket2() }} | **Replace Allocator** {{ link(url="https://old.reddit.com/r/rust/comments/y2yr5i/rust_mimalloc_v0130_has_just_been_released/is5rqfr/") }} | On some platforms ext. allocator (e.g., **mimalloc** {{ link(url="https://crates.io/crates/mimalloc") }}) faster. |
+| {{ rocket1() }} | **Replace Allocator** {{ link(url="https://old.reddit.com/r/rust/comments/y2yr5i/rust_mimalloc_v0130_has_just_been_released/is5rqfr/") }} | On some platforms ext. allocator (e.g., **mimalloc** {{ link(url="https://crates.io/crates/mimalloc") }}) faster. |
 | {{ rocket2() }} | **Batch APIs** | Design APIs to handle multiple similar elements at once, e.g., slices. |
 | {{ rocket1() }} | **SoA** / **AoSoA** {{ link(url="https://www.rustsim.org/blog/2020/03/23/simd-aosoa-in-nalgebra/") }} | Beyond that consider _struct of arrays_ (SoA) and similar. |
 | {{ rocket1() }} | **SIMD** {{ std(page="std/simd/index.html") }} {{ experimental() }} | Inside (math heavy) batch APIs using SIMD can give 2x - 8x boost. |
-| {{ rocket3() }} | **Reduce Data Size**  | Small types (e.g, `u8` vs `u32`, niches{{ todo() }}) and data have better cache use. |
+| {{ rocket2() }} | **Reduce Data Size**  | Small types (e.g, `u8` vs `u32`, niches{{ todo() }}) and data have better cache use. |
 | {{ rocket2() }} | **Keep Data Nearby** {{ link(url="https://en.wikipedia.org/wiki/Data-oriented_design" ) }} | Storing often-used data _nearby_ can improve memory access times. |
-| {{ rocket1() }} | **Pass by Size** {{ link(url="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#reason-45" ) }} | Small (2-3 words) value best passed by value, larger by ref. |
+| {{ rocket1() }} | **Pass by Size** {{ link(url="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#reason-45" ) }} | Small (2-3 words) value best passed by value, larger by reference. |
 | {{ rocket2() }} | **Async-Await** {{ link( url = "https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html") }} | If _parallel waiting_ happens a lot (e.g., server I/O) `async` good idea. |
 |  | **Threading** {{ std(page="std/thread/index.html") }} | Threads allow you to perform _parallel work_ on mult. items at once. |
 | {{ rocket2() }} | ... **in app** | Often good for apps, as lower wait times equals better UX. |
 | {{ rocket1() }} | ... **inside libs** | Opaque _t._ use _inside_ lib often not good idea, can be too opinionated. |
 | {{ rocket2() }} | ... **for lib callers** | However, allowing _your user_ to process _you_ in parallel excellent idea. |
 | {{ rocket3() }} | **Buffered I/O** {{ std(page="std/io/index.html#bufreader-and-bufwriter") }} | Raw `File` I/O highly inefficient w/o buffering. |
-| {{ rocket1() }} | **Faster Hasher** {{ link(url="https://lib.rs/crates/seahash") }} <sup>⚠️</sup> | Default `HashMap` {{ std(page="std/collections/struct.HashMap.html") }} hasher safe but slow. |
-| {{ rocket1() }} | **Faster RNG** <sup>⚠️</sup> | If you use a crypto RNG consider swapping for non-crypto. |
+| {{ rocket1() }} | **Faster Hasher** {{ link(url="https://lib.rs/crates/seahash") }} | Default `HashMap` {{ std(page="std/collections/struct.HashMap.html") }} hasher DoS attack-resilient but slow. |
+| {{ rocket1() }} | **Faster RNG**  | If you use a crypto RNG consider swapping for non-crypto. |
 | {{ rocket1() }} | **Avoid Trait Objects** {{ link(url="https://stackoverflow.com/questions/28621980/what-are-the-actual-runtime-performance-costs-of-dynamic-dispatch") }} | T.O. reduce code size, but increase memory indirection. |
 | {{ rocket1() }} | **Defer Drop** {{ link(url="https://abrams.cc/rust-dropping-things-in-another-thread") }} | Dropping _heavy_ objects in dump-thread can free up current one. |
 | {{ rocket1() }} | **Unchecked APIs**  {{ std(page="std/?search=unchecked") }} | If you are 100% confident `unchecked_` skips checks. |
 
 </div>
-
-<tabs class="color-header blue">
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-perf-1" name="tab-perf" checked>
-<label for="tab-perf-1"><b>Compiler</b></label>
-<panel><div>
-
-<!-- |  | | ⬇️ **Allocations** ⬇️ | -->
-<!-- | ⬇️ | **Compilation Settings** |  | -->
-
-
-| Rating | Name | Description |
-| --- |--- |--- |
-| {{ rocket3() }} | **Release Mode** {{ book(page="ch01-03-hello-cargo.html") }} {{ hot() }} |  Always do `cargo build --release` for massive speed boost. |
-| {{ rocket1() }} | **Target Native CPU** {{ link(url="https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu") }} | Add `rustflags = ["-Ctarget-cpu=native"]` to `config.toml`. {{ above(target = "#project-anatomy") }} |
-| {{ rocket1() }} | **Codegen Units** {{ link(url="https://doc.rust-lang.org/rustc/codegen-options/index.html#codegen-units") }} | Codegen units `1` may yield faster code, slower compile. |
-
-
-</div></panel></tab>
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-perf-2" name="tab-perf">
-<label for="tab-perf-2"><b>Allocation</b></label>
-<panel><div>
-
-
-| Rating | Name | Description |
-| --- |--- |--- |
-| {{ rocket3() }} | **Reserve Capacity** | If you can guess element count pre-allocation improves performance. |
-|  | ... **Strings** | `String::with_capacity()` {{ std(page="std/string/struct.String.html#method.with_capacity") }} can prevent re-allocation, copies. |
-|  | ... **Vec** | `Vec::with_capacity()` {{ std(page="std/vec/struct.Vec.html#method.with_capacity") }} can prevent re-allocation, copies.  |
-| {{ rocket2() }} | **Clear Collections** {{ std(page="std/index.html?search=clear") }} | Calling `x.clear()` and reusing `x` prevents allocations. |
-| {{ rocket2() }} | **Write to Strings** {{ std(page="std/macro.write.html") }} | Using `write!(&mut s, "{}")` can prevent extra allocation. |
-| {{ rocket1() }} | **Bump Allocations** {{ link(url="https://docs.rs/bumpalo/latest/bumpalo/") }} | Cheaply gets _temporary_, dynamic memory, esp. in hot loops. |
-| {{ rocket2() }} | **Replace Allocator** {{ link(url="https://old.reddit.com/r/rust/comments/y2yr5i/rust_mimalloc_v0130_has_just_been_released/is5rqfr/") }} | On some platforms ext. allocator (e.g., **mimalloc** {{ link(url="https://crates.io/crates/mimalloc") }}) faster. |
-
-</div></panel></tab>
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-perf-3" name="tab-perf" >
-<label for="tab-perf-3"><b>Code Design</b></label>
-<panel><div>
-
-
-| Rating | Name | Description |
-| --- |--- |--- |
-| {{ rocket2() }} | **Batch APIs** | Design APIs to handle multiple similar elements at once, e.g., slices. |
-| {{ rocket1() }} | **SoA** / **AoSoA** {{ link(url="https://www.rustsim.org/blog/2020/03/23/simd-aosoa-in-nalgebra/") }} | Beyond that consider _struct of arrays_ (SoA) and similar. |
-| {{ rocket1() }} | **SIMD** {{ std(page="std/simd/index.html") }} {{ experimental() }} | Inside (math heavy) batch APIs using SIMD can give 2x - 8x boost. |
-| {{ rocket3() }} | **Reduce Data Size**  | Small types (e.g, `u8` vs `u32`, niches{{ todo() }}) and data have better cache use. |
-| {{ rocket2() }} | **Keep Data Nearby** {{ link(url="https://en.wikipedia.org/wiki/Data-oriented_design" ) }} | Storing often-used data _nearby_ can improve memory access times. |
-| {{ rocket1() }} | **Pass by Size** {{ link(url="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#reason-45" ) }} | Small (2-3 words) value best passed by value, larger by ref. |
-
-</div></panel></tab>
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-perf-4" name="tab-perf" >
-<label for="tab-perf-4"><b>Multitasking</b></label>
-<panel><div>
-
-
-| Rating | Name | Description |
-| --- |--- |--- |
-| {{ rocket2() }} | **Async-Await** {{ link( url = "https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html") }} | If _parallel waiting_ happens a lot (e.g., server I/O) `async` good idea. |
-|  | **Threading** {{ std(page="std/thread/index.html") }} | Threads allow you to perform _parallel work_ on mult. items at once. |
-| {{ rocket2() }} | ... **in app** | Often good for apps, as lower wait times equals better UX. |
-| {{ rocket1() }} | ... **inside libs** | Opaque thread use _inside_ lib often not good idea, can be too opinionated. |
-| {{ rocket2() }} | ... **for lib callers** | However, API that allows _your user_ to process _you_ in parallel excellent idea. |
-
-</div></panel></tab>
-
-
-<!-- NEW TAB -->
-<tab>
-<input type="radio" id="tab-perf-5" name="tab-perf" >
-<label for="tab-perf-5"><b>Misc</b></label>
-<panel><div>
-
-
-| Rating | Name | Description |
-| --- |--- |--- |
-| {{ rocket3() }} | **Buffered I/O** {{ std(page="std/io/index.html#bufreader-and-bufwriter") }} | Raw `File` I/O highly inefficient w/o buffering. |
-| {{ rocket1() }} | **Faster Hasher** {{ link(url="https://lib.rs/crates/seahash") }} <sup>⚠️</sup> | Default `HashMap` {{ std(page="std/collections/struct.HashMap.html") }} hasher safe but slow. |
-| {{ rocket1() }} | **Faster RNG** <sup>⚠️</sup> | If you use a crypto RNG consider swapping for non-crypto. |
-| {{ rocket1() }} | **Avoid Trait Objects** {{ link(url="https://stackoverflow.com/questions/28621980/what-are-the-actual-runtime-performance-costs-of-dynamic-dispatch") }} | T.O. reduce code size, but increase memory indirection. |
-| {{ rocket1() }} | **Defer Drop** {{ link(url="https://abrams.cc/rust-dropping-things-in-another-thread") }} | Dropping _heavy_ objects in dump-thread can free up current one. |
-| {{ rocket1() }} | **Unchecked APIs**  {{ std(page="std/?search=unchecked") }} | If you are 100% confident `unchecked_` skips checks. |
-
-<!-- | {{ rocket1() }} | **Avoid Owning Iteration** |  | -->
-
-</div></panel></tab>
-
-
-</tabs>
 
 
 <footnotes>
