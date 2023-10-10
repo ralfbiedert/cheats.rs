@@ -66,6 +66,7 @@ const subtitles = [
     "To improve CI times this site will only ship as a precompiled binary starting next week.",
     "Aquaaaa<sup>riiiiiii<sup style='font-size:85%;'>uuuuuuuuuuus</sup></sup>",
     "Rust is fast, somewhere between a snake and a mongoose.",
+    "\"In the jungle, the mighty jungle, the lion sleeps tonight\" ... Chorus: \"Async-await, async-await ...\"",
 ];
 
 
