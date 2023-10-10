@@ -9534,8 +9534,7 @@ Entries marked 🚀 often come with a massive (> 2x) performance boost, 🍼 are
 > Then do a `cargo build --release` and run the result with [**Superluminal**](https://superluminal.eu/rust/) (Windows) or [**Instruments**](https://en.wikipedia.org/wiki/Instruments_%28software%29) (macOS).
 > That said, there are many performance opportunities profilers won't find, but that need to be _designed in_.
 
-
-
+{{ tablesep() }}
 
 
 
