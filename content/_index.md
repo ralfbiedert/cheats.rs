@@ -9485,43 +9485,40 @@ If you are used to Java or C, consider these.
 
 <div class="color-header blue">
 
-
 | Rating | Name | Description |
 | --- | --- |--- |
-| 🚀🍼⚠️ | **Release Mode** {{ book(page="ch01-03-hello-cargo.html") }} {{ hot() }} |  Always do `cargo build --release` for massive speed boost. |
-| {{ rocket1() }} | **Target Native CPU** {{ link(url="https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu") }} | Add `rustflags = ["-Ctarget-cpu=native"]` to `config.toml`. {{ above(target = "#project-anatomy") }} |
-| {{ rocket1() }} | **Codegen Units** {{ link(url="https://doc.rust-lang.org/rustc/codegen-options/index.html#codegen-units") }} | Codegen units `1` may yield faster code, slower compile. |
-| {{ rocket3() }} | **Reserve Capacity** {{ std(page="std/?search=with_capacity") }}  | If you can guess element count pre-allocation improves performance. |
-| {{ rocket2() }} | **Recycle Collections** {{ std(page="std/index.html?search=clear") }} | Calling `x.clear()` and reusing `x` prevents allocations. |
-| {{ rocket2() }} | **Append to Strings** {{ std(page="std/macro.write.html") }} | Using `write!(&mut s, "{}")` can prevent extra allocation. |
-| {{ rocket1() }} | **Bump Allocations** {{ link(url="https://docs.rs/bumpalo/latest/bumpalo/") }} | Cheaply gets _temporary_, dynamic memory, esp. in hot loops. |
-| {{ rocket1() }} | **Replace Allocator** {{ link(url="https://old.reddit.com/r/rust/comments/y2yr5i/rust_mimalloc_v0130_has_just_been_released/is5rqfr/") }} | On some platforms ext. allocator (e.g., **mimalloc** {{ link(url="https://crates.io/crates/mimalloc") }}) faster. |
-| {{ rocket2() }} | **Batch APIs** | Design APIs to handle multiple similar elements at once, e.g., slices. |
-| {{ rocket1() }} | **SoA** / **AoSoA** {{ link(url="https://www.rustsim.org/blog/2020/03/23/simd-aosoa-in-nalgebra/") }} | Beyond that consider _struct of arrays_ (SoA) and similar. |
-| {{ rocket1() }} | **SIMD** {{ std(page="std/simd/index.html") }} {{ experimental() }} | Inside (math heavy) batch APIs using SIMD can give 2x - 8x boost. |
-| {{ rocket2() }} | **Reduce Data Size**  | Small types (e.g, `u8` vs `u32`, niches{{ todo() }}) and data have better cache use. |
-| {{ rocket2() }} | **Keep Data Nearby** {{ link(url="https://en.wikipedia.org/wiki/Data-oriented_design" ) }} | Storing often-used data _nearby_ can improve memory access times. |
-| {{ rocket1() }} | **Pass by Size** {{ link(url="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#reason-45" ) }} | Small (2-3 words) value best passed by value, larger by reference. |
-| {{ rocket2() }} | **Async-Await** {{ link( url = "https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html") }} | If _parallel waiting_ happens a lot (e.g., server I/O) `async` good idea. |
+| 🚀🍼 | **Release Mode** {{ book(page="ch01-03-hello-cargo.html") }} {{ hot() }} |  Always do `cargo build --release` for massive speed boost. |
+| {{ noemoji1() }}🍼{{ noemoji1() }}⚠️ | **Target Native CPU** {{ link(url="https://doc.rust-lang.org/rustc/codegen-options/index.html#target-cpu") }} | Add `rustflags = ["-Ctarget-cpu=native"]` to `config.toml`. {{ above(target = "#project-anatomy") }} |
+| {{ noemoji1() }}🍼⚖️ | **Codegen Units** {{ link(url="https://doc.rust-lang.org/rustc/codegen-options/index.html#codegen-units") }} | Codegen units `1` may yield faster code, slower compile. |
+| {{ noemoji1() }}🍼 | **Reserve Capacity** {{ std(page="std/?search=with_capacity") }}  | Pre-allocation of collections reduces allocation pressure. |
+| {{ noemoji1() }}🍼 | **Recycle Collections** {{ std(page="std/index.html?search=clear") }} | Calling `x.clear()` and reusing `x` prevents allocations. |
+| {{ noemoji1() }}🍼 | **Append to Strings** {{ std(page="std/macro.write.html") }} | Using `write!(&mut s, "{}")` can prevent extra allocation. |
+| | **Bump Allocations** {{ link(url="https://docs.rs/bumpalo/latest/bumpalo/") }} | Cheaply gets _temporary_, dynamic memory, esp. in hot loops. |
+| {{ noemoji1() }}🍼⚖️ | **Replace Allocator** {{ link(url="https://old.reddit.com/r/rust/comments/y2yr5i/rust_mimalloc_v0130_has_just_been_released/is5rqfr/") }} | On some platforms ext. allocator (e.g., **mimalloc** {{ link(url="https://crates.io/crates/mimalloc") }}) faster. |
+|  | **Batch APIs** | Design APIs to handle multiple similar elements at once, e.g., slices. |
+|  {{ noemoji2() }}⚖️ | **SoA** / **AoSoA** {{ link(url="https://www.rustsim.org/blog/2020/03/23/simd-aosoa-in-nalgebra/") }} | Beyond that consider _struct of arrays_ (SoA) and similar. |
+| 🚀{{ noemoji1() }}⚖️ | **SIMD** {{ std(page="std/simd/index.html") }} {{ experimental() }} | Inside (math heavy) batch APIs using SIMD can give 2x - 8x boost. |
+|  | **Reduce Data Size**  | Small types (e.g, `u8` vs `u32`, niches{{ todo() }}) and data have better cache use. |
+|  | **Keep Data Nearby** {{ link(url="https://en.wikipedia.org/wiki/Data-oriented_design" ) }} | Storing often-used data _nearby_ can improve memory access times. |
+|  | **Pass by Size** {{ link(url="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#reason-45" ) }} | Small (2-3 words) structs best passed by value, larger by reference. |
+|  {{ noemoji2() }}⚖️ | **Async-Await** {{ link( url = "https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html") }} | If _parallel waiting_ happens a lot (e.g., server I/O) `async` good idea. |
 |  | **Threading** {{ std(page="std/thread/index.html") }} | Threads allow you to perform _parallel work_ on mult. items at once. |
-| {{ rocket2() }} | ... **in app** | Often good for apps, as lower wait times equals better UX. |
-| {{ rocket1() }} | ... **inside libs** | Opaque _t._ use _inside_ lib often not good idea, can be too opinionated. |
-| {{ rocket2() }} | ... **for lib callers** | However, allowing _your user_ to process _you_ in parallel excellent idea. |
-| {{ rocket3() }} | **Buffered I/O** {{ std(page="std/io/index.html#bufreader-and-bufwriter") }} | Raw `File` I/O highly inefficient w/o buffering. |
-| {{ rocket1() }} | **Faster Hasher** {{ link(url="https://lib.rs/crates/seahash") }} | Default `HashMap` {{ std(page="std/collections/struct.HashMap.html") }} hasher DoS attack-resilient but slow. |
-| {{ rocket1() }} | **Faster RNG**  | If you use a crypto RNG consider swapping for non-crypto. |
-| {{ rocket1() }} | **Avoid Trait Objects** {{ link(url="https://stackoverflow.com/questions/28621980/what-are-the-actual-runtime-performance-costs-of-dynamic-dispatch") }} | T.O. reduce code size, but increase memory indirection. |
-| {{ rocket1() }} | **Defer Drop** {{ link(url="https://abrams.cc/rust-dropping-things-in-another-thread") }} | Dropping _heavy_ objects in dump-thread can free up current one. |
-| {{ rocket1() }} | **Unchecked APIs**  {{ std(page="std/?search=unchecked") }} | If you are 100% confident `unchecked_` skips checks. |
+| 🚀 | ... **in app** | Often good for apps, as lower wait times means better UX. |
+| 🚀{{ noemoji1() }}⚖️ | ... **inside libs** | Opaque _t._ use _inside_ lib often not good idea, can be too opinionated. |
+| 🚀{{ noemoji1() }} | ... **for lib callers** | However, allowing _your user_ to process _you_ in parallel excellent idea. |
+| {{ noemoji1() }}🍼 | **Buffered I/O** {{ std(page="std/io/index.html#bufreader-and-bufwriter") }} {{ hot() }} | Raw `File` I/O highly inefficient w/o buffering. |
+| {{ noemoji1() }}🍼{{ noemoji1() }}⚠️ | **Faster Hasher** {{ link(url="https://lib.rs/crates/seahash") }} | Default `HashMap` {{ std(page="std/collections/struct.HashMap.html") }} hasher DoS attack-resilient but slow. |
+| {{ noemoji1() }}🍼{{ noemoji1() }}⚠️ | **Faster RNG**  | If you use a crypto RNG consider swapping for non-crypto. |
+| {{ noemoji2() }}⚖️ | **Avoid Trait Objects** {{ link(url="https://stackoverflow.com/questions/28621980/what-are-the-actual-runtime-performance-costs-of-dynamic-dispatch") }} | T.O. reduce code size, but increase memory indirection. |
+| {{ noemoji2() }}⚖️ | **Defer Drop** {{ link(url="https://abrams.cc/rust-dropping-things-in-another-thread") }} | Dropping _heavy_ objects in dump-thread can free up current one. |
+| {{ noemoji1() }}🍼{{ noemoji1() }}⚠️ | **Unchecked APIs**  {{ std(page="std/?search=unchecked") }} | If you are 100% confident, `unsafe { unchecked_ }` skips checks. |
 
 </div>
 
 
 <footnotes>
 
-<!-- Suggetions marked 🚀🚀🚀 virtually always deliver a significant speedup, 🚀🚀 are usually good practice but may have counterindications, tips marked 🚀 primarily matter in hot loops or can have significant drawbacks. -->
-
-Entries marked 🚀🚀🚀 are virtually always a good idea, 🚀🚀 are usually good for performance but may have contraindication (recommended, unless reasons not to), tips marked 🚀 may come with significant drawbacks (not recommended unless indicated by profiling).
+Entries marked 🚀 often come with a massive (> 2x) performance boost, 🍼 are easy to implement even after-the-fact, ⚖️ might have costly side effects (e.g., memory, complexity), ⚠️ have special risks (e.g., security, correctness).
 
 </footnotes>
 
