@@ -6494,7 +6494,7 @@ Rust has three kinds of **namespaces**:
 
 </footnotes>
 
-- In any given scope, for example within a module, only one item item per namespace can exist, e.g.,
+- In any given scope, for example within a module, only one item per namespace can exist, e.g.,
     - `enum X {}` and `fn X() {}` can coexist
     - `struct X;` and `const X` cannot coexist
 - With a `use my_mod::X;` all items called `X` will be imported.
