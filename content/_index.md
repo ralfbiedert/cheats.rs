@@ -10167,6 +10167,7 @@ Online services which provide information or tooling.
 | [caniuse.rs](https://caniuse.rs/) | Check which Rust version introduced or stabilized a feature. |
 | [releases.rs](https://releases.rs/) | Release notes for previous and upcoming versions. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
+| [CodeCrafters](https://app.codecrafters.io/tracks/rust) | Recreate popular devtools from scratch in Rust (e.g. Build your own SQLite). |
 
 </div>
 
