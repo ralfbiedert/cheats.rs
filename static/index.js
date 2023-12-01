@@ -41,7 +41,7 @@ const subtitles = [
     "As seen on interdimensional cable.",
     "I'm sure there's an X-File on the never type.",
     "${jndi:ldap://rustup.rs}",
-    "An amorphous guide to fractal complexity.",
+    "A fractal guide to amorphous complexity.",
     "Roses did rust before it was cool.",
     "Blazingly fa... 🤚😣",
     "The sheet that really ties the room together.",
@@ -67,6 +67,7 @@ const subtitles = [
     "Aquaaaa<sup>riiiiiii<sup style='font-size:85%;'>uuuuuuuuuuus</sup></sup>",
     "Rust is fast, somewhere between a snake and a mongoose.",
     "\"In the jungle, the mighty jungle, the lion sleeps tonight\" ... Chorus: \"Async-await, async-await ...\"",
+    "The 3.6 roentgen cheat sheet.",
 ];
 
 
