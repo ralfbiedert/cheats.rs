@@ -5811,12 +5811,12 @@ If you **want** a string of type &hellip;
 |`CString`|`OsString::from(x.to_str()?)`|
 |`OsString`|`x`|
 |`PathBuf`|`x.into_os_string()`|
-|`Vec<u8>` <sup>1</sup> | {{ todo() }} |
+|`Vec<u8>` <sup>1</sup> |`OsString::from_encoded_bytes_unchecked(x)` <sup>2</sup>|
 |`&str`|`OsString::from(x)` <sup>`i`</sup>|
 |`&CStr`|`OsString::from(x.to_str()?)`|
 |`&OsStr`|`OsString::from(x)` <sup>`i`</sup>|
 |`&Path`|`x.as_os_str().to_owned()`|
-|`&[u8]` <sup>1</sup> | {{ todo() }} |
+|`&[u8]` <sup>1</sup> |`OsString::from_encoded_bytes_unchecked(x.to_vec())` <sup>2</sup>|
 
 </div></panel></tab>
 
@@ -5832,12 +5832,12 @@ If you **want** a string of type &hellip;
 |`CString`|`PathBuf::from(x.to_str()?)`|
 |`OsString`|`PathBuf::from(x)` <sup>`i`</sup>|
 |`PathBuf`|`x`|
-|`Vec<u8>` <sup>1</sup> | {{ todo() }} |
+|`Vec<u8>` <sup>1</sup> |`PathBuf::from(OsString::from_encoded_bytes_unchecked(x))` <sup>2</sup>|
 |`&str`|`PathBuf::from(x)` <sup>`i`</sup>|
 |`&CStr`|`PathBuf::from(x.to_str()?)`|
 |`&OsStr`|`PathBuf::from(x)` <sup>`i`</sup>|
 |`&Path`|`PathBuf::from(x)` <sup>`i`</sup>|
-|`&[u8]` <sup>1</sup> | {{ todo() }} |
+|`&[u8]` <sup>1</sup> |`PathBuf::from(OsString::from_encoded_bytes_unchecked(x.to_vec()))` <sup>2</sup>|
 
 </div></panel></tab>
 
@@ -5851,13 +5851,13 @@ If you **want** a string of type &hellip;
 | --- | --- |
 |`String`|`x.into_bytes()`|
 |`CString`|`x.into_bytes()`|
-|`OsString`| {{ todo() }} |
-|`PathBuf`| {{ todo() }} |
+|`OsString`|`x.into_encoded_bytes()`|
+|`PathBuf`|`x.into_os_string().into_encoded_bytes()`|
 |`Vec<u8>` <sup>1</sup> |`x`|
 |`&str`|`Vec::from(x.as_bytes())`|
 |`&CStr`|`Vec::from(x.to_bytes_with_nul())`|
-|`&OsStr`| {{ todo() }} |
-|`&Path`| {{ todo() }} |
+|`&OsStr`|`Vec::from(x.as_encoded_bytes())`|
+|`&Path`|`Vec::from(x.as_os_str().as_encoded_bytes())`|
 |`&[u8]` <sup>1</sup> |`x.to_vec()`|
 
 </div></panel></tab>
@@ -5917,12 +5917,12 @@ If you **want** a string of type &hellip;
 |`CString`| {{ todo() }} |
 |`OsString`|`x.as_os_str()`|
 |`PathBuf`|`x.as_os_str()`|
-|`Vec<u8>` <sup>1</sup> | {{ todo() }} |
+|`Vec<u8>` <sup>1</sup> |`OsStr::from_encoded_bytes_unchecked(&x)` <sup>2</sup>|
 |`&str`|`OsStr::new(x)`|
 |`&CStr`| {{ todo() }} |
 |`&OsStr`|`x`|
 |`&Path`|`x.as_os_str()`|
-|`&[u8]` <sup>1</sup> | {{ todo() }} |
+|`&[u8]` <sup>1</sup> |`OsStr::from_encoded_bytes_unchecked(x)` <sup>2</sup>|
 
 </div></panel></tab>
 
@@ -5938,12 +5938,12 @@ If you **want** a string of type &hellip;
 |`CString`|`Path::new(x.to_str()?)` |
 |`OsString`|`Path::new(x.to_str()?)` <sup>`r`</sup>|
 |`PathBuf`|`Path::new(x.to_str()?)` <sup>`r`</sup>|
-|`Vec<u8>` <sup>1</sup> | {{ todo() }} |
+|`Vec<u8>` <sup>1</sup> |`Path::new(OsStr::from_encoded_bytes_unchecked(&x))` <sup>2</sup>|
 |`&str`|`Path::new(x)` <sup>`r`</sup>|
 |`&CStr`|`Path::new(x.to_str()?)` |
 |`&OsStr`|`Path::new(x)` <sup>`r`</sup>|
 |`&Path`|`x`|
-|`&[u8]` <sup>1</sup> | {{ todo() }} |
+|`&[u8]` <sup>1</sup> |`Path::new(OsStr::from_encoded_bytes_unchecked(x))` <sup>2</sup>|
 
 </div></panel></tab>
 
@@ -5957,13 +5957,13 @@ If you **want** a string of type &hellip;
 | --- | --- |
 |`String`|`x.as_bytes()`|
 |`CString`|`x.as_bytes()`|
-|`OsString`| {{ todo() }} |
-|`PathBuf`| {{ todo() }} |
+|`OsString`|`x.as_encoded_bytes()`|
+|`PathBuf`|`x.as_os_str().as_encoded_bytes()`|
 |`Vec<u8>` <sup>1</sup> |`&x`|
 |`&str`|`x.as_bytes()`|
 |`&CStr`|`x.to_bytes_with_nul()`|
-|`&OsStr`| `x.as_bytes()` <sup>2</sup> |
-|`&Path`| {{ todo() }} |
+|`&OsStr`|`x.as_encoded_bytes()`|
+|`&Path`|`x.as_os_str().as_encoded_bytes()`|
 |`&[u8]` <sup>1</sup> |`x`|
 
 </div></panel></tab>
@@ -5995,14 +5995,7 @@ If you **want** a string of type &hellip;
 
 <sup>1</sup> You must ensure raw data comes with a valid representation for the string type (e.g., UTF-8 data for a `String`).
 
-
-<sup>2</sup> Only on some platforms `std::os::<your_os>::ffi::OsStrExt` exists with helper methods to get a raw `&[u8]` representation of the underlying `OsStr`. Use the rest of the table to go from there, e.g.:
-
-```
-use std::os::unix::ffi::OsStrExt;
-let bytes: &[u8] = my_os_str.as_bytes();
-CString::new(bytes)?
-```
+<sup>2</sup> This operation is **unsafe** and you need to additional legality checks based on your platform.
 
 <sup>3</sup> The `c_char` **must** have come from a previous `CString`. If it comes from FFI see `&CStr` instead.
 
