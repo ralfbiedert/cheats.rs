@@ -5811,12 +5811,12 @@ If you **want** a string of type &hellip;
 |`CString`|`OsString::from(x.to_str()?)`|
 |`OsString`|`x`|
 |`PathBuf`|`x.into_os_string()`|
-|`Vec<u8>` <sup>1,5</sup> |`unsafe { OsString::from_encoded_bytes_unchecked(x) }`|
+|`Vec<u8>` <sup>1</sup> |`unsafe { OsString::from_encoded_bytes_unchecked(x) }`|
 |`&str`|`OsString::from(x)` <sup>`i`</sup>|
 |`&CStr`|`OsString::from(x.to_str()?)`|
 |`&OsStr`|`OsString::from(x)` <sup>`i`</sup>|
 |`&Path`|`x.as_os_str().to_owned()`|
-|`&[u8]` <sup>1,5</sup> |`unsafe { OsString::from_encoded_bytes_unchecked(x.to_vec()) }`|
+|`&[u8]` <sup>1</sup> |`unsafe { OsString::from_encoded_bytes_unchecked(x.to_vec()) }`|
 
 </div></panel></tab>
 
@@ -5832,12 +5832,12 @@ If you **want** a string of type &hellip;
 |`CString`|`PathBuf::from(x.to_str()?)`|
 |`OsString`|`PathBuf::from(x)` <sup>`i`</sup>|
 |`PathBuf`|`x`|
-|`Vec<u8>` <sup>1,5</sup> |`unsafe { PathBuf::from(OsString::from_encoded_bytes_unchecked(x)) }` |
+|`Vec<u8>` <sup>1</sup> |`unsafe { PathBuf::from(OsString::from_encoded_bytes_unchecked(x)) }` |
 |`&str`|`PathBuf::from(x)` <sup>`i`</sup>|
 |`&CStr`|`PathBuf::from(x.to_str()?)`|
 |`&OsStr`|`PathBuf::from(x)` <sup>`i`</sup>|
 |`&Path`|`PathBuf::from(x)` <sup>`i`</sup>|
-|`&[u8]` <sup>1,5</sup> |`unsafe { PathBuf::from(OsString::from_encoded_bytes_unchecked(x.to_vec())) }` |
+|`&[u8]` <sup>1</sup> |`unsafe { PathBuf::from(OsString::from_encoded_bytes_unchecked(x.to_vec())) }` |
 
 </div></panel></tab>
 
@@ -5917,12 +5917,12 @@ If you **want** a string of type &hellip;
 |`CString`| {{ todo() }} |
 |`OsString`|`x.as_os_str()`|
 |`PathBuf`|`x.as_os_str()`|
-|`Vec<u8>` <sup>1,5</sup> |`unsafe { OsStr::from_encoded_bytes_unchecked(&x) }`|
+|`Vec<u8>` <sup>1</sup> |`unsafe { OsStr::from_encoded_bytes_unchecked(&x) }`|
 |`&str`|`OsStr::new(x)`|
 |`&CStr`| {{ todo() }} |
 |`&OsStr`|`x`|
 |`&Path`|`x.as_os_str()`|
-|`&[u8]` <sup>1,5</sup> | `unsafe { OsStr::from_encoded_bytes_unchecked(x) }` |
+|`&[u8]` <sup>1</sup> | `unsafe { OsStr::from_encoded_bytes_unchecked(x) }` |
 
 
 </div></panel></tab>
@@ -5939,12 +5939,12 @@ If you **want** a string of type &hellip;
 |`CString`|`Path::new(x.to_str()?)` |
 |`OsString`|`Path::new(x.to_str()?)` <sup>`r`</sup>|
 |`PathBuf`|`Path::new(x.to_str()?)` <sup>`r`</sup>|
-|`Vec<u8>` <sup>1,5</sup> |`unsafe { Path::new(OsStr::from_encoded_bytes_unchecked(&x)) }`|
+|`Vec<u8>` <sup>1</sup> |`unsafe { Path::new(OsStr::from_encoded_bytes_unchecked(&x)) }`|
 |`&str`|`Path::new(x)` <sup>`r`</sup>|
 |`&CStr`|`Path::new(x.to_str()?)` |
 |`&OsStr`|`Path::new(x)` <sup>`r`</sup>|
 |`&Path`|`x`|
-|`&[u8]` <sup>1,5</sup> |`unsafe { Path::new(OsStr::from_encoded_bytes_unchecked(x)) }` |
+|`&[u8]` <sup>1</sup> |`unsafe { Path::new(OsStr::from_encoded_bytes_unchecked(x)) }` |
 
 </div></panel></tab>
 
@@ -5993,11 +5993,10 @@ If you **want** a string of type &hellip;
 
 <sup>i</sup> Short form `x.into()` possible if type can be inferred. <br>
 <sup>r</sup> Short form `x.as_ref()` possible if type can be inferred.<br>
-<sup>1</sup> You must ensure raw data comes with a valid representation for the string type (e.g., UTF-8 data for a `String`).<br>
+<sup>1</sup> You must ensure `x` comes with a valid representation for the string type (e.g., UTF-8 data for a `String`).<br>
 <sup>2</sup> The `c_char` **must** have come from a previous `CString`. If it comes from FFI see `&CStr` instead.<br>
 <sup>3</sup> No known shorthand as `x` will lack terminating `0x0`. Best way to probably go via `CString`.<br>
 <sup>4</sup> Must ensure `x` actually ends with `0x0`.<br>
-<sup>5</sup> Must ensure `x` actually valid operating-system native string representation.<br>
 
 </footnotes>
 
