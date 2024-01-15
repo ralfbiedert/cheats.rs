@@ -6785,7 +6785,7 @@ Attributes primarily governing emitted code:
 | `#[inline]` | `F` | Nicely suggest compiler should inline function at call sites. {{ ref(page="attributes/codegen.html#the-inline-attribute") }}|
 | `#[inline(always)]` | `F` | Emphatically threaten compiler to inline call, or else. {{ ref(page="attributes/codegen.html#the-inline-attribute") }}|
 | `#[inline(never)]` | `F` | Instruct compiler to feel sad if it still inlines the function. {{ ref(page="attributes/codegen.html#the-inline-attribute") }} |
-| `#[cold]` | `F` | Hint that function probably isn't going to be called. {{ ref(page="codegen.html#the-cold-attribute") }}|
+| `#[cold]` | `F` | Hint that function probably isn't going to be called. {{ ref(page="attributes/codegen.html#the-cold-attribute") }}|
 | `#[target_feature(enable="x")]` | `F` | Enable CPU feature (e.g., `avx2`) for code of `unsafe fn`. {{ ref(page="attributes/codegen.html#the-target_feature-attribute") }}|
 | `#[track_caller]` | `F` | Allows `fn` to find **`caller`**{{ std(page="core/panic/struct.Location.html#method.caller") }} for better panic messages. {{ ref(page="attributes/codegen.html#the-track_caller-attribute") }}|
 | `#[repr(X)]`<sup>1</sup>  | `T`  | Use another representation instead of the default **`rust`** {{ ref(page="type-layout.html#the-default-representation") }} one: |
