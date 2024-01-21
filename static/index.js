@@ -67,7 +67,9 @@ const subtitles = [
     "Aquaaaa<sup>riiiiiii<sup style='font-size:85%;'>uuuuuuuuuuus</sup></sup>",
     "Rust is fast, somewhere between a snake and a mongoose.",
     "\"In the jungle, the mighty jungle, the lion sleeps tonight\" ... Chorus: \"Async-await, async-await ...\"",
-    "The 3.6 roentgen cheat sheet.",
+    "The 3.6 roentgen of Rust cheat sheets.",
+    "This page was intentionally not left blank.",
+    "It's like standing on the shoulders of hobbits.",
 ];
 
 

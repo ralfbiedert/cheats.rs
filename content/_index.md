@@ -5588,7 +5588,7 @@ Many users would expect your collection to _just work_ in `for` loops. You need 
 
 {{ tablesep() }}
 
-> As you can see, the **IntoIterator** {{ std(page="std/iter/trait.IntoIterator.html") }} trait is what actually connects your collection with the **IntoIter** struct you created in the previous tab.
+> As you can see, the **IntoIterator** {{ std(page="std/iter/trait.IntoIterator.html") }} trait is what actually connects your collection with the **IntoIter** struct you created in the previous tab. The two siblings of **IntoIter** (**Iter** and **IterMut**) are discussed in the next tab.
 
 
 </div></panel></tab>
@@ -5606,8 +5606,8 @@ Many users would expect your collection to _just work_ in `for` loops. You need 
 
 In addition, if you want your collection to be useful when borrowed you should implement:
 
-* **`struct Iter<T> {}`** &mdash; Create struct holding `&Collection<T>` for shared iteration.
-* **`struct IterMut<T> {}`** &mdash; Similar, but holding `&mut Collection<T>` for mutable iteration.
+* **`struct Iter<T> {}`** &mdash; Create struct holding `&Collection<T>` state for shared iteration.
+* **`struct IterMut<T> {}`** &mdash; Similar, but holding `&mut Collection<T>` state for mutable iteration.
 * **`impl Iterator for Iter<T> {}`** &mdash; Implement shared iteration.
 * **`impl Iterator for IterMut<T> {}`** &mdash; Implement mutable iteration.
 
@@ -5635,6 +5635,10 @@ Also you might want to add convenience methods:
     </entry>
 </mini-zoo>
 
+{{ tablesep() }}
+
+> The code for borrowing interator support is basically just a repetition of the previous steps with a slightly different types, e.g., `&T` vs `T`.
+
 
 </div></panel></tab>
 
@@ -5655,7 +5659,7 @@ To allow **3<sup>rd</sup> party iterators** to 'collect into' your collection im
 * **`impl FromIterator for Collection<T> {}`** &mdash; Now `some_iter.collect::<Collection<_>>()` works.
 * **`impl Extend for Collection<T> {}`** &mdash; Now `c.extend(other)` works.
 
-In addition, also consider adding the extra traits from **`std::iter`** {{ std(page="std/iter/index.html#") }} to your iterators:
+In addition, also consider adding the extra traits from **`std::iter`** {{ std(page="std/iter/index.html#") }} to your previous structs:
 
 <mini-zoo class="zoo" style="margin-right: 20px;">
     <entry class="wide">
@@ -5697,7 +5701,7 @@ In addition, also consider adding the extra traits from **`std::iter`** {{ std(p
 {{ tablesep() }}
 
 > Writing collections can be work. The good news is, if you followed all
-> steps in this section your collection will feel like a _first class citizen_.
+> these steps your collections will feel like _first class citizens_.
 
 
 </div></panel></tab>
