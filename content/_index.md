@@ -2142,7 +2142,7 @@ let p: *const S = questionable_origin();
 </lifetime-example>
 <explanation>
 
-- Every entity in a program has some (temporal / spatial) room where it is relevant, i.e., _alive_.
+- Every entity in a program has some (temporal / spatial) extent where it is relevant, i.e., _alive_.
 - Loosely speaking, this _alive time_ can be<sup>1</sup>
     1. the **LOC** (lines of code) where an **item is available** (e.g., a module name).
     1. the **LOC** between when a _location_ is **initialized** with a value, and when the location is **abandoned**.
