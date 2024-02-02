@@ -1,12 +1,38 @@
-name: Gitea Actions Demo
-run-name: ${{ github.actor }} is testing out Gitea Actions 🚀
-on: [push]
+name: generate-release
+
+on:
+  push:
+    branches: [ deploy ]
+
 jobs:
-  Deploy Site:
+  generate_release:
     runs-on: ubuntu-latest
+    name: Generate release
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - name: Build Docker image.
-        run: |
-          docker/build.sh cheats-box
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build
+      uses: shalzz/zola-deploy-action@v0.18.0
+      env:
+        BUILD_ONLY: true
+    - name: Postprocess - Setup Node
+      uses: actions/setup-node@v3
+    - name: Postprocess - Run Scripts
+      run: |
+        npm install
+        bash ./scripts/ci_fix_permissions.sh
+        bash ./scripts/ci_pack_public.sh
+    - name: Upload S3
+      uses: shallwefootball/upload-s3-action@v1.3.3
+      with:
+        aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        endpoint: ${{ vars.AWS_ENDPOINT }}
+        aws_bucket: 'cheats.rs'
+        source_dir: 'public.clean'
+        destination_dir: ''
+    - name: Purge Cache
+      uses: jakejarvis/cloudflare-purge-action@v0.3.0
+      env:
+        CLOUDFLARE_ZONE: ${{ vars.CLOUDFLARE_ZONE }}
+        CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}

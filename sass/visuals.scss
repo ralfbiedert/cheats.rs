@@ -1302,7 +1302,7 @@ threading-section {
             .both { background-color: #b4e9a9; }
             .one { background-color: #fbf7bd; }
             .none { background-color: #f37142; }
-            .disabled { border-style: dashed; background-color: lightgray; }
+            .disabled { border-style: dashed; background-color: lightgray; color: lightgray !important; }
         }
 
         subtext {
