@@ -49,26 +49,3 @@ do
     echo "Copying $FOLDER_PREP/$item to $FOLDER_DIST/"
     cp -rf "$FOLDER_PREP/$item" "$FOLDER_DIST"
 done
-
-# # Early debug exit (USE THIS ONE, or there will be pain and suffering)
-# # exit 0
-
-# # Now we can publish
-# echo -e "Sending to ${_GREEN}LIVE${_NC} environment."
-
-# # Make sure we have committed so the public web site shows the right hash.
-# if [[ -n "$(git status --porcelain)" ]]; then
-#     echo -e "You ${_RED}must commit${_NC} before going --live. Aborting ..."
-# fi
-
-
-# Publish
-# scp -r public.clean/* rb@192.168.0.1:/data/sites/cheats.rs
-
-# # Purge Cloudflare cache
-# if [[ "$CLOUDFLARE_CHEATSRS_APITOKEN" ]]; then
-#     echo -e "${_GREEN}Flushing cache${_NC} ..."
-#     curl -X POST "https://api.cloudflare.com/client/v4/zones/8519d81efc8dff85af32fa0cf5f69949/purge_cache" -H "Authorization: Bearer ${CLOUDFLARE_CHEATSRS_APITOKEN}" -H "Content-Type: application/json" --data '{ "purge_everything": true }'
-# else
-#     echo -e "${_RED}No API token to flush cache. You must do that manually!${_NC}"
-# fi

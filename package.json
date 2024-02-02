@@ -1,12 +1,14 @@
 {
   "name": "cheats.rs",
   "scripts": {
-    "posthtml": "cd public && npx posthtml -c ../.posthtmlrc && node ../util/postprocess.js"
+    "posthtml": "cd public && npx posthtml -c ../.posthtmlrc && node ../scripts/postprocess.js",
+    "pdf": "node ./scripts/pdf.js"
   },
   "private": true,
   "dependencies": {
     "cssnano": "^5.1.14",
     "htmlnano": "^0.2.5",
+    "playwright": "^1.41.2",
     "postcss": "^8.4.19",
     "posthtml-cli": "^0.10.0",
     "posthtml-img-autosize": "^0.1.4",

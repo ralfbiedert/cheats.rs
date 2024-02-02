@@ -3,7 +3,7 @@
 # ![Logo](/static/logo.png) Rust Language Cheat Sheet
 
 [![Read Online](/gfx/button_read-online2.png)](https://cheats.rs)
-[![PDF](/gfx/button_cached-pdf2.png)](https://s3.eu-central-1.amazonaws.com/cheats.rs/rust_cheat_sheet.pdf)
+[![PDF](/gfx/button_cached-pdf2.png)](https://cheats.rs/dl/rust_cheat_sheet_a4.pdf)
 
 **A single-page Rust resource for people who like high information density.**
 

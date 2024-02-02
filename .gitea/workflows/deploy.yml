@@ -2,7 +2,7 @@ name: generate-release
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, test ]
 
 jobs:
   generate_release:
@@ -19,11 +19,15 @@ jobs:
         BUILD_ONLY: true
     - name: Postprocess - Setup Node
       uses: actions/setup-node@v3
-    - name: Postprocess - Run Scripts
+    - name: Postprocess - Install Dependencies
       run: |
         npm install
+        npx playwright install --with-deps
+    - name: Postprocess - Run Scripts
+      run: |
         bash ./scripts/ci_fix_permissions.sh
         bash ./scripts/ci_pack_public.sh
+        npm run pdf
     - name: Upload S3
       uses: shallwefootball/upload-s3-action@v1.3.3
       with:

@@ -1,7 +1,7 @@
 "use strict"
 
 const API_ENDPOINT = "https://api.cheats.rs";
-const SURVEY_KEY = "survey2020";
+const SURVEY_KEY = "survey2021";
 
 let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
 let subtitle_index = 0;
