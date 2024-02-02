@@ -5,7 +5,6 @@ template = "index.html"
 insert_anchor_links = "right"
 +++
 
-
 <img id="logo" class="hide_on_small" src="logo.png" alt="Ferris holding a cheat sheet."></img>
 <pagetitle>Rust Language Cheat Sheet</pagetitle>
 <subtitle><span id="subtitle" onclick="advance_subtitle()">{{ date() }}</span></subtitle>
