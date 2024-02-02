@@ -2,7 +2,7 @@ name: generate-release
 
 on:
   push:
-    branches: [ deploy ]
+    branches: [ master ]
 
 jobs:
   generate_release:
