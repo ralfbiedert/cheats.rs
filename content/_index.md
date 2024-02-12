@@ -3945,8 +3945,29 @@ Essential types built into the core of the language.
 
 <!-- NEW TAB -->
 <tab>
+<input type="radio" id="tab-numeric-6" name="tab-group-numeric">
+<label for="tab-numeric-6"><b>Float Types</b></label>
+<panel><div>
+
+
+
+| `f32` | `f64` | Property |
+|---|---|---|
+| 3.40 ⋅ 10<sup>38</sup> | 1.79 ⋅ 10<sup>308</sup> | Maximum float value. |
+| 3.40 ⋅ 10<sup>-38</sup> | 2.23 ⋅ 10<sup>-308</sup> | Minimum positive float value. |
+| `16_777_216` | `9_007_199_254_740_992` | Maximum integer value losslessly representable. |
+
+{{ tablesep() }}
+
+> Float values approximated for visual clarity. Negative limits are values multipled with -1.
+
+</div></panel></tab>
+
+
+<!-- NEW TAB -->
+<tab>
 <input type="radio" id="tab-numeric-2" name="tab-group-numeric">
-<label for="tab-numeric-2"><b>Float Types</b>{{ esoteric() }}</label>
+<label for="tab-numeric-2"><b>Float Internals</b>{{ esoteric() }}</label>
 <panel><div>
 
 
