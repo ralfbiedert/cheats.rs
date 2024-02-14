@@ -3953,8 +3953,8 @@ Essential types built into the core of the language.
 
 | `f32` | `f64` | Property |
 |---|---|---|
-| 3.40 ⋅ 10<sup>38</sup> | 1.79 ⋅ 10<sup>308</sup> | Maximum float value. |
-| 3.40 ⋅ 10<sup>-38</sup> | 2.23 ⋅ 10<sup>-308</sup> | Minimum positive float value. |
+| 3.40 ⋅ 10 <sup>38</sup> | 1.79 ⋅ 10 <sup>308</sup> | Maximum float value. |
+| 3.40 ⋅ 10 <sup>-38</sup> | 2.23 ⋅ 10 <sup>-308</sup> | Minimum positive float value. |
 | `16_777_216` | `9_007_199_254_740_992` | Maximum integer value losslessly representable. |
 
 {{ tablesep() }}
