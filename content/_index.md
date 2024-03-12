@@ -4677,7 +4677,9 @@ Also produces anonymous <code>fn</code> such as <code>f<sub>c1</sub>(C1, X)</cod
 
 ## Standard Library Types
 
+
 Rust's standard library combines the above primitive types into useful types with special semantics, e.g.:
+
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -4788,10 +4790,16 @@ Rust's standard library combines the above primitive types into useful types wit
 </datum>
 
 
+> {{bad()}} All depictions are for **illustrative** purposes only.
+> The fields should exist in latest `stable`, but Rust makes no guarantees about their layouts, and you must not
+> attempt to _unsafely_ access anything unless the docs allow it.
+
 {{ tablesep() }}
 
 
 #### Order-Preserving Collections
+
+
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -4825,10 +4833,10 @@ Rust's standard library combines the above primitive types into useful types wit
            <code>ptr</code><sub>2/4/8</sub>
         </ptr>
         <sized>
-            <code>capacity</code><sub>2/4/8</sub>
+            <code>len</code><sub>2/4/8</sub>
         </sized>
         <sized>
-            <code>len</code><sub>2/4/8</sub>
+            <code>capacity</code><sub>2/4/8</sub>
         </sized>
     </visual>
     <memory-entry class="double">
@@ -4879,7 +4887,6 @@ Rust's standard library combines the above primitive types into useful types wit
     </memory-entry>
     <description>Elements <code>head</code> and <code>tail</code> both <code>null</code> or point to nodes on<br> the heap. Each node can point to its <code>prev</code> and <code>next</code> node.<br>Eats your cache (just look at the thing!); don't use unless<br> you evidently must. {{ bad() }} </description>
 </datum>
-
 
 
 <spacer>
