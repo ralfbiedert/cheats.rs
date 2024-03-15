@@ -72,6 +72,8 @@ const subtitles = [
     "Everytime you type <span class='token keyword'>unsafe</span> the compiler secretly hums the James Bond theme.",
     "Fn traits ... man, I tell ya'",
     "You'll get what you pay for.",
+    "Look, nobody ever defined a size limit for cheat sheets.",
+    "You could say my C++ skills have gotten a bit ... rusty.",
 ];
 
 

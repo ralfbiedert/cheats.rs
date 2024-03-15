@@ -89,7 +89,7 @@ On Windows:
 
 ### How do I upgrade Prism?
 
-- Visit https://prismjs.com/download.html
+- Visit [https://prismjs.com/download.html](https://prismjs.com/download.html)
 - Select version: "Minified"
 - Select theme: "Default"
 - Select languages: "Rust" (and only Rust)

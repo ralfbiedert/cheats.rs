@@ -747,7 +747,7 @@ Rust has several ways to create textual values.
 
 | Example | Explanation |
 |--------|-------------|
-| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}}<sup>, 1</sup> UTF-8, will interpret the following escapes, &hellip;  |
+| `"..."` | **String literal**, {{ ref(page="tokens.html#string-literals")}}<sup>, 1</sup> a UTF-8 `&'static str`, {{ std(page="std/primitive.str.html") }} supporting these escapes:  |
 | {{ tab() }} `"\n\r\t\0\\"` | **Common escapes** {{ ref(page="tokens.html#ascii-escapes") }}, e.g., `"\n"` becomes _new line_. |
 | {{ tab() }} `"\x36"` | **ASCII _e._** {{ ref(page="tokens.html#ascii-escapes") }} up to `7f`, e.g., `"\x36"` would become `6`. |
 | {{ tab() }} `"\u{7fff}"` | **Unicode _e._** {{ ref(page="tokens.html#unicode-escapes") }} up to 6 digits, e.g., `"\u{7fff}"` becomes `翿`. |
@@ -757,6 +757,7 @@ Rust has several ways to create textual values.
 | `br"..."`, `br#"..."#` | Raw byte string literal, ASCII `[u8]`, combination of the above.|
 | `'🦀'` | **Character literal**, {{ ref(page="tokens.html#character-and-string-literals")}} fixed 4 byte unicode '**char**'. {{ std(page="std/primitive.char.html") }} |
 | `b'x'` | ASCII **byte literal**, {{ ref(page="tokens.html#byte-literals")}} a single `u8` byte.  |
+| `c"..."` | **C string literal**, {{ todo() }} constructs NUL-terminated `&CStr`, {{ std(page="std/ffi/struct.CStr.html") }} for FFI interop. {{ edition(ed="1.77+")}}  |
 
 <footnotes>
 
