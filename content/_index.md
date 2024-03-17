@@ -1055,7 +1055,7 @@ An illustrated guide to moves, references and lifetimes.
 
 <footnotes>
 
-<sup>1</sup> For fixed-size values stack is trivially managable: _take a few bytes more while you need them, discarded once you leave_. However, giving out pointers to these _transient_ locations form the very essence of why _lifetimes_ exist; and are the subject of the rest of this chapter.
+<sup>1</sup> For fixed-size values stack is trivially manageable: _take a few bytes more while you need them, discarded once you leave_. However, giving out pointers to these _transient_ locations form the very essence of why _lifetimes_ exist; and are the subject of the rest of this chapter.
 
 </footnotes>
 
@@ -3708,7 +3708,7 @@ Here `Scope` means contained value lives until end of scope, i.e., past the `pri
 - Functions or expressions producing movable values must be handled by callee.
 - Values stores in 'normal' bindings are kept until end of scope, then dropped.
 - Values stored in `_` bindings are usually dropped right away.
-- However, somtimes references (e.g., `ref x3`) can keep value (e.g., the tuple `(S(3), S(6))`) around for longer, so `S(6)`, being part of that tuple can only be dropped once reference to its `S(3)` sibling disappears).
+- However, sometimes references (e.g., `ref x3`) can keep value (e.g., the tuple `(S(3), S(6))`) around for longer, so `S(6)`, being part of that tuple can only be dropped once reference to its `S(3)` sibling disappears).
 
 
 
@@ -6774,8 +6774,8 @@ Attributes affecting the whole crate or app:
 | Builds | On | Explanation |
 |--------|---| ----------|
 | `#![windows_subsystem = "x"]` | `C` | On Windows, make a `console` or `windows` app. {{ ref(page="runtime.html#the-windows_subsystem-attribute") }} {{ esoteric() }} |
-| `#![crate_name = "x"]` | `C`  | Specifiy current crate name, e.g., when not using `cargo`. {{ todo() }} {{ ref(page="crates-and-source-files.html#the-crate_name-attribute") }} {{ esoteric() }} |
-| `#![crate_type = "bin"]` | `C`  | Specifiy current crate type (`bin`, `lib`, `dylib`, `cdylib`, …). {{ ref(page="linkage.html") }} {{ esoteric() }} |
+| `#![crate_name = "x"]` | `C`  | Specify current crate name, e.g., when not using `cargo`. {{ todo() }} {{ ref(page="crates-and-source-files.html#the-crate_name-attribute") }} {{ esoteric() }} |
+| `#![crate_type = "bin"]` | `C`  | Specify current crate type (`bin`, `lib`, `dylib`, `cdylib`, …). {{ ref(page="linkage.html") }} {{ esoteric() }} |
 | `#![recursion_limit = "123"]` | `C` | Set _compile-time_ recursion limit for deref, macros, … {{ ref(page="attributes/limits.html#the-recursion_limit-attribute") }} {{ esoteric() }} |
 | `#![type_length_limit = "456"]` | `C` | Limits maximum number of type substitutions. {{ ref(page="attributes/limits.html#the-type_length_limit-attribute") }} {{ esoteric() }} |
 
@@ -7028,7 +7028,7 @@ Attributes governing conditional compilation:
 | `#[cfg(target_vendor = "apple")]` | `*` |  Manufacturer of target. {{ ref(page="conditional-compilation.html#target_vendor") }}|
 | `#[cfg(debug_assertions)]` | `*` | Whether `debug_assert!()` & co. would panic. {{ ref(page="conditional-compilation.html#debug_assertions") }}|
 | `#[cfg(panic = "unwind")]` | `*` | Whether `unwind` or `abort` will happen on panic. {{ todo() }}|
-| `#[cfg(proc_macro)]` | `*` | Wheter crate compiled as proc macro. {{ ref(page="conditional-compilation.html#proc_macro") }}|
+| `#[cfg(proc_macro)]` | `*` | Whether crate compiled as proc macro. {{ ref(page="conditional-compilation.html#proc_macro") }}|
 | `#[cfg(test)]` | `*` | Whether compiled with `cargo test`. {{ hot() }} {{ ref(page="conditional-compilation.html#test") }}|
 | `#[cfg(feature = "foo")]` | `*` | When your crate was compiled with _f._ `foo`. {{ hot() }} {{ ref(page="conditional-compilation.html#conditional-compilation") }}|
 
@@ -7654,7 +7654,7 @@ Venison::new("rudolph").eat();
 </mini-zoo>
 
 - Parameter for `Vec<>` often named `T` therefore `Vec<T>`.
-- `T` "variable name for type" for user to plug in something specfic, `Vec<f32>`, `S<u8>`, &hellip;
+- `T` "variable name for type" for user to plug in something specific, `Vec<f32>`, `S<u8>`, &hellip;
 
 
 <mini-table>
@@ -8822,7 +8822,7 @@ uses Rust-like syntax for explanations, but is not actually valid Rust.
 - Values have types, e.g. `true` has type `bool`, written `true: bool`.
 - Types have _kinds_, e.g. `bool` has kind `*`, also written `bool: *`. (`*` is
   pronounced _star_ or, sometimes a bit confusingly, _type_.)
-- (Kinds have _sorts_, which is beyond scope here. Type theorits ran out of
+- (Kinds have _sorts_, which is beyond scope here. Type theories ran out of
   English synonyms for _type_ afterwards, but luckily value/type/kind is enough
   for most type systems anyway.)
 
