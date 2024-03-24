@@ -962,6 +962,8 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Match Ergonomics** {{ rfc(page="2005-match-ergonomics.html") }} | Repeatedly deref. [scrutinee](https://doc.rust-lang.org/stable/reference/glossary.html#scrutinee) and adds `ref` and `ref mut` to bindings. |
 | **Rvalue Static Promotion** {{ rfc(page="1414-rvalue_static_promotion.html") }}  {{ esoteric() }} | Makes refs. to constants `'static`, e.g., `&42`, `&None`, `&mut []`. |
 | **Dual Definitions** {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} {{ esoteric() }} | Defining one (e.g., `struct S(u8)`) implicitly def. another (e.g., `fn S`).  |
+| **Drop Hidden Flow** {{ ref(page="destructors.html") }} {{ esoteric() }} | At end of blocks `{ ... }` or `_` assignment, may call `T::drop()`. {{ std(page="std/ops/trait.Drop.html") }} |
+| **Drop Not Callable** {{ std(page="std/ops/trait.Drop.html") }} {{ esoteric() }} | Compiler forbids explicit `T::drop()` call, must use `mem::drop()`. {{ std(page="std/mem/fn.drop.html") }} |
 
 
 </div>
@@ -5273,15 +5275,15 @@ PRs for this section are very welcome. Idea is:
 
 | Intent | Snippet |
 |---------|-------------|
-| Concatenate strings (any `Display`{{ below(target="#string-output") }} that is). <sup>1</sup>  {{ edition(ed="'21") }} | `format!("{x}{y}")` |
-| Append string (any `Display` to any `Write`).  {{ edition(ed="'21") }} | `write!(x, "{y}")` |
+| Concatenate strings (any `Display`{{ below(target="#string-output") }} that is).  {{ std(page="std/fmt/index.html") }} <sup>1</sup>  {{ edition(ed="'21") }} | `format!("{x}{y}")` |
+| Append string (any `Display` to any `Write`).  {{ edition(ed="'21") }} {{ std(page="std/fmt/index.html#write") }} | `write!(x, "{y}")` |
 | Split by separator pattern. {{ std(page="std/str/pattern/trait.Pattern.html") }} {{ link(url="https://stackoverflow.com/a/38138985") }} | `s.split(pattern)` |
 | {{ tab() }} … with `&str` | `s.split("abc")` |
 | {{ tab() }} … with `char` | `s.split('/')` |
 | {{ tab() }} … with closure | `s.split(char::is_numeric)`|
-| Split by whitespace. | `s.split_whitespace()` |
-| Split by newlines. | `s.lines()` |
-| Split by regular expression.<sup>2</sup> | ` Regex::new(r"\s")?.split("one two three")` |
+| Split by whitespace.  {{ std(page="std/primitive.str.html#method.split_whitespace") }} | `s.split_whitespace()` |
+| Split by newlines.  {{ std(page="std/primitive.str.html#method.lines") }}  | `s.lines()` |
+| Split by regular expression. {{ link(url="https://docs.rs/regex/latest/regex/struct.Regex.html#method.split") }} <sup>2</sup> | ` Regex::new(r"\s")?.split("one two three")` |
 
 <footnotes>
 
@@ -5302,8 +5304,9 @@ PRs for this section are very welcome. Idea is:
 
 | Intent | Snippet |
 |---------|-------------|
-| Create a new file | `File::create(PATH)?` |
+| Create a new file {{ std(page="std/fs/struct.File.html#method.open") }} | `File::create(PATH)?`  |
 | {{ tab() }}  Same, via OpenOptions | `OpenOptions::new().create(true).write(true).truncate(true).open(PATH)?` |
+| Read file as `String` {{ std(page="std/fs/fn.read_to_string.html") }} | `read_to_string(path)?` |
 
 <!-- <footnotes>
 
