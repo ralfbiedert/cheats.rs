@@ -1799,10 +1799,10 @@ let d = r.clone();  // Valid to clone (or copy) from r-target.
 ```
 
 
-- References can **read from**  (`&S`) and also **write to** (`&mut S`) location they point to.
-- The *dereference* `*r` means to neither use the _location of_ or _value within_ `r`, but the **location `r` points to**.
-- In example above, clone `d` is created from `*r`, and `S(2)` written to `*r`.
-    - Method `Clone::clone(&T)` expects a reference itself, which is why we can use `r`, not `*r`.
+- References can **read from**  (`&S`) and also **write to** (`&mut S`) locations they point to.
+- The *dereference* `*r` means to use the **location `r` points to** (_not_ the _location of_ or _value within_ `r` itself)
+- In the example, clone `d` is created from `*r`, and `S(2)` written to `*r`.
+    - We assume `S` implements `Clone`, and `r.clone()` clones target-of-`r`, not `r` itself.
     - On assignment `*r = …` old value in location also dropped (not shown above).
 
 </explanation>
