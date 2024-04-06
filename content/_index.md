@@ -193,7 +193,7 @@ fn main() {
 - Strong type system prevents [data races](https://doc.rust-lang.org/nomicon/races.html), brings ['fearless concurrency'](https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html) (amongst others).
 - Seamless C interop, and [dozens of supported platforms](https://doc.rust-lang.org/rustc/platform-support.html) (based on LLVM).
 - ["Most loved or admired language"](https://survey.stackoverflow.co/2023/#section-admired-and-desired-programming-scripting-and-markup-languages) for <strike>4</strike> <strike>5</strike> <strike>6</strike> <strike>7</strike> 8 years in a row. 🤷‍♀️
-- Modern tooling: `cargo` (builds _just work_), `clippy` (600+ code quality lints), `rustup` (easy toolchain mgmt).
+- Modern tooling: `cargo` (builds _just work_), `clippy` (700+ code quality lints), `rustup` (easy toolchain mgmt).
 
 </div></panel></tab>
 

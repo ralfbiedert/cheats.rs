@@ -36,7 +36,7 @@ const subtitles = [
     "Chuck Norris doesn't fear concurrency. Concurrency fears Chuck Norris.",
     "Teaching endianness since 1820.",
     "Snugly fits the Bayeux tapestry.",
-    "If a language and a crab love each other very much ...",
+    "If a crab and a language love each other very much ...",
     "I, for one, welcome our new AI overlords.",
     "As seen on interdimensional cable.",
     "I'm sure there's an X-File on the never type.",
