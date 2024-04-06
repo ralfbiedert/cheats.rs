@@ -252,7 +252,7 @@ fn main() {
 - [**Tour of Rust**](https://tourofrust.com/TOC_en.html) - Live code and explanations, side by side.
 - [**Rust in Easy English**](https://dhghomon.github.io/easy_rust/Chapter_3.html) - 60+ concepts, simple English, example-driven.
 
-In addition, have a look at the usual suspects. {{ book(page="") }} {{ ex(page="") }} {{ std(page="std") }}
+In addition, have a look at the usual suspects: {{ book(page="") }} {{ ex(page="") }} {{ std(page="std") }}
 
 
 > **Opinion** {{ opinionated() }} &mdash; If you have never seen or used any Rust it might be good to visit one of the links above before continuing; the next chapter might feel a bit terse otherwise.
@@ -746,7 +746,7 @@ Rust has several ways to create textual values.
 | {{ tab() }} `"\u{7fff}"` | **Unicode _e._** {{ ref(page="tokens.html#unicode-escapes") }} up to 6 digits, e.g., `"\u{7fff}"` becomes `翿`. |
 | `r"..."` | **Raw string literal**. {{ ref(page="tokens.html#raw-string-literals")}}<sup>, 1</sup>UTF-8, but won't interpret any escape above. |
 | `r#"..."#` | Raw string literal, UTF-8, but can also contain `"`. Number of `#` can vary.|
-| `c"..."` | **C string literal**, {{ ref(page="tokens.html#c-string-literals")}}, a NUL-terminated `&'static CStr`, {{ std(page="std/ffi/struct.CStr.html") }} for FFI. {{ edition(ed="1.77+")}}  |
+| `c"..."` | **C string literal**, {{ ref(page="tokens.html#c-string-literals")}} a NUL-terminated `&'static CStr`, {{ std(page="std/ffi/struct.CStr.html") }} for FFI. {{ edition(ed="1.77+")}}  |
 | `cr"..."`, `cr#"..."#` | Raw C string literal, combination analog to above.|
 | `b"..."` | **Byte string literal**; {{ ref(page="tokens.html#byte-and-byte-string-literals")}}<sup>, 1</sup> constructs ASCII-only `&'static [u8; N]`. |
 | `br"..."`, `br#"..."#` | Raw byte string literal, combination analog to above.|
