@@ -397,10 +397,12 @@ Define units of code and their abstractions.
 | {{ tab() }} `fn f() -> S {}`  | Same, returning a value of type S. |
 | {{ tab() }} `fn f(&self) {}`  | Define a **method**, {{ book(page="ch05-03-method-syntax.html") }}  {{ ex(page="fn/methods.html") }}  {{ ref(page="items/associated-items.html#methods") }}  e.g., within an `impl S {}`. |
 | `struct S` &#8203;`(T);` | More arcanely, _also_{{ above(target="#data-structures") }} defines `fn S(x: T) -> S` **constructor fn**.  {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} {{ esoteric() }} |
-| `const fn f() {}`  | Constant `fn` usable at compile time, e.g., `const X: u32 = f(Y)`. {{ edition(ed="'18") }}|
+| `const fn f() {}`  | Constant `fn` usable at compile time, e.g., `const X: u32 = f(Y)`. {{ ref(page="const_eval.html#const-functions") }} {{ edition(ed="'18") }}|
+| {{ tab() }} `const { x }`  | Used within a function, ensures `{ x }` evaluated during compilation. {{ todo() }} {{ experimental() }}|
 | `async fn f() {}`  | **Async**  {{ ref(page="items/functions.html#async-functions") }} {{ edition(ed="'18") }} function transform, {{ below(target="#async-await-101") }} makes `f` return an `impl` **`Future`**. {{ std(page="std/future/trait.Future.html") }} |
 | {{ tab() }} `async fn f() -> S {}`  | Same, but make `f` return an `impl Future<Output=S>`. |
-| {{ tab() }} `async { x }`  | Used within a function, make `{ x }` an `impl Future<Output=X>`. |
+| {{ tab() }} `async { x }`  | Used within a function, make `{ x }` an `impl Future<Output=X>`. {{ ref(page="expressions/block-expr.html#async-blocks") }} |
+| {{ tab() }} `async move { x }`  | Moves captured variables into future, _c_. move closure.  {{ ref(page="expressions/block-expr.html#capture-modes") }} {{ below(target="#functions-behavior") }}  |
 | `fn() -> S`  | **Function references**, <sup>1</sup> {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} memory holding address of a callable. |
 | `Fn() -> S`  | **Callable Trait** {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), impl. by closures, fn's &hellip; |
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its **captures**, {{ below(target="#closures-data") }} {{ ref(page="types/closure.html#capture-modes") }}  (e.g., a local variable). |
@@ -515,7 +517,7 @@ Short-hand names of types, and methods to convert one type to another.
 |---------|-------------|
 | `type T = S;`  | Create a **type alias**, {{ book(page="ch19-04-advanced-types.html#creating-type-synonyms-with-type-aliases") }} {{ ref(page="items/type-aliases.html#type-aliases") }} i.e., another name for `S`. |
 | `Self`  | Type alias for **implementing type**, {{ ref(page="types.html#self-types") }} e.g., `fn new() -> Self`. |
-| `self`  | Method subject in `fn f(self) {}`, e.g., akin to `fn f(self: Self) {}`. |
+| `self`  | **Method subject** {{ book(page="ch05-03-method-syntax.html#method-syntax") }} {{ ref(page="items/associated-items.html#methods")}} in `fn f(self) {}`, e.g., akin to `fn f(self: Self) {}`. |
 |  {{ tab() }}  `&self`  | Same, but refers to self as borrowed, would equal `f(self: &Self)`|
 |  {{ tab() }}  `&mut self`  | Same, but mutably borrowed, would equal `f(self: &mut Self)` |
 |  {{ tab() }}  `self: Box<Self>`  | [**Arbitrary self type**](https://github.com/withoutboats/rfcs/blob/arbitray-receivers/text/0000-century-of-the-self-type.md), add methods to smart ptrs (`my_box.f_of_self()`). |
@@ -3827,6 +3829,38 @@ Essential types built into the core of the language.
 </datum>
 
 
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>usize</code>, <code>isize</code></name>
+    <visual class="sized">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte style="border-color: #888;"><code></code></byte>
+        <byte style="border-color: #888;"><code></code></byte>
+        <byte style="border-color: #aaa;"><code></code></byte>
+        <byte style="border-color: #aaa;"><code></code></byte>
+        <byte style="border-color: #aaa;"><code></code></byte>
+        <byte style="border-color: #aaa;"><code></code></byte>
+    </visual>
+    <zoom>
+        Same as <code>ptr</code> on platform.
+    </zoom>
+</datum>
+
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>f16</code> {{ experimental() }} </name>
+    <visual class="float">
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+    </visual>
+</datum>
+
+
+
 <!-- NEW ENTRY -->
 <datum class="spaced">
     <name><code>f32</code></name>
@@ -3857,20 +3891,25 @@ Essential types built into the core of the language.
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>usize</code>, <code>isize</code></name>
-    <visual class="sized">
+    <name><code>f128</code> {{ experimental() }} </name>
+    <visual class="float">
         <byte><code></code></byte>
         <byte><code></code></byte>
-        <byte style="border-color: #888;"><code></code></byte>
-        <byte style="border-color: #888;"><code></code></byte>
-        <byte style="border-color: #aaa;"><code></code></byte>
-        <byte style="border-color: #aaa;"><code></code></byte>
-        <byte style="border-color: #aaa;"><code></code></byte>
-        <byte style="border-color: #aaa;"><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
+        <byte><code></code></byte>
     </visual>
-    <zoom>
-        Same as <code>ptr</code> on platform.
-    </zoom>
 </datum>
 
 
@@ -3947,12 +3986,21 @@ Essential types built into the core of the language.
 <panel><div>
 
 
+| Type | Max value | Min pos value | Max lossless integer<sup>1</sup> |
+|---|---|---| ---|
+| `f16` {{ experimental() }} | 65536.0 {{ todo() }} | {{ todo() }} | `2048` {{ todo() }} |
+| `f32` | 3.40 ⋅ 10 <sup>38</sup> | 3.40 ⋅ 10 <sup>-38</sup> | `16_777_216` |
+| `f64` | 1.79 ⋅ 10 <sup>308</sup> | 2.23 ⋅ 10 <sup>-308</sup> | `9_007_199_254_740_992` |
+| `f128` {{ experimental() }} | {{ todo() }} | {{ todo() }} | {{ todo() }} |
 
-| `f32` | `f64` | Property |
-|---|---|---|
-| 3.40 ⋅ 10 <sup>38</sup> | 1.79 ⋅ 10 <sup>308</sup> | Maximum float value. |
-| 3.40 ⋅ 10 <sup>-38</sup> | 2.23 ⋅ 10 <sup>-308</sup> | Minimum positive float value. |
-| `16_777_216` | `9_007_199_254_740_992` | Maximum integer value losslessly representable. |
+<footnotes>
+
+<sup>1</sup> The maximum integer `M` so that all other integers `0 <= X <= M` can be
+losslessly represented in that type. In other words, there might be larger integers
+that could still be represented losslessly (e.g., `65536` for `f16`), but up until that
+value a lossless representation is guaranteed.
+
+</footnotes>
 
 {{ tablesep() }}
 
