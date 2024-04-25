@@ -4280,7 +4280,7 @@ Similarly, for <code>f64</code> types this would look like:
 
 <footnotes>
 
-> <sup>💬</sup> For what seem to be browser bugs Safari and Edge render the hearts in Footnote 3 and 4 wrong, despite being able to differentiate them correctly in `s` and `t` above.
+> <sup>⚠️</sup> For what seem to be browser bugs Safari and Edge render the hearts in Footnote 3 and 4 wrong, despite being able to differentiate them correctly in `s` and `t` above.
 
 </footnotes>
 
