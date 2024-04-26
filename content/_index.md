@@ -5277,7 +5277,7 @@ If the type does not contain a `Cell` for `T`, these are often combined with one
             </memory>
         </memory-entry>
     </div>
-    <description>Holds read-only reference to<br>some <code>T</code>, or owns it's <code>ToOwned</code> {{ std( page = "std/borrow/trait.ToOwned.html") }} <br>analog.</description>
+    <description>Holds read-only reference to<br>some <code>T</code>, or owns its <code>ToOwned</code> {{ std( page = "std/borrow/trait.ToOwned.html") }} <br>analog.</description>
 </datum>
 
 
