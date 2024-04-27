@@ -6723,20 +6723,20 @@ Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-wi
 
 | Within Macros |  Explanation |
 |---------|---------|
-| `$x:ty`  | Macro capture (here a type). |
-| {{ tab() }} `$x:item`    | An item, like a function, struct, module, etc. |
+| `$x:ty`  | Macro capture (here a `$x` is the capture and `ty` means type). |
 | {{ tab() }} `$x:block`   | A block `{}` of statements or expressions, e.g., `{ let x = 5; }` |
-| {{ tab() }} `$x:stmt`    | A statement, e.g., `let x = 1 + 1;`, `String::new();` or `vec![];` |
 | {{ tab() }} `$x:expr`    | An expression, e.g., `x`, `1 + 1`, `String::new()` or `vec![]` |
-| {{ tab() }} `$x:pat`     | A pattern, e.g., `Some(t)`, `(17, 'a')` or `_`. |
-| {{ tab() }} `$x:ty`      | A type, e.g., `String`, `usize` or `Vec<u8>`. |
 | {{ tab() }} `$x:ident`   | An identifier, for example in `let x = 0;` the identifier is `x`. |
-| {{ tab() }} `$x:path`    | A path (e.g., `foo`, `::std::mem::replace`, `transmute::<_, int>`). |
-| {{ tab() }} `$x:literal` | A literal (e.g., `3`, `"foo"`, `b"bar"`, etc.). |
+| {{ tab() }} `$x:item`    | An item, like a function, struct, module, etc. |
 | {{ tab() }} `$x:lifetime` | A lifetime (e.g., `'a`, `'static`, etc.). |
+| {{ tab() }} `$x:literal` | A literal (e.g., `3`, `"foo"`, `b"bar"`, etc.). |
 | {{ tab() }} `$x:meta`    | A meta item; the things that go inside `#[…]` and `#![…]` attributes. |
-| {{ tab() }} `$x:vis`    | A visibility modifier;  `pub`, `pub(crate)`, etc. |
+| {{ tab() }} `$x:pat`     | A pattern, e.g., `Some(t)`, `(17, 'a')` or `_`. |
+| {{ tab() }} `$x:path`    | A path (e.g., `foo`, `::std::mem::replace`, `transmute::<_, int>`). |
+| {{ tab() }} `$x:stmt`    | A statement, e.g., `let x = 1 + 1;`, `String::new();` or `vec![];` |
 | {{ tab() }} `$x:tt`      | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more details. |
+| {{ tab() }} `$x:ty`      | A type, e.g., `String`, `usize` or `Vec<u8>`. |
+| {{ tab() }} `$x:vis`    | A visibility modifier;  `pub`, `pub(crate)`, etc. |
 | `$crate` | Special hygiene variable, crate where macros is defined. {{ todo() }} |
 
 </fixed-2-column>
@@ -6818,20 +6818,20 @@ Attributes affecting the whole crate or app:
 
 | Builds | On | Explanation |
 |--------|---| ----------|
-| `#![windows_subsystem = "x"]` | `C` | On Windows, make a `console` or `windows` app. {{ ref(page="runtime.html#the-windows_subsystem-attribute") }} {{ esoteric() }} |
 | `#![crate_name = "x"]` | `C`  | Specify current crate name, e.g., when not using `cargo`. {{ todo() }} {{ ref(page="crates-and-source-files.html#the-crate_name-attribute") }} {{ esoteric() }} |
 | `#![crate_type = "bin"]` | `C`  | Specify current crate type (`bin`, `lib`, `dylib`, `cdylib`, …). {{ ref(page="linkage.html") }} {{ esoteric() }} |
 | `#![recursion_limit = "123"]` | `C` | Set _compile-time_ recursion limit for deref, macros, … {{ ref(page="attributes/limits.html#the-recursion_limit-attribute") }} {{ esoteric() }} |
 | `#![type_length_limit = "456"]` | `C` | Limits maximum number of type substitutions. {{ ref(page="attributes/limits.html#the-type_length_limit-attribute") }} {{ esoteric() }} |
+| `#![windows_subsystem = "x"]` | `C` | On Windows, make a `console` or `windows` app. {{ ref(page="runtime.html#the-windows_subsystem-attribute") }} {{ esoteric() }} |
 
 
 {{ tablesep() }}
 
 | Handlers | On | Explanation |
 |--------|---|----------|
-| `#[panic_handler]` | `F` | Make some `fn(&PanicInfo) -> !` app's **panic handler**. {{ ref(page="runtime.html#the-panic_handler-attribute") }} |
 | `#[alloc_error_handler]` | `F` | Make some `fn(Layout) -> !` the **allocation fail. handler**. {{ link(url="https://github.com/rust-lang/rust/issues/51540") }} {{ experimental() }} |
 | `#[global_allocator]` | `S` | Make static item impl. `GlobalAlloc` {{ std(page="alloc/alloc/trait.GlobalAlloc.html") }} **global allocator**. {{ ref(page="runtime.html#the-global_allocator-attribute") }}|
+| `#[panic_handler]` | `F` | Make some `fn(&PanicInfo) -> !` app's **panic handler**. {{ ref(page="runtime.html#the-panic_handler-attribute") }} |
 
 
 </fixed-3-column>
@@ -6860,13 +6860,13 @@ Attributes primarily governing emitted code:
 
 | Codegen | On | Explanation |
 |-------|---|-------------|
+| `#[cold]` | `F` | Hint that function probably isn't going to be called. {{ ref(page="attributes/codegen.html#the-cold-attribute") }}|
 | `#[inline]` | `F` | Nicely suggest compiler should inline function at call sites. {{ ref(page="attributes/codegen.html#the-inline-attribute") }}|
 | `#[inline(always)]` | `F` | Emphatically threaten compiler to inline call, or else. {{ ref(page="attributes/codegen.html#the-inline-attribute") }}|
 | `#[inline(never)]` | `F` | Instruct compiler to feel sad if it still inlines the function. {{ ref(page="attributes/codegen.html#the-inline-attribute") }} |
-| `#[cold]` | `F` | Hint that function probably isn't going to be called. {{ ref(page="attributes/codegen.html#the-cold-attribute") }}|
+| `#[repr(X)]`<sup>1</sup>  | `T`  | Use another representation instead of the default **`rust`** {{ ref(page="type-layout.html#the-default-representation") }} one: |
 | `#[target_feature(enable="x")]` | `F` | Enable CPU feature (e.g., `avx2`) for code of `unsafe fn`. {{ ref(page="attributes/codegen.html#the-target_feature-attribute") }}|
 | `#[track_caller]` | `F` | Allows `fn` to find **`caller`**{{ std(page="core/panic/struct.Location.html#method.caller") }} for better panic messages. {{ ref(page="attributes/codegen.html#the-track_caller-attribute") }}|
-| `#[repr(X)]`<sup>1</sup>  | `T`  | Use another representation instead of the default **`rust`** {{ ref(page="type-layout.html#the-default-representation") }} one: |
 | {{ tab() }} `#[repr(C)]` | `T`  | Use a C-compatible (f. FFI), predictable (f. `transmute`) layout. {{ ref(page="type-layout.html#the-c-representation") }}|
 | {{ tab() }} `#[repr(C, u8)]` | `enum`  | Give `enum` discriminant the specified type. {{ ref(page="type-layout.html#the-c-representation") }}|
 | {{ tab() }} `#[repr(transparent)]` | `T`  | Give single-element type same layout as contained field. {{ ref(page="type-layout.html#the-transparent-representation") }}|
@@ -6894,12 +6894,12 @@ Attributes primarily governing emitted code:
 
 | Linking | On | Explanation |
 |-------|---|-------------|
-| `#[no_mangle]` | `*` | Use item name directly as symbol name, instead of mangling.  {{ ref(page="abi.html#the-no_mangle-attribute") }}|
-| `#[no_link]` | `X` | Don't link `extern crate` when only wanting macros. {{ ref(page="items/extern-crates.html#the-no_link-attribute") }}|
+| `#[export_name = "foo"]` | `FS` | Export a `fn` or `static` under a different name. {{ ref(page="abi.html#the-export_name-attribute") }}|
 | `#[link(name="x", kind="y")]` | `X`  | Native lib to link against when looking up symbol. {{ ref(page="items/external-blocks.html#the-link-attribute") }}|
 | `#[link_name = "foo"]` | `F`  | Name of symbol to search for resolving `extern fn`. {{ ref(page="items/external-blocks.html#the-link_name-attribute") }}|
 | `#[link_section = ".sample"]` | `FS`  | Section name of object file where item should be placed. {{ ref(page="abi.html#the-link_section-attribute") }}|
-| `#[export_name = "foo"]` | `FS` | Export a `fn` or `static` under a different name. {{ ref(page="abi.html#the-export_name-attribute") }}|
+| `#[no_mangle]` | `*` | Use item name directly as symbol name, instead of mangling.  {{ ref(page="abi.html#the-no_mangle-attribute") }}|
+| `#[no_link]` | `X` | Don't link `extern crate` when only wanting macros. {{ ref(page="items/extern-crates.html#the-no_link-attribute") }}|
 | `#[used]` | `S`  | Don't optimize away `static` variable despite it looking unused. {{ ref(page="abi.html#the-used-attribute") }}|
 
 
@@ -7064,19 +7064,19 @@ Attributes governing conditional compilation:
 
 | Known Options | On | Explanation |
 |-------|---|-------------|
+| `#[cfg(debug_assertions)]` | `*` | Whether `debug_assert!()` & co. would panic. {{ ref(page="conditional-compilation.html#debug_assertions") }}|
+| `#[cfg(feature = "foo")]` | `*` | When your crate was compiled with _f._ `foo`. {{ hot() }} {{ ref(page="conditional-compilation.html#conditional-compilation") }}|
 | `#[cfg(target_arch = "x86_64")]` | `*` | The CPU architecture crate is compiled for. {{ ref(page="conditional-compilation.html#target_arch") }}|
-| `#[cfg(target_feature = "avx")]` | `*` | Whether a particular class of instructions is avail. {{ ref(page="conditional-compilation.html#target_feature") }}|
-| `#[cfg(target_os = "macos")]` | `*` | Operating system your code will run on. {{ ref(page="conditional-compilation.html#target_os") }}|
-| `#[cfg(target_family = "unix")]` | `*` | Family operating system belongs to. {{ ref(page="conditional-compilation.html#target_family") }}|
 | `#[cfg(target_env = "msvc")]` | `*` | How DLLs and functions are interf. with on OS. {{ ref(page="conditional-compilation.html#target_env") }}|
 | `#[cfg(target_endian = "little")]` | `*` | Main reason your new zero-cost prot. fails. {{ ref(page="conditional-compilation.html#target_endian") }}|
+| `#[cfg(target_family = "unix")]` | `*` | Family operating system belongs to. {{ ref(page="conditional-compilation.html#target_family") }}|
+| `#[cfg(target_feature = "avx")]` | `*` | Whether a particular class of instructions is avail. {{ ref(page="conditional-compilation.html#target_feature") }}|
+| `#[cfg(target_os = "macos")]` | `*` | Operating system your code will run on. {{ ref(page="conditional-compilation.html#target_os") }}|
 | `#[cfg(target_pointer_width = "64")]` | `*` | How many bits ptrs, `usize` and words have. {{ ref(page="conditional-compilation.html#target_pointer_width") }}|
 | `#[cfg(target_vendor = "apple")]` | `*` |  Manufacturer of target. {{ ref(page="conditional-compilation.html#target_vendor") }}|
-| `#[cfg(debug_assertions)]` | `*` | Whether `debug_assert!()` & co. would panic. {{ ref(page="conditional-compilation.html#debug_assertions") }}|
 | `#[cfg(panic = "unwind")]` | `*` | Whether `unwind` or `abort` will happen on panic. {{ todo() }}|
 | `#[cfg(proc_macro)]` | `*` | Whether crate compiled as proc macro. {{ ref(page="conditional-compilation.html#proc_macro") }}|
 | `#[cfg(test)]` | `*` | Whether compiled with `cargo test`. {{ hot() }} {{ ref(page="conditional-compilation.html#test") }}|
-| `#[cfg(feature = "foo")]` | `*` | When your crate was compiled with _f._ `foo`. {{ hot() }} {{ ref(page="conditional-compilation.html#conditional-compilation") }}|
 
 </fixed-3-column>
 
@@ -7124,12 +7124,12 @@ Available in `build.rs` via `env::var()?`. List not exhaustive.
 |-------|-------------|
 | `cargo:rerun-if-changed=PATH` | (Only) run this `build.rs` again if `PATH` changed. |
 | `cargo:rerun-if-env-changed=VAR` | (Only) run this `build.rs` again if environment `VAR` changed. |
+| `cargo:rustc-cfg=KEY[="VALUE"]` | Emit given `cfg` option to be used for later compilation. |
+| `cargo:rustc-cdylib-link-arg=FLAG ` | When building a `cdylib`, pass linker flag. |
+| `cargo:rustc-env=VAR=VALUE ` | Emit var accessible via `env!()` in crate during compilation. |
+| `cargo:rustc-flags=FLAGS` | Add special flags to compiler. {{ todo() }} |
 | `cargo:rustc-link-lib=[KIND=]NAME` | Link native library as if via `-l` option. |
 | `cargo:rustc-link-search=[KIND=]PATH` | Search path for native library as if via `-L` option. |
-| `cargo:rustc-flags=FLAGS` | Add special flags to compiler. {{ todo() }} |
-| `cargo:rustc-cfg=KEY[="VALUE"]` | Emit given `cfg` option to be used for later compilation. |
-| `cargo:rustc-env=VAR=VALUE ` | Emit var accessible via `env!()` in crate during compilation. |
-| `cargo:rustc-cdylib-link-arg=FLAG ` | When building a `cdylib`, pass linker flag. |
 | `cargo:warning=MESSAGE` | Emit compiler warning. |
 
 <footnotes>
