@@ -6854,6 +6854,7 @@ Attributes primarily governing emitted code:
 |-------|---|-------------|
 | `#[non_exhaustive]` | `T` | Future-proof `struct` or `enum`; hint it may grow in future. {{ ref(page="attributes/type_system.html#the-non_exhaustive-attribute") }}|
 | `#[path = "x.rs"]` | `M` | Get module from non-standard file. {{ ref(page="items/modules.html#the-path-attribute") }}|
+| `#[diagnostic::on_unimplemented]` | `X` | Give better error messages when trait not implemented. {{ rfc(page="3368-diagnostic-attribute-namespace.html") }}|
 
 {{ tablesep() }}
 
