@@ -229,7 +229,7 @@ fn main() {
 
 
 **IDEs**
-- [**Rust Rover**](https://www.jetbrains.com/rust/) (paid)
+- [**Rust Rover**](https://www.jetbrains.com/rust/) (free for non-commercial)
 - [Visual Studio Code](https://code.visualstudio.com/) with [**rust-analyzer**](https://rust-analyzer.github.io/) (free)
 
 
