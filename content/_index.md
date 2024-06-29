@@ -555,7 +555,7 @@ Code generation constructs expanded before the actual compilation happens.
 
 | Inside Macros <sup>1</sup> |  Explanation |
 |---------|---------|
-| `$x:ty`  | Macro capture, the `:…` **fragment** {{ ref(page="macros-by-example.html#metavariables") }} declares what is allowed for `$x`. <sup>2</sup> |
+| `$x:ty`  | Macro capture, the `:ty` **fragment specifier** {{ ref(page="macros-by-example.html#metavariables") }} <sup>,2</sup> declares what `$x` may be. |
 | `$x` |  Macro substitution, e.g., use the captured `$x:ty` from above. |
 | `$(x),*` | Macro **repetition** {{ ref(page="macros-by-example.html#repetitions") }} _zero or more times_.|
 | {{ tab() }} `$(x),+` | Same, but _one or more times_. |
@@ -567,7 +567,7 @@ Code generation constructs expanded before the actual compilation happens.
 <footnotes>
 
 <sup>1</sup> Applies to **'macros by example'**. {{ ref(page="macros-by-example.html") }} <br>
-<sup>2</sup> See [**Tooling Directives**](#tooling-directives) below for all captures.
+<sup>2</sup> See [**Tooling Directives**](#tooling-directives) below for all fragment specifiers.
 
 </footnotes>
 
@@ -6705,7 +6705,7 @@ Special tokens embedded in source code used by tooling or preprocessing.
 <!-- NEW TAB -->
 <tab>
 <input type="radio" id="tab-preprocessing-1" name="tab-group-preprocessing" checked>
-<label for="tab-preprocessing-1"><b>Macros</b></label>
+<label for="tab-preprocessing-1"><b>Macro Fragments</b></label>
 <panel><div class="color-header undefined-color-3">
 
 <fixed-2-column class="color-header special_example">
@@ -6719,11 +6719,11 @@ macro_rules! my_macro {
 }
 ``` -->
 
-Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming") }} **macro by example** {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}} `macro_rules!` implementation these work:
+Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-with-macro_rules-for-general-metaprogramming") }} **macro by example** {{book(page="ch19-06-macros.html")}} {{ex(page="macros.html#macro_rules")}} {{ref(page="macros-by-example.html")}} `macro_rules!` implementation these **fragment specifiers** {{ ref(page="macros-by-example.html#metavariables") }} work:
 
 | Within Macros |  Explanation |
 |---------|---------|
-| `$x:ty`  | Macro capture (here a `$x` is the capture and `ty` means type). |
+| `$x:ty`  | Macro capture (here a `$x` is the capture and `ty` means `x` must be type). |
 | {{ tab() }} `$x:block`   | A block `{}` of statements or expressions, e.g., `{ let x = 5; }` |
 | {{ tab() }} `$x:expr`    | An expression, e.g., `x`, `1 + 1`, `String::new()` or `vec![]` |
 | {{ tab() }} `$x:ident`   | An identifier, for example in `let x = 0;` the identifier is `x`. |
