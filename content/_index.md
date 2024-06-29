@@ -85,7 +85,7 @@ Contains clickable links to
 * [Control Flow](#control-flow)
 * [Organizing Code](#organizing-code)
 * [Type Aliases and Casts](#type-aliases-and-casts)
-* [Macros & Attributes](#macros-attributes)
+* [Macros & Attributes & Fragment specifiers](#macros-attributes)
 * [Pattern Matching](#pattern-matching)
 * [Generics & Constraints](#generics-constraints)
 * [Higher-Ranked Items](#higher-ranked-items){{ esoteric() }}
@@ -535,7 +535,7 @@ Short-hand names of types, and methods to convert one type to another.
 
 
 
-### Macros & Attributes
+### Macros & Attributes & Fragment specifiers
 
 Code generation constructs expanded before the actual compilation happens.
 
@@ -563,6 +563,30 @@ Code generation constructs expanded before the actual compilation happens.
 | {{ tab() }} `$(x)<<+` | In fact separators other than `,` are also accepted. Here: `<<`. |
 
 </fixed-2-column>
+
+<fixed-2-column>
+
+| Fragment specifier |  Explanation |
+|---------|---------|
+| block |  a block expression, i.e. statements between curly braces |
+| expr |  an expression, a very wide variety of things within Rust |
+| ident | an identifier or keyword. For example, the start of a function declaration (fn hello) has a keyword followed by an identifier, and we can capture them both by using ident twice |
+| item | things like structs, enums, imports ('use declarations')… |
+| lifetime | a Rust lifetime ('a) |
+| literal | a literal, like a number or a character |
+| meta | the content of an attribute, so Clone or rename = "true". You get a good idea of what an attribute might contain in later chapters |
+| pat | a pattern, 1 | 2 | 3 is one example |
+| pat_param | similar to pat, except it can have | as a separator. So the rule ($first:pat_param | $second:ident) will work, but ($first:pat | $second:ident) tells you that | is not allowed after pat. This also means you need to do some extra work to parse 1 | 2 | 3 with pat_param (as it see 3 separate tokens instead of one) |
+| path | a path, things like ::A::B::C, or `Self::method |
+| stmt | a statement, for example an assignment (let foo = "bar") |
+| tt | a TokenTree |
+| ty | a type, e.g. String |
+| vis | a visibility modifier, pub comes to mind |
+
+</fixed-2-column>
+
+{{ tablesep() }}
+
 
 <footnotes>
 
