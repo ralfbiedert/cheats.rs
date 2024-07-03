@@ -306,7 +306,7 @@ Creating and accessing data structures; and some more _sigilic_ types.
 |---------|-------------|
 | `S { x: y }` | Create `struct S {}` or `use`'ed `enum E::S {}` with field `x` set to `y`. |
 | `S { x }` | Same, but use local variable `x` for field `x`. |
-| `S { ..s }` | Fill remaining fields from `s`, esp. useful with `Default::default()`. {{ std(page="default/trait.Default.html") }} |
+| `S { ..s }` | Fill remaining fields from `s`, esp. useful with `Default::default()`. {{ std(page="std/default/trait.Default.html") }} |
 | `S { 0: x }` | Like `S` &#8203;`(x)` below, but set field `.0` with struct syntax.  |
 | `S`&#8203; `(x)` | Create `struct S` &#8203;`(T)` or `use`'ed `enum E::S`&#8203; `()` with field `.0` set to `x`. |
 | `S` | If `S` is unit `struct S;` or `use`'ed `enum E::S` create value of `S`. |
