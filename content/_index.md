@@ -10234,6 +10234,7 @@ Online services which provide information or tooling.
 | [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
 | [caniuse.rs](https://caniuse.rs/) | Check which Rust version introduced or stabilized a feature. |
 | [releases.rs](https://releases.rs/) | Release notes for previous and upcoming versions. |
+| [query.rs](https://query.rs/) | A search engine for Rust. |
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 
 </div>
