@@ -59,7 +59,7 @@ const subtitles = [
     "In a world of Rust, The Matrix would have been really short and depressing.",
     "Florida man transmutes lifetime, crashes app.",
     "It's pronounced Cheat She<span style='font-size:95%'>e</span><span style='font-size:90%'>e</span><span style='font-size:85%'>e</span><span style='font-size:80%'>e</span><span style='font-size:75%'>e</span><span style='font-size:70%'>t</span><span style='font-size:70%'>.</span>",
-    "Arrival plot twist: the Heptapods needed help with Rust.",
+    "Arrival plot twist: the Heptapods needed help with lifetimes.",
     "The language with more drama than your prom.",
     "Also known as the Rust™️<sup>©️®️,not officially affiliated</sup> Language Cheat Sheet",
     "This is not the greatest cheat sheet in the world, no. This is just a tribute.",
