@@ -190,7 +190,6 @@ function toggle_xray() {
     fetch(`${API_ENDPOINT}/report/aggregates`)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             // Now for each toc_entry, get statistics and render
             toc_entries.forEach(element => {
                 // Get actual target of that href
