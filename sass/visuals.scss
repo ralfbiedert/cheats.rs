@@ -1368,6 +1368,8 @@ threading-section {
             }
         }
     }
+
+    .xray-help { background-color: #eee; }
 }
 
 .night-mode {
@@ -1404,4 +1406,18 @@ threading-section {
             }
         }
     }
+
+    .xray-help { background-color: #333; }
 }
+
+.admin { display: none; }
+.xray { display: none; }
+.xray-help {
+    display: none;
+    font-size: 8pt;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+}
+.xray-visible .xray { display: revert; }
+.xray-visible .xray-help { display: revert; }

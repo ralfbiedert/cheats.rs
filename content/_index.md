@@ -5,7 +5,7 @@ template = "index.html"
 insert_anchor_links = "right"
 +++
 
-<img id="logo" class="hide_on_small" src="logo.png" alt="Ferris holding a cheat sheet."></img>
+<a href="javascript:request_admin()" style="cursor:default; "><img id="logo" class="hide_on_small" src="logo.png" alt="Ferris holding a cheat sheet."></img></a>
 <pagetitle>Rust Language Cheat Sheet</pagetitle>
 <subtitle><span id="subtitle" onclick="advance_subtitle()">{{ date() }}</span></subtitle>
 
@@ -72,7 +72,19 @@ Contains clickable links to
     <a id="toggle_ligatures" href="javascript:toggle_ligatures()">Font Ligatures (<code>..=, =></code>)</a>
     <!-- <a id="expand_everything" class="hide_on_small" href="javascript:toggle_expand_all()">Expand all the things?</a> -->
     <a href="javascript:toggle_night_mode()">Night Mode &#x1f4a1;</a>
+    <a class="admin" href="javascript:toggle_xray()">X-Ray 📈</a>
 </page-controls>
+
+<div class="xray-help">
+X-Ray visualizations are enabled. These show aggregated feedback per section. Right now this is experimental. Known caveats:
+<ul>
+<li>some sections that receive lots of feedback aren't shown (e.g., "Hello Rust")</li>
+<li>it does not account for age of the section (some sections have been around for many years, others for just a few months)</li>
+<li>it does neither account for feedback bursts (people mashing the same button 3 times), nor "most recent feedback" (people up- then down-voting). </li>
+</ul>
+The feedback format is (<span style="color:green;">positive</span>, <span style="color:red;">negative</span>, textual), equivalent to use of the feedback buttons.
+</div>
+
 </noprint>
 
 <noprint>

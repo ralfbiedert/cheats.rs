@@ -6,6 +6,7 @@ const SURVEY_KEY = "survey2021";
 let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
 let subtitle_index = 0;
 let all_tabs_expanded = false; // Set `true` by script if asked to expand tabs
+let request_admin_count = 0;
 
 const SKIP_FIRST_N_SUBTITLES = 2; // Skip first 2 entries
 
@@ -171,6 +172,55 @@ function toggle_legend() {
         short.style.display = "block";
         long.style.display = "none";
         href.text = "➕";
+    }
+}
+
+
+// Called by toggle button, enable or disable night mode and persist setting in localStorage.
+function toggle_xray() {
+    // Make visualization toggleable
+    document.body.classList.toggle('xray-visible');
+
+    // Cleanup existing xray visualizations if they exist so we can safely re-create them again
+    document.querySelectorAll('.xray').forEach(el => el.remove());
+
+    // Get all entries of our TOC (i.e., the list items containing a clickable link to the rest of the sheet)
+    let toc_entries = document.querySelectorAll("toc li");
+
+    fetch(`${API_ENDPOINT}/report/aggregates`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // Now for each toc_entry, get statistics and render
+            toc_entries.forEach(element => {
+                // Get actual target of that href
+                let link_href = element.childNodes[0].getAttribute("href");
+                let section = link_href.split("#")[1];
+
+                let stats = data[section];
+                let width = (stats.positive + stats.negative) / 10;
+                let percentage = 100 * stats.positive / (stats.positive + stats.negative);
+
+                let stat_block = document.createElement("span");
+                stat_block.className = "xray"
+                stat_block.innerHTML = `
+                    <sup>
+                        <div style='background-color: red; width: ${width}px; height: 8px; display: inline-block; overflow: hidden; vertical-align: middle;'>
+                            <div style='background-color: green; height: 100%; width: ${percentage}%;'></div>
+                        </div>
+                        <span style="color: green;">${stats.positive}</span> / <span style="color: red;">${stats.negative}</span> / ${stats.feedbacks}
+                    </sup>
+                `;
+                element.append(stat_block)
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// Show "admin" controls
+function request_admin() {
+    if (++request_admin_count == 5) {
+        document.querySelectorAll('.admin').forEach(el => el.style.display = 'initial');
     }
 }
 
