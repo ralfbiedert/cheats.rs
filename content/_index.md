@@ -243,6 +243,7 @@ fn main() {
 **IDEs**
 - [**Rust Rover**](https://www.jetbrains.com/rust/) (free for non-commercial)
 - [Visual Studio Code](https://code.visualstudio.com/) with [**rust-analyzer**](https://rust-analyzer.github.io/) (free)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) with [**rust-analyzer.vs**](https://marketplace.visualstudio.com/items?itemName=kitamstudios.RustAnalyzer&ssr=false#overview) (free)
 
 
 </div></panel></tab>
