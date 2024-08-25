@@ -10048,14 +10048,9 @@ When updating an API, these changes can break client code.{{ rfc(page="1105-api-
 |---------|
 | 🔴 Adding a non-defaulted item, breaks all existing `impl T for S {}`. |
 | 🔴 Any non-trivial change to item signatures, will affect either consumers or implementors. |
+| 🔴 Implementing any "fundamental" trait, as _not_ implementing a fundamental trait already was a promise. |
 | 🟡 Adding a defaulted item; might cause dispatch ambiguity with other existing trait. |
 | 🟡 Adding a defaulted type parameter. |
-
-{{ tablesep() }}
-
-| Traits |
-|---------|
-| 🔴 Implementing any "fundamental" trait, as _not_ implementing a fundamental trait already was a promise. |
 | 🟡 Implementing any non-fundamental trait; might also cause dispatch ambiguity. |
 
 {{ tablesep() }}
