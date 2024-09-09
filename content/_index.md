@@ -6936,6 +6936,7 @@ Attributes used by Rust tools to improve code quality:
 | Code Patterns | On | Explanation |
 |-------|---|-------------|
 | `#[allow(X)]` | `*` | Instruct `rustc` / `clippy` to ign. class `X` of possible issues. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
+| `#[expect(X)]` <sup>1</sup> | `*` | Warn if a lint doesn't trigger. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
 | `#[warn(X)]` <sup>1</sup> | `*` |  … emit a warning, mixes well with `clippy` lints. {{ hot() }} {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
 | `#[deny(X)]` <sup>1</sup> | `*` |  … fail compilation. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
 | `#[forbid(X)]` <sup>1</sup> | `*` | … fail compilation and prevent subsequent `allow` overrides. {{ ref(page="attributes/diagnostics.html#lint-check-attributes") }} |
