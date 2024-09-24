@@ -2539,7 +2539,7 @@ let p: *const S = questionable_origin();
     - That is, a mutable location that can hold a mutable reference.
 - As mentioned, that reference must guard the targeted memory.
 - However, the **`'c` part**, like a type, also **guards what is allowed into `r`**.
-- Here assiging `&b` (`0x6`) to `r` is valid, but `&a` (`0x3`) would not, as only `&b` lives equal or longer than `&c`.
+- Here assigning `&b` (`0x6`) to `r` is valid, but `&a` (`0x3`) would not, as only `&b` lives equal or longer than `&c`.
 
 </explanation>
 </lifetime-section>
