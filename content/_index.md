@@ -5424,6 +5424,7 @@ PRs for this section are very welcome. Idea is:
 | Get subslice with length. | `&original_slice[offset..][..length]` |
 | Canary so trait `T` is object safe. | `const _: Option<&dyn T> = None;` |
 | _Semver trick_ to unify types. {{ link(url="https://github.com/dtolnay/semver-trick") }} | `my_crate = "next.version"` in `Cargo.toml` + re-export types. |
+| Use macro inside own crate. {{ link(url="https://users.rust-lang.org/t/use-macro-inside-proc-macro-crate/61095/4") }} | `macro_rules! internal_macro {}` with `pub(crate) use internal_macro;` |
 
 
 </div></panel></tab>
