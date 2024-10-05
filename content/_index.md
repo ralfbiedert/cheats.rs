@@ -10256,7 +10256,7 @@ Online services which provide information or tooling.
 
 ## Printing & PDF
 
-> Want this Rust cheat sheet as a PDF? Download the <a href="https://cheats.rs/dl/rust_cheat_sheet_a4.pdf"><b>latest PDF here</b></a>. Alternatively, generate it yourself via <i>File > Print</i> and then "Save as PDF" (works great in Chrome, has some issues in Firefox).
+> Want this Rust cheat sheet as a PDF? Download the <a href="https://cheats.rs/dl/rust_cheat_sheet_a4.pdf"><b>latest PDF here (A4)</b></a> and in <a href="https://cheats.rs/dl/rust_cheat_sheet_letter.pdf"><b>Letter</b></a>. Alternatively, generate it yourself via <i>File > Print</i> and then "Save as PDF" (works great in Chrome, has some issues in Firefox).
 
 </noprint>
 
