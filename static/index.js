@@ -1,7 +1,6 @@
 "use strict"
 
 const API_ENDPOINT = "https://api.cheats.rs";
-const SURVEY_KEY = "survey2021";
 
 let codes_rust = document.querySelectorAll("code:not(.ignore-auto)");
 let subtitle_index = 0;
@@ -281,18 +280,6 @@ function storage_get(key) {
 }
 
 
-// Sets the survey state
-function set_survey(state) {
-    let elements = document.getElementsByClassName("survey");
-
-    for (let e of elements) {
-        e.style.display = state;
-    }
-
-    storage_set(SURVEY_KEY, state);
-}
-
-
 // Called when the user clicks the subtitle (usually the date)
 function advance_subtitle(to_index) {
     let subtitle = document.getElementById("subtitle");
@@ -556,6 +543,8 @@ window.onload = () => {
             // Make sure all interactive content works
             memory_bars_expand_on_click();
             generics_section_expand_on_click();
+
+            json_post("/page/loaded", { referrer: document.referrer });
         }
     } catch (e) {
         console.log(e);
