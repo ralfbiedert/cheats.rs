@@ -67,8 +67,8 @@ const subtitles = [
     "Aquaaaa<sup>riiiiiii<sup style='font-size:85%;'>uuuuuuuuuuus</sup></sup>",
     "Rust is fast, somewhere between a snake and a mongoose.",
     "\"In the jungle, the mighty jungle, the lion sleeps tonight\" ... Chorus: \"Async-await, async-await ...\"",
-    "Measured at 3.6 roentgen.",
-    "It's like standing on the shoulders of hobbits.",
+    "Not great. Not terrible.",
+    "Standing on the shoulders of hobbits.",
     "Everytime you type <span class='token keyword'>unsafe</span> the compiler secretly hums the James Bond theme.",
     "Fn traits ... man, I tell ya'",
     "You'll get what you pay for.",
@@ -340,17 +340,13 @@ function random_quote() {
 
 
 // Performs the raw XHR call.
-function feedback_post(op, json, callback) {
+function json_post(op, json, callback) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", API_ENDPOINT + op, true);
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     xhr.send(JSON.stringify(json));
-    xhr.onerror = (e) => {
-        callback && callback("error")
-    }
-    xhr.onload = (e) => {
-        callback && callback()
-    }
+    xhr.onerror = (e) => { callback && callback("error") }
+    xhr.onload = (e) => { callback && callback() }
 }
 
 // Submits text the user has written into the feedback form.
@@ -361,7 +357,7 @@ function feedback_send_detailed(feedback_id) {
     let textarea = feedback_node.querySelectorAll(`textarea`)[0];
     let text = textarea.value;
 
-    feedback_post("/feedback/detail", { text: text, section: element_id }, (e) => {
+    json_post("/feedback/detail", { text: text, section: element_id }, (e) => {
         let result = feedback_node.querySelectorAll(`result`)[0]
         if (!e) {
             textarea.value = null;
@@ -393,7 +389,7 @@ function feedback_send_mood(mood, feedback_id) {
     animation.style.top = "-3em";
     animation.style.opacity = "0.0";
 
-    feedback_post("/feedback/mood", { mood: mood, section: element_id });
+    json_post("/feedback/mood", { mood: mood, section: element_id });
 
     setTimeout(() => {
         animation.style.visibility = "hidden";

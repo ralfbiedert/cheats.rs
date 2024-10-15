@@ -9577,8 +9577,8 @@ If you are used to Java or C, consider these.
 | {{ noemoji1() }}🍼 | **Reserve Capacity** {{ std(page="std/?search=with_capacity") }}  | Pre-allocation of collections reduces allocation pressure. |
 | {{ noemoji1() }}🍼 | **Recycle Collections** {{ std(page="std/index.html?search=clear") }} | Calling `x.clear()` and reusing `x` prevents allocations. |
 | {{ noemoji1() }}🍼 | **Append to Strings** {{ std(page="std/macro.write.html") }} | Using `write!(&mut s, "{}")` can prevent extra allocation. |
+| {{ noemoji1() }}🍼⚖️ | **Global Allocator** {{ std(page="std/alloc/index.html#the-global_allocator-attribute") }} | On some platforms ext. allocator (e.g., **mimalloc** {{ link(url="https://crates.io/crates/mimalloc") }}) faster. |
 | | **Bump Allocations** {{ link(url="https://docs.rs/bumpalo/latest/bumpalo/") }} | Cheaply gets _temporary_, dynamic memory, esp. in hot loops. |
-| {{ noemoji1() }}🍼⚖️ | **Replace Allocator** {{ link(url="https://nical.github.io/posts/rust-custom-allocators.html") }} | On some platforms ext. allocator (e.g., **mimalloc** {{ link(url="https://crates.io/crates/mimalloc") }}) faster. |
 |  | **Batch APIs** | Design APIs to handle multiple similar elements at once, e.g., slices. |
 |  {{ noemoji2() }}⚖️ | **SoA** / **AoSoA** {{ link(url="https://www.rustsim.org/blog/2020/03/23/simd-aosoa-in-nalgebra/") }} | Beyond that consider _struct of arrays_ (SoA) and similar. |
 | 🚀{{ noemoji1() }}⚖️ | **SIMD** {{ std(page="std/simd/index.html") }} {{ experimental() }} | Inside (math heavy) batch APIs using SIMD can give 2x - 8x boost. |
@@ -10238,6 +10238,7 @@ Online services which provide information or tooling.
     be essential (or at least address a major concern as "best of class") and be
     a self-contained, user-facing web site. -->
 | Services&nbsp;⚙️ | Description |
+
 |--------| -----------|
 | [crates.io](https://crates.io/) | All 3<sup>rd</sup> party libraries for Rust. |
 | [std.rs](https://std.rs/) | Shortcut to `std` documentation. |
