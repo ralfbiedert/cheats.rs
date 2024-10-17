@@ -428,8 +428,8 @@ Define units of code and their abstractions.
 | {{ tab() }} `unsafe trait T {}` | Means "_careless impl. of `T` can cause UB_; **implementor must check**".  |
 | {{ tab() }} `unsafe { f(); }` | Guarantees to compiler "_**I have checked** requirements, trust me_".  |
 | {{ tab() }} `unsafe impl T for S {}` | Guarantees _`S` is well-behaved w.r.t `T`_; people may use `T` on `S` safely.  |
-| {{ tab() }} `unsafe extern "C" {}` | Starting with Rust 2024 `extern "C" {}` blocks must be `unsafe`.  |
-| {{ tab() }} {{ tab() }} `pub safe fn f();`  | Inside an `unsafe extern "C" {}`, mark `f` is actually safe to call. {{ rfc(page="3484-unsafe-extern-blocks.html") }} |
+| {{ tab() }} `unsafe extern "abi" {}` | Starting with Rust 2024 `extern "abi" {}` blocks {{ below(target="#organizing-code")}} must be `unsafe`.  |
+| {{ tab() }} {{ tab() }} `pub safe fn f();`  | Inside an `unsafe extern "abi" {}`, mark `f` is actually safe to call. {{ rfc(page="3484-unsafe-extern-blocks.html") }} |
 
 </fixed-2-column>
 
