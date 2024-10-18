@@ -6618,6 +6618,7 @@ Commands and tools that are good to know.
 | {{ tab() }} <code>cargo run --<span class="cargo-prefix">p</span>ackage w</code> | Run main of sub-worksp. `w`. Treats features more sanely. |
 | <code>cargo … --timings</code> | Show what crates caused your build to take so long. {{ hot() }} |
 | `cargo tree` | Show dependency graph. |
+| `cargo info …` | Show crate metadata (by default for version used by this project). |
 | <code>cargo +{nightly, stable} …</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
 | `cargo +nightly …` | Some nightly-only commands (substitute `…` with command below) |
 | {{ tab() }} `rustc -- -Zunpretty=expanded` |  Show expanded macros. {{ experimental() }} |
