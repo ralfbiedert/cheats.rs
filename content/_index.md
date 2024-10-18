@@ -10243,8 +10243,8 @@ Online services which provide information or tooling.
 <!-- Other online web services related to Rust. As a heuristic, things here should
     be essential (or at least address a major concern as "best of class") and be
     a self-contained, user-facing web site. -->
-| Services&nbsp;⚙️ | Description |
 
+| Services&nbsp;⚙️ | Description |
 |--------| -----------|
 | [crates.io](https://crates.io/) | All 3<sup>rd</sup> party libraries for Rust. |
 | [std.rs](https://std.rs/) | Shortcut to `std` documentation. |
