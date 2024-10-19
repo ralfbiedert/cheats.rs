@@ -380,7 +380,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `s = *r;` | Make `s` a copy of whatever `r` references, if that is `Copy`. |
 | {{ tab() }} `s = *r;` | Won't work {{ bad() }} if `*r` is not `Copy`, as that would move and leave empty. |
 | {{ tab() }} `s = *my_box;` | Special case{{ link(url="https://web.archive.org/web/20230130111147/https://old.reddit.com/r/rust/comments/b4so6i/what_is_exactly/ej8xwg8/") }} for **`Box`**{{ std(page="std/boxed/index.html") }} that can move out b'ed content not `Copy`. |
-| `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} duration of a flow in static analysis. |
+| `'a`  | A **lifetime parameter**, {{ book(page="ch10-00-generics.html") }} {{ ex(page="scope/lifetime.html")}} {{ nom(page="lifetimes.html") }} {{ ref(page="items/generics.html#type-and-lifetime-parameters")}} duration of a flow in static analysis.<sup>1</sup> |
 | {{ tab() }}  `&'a S`  | Only accepts address of some `s`; address existing `'a` or longer. |
 | {{ tab() }}  `&'a mut S`  | Same, but allow address content to be changed. |
 | {{ tab() }}  `struct S<'a> {}`  | Signals this `S` will contain address with lt. `'a`. Creator of `S` decides `'a`. |
@@ -390,6 +390,11 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 
 </fixed-2-column>
 
+<footnotes>
+
+<sup>1</sup>If this doesn't make sense yet, you can crudely think of a Rust 'lifetime' as 'some lines of code that, when printed on paper, you could mark with a single, continous stroke of a yellow highlighter on the left margin of the page'. <br>
+
+</footnotes>
 
 
 
