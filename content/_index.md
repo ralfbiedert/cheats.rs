@@ -837,6 +837,7 @@ These sigils did not fit any other category but are good to know nonetheless.
 | `1_u8` | Type specifier for **numeric literals** {{ ex(page="types/literals.html#literals") }} {{ ref(page="tokens.html#number-literals") }}  (also `i8`, `u16`, &hellip;). |
 | `0xBEEF`, `0o777`, `0b1001`  | Hexadecimal (`0x`), octal (`0o`) and binary (`0b`) integer literals. |
 | `r#foo` | A **raw identifier** {{ book(page="appendix-01-keywords.html#raw-identifiers") }} {{ ex(page="compatibility/raw_identifiers.html#raw-identifiers") }} for edition compatibility. {{ esoteric() }} |
+| `'r#a` | A **raw lifetime label** {{ todo() }} for edition compatibility. {{ esoteric() }} |
 | `x;` | **Statement** {{ ref(page="statements.html")}} terminator, _c_. **expressions** {{ ex(page="expression.html") }} {{ ref(page="expressions.html")}} |
 
 </fixed-2-column>
@@ -6753,6 +6754,7 @@ Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-wi
 | `$x:ty`  | Macro capture (here a `$x` is the capture and `ty` means `x` must be type). |
 | {{ tab() }} `$x:block`   | A block `{}` of statements or expressions, e.g., `{ let x = 5; }` |
 | {{ tab() }} `$x:expr`    | An expression, e.g., `x`, `1 + 1`, `String::new()` or `vec![]` |
+| {{ tab() }} `$x:expr_2021` | An expression that matches the behavior of Rust '21 {{ rfc(page="3531-macro-fragment-policy.html") }} |
 | {{ tab() }} `$x:ident`   | An identifier, for example in `let x = 0;` the identifier is `x`. |
 | {{ tab() }} `$x:item`    | An item, like a function, struct, module, etc. |
 | {{ tab() }} `$x:lifetime` | A lifetime (e.g., `'a`, `'static`, etc.). |
@@ -9535,9 +9537,11 @@ If you are used to Java or C, consider these.
 |  | <code>thread::scope(&vert;s&vert; { /* Threads can't exist longer than scope() */ });</code> |
 | **Avoid _Global_ State** | Being depended on in multiple versions can secretly duplicate statics. {{ bad() }} {{ link(url="https://doc.rust-lang.org/cargo/reference/resolver.html#version-incompatibility-hazards") }} |
 | **Provide Builders** | `Car::new("Model T").hp(20).build();` |
+| **Make it Const** | Where possible mark fns. `const`; where feasible run code inside `const {}`. |
 | **Don't Panic** | Panics are _not_ exceptions, they suggest immediate process abortion! |
 |  | Only panic on programming error; use `Option<T>`{{ std(page="std/option/enum.Option.html") }} or `Result<T,E>`{{ std(page="std/result/enum.Result.html") }} otherwise. |
 |  | If clearly user requested, e.g., calling `obtain()` vs. `try_obtain()`, panic ok too. |
+|  | Inside `const { NonZero::new(1).unwrap() }` p. becomes compile error, ok too. |
 | **Generics in Moderation** | A simple `<T: Bound>` (e.g., `AsRef<Path>`) can make your APIs nicer to use.  |
 | | Complex bounds make it impossible to follow. If in doubt don't be creative with _g_.  |
 | **Split Implementations** | Generics like `Point<T>` can have separate `impl` per `T` for some specialization. |
