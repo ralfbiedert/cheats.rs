@@ -3649,6 +3649,12 @@ Also, dereference `*rb` not strictly necessary, just added for clarity.
 - `f_lr` cases can fail because returning `&'a S` from `&'a mut S` to caller means there would now exist two references (one mutable) to same `S` which is illegal.
 - `f_lm` cases always fail for combination of reasons above.
 
+> Note: This example is about the `f` functions, not `compute`. You can assume
+> it to be defined as `fn compute(x: &S, y: &S) {}`. In that case the `ra` parameter would be automatically
+> coerced {{ below(target="#type-conversions") }} from `&mut S` to `&S`, since you can't have a shared and a mutable
+> reference to the same target.
+
+
 
 </explanation>
 </lifetime-section>
