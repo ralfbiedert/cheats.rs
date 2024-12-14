@@ -4016,10 +4016,10 @@ Essential types built into the core of the language.
 
 | Type | Max value | Min pos value | Max lossless integer<sup>1</sup> |
 |---|---|---| ---|
-| `f16` {{ experimental() }} | 65536.0 {{ todo() }} | {{ todo() }} | `2048` {{ todo() }} |
+| `f16` {{ experimental() }} | 65504.0 | 6.10 ⋅ 10 <sup>-5</sup> | `2048` {{ todo() }} |
 | `f32` | 3.40 ⋅ 10 <sup>38</sup> | 3.40 ⋅ 10 <sup>-38</sup> | `16_777_216` |
 | `f64` | 1.79 ⋅ 10 <sup>308</sup> | 2.23 ⋅ 10 <sup>-308</sup> | `9_007_199_254_740_992` |
-| `f128` {{ experimental() }} | {{ todo() }} | {{ todo() }} | {{ todo() }} |
+| `f128` {{ experimental() }} | 1.19 ⋅ 10 <sup>4932</sup>  |  3.36 ⋅ 10 <sup>-4932</sup> | {{ todo() }} |
 
 <footnotes>
 
