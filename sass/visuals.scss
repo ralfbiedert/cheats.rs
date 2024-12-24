@@ -399,6 +399,7 @@ datum {
         width: 30px;
     }
 
+
     .unsized::before {
         content: " ←";
         padding-left: 2px;
@@ -563,6 +564,30 @@ lifetime-example {
             opacity: 0.25;
         }
 
+
+        // The little (M, E, S, I...) labels, especially for cache
+        container {
+            position: relative;
+
+            tag {
+                position: absolute;
+                font-weight: bold;
+                font-size: 10px;
+                bottom: -6px;
+                z-index: -10;
+            }
+        }
+
+        // Comment at end of line, e.g., "CPU1 Cache"
+        line-comment {
+            // display: inline-block;
+            float: right;
+            width: 100px;
+            font-size: 80%;
+            font-weight: bolder;
+            line-height: 29px;
+        }
+
         // Used for references and pointers
         arrows {
             position: relative;
@@ -600,7 +625,7 @@ lifetime-example {
             position: relative;
             display: block;
             height: 0px;
-            top: -30px;
+            top: -25px;
 
             denied {
                 display: inline-block;
@@ -654,8 +679,23 @@ lifetime-example {
                 border-color: red;
                 border-width: 2px;
             }
+
+            value.stalled {
+                font-size: 0.7em;
+                line-height: 1.5em;
+                vertical-align: middle;
+                padding-left: 5px;
+                padding-right: 5px;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                background-color: #c6dbe7;
+            }
         }
 
+        // This is a dirty fix for an issue that when used outside of tabs the labels are somehow more offcenter.
+        values.freestanding {
+            top: -27px;
+        }
 
         // Text below value boxes with variable names & co
         labels {
@@ -692,6 +732,20 @@ lifetime-example {
             height: 22px;
         }
 
+        .byte2.maybe-borrowed {
+            border-color: black;
+            border-width: 2px;
+            border-style: dotted;
+            bottom: -1px;
+        }
+
+        .byte2.borrowed {
+            border-color: black;
+            border-width: 2px;
+            border-style: solid;
+            bottom: -1px;
+        }
+
         .byte4 {
             width: 66px;
             height: 22px;
@@ -711,12 +765,17 @@ lifetime-example {
         border-radius: 5px;
         width: 15px;
         height: 28px;
+        line-height: 28px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 10px;
     }
 
     // Locations that are borrowed.
     byte.borrowed {
         border-color: black;
         border-width: 2px;
+        overflow: hidden;
     }
 
     // Locations that might be borrowed.
@@ -777,6 +836,14 @@ lifetime-example {
         background-color: rgb(253, 236, 220);
     }
 
+    .cpu1 {
+        background-color: rgb(210, 178, 174);
+    }
+
+    .cpu2 {
+        background-color: rgb(250, 198, 144);
+    }
+
     .t {
         background-color: salmon;
     }
@@ -803,7 +870,22 @@ lifetime-example {
         background-color: rgb(71, 66, 60);
     }
 
+    .cpu1 {
+        color: black;
+        background-color: rgb(210, 178, 174);
+    }
+
+    .cpu2 {
+        color: black;
+        background-color: rgb(250, 198, 144);
+    }
+
+    .borrowed {
+        border-color: brown;
+    }
+
     .t {
+        color: black;
         background-color: salmon;
     }
 

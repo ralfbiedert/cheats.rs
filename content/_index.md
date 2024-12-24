@@ -129,6 +129,7 @@ The feedback format is (<span style="color:green;">positive</span>, <span style=
 **Standard Library**
 * [One-Liners](#one-liners)
 * [Thread Safety](#thread-safety)
+* [Atomics & Cache](#atomics-cache)
 * [Iterators](#iterators)
 * [Number Conversions](#number-conversions)
 * [String Conversions](#string-conversions)
@@ -5543,6 +5544,506 @@ Whether this is allowed is governed by **`Send`**{{ std(page="std/marker/trait.S
 </footnotes>
 
 
+## Atomics & Cache
+
+CPU cache, memory writes, and how atomics affect it.
+
+
+
+<lifetime-section>
+<lifetime-example>
+    <memory-row style="cursor: default;">
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t">S</byte>
+            <byte class="t">O</byte>
+            <byte class="t">M</byte>
+            <byte class="t">E</byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t">D</byte>
+            <byte class="t">R</byte>
+            <byte class="t">A</byte>
+            <byte class="t">M</byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t">D</byte>
+            <byte class="t">A</byte>
+            <byte class="t">T</byte>
+            <byte class="t">A</byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <line-comment>Main Memory</line-comment>
+        </memory-backdrop>
+    </memory-row>
+</lifetime-example>
+</lifetime-section>
+
+<lifetime-section>
+<lifetime-example>
+    <memory-row style="cursor: default;">
+        <memory-backdrop>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu1">S</byte>
+            <byte class="cpu1">O</byte>
+            <byte class="cpu1">M</byte>
+            <byte class="cpu1">E</byte>
+            <container><tag>(E)</tag></container>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu1">D</byte>
+            <byte class="cpu1">A</byte>
+            <byte class="cpu1">T</byte>
+            <byte class="cpu1">A</byte>
+            <container><tag>(S)</tag></container>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <line-comment>CPU1 Cache</line-comment>
+        </memory-backdrop>
+    </memory-row>
+    <memory-row style="cursor: default;">
+        <memory-backdrop style="margin-top: 4px;">
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu2 borrowed">S</byte>
+            <byte class="cpu2">R</byte>
+            <byte class="cpu2">A</byte>
+            <byte class="cpu2">M</byte>
+            <container><tag>(M)</tag></container>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu2">D</byte>
+            <byte class="cpu2">A</byte>
+            <byte class="cpu2">T</byte>
+            <byte class="cpu2">A</byte>
+            <container><tag>(S)</tag></container>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <line-comment>CPU2 Cache</line-comment>
+        </memory-backdrop>
+    </memory-row>
+</lifetime-example>
+</lifetime-section>
+
+<footnotes>
+
+Modern CPUs don't accesses memory directly, only their cache. Each CPU has its own cache, 100x faster than RAM, but much smaller. It comes in **cache lines**,{{ link(url="https://stackoverflow.com/questions/3928995/how-do-cache-lines-work") }} some _sliced_ window of bytes, which track if it's an exclusive (E), shared (S) or modified (M) {{ link(url="https://en.wikipedia.org/wiki/MESI_protocol") }} view of the main memory. Caches talk to each other to ensure **coherence**,{{ link(url="https://gfxcourses.stanford.edu/cs149/fall20content/media/cachecoherence/10_coherence.pdf")}}
+i.e., 'small-enough' data will be 'immediately' seen by all other CPUs, but that may stall the CPU.
+
+</footnotes>
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row style="cursor: default;">
+        <memory-backdrop>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu1">S</byte>
+            <byte class="cpu1">O</byte>
+            <byte class="cpu1"></span></byte>
+            <byte class="cpu1"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu1">D</byte>
+            <byte class="cpu1 borrowed">X</byte>
+            <byte class="cpu1">T</byte>
+            <byte class="cpu1">A</byte>
+            <container><tag>(M)</tag></container>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <line-comment>Cycle 1</line-comment>
+        </memory-backdrop>
+        <values class="freestanding">
+            <value class="t byte2 maybe-borrowed" style="left: 114px;">M4</value>
+        </values>
+    </memory-row>
+    <memory-row style="cursor: default;">
+        <memory-backdrop style="margin-top: 4px;">
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu1 borrowed">1</byte>
+            <byte class="cpu1">O</byte>
+            <byte class="cpu1"></byte>
+            <byte class="cpu1"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu2">D</byte>
+            <byte class="cpu2">X</byte>
+            <byte class="cpu2">T</byte>
+            <byte class="cpu2">A</byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <line-comment>Cycle 2</line-comment>
+        </memory-backdrop>
+        <values class="freestanding">
+            <value class="t byte2 borrowed" style="left: 114px;">34</value>
+            <value class="stalled" style="left: 350px;">STALLED</value>
+        </values>
+    </memory-row>
+    <memory-row style="cursor: default;">
+        <memory-backdrop style="margin-top: 4px;">
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu1 borrowed">1</byte>
+            <byte class="cpu1 borrowed">2</byte>
+            <byte class="cpu1"></byte>
+            <byte class="cpu1"></byte>
+            <container><tag>(M)</tag></container>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu2">D</byte>
+            <byte class="cpu2">X</byte>
+            <byte class="cpu2">T</byte>
+            <byte class="cpu2 borrowed">Y</byte>
+            <container><tag>(M)</tag></container>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <line-comment>Cycle 3</line-comment>
+        </memory-backdrop>
+        <values class="freestanding">
+            <value class="t byte2 borrowed" style="left: 114px;">34</value>
+        </values>
+    </memory-row>
+</lifetime-example>
+</lifetime-section>
+
+
+<footnotes>
+
+Left: Both compiler _and_ CPUs are free to **re-order** {{ link(url="https://en.wikipedia.org/wiki/Memory_ordering")}} and split R/W memory access. Even if you explicitly said `write(1); write(2); write(34)`, your compiler might think it's a good idea to write `34` first; in addition your CPU might insist on splitting the write, doing `4` before `3`. Each of these steps could be observable (even the _impossible_ `M4`) by CPU2 via an `unsafe` _data race_. Reordering is also fatal for locks.
+
+Right: Semi-related, even when two CPUs do not attempt to access each other's data (e.g., update 2 independent variables), they might still experience a significant performance loss if the underlying memory is mapped by 2 cache lines (**false sharing**).{{ link(url="https://docs.kernel.org/kernel-hacking/false-sharing.html")}}
+
+</footnotes>
+
+
+<lifetime-section>
+<lifetime-example class="not-first">
+    <memory-row style="cursor: default;">
+        <memory-backdrop>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t">1</byte>
+            <byte class="t">2</byte>
+            <byte class="t">3</byte>
+            <byte class="t">4</byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t">S</byte>
+            <byte class="t">R</byte>
+            <byte class="t">A</byte>
+            <byte class="t">M</byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte class="t">D</byte>
+            <byte class="t">X</byte>
+            <byte class="t">T</byte>
+            <byte class="t">Y</byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <byte></byte>
+            <line-comment>Main Memory</line-comment>
+        </memory-backdrop>
+        <values class="freestanding">
+            <value class="atomic byte2" style="left: 246px;">RA</value>
+        </values>
+    </memory-row>
+    <memory-row style="cursor: default; margin-top: 40px;">
+        <memory-backdrop style="margin-top: 4px;">
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu2 borrowed">1</byte>
+            <byte class="cpu2">R</byte>
+            <byte class="cpu2">A</byte>
+            <byte class="cpu2">M</byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <line-comment>Cycle 4</line-comment>
+        </memory-backdrop>
+        <values class="freestanding">
+            <value class="atomic byte2" style="left: 246px;">RA</value>
+        </values>
+    </memory-row>
+    <memory-row style="cursor: default; margin-top: 40px;">
+        <memory-backdrop style="margin-top: 4px;">
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu2 borrowed">1</byte>
+            <byte class="cpu2"></byte>
+            <byte class="cpu2"></byte>
+            <byte class="cpu2">M</byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <line-comment>Cycle 5</line-comment>
+        </memory-backdrop>
+        <values class="freestanding">
+            <value class="atomic byte2 borrowed" style="left: 246px;">23</value>
+        </values>
+    </memory-row>
+    <memory-row style="cursor: default; margin-top: 40px;">
+        <memory-backdrop style="margin-top: 4px;">
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="cpu2 borrowed">1</byte>
+            <byte class="cpu2"></byte>
+            <byte class="cpu2"></byte>
+            <byte class="cpu2 borrowed">4</byte>
+            <container><tag>(M)</tag></container>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <byte class="hide"></byte>
+            <line-comment>Cycle 6</line-comment>
+        </memory-backdrop>
+        <values class="freestanding">
+            <value class="atomic byte2 borrowed" style="left: 246px;">23</value>
+        </values>
+    </memory-row>
+</lifetime-example>
+</lifetime-section>
+
+
+<footnotes>
+
+Atomics address the above issues by doing two things, they
+
+- make sure a read / write / update is not partially observable by temporarily locking cache lines in other CPUs,
+- force both the compiler and the CPU to not re-order _'unrelated'_ access around it (i.e., act as a '_fence_'). Ensuring multiple CPUs agree on the relative order of these other ops is called  **consistency**. {{ link(url="https://gfxcourses.stanford.edu/cs149/winter19content/lectures/09_consistency/09_consistency_slides.pdf" )}} This also comes at a cost of missed performance optimizations.
+
+</footnotes>
+
+
+{{ tablesep() }}
+
+> **Note** &mdash; The above section is greatly simplified. While the issues of coherence and consistency are universal, CPU architectures differ a lot how the implement caching and atomics, and in their performance impact.
+
+
+
+
+
+{{ tablesep() }}
+
+<div class="color-header atomics">
+
+| {{ tab() }} A. Ordering {{ std(page="std/sync/atomic/enum.Ordering.html") }} | Explanation |
+| --- | --- |
+| **`Relaxed`** | Full reordering. Unrelated R/W can be freely shuffled around the atomic. |
+| **`Release`**<sup>1</sup> | When writing, ensure other data loaded by 3<sup>rd</sup> party `Acquire` is seen after this write. |
+| **`Acquire`**<sup>1</sup> | When reading, ensures other data written before 3<sup>rd</sup> party `Release` is seen after this read. |
+| **`SeqCst`** | No reordering around atomic. All unrelated reads and writes stay on proper side. |
+
+</div>
+
+<footnotes>
+
+<sup>1</sup> To be clear, when synchronizing memory access with 2+ CPUs, _all_ must use `Acquire` or `Release` (or stronger). The writer must ensure that all other data it wishes to _release_ to memory are put before the atomic signal, while the readers who wish to _acquire_ this data must ensure that their other reads are only done after the atomic signal.
+
+</footnotes>
+
+
+
+
 
 ## Iterators {#iterators}
 
@@ -9615,6 +10116,9 @@ If you are used to Java or C, consider these.
 | 🚀 | ... **in app** | Often good for apps, as lower wait times means better UX. |
 | 🚀{{ noemoji1() }}⚖️ | ... **inside libs** | Opaque _t._ use _inside_ lib often not good idea, can be too opinionated. |
 | 🚀{{ noemoji1() }} | ... **for lib callers** | However, allowing _your user_ to process _you_ in parallel excellent idea. |
+| {{ noemoji2() }}⚖️ | **Avoid Locks**| Locks in multi-threaded code kills parallelism.  |
+| {{ noemoji2() }}⚖️ | **Avoid Atomics**| Needless atomics (e.g., `Arc` vs `Rc`) impact other memory access. |
+| {{ noemoji2() }}⚖️ | **Avoid False Sharing** {{ link(url="https://en.wikipedia.org/wiki/False_sharing") }}| Make sure data R/W by different CPUs at least 64 bytes apart. {{ link(url="https://igoro.com/archive/gallery-of-processor-cache-effects/")}}  |
 | {{ noemoji1() }}🍼 | **Buffered I/O** {{ std(page="std/io/index.html#bufreader-and-bufwriter") }} {{ hot() }} | Raw `File` I/O highly inefficient w/o buffering. |
 | {{ noemoji1() }}🍼{{ noemoji1() }}⚠️ | **Faster Hasher** {{ link(url="https://lib.rs/crates/seahash") }} | Default `HashMap` {{ std(page="std/collections/struct.HashMap.html") }} hasher DoS attack-resilient but slow. |
 | {{ noemoji1() }}🍼{{ noemoji1() }}⚠️ | **Faster RNG**  | If you use a crypto RNG consider swapping for non-crypto. |
