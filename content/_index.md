@@ -5548,6 +5548,9 @@ Whether this is allowed is governed by **`Send`**{{ std(page="std/marker/trait.S
 
 CPU cache, memory writes, and how atomics affect it.
 
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
 
 
 <lifetime-section>
@@ -5680,6 +5683,10 @@ CPU cache, memory writes, and how atomics affect it.
 </lifetime-example>
 </lifetime-section>
 
+<!-- end overflow -->
+</div>
+</div>
+
 <footnotes>
 
 Modern CPUs don't accesses memory directly, only their cache. Each CPU has its own cache, 100x faster than RAM, but much smaller. It comes in **cache lines**,{{ link(url="https://stackoverflow.com/questions/3928995/how-do-cache-lines-work") }} some _sliced_ window of bytes, which track if it's an exclusive (E), shared (S) or modified (M) {{ link(url="https://en.wikipedia.org/wiki/MESI_protocol") }} view of the main memory. Caches talk to each other to ensure **coherence**,{{ link(url="https://gfxcourses.stanford.edu/cs149/fall20content/media/cachecoherence/10_coherence.pdf")}}
@@ -5687,6 +5694,10 @@ i.e., 'small-enough' data will be 'immediately' seen by all other CPUs, but that
 
 </footnotes>
 
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
 
 <lifetime-section>
 <lifetime-example class="not-first">
@@ -5821,6 +5832,10 @@ i.e., 'small-enough' data will be 'immediately' seen by all other CPUs, but that
 </lifetime-example>
 </lifetime-section>
 
+<!-- end overflow -->
+</div>
+</div>
+
 
 <footnotes>
 
@@ -5830,6 +5845,10 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
 
 </footnotes>
 
+
+<!-- Create a horizontal scrollable area on small displays to preserve layout-->
+<div style="overflow:auto;">
+<div style="min-width: 100%; width: 650px;">
 
 <lifetime-section>
 <lifetime-example class="not-first">
@@ -6002,6 +6021,10 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
     </memory-row>
 </lifetime-example>
 </lifetime-section>
+
+<!-- end overflow -->
+</div>
+</div>
 
 
 <footnotes>
