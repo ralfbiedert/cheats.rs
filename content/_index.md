@@ -10137,12 +10137,12 @@ If you are used to Java or C, consider these.
 |  {{ noemoji2() }}⚖️ | **Async-Await** {{ link( url = "https://rust-lang.github.io/async-book/01_getting_started/01_chapter.html") }} | If _parallel waiting_ happens a lot (e.g., server I/O) `async` good idea. |
 |  | **Threading** {{ std(page="std/thread/index.html") }} | Threads allow you to perform _parallel work_ on mult. items at once. |
 | 🚀 | ... **in app** | Often good for apps, as lower wait times means better UX. |
-| 🚀{{ noemoji1() }}⚖️ | ... **inside libs** | Opaque _t._ use _inside_ lib often not good idea, can be too opinionated. |
+| {{ noemoji2() }}⚖️ | ... **inside libs** | Opaque _t._ use _inside_ lib often not good idea, can be too opinionated. |
 | 🚀{{ noemoji1() }} | ... **for lib callers** | However, allowing _your user_ to process _you_ in parallel excellent idea. |
 | {{ noemoji2() }}⚖️ | **Avoid Locks**| Locks in multi-threaded code kills parallelism.  |
 | {{ noemoji2() }}⚖️ | **Avoid Atomics**| Needless atomics (e.g., `Arc` vs `Rc`) impact other memory access. |
 | {{ noemoji2() }}⚖️ | **Avoid False Sharing** {{ link(url="https://en.wikipedia.org/wiki/False_sharing") }}| Make sure data R/W by different CPUs at least 64 bytes apart. {{ link(url="https://igoro.com/archive/gallery-of-processor-cache-effects/")}}  |
-| {{ noemoji1() }}🍼 | **Buffered I/O** {{ std(page="std/io/index.html#bufreader-and-bufwriter") }} {{ hot() }} | Raw `File` I/O highly inefficient w/o buffering. |
+| 🚀🍼 | **Buffered I/O** {{ std(page="std/io/index.html#bufreader-and-bufwriter") }} {{ hot() }} | Raw `File` I/O highly inefficient w/o buffering. |
 | {{ noemoji1() }}🍼{{ noemoji1() }}⚠️ | **Faster Hasher** {{ link(url="https://lib.rs/crates/seahash") }} | Default `HashMap` {{ std(page="std/collections/struct.HashMap.html") }} hasher DoS attack-resilient but slow. |
 | {{ noemoji1() }}🍼{{ noemoji1() }}⚠️ | **Faster RNG**  | If you use a crypto RNG consider swapping for non-crypto. |
 | {{ noemoji2() }}⚖️ | **Avoid Trait Objects** {{ link(url="https://stackoverflow.com/questions/28621980/what-are-the-actual-runtime-performance-costs-of-dynamic-dispatch") }} | T.O. reduce code size, but increase memory indirection. |
