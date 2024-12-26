@@ -360,6 +360,10 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 
 <fixed-2-column>
 
+<!-- | {{ tab() }} `&pin mut T` | Ergonomic wrapper for `Pin<&mut T>`. {{ std(page="std/pin/") }} {{ experimental() }} Prevents _selfref._ `t` from moving. |
+| {{ tab() }} `&pin const T` | Ergonomic wrapper for `Pin<&T>`. {{ experimental() }} | -->
+
+
 | Example | Explanation |
 |---------|-------------|
 | `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (type; space for holding _any_ `&s`). |
