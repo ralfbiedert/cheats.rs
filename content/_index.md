@@ -129,7 +129,7 @@ The feedback format is (<span style="color:green;">positive</span>, <span style=
 **Standard Library**
 * [One-Liners](#one-liners)
 * [Thread Safety](#thread-safety)
-* [Atomics & Cache](#atomics-cache)
+* [Atomics & Cache](#atomics-cache){{ esoteric() }}
 * [Iterators](#iterators)
 * [Number Conversions](#number-conversions)
 * [String Conversions](#string-conversions)
@@ -363,10 +363,10 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | Example | Explanation |
 |---------|-------------|
 | `&S` | Shared **reference** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ std(page="std/primitive.reference.html") }} {{ nom(page="references.html")}} {{ ref(page="types.html#pointer-types")}} (type; space for holding _any_ `&s`). |
-| {{ tab() }} `&[S]` | Special slice reference that contains (`address`, `count`). |
-| {{ tab() }} `&str` | Special string slice reference that contains (`address`, `byte_length`). |
+| {{ tab() }} `&[S]` | Special slice reference that contains (`addr`, `count`). |
+| {{ tab() }} `&str` | Special string slice reference that contains (`addr`, `byte_len`). |
 | {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, &hellip;). |
-| {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} reference that contains (`address`, `vtable`). |
+| {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types/trait-object.html")}} ref. as (`addr`, `vtable`); `T` must be **object safe**.  {{ ref(page="items/traits.html#object-safety")}} |
 | `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., addr., len, vtable, &hellip; of _this_ `s`, like `0x1234`). |
 | {{ tab() }} `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }} w/o memory safety. |
@@ -946,7 +946,7 @@ On the left things people may incorrectly assume they _should get away with_ if 
 | `0xff` and `0xff` are same pointer. {{ bad() }} | AM pointers can have _'domain'_ attached for optimization.  |
 | Any r/w on pointer `0xff` always fine. {{ bad() }} | AM may issue cache-friendly ops since _'no read possible'_.  |
 | Reading un-init just gives random value. {{ bad() }} | AM _'knows'_ read impossible, may remove all related code.  |
-| Data race just gives random value. {{ bad() }} | AM may split R/W, produce _impossible_ value, see above.  |
+| Data race just gives random value. {{ bad() }} | AM may split R/W, produce _impossible_ value. {{ below(target="#atomics-cache") }}  |
 | Null ref. is just `0x0` in some register. {{ bad() }} | Holding `0x0` in reference summons Cthulhu.  |
 
 {{ tablesep() }}
@@ -4032,7 +4032,7 @@ Essential types built into the core of the language.
 
 <sup>1</sup> The maximum integer `M` so that all other integers `0 <= X <= M` can be
 losslessly represented in that type. In other words, there might be larger integers
-that could still be represented losslessly (e.g., `65536` for `f16`), but up until that
+that could still be represented losslessly (e.g., `65504` for `f16`), but up until that
 value a lossless representation is guaranteed.
 
 </footnotes>
@@ -5444,7 +5444,7 @@ PRs for this section are very welcome. Idea is:
 | Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
 | Iterate _and_ edit `&mut [T]` if `T` Copy. | `Cell::from_mut(mut_slice).as_slice_of_cells()` |
 | Get subslice with length. | `&original_slice[offset..][..length]` |
-| Canary so trait `T` is object safe. | `const _: Option<&dyn T> = None;` |
+| Canary so trait `T` is **object safe**. {{ ref(page="items/traits.html#object-safety")}} | `const _: Option<&dyn T> = None;` |
 | _Semver trick_ to unify types. {{ link(url="https://github.com/dtolnay/semver-trick") }} | `my_crate = "next.version"` in `Cargo.toml` + re-export types. |
 | Use macro inside own crate. {{ link(url="https://users.rust-lang.org/t/use-macro-inside-proc-macro-crate/61095/4") }} | `macro_rules! internal_macro {}` with `pub(crate) use internal_macro;` |
 
@@ -5544,7 +5544,7 @@ Whether this is allowed is governed by **`Send`**{{ std(page="std/marker/trait.S
 </footnotes>
 
 
-## Atomics & Cache
+## Atomics & Cache {{ esoteric() }}
 
 CPU cache, memory writes, and how atomics affect it.
 
@@ -5892,7 +5892,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <line-comment>Main Memory</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="atomic byte2" style="left: 246px;">RA</value>
+            <value class="atomic byte2 borrowed" style="left: 264px;">AM</value>
         </values>
     </memory-row>
     <memory-row style="cursor: default; margin-top: 40px;">
@@ -5933,7 +5933,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <line-comment>Cycle 4</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="atomic byte2" style="left: 246px;">RA</value>
+            <value class="atomic byte2 borrowed" style="left: 264px;">AM</value>
         </values>
     </memory-row>
     <memory-row style="cursor: default; margin-top: 40px;">
@@ -5951,7 +5951,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <byte class="hide"></byte>
             <byte class="hide"></byte>
             <byte class="cpu2 borrowed">1</byte>
-            <byte class="cpu2"></byte>
+            <byte class="cpu2 borrowed">2</byte>
             <byte class="cpu2"></byte>
             <byte class="cpu2">M</byte>
             <byte class="hide"></byte>
@@ -5974,7 +5974,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <line-comment>Cycle 5</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="atomic byte2 borrowed" style="left: 246px;">23</value>
+            <value class="atomic byte2 borrowed" style="left: 264px;">AM</value>
         </values>
     </memory-row>
     <memory-row style="cursor: default; margin-top: 40px;">
@@ -5992,9 +5992,9 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <byte class="hide"></byte>
             <byte class="hide"></byte>
             <byte class="cpu2 borrowed">1</byte>
-            <byte class="cpu2"></byte>
-            <byte class="cpu2"></byte>
-            <byte class="cpu2 borrowed">4</byte>
+            <byte class="cpu2 borrowed">2</byte>
+            <byte class="cpu2">3</byte>
+            <byte class="cpu2">4</byte>
             <container><tag>(M)</tag></container>
             <byte class="hide"></byte>
             <byte class="hide"></byte>
@@ -6016,7 +6016,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <line-comment>Cycle 6</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="atomic byte2 borrowed" style="left: 246px;">23</value>
+            <value class="atomic byte2 borrowed" style="left: 264px;">34</value>
         </values>
     </memory-row>
 </lifetime-example>
@@ -6032,7 +6032,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
 Atomics address the above issues by doing two things, they
 
 - make sure a read / write / update is not partially observable by temporarily locking cache lines in other CPUs,
-- force both the compiler and the CPU to not re-order _'unrelated'_ access around it (i.e., act as a '_fence_'). Ensuring multiple CPUs agree on the relative order of these other ops is called  **consistency**. {{ link(url="https://gfxcourses.stanford.edu/cs149/winter19content/lectures/09_consistency/09_consistency_slides.pdf" )}} This also comes at a cost of missed performance optimizations.
+- force both the compiler and the CPU to not re-order _'unrelated'_ access around it (i.e., act as a **fence** {{ std(page="std/sync/atomic/fn.fence.html")}}). Ensuring multiple CPUs agree on the relative order of these other ops is called  **consistency**. {{ link(url="https://gfxcourses.stanford.edu/cs149/winter19content/lectures/09_consistency/09_consistency_slides.pdf" )}} This also comes at a cost of missed performance optimizations.
 
 </footnotes>
 
@@ -6049,12 +6049,12 @@ Atomics address the above issues by doing two things, they
 
 <div class="color-header atomics">
 
-| {{ tab() }} A. Ordering {{ std(page="std/sync/atomic/enum.Ordering.html") }} | Explanation |
+| {{ tab() }} A. Ordering  | Explanation |
 | --- | --- |
-| **`Relaxed`** | Full reordering. Unrelated R/W can be freely shuffled around the atomic. |
-| **`Release`**<sup>1</sup> | When writing, ensure other data loaded by 3<sup>rd</sup> party `Acquire` is seen after this write. |
-| **`Acquire`**<sup>1</sup> | When reading, ensures other data written before 3<sup>rd</sup> party `Release` is seen after this read. |
-| **`SeqCst`** | No reordering around atomic. All unrelated reads and writes stay on proper side. |
+| **`Relaxed`** {{ std(page="std/sync/atomic/enum.Ordering.html#variant.Relaxed") }} | Full reordering. Unrelated R/W can be freely shuffled around the atomic. |
+| **`Release`** {{ std(page="std/sync/atomic/enum.Ordering.html#variant.Release") }}<sup>, 1</sup> | When writing, ensure other data loaded by 3<sup>rd</sup> party `Acquire` is seen after this write. |
+| **`Acquire`** {{ std(page="std/sync/atomic/enum.Ordering.html#variant.Acquire") }}<sup>, 1</sup> | When reading, ensures other data written before 3<sup>rd</sup> party `Release` is seen after this read. |
+| **`SeqCst`** {{ std(page="std/sync/atomic/enum.Ordering.html#variant.SeqCst") }} | No reordering around atomic. All unrelated reads and writes stay on proper side. |
 
 </div>
 
