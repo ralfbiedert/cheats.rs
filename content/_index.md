@@ -5713,8 +5713,8 @@ i.e., 'small-enough' data will be 'immediately' seen by all other CPUs, but that
             <byte class="hide"></byte>
             <byte class="cpu1">S</byte>
             <byte class="cpu1">O</byte>
-            <byte class="cpu1"></span></byte>
-            <byte class="cpu1"></byte>
+            <byte class="cpu1">M</byte>
+            <byte class="cpu1">E</byte>
             <byte class="hide"></byte>
             <byte class="hide"></byte>
             <byte class="hide"></byte>
@@ -5745,7 +5745,7 @@ i.e., 'small-enough' data will be 'immediately' seen by all other CPUs, but that
             <line-comment>Cycle 1</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="t byte2 maybe-borrowed" style="left: 114px;">M4</value>
+            <value class="t byte2 maybe-borrowed" style="left: 96px;">O3</value>
         </values>
     </memory-row>
     <memory-row style="cursor: default;">
@@ -5754,10 +5754,10 @@ i.e., 'small-enough' data will be 'immediately' seen by all other CPUs, but that
             <byte class="hide"></byte>
             <byte class="hide"></byte>
             <byte class="hide"></byte>
-            <byte class="cpu1 borrowed">1</byte>
+            <byte class="cpu1">S</byte>
             <byte class="cpu1">O</byte>
-            <byte class="cpu1"></byte>
-            <byte class="cpu1"></byte>
+            <byte class="cpu1">M</byte>
+            <byte class="cpu1 borrowed">4</byte>
             <byte class="hide"></byte>
             <byte class="hide"></byte>
             <byte class="hide"></byte>
@@ -5786,7 +5786,7 @@ i.e., 'small-enough' data will be 'immediately' seen by all other CPUs, but that
             <line-comment>Cycle 2</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="t byte2 borrowed" style="left: 114px;">34</value>
+            <value class="t byte2 borrowed" style="left: 96px;">23</value>
             <value class="stalled" style="left: 350px;">STALLED</value>
         </values>
     </memory-row>
@@ -5797,9 +5797,9 @@ i.e., 'small-enough' data will be 'immediately' seen by all other CPUs, but that
             <byte class="hide"></byte>
             <byte class="hide"></byte>
             <byte class="cpu1 borrowed">1</byte>
-            <byte class="cpu1 borrowed">2</byte>
             <byte class="cpu1"></byte>
             <byte class="cpu1"></byte>
+            <byte class="cpu1 borrowed">4</byte>
             <container><tag>(M)</tag></container>
             <byte class="hide"></byte>
             <byte class="hide"></byte>
@@ -5830,7 +5830,7 @@ i.e., 'small-enough' data will be 'immediately' seen by all other CPUs, but that
             <line-comment>Cycle 3</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="t byte2 borrowed" style="left: 114px;">34</value>
+            <value class="t byte2 borrowed" style="left: 96px;">23</value>
         </values>
     </memory-row>
 </lifetime-example>
@@ -5843,7 +5843,7 @@ i.e., 'small-enough' data will be 'immediately' seen by all other CPUs, but that
 
 <footnotes>
 
-Left: Both compiler _and_ CPUs are free to **re-order** {{ link(url="https://en.wikipedia.org/wiki/Memory_ordering")}} and split R/W memory access. Even if you explicitly said `write(1); write(2); write(34)`, your compiler might think it's a good idea to write `34` first; in addition your CPU might insist on splitting the write, doing `4` before `3`. Each of these steps could be observable (even the _impossible_ `M4`) by CPU2 via an `unsafe` _data race_. Reordering is also fatal for locks.
+Left: Both compiler _and_ CPUs are free to **re-order** {{ link(url="https://en.wikipedia.org/wiki/Memory_ordering")}} and split R/W memory access. Even if you explicitly said `write(1); write(23); write(4)`, your compiler might think it's a good idea to write `23` first; in addition your CPU might insist on splitting the write, doing `3` before `2`. Each of these steps could be observable (even the _impossible_ `O3`) by CPU2 via an `unsafe` _data race_. Reordering is also fatal for locks.
 
 Right: Semi-related, even when two CPUs do not attempt to access each other's data (e.g., update 2 independent variables), they might still experience a significant performance loss if the underlying memory is mapped by 2 cache lines (**false sharing**).{{ link(url="https://docs.kernel.org/kernel-hacking/false-sharing.html")}}
 
@@ -5896,7 +5896,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <line-comment>Main Memory</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="atomic byte2 borrowed" style="left: 264px;">AM</value>
+            <value class="atomic byte2" style="left: 246px;">RA</value>
         </values>
     </memory-row>
     <memory-row style="cursor: default; margin-top: 40px;">
@@ -5937,7 +5937,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <line-comment>Cycle 4</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="atomic byte2 borrowed" style="left: 264px;">AM</value>
+            <value class="atomic byte2" style="left: 246px;">RA</value>
         </values>
     </memory-row>
     <memory-row style="cursor: default; margin-top: 40px;">
@@ -5955,7 +5955,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <byte class="hide"></byte>
             <byte class="hide"></byte>
             <byte class="cpu2 borrowed">1</byte>
-            <byte class="cpu2 borrowed">2</byte>
+            <byte class="cpu2">2</byte>
             <byte class="cpu2"></byte>
             <byte class="cpu2">M</byte>
             <byte class="hide"></byte>
@@ -5978,7 +5978,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <line-comment>Cycle 5</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="atomic byte2 borrowed" style="left: 264px;">AM</value>
+            <value class="atomic byte2 borrowed" style="left: 246px;">23</value>
         </values>
     </memory-row>
     <memory-row style="cursor: default; margin-top: 40px;">
@@ -5996,9 +5996,9 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <byte class="hide"></byte>
             <byte class="hide"></byte>
             <byte class="cpu2 borrowed">1</byte>
-            <byte class="cpu2 borrowed">2</byte>
+            <byte class="cpu2">2</byte>
             <byte class="cpu2">3</byte>
-            <byte class="cpu2">4</byte>
+            <byte class="cpu2 borrowed">4</byte>
             <container><tag>(M)</tag></container>
             <byte class="hide"></byte>
             <byte class="hide"></byte>
@@ -6020,7 +6020,7 @@ Right: Semi-related, even when two CPUs do not attempt to access each other's da
             <line-comment>Cycle 6</line-comment>
         </memory-backdrop>
         <values class="freestanding">
-            <value class="atomic byte2 borrowed" style="left: 264px;">34</value>
+            <value class="atomic byte2 borrowed" style="left: 246px;">23</value>
         </values>
     </memory-row>
 </lifetime-example>
