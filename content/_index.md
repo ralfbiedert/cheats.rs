@@ -6037,7 +6037,7 @@ Atomics address the above issues by doing two things, they
 
 {{ tablesep() }}
 
-> **Note** &mdash; The above section is greatly simplified. While the issues of coherence and consistency are universal, CPU architectures differ a lot how the implement caching and atomics, and in their performance impact.
+> **Note** &mdash; The above section is greatly simplified. While the issues of coherence and consistency are universal, CPU architectures differ a lot in how they implement caching and atomics, and in their performance impact.
 
 
 
