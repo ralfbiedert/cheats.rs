@@ -941,7 +941,7 @@ On the left things people may incorrectly assume they _should get away with_ if 
 | Without AM | With AM |
 |---------|-------------|
 | `0xffff_ffff` would make a valid `char`. {{ bad() }} | AM may exploit _'invalid'_ bit patterns to pack unrelated data.  |
-| `0xff` and `0xff` are same pointer. {{ bad() }} | AM pointers can have _'domain'_ attached for optimization.  |
+| `0xff` and `0xff` are same pointer. {{ bad() }} | AM pointers can have **provenance** {{ std(page="std/ptr/index.html#provenance")}} for optimization.  |
 | Any r/w on pointer `0xff` always fine. {{ bad() }} | AM may issue cache-friendly ops since _'no read possible'_.  |
 | Reading un-init just gives random value. {{ bad() }} | AM _'knows'_ read impossible, may remove all related code.  |
 | Data race just gives random value. {{ bad() }} | AM may split R/W, produce _impossible_ value. {{ below(target="#atomics-cache") }}  |
