@@ -5541,6 +5541,35 @@ Whether this is allowed is governed by **`Send`**{{ std(page="std/marker/trait.S
 
 </footnotes>
 
+{{ tablesep() }}
+
+<div class="color-header sendsync">
+
+| When is ... | ... Send? |
+| --- | --- |
+| `T` | All contained fields are `Send`, or `unsafe` impl'ed. |
+| {{ tab() }}`struct S { ... }` | All fields are `Send`, or `unsafe` impl'ed. |
+| {{ tab() }}`struct S<T> { ... }` | All fields are `Send` and T is `Send`, or `unsafe` impl'ed. |
+| {{ tab() }}`enum E { ... }` | All fields in all variants are `Send`, or `unsafe` impl'ed. |
+| `&T` | If `T` is `Sync`. |
+| <code>&vert;&vert; {}</code> | Closures are `Send` if all _captures_ are `Send`.  |
+| {{ tab() }} <code>&vert;x&vert; { }</code> | `Send`, regardless of `x`.  |
+| {{ tab() }} <code>&vert;x&vert; { Rc::new(x) }</code> | `Send`, since still nothing captured, despite `Rc` not being `Send`.  |
+| {{ tab() }} <code>&vert;x&vert; { x + y }</code> | Only `Send` if `y` is `Send`.  |
+| <code>async { }</code> | Futures are `Send` if no `!Send` is held over `.await` points.  |
+| {{ tab() }} <code>async { Rc::new() }</code> | `Future` is `Send`, since the `!Send` type `Rc` is not held over `.await`.  |
+| {{ tab() }} <code>async { rc; x.await; rc; }</code> <sup>1</sup> | `Future` is `!Send`, since `Rc` used across the `.await` point. |
+| <code>async &vert;&vert; { }</code> {{ experimental()}} | Async _cl_. `Send` if all cpts. `Send`, res. `Future` if also no `!Send` inside.   |
+| {{ tab() }} <code>async &vert;x&vert; { x  + y }</code> {{ experimental()}} | Async closure `Send` if `y` is `Send`. Future `Send` if `x` and `y` `Send`. |
+
+</div>
+
+<footnotes>
+
+<sup>1</sup> This is a bit of pseudo-code to get the point across, the idea is to have an `Rc` before an `.await` point and keep using it beyond that point.
+
+</footnotes>
+
 
 ## Atomics & Cache {{ esoteric() }}
 
