@@ -987,6 +987,7 @@ If something works that "shouldn't work now that you think about it", it might b
 | **Dual Definitions** {{ rfc(page="1506-adt-kinds.html#tuple-structs") }} {{ esoteric() }} | Defining one (e.g., `struct S(u8)`) implicitly def. another (e.g., `fn S`).  |
 | **Drop Hidden Flow** {{ ref(page="destructors.html") }} {{ esoteric() }} | At end of blocks `{ ... }` or `_` assignment, may call `T::drop()`. {{ std(page="std/ops/trait.Drop.html") }} |
 | **Drop Not Callable** {{ std(page="std/ops/trait.Drop.html") }} {{ esoteric() }} | Compiler forbids explicit `T::drop()` call, must use `mem::drop()`. {{ std(page="std/mem/fn.drop.html") }} |
+| **Auto Traits** {{ ref(page="special-types-and-traits.html#auto-traits") }} | Always impl'ed for your types, closures, futures if possible. |
 
 
 </div>
