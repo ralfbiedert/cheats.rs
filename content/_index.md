@@ -10826,6 +10826,7 @@ Online services which provide information or tooling.
 | [stdrs.dev](https://stdrs.dev/) | Shortcut to `std` documentation including compiler-internal modules. {{ esoteric() }} |
 | [docs.rs](https://docs.rs/) | Documentation for 3<sup>rd</sup> party libraries, automatically generated from source. |
 | [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
+| [blessed.rs](https://blessed.rs/) | An unofficial guide to the Rust ecosystem. |
 | [releases.rs](https://releases.rs/) | Release notes for previous and upcoming versions. |
 | [query.rs](https://query.rs/) | A search engine for Rust. |
 
