@@ -10820,15 +10820,14 @@ Online services which provide information or tooling.
 
 | Services&nbsp;⚙️ | Description |
 |--------| -----------|
+| [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 | [crates.io](https://crates.io/) | All 3<sup>rd</sup> party libraries for Rust. |
 | [std.rs](https://std.rs/) | Shortcut to `std` documentation. |
 | [stdrs.dev](https://stdrs.dev/) | Shortcut to `std` documentation including compiler-internal modules. {{ esoteric() }} |
 | [docs.rs](https://docs.rs/) | Documentation for 3<sup>rd</sup> party libraries, automatically generated from source. |
 | [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
-| [caniuse.rs](https://caniuse.rs/) | Check which Rust version introduced or stabilized a feature. |
 | [releases.rs](https://releases.rs/) | Release notes for previous and upcoming versions. |
 | [query.rs](https://query.rs/) | A search engine for Rust. |
-| [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 
 </div>
 
