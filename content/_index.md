@@ -15,11 +15,11 @@ insert_anchor_links = "right"
 <symbol-legend class="short">
 
 Contains clickable links to
-**The Book** {{ book(page="") }},
-**Rust by Example** {{ ex(page="") }},
-**Std Docs** {{ std(page="std") }},
-**Nomicon** {{ nom(page="") }},
-**Reference** {{ ref(page="") }}.
+**The Book**,{{ book(page="") }}
+**Rust by Example**,{{ ex(page="") }}
+**Std Docs**,{{ std(page="std") }}
+**Nomicon**,{{ nom(page="") }} and
+**Reference**.{{ ref(page="") }}
 
 </symbol-legend>
 
@@ -264,8 +264,10 @@ fn main() {
 **Modular Beginner Resources**
 - [**Tour of Rust**](https://tourofrust.com/TOC_en.html) - Live code and explanations, side by side.
 - [**Rust in Easy English**](https://dhghomon.github.io/easy_rust/Chapter_3.html) - 60+ concepts, simple English, example-driven.
+- [**Rust for the Polyglot Programmer**](https://www.chiark.greenend.org.uk/~ianmdlvl/rust-polyglot/index.html) - A guide for the experienced programmer.
 
-In addition, have a look at the usual suspects: {{ book(page="") }} {{ ex(page="") }} {{ std(page="std") }}
+In addition consider **The Book**,{{ book(page="") }} **Rust by Example**,{{ ex(page="") }} the **Standard Library**,{{ std(page="std") }} and **Rust Learning**.<sup>[⭐](https://github.com/ctjhoa/rust-learning)</sup>
+
 
 
 > **Opinion** {{ opinionated() }} &mdash; If you have never seen or used any Rust it might be good to visit one of the links above before continuing; the next chapter might feel a bit terse otherwise.
@@ -10724,73 +10726,40 @@ When updating an API, these changes can break client code.{{ rfc(page="1105-api-
 
 ## Links & Services
 
-These are other great guides and tables.
-
-
 <div class="color-header lavender">
 
+<!-- Official Rust online "books" about Rust itself or major components (e.g., WebAssembly, Embedded, …).
+     This is not a random link section. Resources below should be have official community
+     involvement, be maintained, have +1k Github stars, and be 'substantial'. Given our own
+     audience we generally favor compact resources targetting experienced programmers. -->
 
-<!-- This is for major other "cheat sheet" like material on the web. Main question when adding: does it add something
-    significant not found elsewhere? -->
-| Cheat Sheets | Description |
-|--------| -----------|
-| [Rust Learning⭐](https://github.com/ctjhoa/rust-learning) | Probably the best collection of links about learning Rust.  |
-| [Functional Jargon in Rust](https://github.com/JasonShin/functional-programming-jargon.rs) | A collection of functional programming jargon explained in Rust.  |
-| [Rust Iterator Cheat Sheet](https://danielkeep.github.io/itercheat_baked.html) | Summary of iterator-related methods from `std::iter` and `itertools`. |
+Specialty books, also see [Little Book of Rust Books](https://lborb.github.io/book/title-page.html).
 
-</div>
-
-
-{{ tablesep() }}
-
-
-All major Rust books developed by the community.
-
-
-<div class="color-header lavender">
-
-<!-- Official Rust online "books" about Rust itself or major components (e.g., WebAssembly, Embedded, …). Good test
-    for inclusion can be official community involvement, +1k Github stars, … -->
 | Books&nbsp;️📚  | Description |
 |--------| -----------|
-| [The Rust Programming Language](https://doc.rust-lang.org/stable/book/) | Standard introduction to Rust, **start here if you are new**. |
-| {{ tab() }} [API Guidelines](https://rust-lang.github.io/api-guidelines/) | How to write idiomatic and re-usable Rust. |
-| {{ tab() }} [Asynchronous Programming](https://rust-lang.github.io/async-book/)  {{ experimental() }} | Explains `async` code, `Futures`, … |
-| {{ tab() }} [Design Patterns](https://rust-unofficial.github.io/patterns//) | Idioms, Patterns, Anti-Patterns. |
-| {{ tab() }} [Edition Guide](https://doc.rust-lang.org/nightly/edition-guide/) | Working with Rust 2015, Rust 2018, and beyond.  |
-| {{ tab() }} [Error Handling](https://nrc.github.io/error-docs/intro.html) | Language features, libraries, and writing good error code.  |
-| {{ tab() }} [Guide to Rustc Development](https://rustc-dev-guide.rust-lang.org/index.html) | Explains how the compiler works internally. |
-| {{ tab() }} [Little Book of Rust Macros](https://veykril.github.io/tlborm/introduction.html) | Community's collective knowledge of Rust macros. |
-| {{ tab() }} [Reference](https://doc.rust-lang.org/stable/reference/) {{ experimental() }}  | Reference of the Rust language.  |
-| {{ tab() }} [RFC Book](https://rust-lang.github.io/rfcs/) | Look up accepted RFCs and how they change the language. |
-| {{ tab() }} [Performance Book](https://nnethercote.github.io/perf-book/) | Techniques to improve the speed and memory usage. |
-| {{ tab() }} [Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/) | Collection of simple examples that demonstrate good practices. |
-| {{ tab() }} [Rust in Easy English](https://dhghomon.github.io/easy_rust/Chapter_3.html) | Explains concepts in simplified English, **good alternative start**. |
-| {{ tab() }} [Rust for the Polyglot Programmer](https://www.chiark.greenend.org.uk/~ianmdlvl/rust-polyglot/index.html) | A guide for the experienced programmer. |
-| {{ tab() }} [Rustdoc Book](https://doc.rust-lang.org/stable/rustdoc/) | Tips how to customize `cargo doc` and `rustdoc`. |
-| {{ tab() }} [Rustonomicon](https://doc.rust-lang.org/nomicon/) | Dark Arts of Advanced and Unsafe Rust Programming. |
-| {{ tab() }} [Unsafe Code Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/)  {{ experimental() }} | Concise information about writing `unsafe` code. |
-| {{ tab() }} [Unstable Book](https://doc.rust-lang.org/unstable-book/index.html) | Information about unstable items, e.g, `#![feature(…)]`.  |
-| [The Cargo Book](https://doc.rust-lang.org/cargo/) | How to use `cargo` and write `Cargo.toml`. |
-| [The CLI Book](https://rust-lang-nursery.github.io/cli-wg/) | Information about creating CLI tools. |
-| [The Embedded Book](https://docs.rust-embedded.org/book/intro/index.html) | Working with embedded and `#![no_std]` devices. |
-| {{ tab() }} [The Embedonomicon](https://docs.rust-embedded.org/embedonomicon/) | First `#![no_std]` from scratch on a Cortex-M. |
-| [The WebAssembly Book](https://rustwasm.github.io/docs/book/) | Working with the web and producing `.wasm` files. |
-| {{ tab() }} [The `wasm-bindgen` Guide](https://rustwasm.github.io/docs/wasm-bindgen/) | How to bind Rust and JavaScript APIs in particular. |
+| [API Guidelines](https://rust-lang.github.io/api-guidelines/) | How to write idiomatic and re-usable Rust. |
+| [Asynchronous Programming](https://rust-lang.github.io/async-book/)  {{ experimental() }} | Explains `async` code, `Futures`, … |
+| [Cargo](https://doc.rust-lang.org/cargo/) | How to use `cargo` and write `Cargo.toml`. |
+| [CLIs](https://rust-lang-nursery.github.io/cli-wg/) | Information about creating CLI tools. |
+| [Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/) | Collection of simple examples that demonstrate good practices. |
+| [Design Patterns](https://rust-unofficial.github.io/patterns//) | Idioms, Patterns, Anti-Patterns. |
+| [Edition Guide](https://doc.rust-lang.org/nightly/edition-guide/) | Working with Rust 2015, Rust 2018, and beyond.  |
+| [Embedded](https://docs.rust-embedded.org/book/intro/index.html) | Working with embedded and `#![no_std]` devices. |
+| [Functional Jargon](https://github.com/JasonShin/functional-programming-jargon.rs) {{ esoteric() }} | A collection of functional programming jargon explained in Rust.  |
+| [Guide to Rustc Development](https://rustc-dev-guide.rust-lang.org/index.html) {{ esoteric() }} | Explains how the compiler works internally. |
+| [Little Book of Rust Macros](https://veykril.github.io/tlborm/introduction.html) | Community's collective knowledge of Rust macros. |
+| [Performance](https://nnethercote.github.io/perf-book/) | Techniques to improve the speed and memory usage. |
+| [RFCs](https://rust-lang.github.io/rfcs/) {{ esoteric() }} | Look up accepted RFCs and how they change the language. |
+| [Rustdoc](https://doc.rust-lang.org/stable/rustdoc/) | Tips how to customize `cargo doc` and `rustdoc`. |
+| [Unsafe Code Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/) {{ experimental() }} | Concise information about writing `unsafe` code. |
+| [Unstable](https://doc.rust-lang.org/unstable-book/index.html)  {{ esoteric() }} | Information about unstable items, e.g, `#![feature(…)]`.  |
 
 </div>
 
-<footnotes>
-
-For more inofficial books see [Little Book of Rust Books](https://lborb.github.io/book/title-page.html).
-
-</footnotes>
-
-<!-- Disabled for now as looks abandoned w/o content -->
-<!-- | {{ tab() }} [SIMD Performance Guide](https://rust-lang.github.io/packed_simd/perf-guide/) {{ experimental() }} | Work with `u8x32` or `f32x8` to speed up your computations.  | -->
-
 
 {{ tablesep() }}
+
+
 
 Comprehensive lookup tables for common components.
 
@@ -10800,11 +10769,10 @@ Comprehensive lookup tables for common components.
 | Tables&nbsp;📋| Description |
 |--------| -----------|
 | [Rust Forge](https://forge.rust-lang.org/) | Lists release train and links for people working on the compiler. |
-| {{ tab() }} [Rust Platform Support](https://doc.rust-lang.org/rustc/platform-support.html) | All supported platforms and their Tier. |
-| {{ tab() }} [Rust Component History](https://rust-lang.github.io/rustup-components-history/) | Check **nightly** status of various Rust tools for a platform. |
-| [ALL the Clippy Lints](https://rust-lang.github.io/rust-clippy/master/) | All the [**clippy**](https://github.com/rust-lang/rust-clippy) lints you might be interested in. |
-| [Configuring Rustfmt](https://rust-lang.github.io/rustfmt/) | All [**rustfmt**](https://github.com/rust-lang/rustfmt) options you can use in `.rustfmt.toml`. |
-| [Compiler Error Index](https://doc.rust-lang.org/error-index.html) | Ever wondered what `E0404` means? |
+| {{ tab() }} [Supported Platforms](https://doc.rust-lang.org/rustc/platform-support.html) | All supported platforms and their Tier. |
+| {{ tab() }} [Component History](https://rust-lang.github.io/rustup-components-history/) {{ experimental() }} | Check **nightly** status of various Rust tools for a platform. |
+| [Clippy Lints](https://rust-lang.github.io/rust-clippy/master/) | All the [**clippy**](https://github.com/rust-lang/rust-clippy) lints you might be interested in. |
+| [Rustfmt Config](https://rust-lang.github.io/rustfmt/) | All [**rustfmt**](https://github.com/rust-lang/rustfmt) options you can use in `.rustfmt.toml`. |
 </div>
 
 {{ tablesep() }}
@@ -10822,11 +10790,11 @@ Online services which provide information or tooling.
 |--------| -----------|
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 | [crates.io](https://crates.io/) | All 3<sup>rd</sup> party libraries for Rust. |
+| [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
+| [blessed.rs](https://blessed.rs/) | An unofficial guide to the Rust ecosystem, even more opinionated. <a class="tooltip" title="Opinionated."><sup>💬</sup></a> |
 | [std.rs](https://std.rs/) | Shortcut to `std` documentation. |
 | [stdrs.dev](https://stdrs.dev/) | Shortcut to `std` documentation including compiler-internal modules. {{ esoteric() }} |
 | [docs.rs](https://docs.rs/) | Documentation for 3<sup>rd</sup> party libraries, automatically generated from source. |
-| [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
-| [blessed.rs](https://blessed.rs/) | An unofficial guide to the Rust ecosystem. |
 | [releases.rs](https://releases.rs/) | Release notes for previous and upcoming versions. |
 | [query.rs](https://query.rs/) | A search engine for Rust. |
 
