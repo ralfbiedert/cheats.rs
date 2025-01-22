@@ -10791,9 +10791,9 @@ Online services which provide information or tooling.
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 | [crates.io](https://crates.io/) | All 3<sup>rd</sup> party libraries for Rust. |
 | [lib.rs](https://lib.rs/) | Unofficial overview of quality Rust libraries and applications. |
-| [blessed.rs](https://blessed.rs/) | An unofficial guide to the Rust ecosystem, even more opinionated. <a class="tooltip" title="Opinionated."><sup>💬</sup></a> |
+| [blessed.rs](https://blessed.rs/) <a class="tooltip" title="Opinionated."><sup>💬</sup></a> | An unofficial guide to the Rust ecosystem, even more opinionated. |
 | [std.rs](https://std.rs/) | Shortcut to `std` documentation. |
-| [stdrs.dev](https://stdrs.dev/) | Shortcut to `std` documentation including compiler-internal modules. {{ esoteric() }} |
+| [stdrs.dev](https://stdrs.dev/)  {{ esoteric() }} | Shortcut to `std` documentation including compiler-internal modules. |
 | [docs.rs](https://docs.rs/) | Documentation for 3<sup>rd</sup> party libraries, automatically generated from source. |
 | [releases.rs](https://releases.rs/) | Release notes for previous and upcoming versions. |
 | [query.rs](https://query.rs/) | A search engine for Rust. |
