@@ -10735,7 +10735,7 @@ When updating an API, these changes can break client code.{{ rfc(page="1105-api-
 
 Specialty books, also see [Little Book of Rust Books](https://lborb.github.io/book/title-page.html).
 
-| Books&nbsp;️📚  | Description |
+| Topic&nbsp;️📚  | Description |
 |--------| -----------|
 | [API Guidelines](https://rust-lang.github.io/api-guidelines/) | How to write idiomatic and re-usable Rust. |
 | [Asynchronous Programming](https://rust-lang.github.io/async-book/)  {{ experimental() }} | Explains `async` code, `Futures`, … |
@@ -10766,7 +10766,7 @@ Comprehensive lookup tables for common components.
 <div class="color-header lavender">
 
 <!-- Table-like sites, often auto-generated. -->
-| Tables&nbsp;📋| Description |
+| Table&nbsp;📋| Description |
 |--------| -----------|
 | [Rust Forge](https://forge.rust-lang.org/) | Lists release train and links for people working on the compiler. |
 | {{ tab() }} [Supported Platforms](https://doc.rust-lang.org/rustc/platform-support.html) | All supported platforms and their Tier. |
@@ -10786,7 +10786,7 @@ Online services which provide information or tooling.
     be essential (or at least address a major concern as "best of class") and be
     a self-contained, user-facing web site. -->
 
-| Services&nbsp;⚙️ | Description |
+| Service&nbsp;⚙️ | Description |
 |--------| -----------|
 | [Rust Playground](https://play.rust-lang.org/) | Try and share snippets of Rust code. |
 | [crates.io](https://crates.io/) | All 3<sup>rd</sup> party libraries for Rust. |
