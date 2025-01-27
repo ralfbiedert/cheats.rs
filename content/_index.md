@@ -7684,7 +7684,7 @@ Attributes governing conditional compilation:
 <label for="tab-preprocessing-6"><b><code>build.rs</code></b></label>
 <panel><div class="color-header undefined-color-3">
 
-Environment variables and outputs related to the pre-build script.
+Environment variables and outputs related to the pre-build script. Consider **build-rs**{{ link(url="https://docs.rs/build-rs/0.1.2/build/") }} instead.
 
 <fixed-2-column class="color-header special_example extra-wide">
 
@@ -7715,15 +7715,15 @@ Available in `build.rs` via `env::var()?`. List not exhaustive.
 
 | Output String | Explanation {{ link(url="https://doc.rust-lang.org/cargo/reference/build-scripts.html") }} |
 |-------|-------------|
-| `cargo:rerun-if-changed=PATH` | (Only) run this `build.rs` again if `PATH` changed. |
-| `cargo:rerun-if-env-changed=VAR` | (Only) run this `build.rs` again if environment `VAR` changed. |
-| `cargo:rustc-cfg=KEY[="VALUE"]` | Emit given `cfg` option to be used for later compilation. |
-| `cargo:rustc-cdylib-link-arg=FLAG ` | When building a `cdylib`, pass linker flag. |
-| `cargo:rustc-env=VAR=VALUE ` | Emit var accessible via `env!()` in crate during compilation. |
-| `cargo:rustc-flags=FLAGS` | Add special flags to compiler. {{ todo() }} |
-| `cargo:rustc-link-lib=[KIND=]NAME` | Link native library as if via `-l` option. |
-| `cargo:rustc-link-search=[KIND=]PATH` | Search path for native library as if via `-L` option. |
-| `cargo:warning=MESSAGE` | Emit compiler warning. |
+| `cargo::rerun-if-changed=PATH` | (Only) run this `build.rs` again if `PATH` changed. |
+| `cargo::rerun-if-env-changed=VAR` | (Only) run this `build.rs` again if environment `VAR` changed. |
+| `cargo::rustc-cfg=KEY[="VALUE"]` | Emit given `cfg` option to be used for later compilation. |
+| `cargo::rustc-cdylib-link-arg=FLAG ` | When building a `cdylib`, pass linker flag. |
+| `cargo::rustc-env=VAR=VALUE ` | Emit var accessible via `env!()` in crate during compilation. |
+| `cargo::rustc-flags=FLAGS` | Add special flags to compiler. {{ todo() }} |
+| `cargo::rustc-link-lib=[KIND=]NAME` | Link native library as if via `-l` option. |
+| `cargo::rustc-link-search=[KIND=]PATH` | Search path for native library as if via `-L` option. |
+| `cargo::warning=MESSAGE` | Emit compiler warning. |
 
 <footnotes>
 
