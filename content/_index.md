@@ -266,7 +266,7 @@ fn main() {
 - [**Rust in Easy English**](https://dhghomon.github.io/easy_rust/Chapter_3.html) - 60+ concepts, simple English, example-driven.
 - [**Rust for the Polyglot Programmer**](https://www.chiark.greenend.org.uk/~ianmdlvl/rust-polyglot/index.html) - A guide for the experienced programmer.
 
-In addition consider **The Book**,{{ book(page="") }} **Rust by Example**,{{ ex(page="") }} the **Standard Library**,{{ std(page="std") }} and **Rust Learning**.<sup>[⭐](https://github.com/ctjhoa/rust-learning)</sup>
+In addition consider **The Book**,{{ book(page="") }} **Rust by Example**,{{ ex(page="") }} the **Standard Library**,{{ std(page="std") }} and **Rust Learning**.{{ link(url="https://github.com/ctjhoa/rust-learning") }}
 
 
 
