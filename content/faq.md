@@ -51,11 +51,14 @@ The pentagram has a few desirable properties:
 In other words, the pentagram is the Rust of summoning circles.
 
 
-
 ### Are you a Satanist?
 
 All inquiries in this matter should be directed to your bathroom mirror on a moonless night.
 
+
+### Can you remove the pentagram?
+
+The pentagram has spoken. The pentagram stays.
 
 
 
