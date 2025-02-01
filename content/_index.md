@@ -7183,7 +7183,7 @@ Commands and tools that are good to know.
 | <code>cargo <span class="cargo-prefix">b</span>uild</code> | Build the project in debug mode (<code>--<span class="cargo-prefix">r</span>elease</code> for all optimization). |
 | <code>cargo <span class="cargo-prefix">c</span>heck</code> | Check if project would compile (much faster). |
 | <code>cargo <span class="cargo-prefix">t</span>est</code> | Run tests for the project. |
-| <code>cargo <span class="cargo-prefix">d</span>oc --open</code> | Locally generate documentation for your code and dependencies. |
+| <code>cargo <span class="cargo-prefix">d</span>oc --no-deps --open</code> | Locally generate documentation for your code. |
 | <code>cargo <span class="cargo-prefix">r</span>un</code> | Run your project, if a binary is produced (main.rs). |
 | {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies feat. with other dependents (can be confusing). |
 | {{ tab() }} <code>cargo run --<span class="cargo-prefix">p</span>ackage w</code> | Run main of sub-worksp. `w`. Treats features more sanely. |
