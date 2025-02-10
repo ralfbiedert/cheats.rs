@@ -4764,59 +4764,6 @@ Also produces anonymous <code>fn</code> such as <code>f<sub>c1</sub>(C1, X)</cod
 Rust's standard library combines the above primitive types into useful types with special semantics, e.g.:
 
 
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>UnsafeCell&lt;T&gt;</code> {{ std(page="std/cell/struct.UnsafeCell.html") }}</name>
-    <visual class="cell">
-           <framed class="any unsized"><code>T</code></framed>
-    </visual>
-    <description>Magic type allowing <br>aliased mutability.</description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>Cell&lt;T&gt;</code> {{ std(page="std/cell/struct.Cell.html") }}</name>
-    <visual>
-           <framed class="any unsized celled"><code>T</code></framed>
-    </visual>
-    <description>Allows <code>T</code>'s<br> to move in<br> and out.</description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>RefCell&lt;T&gt;</code> {{ std(page="std/cell/struct.RefCell.html") }}</name>
-    <visual>
-        <sized class="celled"><code>borrowed</code></sized>
-        <framed class="any unsized celled"><code>T</code></framed>
-    </visual>
-    <description>Also support dynamic<br>
-    borrowing of <code>T</code>. Like <code>Cell</code> this<br>
-    is <code>Send</code>, but not <code>Sync</code>.</description>
-</datum>
-
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>ManuallyDrop&lt;T&gt;</code> {{ std(page="std/mem/struct.ManuallyDrop.html") }}</name>
-    <visual>
-           <framed class="any unsized"  style="width: 100px;"><code>T</code></framed>
-    </visual>
-    <description>Prevents <code>T::drop()</code> from<br>being called.</description>
-</datum>
-
-<!-- NEW ENTRY -->
-<datum class="spaced">
-    <name><code>AtomicUsize</code> {{ std(page="std/sync/atomic/index.html") }}</name>
-    <visual class="atomic">
-        <ptr class="atomic">
-            <code>usize</code><sub>2/4/8</sub>
-        </ptr>
-    </visual>
-    <description>Other atomic similarly.</description>
-</datum>
-
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
@@ -4855,6 +4802,28 @@ Rust's standard library combines the above primitive types into useful types wit
     <description>Either some error <code>E</code> or value<br>of <code>T</code>.</description>
 </datum>
 
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>ManuallyDrop&lt;T&gt;</code> {{ std(page="std/mem/struct.ManuallyDrop.html") }}</name>
+    <visual>
+           <framed class="any unsized"  style="width: 100px;"><code>T</code></framed>
+    </visual>
+    <description>Prevents <code>T::drop()</code> from<br>being called.</description>
+</datum>
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>AtomicUsize</code> {{ std(page="std/sync/atomic/index.html") }}</name>
+    <visual class="atomic">
+        <ptr class="atomic">
+            <code>usize</code><sub>2/4/8</sub>
+        </ptr>
+    </visual>
+    <description>Other atomic similarly.</description>
+</datum>
+
+
 <!-- NEW ENTRY -->
 <datum>
     <name><code>MaybeUninit&lt;T&gt;</code><span style="position: absolute;"> {{ std(page="std/mem/union.MaybeUninit.html") }}</span></name>
@@ -4873,9 +4842,121 @@ Rust's standard library combines the above primitive types into useful types wit
 </datum>
 
 
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>PhantomData&lt;T&gt;</code> {{ std(page="std/marker/struct.PhantomData.html") }}</name>
+    <visual style="width: 15px;" class="zst">
+        <code></code>
+    </visual>
+    <description>Zero-Sized {{ below(target = "#sized-types") }} helper to hold<br>otherwise unused lifetimes.</description>
+</datum>
+
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>Pin&lt;P&gt;</code> {{ std(page="std/pin/struct.Pin.html") }}</name>
+    <visual class="enum">
+        <framed class="t" style="width: 100px;">
+            <code>P</code>
+        </framed>
+    </visual>
+    <description>Signals <code>*p</code> this <code>P</code> pins<br>will never move unless<br>it's <code>Unpin</code>.{{ std(page="std/marker/trait.Unpin.html") }}</description>
+</datum>
+
+
 > {{bad()}} All depictions are for **illustrative** purposes only.
 > The fields should exist in latest `stable`, but Rust makes no guarantees about their layouts, and you must not
 > attempt to _unsafely_ access anything unless the docs allow it.
+
+{{ tablesep() }}
+
+
+#### Cells
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>UnsafeCell&lt;T&gt;</code> {{ std(page="std/cell/struct.UnsafeCell.html") }}</name>
+    <visual class="cell">
+           <framed class="any unsized"><code>T</code></framed>
+    </visual>
+    <description>Magic type allowing <br>aliased mutability.</description>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>Cell&lt;T&gt;</code> {{ std(page="std/cell/struct.Cell.html") }}</name>
+    <visual>
+           <framed class="any unsized celled"><code>T</code></framed>
+    </visual>
+    <description>Allows <code>T</code>'s<br> to move in<br> and out.</description>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>RefCell&lt;T&gt;</code> {{ std(page="std/cell/struct.RefCell.html") }}</name>
+    <visual>
+        <sized class="celled"><code>borrowed</code></sized>
+        <framed class="any unsized celled"><code>T</code></framed>
+    </visual>
+    <description>Also support dynamic<br>
+    borrowing of <code>T</code>. Like <code>Cell</code> this<br>
+    is <code>Send</code>, but not <code>Sync</code>.</description>
+</datum>
+
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>OnceCell&lt;T&gt;</code> {{ std(page="std/cell/struct.OnceCell.html") }}</name>
+    <div class="celled" style="border-radius: 8px;">
+    <visual class="enum" style="text-align: left;">
+        <pad><code>Tag</code></pad>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 80px;">
+            <code>T</code>
+        </framed>
+    </visual>
+    </div>
+    <description>Initialized at most once.</description>
+</datum>
+
+
+<!-- NEW ENTRY -->
+<datum class="spaced">
+    <name><code>LazyCell&lt;T, F&gt;</code> {{ std(page="std/cell/struct.LazyCell.html") }}</name>
+    <div class="celled" style="border-radius: 8px;">
+    <visual class="enum">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 80px;">
+            <code>Uninit&lt;F&gt;</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 80px;">
+            <code>Init&lt;T&gt;</code>
+        </framed>
+    </visual>
+    <andor>or</andor>
+    <visual class="enum">
+        <pad><code>Tag</code></pad>
+        <framed class="any" style="width: 80px;">
+            <code>Poisoned</code>
+        </framed>
+    </visual>
+    </div>
+    <description>Initialized on first access.</description>
+</datum>
+
+
 
 {{ tablesep() }}
 
@@ -7188,8 +7269,9 @@ Commands and tools that are good to know.
 | {{ tab() }} `cargo run --bin b` | Run binary `b`. Unifies feat. with other dependents (can be confusing). |
 | {{ tab() }} <code>cargo run --<span class="cargo-prefix">p</span>ackage w</code> | Run main of sub-worksp. `w`. Treats features more sanely. |
 | <code>cargo … --timings</code> | Show what crates caused your build to take so long. {{ hot() }} |
-| `cargo tree` | Show dependency graph. |
-| `cargo info …` | Show crate metadata (by default for version used by this project). |
+| `cargo tree` | Show dependency graph, all crates used by project, transitively. |
+| {{ tab() }} `cargo tree -i foo` | Inverse dependency lookup, explain why `foo` is used. |
+| `cargo info foo` | Show crate metadata for `foo` (by default for version used by this project). |
 | <code>cargo +{nightly, stable} …</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
 | `cargo +nightly …` | Some nightly-only commands (substitute `…` with command below) |
 | {{ tab() }} `rustc -- -Zunpretty=expanded` |  Show expanded macros. {{ experimental() }} |
