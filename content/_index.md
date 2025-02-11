@@ -4825,7 +4825,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 
 <!-- NEW ENTRY -->
-<datum>
+<datum class="spaced">
     <name><code>MaybeUninit&lt;T&gt;</code><span style="position: absolute;"> {{ std(page="std/mem/union.MaybeUninit.html") }}</span></name>
     <visual class="enum">
         <framed class="uninit" style="width: 100px;">
