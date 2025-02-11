@@ -4344,7 +4344,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
     <visual>
        <framed class="any t"><code>T</code></framed>
     </visual>
-    <description>Sized {{ below(target = "#sized-types") }} </description>
+    <description>Sized type.</description>
 </datum>
 
 <!-- NEW ENTRY -->
@@ -4353,7 +4353,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
     <visual>
        <framed class="any unsized"><code>T</code></framed>
     </visual>
-    <description>Maybe DST {{ below(target = "#sized-types") }} </description>
+    <description>Maybe sized.</description>
 </datum>
 
 
@@ -4390,7 +4390,7 @@ Basic types definable by users. Actual <b>layout</b> {{ ref(page="type-layout.ht
     <visual style="width: 15px;" class="zst">
         <code></code>
     </visual>
-    <description>Zero-Sized {{ below(target = "#sized-types") }} </description>
+    <description>Zero-sized type. </description>
 </datum>
 
 
@@ -4848,7 +4848,7 @@ Rust's standard library combines the above primitive types into useful types wit
     <visual style="width: 15px;" class="zst">
         <code></code>
     </visual>
-    <description>Zero-Sized {{ below(target = "#sized-types") }} helper to hold<br>otherwise unused lifetimes.</description>
+    <description>Zero-sized helper to hold<br>otherwise unused lifetimes.</description>
 </datum>
 
 
@@ -4861,7 +4861,7 @@ Rust's standard library combines the above primitive types into useful types wit
             <code>P</code>
         </framed>
     </visual>
-    <description>Signals <code>*p</code> this <code>P</code> pins<br>will never move unless<br>it's <code>Unpin</code>.{{ std(page="std/marker/trait.Unpin.html") }}</description>
+    <description>Signals <code>*p</code> this <code>P</code> pins<br>will never(!) move again<br> unless it's <code>Unpin</code>.{{ std(page="std/marker/trait.Unpin.html") }}</description>
 </datum>
 
 
