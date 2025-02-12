@@ -4856,14 +4856,21 @@ Rust's standard library combines the above primitive types into useful types wit
 <!-- NEW ENTRY -->
 <datum class="spaced">
     <name><code>Pin&lt;P&gt;</code> {{ std(page="std/pin/struct.Pin.html") }}</name>
-    <visual class="enum">
-        <framed class="t" style="width: 100px;">
-            <code>P</code>
+    <visual style="width: 90px;">
+        <framed class="any" style="width: 80px;">
+           <code>P</code>
         </framed>
     </visual>
-    <description>Signals <code>*p</code> this <code>P</code> pins<br>will never(!) move again<br> unless it's <code>Unpin</code>.{{ std(page="std/marker/trait.Unpin.html") }}</description>
+    <memory-entry class="double">
+        <memory-link style="left:24%;">|</memory-link>
+        <memory class="anymem pinned" style="opacity: 0.8; font-size: 11pt;">
+            <span style="position:absolute; right: -14px; top: -16px;">📌</span>
+            <framed class="any" style="width: 130px;"><code>P::Deref</code></framed>
+        </memory>
+    </memory-entry>
+    <!-- <description>Signals <code>*p</code> this <code>P</code> pins<br>will never(!) move again<br> unless it's <code>Unpin</code>.{{ std(page="std/marker/trait.Unpin.html") }}</description> -->
+    <description>Signals tgt. of <code>P</code> is pinned 'forever'<br>even past lt. of <code>Pin</code>. Value within<br> may not be moved out (but new<br> one moved in), unless <code>Unpin</code>.{{ std(page="std/marker/trait.Unpin.html") }}</description>
 </datum>
-
 
 > {{bad()}} All depictions are for **illustrative** purposes only.
 > The fields should exist in latest `stable`, but Rust makes no guarantees about their layouts, and you must not

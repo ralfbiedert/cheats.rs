@@ -188,6 +188,13 @@ datum {
             background-color: rgb(253, 236, 220);
         }
 
+        memory.pinned {
+            // background-color: rgb(232, 172, 119);
+            // border-style: solid;
+            // border-width: 4px;
+            // border-color: saddlebrown;
+        }
+
         memory.static {
             background-color: burlywood;
         }
@@ -226,6 +233,15 @@ datum {
 
         memory.static-vtable::after {
             content: "(static vtable)";
+            display: block;
+            position: absolute;
+            bottom: 0px;
+            right: 2px;
+            font-size: 9px;
+        }
+
+        memory.pinned::after {
+            content: "(any mem)";
             display: block;
             position: absolute;
             bottom: 0px;
@@ -449,7 +465,7 @@ datum.doublespaced {
 // In some places we don't want our Rust-like color scheme b/c we have conflicting
 // background colors.
 .day-mode datum {
-    framed .token.class-name, framed .token.keyword {
+    framed .token.class-name, framed .token.keyword, framed .token.punctuation  {
         color: black;
     }
 
@@ -469,7 +485,7 @@ datum.doublespaced {
 // In some places we don't want our Rust-like color scheme b/c we have conflicting
 // background colors.
 .night-mode datum {
-    framed .token.class-name, framed .token.keyword {
+    framed .token.class-name, framed .token.keyword, framed .token.punctuation {
         color: black;
     }
 
