@@ -5280,7 +5280,7 @@ Rust's standard library combines the above primitive types into useful types wit
 <datum>
     <name><code>PathBuf</code> {{ std(page="std/path/struct.PathBuf.html") }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
-    <visual class="platformdefined">
+    <visual class="platformdefined" style="width: 100px;">
         <payload>
             <code>OsString</code>
         </payload>
