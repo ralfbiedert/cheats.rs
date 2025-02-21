@@ -266,7 +266,7 @@ fn main() {
 - [**Rust in Easy English**](https://dhghomon.github.io/easy_rust/Chapter_3.html) - 60+ concepts, simple English, example-driven.
 - [**Rust for the Polyglot Programmer**](https://www.chiark.greenend.org.uk/~ianmdlvl/rust-polyglot/index.html) - A guide for the experienced programmer.
 
-In addition consider **The Book**,{{ book(page="") }} **Rust by Example**,{{ ex(page="") }} the **Standard Library**,{{ std(page="std") }} and **Rust Learning**.{{ link(url="https://github.com/ctjhoa/rust-learning") }}
+In addition consider **The Book**,{{ book(page="") }} **Rust by Example**,{{ ex(page="") }} the **Standard Library**,{{ std(page="std") }} and **Learn Rust**.{{ link(url="https://github.com/ImplFerris/LearnRust") }}
 
 
 
@@ -424,13 +424,13 @@ Define units of code and their abstractions.
 | {{ tab() }} `async move { x }`  | Moves captured variables into future, _c_. move closure.  {{ ref(page="expressions/block-expr.html#capture-modes") }} {{ below(target="#functions-behavior") }}  |
 | `fn() -> S`  | **Function references**, <sup>1</sup> {{ book(page="ch19-05-advanced-functions-and-closures.html#function-pointers") }} {{ std(page="std/primitive.fn.html") }} {{ ref(page="types.html#function-pointer-types") }} memory holding address of a callable. |
 | `Fn() -> S`  | **Callable trait** {{ book(page="ch19-05-advanced-functions-and-closures.html#returning-closures") }} {{ std(page="std/ops/trait.Fn.html") }} (also `FnMut`, `FnOnce`), impl. by closures, fn's &hellip; |
-| `AsyncFn() -> S`  | **Callable async trait** {{ todo() }} (also `AsyncFnMut`, `AsyncFnOnce`), impl. by async _c._ {{ experimental() }}  |
+| `AsyncFn() -> S`  | **Callable async trait** {{ std(page="std/ops/trait.AsyncFn.html") }} (also `AsyncFnMut`, `AsyncFnOnce`), impl. by async _c._  |
 | <code>&vert;&vert; {} </code> | A **closure** {{ book(page="ch13-01-closures.html") }} {{ ex(page="fn/closures.html") }} {{ ref(page="expressions/closure-expr.html")}} that borrows its **captures**, {{ below(target="#closures-data") }} {{ ref(page="types/closure.html#capture-modes") }}  (e.g., a local variable). |
 | {{ tab() }} <code>&vert;x&vert; {}</code> | Closure accepting one argument named `x`, body is block expression. |
 | {{ tab() }} <code>&vert;x&vert; x + x</code> | Same, without block expression; may only consist of single expression.  |
 | {{ tab() }} <code>move &vert;x&vert; x + y </code> | **Move closure** {{ ref(page="types/closure.html#capture-modes")}} taking ownership; i.e., `y` transferred into closure.  |
-| {{ tab() }} <code>async &vert;x&vert; x + x</code> | **Async closure**.  {{ todo() }} {{ experimental() }} Converts its result into an `impl Future<Output=X>`. |
-| {{ tab() }} <code>async move &vert;x&vert; x + y</code> | **Async move closure**.  {{ todo() }} {{ experimental() }} Combination of the above. |
+| {{ tab() }} <code>async &vert;x&vert; x + x</code> | **Async closure**. {{ ref(page="expressions/closure-expr.html#async-closures")}}  Converts its result into an `impl Future<Output=X>`. |
+| {{ tab() }} <code>async move &vert;x&vert; x + y</code> | **Async move closure**.  Combination of the above. |
 | {{ tab() }} <code>return &vert;&vert; true </code> | Closures sometimes look like logical ORs (here: return a closure). |
 | `unsafe` | If you enjoy debugging segfaults; **unsafe code**. {{ below(target="#unsafe-unsound-undefined") }} {{ book(page="ch19-01-unsafe-rust.html#unsafe-superpowers") }} {{ ex(page="unsafe.html#unsafe-operations") }} {{ nom(page="meet-safe-and-unsafe.html") }} {{ ref(page="unsafe-blocks.html#unsafe-blocks") }} |
 | {{ tab() }} `unsafe fn f() {}` | Means "_calling can cause UB, {{ below(target="#unsafe-unsound-undefined") }} **YOU must check** requirements_". |
