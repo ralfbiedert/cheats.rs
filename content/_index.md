@@ -10693,7 +10693,8 @@ When updating an API, these changes can break client code.{{ rfc(page="1105-api-
 | Crates |
 |---------|
 | 🔴 Making a crate that previously compiled for _stable_ require _nightly_. |
-| 🟡 Altering use of Cargo features (e.g., adding or removing features). |
+| 🔴 Removing Cargo features. |
+| 🟡 Altering existing Cargo features. |
 
 {{ tablesep() }}
 
