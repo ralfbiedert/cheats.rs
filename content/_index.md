@@ -7416,7 +7416,8 @@ Inside a **declarative** {{ book(page="ch19-06-macros.html#declarative-macros-wi
 | {{ tab() }} `$x:lifetime` | A lifetime (e.g., `'a`, `'static`, etc.). |
 | {{ tab() }} `$x:literal` | A literal (e.g., `3`, `"foo"`, `b"bar"`, etc.). |
 | {{ tab() }} `$x:meta`    | A meta item; the things that go inside `#[…]` and `#![…]` attributes. |
-| {{ tab() }} `$x:pat`     | A pattern, e.g., `Some(t)`, `(17, 'a')` or `_`. |
+| {{ tab() }} `$x:pat`     | A pattern, e.g., `Some(x)`, `(17, 'a')` or <code>x&vert;x</code>. |
+| {{ tab() }} `$x:pat_param`| Subset of patterns without top-level &vert;, e.g., `Some(x)` or `x`. |
 | {{ tab() }} `$x:path`    | A path (e.g., `foo`, `::std::mem::replace`, `transmute::<_, int>`). |
 | {{ tab() }} `$x:stmt`    | A statement, e.g., `let x = 1 + 1;`, `String::new();` or `vec![];` |
 | {{ tab() }} `$x:tt`      | A single token tree, [see here](https://stackoverflow.com/a/40303308) for more details. |
