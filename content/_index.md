@@ -7281,6 +7281,7 @@ Commands and tools that are good to know.
 | {{ tab() }} `cargo tree -i foo` | Inverse dependency lookup, explain why `foo` is used. |
 | `cargo info foo` | Show crate metadata for `foo` (by default for version used by this project). |
 | <code>cargo +{nightly, stable} …</code>  | Use given toolchain for command, e.g., for 'nightly only' tools. |
+| <code>cargo +1.85.0 …</code>  | Also accepts a specific version directly. |
 | `cargo +nightly …` | Some nightly-only commands (substitute `…` with command below) |
 | {{ tab() }} `rustc -- -Zunpretty=expanded` |  Show expanded macros. {{ experimental() }} |
 | `rustup doc` | Open offline Rust documentation (incl. the books), good on a plane! |
