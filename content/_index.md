@@ -619,6 +619,7 @@ Constructs found in `match` or `let` expressions, or function parameters.
 | `let Ok(x) = f();` | But can work if alternatives uninhabited, e.g., `f` returns `Result<T, !>` {{ edition(ed="1.82+") }} |
 | `let Ok(x) = f() else {};`  | Try to assign {{ rfc(page="3137-let-else.html") }} if not `else {}` w. must `break`, `return`, `panic!`, … {{ edition(ed="1.65+")}} {{ hot() }} |
 | `if let Ok(x) = f() {}`  | Branch if pattern can be assigned (e.g., `enum` variant), syntactic sugar. <sup>*</sup>|
+| <code>if let &hellip; && let &hellip; { }</code>  | **Let chains**, {{ ref(page="expressions/if-expr.html#r-expr.if.chains.bindings")}} use more than binding w.o. nesting. {{ edition(ed="'24") }}|
 | `while let Ok(x) = f() {}`  | Equiv.; here keep calling `f()`, run `{}` as long as _p._ can be assigned. |
 | `fn f(S { x }: S)`  | Function param. also work like `let`, here `x` bound to `s.x` of `f(s)`. {{ esoteric() }} |
 
