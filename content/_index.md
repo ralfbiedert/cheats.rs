@@ -10232,8 +10232,8 @@ If you are used to Java or C, consider these.
 {{ tablesep() }}
 
 > 🔥 We **highly** recommend you also follow the
-> [**API Guidelines**](https://rust-lang.github.io/api-guidelines/) ([**Checklist**](https://rust-lang.github.io/api-guidelines/checklist.html))
-> for any shared project! 🔥
+> [**API Guidelines**](https://rust-lang.github.io/api-guidelines/) and the
+> [**Pragmatic Rust Guidelines**](https://microsoft.github.io/rust-guidelines/)  🔥
 
 
 {{ tablesep() }}
@@ -10847,6 +10847,7 @@ Specialty books, also see [Little Book of Rust Books](https://lborb.github.io/bo
 | [Guide to Rustc Development](https://rustc-dev-guide.rust-lang.org/index.html) {{ esoteric() }} | Explains how the compiler works internally. |
 | [Little Book of Rust Macros](https://veykril.github.io/tlborm/introduction.html) | Community's collective knowledge of Rust macros. |
 | [Performance](https://nnethercote.github.io/perf-book/) | Techniques to improve the speed and memory usage. |
+| [Pragmatic Rust Guidelines](https://microsoft.github.io/rust-guidelines/) | Pragmatic design guidelines for idiomatic Rust that scales. |
 | [RFCs](https://rust-lang.github.io/rfcs/) {{ esoteric() }} | Look up accepted RFCs and how they change the language. |
 | [Rustdoc](https://doc.rust-lang.org/stable/rustdoc/) | Tips how to customize `cargo doc` and `rustdoc`. |
 | [Unsafe Code Guidelines](https://rust-lang.github.io/unsafe-code-guidelines/) {{ experimental() }} | Concise information about writing `unsafe` code. |
