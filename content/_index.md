@@ -10196,7 +10196,7 @@ If you are used to Java or C, consider these.
 | **Illegal State: Impossible** | `my_lock.write().unwrap().guaranteed_at_compile_time_to_be_locked = 10;` <sup>1</sup>|
 |  | <code>thread::scope(&vert;s&vert; { /* Threads can't exist longer than scope() */ });</code> |
 | **Avoid _Global_ State** | Being depended on in multiple versions can secretly duplicate statics. {{ bad() }} {{ link(url="https://doc.rust-lang.org/cargo/reference/resolver.html#version-incompatibility-hazards") }} |
-| **Provide Builders** | `Car::builder("Model T").hp(20).build();` |
+| **Provide Builders** | `Car::builder().name("Model T").hp(20).build();` |
 | **Make it Const** | Where possible mark fns. `const`; where feasible run code inside `const {}`. |
 | **Don't Panic** | Panics are _not_ exceptions, they suggest immediate process abortion! |
 |  | Only panic on programming error; use `Option<T>`{{ std(page="std/option/enum.Option.html") }} or `Result<T,E>`{{ std(page="std/result/enum.Result.html") }} otherwise. |
