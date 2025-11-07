@@ -6483,6 +6483,7 @@ As-<b style="">correct</b>-as-it-currently-gets number conversions.
 | `u8` &hellip; `i128` | `u8::try_from(x)?` <sup>1</sup> |  `x as f32` <sup>3</sup> | `x.to_string()` |
 | `f32` / `f64` | `x as u8` <sup>2</sup> |  `x as f32` | `x.to_string()` |
 | `String` | `x.parse::<u8>()?` | `x.parse::<f32>()?` | `x` |
+| `&str` | `x.parse::<u8>()?` | `x.parse::<f32>()?` | `x.to_owned()` |
 
 
 <footnotes>
