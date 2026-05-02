@@ -372,7 +372,7 @@ Granting access to un-owned memory. Also see section on Generics & Constraints.
 | {{ tab() }} `&[S]` | Special slice reference that contains (`addr`, `count`). |
 | {{ tab() }} `&str` | Special string slice reference that contains (`addr`, `byte_len`). |
 | {{ tab() }} `&mut S` | Exclusive reference to allow mutability (also `&mut [S]`, `&mut dyn S`, &hellip;). |
-| {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types/trait-object.html")}} ref. as (`addr`, `vtable`); `T` must be **object safe**.  {{ ref(page="items/traits.html#object-safety")}} |
+| {{ tab() }} `&dyn T` | Special **trait object** {{ book(page="ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types") }} {{ ref(page="types/trait-object.html")}} ref. as (`addr`, `vtable`); `T` must be **dyn compatible**.  {{ ref(page="items/traits.html#dyn-compatibility")}} |
 | `&s` | Shared **borrow** {{ book(page="ch04-02-references-and-borrowing.html") }} {{ ex(page="scope/borrow.html") }} {{ std(page="std/borrow/trait.Borrow.html") }} (e.g., addr., len, vtable, &hellip; of _this_ `s`, like `0x1234`). |
 | {{ tab() }} `&mut s` | Exclusive borrow that allows **mutability**. {{ ex(page="scope/borrow/mut.html") }} |
 | `*const S` | Immutable **raw pointer type** {{ book(page="ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer") }} {{ std(page="std/primitive.pointer.html") }} {{ ref(page="types.html#raw-pointers-const-and-mut") }} w/o memory safety. |
@@ -5539,7 +5539,7 @@ PRs for this section are very welcome. Idea is:
 | Fix inference in '`try`' closures | <code>iter.try_for_each(&vert;x&vert; { Ok::<(), Error>(()) })?;</code> |
 | Iterate _and_ edit `&mut [T]` if `T` Copy. | `Cell::from_mut(mut_slice).as_slice_of_cells()` |
 | Get subslice with length. | `&original_slice[offset..][..length]` |
-| Canary so trait `T` is **object safe**. {{ ref(page="items/traits.html#object-safety")}} | `const _: Option<&dyn T> = None;` |
+| Canary so trait `T` is **dyn compatible**. {{ ref(page="items/traits.html#dyn-compatibility")}} | `const _: Option<&dyn T> = None;` |
 | _Semver trick_ to unify types. {{ link(url="https://github.com/dtolnay/semver-trick") }} | `my_crate = "next.version"` in `Cargo.toml` + re-export types. |
 | Use macro inside own crate. {{ link(url="https://users.rust-lang.org/t/use-macro-inside-proc-macro-crate/61095/4") }} | `macro_rules! internal_macro {}` with `pub(crate) use internal_macro;` |
 
