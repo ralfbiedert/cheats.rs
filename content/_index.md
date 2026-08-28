@@ -65,7 +65,6 @@ Contains clickable links to
 
 </blockquote>
 
-
 <noprint>
 <page-controls>
     <!-- <a id="" href="" style="float: left; margin-left:5px;">X-Ray Mode 👓</a> -->
