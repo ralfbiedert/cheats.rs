@@ -57,6 +57,15 @@ datum {
             border-radius: 5px;
         }
 
+        alloc {
+            display: inline-block;
+            width: 30px;
+            background-color: whitesmoke;
+            border-style: dashed;
+            border-width: 1px;
+            border-color: black;
+            border-radius: 5px;
+        }
     }
 
 
@@ -490,7 +499,7 @@ datum.doublespaced {
     }
 
     // This is a bit of an ugly hack ...
-    ptr, payload, sized, pad, framed, byte, memory, .platformdefined {
+    ptr, payload, alloc, sized, pad, framed, byte, memory, .platformdefined {
         color: #333 !important;
 
         code {
@@ -510,7 +519,6 @@ datum.doublespaced {
 
     zoom {
         background-color: #222;
-
     }
 }
 

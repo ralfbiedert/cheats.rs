@@ -4977,7 +4977,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum class="spaced">
-    <name><code>Box&lt;T&gt;</code> {{ <std page="std/boxed/struct.Box.html" /> }}</name>
+    <name><code>Box&lt;T, A&gt;</code> {{ <std page="std/boxed/struct.Box.html" /> }}</name>
     <visual>
         <ptr>
            <code>ptr</code><sub>2/4/8</sub>
@@ -4985,6 +4985,9 @@ Rust's standard library combines the above primitive types into useful types wit
         <payload>
             <code>meta</code><sub>2/4/8</sub>
         </payload>
+        <alloc>
+            <code>A</code>
+        </alloc>
     </visual>
     <memory-entry>
         <memory-link style="left:49%;">|</memory-link>
@@ -5000,7 +5003,7 @@ Rust's standard library combines the above primitive types into useful types wit
 
 <!-- NEW ENTRY -->
 <datum>
-    <name><code>Vec&lt;T&gt;</code> {{ <std page="std/vec/struct.Vec.html" /> }}</name>
+    <name><code>Vec&lt;T, A&gt;</code> {{ <std page="std/vec/struct.Vec.html" /> }}</name>
     <!-- For some reason we need the width for mobile not to line break -->
     <visual>
         <ptr>
@@ -5012,6 +5015,9 @@ Rust's standard library combines the above primitive types into useful types wit
         <sized>
             <code>capacity</code><sub>2/4/8</sub>
         </sized>
+        <alloc>
+            <code>A</code>
+        </alloc>
     </visual>
     <memory-entry class="double">
         <memory-link style="left:25%;">|</memory-link>

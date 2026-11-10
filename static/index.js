@@ -75,6 +75,7 @@ const subtitles = [
     "Look, nobody ever defined a size limit for cheat sheets.",
     "You could say my C++ skills have gotten a bit &mldr; rusty.",
     "You can't spell <i>trust</i> without <i>rust</i> &mldr; <strike>also frustra&mldr;</strike>",
+    "As foretold by Nostradamus.",
 ];
 
 
