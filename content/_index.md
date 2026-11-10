@@ -10198,7 +10198,7 @@ If you are used to Java or C, consider these.
 | **Use Strong Types** | `enum E { Invalid, Valid { … } }` over `ERROR_INVALID = -1` |
 |  | `enum E { Visible, Hidden }` over `visible: bool` |
 |  | `struct Charge(f32)` over `f32` |
-| **Illegal State: Impossible** | `my_lock.write().unwrap().guaranteed_at_compile_time_to_be_locked = 10;` <sup>1</sup>|
+| **Impossbl. Illegal State** | `my_lock.write().unwrap().guaranteed_at_compile_time_to_be_locked = 10;` <sup>1</sup>|
 |  | <code>thread::scope(&vert;s&vert; { /* Threads can't exist longer than scope() */ });</code> |
 | **Avoid _Global_ State** | Being depended on in multiple versions can secretly duplicate statics. {{ <bad /> }} {{ <link url="https://doc.rust-lang.org/cargo/reference/resolver.html#version-incompatibility-hazards" /> }} |
 | **Provide Builders** | `Car::builder().name("Model T").hp(20).build();` |
@@ -10207,7 +10207,7 @@ If you are used to Java or C, consider these.
 |  | Only panic on programming error; use `Option<T>`{{ <std page="std/option/enum.Option.html" /> }} or `Result<T,E>`{{ <std page="std/result/enum.Result.html" /> }} otherwise. |
 |  | If clearly user requested, e.g., calling `obtain()` vs. `try_obtain()`, panic ok too. |
 |  | Inside `const { NonZero::new(1).unwrap() }` p. becomes compile error, ok too. |
-| **Generics in Moderation** | A simple `<T: Bound>` (e.g., `AsRef<Path>`) can make your APIs nicer to use.  |
+| **Limited Generics** | A simple `<T: Bound>` (e.g., `AsRef<Path>`) can make your APIs nicer to use.  |
 | | Complex bounds make it impossible to follow. If in doubt don't be creative with _g_.  |
 | **Split Implementations** | Generics like `Point<T>` can have separate `impl` per `T` for some specialization. |
 |   | `impl<T> Point<T> { /* Add common methods here */ }` |
