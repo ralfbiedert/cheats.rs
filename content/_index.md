@@ -834,9 +834,9 @@ These sigils did not fit any other category but are good to know nonetheless.
 | Example | Explanation |
 |---------|-------------|
 | `!` | Always empty **never type**. {{ <book page="ch19-04-advanced-types.html#the-never-type-that-never-returns" /> }} {{ <ex page="fn/diverging.html#diverging-functions" /> }} {{ <std page="std/primitive.never.html" /> }} {{ <ref page="types.html#never-type" /> }} |
-| {{ <tab /> }} `fn f() -> ! {}` | Function that never ret.; compat. with any _ty._ e.g., `let x: u8 = f();` |
-| {{ <tab /> }} `fn f() -> Result<(), !> {}` | Function that must return `Result` but signals it can never `Err`. {{ <experimental /> }} |
-| {{ <tab /> }} `fn f(x: !) {}` | Function that exists, but can never be called. Not very useful. {{ <esoteric /> }} {{ <experimental /> }} |
+| {{ <tab /> }} `fn f() -> !` | Function that never ret.; compat. with any _ty._ e.g., `let x: u8 = f();` |
+| {{ <tab /> }} `fn f() -> Result<(), !>` | Function that must return `Result` but signals it can never `Err`. {{ <experimental /> }} |
+| {{ <tab /> }} `fn f(x: !)` | Function that exists, but can never be called. Not very useful. {{ <esoteric /> }} {{ <experimental /> }} |
 | `_` | Unnamed **wildcard** {{ <ref page="patterns.html#wildcard-pattern" /> }} variable binding, e.g., <code>&vert;x, _&vert; {}</code>.|
 | {{ <tab /> }} `let _ = x;`  | Unnamed assign. is no-op, does **not** {{ <bad /> }} move out `x` or preserve scope! |
 | {{ <tab /> }} `_ = x;`  | You can assign _anything_ to `_` without `let`, i.e.,  `_ = ignore_rval();` {{ <hot /> }} |
