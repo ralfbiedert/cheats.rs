@@ -127,4 +127,4 @@ Basically this work is about providing high quality content in a particular form
 
 To be perfectly clear, if you are in good standing you can freely copy or re-host the work, or perform [almost any](/legal#copyright-information) change you like on your own copy, and you'd really only lose that status if you 'went around trying to enforce your will on others'.
 
-{{ tablesep() }}
+{{ <tablesep /> }}
